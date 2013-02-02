@@ -1,6 +1,6 @@
 unit lazdyn_mpg123;
 
-/////// This is the dynamical loader for mpg123 library.
+/////// This is the dynamical loader for mpg123 library with reference counting.
 
 //////  Tested in both 32 and 64 bits environnements (Windows, Linux and Macosx).
 
@@ -294,13 +294,7 @@ const
   MPG123_LEFT  = $1;
   MPG123_RIGHT = $2;
 
-
-
 type
-
-
-
-
 
   {$if defined(cpu64)}
     cuint64 = qword;
@@ -312,26 +306,19 @@ cuint32 = LongWord;
 
 psize_t = ^size_t;
 
-
                  { as defined in the C standard }
                 { => size_t is the result type of function SizeOf() }
 
-
-
 type   //FixMe: use unit ctypes in LAZARUS instead !
   coff_t = integer;  //Int64;
-
 
 type
 //FixMe:  this is experimental - NOT TESTED !!!
   PLong = Pointer;
   pplong = array of PLong;        //pplong in mpg123 means: (a Pointer to) a list of Pointers
   //hint: use size_t to dim the pplong array  
-
   PInteger = Pointer;
-
   PPInteger = array of PInteger;  //ppinteger in mpg123 means: (a Pointer to) a list of Pointers
-
 (** An array of supported standard sample rates
  *  These are possible native sample rates of MPEG audio files.
  *  You can still force mpg123 to resample to a different one, but by default
@@ -850,7 +837,7 @@ type
 								 			 2: album/audiophile *)
                    halfspeed   : longword;
                    doublespeed : longword;
-                 {$IFNDEF WIN32}
+                 {$IFNDEF WINDOWS}
 	               timeout     : longword;
                  {$ENDIF}
                    audio_caps : array[0.._NUM_CHANNELS-1,0.._MPG123_RATES,0.._MPG123_ENCODINGS-1] of Char;
@@ -1049,32 +1036,49 @@ var
 
 
    {Special function for dynamic loading of lib ...}
+   
+    
+       var 
+         Mp_Handle:TLibHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
+         ReferenceCounter : cardinal = 0;  // Reference counter
+         
+         function mp_IsLoaded : boolean; inline;
+     Function mp_load(const libfilename:string) :boolean; // load the lib
 
-       var Mp_Handle:TLibHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
-
-     Function Mp_Load(const libfilename:string) :boolean; // load the lib
-
-       function Mp_Unload() : boolean; // unload and frees the lib from memory : do not forget to call it before close application.
+       function mp_unload() : boolean; // unload and frees the lib from memory : do not forget to call it before close application.
 
 implementation
 
-
+ function mp_IsLoaded: boolean;
+begin
+ Result := (Mp_Handle <> dynlibs.NilHandle);
+end;
+ 
 function  mp_unload():boolean;
 begin
-   if Mp_Handle<>DynLibs.NilHandle then
-     begin
-            DynLibs.UnloadLibrary(Mp_Handle);
-     end;
-  Mp_Handle:=DynLibs.NilHandle;
-
+  // < Reference counting
+  if ReferenceCounter > 0 then
+    dec(ReferenceCounter);
+  if ReferenceCounter > 0 then
+    exit;
+  // >
+  if mp_IsLoaded then
+  begin
+    DynLibs.UnloadLibrary(mp_Handle);
+    mp_Handle:=DynLibs.NilHandle;
+  end;
+   
 end;
 
  function Mp_Load (const libfilename:string) :boolean;
 
   begin
   Result := False;
-  if Mp_Handle<>0 then result:=true {is it already there ?}
-  else begin {go & load the library}
+  if Mp_Handle<>0 then 
+    begin
+      result:=true; {is it already there ?}
+      Inc(ReferenceCounter);
+end  else begin {go & load the library}
     if Length(libfilename) = 0 then exit;
     Mp_Handle:=DynLibs.LoadLibrary(libfilename); // obtain the handle we want
   	if Mp_Handle <> DynLibs.NilHandle then
@@ -1148,9 +1152,12 @@ end;
       // FixMe:
       //mpg123_replace_reader := GetProcAddress(hlib,'mpg123_replace_reader');
     end;
-   result:=(Mp_Handle<>DynLibs.NilHandle);
+      Result := mp_IsLoaded;
+    ReferenceCounter:=1;    
+  
 end;
   end;
+ 
 
 end.
 
