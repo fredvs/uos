@@ -202,7 +202,8 @@ type
   public
     Enabled: boolean;
     Status: shortint;
-    BeginProc: procedure of object;  //// procedure to execute at begin of thread
+    BeginProc: procedure of object;   //// procedure to execute at begin of thread
+    LoopProc: procedure of object;    //// procedure to execute at in loop in thread
     EndProc:  procedure of object;    //// procedure to execute at end of thread
     StreamIn: array of TUOS_InStream;
     StreamOut: array of TUOS_OutStream;
@@ -218,9 +219,7 @@ type
     procedure Stop;                  ///// Stop playing and free thread
 
     procedure Pause;                 ///// Pause playing
-
-    procedure Seek(InputIndex: integer; pos: Tsf_count_t);  //// change position
-
+   
     function AddIntoDevOut(Device: integer; Latency: CDouble;
       SampleRate: integer; Channels: integer; SampleFormat: shortint): integer;   ////// Add a Output into Device Output with custom parameters
     function AddIntoDevOut: integer;                          ////// Add a Output into Device Output with default parameters
@@ -263,14 +262,36 @@ type
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //  result : -1 nothing created, otherwise Input Index in array     
     //////////// example : InputIndex1 := AddFromFile(edit5.Text,-1,-1);
+    
+    procedure Seek(InputIndex: integer; pos: Tsf_count_t);  //// change position in sample    
+    
+    procedure SeekSeconds(InputIndex: integer; pos: cfloat);  //// change position in seconds
+    
+    procedure SeekTime(InputIndex: integer; pos : TTime);  //// change position in time format
 
     function InputLength(InputIndex: integer): longint;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : Lenght of Input in samples
+    
+    function InputLengthSeconds(InputIndex: integer): cfloat;
+    ////////// InputIndex : InputIndex of existing input
+    ///////  result : Lenght of Input in seconds
+       
+    function InputLengthTime(InputIndex: integer): TTime;
+    ////////// InputIndex : InputIndex of existing input
+    ///////  result : Lenght of Input in time format
 
     function InputPosition(InputIndex: integer): longint;
     ////////// InputIndex : InputIndex of existing input
-    ////// result : current postion of sample 
+    ////// result : current postion in sample 
+    
+    function InputPositionSeconds(InputIndex: integer): cfloat;
+    ////////// InputIndex : InputIndex of existing input
+    ///////  result : current postion of Input in seconds
+       
+    function InputPositionTime(InputIndex: integer): TTime;
+    ////////// InputIndex : InputIndex of existing input
+    ///////  result : current postion of Input in time format
 
     function AddDSPin(InputIndex: integer; BeforeProc: TProc; AfterProc: TProc): integer;
     ///// add a DSP procedure for input
@@ -602,10 +623,59 @@ begin
   end;
 end;
 
-procedure TUOS_Player.Seek(InputIndex: integer; pos: Tsf_count_t);  //// change position
+procedure TUOS_Player.Seek(InputIndex: integer; pos: Tsf_count_t);  //// change position in samples
 begin
   if (InputIndex > -1) and (InputIndex < length(StreamIn)) then
     StreamIn[InputIndex].Data.Poseek := pos;
+end;
+
+procedure TUOS_Player.SeekSeconds(InputIndex: integer; pos: cfloat);  //// change position in seconds
+begin
+  if (InputIndex > -1) and (InputIndex < length(StreamIn)) then
+    StreamIn[InputIndex].Data.Poseek := trunc(pos *  StreamIn[InputIndex].Data.SampleRate) ;
+end;
+
+procedure TUOS_Player.SeekTime(InputIndex: integer; pos: TTime);  //// change position in time format 
+var
+   ho,mi,se,ms, possample : word;
+begin
+    DecodeTime(pos,ho,mi,se,ms);
+    
+    possample := trunc(((ho * 3600) + (mi * 60) + se + (ms/1000)) * StreamIn[InputIndex].Data.SampleRate) ;
+    
+  if (InputIndex > -1) and (InputIndex < length(StreamIn)) then
+    StreamIn[InputIndex].Data.Poseek := possample;
+end;
+
+function TUOS_Player.InputLength(InputIndex: integer): longint;      //// gives length in samples
+begin
+  Result := 0;
+  if (InputIndex > -1) and (InputIndex < length(StreamIn)) then
+    Result := StreamIn[InputIndex].Data.Lengthst;
+end;
+
+function TUOS_Player.InputLengthSeconds(InputIndex: integer): cfloat;
+begin
+  Result := 0;
+  if (InputIndex > -1) and (InputIndex < length(StreamIn)) then
+    Result := StreamIn[InputIndex].Data.Lengthst / StreamIn[InputIndex].Data.SampleRate;
+end;
+
+function TUOS_Player.InputLengthTime(InputIndex: integer): TTime;
+var
+  tmp: cfloat;
+  h, m, s, ms: word;
+begin
+  Result := 0;
+  if (InputIndex > -1) and (InputIndex < length(StreamIn)) then
+  begin
+    tmp    := InputLengthSeconds(InputIndex);
+    ms     := trunc(frac(tmp)*1000);
+    h      := trunc(tmp / 3600);
+    m      := trunc(tmp / 60 - h * 60);
+    s      := trunc(tmp - (h * 3600 + m * 60)) ;
+    Result := EncodeTime(h,m,s,ms);
+  end;
 end;
 
 function TUOS_Player.InputPosition(InputIndex: integer): longint;  //// gives current position
@@ -615,11 +685,28 @@ begin
     Result := StreamIn[InputIndex].Data.Position;
 end;
 
-function TUOS_Player.InputLength(InputIndex: integer): longint;    //// gives length in samples
+function TUOS_Player.InputPositionSeconds(InputIndex: integer): cfloat;
 begin
   Result := 0;
   if (InputIndex > -1) and (InputIndex < length(StreamIn)) then
-    Result := StreamIn[InputIndex].Data.Lengthst;
+    Result := StreamIn[InputIndex].Data.Position / StreamIn[InputIndex].Data.SampleRate;
+end;
+
+function TUOS_Player.InputPositionTime(InputIndex: integer): TTime;
+var
+  tmp: cfloat;
+  h, m, s, ms: word;
+begin
+  Result := 0;
+  if (InputIndex > -1) and (InputIndex < length(StreamIn)) then
+  begin
+    tmp    := InputPositionSeconds(InputIndex);
+    ms     := trunc(frac(tmp) * 1000);
+    h      := trunc(tmp / 3600);
+    m      := trunc(tmp / 60 - h * 60);
+    s      := trunc(tmp - (h * 3600 + m * 60)) ;
+    Result := EncodeTime(h,m,s,ms);
+  end;
 end;
 
 procedure TUOS_Player.SetDSPin(InputIndex: integer; DSPinIndex: integer;
@@ -1751,6 +1838,11 @@ begin
               sf_seek(StreamIn[x].Data.HandleSt, 0, SEEK_CUR);
           1: StreamIn[x].Data.position := mpg123_tell(StreamIn[x].Data.HandleSt);
         end;
+      
+     ///////
+        if LoopProc <> nil then 
+    synchronize(LoopProc); /////  Execute LoopProc procedure
+     ///////   
 
       //////// DSPin BeforeBuffProc
       if (StreamIn[x].Data.Status = 1) and (length(StreamIn[x].DSP) > 0) then
@@ -1940,6 +2032,7 @@ begin
   status := 2;
   BeginProc := nil;
   EndProc := nil;
+  LoopProc := nil;
 end;
 
 destructor TUOS_DSP.Destroy;
