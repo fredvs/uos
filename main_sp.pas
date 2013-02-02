@@ -423,7 +423,7 @@ begin
       temptime := Player1.InputPositionTime(In1Index);  ////// Length of input in time
     DecodeTime(temptime,ho,mi,se,ms);
     form1.lposition.Caption:=format('%d:%d:%d.%d',[ho,mi,se,ms]);
-   end;
+    end;
  end;
 
 function DSPReverseBefore(data:TUOS_Data; fft:TUOS_FFT): TArFloat;
