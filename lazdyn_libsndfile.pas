@@ -1,10 +1,10 @@
 {
 
-This is the Dynamic loading version of LibSndFile.pas .
+This is the Dynamic loading version with reference counting of LibSndFile.pas.
  You can choose the folder and file of the LibSndFile library with sf_load() and
  release it with sf_unload().
 
- Fred van Stappen / fiens@hotmail.com / 2012
+ Fred van Stappen / fiens@hotmail.com / 2013
 
  }
 
@@ -579,15 +579,22 @@ Procedure sf_Unload(); // unload and frees the lib from memory : do not forget t
 
        ////////////////////////////////////////////////
 
-
+function sf_IsLoaded : boolean; inline;
 
 
 implementation
+var
+ReferenceCounter : cardinal = 0;  // Reference counter
 
 Function sf_Load (const libfilename:string) :boolean;
 begin
   Result := False;
-  if sf_Handle<>0 then result:=true {is it already there ?}
+  if sf_Handle<>0 then
+     begin
+     result:=true {is it already there ?};
+      //Reference counting
+    Inc(ReferenceCounter);
+    end
   else begin {go & load the library}
     if Length(libfilename) = 0 then exit;
     sf_Handle:=DynLibs.LoadLibrary(libfilename); // obtain the handle we want
@@ -632,7 +639,8 @@ Pointer(sf_close):=DynLibs.GetProcedureAddress(sf_Handle,PChar('sf_close'));
 Pointer(sf_write_sync):=DynLibs.GetProcedureAddress(sf_Handle,PChar('sf_write_sync'));
 
    end;
-    result:=(sf_Handle<>DynLibs.NilHandle);
+    Result := sf_IsLoaded;
+    ReferenceCounter:=1;
   end;
 
 end;
@@ -640,11 +648,18 @@ end;
 //////////////////////////////
 Procedure sf_Unload;
 begin
-  if sf_Handle<>DynLibs.NilHandle then
+  // < Reference counting
+  if ReferenceCounter > 0 then
+    dec(ReferenceCounter);
+  if ReferenceCounter > 0 then
+    exit;
+  // >
+  if sf_IsLoaded then
      begin
-           DynLibs.UnloadLibrary(sf_Handle);
+      DynLibs.UnloadLibrary(sf_Handle);
+       sf_Handle:=DynLibs.NilHandle;
      end;
-  sf_Handle:=DynLibs.NilHandle;
+ 
 end;
 
 /////////////////
@@ -655,6 +670,10 @@ begin
   result:= sf_open_native( pChar( path), mode, @sfinfo);
 end;
 
+function sf_IsLoaded: boolean;
+begin
+ Result := (sf_Handle <> dynlibs.NilHandle);
+end;
 
 end.
-
+
