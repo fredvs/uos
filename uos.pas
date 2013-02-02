@@ -23,7 +23,8 @@ unit uos;
 *  8 th changes: 2013-01-21 (Record, Direct Wire, Save to file, new DSP proc)  *
 *  9 th changes: 2013-01-28 (FFT, Filters HighPass, LowPass, BandSelect,       *
 *                                    BandReject, BandPass)                     *
-*                                                                              *
+* 10 th changes: 2013-02-02 (Dibo's time procedures, Max Karpushin add         * 
+*                                 reference counting in PortAudio              *
 *                                                                              *
 ********************************************************************************}
 
