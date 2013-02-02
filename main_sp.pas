@@ -31,6 +31,9 @@ type
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
+    llength: TLabel;
+    lposition: TLabel;
+    Label8: TLabel;
     OpenDialog1: TOpenDialog;
     PaintBox1: TPaintBox;
     RadioButton1: TRadioButton;
@@ -59,6 +62,7 @@ type
       Shift: TShiftState; X, Y: integer);
     
     procedure ClosePlayer1;
+    Procedure ShowPosition ;
     
   private
     { private declarations }
@@ -67,7 +71,6 @@ type
   end;
   
 ////// This is the "standart" DSP procedure look.
-function DSPPosition(data:TUOS_Data; fft:TUOS_FFT): TArFloat;
 function DSPReverseBefore(data:TUOS_Data; fft:TUOS_FFT): TArFloat;
 function DSPReverseAfter(data:TUOS_Data; fft:TUOS_FFT): TArFloat;
 
@@ -77,7 +80,7 @@ var
   Form1: TForm1;
   BufferBMP: TBitmap;
   Player1: TUOS_Player;
-  Out1Index, In1Index, DSP1Index, DSP2Index, DSP3Index: integer;
+  Out1Index, In1Index, DSP1Index, DSP2Index: integer;
   Init: TUOS_Init;
 
 implementation
@@ -95,6 +98,7 @@ begin
   Form1.trackbar2.Enabled := False;
   Form1.radiogroup1.Enabled:=true;
   Form1.TrackBar2.Position := 0;
+  form1.lposition.Caption:= '00:00:00.000' ;
  end;
 
 procedure TForm1.FormActivate(Sender: TObject);
@@ -257,15 +261,18 @@ end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
-  Player1.RePlay;
   Button4.Enabled := False;
   Button5.Enabled := True;
   Button6.Enabled := True;
+  application.ProcessMessages;
+  Player1.RePlay;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 var
 samformat : shortint;
+temptime : ttime;
+ho,mi,se,ms : word;
 begin
   
   if radiobutton1.Checked = true then samformat := 0;
@@ -301,26 +308,26 @@ begin
       ////////// VolRight : Right volume
       ////////// Enable : Enabled
   
-    DSP2Index := Player1.AddDSPIn(In1Index, @DSPPosition, nil);  ///// add a DSP procedure for input Position 
-  ////////// In1Index: InputIndex of existing input
-  ////////// BeforeProc : procedure to do before the buffer is filled
-  ////////// AfterProc : procedure to do after the buffer is filled
- 
-    DSP3Index := Player1.AddDSPIn(In1Index, @DSPReverseBefore, @DSPReverseAfter); ///// add a DSP procedure for input Reverse
+      DSP2Index := Player1.AddDSPIn(In1Index, @DSPReverseBefore, @DSPReverseAfter); ///// add a DSP procedure for input Reverse
   ////////// In1Index: InputIndex of existing input
   ////////// BeforeProc : procedure to do before the buffer is filled
   ////////// AfterProc : procedure to do after the buffer is filled
 
-   Player1.SetDSPIn(In1Index, DSP3Index, checkbox1.Checked); //// enable reverse to checkbox state;
+   Player1.SetDSPIn(In1Index, DSP2Index, checkbox1.Checked); //// enable reverse to checkbox state;
   
    trackbar2.Max := Player1.InputLength(In1Index); ////// Length of Input in samples
+  
+   temptime := Player1.InputLengthTime(In1Index);  ////// Length of input in time
+
+    DecodeTime(temptime,ho,mi,se,ms);
+
+   llength.Caption:=format('%d:%d:%d.%d',[ho,mi,se,ms]);
 
    Player1.EndProc := @ClosePlayer1;  /////// procedure to execute when stream is terminated
+   
+   Player1.LoopProc := @ShowPosition;  /////// procedure to execute inside the loop
 
    TrackBar2.position := 0;
-   
-   Player1.Play;  /////// everything is ready, here we are, lets play it...
-  
    trackbar2.Enabled := True;
    Button3.Enabled := false;
    Button4.Enabled := false;
@@ -328,6 +335,10 @@ begin
    Button5.Enabled := true;
    CheckBox1.Enabled := True;
    radiogroup1.Enabled:=false;
+   
+   application.ProcessMessages;
+   
+   Player1.Play;  /////// everything is ready, here we are, lets play it...
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
@@ -344,7 +355,7 @@ end;
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
   if assigned(Player1) and (button3.Enabled = false) then 
-    Player1.SetDSPIn(In1Index, DSP3Index, checkbox1.Checked);
+    Player1.SetDSPIn(In1Index, DSP2Index, checkbox1.Checked);
 end;
 
 procedure UOS_logo();
@@ -402,10 +413,17 @@ begin
   end;
 end;
 
-function DSPPosition(data:TUOS_Data; fft:TUOS_FFT) : TArFloat;
+Procedure TForm1.ShowPosition ;
+var
+  temptime : ttime;
+  ho,mi,se,ms : word;
 begin
-  if form1.TrackBar2.Tag = 0 then
-     form1.TrackBar2.Position := data.Position;
+  if form1.TrackBar2.Tag = 0 then begin
+     form1.TrackBar2.Position := Player1.InputPosition(In1Index);
+      temptime := Player1.InputPositionTime(In1Index);  ////// Length of input in time
+    DecodeTime(temptime,ho,mi,se,ms);
+    form1.lposition.Caption:=format('%d:%d:%d.%d',[ho,mi,se,ms]);
+   end;
  end;
 
 function DSPReverseBefore(data:TUOS_Data; fft:TUOS_FFT): TArFloat;
