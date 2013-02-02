@@ -87,10 +87,10 @@ object Form1: TForm1
   Position = poDesktopCenter
   LCLVersion = '1.1'
   object Shape1: TShape
-    Left = 11
-    Height = 156
-    Top = 150
-    Width = 483
+    Left = 10
+    Height = 162
+    Top = 148
+    Width = 485
     Brush.Color = clSilver
   end
   object TrackBar1: TTrackBar
@@ -182,9 +182,9 @@ object Form1: TForm1
     TabOrder = 3
   end
   object CheckBox1: TCheckBox
-    Left = 322
+    Left = 278
     Height = 24
-    Top = 248
+    Top = 245
     Width = 79
     Caption = 'Reverse'
     OnChange = CheckBox1Change
@@ -271,10 +271,10 @@ object Form1: TForm1
     TabOrder = 11
   end
   object Button2: TButton
-    Left = 292
+    Left = 366
     Height = 23
-    Top = 220
-    Width = 166
+    Top = 246
+    Width = 104
     Caption = 'Choose'
     OnClick = Button2Click
     TabOrder = 12
@@ -350,6 +350,30 @@ object Form1: TForm1
       TabOrder = 2
       TabStop = True
     end
+  end
+  object llength: TLabel
+    Left = 384
+    Height = 17
+    Top = 222
+    Width = 84
+    Caption = '00:00:00.000'
+    ParentColor = False
+  end
+  object lposition: TLabel
+    Left = 286
+    Height = 17
+    Top = 222
+    Width = 84
+    Caption = '00:00:00.000'
+    ParentColor = False
+  end
+  object Label8: TLabel
+    Left = 374
+    Height = 17
+    Top = 222
+    Width = 6
+    Caption = '/'
+    ParentColor = False
   end
   object OpenDialog1: TOpenDialog
     left = 76
