@@ -165,8 +165,8 @@ install:
         <UnitName Value="LazDyn_PortAudio"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="446"/>
-        <CursorPos X="7" Y="465"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="7"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -224,7 +224,7 @@ install:
         <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="81" Y="3"/>
+        <CursorPos X="54" Y="11"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit9>
@@ -241,8 +241,8 @@ install:
         <UnitName Value="lazdyn_libsndfile"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="13"/>
-        <CursorPos X="3" Y="29"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="12"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit11>
@@ -342,8 +342,8 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1897"/>
-        <CursorPos X="7" Y="1906"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="2"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
