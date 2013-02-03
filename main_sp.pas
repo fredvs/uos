@@ -295,6 +295,8 @@ begin
     ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
     ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
 
+    Player1.StreamIn[In1Index].LoopProc := @ShowPosition;  /////// procedure to execute inside the loop
+     
     DSP1Index := Player1.AddDSPVolumeIn(In1Index, 1, 1) ;  ///// DSP Volume changer                               
      ////////// In1Index : InputIndex of a existing input
      ////////// VolLeft : Left volume
@@ -308,11 +310,12 @@ begin
       ////////// VolRight : Right volume
       ////////// Enable : Enabled
   
-      DSP2Index := Player1.AddDSPIn(In1Index, @DSPReverseBefore, @DSPReverseAfter); ///// add a DSP procedure for input Reverse
+      DSP2Index := Player1.AddDSPIn(In1Index, @DSPReverseBefore, @DSPReverseAfter, nil); ///// add a DSP procedure for input Reverse
   ////////// In1Index: InputIndex of existing input
   ////////// BeforeProc : procedure to do before the buffer is filled
   ////////// AfterProc : procedure to do after the buffer is filled
-
+  ////////// LoopProc : external procedure to do after the buffer is filled
+  
    Player1.SetDSPIn(In1Index, DSP2Index, checkbox1.Checked); //// enable reverse to checkbox state;
   
    trackbar2.Max := Player1.InputLength(In1Index); ////// Length of Input in samples
@@ -324,9 +327,7 @@ begin
    llength.Caption:=format('%d:%d:%d.%d',[ho,mi,se,ms]);
 
    Player1.EndProc := @ClosePlayer1;  /////// procedure to execute when stream is terminated
-   
-   Player1.LoopProc := @ShowPosition;  /////// procedure to execute inside the loop
-
+    
    TrackBar2.position := 0;
    trackbar2.Enabled := True;
    Button3.Enabled := false;
