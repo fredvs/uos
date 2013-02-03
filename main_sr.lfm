@@ -1,11 +1,11 @@
 object Form1: TForm1
   Left = 350
-  Height = 318
+  Height = 311
   Top = 195
   Width = 505
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Recorder U0S'
-  ClientHeight = 318
+  ClientHeight = 311
   ClientWidth = 505
   Color = clMoneyGreen
   Icon.Data = {
