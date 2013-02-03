@@ -138,10 +138,11 @@ install:
         <Filename Value="simpleplayer.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simpleplayer"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="2" Y="8"/>
+        <CursorPos X="8" Y="7"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -152,11 +153,10 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_sp"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="421"/>
-        <CursorPos X="10" Y="428"/>
+        <CursorPos X="15" Y="422"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
