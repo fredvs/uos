@@ -7,7 +7,7 @@ unit uos;
 *          United procedures to access Open Sound (IN/OUT) libraries           *
 *                                                                              *
 *              With Big contributions of (in alphabetic order)                 *
-*          BigChimp, Blaazen, KpjComp, Leledumbo, Lazarus forum, ...           *
+*       BigChimp, Blaazen, Dibo, KpjComp, Leledumbo, Lazarus forum, ...        *
 *                                                                              *
 *                 Fred van Stappen /  fiens@hotmail.com                        *
 *                                                                              *
@@ -190,8 +190,8 @@ type
   end;
 
 type
-  TProc = function(Data: TUOS_Data; FFT: TUOS_FFT): TArFloat;
-
+  TFunc = function(Data: TUOS_Data; FFT: TUOS_FFT): TArFloat;
+   TProc = procedure(Data: TUOS_Data; FFT: TUOS_FFT) of object ;
 type
   TUOS_InStream = class;
   TUOS_OutStream = class;
@@ -203,8 +203,7 @@ type
   public
     Enabled: boolean;
     Status: shortint;
-    BeginProc: procedure of object;   //// procedure to execute at begin of thread
-    LoopProc: procedure of object;    //// procedure to execute at in loop in thread
+    BeginProc: procedure of object;   //// external procedure to execute at begin of thread
     EndProc:  procedure of object;    //// procedure to execute at end of thread
     StreamIn: array of TUOS_InStream;
     StreamOut: array of TUOS_OutStream;
@@ -228,9 +227,9 @@ type
     //////////// Latency  ( -1 is latency suggested ) )
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
     //  result : -1 nothing created, otherwise Output Index in array               
-    /// example : OutputIndex1 := AddOutput(-1,-1,-1,-1,-1);
+    /// example : OutputIndex1 := AddOutput(-1,-1,-1,-1,0);
 
     function AddIntoFile(Filename: string; SampleRate: integer;
       Channels: integer; SampleFormat: shortint): integer;  /////// Add a Output into audio wav file with custom parameters
@@ -238,7 +237,7 @@ type
     ////////// FileName : filename of saved audio wav file
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
     //  result : -1 nothing created, otherwise Output Index in array     
     //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1,0);
 
@@ -251,7 +250,7 @@ type
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other integer refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
     //  result : -1 nothing created, otherwise Output Index in array               
     /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1,-1);
 
@@ -260,9 +259,9 @@ type
     function AddFromFile(Filename: string): integer;     /////// Add a input from audio file with default parameters
     ////////// FileName : filename of audio file
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other integer refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
     //  result : -1 nothing created, otherwise Input Index in array     
-    //////////// example : InputIndex1 := AddFromFile(edit5.Text,-1,-1);
+    //////////// example : InputIndex1 := AddFromFile(edit5.Text,-1,0);
     
     procedure Seek(InputIndex: integer; pos: Tsf_count_t);  //// change position in sample    
     
@@ -294,13 +293,14 @@ type
     ////////// InputIndex : InputIndex of existing input
     ///////  result : current postion of Input in time format
 
-    function AddDSPin(InputIndex: integer; BeforeProc: TProc; AfterProc: TProc): integer;
+    function AddDSPin(InputIndex: integer; BeforeProc: TFunc; AfterProc: TFunc; LoopProc: TProc): integer;
     ///// add a DSP procedure for input
     ////////// InputIndex : Input Index of a existing input
     ////////// BeforeProc : procedure to do before the buffer is filled
     ////////// AfterProc : procedure to do after the buffer is filled
+    ////////// LoopProc : external procedure to do after the buffer is filled
     //  result : -1 nothing created, otherwise index of DSPin in array  (DSPinIndex)   
-    ////////// example : DSPinIndex1 := AddDSPIn(InputIndex1,@beforereverse,@afterreverse);
+    ////////// example : DSPinIndex1 := AddDSPIn(InputIndex1,@beforereverse,@afterreverse,nil);
 
     procedure SetDSPin(InputIndex: integer; DSPinIndex: integer; Enable: boolean);
     ////////// InputIndex : Input Index of a existing input
@@ -308,13 +308,14 @@ type
     ////////// Enable :  DSP enabled 
     ////////// example : SetDSPIn(InputIndex1,DSPinIndex1,True);
 
-    function AddDSPout(OutputIndex: integer; BeforeProc: TProc;
-      AfterProc: TProc): integer;    //// usefull if multi output
+    function AddDSPout(OutputIndex: integer; BeforeProc: TFunc;
+      AfterProc: TFunc; LoopProc: TProc): integer;    //// usefull if multi output
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// BeforeProc : procedure to do before the buffer is filled
     ////////// AfterProc : procedure to do after the buffer is filled just before to give to output
+     ////////// LoopProc : external procedure to do after the buffer is filled
     //  result : -1 nothing created, otherwise index of DSPout in array    
-    ////////// example :DSPoutIndex1 := AddDSPout(OutputIndex1,@volumeproc,nil);
+    ////////// example :DSPoutIndex1 := AddDSPout(OutputIndex1,@volumeproc,nil,nil);
 
     procedure SetDSPout(OutputIndex: integer; DSPoutIndex: integer; Enable: boolean);
     ////////// OutputIndex : OutputIndex of a existing Output
@@ -323,19 +324,21 @@ type
     ////////// example : SetDSPIn(OutputIndex1,DSPoutIndex1,True);
 
     function AddFilterIn(InputIndex: integer; LowFrequency: integer;
-      HighFrequency: integer; Gain: cfloat; TypeFilter: integer; AlsoBuf: Boolean): integer;
+      HighFrequency: integer; Gain: cfloat; TypeFilter: integer; AlsoBuf: Boolean ; LoopProc: TProc): integer;
     ////////// InputIndex : InputIndex of a existing Input
     ////////// LowFrequency : Lowest frequency of filter
     ////////// HighFrequency : Highest frequency of filter
+    ////////// Gain : gain to apply to filter
     ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
     /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+    ////////// LoopProc : External procedure to execute after DSP done
     //  result : -1 nothing created, otherwise index of DSPIn in array    
-    ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1);
+    ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1,2,true,nil);
 
     procedure SetFilterIn(InputIndex: integer; FilterIndex: integer;
       LowFrequency: integer; HighFrequency: integer; Gain: cfloat;
-      TypeFilter: integer; AlsoBuf: Boolean; Enable: boolean);
+      TypeFilter: integer; AlsoBuf: Boolean; Enable: boolean; LoopProc: TProc );
     ////////// InputIndex : InputIndex of a existing Input
     ////////// DSPInIndex : DSPInIndex of existing DSPIn
     ////////// LowFrequency : Lowest frequency of filter ( -1 : current LowFrequency )
@@ -344,11 +347,12 @@ type
     ////////// TypeFilter: Type of filter : ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
     /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+    ////////// LoopProc : External procedure to execute after DSP done
     ////////// Enable :  Filter enabled 
-    ////////// example : SetFilterIn(InputIndex1,FilterInIndex1,-1,-1,-1,False,True);
+    ////////// example : SetFilterIn(InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 
     function AddFilterOut(OutputIndex: integer; LowFrequency: integer;
-      HighFrequency: integer; Gain: cfloat; TypeFilter: integer; AlsoBuf: Boolean): integer;
+      HighFrequency: integer; Gain: cfloat; TypeFilter: integer; AlsoBuf: Boolean; LoopProc: TProc): integer;
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// LowFrequency : Lowest frequency of filter
     ////////// HighFrequency : Highest frequency of filter
@@ -356,12 +360,13 @@ type
     ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
     /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+    ////////// LoopProc : External procedure to execute after DSP done
     //  result : -1 nothing created, otherwise index of DSPOut in array    
-    ////////// example :FilterOutIndex1 := AddFilterOut(OutputIndex1,6000,16000,1,true);
+    ////////// example :FilterOutIndex1 := AddFilterOut(OutputIndex1,6000,16000,1,true,nil);
 
     procedure SetFilterOut(OutputIndex: integer; FilterIndex: integer;
       LowFrequency: integer; HighFrequency: integer; Gain: cfloat;
-      TypeFilter: integer;  AlsoBuf: Boolean; Enable: boolean);
+      TypeFilter: integer;  AlsoBuf: Boolean; Enable: boolean; LoopProc : TProc);
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// FilterIndex : DSPOutIndex of existing DSPOut
     ////////// LowFrequency : Lowest frequency of filter ( -1 : current LowFrequency )
@@ -371,7 +376,8 @@ type
     /// fBandPass = 3, fHighPass = 4, fLowPass = 5)
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
     ////////// Enable :  Filter enabled 
-    ////////// example : SetFilterOut(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True);
+     ////////// LoopProc : External procedure to execute after DSP done
+    ////////// example : SetFilterOut(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
 
     function AddDSPVolumeIn(InputIndex: integer; VolLeft: double;
       VolRight: double): integer;  ///// DSP Volume changer                               
@@ -413,8 +419,9 @@ type
   TUOS_DSP = class(TObject)
   public
     Enabled: boolean;
-    BefProc: TProc;     //// Procedure to load before buffer is filled
-    AftProc: TProc;     //// Procedure to load after buffer is filled
+    BefProc: TFunc;     //// Procedure to execute before buffer is filled
+    AftProc: TFunc;     //// Procedure to execute after buffer is filled
+    LoopProc: TProc;     //// External Procedure after buffer is filled
     ////////////// for FFT
     fftdata: TUOS_FFT;
     destructor Destroy; override;
@@ -425,6 +432,7 @@ type
   public
     Data: TUOS_Data;
     DSP: array of TUOS_DSP;
+    LoopProc: procedure of object ;    //// external procedure to execute in loop 
     destructor Destroy; override;
   end;
 
@@ -433,6 +441,7 @@ type
   public
     Data: TUOS_Data;
     DSP: array of TUOS_DSP;
+    LoopProc: procedure of object;    //// external procedure to execute in loop 
     destructor Destroy; override;
   end;
 
@@ -726,8 +735,8 @@ begin
       StreamOut[OutputIndex].DSP[DSPoutIndex].Enabled := Enable;
 end;
 
-function TUOS_Player.AddDSPin(InputIndex: integer; BeforeProc: TProc;
-  AfterProc: TProc): integer;
+function TUOS_Player.AddDSPin(InputIndex: integer; BeforeProc: TFunc;
+  AfterProc: TFunc; LoopProc : Tproc): integer;
 begin
   Result := -1;
   if (InputIndex > -1) and (InputIndex < length(StreamIn)) then
@@ -736,6 +745,7 @@ begin
     StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1] := TUOS_DSP.Create();
     StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].BefProc := BeforeProc;
     StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].AftProc := AfterProc;
+    StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].LoopProc := LoopProc;
     StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].Enabled := True;
 
     StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].fftdata :=
@@ -745,8 +755,8 @@ begin
   end;
 end;
 
-function TUOS_Player.AddDSPout(OutputIndex: integer; BeforeProc: TProc;
-  AfterProc: TProc): integer;
+function TUOS_Player.AddDSPout(OutputIndex: integer; BeforeProc: TFunc;
+  AfterProc: TFunc; LoopProc: Tproc): integer;
 begin
   Result := -1;
   if (OutputIndex > -1) and (OutputIndex < length(StreamOut)) then
@@ -758,6 +768,8 @@ begin
       BeforeProc;
     StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].AftProc :=
       AfterProc;
+    StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].LoopProc :=
+      LoopProc;
     StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].Enabled := True;
     Result := Length(StreamOut[OutputIndex].DSP) - 1;
   end;
@@ -765,7 +777,7 @@ end;
 
 procedure TUOS_Player.SetFilterIn(InputIndex: integer; FilterIndex: integer;
   LowFrequency: integer; HighFrequency: integer; Gain: cfloat;
-  TypeFilter: integer; AlsoBuf: Boolean; Enable: boolean);
+  TypeFilter: integer; AlsoBuf: Boolean; Enable: boolean;  LoopProc: TProc);
 ////////// InputIndex : InputIndex of a existing Input
 ////////// DSPInIndex : DSPInIndex of existing DSPIn
 ////////// LowFrequency : Lowest frequency of filter ( default = -1 : current LowFrequency )
@@ -774,8 +786,9 @@ procedure TUOS_Player.SetFilterIn(InputIndex: integer; FilterIndex: integer;
 ////////// TypeFilter: Type of filter : ( default = -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
 /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
 ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+////////// LoopProc : External procedure to execute after filter
 ////////// Enable :  Filter enabled 
-////////// example : SetFilterIn(InputIndex1,FilterInIndex1,1000,1500,-1,True);
+////////// example : SetFilterIn(InputIndex1,FilterInIndex1,1000,1500,-1,True,nil);
 begin
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.AlsoBuf := AlsoBuf;
   if LowFrequency = -1 then
@@ -939,7 +952,7 @@ end;
 
 procedure TUOS_Player.SetFilterOut(OutputIndex: integer; FilterIndex: integer;
   LowFrequency: integer; HighFrequency: integer; Gain: cfloat;
-  TypeFilter: integer; AlsoBuf: boolean; Enable: boolean);
+  TypeFilter: integer; AlsoBuf: boolean; Enable: boolean; LoopProc:TProc);
 ////////// OutputIndex : OutputIndex of a existing Output
 ////////// FilterIndex : DSPOutIndex of existing DSPOut
 ////////// LowFrequency : Lowest frequency of filter
@@ -948,7 +961,8 @@ procedure TUOS_Player.SetFilterOut(OutputIndex: integer; FilterIndex: integer;
 /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
 ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 ////////// Enable :  Filter enabled 
-////////// example : SetFilterOut(OutputIndex1,FilterOutIndex1,1000,1500,-1,True);
+////////// LoopProc : External procedure to execute after filter
+////////// example : SetFilterOut(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,nil);
 begin
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.AlsoBuf := AlsoBuf;
   StreamOut[OutputIndex].DSP[FilterIndex].Enabled := Enable;
@@ -1319,7 +1333,7 @@ function TUOS_Player.AddDSPVolumeIn(InputIndex: integer; VolLeft: double;
   //  result : -1 nothing created, otherwise index of DSPIn in array    
   ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
 begin
-  Result := AddDSPin(InputIndex, nil, @UOS_DSPVolume);
+  Result := AddDSPin(InputIndex, nil, @UOS_DSPVolume,nil);
   StreamIn[InputIndex].Data.VLeft := VolLeft;
   StreamIn[InputIndex].Data.VRight := VolRight;
 end;
@@ -1332,7 +1346,7 @@ function TUOS_Player.AddDSPVolumeOut(OutputIndex: integer; VolLeft: double;
   //  result : -1 nothing created, otherwise index of DSPIn in array    
   ////////// example  DSPIndex1 := AddDSPVolumeOut(OutputIndex1,1,1);
 begin
-  Result := AddDSPin(OutputIndex, nil, @UOS_DSPVolume);
+  Result := AddDSPin(OutputIndex, nil, @UOS_DSPVolume, nil);
   StreamOut[OutputIndex].Data.VLeft := VolLeft;
   StreamOut[OutputIndex].Data.VRight := VolRight;
 end;
@@ -1370,7 +1384,7 @@ begin
 end;
 
 function TUOS_Player.AddFilterIn(InputIndex: integer; LowFrequency: integer;
-  HighFrequency: integer; Gain: cfloat; TypeFilter: integer; AlsoBuf: Boolean): integer;
+  HighFrequency: integer; Gain: cfloat; TypeFilter: integer; AlsoBuf: Boolean; LoopProc: TProc): integer;
   ////////// InputIndex : InputIndex of a existing Input
   ////////// LowFrequency : Lowest frequency of filter
   ////////// HighFrequency : Highest frequency of filter
@@ -1378,23 +1392,24 @@ function TUOS_Player.AddFilterIn(InputIndex: integer; LowFrequency: integer;
   ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
   /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+////////// LoopProc : External procedure to execute after filter
   //  result : -1 nothing created, otherwise index of DSPIn in array    
   ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1,1,True);
 var
   FilterIndex: integer;
 begin
-  FilterIndex := AddDSPin(InputIndex, nil, @UOS_BandFilter);
+  FilterIndex := AddDSPin(InputIndex, nil, @UOS_BandFilter, LoopProc);
   if TypeFilter = -1 then
     TypeFilter := 1;
   SetFilterIn(InputIndex, FilterIndex, LowFrequency, HighFrequency,
-    Gain, TypeFilter, AlsoBuf, True);
+    Gain, TypeFilter, AlsoBuf, True,LoopProc);
 
   Result := FilterIndex;
 
 end;
 
 function TUOS_Player.AddFilterOut(OutputIndex: integer; LowFrequency: integer;
-  HighFrequency: integer; Gain: cfloat; TypeFilter: integer; AlsoBuf:Boolean): integer;
+  HighFrequency: integer; Gain: cfloat; TypeFilter: integer; AlsoBuf:Boolean; LoopProc : TProc): integer;
   ////////// OutputIndex : OutputIndex of a existing Output
   ////////// LowFrequency : Lowest frequency of filter
   ////////// HighFrequency : Highest frequency of filter
@@ -1406,11 +1421,11 @@ function TUOS_Player.AddFilterOut(OutputIndex: integer; LowFrequency: integer;
 var
   FilterIndex: integer;
 begin
-  FilterIndex := AddDSPOut(OutputIndex, nil, @UOS_BandFilter);
+  FilterIndex := AddDSPOut(OutputIndex, nil, @UOS_BandFilter, LoopProc);
   if TypeFilter = -1 then
     TypeFilter := 1;
   SetFilterOut(OutputIndex, FilterIndex, LowFrequency, HighFrequency,
-    Gain, TypeFilter, AlsoBuf, True);
+    Gain, TypeFilter, AlsoBuf, True, LoopProc);
 
   Result := FilterIndex;
 
@@ -1477,7 +1492,7 @@ begin
   StreamIn[x].Data.Output := OutputIndex;
   StreamIn[x].Data.seekable := False;
   StreamIn[x].Data.LibOpen := 2;
-
+  StreamIn[x].LoopProc := nil;
   err := Pa_OpenStream(@StreamIn[x].Data.HandleSt, @StreamIn[x].Data.PAParam,
     nil, StreamIn[x].Data.SampleRate, 512, paClipOff, nil, nil);
 
@@ -1547,7 +1562,7 @@ begin
   else
     StreamOut[x].Data.FileBuffer.wSamplesPerSec := samplerate;
   StreamOut[x].Data.Samplerate := StreamOut[x].Data.FileBuffer.wSamplesPerSec;
-
+  StreamOut[x].LoopProc := nil;
 end;
 
 function TUOS_Player.AddIntoFile(Filename: string): integer;
@@ -1611,7 +1626,7 @@ begin
 
   err := Pa_OpenStream(@StreamOut[x].Data.HandleSt, nil,
     @StreamOut[x].Data.PAParam, StreamOut[x].Data.SampleRate, 512, paClipOff, nil, nil);
-
+  StreamOut[x].LoopProc := nil;
   if err <> 0 then
     MessageDlg(Pa_GetErrorText(err), mtWarning, [mbYes], 0)
   else
@@ -1772,6 +1787,7 @@ begin
       StreamIn[x].Data.Poseek := -1;
       StreamIn[x].Data.TypePut := 0;
       StreamIn[x].Data.seekable := True;
+      StreamIn[x].LoopProc := nil;
       if SampleFormat = -1 then
         StreamIn[x].Data.SampleFormat := 2
       else
@@ -1808,9 +1824,10 @@ procedure TUOS_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
   x, x2, x3: integer;
+  curpos : cint64 ;
   err: PaError;
 begin
-
+  curpos := 0;
   if BeginProc <> nil then
     synchronize(BeginProc); /////  Execute BeginProc procedure
 
@@ -1830,22 +1847,13 @@ begin
             0: sf_seek(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Poseek, SEEK_SET);
             1: mpg123_seek(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Poseek, SEEK_SET);
           end;
+          curpos := StreamIn[x].Data.Poseek ;
           StreamIn[x].Data.Poseek := -1;
         end;
 
-      if (StreamIn[x].Data.Seekable = True) then
-        case StreamIn[x].Data.LibOpen of      ///// get current position
-          0: StreamIn[x].Data.position :=
-              sf_seek(StreamIn[x].Data.HandleSt, 0, SEEK_CUR);
-          1: StreamIn[x].Data.position := mpg123_tell(StreamIn[x].Data.HandleSt);
-        end;
+      if (StreamIn[x].Data.Seekable = True) then StreamIn[x].Data.position :=curpos;
       
-     ///////
-        if LoopProc <> nil then 
-    synchronize(LoopProc); /////  Execute LoopProc procedure
-     ///////   
-
-      //////// DSPin BeforeBuffProc
+        //////// DSPin BeforeBuffProc
       if (StreamIn[x].Data.Status = 1) and (length(StreamIn[x].DSP) > 0) then
         for x2 := 0 to high(StreamIn[x].DSP) do
           if (StreamIn[x].DSP[x2].Enabled = True) and
@@ -1859,7 +1867,6 @@ begin
       case StreamIn[x].Data.TypePut of
         0:   ///// it is a input from audio file...
         begin
-
           case StreamIn[x].Data.LibOpen of
             //////////// Here we are, reading the data and store it in buffer
             0: case StreamIn[x].Data.SampleFormat of
@@ -1892,21 +1899,38 @@ begin
             StreamIn[x].Data.Buffer[x2] := cfloat(0);      ////// clear input
           err := Pa_ReadStream(StreamIn[x].Data.HandleSt,
             @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.WantFrames);
-          StreamIn[x].Data.OutFrames := StreamIn[x].Data.WantFrames * 2;
+          StreamIn[x].Data.OutFrames := StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
           //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  /// if you want clean buffer
         end;
       end;
-
+      
+      if (StreamIn[x].Data.LibOpen = 1) and (StreamIn[x].Data.SampleFormat < 2) then      
+      curpos := curpos + (StreamIn[x].Data.OutFrames div (StreamIn[x].Data.Channels * 2)) //// strange outframes float 32 with Mpg123 ?
+      else curpos := curpos + (StreamIn[x].Data.OutFrames div (StreamIn[x].Data.Channels)) ;
+     
+      StreamIn[x].Data.position := curpos; // new position
+      
       x2 := 0;
 
       //////// DSPin AfterBuffProc      
       if (StreamIn[x].Data.Status = 1) and (length(StreamIn[x].DSP) > 0) then
         for x2 := 0 to high(StreamIn[x].DSP) do
-          if (StreamIn[x].DSP[x2].Enabled = True) and
-            (StreamIn[x].DSP[x2].AftProc <> nil) then
+          if (StreamIn[x].DSP[x2].Enabled = True) then begin
+          
+          if  (StreamIn[x].DSP[x2].AftProc <> nil) then
             StreamIn[x].Data.Buffer :=
               StreamIn[x].DSP[x2].AftProc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
+         
+          if  (StreamIn[x].DSP[x2].LoopProc <> nil) then
+            StreamIn[x].DSP[x2].LoopProc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
+    end;
+      
       ///// End DSPin AfterBuffProc 
+      
+      ///////
+        if StreamIn[x].LoopProc <> nil then 
+    synchronize(StreamIn[x].LoopProc) ; /////  Execute LoopProc procedure
+     ///////  
 
     end; ///// End Input enabled
 
@@ -1922,8 +1946,8 @@ begin
 
     RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
     RTLeventSetEvent(evPause);
-
-    //////////////////////// Give Buffer to Output
+    
+        //////////////////////// Give Buffer to Output
     if status = 1 then
       for x := 0 to high(StreamOut) do
 
@@ -1947,11 +1971,15 @@ begin
           //////// DSPOut AfterBuffProc
           if (length(StreamOut[x].DSP) > 0) then
             for x3 := 0 to high(StreamOut[x].DSP) do
-              if (StreamOut[x].DSP[x3].Enabled = True) and
-                (StreamOut[x].DSP[x3].AftProc <> nil) then
+              if (StreamOut[x].DSP[x3].Enabled = True) then begin
+               if (StreamOut[x].DSP[x3].AftProc <> nil) then
+                StreamOut[x].Data.Buffer :=
                 StreamOut[x].DSP[x3].AftProc(StreamOut[x].Data,
                   StreamOut[x].DSP[x3].fftdata);
-          ///// end DSPOut AfterBuffProc
+               if (StreamOut[x].DSP[x3].LoopProc <> nil) then
+                StreamOut[x].DSP[x3].LoopProc(StreamOut[x].Data,
+                  StreamOut[x].DSP[x3].fftdata);
+                       end;    ///// end DSPOut AfterBuffProc
 
           //////// Convert Input format into Output format if needed:
           case StreamOut[x].Data.SampleFormat of
@@ -2033,7 +2061,6 @@ begin
   status := 2;
   BeginProc := nil;
   EndProc := nil;
-  LoopProc := nil;
 end;
 
 destructor TUOS_DSP.Destroy;
