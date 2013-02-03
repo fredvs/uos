@@ -1,11 +1,11 @@
 object Form1: TForm1
   Left = 276
-  Height = 314
+  Height = 318
   Top = 163
   Width = 505
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'
-  ClientHeight = 314
+  ClientHeight = 318
   ClientWidth = 505
   Color = clMoneyGreen
   Icon.Data = {
