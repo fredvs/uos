@@ -10,7 +10,6 @@ This is the Dynamic loading version with reference counting of LibSndFile.pas.
 
 unit lazdyn_libsndfile;
 
-
 (*
  - Translation for sndfile.h version 1.0.17 by Ido Kanner idokan at gmail dot com
 *)
