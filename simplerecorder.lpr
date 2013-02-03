@@ -4,14 +4,13 @@ program simplerecorder;
  {$DEFINE UseCThreads}
 
 uses
+cmem, 
 {$IFDEF UNIX}{$IFDEF UseCThreads}
-cmem,  // Yes or No ? 
 cthreads,
    {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, main_sr
   { you can add units after this };
-
 
 {$R *.res}
 
