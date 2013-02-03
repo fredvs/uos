@@ -4,8 +4,8 @@ program simpleplayer;
  {$DEFINE UseCThreads}
 
 uses
+cmem,  
 {$IFDEF UNIX}{$IFDEF UseCThreads}
-  cmem,   // Yes or No ?
   cthreads,
 {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
