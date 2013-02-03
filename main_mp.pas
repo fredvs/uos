@@ -572,6 +572,7 @@ begin
     player4.Stop;
   if button1.Enabled = False then
     testInit.UnloadLib();
+  
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
