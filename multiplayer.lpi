@@ -159,7 +159,7 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
+        <TopLine Value="401"/>
         <CursorPos X="1" Y="582"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -229,7 +229,7 @@ install:
         <EditorIndex Value="4"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1060"/>
-        <CursorPos X="18" Y="1072"/>
+        <CursorPos X="1" Y="1072"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit9>
