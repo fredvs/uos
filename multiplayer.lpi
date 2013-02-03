@@ -142,10 +142,11 @@ install:
         <Filename Value="multiplayer.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="multiplayer"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="24" Y="8"/>
+        <CursorPos X="7" Y="7"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -156,11 +157,10 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_mp"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="562"/>
-        <CursorPos X="1" Y="582"/>
+        <TopLine Value="560"/>
+        <CursorPos X="22" Y="569"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
