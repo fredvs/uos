@@ -9,7 +9,6 @@ unit lazdyn_mpg123;
 /////// Just call the functions Lp_load(your_lib_filename) / Lp_unload(your_lib_filename).                         *
 
 //////         Fred van Stappen     fiens@hotmail.com
-
 {*******************************************************************************
 *                        --  mpg123rt.pas --                                   *
 *                                                                              *
