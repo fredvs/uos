@@ -221,7 +221,7 @@ begin
      ////////// VolRight : Right volume
       //  result : -1 nothing created, otherwise index of DSPIn in array    
         
-     Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position/100, TrackBar3.position/100, true); /// Set volume 
+  Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position/100, TrackBar3.position/100, true); /// Set volume 
   
   Player1.EndProc := @ClosePlayer1;  /////// procedure to execute when stream is terminated
 
