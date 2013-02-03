@@ -419,7 +419,8 @@ var
   temptime : ttime;
   ho,mi,se,ms : word;
 begin
-  if form1.TrackBar2.Tag = 0 then begin
+  if form1.TrackBar2.Tag = 0 then 
+    begin
      form1.TrackBar2.Position := Player1.InputPosition(In1Index);
       temptime := Player1.InputPositionTime(In1Index);  ////// Length of input in time
     DecodeTime(temptime,ho,mi,se,ms);
