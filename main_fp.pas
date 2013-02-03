@@ -106,7 +106,7 @@ begin
  else gain := TrackBar3.Position / 100 ;
   
  if assigned(Player1) and (button3.Enabled = false) then 
-   Player1.SetFilterIn(In1Index, EQIndex3, -1, -1, Gain, -1, True, checkbox1.Checked);
+   Player1.SetFilterIn(In1Index, EQIndex3, -1, -1, Gain, -1, True, checkbox1.Checked, nil);
 end;
 
 procedure TForm1.TrackBar3MouseUp(Sender: TObject; Button: TMouseButton; 
@@ -212,9 +212,11 @@ begin
  if radiobutton3.Checked = true then typfilt := 4;
  if radiobutton4.Checked = true then typfilt := 5;
  if assigned(Player1) and (button3.Enabled = false) then
-  Player1.SetFilterIn(In1Index, FTIndex1,  strtoint(edit6.text),strtoint(edit5.text), 1, typfilt, True, checkbox2.Checked);
+  Player1.SetFilterIn(In1Index, FTIndex1,  strtoint(edit6.text),strtoint(edit5.text), 1, typfilt, True, checkbox2.Checked, nil);
   
 end;
+
+
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
   var
@@ -224,7 +226,7 @@ procedure TForm1.TrackBar1Change(Sender: TObject);
    if TrackBar1.Position > 100 then gain :=  1 + ((100 - TrackBar1.Position) / 20)
    else gain := TrackBar1.Position / 100 ;
   if assigned(Player1) and (button3.Enabled = false) then 
-     Player1.SetFilterIn(In1Index, EQIndex1, -1, -1, Gain, -1, True, checkbox1.Checked);
+     Player1.SetFilterIn(In1Index, EQIndex1, -1, -1, Gain, -1, True, checkbox1.Checked, nil);
   end;
 
 
@@ -236,7 +238,7 @@ begin
  if TrackBar2.Position > 100 then gain :=  1 + ((100 - TrackBar2.Position) / 25)
  else gain := TrackBar2.Position / 100 ;
  if assigned(Player1) and (button3.Enabled = false) then 
-   Player1.SetFilterIn(In1Index, EQIndex2, -1, -1, Gain, -1, True, checkbox1.Checked);
+   Player1.SetFilterIn(In1Index, EQIndex2, -1, -1, Gain, -1, True, checkbox1.Checked, nil);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -305,21 +307,19 @@ typfilt : shortint;
 begin
    Player1 := TUOS_Player.Create(True);     //// Create the player
 
- Out1Index := Player1.AddIntoDevOut ;    //// add a Output into device with default parameters 
- // Out1Index := Player1.AddIntoDevOut(-1, -1, -1, -1,0);   //// add a Output into device with custom parameters
+  Out1Index := Player1.AddIntoDevOut(-1, -1, -1, -1,0);   //// add a Output into device with custom parameters
   //////////// Device ( -1 is default Output device )
   //////////// Latency  ( -1 is latency suggested ) )
   //////////// SampleRate : delault : -1 (44100)
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   
- In1Index := Player1.AddFromFile(Edit4.Text);    //// add input from audio file with default parameters 
-  // In1Index := Player1.AddFromFile(Edit4.Text, -1, 0);  //// add input from audio file with custom parameters
+  In1Index := Player1.AddFromFile(Edit4.Text, -1, 0);  //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
     ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
 
- EQIndex1 := Player1.AddFilterIn(In1Index, 1, 1000, 1, 1, True);
+ EQIndex1 := Player1.AddFilterIn(In1Index, 1, 1000, 1, 1, True, nil);
   ////////// In1Index : InputIndex of a existing Input
   ////////// LowFrequency : Lowest frequency of filter
   ////////// HighFrequency : Highest frequency of filter
@@ -327,19 +327,20 @@ begin
   ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
   /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+  ////////// LoopProc : External procedure to execute after filter
   //  result : -1 nothing created, otherwise index of DSPIn in array   
   
- EQIndex2 := Player1.AddFilterIn(In1Index, 1000, 8000, 1, 1, True);
- EQIndex3 := Player1.AddFilterIn(In1Index, 8000,22000, 1, 1, True);
+ EQIndex2 := Player1.AddFilterIn(In1Index, 1000, 8000, 1, 1, True, nil);
+ EQIndex3 := Player1.AddFilterIn(In1Index, 8000,22000, 1, 1, True, nil);
 
  if radiobutton1.Checked = true then typfilt := 2;
  if radiobutton2.Checked = true then typfilt := 3;
  if radiobutton3.Checked = true then typfilt := 4;
  if radiobutton4.Checked = true then typfilt := 5;
  
- FTIndex1 := Player1.AddFilterIn(In1Index, strtoint(edit6.text),strtoint(edit5.text), 1, typfilt, True);
+ FTIndex1 := Player1.AddFilterIn(In1Index, strtoint(edit6.text),strtoint(edit5.text), 1, typfilt, True, nil);
 
- Player1.SetFilterIn(In1Index, FTIndex1, -1, -1, -1, -1, True, checkbox2.Checked);
+ Player1.SetFilterIn(In1Index, FTIndex1, -1, -1, -1, -1, True, checkbox2.Checked, nil);
 ////////// InputIndex : InputIndex of a existing Input
 ////////// DSPInIndex : DSPInIndex of existing DSPIn
 ////////// LowFrequency : Lowest frequency of filter ( default = -1 : current LowFrequency )
@@ -354,17 +355,17 @@ begin
  if TrackBar1.Position = 100 then EqGain := 1 else
  if TrackBar1.Position > 100 then EqGain :=  1 + ((100 - TrackBar1.Position) div 25)
  else EqGain := TrackBar1.Position div 100 ;
-  Player1.SetFilterIn(In1Index, EQIndex1, -1, -1, EqGain, -1, true, checkbox1.Checked);
+  Player1.SetFilterIn(In1Index, EQIndex1, -1, -1, EqGain, -1, true, checkbox1.Checked, nil);
   
   if TrackBar2.Position = 100 then EqGain := 1 else
  if TrackBar2.Position > 100 then EqGain :=  1 + ((100 - TrackBar2.Position) div 25)
  else EqGain := TrackBar2.Position div 100 ;
-  Player1.SetFilterIn(In1Index, EQIndex2, -1, -1, EqGain, -1, true, checkbox1.Checked);
+  Player1.SetFilterIn(In1Index, EQIndex2, -1, -1, EqGain, -1, true, checkbox1.Checked, nil);
   
   if TrackBar3.Position = 100 then EqGain := 1 else
  if TrackBar3.Position > 100 then EqGain :=  1 + ((100 - TrackBar3.Position) div 25)
  else EqGain := TrackBar3.Position div 100 ;
-  Player1.SetFilterIn(In1Index, EQIndex3, -1, -1, EqGain, -1, true, checkbox1.Checked);
+  Player1.SetFilterIn(In1Index, EQIndex3, -1, -1, EqGain, -1, true, checkbox1.Checked, nil);
 
    Player1.EndProc := @ClosePlayer1;  /////// procedure to execute when stream is terminated
 
@@ -393,9 +394,9 @@ procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
   if assigned(Player1) and (button3.Enabled = false) then 
   if assigned(Player1) and (button3.Enabled = false) then begin
-   Player1.SetFilterIn(In1Index, EQIndex1, -1, -1, -1, -1, true, checkbox1.Checked); 
-   Player1.SetFilterIn(In1Index, EQIndex2, -1, -1, -1, -1, true, checkbox1.Checked); 
-   Player1.SetFilterIn(In1Index, EQIndex3, -1, -1, -1, -1, true, checkbox1.Checked); 
+   Player1.SetFilterIn(In1Index, EQIndex1, -1, -1, -1, -1, true, checkbox1.Checked, nil); 
+   Player1.SetFilterIn(In1Index, EQIndex2, -1, -1, -1, -1, true, checkbox1.Checked, nil); 
+   Player1.SetFilterIn(In1Index, EQIndex3, -1, -1, -1, -1, true, checkbox1.Checked, nil); 
   end;
 end;
 
