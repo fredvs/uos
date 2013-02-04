@@ -1690,8 +1690,7 @@ begin
         StreamIn[x].Data.comment :=
           sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_COMMENT);
         StreamIn[x].Data.date := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_DATE);
-        StreamIn[x].Data.Lengthst := sf_Seek(StreamIn[x].Data.HandleSt, 0, SEEK_END);
-        sf_seek(StreamIn[x].Data.HandleSt, 0, SEEK_SET);
+        StreamIn[x].Data.Lengthst := sfInfo.frames;
         StreamIn[x].Data.Enabled := False;
         err := 0;
       end;
