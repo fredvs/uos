@@ -138,11 +138,10 @@ install:
         <Filename Value="simplerecorder.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simplerecorder"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
-        <CursorPos X="1" Y="14"/>
+        <CursorPos X="85" Y="12"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -153,9 +152,10 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_sr"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="217"/>
+        <TopLine Value="174"/>
         <CursorPos X="38" Y="224"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
