@@ -138,7 +138,6 @@ install:
         <Filename Value="filterplayer.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="filterplayer"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
@@ -153,10 +152,11 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_fp"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="387"/>
-        <CursorPos X="88" Y="399"/>
+        <CursorPos X="106" Y="404"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
