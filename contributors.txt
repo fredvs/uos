@@ -1,0 +1,16 @@
+Here are the great contributors of uos.
+
+KpjComp : He gives the way to link PortAudio with SndFile and shows the best way to pause a thread.
+
+Blaazen : He knows digital audio and explains me how it works.
+
+BigChimp : He is the one who converts me to oop way of programming.
+
+Leledumbo : Helps me with threads managing.
+ 
+Dibo : Shows the best way to calculate time.
+
+And many other in Lazarus forum.
+
+Fred van Stappen
+ 
