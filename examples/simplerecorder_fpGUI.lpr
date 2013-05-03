@@ -7,7 +7,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-   cwstring, SysUtils,uos, ctypes, Math,  Classes,fpg_button, fpg_widget, fpg_label, fpg_Editbtn, fpg_RadioButton, fpg_trackbar, fpg_CheckBox, fpg_base, fpg_main, fpg_form
+   cwstring, SysUtils,uos, ctypes, Math ,  Classes,fpg_button, fpg_widget, fpg_label, fpg_Editbtn, fpg_RadioButton, fpg_trackbar, fpg_CheckBox, fpg_base, fpg_main, fpg_form
   { you can add units after this };
 
 type
