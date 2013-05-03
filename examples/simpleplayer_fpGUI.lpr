@@ -1,6 +1,7 @@
 program simpleplayer_fpGUI;
 {$mode objfpc}{$H+}
   {$DEFINE UseCThreads}
+
 uses
 
   {$IFDEF UNIX}{$IFDEF UseCThreads}
