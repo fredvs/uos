@@ -1,5 +1,7 @@
 UOS : United OpenLib of Sound. UOS unifies the best open-source audio libraries.
 
+For FPC, fgGUI, Lazarus and Delphi.
+
 With UOS you can:
 
 . Listen to mp3, ogg, wav, flac,... audio files.
@@ -15,7 +17,7 @@ With UOS you can:
 UOS uses the PortAudio, SndFile and Mpg123 audio libraries.
 
 Included in the package:
-. Examples.
+. Examples fpGUI, LCL(Lazarus) and console.
 . Binary libraries for Linux 32/64, Windows 32/64, Mac OSX 32. 
 
 Fred van Stappen
