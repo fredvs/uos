@@ -24,7 +24,7 @@ unit uos;
 *                                    BandReject, BandPass)                     *
 * 10 th changes: 2013-02-02 (Dibo's time procedures, Max Karpushin add         * 
 *                                 reference counting in PortAudio              *
-* 11 th changes: 2013-04-30 (Fully FP/fpGUI/Lazarus compatible)                *
+* 11 th changes: 2013-05-03 (Fully FP/fpGUI/Lazarus compatible)                *
 *                                                                              *
 ********************************************************************************}
 
@@ -44,20 +44,18 @@ unit uos;
     You should have received a copy of the GNU Lesser General Public
     License along with this library; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
 }
 
 interface
 
 uses
-  {$IfDef LCL}
+ {$IfDef LCL}
     {$else}
     fpg_base, fpg_main,
     {$endif}
   Classes, ctypes, Math, SysUtils, uos_portaudio,
   uos_LibSndFile, uos_Mpg123;
-
-var
-  testfpgui : shortint;
 
 type
   TArFloat = array[0..$ffff] of cfloat;
@@ -480,11 +478,12 @@ type
 var
     UOSLoadFlag: shortint;
     UOSLoadResult: TUOS_LoadResult;
-  {$IfDef LCL}
+    {$IfDef LCL}
     {$else}
-    const
+  const
    MSG_CUSTOM1 = FPGM_USER+1;
     {$endif}
+
 implementation
 
 function FormatBuf(Inbuf: TArFloat; format: shortint): TArFloat;
@@ -1875,15 +1874,15 @@ var
   x, x2, x3: integer;
   curpos : cint64 ;
   err: CInt32;
-  msg: TfpgMessageParams;
+   {$IfDef LCL}
+    {$else}
+    msg: TfpgMessageParams;
+    {$endif}
 
-  // synindex : integer;
 begin
 
   curpos := 0;
-  // synindex  :=0;
-
-  if BeginProc <> nil then
+   if BeginProc <> nil then
     synchronize(BeginProc); /////  Execute BeginProc procedure
 
   repeat
@@ -1980,22 +1979,15 @@ begin
             StreamIn[x].DSP[x2].LoopProc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
     end;
       
-      ///// End DSPin AfterBuffProc 
-    {  
+      ///// End DSPin AfterBuffProc
+
+      ///////////// the loop procedure
        if StreamIn[x].LoopProc <> nil then
-           {$IfDef LCL}
+       {$IfDef LCL}
          synchronize(StreamIn[x].LoopProc) ;
     {$else}
-    fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
+   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
     {$endif}
-
-    }
-
-    if StreamIn[x].LoopProc <> nil then
-       if testfpgui = 0 then
-         synchronize(StreamIn[x].LoopProc) else
-       fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
-
 
      end; ///// End Input enabled
 
