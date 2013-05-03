@@ -133,14 +133,14 @@ install:
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="35">
+    <Units Count="36">
       <Unit0>
         <Filename Value="simplerecorder.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simplerecorder"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
+        <TopLine Value="2"/>
         <CursorPos X="85" Y="12"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -152,11 +152,10 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_sr"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="235"/>
-        <CursorPos X="21" Y="235"/>
+        <TopLine Value="78"/>
+        <CursorPos X="64" Y="93"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -435,6 +434,17 @@ install:
         <CursorPos X="1" Y="279"/>
         <UsageCount Value="10"/>
       </Unit34>
+      <Unit35>
+        <Filename Value="simplerecorder_fpGUI.lpr"/>
+        <UnitName Value="simplerecorder_fpGUI"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="630"/>
+        <CursorPos X="61" Y="641"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit35>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
