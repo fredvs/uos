@@ -7,11 +7,10 @@
         <Filename Value="simpleplayer_fpGUI.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simpleplayer_fpGUI"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="728"/>
-        <CursorPos X="2" Y="746"/>
+        <TopLine Value="1"/>
+        <CursorPos X="2" Y="4"/>
         <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit0>
