@@ -138,6 +138,7 @@ install:
         <Filename Value="simplerecorder.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simplerecorder"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
         <TopLine Value="2"/>
@@ -437,13 +438,10 @@ install:
       <Unit35>
         <Filename Value="simplerecorder_fpGUI.lpr"/>
         <UnitName Value="simplerecorder_fpGUI"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="3"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="630"/>
-        <CursorPos X="61" Y="641"/>
+        <TopLine Value="566"/>
+        <CursorPos X="61" Y="578"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit35>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
