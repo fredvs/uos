@@ -6,7 +6,7 @@ program simplerecorder;
 uses
 cmem, 
 {$IFDEF UNIX}{$IFDEF UseCThreads}
-cthreads,
+cthreads,   cwstring,
    {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, main_sr
