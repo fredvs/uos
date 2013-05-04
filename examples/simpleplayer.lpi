@@ -152,7 +152,6 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_sp"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="115"/>
@@ -334,10 +333,11 @@ install:
       <Unit23>
         <Filename Value="uos.pas"/>
         <UnitName Value="uos"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1869"/>
-        <CursorPos X="2" Y="1879"/>
+        <TopLine Value="1"/>
+        <CursorPos X="76" Y="2"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>

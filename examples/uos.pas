@@ -1,4 +1,7 @@
 unit uos;
+
+  {.$DEFINE Console}   // Uncomment it if you want a console application
+
 {*******************************************************************************
 *                  United Openlibraries of Sound ( UOS )                       *
 *                  --------------------------------------                      *
@@ -50,9 +53,9 @@ unit uos;
 interface
 
 uses
- {$IfDef LCL}
-    {$else}
-    fpg_base, fpg_main,
+  {$IF DEFINED(LCL) or DEFINED(Console)}
+     {$else}
+     fpg_base, fpg_main,
     {$endif}
   Classes, ctypes, Math, SysUtils, uos_portaudio,
   uos_LibSndFile, uos_Mpg123;
@@ -478,11 +481,13 @@ type
 var
     UOSLoadFlag: shortint;
     UOSLoadResult: TUOS_LoadResult;
-    {$IfDef LCL}
-    {$else}
+
+      {$IF DEFINED(LCL) or DEFINED(Console)}
+      {$else}
   const
    MSG_CUSTOM1 = FPGM_USER+1;
     {$endif}
+
 
 implementation
 
@@ -1874,10 +1879,11 @@ var
   x, x2, x3: integer;
   curpos : cint64 ;
   err: CInt32;
-   {$IfDef LCL}
-    {$else}
+    {$IF DEFINED(LCL) or DEFINED(Console)}
+      {$else}
     msg: TfpgMessageParams;
     {$endif}
+
 
 begin
 
@@ -1983,11 +1989,12 @@ begin
 
       ///////////// the loop procedure
        if StreamIn[x].LoopProc <> nil then
-       {$IfDef LCL}
-         synchronize(StreamIn[x].LoopProc) ;
+        {$IF DEFINED(LCL) or DEFINED(Console)}
+        synchronize(StreamIn[x].LoopProc) ;
     {$else}
-   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
+      fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
     {$endif}
+
 
      end; ///// End Input enabled
 
