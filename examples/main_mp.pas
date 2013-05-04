@@ -178,7 +178,7 @@ begin
   edit6.Text := application.Location + 'sound/test.flac';
   edit7.Text := application.Location + 'sound/test.ogg';
    {$ENDIF}
- 
+
     {$IFDEF Windows}
        {$if defined(cpu64)}
   edit2.Text := application.Location + 'lib\LibSndFile-64.dll';
@@ -308,8 +308,8 @@ end;
 procedure TForm1.Button11Click(Sender: TObject);
 
 begin
-  Player4 := TUOS_Player.Create(True,self);
-  Player4.AddIntoDevOut(-1, -1, -1, -1,0);   //// add a Output with custom parameters
+  Player4 := TUOS_Player.Create(True, self);
+  Player4.AddIntoDevOut(-1, -1, -1, -1, 0);   //// add a Output with custom parameters
   // Player4.AddIntoDevOut;   //// add a Output with default parameters
   //////////// Device ( -1 is default device )
   //////////// Latency  ( -1 is latency suggested ) )
@@ -317,7 +317,8 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
 
-  Player4.AddFromFile(Edit7.Text, -1, 0);  //// add a input from file with custom parameters
+  Player4.AddFromFile(Edit7.Text, -1, 0);
+  //// add a input from file with custom parameters
   // Player4.AddFromFile(Edit7.Text);  //// add a input from file with default parameters
   ////////// FileName : filename of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
@@ -393,8 +394,8 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 
 begin
-  Player1 := TUOS_Player.Create(True,self);
-  Player1.AddIntoDevOut(-1, -1, -1, -1,0);   //// add a Output with custom parameters
+  Player1 := TUOS_Player.Create(True, self);
+  Player1.AddIntoDevOut(-1, -1, -1, -1, 0);   //// add a Output with custom parameters
   // Player1.AddIntoDevOut;   //// add a Output with default parameters
   //////////// Device ( -1 is default device )
   //////////// Latency  ( -1 is latency suggested ) )
@@ -402,7 +403,8 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
 
-  Player1.AddFromFile(Edit4.Text, -1, 0);  //// add a input from file with custom parameters
+  Player1.AddFromFile(Edit4.Text, -1, 0);
+  //// add a input from file with custom parameters
   // Player1.AddFromFile(Edit4.Text);  //// add a input from file with default parameters
   ////////// FileName : filename of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
@@ -432,7 +434,7 @@ end;
 procedure TForm1.Button5Click(Sender: TObject);
 
 begin
-  Player2 := TUOS_Player.Create(True,self);
+  Player2 := TUOS_Player.Create(True, self);
   Player2.AddIntoDevOut(-1, -1, -1, -1, 0);   //// add a Output with custom parameters
   // Player2.AddIntoDevOut;   //// add a Output with default parameters
   // Player2.AddIntoDevOut(-1, -1, -1, -1, 0);   //// add a Output with custom parameters
@@ -442,7 +444,8 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
 
-  Player2.AddFromFile(Edit5.Text, -1, 0);  //// add a input from file with custom parameters
+  Player2.AddFromFile(Edit5.Text, -1, 0);
+  //// add a input from file with custom parameters
   // Player2.AddFromFile(Edit5.Text);  //// add a input from file with custom parameters
   ////////// FileName : filename of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
@@ -472,7 +475,7 @@ end;
 
 procedure TForm1.Button8Click(Sender: TObject);
 begin
-  Player3 := TUOS_Player.Create(True,self);
+  Player3 := TUOS_Player.Create(True, self);
   Player3.AddIntoDevOut(-1, -1, -1, -1, 0);   //// add a Output with custom parameters
   // Player3.AddIntoDevOut;   //// add a Output with default parameters
   //////////// Device ( -1 is default device )
@@ -481,7 +484,8 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
 
-  Player3.AddFromFile(Edit6.Text, -1, 0);  //// add a input from file with custom parameters
+  Player3.AddFromFile(Edit6.Text, -1, 0);
+  //// add a input from file with custom parameters
   // Player3.AddFromFile(Edit6.Text);  //// add a input from file with default parameters
   ////////// FileName : filename of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
@@ -568,7 +572,7 @@ begin
     player4.Stop;
   if button1.Enabled = False then
     testInit.UnloadLib();
-  
+
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

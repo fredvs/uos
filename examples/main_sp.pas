@@ -9,7 +9,7 @@ unit main_sp;
 interface
 
 uses
-  uos, Forms, Dialogs, SysUtils, Graphics, 
+  uos, Forms, Dialogs, SysUtils, Graphics,
   StdCtrls, ComCtrls, ExtCtrls, Classes, Controls;
 
 type
@@ -60,19 +60,19 @@ type
       Shift: TShiftState; X, Y: integer);
     procedure TrackBar2MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
-    
+
     procedure ClosePlayer1;
-    Procedure ShowPosition ;
-    
+    procedure ShowPosition;
+
   private
     { private declarations }
   public
     { public declarations }
   end;
-  
+
 ////// This is the "standart" DSP procedure look.
-function DSPReverseBefore(data:TUOS_Data; fft:TUOS_FFT): TArFloat;
-function DSPReverseAfter(data:TUOS_Data; fft:TUOS_FFT): TArFloat;
+function DSPReverseBefore(Data: TUOS_Data; fft: TUOS_FFT): TArFloat;
+function DSPReverseAfter(Data: TUOS_Data; fft: TUOS_FFT): TArFloat;
 
 procedure UOS_logo();
 
@@ -91,15 +91,15 @@ implementation
 
 procedure TForm1.ClosePlayer1;
 begin
-  Form1.button3.Enabled := true;
+  Form1.button3.Enabled := True;
   Form1.button4.Enabled := False;
   Form1.button5.Enabled := False;
   Form1.button6.Enabled := False;
   Form1.trackbar2.Enabled := False;
-  Form1.radiogroup1.Enabled:=true;
+  Form1.radiogroup1.Enabled := True;
   Form1.TrackBar2.Position := 0;
-  form1.lposition.Caption:= '00:00:00.000' ;
- end;
+  form1.lposition.Caption := '00:00:00.000';
+end;
 
 procedure TForm1.FormActivate(Sender: TObject);
 {$IFDEF Darwin}
@@ -107,7 +107,7 @@ var
   opath: string;
             {$ENDIF}
 begin
-   UOS_logo();
+  UOS_logo();
       {$IFDEF Windows}
      {$if defined(cpu64)}
   edit1.Text := application.Location + 'lib\LibPortaudio-64.dll';
@@ -191,8 +191,9 @@ end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
-  if assigned(Player1) and (button3.Enabled = false) then 
-    Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position/100, TrackBar3.position/100, true);
+  if assigned(Player1) and (button3.Enabled = False) then
+    Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position / 100,
+      TrackBar3.position / 100, True);
 end;
 
 procedure TForm1.TrackBar2MouseDown(Sender: TObject; Button: TMouseButton;
@@ -211,7 +212,7 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   Init := TUOS_Init.Create;   //// Create Iibraries Loader-Init
- 
+
   Init.PA_FileName := edit1.Text;
   Init.SF_FileName := edit2.Text;
   Init.MP_FileName := edit3.Text;
@@ -219,10 +220,8 @@ begin
 
   Init.LoadLib;
 
-  if (Init.LoadResult.PAloaderror = 0)
-  and (Init.LoadResult.MPloaderror = 0) and
-   (Init.LoadResult.Sfloaderror = 0) 
-    then
+  if (Init.LoadResult.PAloaderror = 0) and (Init.LoadResult.MPloaderror = 0) and
+    (Init.LoadResult.Sfloaderror = 0) then
   begin
     form1.hide;
     button1.Caption := 'PortAudio, SndFile and Mpg123 libraries are loaded...';
@@ -269,76 +268,87 @@ end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 var
-samformat : shortint;
-temptime : ttime;
-ho,mi,se,ms : word;
+  samformat: shortint;
+  temptime: ttime;
+  ho, mi, se, ms: word;
 begin
-  
-  if radiobutton1.Checked = true then samformat := 0;
-  if radiobutton2.Checked = true then samformat := 1;
-  if radiobutton3.Checked = true then samformat := 2;
-  
-   Player1 := TUOS_Player.Create(True,self);     //// Create the player
 
-         // Out1Index := Player1.AddIntoDevOut ;    //// add a Output into device with default parameters 
-   Out1Index := Player1.AddIntoDevOut(-1, -1, -1, -1,samformat);   //// add a Output into device with custom parameters
+  if radiobutton1.Checked = True then
+    samformat := 0;
+  if radiobutton2.Checked = True then
+    samformat := 1;
+  if radiobutton3.Checked = True then
+    samformat := 2;
+
+  Player1 := TUOS_Player.Create(True, self);     //// Create the player
+
+  // Out1Index := Player1.AddIntoDevOut ;    //// add a Output into device with default parameters
+  Out1Index := Player1.AddIntoDevOut(-1, -1, -1, -1, samformat);
+  //// add a Output into device with custom parameters
   //////////// Device ( -1 is default Output device )
   //////////// Latency  ( -1 is latency suggested ) )
   //////////// SampleRate : delault : -1 (44100)
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-  
-       // In1Index := Player1.AddFromFile(Edit4.Text);    //// add input from audio file with default parameters 
-    In1Index := Player1.AddFromFile(Edit4.Text, -1, samformat);  //// add input from audio file with custom parameters
-    ////////// FileName : filename of audio file
-    ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-    ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
 
-    Player1.StreamIn[In1Index].LoopProc := @ShowPosition;  /////// procedure to execute inside the loop
-     
-    DSP1Index := Player1.AddDSPVolumeIn(In1Index, 1, 1) ;  ///// DSP Volume changer                               
-     ////////// In1Index : InputIndex of a existing input
-     ////////// VolLeft : Left volume
-     ////////// VolRight : Right volume
-      //  result : -1 nothing created, otherwise index of DSPIn in array    
-        
-     Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position/100, TrackBar3.position/100, true); /// Set volume 
-      ////////// In1Index : InputIndex of a existing Input
-      ////////// DSPIndex : DSPIndex of a existing DSP
-      ////////// VolLeft : Left volume
-      ////////// VolRight : Right volume
-      ////////// Enable : Enabled
-  
-      DSP2Index := Player1.AddDSPIn(In1Index, @DSPReverseBefore, @DSPReverseAfter, nil); ///// add a DSP procedure for input Reverse
+  // In1Index := Player1.AddFromFile(Edit4.Text);    //// add input from audio file with default parameters
+  In1Index := Player1.AddFromFile(Edit4.Text, -1, samformat);
+  //// add input from audio file with custom parameters
+  ////////// FileName : filename of audio file
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+
+  Player1.StreamIn[In1Index].LoopProc := @ShowPosition;
+  /////// procedure to execute inside the loop
+
+  DSP1Index := Player1.AddDSPVolumeIn(In1Index, 1, 1);
+  ///// DSP Volume changer
+  ////////// In1Index : InputIndex of a existing input
+  ////////// VolLeft : Left volume
+  ////////// VolRight : Right volume
+  //  result : -1 nothing created, otherwise index of DSPIn in array
+
+  Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position / 100,
+    TrackBar3.position / 100, True); /// Set volume
+  ////////// In1Index : InputIndex of a existing Input
+  ////////// DSPIndex : DSPIndex of a existing DSP
+  ////////// VolLeft : Left volume
+  ////////// VolRight : Right volume
+  ////////// Enable : Enabled
+
+  DSP2Index := Player1.AddDSPIn(In1Index, @DSPReverseBefore, @DSPReverseAfter, nil);
+  ///// add a DSP procedure for input Reverse
   ////////// In1Index: InputIndex of existing input
   ////////// BeforeProc : procedure to do before the buffer is filled
   ////////// AfterProc : procedure to do after the buffer is filled
   ////////// LoopProc : external procedure to do after the buffer is filled
-  
-   Player1.SetDSPIn(In1Index, DSP2Index, checkbox1.Checked); //// enable reverse to checkbox state;
-  
-   trackbar2.Max := Player1.InputLength(In1Index); ////// Length of Input in samples
-  
-   temptime := Player1.InputLengthTime(In1Index);  ////// Length of input in time
 
-    DecodeTime(temptime,ho,mi,se,ms);
+  Player1.SetDSPIn(In1Index, DSP2Index, checkbox1.Checked);
+  //// enable reverse to checkbox state;
 
-   llength.Caption:=format('%d:%d:%d.%d',[ho,mi,se,ms]);
+  trackbar2.Max := Player1.InputLength(In1Index); ////// Length of Input in samples
 
-   Player1.EndProc := @ClosePlayer1;  /////// procedure to execute when stream is terminated
-    
-   TrackBar2.position := 0;
-   trackbar2.Enabled := True;
-   Button3.Enabled := false;
-   Button4.Enabled := false;
-   Button6.Enabled := True;
-   Button5.Enabled := true;
-   CheckBox1.Enabled := True;
-   radiogroup1.Enabled:=false;
-   
-   application.ProcessMessages;
-   
-   Player1.Play;  /////// everything is ready, here we are, lets play it...
+  temptime := Player1.InputLengthTime(In1Index);  ////// Length of input in time
+
+  DecodeTime(temptime, ho, mi, se, ms);
+
+  llength.Caption := format('%d:%d:%d.%d', [ho, mi, se, ms]);
+
+  Player1.EndProc := @ClosePlayer1;
+  /////// procedure to execute when stream is terminated
+
+  TrackBar2.position := 0;
+  trackbar2.Enabled := True;
+  Button3.Enabled := False;
+  Button4.Enabled := False;
+  Button6.Enabled := True;
+  Button5.Enabled := True;
+  CheckBox1.Enabled := True;
+  radiogroup1.Enabled := False;
+
+  application.ProcessMessages;
+
+  Player1.Play;  /////// everything is ready, here we are, lets play it...
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
@@ -354,7 +364,7 @@ end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
-  if assigned(Player1) and (button3.Enabled = false) then 
+  if assigned(Player1) and (button3.Enabled = False) then
     Player1.SetDSPIn(In1Index, DSP2Index, checkbox1.Checked);
 end;
 
@@ -413,48 +423,49 @@ begin
   end;
 end;
 
-Procedure TForm1.ShowPosition ;
+procedure TForm1.ShowPosition;
 var
-  temptime : ttime;
-  ho,mi,se,ms : word;
+  temptime: ttime;
+  ho, mi, se, ms: word;
 begin
-  if form1.TrackBar2.Tag = 0 then 
-    begin
-     form1.TrackBar2.Position := Player1.InputPosition(In1Index);
-      temptime := Player1.InputPositionTime(In1Index);  ////// Length of input in time
-    DecodeTime(temptime,ho,mi,se,ms);
-    form1.lposition.Caption:=format('%.2d:%.2d:%.2d.%.3d',[ho,mi,se,ms]);
-     end;
- end;
-
-function DSPReverseBefore(data:TUOS_Data; fft:TUOS_FFT): TArFloat;
-begin
-  if data.position > data.OutFrames div data.Channels then
-    Player1.Seek(In1Index, data.position - (data.OutFrames div data.Channels));
+  if form1.TrackBar2.Tag = 0 then
+  begin
+    form1.TrackBar2.Position := Player1.InputPosition(In1Index);
+    temptime := Player1.InputPositionTime(In1Index);  ////// Length of input in time
+    DecodeTime(temptime, ho, mi, se, ms);
+    form1.lposition.Caption := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
+  end;
 end;
 
-function DSPReverseAfter(data:TUOS_Data; fft:TUOS_FFT): TArFloat;
+function DSPReverseBefore(Data: TUOS_Data; fft: TUOS_FFT): TArFloat;
+begin
+  if Data.position > Data.OutFrames div Data.Channels then
+    Player1.Seek(In1Index, Data.position - (Data.OutFrames div Data.Channels));
+end;
+
+function DSPReverseAfter(Data: TUOS_Data; fft: TUOS_FFT): TArFloat;
 var
-  x : integer;
+  x: integer;
   arfl: TArFloat;
 begin
-   for x := 0 to ((data.OutFrames div data.Channels)) do
+  for x := 0 to ((Data.OutFrames div Data.Channels)) do
     if odd(x) then
-      arfl[x] := data.Buffer[(data.OutFrames div data.Channels) - x - 1]
+      arfl[x] := Data.Buffer[(Data.OutFrames div Data.Channels) - x - 1]
     else
-      arfl[x] := data.Buffer[(data.OutFrames div data.Channels) - x + 1];
+      arfl[x] := Data.Buffer[(Data.OutFrames div Data.Channels) - x + 1];
   Result := arfl;
 end;
 
 procedure TForm1.FormClose(Sender: TObject);
 begin
 
-  if assigned(Player1) and (button3.Enabled = false) then
-    begin
+  if assigned(Player1) and (button3.Enabled = False) then
+  begin
     button6.Click;
-    sleep(500) ;
-    end;
-   if button1.Enabled = false then Init.UnloadLib();
+    sleep(500);
+  end;
+  if button1.Enabled = False then
+    Init.UnloadLib();
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

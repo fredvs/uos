@@ -1,11 +1,14 @@
 
 /////////////////// Demo how to use United Openlib of Sound ////////////////////
 unit main_sr;
+
 {$mode objfpc}{$H+}
 interface
+
 uses
   uos, Forms, Dialogs, SysUtils, Graphics,
   StdCtrls, ComCtrls, ExtCtrls, Classes, Controls;
+
 type
   { TForm1 }
   TForm1 = class(TForm)
@@ -52,7 +55,7 @@ var
   Form1: TForm1;
   BufferBMP: TBitmap;
   Player1: TUOS_Player;
-  Out1Index, Out2Index, In1Index, DSP1Index : integer;
+  Out1Index, Out2Index, In1Index, DSP1Index: integer;
   Init: TUOS_Init;
 
 implementation
@@ -63,18 +66,20 @@ implementation
 
 procedure TForm1.ClosePlayer1;
 begin
-  button2.Enabled := true;
+  button2.Enabled := True;
   button3.Enabled := False;
-  button5.Enabled := false;
-  CheckBox1.Enabled := true;
-  CheckBox2.Enabled := true;
-   if CheckBox2.checked = true then Button4.Enabled := true;
- end;
+  button5.Enabled := False;
+  CheckBox1.Enabled := True;
+  CheckBox2.Enabled := True;
+  if CheckBox2.Checked = True then
+    Button4.Enabled := True;
+end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
-   if assigned(Player1) and (Button2.Enabled = false) then
-     Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position/100, TrackBar3.position/100, true);
+  if assigned(Player1) and (Button2.Enabled = False) then
+    Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position / 100,
+      TrackBar3.position / 100, True);
 end;
 
 procedure TForm1.FormActivate(Sender: TObject);
@@ -83,7 +88,7 @@ var
   opath: string;
             {$ENDIF}
 begin
-   UOS_logo();
+  UOS_logo();
       {$IFDEF Windows}
      {$if defined(cpu64)}
   edit1.Text := application.Location + 'lib\LibPortaudio-64.dll';
@@ -134,7 +139,6 @@ begin
 
             {$ENDIF}
 
-            
 end;
 
 //////////////////////////////////////////////////////////////////////////
@@ -155,10 +159,7 @@ begin
 
   Init.LoadLib;
 
-  if (Init.LoadResult.PAloaderror = 0)
-  and
-   (Init.LoadResult.Sfloaderror = 0) 
-    then
+  if (Init.LoadResult.PAloaderror = 0) and (Init.LoadResult.Sfloaderror = 0) then
 
   begin
     form1.hide;
@@ -180,33 +181,38 @@ begin
       MessageDlg(edit2.Text + ' do not exist...', mtWarning, [mbYes], 0);
     if Init.LoadResult.SFloaderror = 2 then
       MessageDlg(edit2.Text + ' do not load...', mtWarning, [mbYes], 0);
-     end;
+  end;
 end;
 
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  if (checkbox1.Checked = true) or (checkbox2.Checked = true) then begin
-  
-   Player1 := TUOS_Player.Create(True,self);
-   
-     Out1Index := Player1.AddIntoFile(edit3.text); //// add Output into wav file (save record)  with default parameters
-     // Out1Index := Player1.AddIntoFile('test.wav', -1, -1, -1);   //// add a Output into wav file (save record) with custom parameters
-  //////////// Filename : name of new file for recording
-  //////////// SampleRate : delault : -1 (44100)
-  //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-  //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-  
-    if checkbox1.Checked = true then Out2Index := Player1.AddIntoDevOut ; //// add a Output into OUT device with default parameters
+  if (checkbox1.Checked = True) or (checkbox2.Checked = True) then
+  begin
+
+    Player1 := TUOS_Player.Create(True, self);
+
+    Out1Index := Player1.AddIntoFile(edit3.Text);
+    //// add Output into wav file (save record)  with default parameters
+    // Out1Index := Player1.AddIntoFile('test.wav', -1, -1, -1);   //// add a Output into wav file (save record) with custom parameters
+    //////////// Filename : name of new file for recording
+    //////////// SampleRate : delault : -1 (44100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+
+    if checkbox1.Checked = True then
+      Out2Index := Player1.AddIntoDevOut;
+    //// add a Output into OUT device with default parameters
     // Out1Index := Player1.AddIntoDevOut(-1, -1, -1, -1,0);   //// add a Output into device with custom parameters
-  //////////// Device ( -1 is default Output device )
-  //////////// Latency  ( -1 is latency suggested ) )
-  //////////// SampleRate : delault : -1 (44100)
-  //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-  //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-  
-   In1Index := Player1.AddFromDevIn;  /// add Input from mic into IN device with default parameters
-       //   In1Index := Player1.AddFromDevIn(-1, -1, -1, -1, -1,0);   //// add input from mic with custom parameters
+    //////////// Device ( -1 is default Output device )
+    //////////// Latency  ( -1 is latency suggested ) )
+    //////////// SampleRate : delault : -1 (44100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+
+    In1Index := Player1.AddFromDevIn;
+    /// add Input from mic into IN device with default parameters
+    //   In1Index := Player1.AddFromDevIn(-1, -1, -1, -1, -1,0);   //// add input from mic with custom parameters
     //////////// Device ( -1 is default Input device )
     //////////// Latency  ( -1 is latency suggested ) )
     //////////// SampleRate : delault : -1 (44100)
@@ -214,24 +220,27 @@ begin
     //////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
 
-    DSP1Index := Player1.AddDSPVolumeIn(In1Index, 1, 1) ;  ///// DSP Volume changer                               
-     ////////// In1Index : InputIndex of a existing input
-     ////////// VolLeft : Left volume
-     ////////// VolRight : Right volume
-      //  result : -1 nothing created, otherwise index of DSPIn in array    
-        
-  Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position/100, TrackBar3.position/100, true); /// Set volume 
-  
-  Player1.EndProc := @ClosePlayer1;  /////// procedure to execute when stream is terminated
+    DSP1Index := Player1.AddDSPVolumeIn(In1Index, 1, 1);
+    ///// DSP Volume changer
+    ////////// In1Index : InputIndex of a existing input
+    ////////// VolLeft : Left volume
+    ////////// VolRight : Right volume
+    //  result : -1 nothing created, otherwise index of DSPIn in array
 
-  Player1.Play;  /////// everything is ready to play...
-    
-  Button2.Enabled := false;
-  Button3.Enabled := True;
-  Button4.Enabled := false;
-  CheckBox1.Enabled := false;
-  CheckBox2.Enabled := false;
-end;
+    Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position / 100,
+      TrackBar3.position / 100, True); /// Set volume
+
+    Player1.EndProc := @ClosePlayer1;
+    /////// procedure to execute when stream is terminated
+
+    Player1.Play;  /////// everything is ready to play...
+
+    Button2.Enabled := False;
+    Button3.Enabled := True;
+    Button4.Enabled := False;
+    CheckBox1.Enabled := False;
+    CheckBox2.Enabled := False;
+  end;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -241,43 +250,51 @@ end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
- Player1 := TUOS_Player.Create(True,self);
-     
-   Out1Index := Player1.AddIntoDevOut ; //// add a Output into OUT device with default parameters
-    // Out1Index := Player1.AddIntoDevOut(-1, -1, -1, -1,0);   //// add a Output into device with custom parameters
+  Player1 := TUOS_Player.Create(True, self);
+
+  Out1Index := Player1.AddIntoDevOut;
+  //// add a Output into OUT device with default parameters
+  // Out1Index := Player1.AddIntoDevOut(-1, -1, -1, -1,0);   //// add a Output into device with custom parameters
   //////////// Device ( -1 is default Output device )
   //////////// Latency  ( -1 is latency suggested ) )
   //////////// SampleRate : delault : -1 (44100)
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-  
-   In1Index := Player1.AddFromFile(Edit3.Text);    //// add input from audio file with default parameters 
-    // In1Index := Player1.AddFromFile(Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
-    ////////// FileName : filename of audio file
-    ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-    ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
- 
-   DSP1Index := Player1.AddDSPVolumeIn(In1Index, 1, 1) ;  ///// DSP Volume changer                               
-     ////////// In1Index : InputIndex of a existing input
-     ////////// VolLeft : Left volume
-     ////////// VolRight : Right volume
-      //  result : -1 nothing created, otherwise index of DSPIn in array    
-        
-     Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position/100, TrackBar3.position/100, true); /// Set volume 
 
-    Player1.EndProc := @ClosePlayer1;  /////// procedure to execute when stream is terminated  
-    
-    Player1.Play;  /////// everything is ready to play...
-   button4.Enabled:=false; 
-   button5.Enabled:=true; 
-   button2.Enabled:=false; 
-   CheckBox1.Enabled := false;
-   CheckBox2.Enabled := false;
+  In1Index := Player1.AddFromFile(Edit3.Text);
+  //// add input from audio file with default parameters
+  // In1Index := Player1.AddFromFile(Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
+  ////////// FileName : filename of audio file
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+
+  DSP1Index := Player1.AddDSPVolumeIn(In1Index, 1, 1);
+  ///// DSP Volume changer
+  ////////// In1Index : InputIndex of a existing input
+  ////////// VolLeft : Left volume
+  ////////// VolRight : Right volume
+  //  result : -1 nothing created, otherwise index of DSPIn in array
+
+  Player1.SetDSPVolumeIn(In1Index, DSP1Index, TrackBar1.position / 100,
+    TrackBar3.position / 100, True); /// Set volume
+
+  Player1.EndProc := @ClosePlayer1;
+  /////// procedure to execute when stream is terminated
+
+  Player1.Play;  /////// everything is ready to play...
+  button4.Enabled := False;
+  button5.Enabled := True;
+  button2.Enabled := False;
+  CheckBox1.Enabled := False;
+  CheckBox2.Enabled := False;
 end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
-if checkbox1.Checked = true then label7.show else label7.hide;
+  if checkbox1.Checked = True then
+    label7.Show
+  else
+    label7.hide;
 end;
 
 procedure UOS_logo();
@@ -337,13 +354,14 @@ end;
 
 procedure TForm1.FormClose(Sender: TObject);
 begin
-  if assigned(Player1) and (Button2.Enabled = false) then
-    begin
+  if assigned(Player1) and (Button2.Enabled = False) then
+  begin
     Button3.Click;
-    sleep(500) ;
-    end;
-   if button1.Enabled = false then Init.UnloadLib();
-    sleep(300) ;
+    sleep(500);
+  end;
+  if button1.Enabled = False then
+    Init.UnloadLib();
+  sleep(300);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
