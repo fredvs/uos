@@ -133,6 +133,7 @@ type
     DefDevInAPIInfo: PPaHostApiInfo;
     constructor Create;
     function LoadLib: integer;
+    function ShowDefDeviceOut : string;
     procedure UnloadLib;
   private
     function InitLib: integer;
@@ -2589,5 +2590,19 @@ begin
   LoadResult.MPinitError := -1;
 
 end;
+
+function TUOS_Init.ShowDefDeviceOut() :  string;
+
+var
+  CurDevice : integer;
+  deviceInfo : PPaDeviceInfo;
+  devicename :  string;
+
+begin
+  CurDevice := Pa_GetDefaultOutputDevice();
+  deviceInfo := Pa_GetDeviceInfo( CurDevice );
+  devicename := deviceInfo^._name ;
+  Result := devicename;
+end;  
 
 end.
