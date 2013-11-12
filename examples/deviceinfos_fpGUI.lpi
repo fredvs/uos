@@ -9,7 +9,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="UOS Simple Filter fpGUI"/>
+      <Title Value="UOS Devices Infos"/>
       <UseAppBundle Value="False"/>
     </General>
     <VersionInfo>
@@ -37,16 +37,16 @@
     </RequiredPackages>
     <Units Count="1">
       <Unit0>
-        <Filename Value="filterplayer_fpGUI.lpr"/>
+        <Filename Value="deviceinfos_fpGUI.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="filterplayer_fpGUI"/>
+        <UnitName Value="deviceinfos_fpGUI"/>
       </Unit0>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="FilterPlayer_FPG"/>
+      <Filename Value="SimplePlayer_FPG"/>
     </Target>
     <SearchPaths>
       <UnitOutputDirectory Value="units/$(TargetCPU)-$(TargetOS)"/>

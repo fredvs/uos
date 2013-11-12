@@ -133,12 +133,12 @@ install:
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="36">
+    <Units Count="37">
       <Unit0>
         <Filename Value="simpleplayer.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="simpleplayer"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1"/>
         <CursorPos X="54" Y="3"/>
@@ -152,10 +152,11 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="main_sp"/>
-        <EditorIndex Value="0"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="115"/>
-        <CursorPos X="36" Y="129"/>
+        <TopLine Value="1"/>
+        <CursorPos X="44" Y="12"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -333,11 +334,10 @@ install:
       <Unit23>
         <Filename Value="uos.pas"/>
         <UnitName Value="uos"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="76" Y="2"/>
+        <TopLine Value="2519"/>
+        <CursorPos X="41" Y="2530"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -443,120 +443,138 @@ install:
         <CursorPos X="100" Y="281"/>
         <UsageCount Value="10"/>
       </Unit35>
+      <Unit36>
+        <Filename Value="uos_portaudio.pas"/>
+        <UnitName Value="uos_portaudio"/>
+        <EditorIndex Value="3"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="245"/>
+        <CursorPos X="26" Y="262"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit36>
     </Units>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="uos.pas"/>
-        <Caret Line="146" Column="15" TopLine="129"/>
+        <Caret Line="150" Column="4" TopLine="140"/>
       </Position1>
       <Position2>
         <Filename Value="uos.pas"/>
-        <Caret Line="147" Column="14" TopLine="130"/>
+        <Caret Line="149" Column="22" TopLine="131"/>
       </Position2>
       <Position3>
         <Filename Value="uos.pas"/>
-        <Caret Line="166" Column="11" TopLine="149"/>
+        <Caret Line="2295" Column="33" TopLine="2288"/>
       </Position3>
       <Position4>
         <Filename Value="uos.pas"/>
-        <Caret Line="1134" Column="36" TopLine="1117"/>
+        <Caret Line="527" Column="29" TopLine="519"/>
       </Position4>
       <Position5>
         <Filename Value="uos.pas"/>
-        <Caret Line="1143" Column="36" TopLine="1127"/>
+        <Caret Line="829" Column="11" TopLine="810"/>
       </Position5>
       <Position6>
         <Filename Value="uos.pas"/>
-        <Caret Line="1156" Column="36" TopLine="1140"/>
+        <Caret Line="2516" Column="10" TopLine="2512"/>
       </Position6>
       <Position7>
         <Filename Value="uos.pas"/>
-        <Caret Line="1191" Column="28" TopLine="1175"/>
+        <Caret Line="2515" Column="33" TopLine="2505"/>
       </Position7>
       <Position8>
-        <Filename Value="uos.pas"/>
-        <Caret Line="1484" Column="30" TopLine="1468"/>
+        <Filename Value="uos_portaudio.pas"/>
+        <Caret Line="274" Column="8" TopLine="263"/>
       </Position8>
       <Position9>
         <Filename Value="uos.pas"/>
-        <Caret Line="1486" Column="29" TopLine="1470"/>
+        <Caret Line="2519" Column="37" TopLine="2507"/>
       </Position9>
       <Position10>
         <Filename Value="uos.pas"/>
-        <Caret Line="1622" Column="31" TopLine="1606"/>
+        <Caret Line="9" Column="42" TopLine="1"/>
       </Position10>
       <Position11>
-        <Filename Value="simpleplayer.lpr"/>
-        <Caret Line="7" Column="8" TopLine="1"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="829" Column="11" TopLine="817"/>
       </Position11>
       <Position12>
-        <Filename Value="simpleplayer.lpr"/>
-        <Caret Line="22" Column="1" TopLine="17"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="849" Column="11" TopLine="830"/>
       </Position12>
       <Position13>
         <Filename Value="uos.pas"/>
-        <Caret Line="1694" Column="7" TopLine="1689"/>
+        <Caret Line="1574" Column="9" TopLine="1555"/>
       </Position13>
       <Position14>
         <Filename Value="uos.pas"/>
-        <Caret Line="1721" Column="55" TopLine="1711"/>
+        <Caret Line="1646" Column="9" TopLine="1627"/>
       </Position14>
       <Position15>
         <Filename Value="uos.pas"/>
-        <Caret Line="1746" Column="36" TopLine="1736"/>
+        <Caret Line="1709" Column="9" TopLine="1690"/>
       </Position15>
       <Position16>
         <Filename Value="uos.pas"/>
-        <Caret Line="1744" Column="10" TopLine="1736"/>
+        <Caret Line="1782" Column="11" TopLine="1764"/>
       </Position16>
       <Position17>
         <Filename Value="uos.pas"/>
-        <Caret Line="1721" Column="53" TopLine="1711"/>
+        <Caret Line="2520" Column="30" TopLine="1"/>
       </Position17>
       <Position18>
         <Filename Value="uos.pas"/>
-        <Caret Line="1746" Column="36" TopLine="1736"/>
+        <Caret Line="5" Column="42" TopLine="1"/>
       </Position18>
       <Position19>
         <Filename Value="uos.pas"/>
-        <Caret Line="1667" Column="4" TopLine="1654"/>
+        <Caret Line="520" Column="20" TopLine="501"/>
       </Position19>
       <Position20>
         <Filename Value="uos.pas"/>
-        <Caret Line="1745" Column="7" TopLine="1737"/>
+        <Caret Line="2520" Column="30" TopLine="2501"/>
       </Position20>
       <Position21>
         <Filename Value="uos.pas"/>
-        <Caret Line="1747" Column="12" TopLine="1737"/>
+        <Caret Line="2515" Column="1" TopLine="2505"/>
       </Position21>
       <Position22>
         <Filename Value="uos.pas"/>
-        <Caret Line="1746" Column="12" TopLine="1736"/>
+        <Caret Line="2517" Column="2" TopLine="2211"/>
       </Position22>
       <Position23>
         <Filename Value="uos.pas"/>
-        <Caret Line="1744" Column="9" TopLine="1724"/>
+        <Caret Line="2525" Column="37" TopLine="2514"/>
       </Position23>
       <Position24>
-        <Filename Value="main_sp.pas"/>
-        <Caret Line="427" Column="49" TopLine="421"/>
+        <Filename Value="uos_portaudio.pas"/>
+        <Caret Line="6" Column="64" TopLine="1"/>
       </Position24>
       <Position25>
-        <Filename Value="main_sp.pas"/>
-        <Caret Line="74" Column="43" TopLine="1"/>
+        <Filename Value="uos_portaudio.pas"/>
+        <Caret Line="5" Column="40" TopLine="1"/>
       </Position25>
       <Position26>
-        <Filename Value="uos.pas"/>
-        <Caret Line="1721" Column="55" TopLine="1711"/>
+        <Filename Value="uos_portaudio.pas"/>
+        <Caret Line="3" Column="73" TopLine="1"/>
       </Position26>
       <Position27>
-        <Filename Value="uos.pas"/>
-        <Caret Line="1876" Column="7" TopLine="1861"/>
+        <Filename Value="uos_portaudio.pas"/>
+        <Caret Line="123" Column="16" TopLine="104"/>
       </Position27>
       <Position28>
-        <Filename Value="main_sp.pas"/>
-        <Caret Line="129" Column="71" TopLine="118"/>
+        <Filename Value="uos_portaudio.pas"/>
+        <Caret Line="131" Column="34" TopLine="112"/>
       </Position28>
+      <Position29>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2522" Column="11" TopLine="2510"/>
+      </Position29>
+      <Position30>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2518" Column="14" TopLine="2507"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -571,8 +589,6 @@ install:
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
       <SmallerCode Value="True"/>
-      <TargetCPU Value="x86_64"/>
-      <TargetOS Value="linux"/>
     </CodeGeneration>
     <Linking>
       <Debugging>
@@ -617,5 +633,4 @@ install:
       </Item3>
     </Exceptions>
   </Debugging>
-  <EditorMacros Count="0"/>
 </CONFIG>

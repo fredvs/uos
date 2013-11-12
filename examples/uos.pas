@@ -32,7 +32,7 @@ unit uos;
 ********************************************************************************}
 
 {
-    Copyright (C) 2003  Fred van Stappen
+    Copyright (C) 2013  Fred van Stappen
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -57,7 +57,7 @@ uses
      {$else}
   fpg_base, fpg_main,
     {$endif}
-  Classes, ctypes, Math, SysUtils, uos_portaudio,
+  Classes, ctypes, Math, SysUtils, uos_PortAudio,
   uos_LibSndFile, uos_Mpg123;
 
 type
@@ -67,6 +67,7 @@ type
   PArFloat = ^TArFloat;
   PArShort = ^TArShort;
   PArLong = ^TArLong;
+  procedure UOS_GetInfoDevice()  ;
 
 const
   ///// error
@@ -137,7 +138,28 @@ type
     function InitLib: integer;
   end;
 
-type
+  type
+   TUOS_DeviceInfos = record
+  DeviceNum: shortint;
+  DeviceName : string;
+  DefaultDevIn : boolean;
+  DefaultDevOut : boolean;
+  ChannelsIn : integer;
+  ChannelsOut : integer;
+  SampleRate : CDouble;
+  LatencyHighIn : CDouble ;
+  LatencyLowIn: CDouble ;
+  LatencyHighOut : CDouble ;
+  LatencyLowOut : CDouble ;
+  HostAPIName : string;
+      end;
+
+
+   type
+   TUOS_ARDeviceInfos = array of TUOS_DeviceInfos ;
+
+
+  type
   TUOS_WaveHeaderChunk = packed record
     wFormatTag: smallint;
     wChannels: word;
@@ -314,15 +336,15 @@ type
 
     function InputLength(InputIndex: integer): longint;
     ////////// InputIndex : InputIndex of existing input
-    ///////  result : Lenght of Input in samples
+    ///////  result : Length of Input in samples
 
     function InputLengthSeconds(InputIndex: integer): cfloat;
     ////////// InputIndex : InputIndex of existing input
-    ///////  result : Lenght of Input in seconds
+    ///////  result : Length of Input in seconds
 
     function InputLengthTime(InputIndex: integer): TTime;
     ////////// InputIndex : InputIndex of existing input
-    ///////  result : Lenght of Input in time format
+    ///////  result : Length of Input in time format
 
     function InputPosition(InputIndex: integer): longint;
     ////////// InputIndex : InputIndex of existing input
@@ -503,8 +525,11 @@ type
 var
   UOSLoadFlag: shortint;
   UOSLoadResult: TUOS_LoadResult;
-
-      {$IF DEFINED(LCL) or DEFINED(Console)}
+  UOSDeviceInfos : array of TUOS_DeviceInfos ;
+  UOSDeviceCount : integer;
+  UOSDefaultDeviceIn : integer ;
+  UOSDefaultDeviceOut : integer ;
+         {$IF DEFINED(LCL) or DEFINED(Console)}
       {$else}
 const
   MSG_CUSTOM1 = FPGM_USER + 1;
@@ -2305,6 +2330,9 @@ begin
       begin
         Result := 0;
         LoadResult.PAloadERROR := 0;
+          UOSDefaultDeviceOut :=  Pa_GetDefaultOutPutDevice() ;
+          UOSDefaultDeviceIn :=  Pa_GetDefaultInPutDevice() ;
+          UOSDeviceCount := Pa_GetDeviceCount() ;
       end
       else
         LoadResult.PAloadERROR := 2;
@@ -2349,6 +2377,10 @@ begin
       begin
         Result := 0;
         LoadResult.PAloadERROR := 0;
+          UOSDefaultDeviceOut :=  Pa_GetDefaultOutPutDevice() ;
+          UOSDefaultDeviceIn :=  Pa_GetDefaultInPutDevice() ;
+          UOSDeviceCount := Pa_GetDeviceCount() ;
+
       end
       else
       begin
@@ -2404,7 +2436,10 @@ begin
       begin
         Result := 0;
         LoadResult.PAloadERROR := 0;
-      end
+          UOSDefaultDeviceOut :=  Pa_GetDefaultOutPutDevice() ;
+          UOSDefaultDeviceIn :=  Pa_GetDefaultInPutDevice() ;
+          UOSDeviceCount := Pa_GetDeviceCount() ;
+       end
       else
       begin
         Result := -1;
@@ -2446,8 +2481,13 @@ begin
         LoadResult.PAloadERROR := 1;
       end
       else
-      if Pa_Load(PA_FileName) then
-        LoadResult.PAloadERROR := 0
+      if Pa_Load(PA_FileName) then begin
+        LoadResult.PAloadERROR := 0 ;
+          UOSDefaultDeviceOut :=  Pa_GetDefaultOutPutDevice() ;
+          UOSDefaultDeviceIn :=  Pa_GetDefaultInPutDevice() ;
+          UOSDeviceCount := Pa_GetDeviceCount() ;
+
+      end
       else
       begin
         Result := -1;
@@ -2490,6 +2530,52 @@ begin
   end;
   if Result = 0 then
     Result := InitLib();
+end;
+
+procedure UOS_GetInfoDevice()  ;
+var
+x : integer;
+devinf : PPaDeviceInfo;
+apiinf : PPaHostApiInfo;
+ begin
+  x := 0 ;
+  SetLength(UOSDeviceInfos, Pa_GetDeviceCount());
+
+  UOSDefaultDeviceOut :=  Pa_GetDefaultOutPutDevice() ;
+  UOSDefaultDeviceIn :=  Pa_GetDefaultInPutDevice() ;
+
+  UOSDeviceCount := Pa_GetDeviceCount() ;
+
+  while x < Pa_GetDeviceCount()  do
+  begin
+
+   UOSDeviceInfos[x].DeviceNum:= x;
+
+   devinf := Pa_GetDeviceInfo(x) ;
+   apiinf := Pa_GetHostApiInfo(devinf^.hostApi);
+   UOSDeviceInfos[x].HostAPIName := apiinf^._name;
+   UOSDeviceInfos[x].DeviceName:= devinf^._name;
+
+    if x = UOSDefaultDeviceIn then
+    UOSDeviceInfos[x].DefaultDevIn:= true else
+ UOSDeviceInfos[x].DefaultDevIn:= false ;
+
+      if x = UOSDefaultDeviceOut then
+    UOSDeviceInfos[x].DefaultDevOut:= true else
+ UOSDeviceInfos[x].DefaultDevOut:= false ;
+
+       UOSDeviceInfos[x].ChannelsIn := devinf^.maxInputChannels;
+        UOSDeviceInfos[x].ChannelsOut := devinf^.maxOutPutChannels;
+    UOSDeviceInfos[x].SampleRate:= devinf^.defaultSampleRate ;
+     UOSDeviceInfos[x].LatencyHighIn:= devinf^.defaultHighInputLatency ;
+     UOSDeviceInfos[x].LatencyLowIn:= devinf^.defaultLowInputLatency ;
+      UOSDeviceInfos[x].LatencyHighOut:= devinf^.defaultHighOutputLatency ;
+     UOSDeviceInfos[x].LatencyLowOut:= devinf^.defaultLowOutputLatency ;
+
+   inc(x) ;
+  end;
+
+ // := result ;
 end;
 
 constructor TUOS_Init.Create;

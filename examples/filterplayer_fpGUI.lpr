@@ -836,5 +836,5 @@ var
   end;
 
 begin
-  MainProc;
+   MainProc;
 end.

@@ -212,8 +212,7 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   Init := TUOS_Init.Create;   //// Create Iibraries Loader-Init
-
-  Init.PA_FileName := edit1.Text;
+   Init.PA_FileName := edit1.Text;
   Init.SF_FileName := edit2.Text;
   Init.MP_FileName := edit3.Text;
   Init.Flag := LoadAll;
@@ -469,6 +468,7 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+
 begin
   Form1.Height := 150;
 end;
