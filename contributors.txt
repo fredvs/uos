@@ -1,0 +1,20 @@
+Here are the great contributors of uos:
+
+Andrew Haines : All audio web streaming of uos => he did it.
+
+KpjComp : He gives the way to link PortAudio with SndFile and shows the best way to pause a thread.
+
+Sandro Cumerlato : He gives the DSPLevel procedure and lot, did SounTouch wrapper and other perfect codes and ideas.
+
+Blaazen : He knows digital audio and explains how it works. He is the Professor Audio.
+
+BigChimp : He is the one who converts me to oop way of programming. He never stops to help.
+
+Leledumbo : Helps me with threads managing and courage to continue uos.
+ 
+Dibo : Shows the best way to calculate time.
+
+
+And many other in Lazarus/fpc/fpGUI forum.
+
+Fred van Stappen : fiens@hotmail.com 

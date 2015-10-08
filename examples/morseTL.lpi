@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+      <Title Value="Morse Translator"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1" Active="Default">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="morseTL.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="33" Y="9"/>
+        <UsageCount Value="30"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="main_mt.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="main_mt"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="20" Y="9"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="uos.pas"/>
+        <UnitName Value="uos"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="86"/>
+        <CursorPos X="27" Y="94"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit2>
+    </Units>
+    <JumpHistory Count="14" HistoryIndex="13">
+      <Position1>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3" Column="3"/>
+      </Position1>
+      <Position2>
+        <Filename Value="uos.pas"/>
+        <Caret Line="104" Column="20" TopLine="92"/>
+      </Position2>
+      <Position3>
+        <Filename Value="uos.pas"/>
+        <Caret Line="105" Column="23" TopLine="92"/>
+      </Position3>
+      <Position4>
+        <Filename Value="uos.pas"/>
+        <Caret Line="106" Column="23" TopLine="92"/>
+      </Position4>
+      <Position5>
+        <Filename Value="uos.pas"/>
+        <Caret Line="541" Column="20" TopLine="516"/>
+      </Position5>
+      <Position6>
+        <Filename Value="uos.pas"/>
+        <Caret Line="544" Column="23" TopLine="519"/>
+      </Position6>
+      <Position7>
+        <Filename Value="uos.pas"/>
+        <Caret Line="547" Column="23" TopLine="522"/>
+      </Position7>
+      <Position8>
+        <Filename Value="uos.pas"/>
+        <Caret Line="7" Column="107"/>
+      </Position8>
+      <Position9>
+        <Filename Value="uos.pas"/>
+        <Caret Line="117" Column="28" TopLine="102"/>
+      </Position9>
+      <Position10>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3711" Column="18" TopLine="3699"/>
+      </Position10>
+      <Position11>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3730" Column="24" TopLine="3719"/>
+      </Position11>
+      <Position12>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3814" Column="23" TopLine="3802"/>
+      </Position12>
+      <Position13>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3940" Column="26" TopLine="3927"/>
+      </Position13>
+      <Position14>
+        <Filename Value="main_mt.pas"/>
+        <Caret Line="5" Column="29"/>
+      </Position14>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="Morse_Transator"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="units"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <WriteFPCLogo Value="False"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Watches Count="2">
+      <Item1>
+        <Expression Value="key"/>
+      </Item1>
+      <Item2>
+        <Expression Value="i"/>
+      </Item2>
+    </Watches>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

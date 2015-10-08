@@ -1,0 +1,1162 @@
+[componentpalette]
+order0=0
+order1=0
+order2=0
+order3=0
+order4=0
+order5=0
+order6=0
+order7=0
+order8=0
+order9=0
+order10=0
+order11=0
+order12=0
+order13=0
+order14=0
+order15=0
+order16=0
+[projectoptions]
+projectdir=/home/fred/uos/examples
+projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
+findinfiledialog=34
+ [findinfileadialogfo.subdirs]
+ value=0
+ [findinfileadialogfo.inopenfiles]
+ value=0
+ [findinfileadialogfo.wholeword]
+ value=0
+ [findinfileadialogfo.casesensitive]
+ value=0
+ [findinfileadialogfo.indirectories]
+ value=1
+ [findinfileadialogfo.mask]
+ value="*.pas" "*.pp" "*.inc"
+ history=1
+  "*.pas" "*.pp" "*.inc"
+ [findinfileadialogfo.dir]
+ filenames=0
+ filehistory=0
+ filefilterindex=0
+ filefilter=
+ filecolwidth=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ [findinfileadialogfo.findtext]
+ value=
+ history=1
+  
+ [findinfileadialogfo]
+ stackedunder=
+ x=386
+ y=189
+ cx=339
+ cy=251
+finddialog=8
+ [finddialogfo.selectedonly]
+ value=0
+ [finddialogfo]
+ stackedunder=
+ x=319
+ y=205
+ cx=331
+ cy=116
+replacedialog=15
+ [replacedialogfo.promptonreplace]
+ value=1
+ [replacedialogfo.selectedonly]
+ value=0
+ [replacedialogfo.replacetext]
+ value=DocView
+ history=2
+  DocView
+  
+ [replacedialogfo]
+ stackedunder=
+ x=142
+ y=302
+ cx=437
+ cy=171
+options=99
+ [projectoptionsfo.twidgetgrid3]
+ propcolwidthref=740
+ sortdescend0=0
+ sortdescend1=0
+ sortdescend2=0
+ sortdescend3=0
+ width4=345
+ sortdescend4=0
+ width5=186
+ sortdescend5=0
+ width6=158
+ sortdescend6=0
+ [projectoptionsfo.twidgetgrid4]
+ propcolwidthref=564
+ width0=96
+ sortdescend0=0
+ sortdescend1=0
+ width2=73
+ sortdescend2=0
+ width3=271
+ sortdescend3=0
+ width4=283
+ sortdescend4=0
+ sorted=0
+ col=0
+ row=0
+ rowheight=17
+ [projectoptionsfo.newfile]
+ firsttab=0
+ index=0
+ [projectoptionsfo.fontaliasgrid]
+ propcolwidthref=423
+ width0=98
+ sortdescend0=0
+ width1=412
+ sortdescend1=0
+ width2=30
+ sortdescend2=0
+ width3=50
+ sortdescend3=0
+ width4=50
+ sortdescend4=0
+ width5=50
+ sortdescend5=0
+ width6=70
+ sortdescend6=0
+ [projectoptionsfo.macrosplitter]
+ x=0
+ y=143
+ xprop=1
+ yprop=0.32808988764045
+ [projectoptionsfo.macrogrid]
+ propcolwidthref=547
+ sortdescend0=0
+ sortdescend1=0
+ sortdescend2=0
+ sortdescend3=0
+ sortdescend4=0
+ sortdescend5=0
+ width6=146
+ sortdescend6=0
+ width7=535
+ sortdescend7=0
+ [projectoptionsfo.makegroupbox]
+ firsttab=0
+ index=1
+ [projectoptionsfo.exceptionsgrid]
+ propcolwidthref=724
+ width0=47
+ sortdescend0=0
+ width1=718
+ sortdescend1=0
+ [projectoptionsfo.ttabwidget1]
+ firsttab=0
+ index=4
+ [projectoptionsfo.grid]
+ propcolwidthref=448
+ width0=296
+ sortdescend0=0
+ width1=441
+ sortdescend1=0
+ [projectoptionsfo.filefiltergrid]
+ propcolwidthref=632
+ width0=112
+ sortdescend0=0
+ width1=625
+ sortdescend1=0
+ [projectoptionsfo.ttabwidget2]
+ firsttab=0
+ index=1
+ [projectoptionsfo.tabwidget]
+ firsttab=0
+ index=2
+ [projectoptionsfo]
+ stackedunder=
+ x=292
+ y=97
+ cx=773
+ cy=497
+programparameters=18
+ [programparametersfo.grid]
+ propcolwidthref=304
+ width0=20
+ sortdescend0=0
+ width1=103
+ sortdescend1=0
+ width2=194
+ sortdescend2=0
+ sorted=0
+ col=-1073741823
+ row=-1073741823
+ rowheight=18
+ [programparametersfo]
+ stackedunder=
+ x=272
+ y=243
+ cx=328
+ cy=348
+settings=13
+ [settingsfo.tsplitter2]
+ x=192
+ y=16
+ xprop=0.5906432748538
+ yprop=0.97297297297297
+ [settingsfo]
+ x=410
+ y=41
+ cx=344
+ cy=651
+ wsize=0
+ active=1
+ visible=1
+mainfile=${PROJECTDIR}simpleplayer_fpGUI.pas
+targetfile=${PROJECTDIR}/simpleplayer_fpGUI
+messageoutputfile=
+makecommand=${COMPILER}
+makedir=
+unitdirs=7
+ ${FPGUIDIR}/lib/${TargetCPU}-${TargetOS}
+ ${FPGUIDIR}
+ ${FPGUIDIR}/src/corelib/gdi
+ ${FPGUIDIR}/src
+ ${FPGUIDIR}/src/corelib/x11
+ ${FPGUIDIR}/src/gui
+ ${FPGUIDIR}/src/corelib
+unitpref=-Fu
+incpref=-Fi
+libpref=-Fl
+objpref=-Fo
+targpref=-o
+befcommand=0
+aftcommand=0
+makeoptions=7
+ -fPIC
+ -l -Mobjfpc -Schi
+ -FE.
+ -FUunits
+ -B
+ -O2 -XX -Xs -CX
+ -vewnhibq
+codetemplatedirs=1
+ ${TEMPLATEDIR}
+toolmenus=1
+   fpGUI &DocView  
+toolfiles=1
+ ${DOCVIEWDIR}/docview
+toolparams=1
+ FPCHELP -k ${cursword}
+fontnames=0
+scriptbeforecopy=
+scriptaftercopy=
+newprojectfiles=4
+ ${TEMPLATEDIR}/fpgui_single_unit/project.pas
+ ${TEMPLATEDIR}fpgui/units/i386-linux/placeholder.txt
+ ${TEMPLATEDIR}fpgui/units/i386-win32/placeholder.txt
+ ${TEMPLATEDIR}fpgui/units/x86_64-linux/placeholder.txt
+newprojectfilesdest=4
+ ${%PROJECTNAME%}.pas
+ ${%PROJECTDIR%}units/i386-linux/placeholder.txt
+ ${%PROJECTDIR%}units/i386-win32/placeholder.txt
+ ${%PROJECTDIR%}units/x86_64-linux/placeholder.txt
+newfinames=3
+ Program
+ Unit
+ Textfile
+newfifilters=3
+ "*.pas" "*.pp"
+ "*.pas" "*.pp"
+ 
+newfiexts=3
+ pas
+ pas
+ 
+newfisources=3
+ ${TEMPLATEDIR}default/program.pas
+ ${TEMPLATEDIR}default/unit.pas
+ 
+newfonames=2
+ Mainform
+ Simple Form
+newfonamebases=2
+ 
+ 
+newfosources=2
+ ${TEMPLATEDIR}fpgui/mainform.pas
+ ${TEMPLATEDIR}fpgui/simpleform.pas
+newfoforms=2
+ 
+ 
+forcezorder=-1
+stripmessageesc=0
+copymessages=0
+closemessages=0
+checkmethods=1
+colorerror=-1610612712
+colorwarning=-1610612717
+colornote=-1610612716
+usercolors=30
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+usercolorcomment=30
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+formatmacronames=0
+formatmacrovalues=0
+settingsfile=
+settingseditor=0
+settingsdebugger=0
+settingsstorage=0
+settingsprojecttree=0
+settingsautoload=0
+settingsautosave=0
+modulenames=0
+moduletypes=0
+modulefiles=0
+befcommandon=0
+makeoptionson=7
+ 0
+ 63
+ 63
+ 63
+ 32
+ 48
+ 63
+aftcommandon=0
+unitdirson=7
+ 196671
+ 196671
+ 0
+ 196671
+ 196671
+ 196671
+ 196671
+macroon=5
+ 1
+ 3
+ 6
+ 4
+ 63
+macronames=5
+ TargetCPU
+ TargetOS
+ TargetCPU
+ TargetOS
+ HelpPath
+macrovalues=5
+ x86_64
+ linux
+ i386
+ win32
+ /opt/FPC_Docs/inf/
+macrogroup=0
+groupcomments=6
+ Linux 64-bit
+ Linux 32-bit
+ Windows 32-bit
+ 
+ 
+ 
+toolsave=1
+ 0
+toolhide=1
+ 0
+toolparse=1
+ 0
+toolmessages=1
+ 0
+fontalias=0
+fontancestors=0
+fontheights=0
+fontwidths=0
+fontoptions=0
+fontxscales=0
+expandprojectfilemacros=4
+ 1
+ -1
+ -1
+ -1
+loadprojectfile=4
+ 1
+ 0
+ 0
+ 0
+newinheritedforms=2
+ 0
+ 0
+uid=0
+sourcefilemasks=5
+ "*.pas" "*.dpr" "*.pp" "*.inc" "*.lpr"
+ "*.c" "*.cc" "*.h"
+ "*.mfm"
+ "*.ipf"
+ "*.sql"
+syntaxdeffiles=5
+ ${SYNTAXDEFDIR}pascal_ideu.sdef
+ ${SYNTAXDEFDIR}cpp.sdef
+ ${SYNTAXDEFDIR}objecttext.sdef
+ ${SYNTAXDEFDIR}ipf2.sdef
+ ${SYNTAXDEFDIR}sql.sdef
+filemasknames=5
+ Source
+ Forms
+ Text
+ IPF help
+ All Files
+filemasks=5
+ "*.pp" "*.pas" "*.inc" "*.dpr" "*.lpr"
+ *.mfm
+ *.txt
+ *.ipf
+ *
+showgrid=1
+snaptogrid=1
+moveonfirstclick=1
+noformdesignerdocking=0
+gridsizex=8
+gridsizey=8
+autoindent=1
+blockindent=2
+linenumberson=1
+rightmarginon=1
+rightmarginchars=80
+scrollheight=0
+tabstops=2
+spacetabs=1
+showtabs=0
+tabindent=0
+editfontname=mseide_source
+editfontheight=16
+editfontwidth=0
+editfontextraspace=0
+editfontcolor=-1879048183
+editbkcolor=-1879048186
+statementcolor=14745599
+editfontantialiased=1
+editmarkbrackets=1
+backupfilecount=0
+encoding=0
+codetemplatedirs=1
+ ${TEMPLATEDIR}
+debugcommand=${DEBUGGER}
+debugoptions=
+debugtarget=
+runcommand=
+xtermcommand=xterm -S${PTSN}/${PTSH}
+remoteconnection=
+uploadcommand=
+gdbprocessor=Auto
+gdbservercommand=
+gdbservercommandattach=
+beforeconnect=
+afterconnect=
+beforeload=
+afterload=
+beforerun=
+sourcebase=
+sourcedirs=5
+ ${FPGUI_DIR}/src/gui/
+ ${FPGUI_DIR}/src/corelib/gdi/X/
+ ${FPGUI_DIR}/src/corelib/x11/
+ ${FPGUI_DIR}/src/corelib/
+ ./
+defines=0
+progparameters=
+progworkingdirectory=
+envvarnames=0
+envvarvalues=0
+defineson=0
+stoponexception=0
+valuehints=1
+activateonbreak=1
+raiseonbreak=1
+showconsole=1
+externalconsole=0
+settty=1
+gdbdownload=0
+downloadalways=0
+startupbkpt=0
+startupbkpton=0
+gdbsimulator=0
+gdbserverstartonce=0
+gdbloadtimeout=
+gdbserverwait=0
+nogdbserverexit=0
+gdbservertty=0
+exceptclassnames=1
+ EconvertError
+exceptignore=1
+ 0
+nodebugbeginend=0
+sigsettings=27
+ 1,1,T,F
+ 3,3,T,F
+ 4,4,T,F
+ 6,6,T,F
+ 7,7,T,F
+ 8,8,T,F
+ 9,9,T,F
+ 10,10,T,F
+ 11,11,T,F
+ 12,12,T,F
+ 13,13,T,F
+ 15,15,T,F
+ 16,16,T,F
+ 17,17,F,F
+ 18,18,T,F
+ 19,19,T,F
+ 20,20,T,F
+ 21,21,T,F
+ 22,22,T,F
+ 23,23,T,F
+ 24,24,T,F
+ 25,25,T,F
+ 26,26,T,F
+ 27,27,T,F
+ 28,28,T,F
+ 29,29,T,F
+ 30,30,T,F
+defaultmake=4
+[breakpoints]
+on=0
+path=0
+line=0
+address=0
+addbkpt=0
+ignore=0
+condition=0
+panels=1
+ panel1
+units=
+ (
+ a=0,4149,6,Pascal Units
+ c=1
+  (
+  file=sak_fpGUI_test.lpr
+  kind=1
+  a=0,4100,0,simpleplayer_fpGUI.pas
+  )
+ )
+cmodules=
+ (
+ a=0,4132,6,C Modules
+ )
+files=
+ (
+ a=0,4148,6,Text Files
+ c=1
+  (
+  file=/home/fred/designer_ext/src/extrafpc.cfg
+  kind=1
+  a=0,4100,0,extrafpc.cfg
+  )
+ )
+[componentstore]
+storedir=/home/fred/Téléchargements/mseide-msegui.git/apps/ide/compstore/
+filename=
+[components]
+[selecteditpage]
+colwidth=162
+x=974
+y=129
+cx=169
+cy=473
+[progparams]
+envvarons=0
+[edit]
+hintwidth=462
+hintheight=214
+finddtext=res=
+findhistory=7
+ res=
+ 30005
+ NewView
+ images
+ Sort
+ sort
+ uses
+findoptions=1
+editpos=1
+ 0,4
+bookmarks0=0
+sourcefiles=1
+ /home/fred/uos/examples/simpleplayer_fpGUI.pas
+relpaths=1
+ simpleplayer_fpGUI.pas
+ismoduletexts=1
+ 0
+modules=0
+moduleoptions=0
+visiblemodules=0
+nomenumodules=0
+[sourcefo.tabwidget]
+tabsize=113
+firsttab=0
+index=0
+[layout]
+windowlayout=503
+ [mainfo.basedock]
+ splitdir=2
+ useroptions=15488
+ [mainfo]
+ splitdir=0
+ useroptions=33554555
+ stackedunder=
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=128
+ y=24
+ cx=1139
+ cy=717
+ rcx=0
+ rcy=0
+ wsize=0
+ active=1
+ visible=1
+ [targetconsolefo]
+ splitdir=0
+ useroptions=16489
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=495
+ y=172
+ cx=497
+ cy=314
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=1
+ [threadsfo]
+ splitdir=0
+ useroptions=16489
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [memoryfo]
+ splitdir=0
+ useroptions=16507
+ stackedunder=cpuc86_64fo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=100
+ y=100
+ cx=453
+ cy=354
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [memoryfo.add]
+ value=0
+ [memoryfo.memon]
+ value=0
+ [memoryfo.bitwidth]
+ value=0
+ [memoryfo.cnt]
+ value=0
+ [disassfo]
+ splitdir=0
+ useroptions=16491
+ stackedunder=componentstorefo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=162
+ y=502
+ cx=564
+ cy=210
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [findinfilefo]
+ splitdir=0
+ useroptions=16491
+ stackedunder=symbolfo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=239
+ y=115
+ cx=678
+ cy=414
+ rcx=0
+ rcy=0
+ [projecttreefo]
+ splitdir=0
+ useroptions=49259
+ parent=mainfo.panel1.container
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=0
+ cx=159
+ cy=535
+ rcx=0
+ rcy=0
+ [projecttreefo.grid]
+ propcolwidthref=1
+ width0=170
+ sortdescend0=0
+ width1=1
+ sortdescend1=0
+ sorted=0
+ col=0
+ row=-1073741823
+ rowheight=17
+ [stackfo]
+ splitdir=0
+ useroptions=24681
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [watchpointsfo]
+ splitdir=0
+ useroptions=16489
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=537
+ y=26
+ cx=483
+ cy=210
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [watchpointsfo.grid]
+ propcolwidthref=352
+ sortdescend0=0
+ values1=0
+ values1_ci=-1
+ width1=33
+ sortdescend1=0
+ values2=0
+ width2=158
+ sortdescend2=0
+ width4=34
+ sortdescend4=0
+ values5=0
+ values5_ci=-1
+ width5=38
+ sortdescend5=0
+ values6=0
+ width6=184
+ sortdescend6=0
+ [breakpointsfo]
+ splitdir=0
+ useroptions=16491
+ stackedunder=memoryfo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=107
+ y=404
+ cx=477
+ cy=128
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [breakpointsfo.bkptson]
+ value=0
+ [objectinspectorfo]
+ splitdir=0
+ useroptions=16491
+ stackedunder=componentpalettefo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=670
+ y=179
+ cx=316
+ cy=484
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [objectinspectorfo.grid]
+ propcolwidthref=306
+ width0=73
+ sortdescend0=0
+ width1=227
+ sortdescend1=0
+ [symbolfo]
+ splitdir=0
+ useroptions=16507
+ stackedunder=targetconsolefo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=142
+ y=257
+ cx=361
+ cy=137
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [symbolfo.grid]
+ propcolwidthref=222
+ values0=14
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ width0=111
+ sortdescend0=0
+ width1=135
+ sortdescend1=0
+ [symbolfo.symbol]
+ [watchfo]
+ splitdir=0
+ useroptions=24681
+ parent=mainfo.basedock
+ visible=0
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=53
+ y=0
+ cx=247
+ cy=44
+ rcx=1129
+ rcy=679
+ [watchfo.grid]
+ propcolwidthref=123
+ values0=2
+  -1
+  -1
+ values0_ci=-1
+ sortdescend0=0
+ values1=2
+  po2^
+  test
+ width1=66
+ sortdescend1=0
+ values3=2
+  0
+  0
+ values3_ci=-1
+ sortdescend3=0
+ values4=2
+  0
+  0
+ values4_ci=-1
+ width4=13
+ sortdescend4=0
+ [watchfo.watchon]
+ [watchfo.expression]
+ [watchfo.watcheson]
+ value=1
+ [messagefo]
+ splitdir=0
+ useroptions=82027
+ parent=mainfo.basedock
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=579
+ cx=1129
+ cy=100
+ rcx=0
+ rcy=0
+ [componentstorefo]
+ splitdir=0
+ useroptions=24699
+ stackedunder=findinfilefo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=100
+ y=100
+ cx=445
+ cy=354
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [componentstorefo.grid]
+ propcolwidthref=435
+ width0=111
+ sortdescend0=0
+ sortdescend1=0
+ width2=160
+ sortdescend2=0
+ width3=185
+ sortdescend3=0
+ [componentstorefo.storefiledialog]
+ filenames=1
+  /home/mse/test/msegui/apps/ide/compstore/
+ lastdir=/home/mse/test/msegui/apps/ide/compstore/
+ filehistory=0
+ filefilterindex=0
+ filefilter=
+ filecolwidth=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ [componentstorefo.groupfiledialog]
+ filenames=1
+  /home/mse/test/msegui/apps/ide/compstore/
+ lastdir=/home/mse/test/msegui/apps/ide/compstore/
+ filehistory=0
+ filefilterindex=0
+ filefilter=
+ filecolwidth=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ [componentstorefo.compfiledialog]
+ filenames=0
+ lastdir=
+ filehistory=0
+ filefilterindex=0
+ filefilter=
+ filecolwidth=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ [componentpalettefo]
+ splitdir=0
+ useroptions=24683
+ stackedunder=disassfo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=428
+ y=66
+ cx=440
+ cy=129
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [componentpalettefo.componentpages]
+ activetab=0
+ [debuggerfo]
+ splitdir=0
+ useroptions=24683
+ parent=mainfo.basedock
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=0
+ cx=1129
+ cy=38
+ rcx=0
+ rcy=0
+ [sourcefo]
+ splitdir=0
+ useroptions=16489
+ parent=mainfo.panel1.container
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=162
+ y=0
+ cx=967
+ cy=535
+ rcx=0
+ rcy=0
+ [actionsmo.watchesonact]
+ checked=1
+ [actionsmo.bluedotsonact]
+ checked=1
+ [cpuc86_64fo]
+ irqoff=0
+ splitdir=0
+ useroptions=16491
+ stackedunder=objectinspectorfo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=183
+ y=113
+ cx=352
+ cy=277
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
+ [mainfo.panel1]
+ splitdir=1
+ useroptions=33652203
+ parent=mainfo.basedock
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=41
+ cx=1129
+ cy=535
+ rcx=0
+ rcy=0
+[targetconsole]
+finddtext=
+findhistory=0
+findoptions=1
