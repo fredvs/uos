@@ -22,7 +22,7 @@ uos uses the SoundTouch, PortAudio, SndFile and Mpg123 audio libraries.
 
 Included in the package:
 . Examples fpGUI, LCL and console.
-. Binaries of libraries for Linux, Windows, Mac osX, freeBSD.
+. Binaries of libraries for Linux, Windows, Mac osX, FreeBSD.
 
 Fred van Stappen
 fiens@hotmail.com
