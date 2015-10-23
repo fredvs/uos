@@ -1,67 +1,18 @@
+{This is the Dynamic loading version of PortAudio Pascal Wrapper.
+ Fred van Stappen / fiens@hotmail.com 
+ Load SoundTouch library with pa_load() and release it with pa_unload().
+ 
+ Reference counting added
+ by Max Karpushin, homeplaner@yandex.ru }
 
 unit uos_portaudio;
 
 {$mode objfpc}{$H+}
 
-{This is the Dynamic loading version of PortAudio Pascal Wrapper.
- Load the PortAudio library with Pa_load() and
- release it with Pa_unload().
-
- Fred van Stappen / fiens@hotmail.com
-
- //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- }
- {
-    - Reference counting and some code formatting are added
-    - Pa_IsFormatSupported fixed: PaStreamParameters -> PPaStreamParameters in arguments
-
-  by Max Karpushin, homeplaner@yandex.ru
-}
-{
-  PortAudio bindings for FPC by the HuMuS team.
- 
-  Copyright (c) 2009-2010 HuMuS Project
-  Maintained by Roland Schaefer
-
-  PortAudio Portable Real-Time Audio Library
-  Latest version available at: http://www.portaudio.com
-
-  Permission is hereby granted, free of charge, to any person obtaining
-  a copy of this software and associated documentation files
-  (the "Software"), to deal in the Software without restriction,
-  including without limitation the rights to use, copy, modify, merge,
-  publish, distribute, sublicense, and/or sell copies of the Software,
-  and to permit persons to whom the Software is furnished to do so,
-  subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
-  ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
-  CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-  The text above constitutes the entire PortAudio license; however, 
-  the PortAudio community also makes the following non-binding requests:
-
-  Any person wishing to distribute modifications to the Software is
-  requested to send the modifications to the original developer so that
-  they can be incorporated into the canonical version. It is also 
-  requested that these non-binding requests be included along with the 
-  license above.
-}
-
-
 interface
 
 uses
-
   dynlibs, CTypes  ;
-
 
 type
   PaError = CInt32;
@@ -98,11 +49,9 @@ type
     paNoError := 0
   );
 
-
   PaDeviceIndex = CInt32;
   
   PaHostApiIndex = CInt32;
-  
   
   PaHostApiTypeId =(paInDevelopment := 0,
     paDirectSound := 1,    
@@ -120,7 +69,6 @@ type
     paAudioScienceHPI := 14
   );
   
-  
   PaHostApiInfo = record
     structVersion : CInt32;
     _type : PaHostApiTypeId ;
@@ -130,21 +78,18 @@ type
     defaultOutputDevice : PaDeviceIndex;
   end;
   PPaHostApiInfo = ^PaHostApiInfo;
-  
-  
+   
   PaHostErrorInfo = record
     hostApiType : PaHostApiTypeId;
     errorCode : CLong;
     errorText : PChar;
   end;
   PPaHostErrorInfo = ^PaHostErrorInfo;
-  
-  
+   
   PaTime = CDouble;
   
   PaSampleFormat = pCULongLong;
-  
-  
+    
   PaDeviceInfo = record
     structVersion : CInt32;
     _name : PChar;
@@ -159,7 +104,6 @@ type
   end;
   PPaDeviceInfo = ^PaDeviceInfo;
 
-
   PaStreamParameters = record
     device : PaDeviceIndex;
     channelCount : CInt32;
@@ -168,7 +112,6 @@ type
     hostApiSpecificStreamInfo : Pointer;
   end;
   PPaStreamParameters = ^PaStreamParameters;
-
 
   // ************************* Streaming types *************************
 
@@ -184,16 +127,13 @@ type
     outputBufferDacTime : PaTime;
   end;
   PPaStreamCallbackTimeInfo = ^PaStreamCallbackTimeInfo;
-  
 
   PaStreamCallbackFlags = CULong;
-
 
   PaStreamCallbackResult =(
     paContinue := 0,
     paComplete := 1,
     paAbort := 2);
-  
   
   PaStreamCallback = function(
     input : Pointer;
@@ -204,10 +144,8 @@ type
     userData : Pointer) : CInt32;
   PPaStreamCallback = ^PaStreamCallback;  
 
-
   PaStreamFinishedCallback = procedure(userData : Pointer);
   PPaStreamFinishedCallback = ^PaStreamFinishedCallback;
-
 
   PaStreamInfo = record
     structVersion : CInt32;
@@ -216,8 +154,6 @@ type
     sampleRate : CDouble;
   end;
   PPaStreamInfo = ^PaStreamInfo;
-
-
 
 const
   paFormatIsSupported = 0;

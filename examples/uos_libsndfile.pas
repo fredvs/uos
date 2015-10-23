@@ -1,51 +1,8 @@
-{
-
-This is the Dynamic loading version with reference counting of LibSndFile.pas.
-With reference counter too.
- Load the LibSndFile library with sf_load() and
- release it with sf_unload().
-
- Fred van Stappen / fiens@hotmail.com / 2013
-
- }
+{This is the Dynamic loading version with reference counting of LibSndFile.pas.
+ Load the LibSndFile library with sf_load() annd release it with sf_unload().
+ Fred van Stappen / fiens@hotmail.com }
 
 unit uos_libsndfile;
-
-(*
- - Translation for sndfile.h version 1.0.17 by Ido Kanner idokan at gmail dot com
-*)
-{
-** Copyright (C) 1999-2006 Erik de Castro Lopo <erikd@mega-nerd.com>
-**
-** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU Lesser General Public License as published by
-** the Free Software Foundation; either version 2.1 of the License, or
-** (at your option) any later version.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU Lesser General Public License for more details.
-**
-** You should have received a copy of the GNU Lesser General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-
-** sndfile.h -- system-wide definitions
-**
-** API documentation is in the doc/ directory of the source code tarball
-** and at http://www.mega-nerd.com/libsndfile/api.html.
-
- This is the version 1.0.X header file.
- 
- For the Metrowerks CodeWarrior Pro Compiler (mainly MacOS)
- 
-** The following file types can be read and written.
-** A file type would consist of a major type (ie SF_FORMAT_WAV) bitwise
-** ORed with a minor type (ie SF_FORMAT_PCM). SF_FORMAT_TYPEMASK and
-** SF_FORMAT_SUBMASK can be used to separate the major and minor file
-** types.
-}
 
 {$IFDEF FPC}
   {$MODE objfpc}
@@ -59,8 +16,6 @@ unit uos_libsndfile;
 
 {$LONGSTRINGS ON}(* remember: in Lazarus this is not default ! *)
 {** LONGSTRINGS is equivalent to H+}
-
-
 
 interface
 

@@ -1,5 +1,5 @@
-{This is HTTP Thread Getter done by
-   Andrew Haines => andrewd207@aol.com }
+{This is HTTP Thread Getter by
+ Andrew Haines => andrewd207@aol.com}
 
 unit uos_httpgetthread;
 

@@ -1,3 +1,8 @@
+{ United Openlibraries of Sound (uos)
+  Fred van Stappen fiens@hotmail.com }
+
+// This is the "Flat Layer" of uos => for universal procedures.
+
 unit uos_flat;
 
 {$mode objfpc}{$H+}
@@ -15,41 +20,6 @@ unit uos_flat;
 {$DEFINE soundtouch} // uncomment to enable soundtouch compiling
 
 {$DEFINE webstream} // uncomment to enable Internet Audio Stream
-
-   // This is the "Flat Layer" of uos => for universal procedures.
-
-{*******************************************************************************
-*                  United Openlibraries of Sound ( uos )                       *
-*                  --------------------------------------                      *
-*                                                                              *
-*          United procedures to access Open Sound (IN/OUT) libraries           *
-*                                                                              *
-*              With Big contributions of (in alphabetic order)                 *
-*   Andrew, BigChimp, Blaazen, Sandro Cumerlato, Dibo, KpjComp, Leledumbo.     *
-*                                                                              *
-*                 Fred van Stappen /  fiens@hotmail.com                        *
-*                                                                              *
-*                                                                              *
-********************************************************************************
-}
-{
-    Copyright (C) 2012/20115  Fred van Stappen
-
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-
-}
 
 interface
 

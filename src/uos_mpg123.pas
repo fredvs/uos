@@ -1,22 +1,9 @@
+{ This is the dynamical loader for mpg123 library with reference counting.
+  Load the library with mp_load() annd release with mp_unload().
+  License : modified LGPL.
+  Fred van Stappen  fiens@hotmail.com }
+
 unit uos_mpg123;
-
-/////// This is the dynamical loader for mpg123 library with reference counting.
-
-//////  Tested in both 32 and 64 bits environnements (Windows, Linux and Macosx).
-
-//////   Based on the --  mpg123rt.pas -- header (many thanks).
-
-/////// Just call the functions mp_load(your_lib_filename) / mp_unload(your_lib_filename).                         *
-
-//////         Fred van Stappen     fiens@hotmail.com
-{*******************************************************************************
-*                        --  mpg123rt.pas --                                   *
-*                                                                              *
-*  libmpg123:  MPEG Audio Decoder library (version 1.13.0)                     *
-*                                                                              *
-*                                                                              *
-*  This file is for linking the dll ON RUNTIME                                 *
-*******************************************************************************}
 
 interface
 
@@ -946,6 +933,7 @@ begin
       mpg123_param := Tmpg123_param(GetProcAddress(Mp_Handle, 'mpg123_param'));
       mpg123_getparam := Tmpg123_getparam(
         GetProcAddress(Mp_Handle, 'mpg123_getparam'));
+
       mpg123_plain_strerror := Tmpg123_plain_strerror(
         GetProcAddress(Mp_Handle, 'mpg123_plain_strerror'));
       mpg123_strerror := Tmpg123_strerror(

@@ -1,7 +1,10 @@
+{ United Openlibraries of Sound (uos)
+  Fred van Stappen fiens@hotmail.com }
+
 unit uos;
 {$mode objfpc}{$H+}
 
-    // WARNING =>  All those defines must be the same as in uos_flat.pas
+// WARNING =>  All those defines must be the same as in uos_flat.pas
 
 {.$DEFINE ConsoleApp} // if FPC version < 2.7.1 uncomment for console application
 
@@ -14,60 +17,6 @@ unit uos;
 {$DEFINE soundtouch} // uncomment to enable soundtouch compiling
 
 {$DEFINE webstream} // uncomment to enable Internet Audio Stream
-
-{*******************************************************************************
-*                  United Openlibraries of Sound ( uos )                       *
-*                  --------------------------------------                      *
-*                                                                              *
-*          United procedures to access Open Sound (IN/OUT) libraries           *
-*                                                                              *
-*              With Big contributions of (in alphabetic order)                 *
-*       Andrew, BigChimp, Blaazen, Sandro, Dibo, KpjComp, Leledumbo.           *
-*                                                                              *
-*                 Fred van Stappen /  fiens@hotmail.com                        *
-*                                                                              *
-*                                                                              *
-********************************************************************************
-*  1 th changes: 2012-07-20   (first shot)                                     *
-*  2 th changes: 2012-07-31   (mono thread, only one stream)                   *
-*  3 th changes: 2012-11-13  (mono thread, multi streams)                      *
-*  4 th changes: 2012-11-14  (multi threads, multi streams)                    *
-*  5 th changes: 2012-11-27 (event pause, position, volume, reverse)           *
-*  6 th changes: 2012-12-31 (Class/Oop look, DSP, multi IN/OUT)                *
-*  7 th changes: 2013-01-12 (Float resolution for all, new DSP proc)           *
-*  8 th changes: 2013-01-21 (Record, Direct Wire, Save to file, new DSP proc)  *
-*  9 th changes: 2013-01-28 (FFT, Filters HighPass, LowPass, BandSelect,       *
-*                                    BandReject, BandPass)                     *
-* 10 th changes: 2013-02-02 (Dibo's time procedures, Max Karpushin add         *
-*                                 reference counting in PortAudio)             *
-* 11 th changes: 2013-05-03 (Fully FP/fpGUI/Lazarus compatible)                *
-* 12 th changes: 2014-10-01 (Added GetLevel procedure)                         *
-* 13 th changes: 2014-02-01 (Added Plugin + Dynamic Buffer => uos version 1.0) *
-* 14 th changes: 2014-03-01 (String=>PChar, GetSampleRale, => uos version 1.2) *
-* 15 th changes: 2014-03-16 (uos_flat + uos => uos version 1.3)                *
-* 16 th changes: 2014-06-16 (Java uos library compatible)                      *
-* 17 th changes: 2015-03-15 (freeBSD compatible)                               *
-* 18 th changes: 2015-03-20 (Andrew's Audio Internet Streaming)                *
-*                                                                              *
-********************************************************************************}
-
-{
-    Copyright (C) 2012/2015  Fred van Stappen
-
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-}
 
 interface
 

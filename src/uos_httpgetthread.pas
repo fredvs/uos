@@ -1,5 +1,7 @@
-{This is HTTP Thread Getter done by
-   Andrew Haines => andrewd207@aol.com }
+{This is HTTP Thread Getter
+ created by Andrew Haines => andrewd207@aol.com
+ License : modified LGPL.
+ Fred van Stappen / fiens@hotmail.com}
 
 unit uos_httpgetthread;
 
