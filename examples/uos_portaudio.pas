@@ -1,9 +1,8 @@
 {This is the Dynamic loading version of PortAudio Pascal Wrapper.
+ Load library with pa_load() and release with pa_unload().
+ License : modified LGPL. 
  Fred van Stappen / fiens@hotmail.com 
- Load SoundTouch library with pa_load() and release it with pa_unload().
- 
- Reference counting added
- by Max Karpushin, homeplaner@yandex.ru }
+ Reference counting added by Max Karpushin / homeplaner@yandex.ru} 
 
 unit uos_portaudio;
 

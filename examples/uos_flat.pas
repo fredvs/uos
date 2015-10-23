@@ -1,4 +1,5 @@
 { United Openlibraries of Sound (uos)
+  License : modified LGPL.
   Fred van Stappen fiens@hotmail.com }
 
 // This is the "Flat Layer" of uos => for universal procedures.

@@ -1,9 +1,8 @@
 {This is the Dynamic loading version of SoundTouch Pascal Wrapper
  from Sandro Cumerlato <sandro.cumerlato@gmail.com>.
- 
- Load SoundTouch library with St_load() and release it with St_unload().
- Fred van Stappen / fiens@hotmail.com
-}
+ Load library with St_load() and release with St_unload().
+ License : modified LGPL.
+ Fred van Stappen / fiens@hotmail.com}
 
 unit uos_soundtouch;
 

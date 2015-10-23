@@ -1,5 +1,6 @@
 { This is the dynamical loader for mpg123 library with reference counting.
-  Just call the functions mp_load(filename) / mp_unload(filename).
+  Load the library with mp_load() annd release with mp_unload().
+  License : modified LGPL.
   Fred van Stappen  fiens@hotmail.com }
 
 unit uos_mpg123;
@@ -932,6 +933,7 @@ begin
       mpg123_param := Tmpg123_param(GetProcAddress(Mp_Handle, 'mpg123_param'));
       mpg123_getparam := Tmpg123_getparam(
         GetProcAddress(Mp_Handle, 'mpg123_getparam'));
+
       mpg123_plain_strerror := Tmpg123_plain_strerror(
         GetProcAddress(Mp_Handle, 'mpg123_plain_strerror'));
       mpg123_strerror := Tmpg123_strerror(

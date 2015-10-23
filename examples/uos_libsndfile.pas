@@ -1,5 +1,6 @@
 {This is the Dynamic loading version with reference counting of LibSndFile.pas.
- Load the LibSndFile library with sf_load() annd release it with sf_unload().
+ Load the library with sf_load() annd release with sf_unload().
+ License : modified LGPL.
  Fred van Stappen / fiens@hotmail.com }
 
 unit uos_libsndfile;
@@ -263,6 +264,7 @@ type
     sections: ctypes.cint;
     seekable: ctypes.cint;
   end;
+
 
 {
 ** The SF_FORMAT_INFO struct is used to retrieve information about the sound
