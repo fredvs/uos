@@ -75,6 +75,7 @@ type
 procedure uos_logo();
 
 var
+  test : ttimer;
   Form1: TForm1;
   BufferBMP: TBitmap;
   PlayerIndex1: cardinal;

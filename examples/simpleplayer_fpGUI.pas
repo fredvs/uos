@@ -11,7 +11,7 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   ctypes,
   Math,
   Classes,
-  fpg_button,
+    fpg_button,
   fpg_widget,
   fpg_label,
   fpg_Editbtn,
