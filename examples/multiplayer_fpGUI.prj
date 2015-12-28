@@ -18,7 +18,7 @@ order15=0
 order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
+projectfilename=/home/fred/uos/examples/multiplayer_fpGUI.prj
 findinfiledialog=34
  [findinfileadialogfo.subdirs]
  value=0
@@ -228,8 +228,8 @@ settings=13
  wsize=0
  active=1
  visible=1
-mainfile=${PROJECTDIR}simpleplayer_fpGUI.pas
-targetfile=${PROJECTDIR}/simpleplayer_fpGUI
+mainfile=${PROJECTDIR}multiplayer_fpGUI.pas
+targetfile=${PROJECTDIR}/multiplayer_fpGUI
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
@@ -608,16 +608,16 @@ panels=1
 units=
  (
  a=0,4149,6,Pascal Units
- c=8
+ c=7
   (
   file=define.inc
   kind=1
   a=0,4100,0,define.inc
   )
   (
-  file=simpleplayer_fpGUI.pas
+  file=multiplayer_fpGUI.pas
   kind=1
-  a=0,4100,0,simpleplayer_fpGUI.pas
+  a=0,4100,0,multiplayer_fpGUI.pas
   )
   (
   file=uos_flat.pas
@@ -643,11 +643,6 @@ units=
   file=uos_portaudio.pas
   kind=1
   a=0,4100,0,uos_portaudio.pas
-  )
-  (
-  file=uos_soundtouch.pas
-  kind=1
-  a=0,4100,0,uos_soundtouch.pas
   )
  )
 cmodules=
@@ -688,15 +683,14 @@ findhistory=10
  Sort
  sort
 findoptions=1
-editpos=8
- 0,0
+editpos=7
+ 0,2
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,578
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -704,27 +698,23 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-bookmarks7=0
-sourcefiles=8
+sourcefiles=7
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=8
+ ${PROJECTDIR}/multiplayer_fpGUI.pas
+relpaths=7
  uos.pas
  uos_flat.pas
  define.inc
  uos_mpg123.pas
  uos_libsndfile.pas
  uos_portaudio.pas
- uos_soundtouch.pas
- simpleplayer_fpGUI.pas
-ismoduletexts=8
- 0
+ multiplayer_fpGUI.pas
+ismoduletexts=7
  0
  0
  0
@@ -737,6 +727,14 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=7
+ 6
+ 2
+ 1
+ 0
+ 5
+ 4
+ 3
 tabsize=60
 firsttab=0
 index=0
@@ -849,7 +847,7 @@ windowlayout=499
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -886,7 +884,7 @@ windowlayout=499
  sortdescend1=0
  sorted=0
  col=0
- row=10
+ row=8
  rowheight=17
  [stackfo]
  splitdir=0

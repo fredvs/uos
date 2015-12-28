@@ -319,14 +319,14 @@ object Form1: TForm1
     ChildSizing.ShrinkVertical = crsScaleChilds
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 84
+    ClientHeight = 70
     ClientWidth = 118
     Color = clSilver
     ParentColor = False
     TabOrder = 14
     object RadioButton1: TRadioButton
       Left = 6
-      Height = 24
+      Height = 19
       Top = 6
       Width = 106
       Caption = 'Float 32 bit'
@@ -336,16 +336,16 @@ object Form1: TForm1
     end
     object RadioButton2: TRadioButton
       Left = 6
-      Height = 24
-      Top = 30
+      Height = 19
+      Top = 25
       Width = 106
       Caption = 'Int 32 bit'
       TabOrder = 1
     end
     object RadioButton3: TRadioButton
       Left = 6
-      Height = 24
-      Top = 54
+      Height = 20
+      Top = 44
       Width = 106
       Caption = 'Int 16 bit'
       TabOrder = 2

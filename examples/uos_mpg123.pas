@@ -1,5 +1,5 @@
 { This is the dynamical loader for mpg123 library with reference counting.
-  Load the library with mp_load() annd release with mp_unload().
+  Load the library with mp_load() and release with mp_unload().
   License : modified LGPL.
   Fred van Stappen  fiens@hotmail.com }
 

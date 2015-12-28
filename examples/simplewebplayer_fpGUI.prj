@@ -18,7 +18,7 @@ order15=0
 order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
+projectfilename=/home/fred/uos/examples/simplewebplayer_fpGUI.prj
 findinfiledialog=34
  [findinfileadialogfo.subdirs]
  value=0
@@ -228,8 +228,8 @@ settings=13
  wsize=0
  active=1
  visible=1
-mainfile=${PROJECTDIR}simpleplayer_fpGUI.pas
-targetfile=${PROJECTDIR}/simpleplayer_fpGUI
+mainfile=${PROJECTDIR}simplewebplayer_fpGUI.pas
+targetfile=${PROJECTDIR}/simplewebplayer_fpGUI
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
@@ -615,9 +615,9 @@ units=
   a=0,4100,0,define.inc
   )
   (
-  file=simpleplayer_fpGUI.pas
+  file=simplewebplayer_fpGUI.pas
   kind=1
-  a=0,4100,0,simpleplayer_fpGUI.pas
+  a=0,4100,0,simplewebplayer_fpGUI.pas
   )
   (
   file=uos_flat.pas
@@ -688,8 +688,9 @@ findhistory=10
  Sort
  sort
 findoptions=1
-editpos=8
- 0,0
+editpos=9
+ 0,276
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -705,25 +706,29 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 bookmarks7=0
-sourcefiles=8
+bookmarks8=0
+sourcefiles=9
+ ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=8
+ ${PROJECTDIR}/uos_httpgetthread.pas
+relpaths=9
+ simplewebplayer_fpGUI.pas
  uos.pas
- uos_flat.pas
- define.inc
- uos_mpg123.pas
- uos_libsndfile.pas
  uos_portaudio.pas
+ define.inc
+ uos_flat.pas
+ uos_libsndfile.pas
+ uos_mpg123.pas
  uos_soundtouch.pas
- simpleplayer_fpGUI.pas
-ismoduletexts=8
+ uos_httpgetthread.pas
+ismoduletexts=9
+ 0
  0
  0
  0
@@ -755,14 +760,14 @@ windowlayout=499
  ny=0
  ncx=0
  ncy=0
- x=64
- y=80
+ x=49
+ y=49
  cx=1272
  cy=621
  rcx=0
  rcy=0
- wsize=0
- active=1
+ wsize=4
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -780,8 +785,8 @@ windowlayout=499
  rcx=0
  rcy=0
  wsize=0
- active=0
- visible=0
+ active=1
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -875,7 +880,7 @@ windowlayout=499
  x=0
  y=0
  cx=159
- cy=458
+ cy=535
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -886,7 +891,7 @@ windowlayout=499
  sortdescend1=0
  sorted=0
  col=0
- row=10
+ row=7
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1084,9 +1089,9 @@ windowlayout=499
  ncx=0
  ncy=0
  x=0
- y=506
- cx=1262
- cy=80
+ y=590
+ cx=1356
+ cy=93
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1185,8 +1190,8 @@ windowlayout=499
  ncy=0
  x=0
  y=0
- cx=1262
- cy=42
+ cx=1356
+ cy=49
  rcx=0
  rcy=0
  [sourcefo]
@@ -1201,8 +1206,8 @@ windowlayout=499
  ncy=0
  x=162
  y=0
- cx=1092
- cy=458
+ cx=1186
+ cy=535
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1236,9 +1241,9 @@ windowlayout=499
  ncx=0
  ncy=0
  x=0
- y=45
- cx=1262
- cy=458
+ y=52
+ cx=1356
+ cy=535
  rcx=0
  rcy=0
 [targetconsole]

@@ -1,5 +1,5 @@
 {This is the Dynamic loading version with reference counting of LibSndFile.pas.
- Load the library with sf_load() annd release with sf_unload().
+ Load the library with sf_load() and release with sf_unload().
  License : modified LGPL.
  Fred van Stappen / fiens@hotmail.com }
 
@@ -15,7 +15,7 @@ unit uos_libsndfile;
 {** MINENUMSIZE is equivalent to Z+}
 {$ENDIF}
 
-{$LONGSTRINGS ON}(* remember: in Lazarus this is not default ! *)
+{$LONGSTRINGS ON}
 {** LONGSTRINGS is equivalent to H+}
 
 interface

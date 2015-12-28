@@ -3,15 +3,16 @@ program simpleplayer_fpGUI;
 {$mode objfpc}{$H+}
   {$DEFINE UseCThreads}
 
-uses {$IFDEF UNIX} {$IFDEF UseCThreads}
+uses
+  {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
   uos_flat,
-  ctypes,
+  ctypes, 
   Math,
   Classes,
-    fpg_button,
+  fpg_button,
   fpg_widget,
   fpg_label,
   fpg_Editbtn,
@@ -101,13 +102,13 @@ type
 var
   PlayerIndex1: integer;
   ordir, opath: string;
-  Out1Index, In1Index, DSP1Index, Plugin1Index: integer;
+  OutputIndex1, InputIndex1, DSPIndex1, PluginIndex1: integer;
 
   procedure TSimpleplayer.btnTrackOnClick(Sender: TObject; Button: TMouseButton;
     Shift: TShiftState; const pos: TPoint);
   begin
     TrackBar1.Tag := 1;
-  end;
+   end;
 
   procedure TSimpleplayer.ChangePlugSet(Sender: TObject);
   var
@@ -129,7 +130,7 @@ var
 
     if radiobutton1.Enabled = False then   /// player1 was created
     begin
-      uos_SetPluginSoundTouch(PlayerIndex1, Plugin1Index, tempo, rate, checkbox2.Checked);
+      uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex1, tempo, rate, checkbox2.Checked);
     end;
     end;
   end;
@@ -140,7 +141,7 @@ var
     TrackBar5.Position := 50;
     if radiobutton1.Enabled = False then   /// player1 was created
     begin
-      uos_SetPluginSoundTouch(PlayerIndex1, Plugin1Index, 1, 1, checkbox2.Checked);
+      uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex1, 1, 1, checkbox2.Checked);
     end;
   end;
 
@@ -153,7 +154,7 @@ var
   procedure TSimpleplayer.btnTrackoffClick(Sender: TObject;
     Button: TMouseButton; Shift: TShiftState; const pos: TPoint);
   begin
-    uos_Seek(PlayerIndex1, In1Index, TrackBar1.position);
+    uos_Seek(PlayerIndex1, InputIndex1, TrackBar1.position);
     TrackBar1.Tag := 0;
   end;
 
@@ -184,13 +185,13 @@ var
   procedure TSimpleplayer.changecheck(Sender: TObject);
   begin
     if (btnstart.Enabled = False) then
-      uos_SetDSPIn(PlayerIndex1, In1Index, DSP1Index, checkbox1.Checked);
+      uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
   end;
 
   procedure TSimpleplayer.VolumeChange(Sender: TObject; pos: integer);
   begin
     if (btnstart.Enabled = False) then
-      uos_SetDSPVolumeIn(PlayerIndex1, In1Index,
+      uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1,
         (100 - TrackBar2.position) / 100,
         (100 - TrackBar3.position) / 100, True);
   end;
@@ -199,10 +200,10 @@ var
   begin
     vuLeft.Visible := True;
     vuRight.Visible := True;
-    if round(uos_InputGetLevelLeft(PlayerIndex1, In1Index) * 128) >= 0 then
-      vuLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, In1Index) * 128);
-    if round(uos_InputGetLevelRight(PlayerIndex1, In1Index) * 128) >= 0 then
-      vuRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, In1Index) * 128);
+    if round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 128) >= 0 then
+      vuLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 128);
+    if round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 128) >= 0 then
+      vuRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 128);
     vuLeft.top := 348 - vuLeft.Height;
     vuRight.top := 348 - vuRight.Height;
     vuright.UpdateWindowPosition;
@@ -267,6 +268,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pch
 
   procedure TSimpleplayer.ClosePlayer1;
   begin
+   
     radiobutton1.Enabled := True;
     radiobutton2.Enabled := True;
     radiobutton3.Enabled := True;
@@ -293,7 +295,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pch
   function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
   begin
     if Data.position > Data.OutFrames div Data.ratio then
-      uos_Seek(PlayerIndex1, In1Index, Data.position - (Data.OutFrames div Data.Ratio));
+      uos_Seek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.Ratio));
   end;
 
   function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
@@ -344,7 +346,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pch
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-     In1Index := uos_AddFromFile(PlayerIndex1, pchar(filenameEdit4.filename), -1, samformat, -1);
+     InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(filenameEdit4.filename), -1, samformat, -1);
     //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     //////////// PlayerIndex : Index of a existing Player
@@ -353,11 +355,11 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pch
     //////////// FramesCount : default : -1 (65536)
     //  result : -1 nothing created, otherwise Input Index in array
 
-    if In1Index > -1 then begin
+    if InputIndex1 > -1 then begin
 
-      // Out1Index := uos_AddIntoDevOut(PlayerIndex1) ;
+      // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
-    Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, samformat, -1);
+    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1), -1, samformat, -1);
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -368,7 +370,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pch
     //////////// FramesCount : default : -1 (65536)
     //  result : -1 nothing created, otherwise Output Index in array
 
-    uos_InputSetLevelEnable(PlayerIndex1, In1Index, 2) ;
+    uos_InputSetLevelEnable(PlayerIndex1, InputIndex1, 2) ;
      ///// set calculation of level/volume (usefull for showvolume procedure)
                        ///////// set level calculation (default is 0)
                           // 0 => no calcul
@@ -376,60 +378,60 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pch
                           // 2 => calcul after all DSP procedures.
                           // 3 => calcul before and after all DSP procedures.
 
-    uos_InputSetPositionEnable(PlayerIndex1, In1Index, 1) ;
+    uos_InputSetPositionEnable(PlayerIndex1, InputIndex1, 1) ;
      ///// set calculation of position (usefull for positions procedure)
                        ///////// set position calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul position.
 
-    uos_LoopProcIn(PlayerIndex1, In1Index, @LoopProcPlayer1);
-    ///// Assign the procedure of object to execute inside the loop of input
+    uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
+    ///// Assign the procedure of object to execute inside the loop
     //////////// PlayerIndex : Index of a existing Player
-    //////////// InIndex : Index of a existing Input
+    //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
-    uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+    uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing input
+    ////////// InputIndex1 : Index of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-    uos_SetDSPVolumeIn(PlayerIndex1, In1Index,
+    uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1,
       (100 - TrackBar2.position) / 100,
       (100 - TrackBar3.position) / 100, True);
     /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing Input
+    ////////// InputIndex1 : InputIndex of a existing Input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
 
-    DSP1Index := uos_AddDSPIn(PlayerIndex1, In1Index, @DSPReverseBefore,
+    DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
       @DSPReverseAfter, nil);
     ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index: InputIndex of existing input
+    ////////// InputIndex1: InputIndex of existing input
     ////////// BeforeProc : procedure to do before the buffer is filled
     ////////// AfterProc : procedure to do after the buffer is filled
     ////////// LoopProc : external procedure to do after the buffer is filled
 
-    uos_SetDSPIn(PlayerIndex1, In1Index, DSP1Index, checkbox1.Checked);
+    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
     //// set the parameters of custom DSP;
 
          if (trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName) then
   begin
-    Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
+    PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
     ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
 
     ChangePlugSet(self); //// custom procedure to Change plugin settings
 
       end;
 
-    trackbar1.Max := uos_InputLength(PlayerIndex1, In1Index);
+    trackbar1.Max := uos_InputLength(PlayerIndex1, InputIndex1);
     ////// Length of Input in samples
 
-    temptime := uos_InputLengthTime(PlayerIndex1, In1Index);
+    temptime := uos_InputLengthTime(PlayerIndex1, InputIndex1);
     ////// Length of input in time
 
     DecodeTime(temptime, ho, mi, se, ms);
@@ -462,10 +464,10 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pch
   begin
     if (TrackBar1.Tag = 0) then
     begin
-      if uos_InputPosition(PlayerIndex1, In1Index) > 0 then
+      if uos_InputPosition(PlayerIndex1, InputIndex1) > 0 then
       begin
-        TrackBar1.Position := uos_InputPosition(PlayerIndex1, In1Index);
-        temptime := uos_InputPositionTime(PlayerIndex1, In1Index);
+        TrackBar1.Position := uos_InputPosition(PlayerIndex1, InputIndex1);
+        temptime := uos_InputPositionTime(PlayerIndex1, InputIndex1);
         ////// Length of input in time
         DecodeTime(temptime, ho, mi, se, ms);
         lposition.Text := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
@@ -494,446 +496,447 @@ end;
     {%region 'Auto-generated GUI code' -fold}
 
     {@VFD_BODY_BEGIN: Simpleplayer}
-    Name := 'Simpleplayer';
-    SetPosition(467, 0, 502, 403);
-    WindowTitle := 'Simple player ';
+  Name := 'Simpleplayer';
+  SetPosition(392, 181, 502, 403);
+  WindowTitle := 'Simple player ';
+  IconName := '';
+  Hint := '';
+  BackGroundColor := $80000001;
+  WindowPosition := wpScreenCenter;
+  Ondestroy := @btnCloseClick;
+
+  Custom1 := TfpgWidget.Create(self);
+  with Custom1 do
+  begin
+    Name := 'Custom1';
+    SetPosition(10, 4, 115, 155);
+    OnPaint := @uos_logo;
+  end;
+
+  Labelport := TfpgLabel.Create(self);
+  with Labelport do
+  begin
+    Name := 'Labelport';
+    SetPosition(136, 0, 320, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
     Hint := '';
-    WindowPosition := wpScreenCenter;
-    BackgroundColor := clmoneygreen;
-    Ondestroy := @btnCloseClick;
+    Text := 'Folder + filename of PortAudio Library';
+  end;
 
-    Custom1 := TfpgWidget.Create(self);
-    with Custom1 do
-    begin
-      Name := 'Custom1';
-      SetPosition(10, 8, 115, 155);
-      OnPaint := @uos_logo;
-    end;
+  btnLoad := TfpgButton.Create(self);
+  with btnLoad do
+  begin
+    Name := 'btnLoad';
+    SetPosition(16, 168, 476, 23);
+    Text := 'Load that libraries';
+    FontDesc := '#Label1';
+    Hint := '';
+    ImageName := '';
+    TabOrder := 0;
+    onclick := @btnLoadClick;
+  end;
 
-    Labelport := TfpgLabel.Create(self);
-    with Labelport do
-    begin
-      Name := 'Labelport';
-      SetPosition(136, 0, 320, 15);
-      Alignment := taCenter;
-      FontDesc := '#Label1';
-      Hint := '';
-      Text := 'Folder + filename of PortAudio Library';
-    end;
+  FilenameEdit1 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit1 do
+  begin
+    Name := 'FilenameEdit1';
+    SetPosition(136, 16, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 3;
+  end;
 
-    btnLoad := TfpgButton.Create(self);
-    with btnLoad do
-    begin
-      Name := 'btnLoad';
-      SetPosition(16, 168, 476, 23);
-      Text := 'Load that libraries';
-      FontDesc := '#Label1';
-      Hint := '';
-      ImageName := '';
-      TabOrder := 0;
-      onclick := @btnLoadClick;
-    end;
+  FilenameEdit2 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit2 do
+  begin
+    Name := 'FilenameEdit2';
+    SetPosition(136, 56, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 4;
+  end;
 
-    FilenameEdit1 := TfpgFileNameEdit.Create(self);
-    with FilenameEdit1 do
-    begin
-      Name := 'FilenameEdit1';
-      SetPosition(136, 16, 356, 24);
-      ExtraHint := '';
-      FileName := '';
-      Filter := '';
-      InitialDir := '';
-      TabOrder := 3;
-    end;
+  FilenameEdit4 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit4 do
+  begin
+    Name := 'FilenameEdit4';
+    SetPosition(132, 200, 360, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 5;
+  end;
 
-    FilenameEdit2 := TfpgFileNameEdit.Create(self);
-    with FilenameEdit2 do
-    begin
-      Name := 'FilenameEdit2';
-      SetPosition(136, 56, 356, 24);
-      ExtraHint := '';
-      FileName := '';
-      Filter := '';
-      InitialDir := '';
-      TabOrder := 4;
-    end;
+  btnStart := TfpgButton.Create(self);
+  with btnStart do
+  begin
+    Name := 'btnStart';
+    SetPosition(136, 372, 44, 23);
+    Text := 'Play';
+    Enabled := False;
+    FontDesc := '#Label1';
+    Hint := '';
+    ImageName := '';
+    TabOrder := 6;
+    onclick := @btnstartClick;
+  end;
 
-    FilenameEdit4 := TfpgFileNameEdit.Create(self);
-    with FilenameEdit4 do
-    begin
-      Name := 'FilenameEdit4';
-      SetPosition(132, 200, 360, 24);
-      ExtraHint := '';
-      FileName := '';
-      Filter := '';
-      InitialDir := '';
-      TabOrder := 5;
-    end;
+  btnStop := TfpgButton.Create(self);
+  with btnStop do
+  begin
+    Name := 'btnStop';
+    SetPosition(360, 372, 80, 23);
+    Text := 'Stop';
+    Enabled := False;
+    FontDesc := '#Label1';
+    Hint := '';
+    ImageName := '';
+    TabOrder := 7;
+    onclick := @btnStopClick;
+  end;
 
-    btnStart := TfpgButton.Create(self);
-    with btnStart do
-    begin
-      Name := 'btnStart';
-      SetPosition(136, 372, 44, 23);
-      Text := 'Play';
-      Enabled := False;
-      FontDesc := '#Label1';
-      Hint := '';
-      ImageName := '';
-      TabOrder := 6;
-      onclick := @btnstartClick;
-    end;
+  lposition := TfpgLabel.Create(self);
+  with lposition do
+  begin
+    Name := 'lposition';
+    SetPosition(224, 265, 84, 19);
+    Alignment := taCenter;
+    FontDesc := '#Label2';
+    Hint := '';
+    Text := '00:00:00.000';
+  end;
 
-    btnStop := TfpgButton.Create(self);
-    with btnStop do
-    begin
-      Name := 'btnStop';
-      SetPosition(360, 372, 80, 23);
-      Text := 'Stop';
-      Enabled := False;
-      FontDesc := '#Label1';
-      Hint := '';
-      ImageName := '';
-      TabOrder := 7;
-      onclick := @btnStopClick;
-    end;
+  Labelsnf := TfpgLabel.Create(self);
+  with Labelsnf do
+  begin
+    Name := 'Labelsnf';
+    SetPosition(140, 40, 316, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    Hint := '';
+    Text := 'Folder + filename of SndFile Library';
+  end;
 
-    lposition := TfpgLabel.Create(self);
-    with lposition do
-    begin
-      Name := 'lposition';
-      SetPosition(224, 265, 84, 19);
-      Alignment := taCenter;
-      FontDesc := '#Label2';
-      Hint := '';
-      Text := '00:00:00.000';
-    end;
+  Labelmpg := TfpgLabel.Create(self);
+  with Labelmpg do
+  begin
+    Name := 'Labelmpg';
+    SetPosition(136, 80, 316, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    Hint := '';
+    Text := 'Folder + filename of Mpg123 Library';
+  end;
 
-    Labelsnf := TfpgLabel.Create(self);
-    with Labelsnf do
-    begin
-      Name := 'Labelsnf';
-      SetPosition(140, 40, 316, 15);
-      Alignment := taCenter;
-      FontDesc := '#Label1';
-      Hint := '';
-      Text := 'Folder + filename of SndFile Library';
-    end;
+  Labelst := TfpgLabel.Create(self);
+  with Labelst do
+  begin
+    Name := 'Labelst';
+    SetPosition(136, 120, 316, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    Hint := '';
+    Text := 'Folder + filename of SoundTouch Library';
+  end;
 
-    Labelmpg := TfpgLabel.Create(self);
-    with Labelmpg do
-    begin
-      Name := 'Labelmpg';
-      SetPosition(136, 80, 316, 15);
-      Alignment := taCenter;
-      FontDesc := '#Label1';
-      Hint := '';
-      Text := 'Folder + filename of Mpg123 Library';
-    end;
+  FilenameEdit3 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit3 do
+  begin
+    Name := 'FilenameEdit3';
+    SetPosition(136, 96, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 12;
+  end;
 
-    Labelst := TfpgLabel.Create(self);
-    with Labelst do
-    begin
-      Name := 'Labelst';
-      SetPosition(136, 120, 316, 15);
-      Alignment := taCenter;
-      FontDesc := '#Label1';
-      Hint := '';
-      Text := 'Folder + filename of SoundTouch Library';
-    end;
+  FilenameEdit5 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit5 do
+  begin
+    Name := 'FilenameEdit5';
+    SetPosition(136, 136, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 12;
+  end;
 
-    FilenameEdit3 := TfpgFileNameEdit.Create(self);
-    with FilenameEdit3 do
-    begin
-      Name := 'FilenameEdit3';
-      SetPosition(136, 96, 356, 24);
-      ExtraHint := '';
-      FileName := '';
-      Filter := '';
-      InitialDir := '';
-      TabOrder := 12;
-    end;
+  Label1 := TfpgLabel.Create(self);
+  with Label1 do
+  begin
+    Name := 'Label1';
+    SetPosition(308, 265, 12, 15);
+    FontDesc := '#Label1';
+    Hint := '';
+    Text := '/';
+  end;
 
-    FilenameEdit5 := TfpgFileNameEdit.Create(self);
-    with FilenameEdit5 do
-    begin
-      Name := 'FilenameEdit5';
-      SetPosition(136, 136, 356, 24);
-      ExtraHint := '';
-      FileName := '';
-      Filter := '';
-      InitialDir := '';
-      TabOrder := 12;
-    end;
+  Llength := TfpgLabel.Create(self);
+  with Llength do
+  begin
+    Name := 'Llength';
+    SetPosition(316, 265, 80, 15);
+    FontDesc := '#Label2';
+    Hint := '';
+    Text := '00:00:00.000';
+  end;
 
-    Label1 := TfpgLabel.Create(self);
-    with Label1 do
-    begin
-      Name := 'Label1';
-      SetPosition(308, 265, 12, 15);
-      FontDesc := '#Label1';
-      Hint := '';
-      Text := '/';
-    end;
+  btnpause := TfpgButton.Create(self);
+  with btnpause do
+  begin
+    Name := 'btnpause';
+    SetPosition(200, 372, 52, 23);
+    Text := 'Pause';
+    Enabled := False;
+    FontDesc := '#Label1';
+    Hint := '';
+    ImageName := '';
+    TabOrder := 15;
+    onclick := @btnPauseClick;
+  end;
 
-    Llength := TfpgLabel.Create(self);
-    with Llength do
-    begin
-      Name := 'Llength';
-      SetPosition(316, 265, 80, 15);
-      FontDesc := '#Label2';
-      Hint := '';
-      Text := '00:00:00.000';
-    end;
+  btnresume := TfpgButton.Create(self);
+  with btnresume do
+  begin
+    Name := 'btnresume';
+    SetPosition(272, 372, 64, 23);
+    Text := 'Resume';
+    Enabled := False;
+    FontDesc := '#Label1';
+    Hint := '';
+    ImageName := '';
+    TabOrder := 16;
+    onclick := @btnResumeClick;
+  end;
 
-    btnpause := TfpgButton.Create(self);
-    with btnpause do
-    begin
-      Name := 'btnpause';
-      SetPosition(200, 372, 52, 23);
-      Text := 'Pause';
-      Enabled := False;
-      FontDesc := '#Label1';
-      Hint := '';
-      ImageName := '';
-      TabOrder := 15;
-      onclick := @btnPauseClick;
-    end;
+  CheckBox1 := TfpgCheckBox.Create(self);
+  with CheckBox1 do
+  begin
+    Name := 'CheckBox1';
+    SetPosition(12, 372, 104, 19);
+    FontDesc := '#Label1';
+    Hint := '';
+    TabOrder := 17;
+    Text := 'Play Reverse';
+  end;
 
-    btnresume := TfpgButton.Create(self);
-    with btnresume do
-    begin
-      Name := 'btnresume';
-      SetPosition(272, 372, 64, 23);
-      Text := 'Resume';
-      Enabled := False;
-      FontDesc := '#Label1';
-      Hint := '';
-      ImageName := '';
-      TabOrder := 16;
-      onclick := @btnResumeClick;
-    end;
+  RadioButton1 := TfpgRadioButton.Create(self);
+  with RadioButton1 do
+  begin
+    Name := 'RadioButton1';
+    SetPosition(128, 300, 96, 19);
+    Checked := True;
+    FontDesc := '#Label1';
+    GroupIndex := 0;
+    Hint := '';
+    TabOrder := 18;
+    Text := 'Float 32 bit';
+  end;
 
-    CheckBox1 := TfpgCheckBox.Create(self);
-    with CheckBox1 do
-    begin
-      Name := 'CheckBox1';
-      SetPosition(12, 372, 104, 19);
-      FontDesc := '#Label1';
-      Hint := '';
-      TabOrder := 17;
-      Text := 'Play Reverse';
-    end;
+  RadioButton2 := TfpgRadioButton.Create(self);
+  with RadioButton2 do
+  begin
+    Name := 'RadioButton2';
+    SetPosition(128, 316, 100, 19);
+    FontDesc := '#Label1';
+    GroupIndex := 0;
+    Hint := '';
+    TabOrder := 19;
+    Text := 'Int 32 bit';
+  end;
 
-    RadioButton1 := TfpgRadioButton.Create(self);
-    with RadioButton1 do
-    begin
-      Name := 'RadioButton1';
-      SetPosition(128, 300, 96, 19);
-      Checked := True;
-      FontDesc := '#Label1';
-      GroupIndex := 0;
-      Hint := '';
-      TabOrder := 18;
-      Text := 'Float 32 bit';
-    end;
+  RadioButton3 := TfpgRadioButton.Create(self);
+  with RadioButton3 do
+  begin
+    Name := 'RadioButton3';
+    SetPosition(128, 334, 100, 19);
+    FontDesc := '#Label1';
+    GroupIndex := 0;
+    Hint := '';
+    TabOrder := 20;
+    Text := 'Int 16 bit';
+  end;
 
-    RadioButton2 := TfpgRadioButton.Create(self);
-    with RadioButton2 do
-    begin
-      Name := 'RadioButton2';
-      SetPosition(128, 316, 100, 19);
-      FontDesc := '#Label1';
-      GroupIndex := 0;
-      Hint := '';
-      TabOrder := 19;
-      Text := 'Int 32 bit';
-    end;
+  Label2 := TfpgLabel.Create(self);
+  with Label2 do
+  begin
+    Name := 'Label2';
+    SetPosition(116, 284, 104, 15);
+    FontDesc := '#Label2';
+    Hint := '';
+    Text := 'Sample format';
+  end;
 
-    RadioButton3 := TfpgRadioButton.Create(self);
-    with RadioButton3 do
-    begin
-      Name := 'RadioButton3';
-      SetPosition(128, 334, 100, 19);
-      FontDesc := '#Label1';
-      GroupIndex := 0;
-      Hint := '';
-      TabOrder := 20;
-      Text := 'Int 16 bit';
-    end;
+  TrackBar1 := TfpgTrackBar.Create(self);
+  with TrackBar1 do
+  begin
+    Name := 'TrackBar1';
+    SetPosition(132, 232, 356, 30);
+    Hint := '';
+    TabOrder := 22;
+    TrackBar1.OnMouseDown := @btntrackonClick;
+    TrackBar1.OnMouseUp := @btntrackoffClick;
+  end;
 
-    Label2 := TfpgLabel.Create(self);
-    with Label2 do
-    begin
-      Name := 'Label2';
-      SetPosition(116, 284, 104, 15);
-      FontDesc := '#Label2';
-      Hint := '';
-      Text := 'Sample format';
-    end;
+  TrackBar2 := TfpgTrackBar.Create(self);
+  with TrackBar2 do
+  begin
+    Name := 'TrackBar2';
+    SetPosition(4, 216, 32, 134);
+    Hint := '';
+    Orientation := orVertical;
+    TabOrder := 23;
+    OnChange := @volumechange;
+  end;
 
-    TrackBar1 := TfpgTrackBar.Create(self);
-    with TrackBar1 do
-    begin
-      Name := 'TrackBar1';
-      SetPosition(132, 232, 356, 30);
-      Hint := '';
-      TabOrder := 22;
-      TrackBar1.OnMouseDown := @btntrackonClick;
-      TrackBar1.OnMouseUp := @btntrackoffClick;
-    end;
+  TrackBar3 := TfpgTrackBar.Create(self);
+  with TrackBar3 do
+  begin
+    Name := 'TrackBar3';
+    SetPosition(72, 216, 28, 134);
+    Hint := '';
+    Orientation := orVertical;
+    TabOrder := 24;
+    OnChange := @volumechange;
+  end;
 
-    TrackBar2 := TfpgTrackBar.Create(self);
-    with TrackBar2 do
-    begin
-      Name := 'TrackBar2';
-      SetPosition(4, 216, 32, 134);
-      Hint := '';
-      Orientation := orVertical;
-      TabOrder := 23;
-      OnChange := @volumechange;
-    end;
+  Label3 := TfpgLabel.Create(self);
+  with Label3 do
+  begin
+    Name := 'Label3';
+    SetPosition(12, 196, 84, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label2';
+    Hint := '';
+    Text := 'Volume';
+  end;
 
-    TrackBar3 := TfpgTrackBar.Create(self);
-    with TrackBar3 do
-    begin
-      Name := 'TrackBar3';
-      SetPosition(72, 216, 28, 134);
-      Hint := '';
-      Orientation := orVertical;
-      TabOrder := 24;
-      OnChange := @volumechange;
-    end;
+  Label4 := TfpgLabel.Create(self);
+  with Label4 do
+  begin
+    Name := 'Label4';
+    SetPosition(0, 348, 40, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    Hint := '';
+    Text := 'Left';
+  end;
 
-    Label3 := TfpgLabel.Create(self);
-    with Label3 do
-    begin
-      Name := 'Label3';
-      SetPosition(12, 196, 84, 15);
-      Alignment := taCenter;
-      FontDesc := '#Label2';
-      Hint := '';
-      Text := 'Volume';
-    end;
+  Label5 := TfpgLabel.Create(self);
+  with Label5 do
+  begin
+    Name := 'Label5';
+    SetPosition(68, 348, 36, 19);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    Hint := '';
+    Text := 'Right';
+  end;
 
-    Label4 := TfpgLabel.Create(self);
-    with Label4 do
-    begin
-      Name := 'Label4';
-      SetPosition(0, 348, 40, 15);
-      Alignment := taCenter;
-      FontDesc := '#Label1';
-      Hint := '';
-      Text := 'Left';
-    end;
+  vuleft := TfpgPanel.Create(self);
+  with vuleft do
+  begin
+    Name := 'vuleft';
+    SetPosition(40, 220, 8, 128);
+    BackgroundColor := TfpgColor($00D51D);
+    FontDesc := '#Label1';
+    Hint := '';
+    Style := bsFlat;
+    Text := '';
+  end;
 
-    Label5 := TfpgLabel.Create(self);
-    with Label5 do
-    begin
-      Name := 'Label5';
-      SetPosition(68, 348, 36, 19);
-      Alignment := taCenter;
-      FontDesc := '#Label1';
-      Hint := '';
-      Text := 'Right';
-    end;
+  vuright := TfpgPanel.Create(self);
+  with vuright do
+  begin
+    Name := 'vuright';
+    SetPosition(60, 220, 8, 128);
+    BackgroundColor := TfpgColor($1DD523);
+    FontDesc := '#Label1';
+    Hint := '';
+    Style := bsFlat;
+    Text := '';
+  end;
 
-    vuleft := TfpgPanel.Create(self);
-    with vuleft do
-    begin
-      Name := 'vuleft';
-      SetPosition(40, 220, 8, 128);
-      BackgroundColor := TfpgColor($00D51D);
-      FontDesc := '#Label1';
-      Hint := '';
-      Style := bsFlat;
-      Text := '';
-    end;
+  CheckBox2 := TfpgCheckBox.Create(self);
+  with CheckBox2 do
+  begin
+    Name := 'CheckBox2';
+    SetPosition(268, 284, 184, 19);
+    FontDesc := '#Label1';
+    Hint := '';
+    TabOrder := 32;
+    Text := 'Enable SoundTouch PlugIn';
+    OnChange := @ChangePlugSet;
+  end;
 
-    vuright := TfpgPanel.Create(self);
-    with vuright do
-    begin
-      Name := 'vuright';
-      SetPosition(60, 220, 8, 128);
-      BackgroundColor := TfpgColor($1DD523);
-      FontDesc := '#Label1';
-      Hint := '';
-      Style := bsFlat;
-      Text := '';
-    end;
+  Label6 := TfpgLabel.Create(self);
+  with Label6 do
+  begin
+    Name := 'Label6';
+    SetPosition(272, 312, 80, 19);
+    FontDesc := '#Label1';
+    Hint := '';
+    Text := 'Tempo: 1.0';
+  end;
 
-    CheckBox2 := TfpgCheckBox.Create(self);
-    with CheckBox2 do
-    begin
-      Name := 'CheckBox2';
-      SetPosition(268, 284, 184, 19);
-      FontDesc := '#Label1';
-      Hint := '';
-      TabOrder := 32;
-      Text := 'Enable SoundTouch PlugIn';
-      OnChange := @ChangePlugSet;
-    end;
+  Label7 := TfpgLabel.Create(self);
+  with Label7 do
+  begin
+    Name := 'Label7';
+    SetPosition(380, 312, 80, 15);
+    FontDesc := '#Label1';
+    Hint := '';
+    Text := 'Pitch: 1.0';
+  end;
 
-    Label6 := TfpgLabel.Create(self);
-    with Label6 do
-    begin
-      Name := 'Label6';
-      SetPosition(272, 312, 80, 19);
-      FontDesc := '#Label1';
-      Hint := '';
-      Text := 'Tempo: 1.0';
-    end;
+  TrackBar4 := TfpgTrackBar.Create(self);
+  with TrackBar4 do
+  begin
+    Name := 'TrackBar4';
+    SetPosition(344, 308, 28, 54);
+    Hint := '';
+    Orientation := orVertical;
+    Position := 50;
+    Position := 50;
+    TabOrder := 35;
+    OnChange := @TrackChangePlugSet;
+  end;
 
-    Label7 := TfpgLabel.Create(self);
-    with Label7 do
-    begin
-      Name := 'Label7';
-      SetPosition(380, 312, 80, 15);
-      FontDesc := '#Label1';
-      Hint := '';
-      Text := 'Pitch: 1.0';
-    end;
+  TrackBar5 := TfpgTrackBar.Create(self);
+  with TrackBar5 do
+  begin
+    Name := 'TrackBar5';
+    SetPosition(440, 308, 28, 54);
+    Hint := '';
+    Orientation := orVertical;
+    Position := 50;
+    Position := 50;
+    TabOrder := 36;
+    OnChange := @TrackChangePlugSet;
+  end;
 
-    TrackBar4 := TfpgTrackBar.Create(self);
-    with TrackBar4 do
-    begin
-      Name := 'TrackBar4';
-      SetPosition(344, 308, 28, 54);
-      Hint := '';
-      Orientation := orVertical;
-      Position := 50;
-      Position := 50;
-      TabOrder := 35;
-      OnChange := @TrackChangePlugSet;
-    end;
+  Button1 := TfpgButton.Create(self);
+  with Button1 do
+  begin
+    Name := 'Button1';
+    SetPosition(260, 336, 60, 23);
+    Text := 'Reset';
+    FontDesc := '#Label1';
+    Hint := '';
+    ImageName := '';
+    TabOrder := 37;
+    OnClick := @ResetPlugClick;
+  end;
 
-    TrackBar5 := TfpgTrackBar.Create(self);
-    with TrackBar5 do
-    begin
-      Name := 'TrackBar5';
-      SetPosition(440, 308, 28, 54);
-      Hint := '';
-      Orientation := orVertical;
-      Position := 50;
-      Position := 50;
-      TabOrder := 36;
-      OnChange := @TrackChangePlugSet;
-    end;
-
-    Button1 := TfpgButton.Create(self);
-    with Button1 do
-    begin
-      Name := 'Button1';
-      SetPosition(260, 336, 60, 23);
-      Text := 'Reset';
-      FontDesc := '#Label1';
-      Hint := '';
-      ImageName := '';
-      TabOrder := 37;
-      OnClick := @ResetPlugClick;
-    end;
-
-    {@VFD_BODY_END: Simpleplayer}
+  {@VFD_BODY_END: Simpleplayer}
     {%endregion}
 
     //////////////////////
@@ -989,20 +992,18 @@ end;
     FilenameEdit3.FileName := ordir + 'lib/freeBSD/64bit/libmpg123-64.so';
     FilenameEdit5.FileName := '';
     {$else}
-   FilenameEdit1.FileName := ordir + 'lib/freeBSD/32bit/libportaudio-32.so';
-     FilenameEdit2.FileName := ordir + 'lib/freeBSD/32bit/libsndfile-32.so';
+    FilenameEdit1.FileName := ordir + 'lib/freeBSD/32bit/libportaudio-32.so';
+    FilenameEdit2.FileName := ordir + 'lib/freeBSD/32bit/libsndfile-32.so';
     FilenameEdit3.FileName := ordir + 'lib/freeBSD/32bit/libmpg123-32.so';
-     FilenameEdit5.FileName := '';
+    FilenameEdit5.FileName := '';
 {$endif}
-     FilenameEdit4.FileName := ordir + 'sound/test.mp3';
- {$ENDIF}
-
+    FilenameEdit4.FileName := ordir + 'sound/test.mp3';
+{$ENDIF}
     FilenameEdit4.Initialdir := ordir + 'sound';
     FilenameEdit1.Initialdir := ordir + 'lib';
     FilenameEdit2.Initialdir := ordir + 'lib';
     FilenameEdit3.Initialdir := ordir + 'lib';
     FilenameEdit5.Initialdir := ordir + 'lib';
-
     vuLeft.Visible := False;
     vuRight.Visible := False;
     vuLeft.Height := 0;
@@ -1026,10 +1027,9 @@ end;
     frm: TSimpleplayer;
   begin
     fpgApplication.Initialize;
- //   frm := TSimpleplayer.Create(nil);
-       fpgApplication.CreateForm(TSimpleplayer, frm);
+    fpgApplication.CreateForm(TSimpleplayer, frm);
     try
-      frm.Show;
+     frm.Show;
       fpgApplication.Run;
     finally
       frm.Free;

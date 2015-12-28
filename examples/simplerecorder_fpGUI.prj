@@ -18,7 +18,7 @@ order15=0
 order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
+projectfilename=/home/fred/uos/examples/simplerecorder_fpGUI.prj
 findinfiledialog=34
  [findinfileadialogfo.subdirs]
  value=0
@@ -228,8 +228,8 @@ settings=13
  wsize=0
  active=1
  visible=1
-mainfile=${PROJECTDIR}simpleplayer_fpGUI.pas
-targetfile=${PROJECTDIR}/simpleplayer_fpGUI
+mainfile=${PROJECTDIR}simplerecorder_fpGUI.pas
+targetfile=${PROJECTDIR}/simplerecorder_fpGUI
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
@@ -615,9 +615,9 @@ units=
   a=0,4100,0,define.inc
   )
   (
-  file=simpleplayer_fpGUI.pas
+  file=simplerecorder_fpGUI.pas
   kind=1
-  a=0,4100,0,simpleplayer_fpGUI.pas
+  a=0,4100,0,simplerecorder_fpGUI.pas
   )
   (
   file=uos_flat.pas
@@ -696,7 +696,7 @@ editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -713,7 +713,7 @@ sourcefiles=8
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/simplerecorder_fpGUI.pas
 relpaths=8
  uos.pas
  uos_flat.pas
@@ -722,7 +722,7 @@ relpaths=8
  uos_libsndfile.pas
  uos_portaudio.pas
  uos_soundtouch.pas
- simpleplayer_fpGUI.pas
+ simplerecorder_fpGUI.pas
 ismoduletexts=8
  0
  0
@@ -737,6 +737,15 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=8
+ 8
+ 2
+ 1
+ 0
+ 5
+ 4
+ 3
+ 6
 tabsize=60
 firsttab=0
 index=0
@@ -849,7 +858,7 @@ windowlayout=499
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
