@@ -708,7 +708,7 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 sourcefiles=9
- ${PROJECTDIR}/simplewebplayer_fpGUI.pas
+ /home/fred/uos/examples/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/define.inc
@@ -767,7 +767,7 @@ windowlayout=499
  rcx=0
  rcy=0
  wsize=4
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -785,7 +785,7 @@ windowlayout=499
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
