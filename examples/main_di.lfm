@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '1.3'
+  LCLVersion = '1.5'
   object Shape1: TShape
     Left = 10
     Height = 192
@@ -210,7 +210,7 @@ object Form1: TForm1
     Left = 12
     Height = 15
     Top = 356
-    Width = 124
+    Width = 118
     Caption = 'Device Count =  99'
     ParentColor = False
   end
@@ -218,7 +218,7 @@ object Form1: TForm1
     Left = 152
     Height = 15
     Top = 356
-    Width = 153
+    Width = 146
     Caption = 'Default Device  IN =  99'
     ParentColor = False
   end
@@ -226,7 +226,7 @@ object Form1: TForm1
     Left = 320
     Height = 15
     Top = 356
-    Width = 167
+    Width = 158
     Caption = 'Default Device OUT  =  99'
     ParentColor = False
   end

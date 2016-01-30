@@ -66,6 +66,9 @@ type
     TrackBar4: TfpgTrackBar;
     TrackBar5: TfpgTrackBar;
     Button1: TfpgButton;
+    chkst2b: TfpgCheckBox;
+    Labelst1: TfpgLabel;
+    FilenameEdit6: TfpgFileNameEdit;
     {@VFD_HEAD_END: Simpleplayer}
   public
     procedure AfterCreate; override;
@@ -90,8 +93,9 @@ type
     procedure ShowLevel;
     procedure changecheck(Sender: TObject);
     procedure VolumeChange(Sender: TObject; pos: integer);
-    procedure ChangePlugSet(Sender: TObject);
-    procedure TrackChangePlugSet(Sender: TObject; pos: integer);
+    procedure ChangePlugSetSoundTouch(Sender: TObject);
+    procedure ChangePlugSetbs2b(Sender: TObject);
+    procedure TrackChangePlugSetSoundTouch(Sender: TObject; pos: integer);
     procedure ResetPlugClick(Sender: TObject);
   end;
 
@@ -102,15 +106,20 @@ type
 var
   PlayerIndex1: integer;
   ordir, opath: string;
-  OutputIndex1, InputIndex1, DSPIndex1, PluginIndex1: integer;
+  OutputIndex1, InputIndex1, DSPIndex1, PluginIndex1, PluginIndex2: integer;
 
   procedure TSimpleplayer.btnTrackOnClick(Sender: TObject; Button: TMouseButton;
     Shift: TShiftState; const pos: TPoint);
   begin
     TrackBar1.Tag := 1;
    end;
+   
+   procedure TSimpleplayer.ChangePlugSetBs2b(Sender: TObject);
+   begin
+  uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, chkst2b.Checked);   
+  end;
 
-  procedure TSimpleplayer.ChangePlugSet(Sender: TObject);
+  procedure TSimpleplayer.ChangePlugSetSoundTouch(Sender: TObject);
   var
     tempo, rate: cfloat;
   begin
@@ -130,7 +139,7 @@ var
 
     if radiobutton1.Enabled = False then   /// player1 was created
     begin
-      uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex1, tempo, rate, checkbox2.Checked);
+      uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, tempo, rate, checkbox2.Checked);
     end;
     end;
   end;
@@ -141,14 +150,14 @@ var
     TrackBar5.Position := 50;
     if radiobutton1.Enabled = False then   /// player1 was created
     begin
-      uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex1, 1, 1, checkbox2.Checked);
+      uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, 1, 1, checkbox2.Checked);
     end;
   end;
 
-  procedure TSimpleplayer.TrackChangePlugSet(Sender: TObject; pos: integer);
+  procedure TSimpleplayer.TrackChangePlugSetSoundTouch(Sender: TObject; pos: integer);
   begin
        if (trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName) then
-      ChangePlugSet(Sender);
+      ChangePlugSetSoundTouch(Sender);
   end;
 
   procedure TSimpleplayer.btnTrackoffClick(Sender: TObject;
@@ -204,8 +213,8 @@ var
       vuLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 128);
     if round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 128) >= 0 then
       vuRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 128);
-    vuLeft.top := 348 - vuLeft.Height;
-    vuRight.top := 348 - vuRight.Height;
+    vuLeft.top := 380 - vuLeft.Height;
+    vuRight.top := 380 - vuRight.Height;
     vuright.UpdateWindowPosition;
     vuLeft.UpdateWindowPosition;
   end;
@@ -231,24 +240,27 @@ var
 
   begin
     // Load the libraries
-    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
-if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pchar(FilenameEdit3.FileName), Pchar(FilenameEdit5.FileName)) = 0 then
+    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar;
+    // Mpg123FileName: Pchar; SoundTouchFileName: Pchar ; bs2bFileName: Pchar) : integer;
+if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
+ Pchar(FilenameEdit3.FileName), Pchar(FilenameEdit5.FileName), Pchar(FilenameEdit6.FileName)) = 0 then
     begin
       hide;
-      Height := 403;
+      Height := 435;
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
       FilenameEdit1.ReadOnly := True;
       FilenameEdit2.ReadOnly := True;
       FilenameEdit3.ReadOnly := True;
       FilenameEdit5.ReadOnly := True;
+      FilenameEdit6.ReadOnly := True;
       UpdateWindowPosition;
-       if (trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName) then
+       if ((trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName))  then
         btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123 and Plugin SoundTouch libraries are loaded...'
+        'PortAudio, SndFile, Mpg123 and Plugin SoundTouch + bs2b libraries are loaded...'
         else
           begin
-      TrackBar4.enabled := false;
+        TrackBar4.enabled := false;
        TrackBar5.enabled := false;
        CheckBox2.enabled := false;
        Button1.enabled := false;
@@ -256,14 +268,18 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pch
        label7.enabled := false;
                btnLoad.Text :=
         'PortAudio, SndFile and Mpg123 libraries are loaded...'  ;
-
           end;
+          
+      if ((trim(Pchar(filenameedit6.FileName)) <> '') and fileexists(filenameedit6.FileName)) 
+      then else chkst2b.enabled := false; 
+          
       WindowPosition := wpScreenCenter;
       WindowTitle := 'Simple Player.    uos version ' + inttostr(uos_getversion());
        fpgapplication.ProcessMessages;
       sleep(500);
       Show;
-    end;
+    end else btnLoad.Text :=
+        'One or more libraries did not load, check filenames...'
   end;
 
   procedure TSimpleplayer.ClosePlayer1;
@@ -416,26 +432,35 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pch
     ////////// AfterProc : procedure to do after the buffer is filled
     ////////// LoopProc : external procedure to do after the buffer is filled
 
-    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+   
     //// set the parameters of custom DSP;
-
-         if (trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName) then
+    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+  
+     ///// add bs2b plugin with default samplerate(44100) / channels(2 = stereo)
+       if (trim(Pchar(filenameedit6.FileName)) <> '') and fileexists(filenameedit6.FileName) then
   begin
-    PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
-    ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
-
-    ChangePlugSet(self); //// custom procedure to Change plugin settings
-
-      end;
-
-    trackbar1.Max := uos_InputLength(PlayerIndex1, InputIndex1);
+  PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b', -1, -1);
+  if  chkst2b.checked = true then
+   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1,true) else
+   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1,false) ;
+    end;  
+    
+     ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
+    /// SoundTouch plugin must be the last added.
+    if (trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName) then
+  begin
+    PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
+    ChangePlugSetSoundTouch(self); //// custom procedure to Change plugin settings
+   end;
+         
+   trackbar1.Max := uos_InputLength(PlayerIndex1, InputIndex1);
     ////// Length of Input in samples
 
-    temptime := uos_InputLengthTime(PlayerIndex1, InputIndex1);
+   temptime := uos_InputLengthTime(PlayerIndex1, InputIndex1);
     ////// Length of input in time
 
     DecodeTime(temptime, ho, mi, se, ms);
-
+    
     llength.Text := format('%d:%d:%d.%d', [ho, mi, se, ms]);
 
     /////// procedure to execute when stream is terminated
@@ -497,11 +522,11 @@ end;
 
     {@VFD_BODY_BEGIN: Simpleplayer}
   Name := 'Simpleplayer';
-  SetPosition(392, 181, 502, 403);
+  SetPosition(571, 86, 503, 455);
   WindowTitle := 'Simple player ';
   IconName := '';
-  Hint := '';
   BackGroundColor := $80000001;
+  Hint := '';
   WindowPosition := wpScreenCenter;
   Ondestroy := @btnCloseClick;
 
@@ -509,7 +534,7 @@ end;
   with Custom1 do
   begin
     Name := 'Custom1';
-    SetPosition(10, 4, 115, 155);
+    SetPosition(10, 4, 115, 195);
     OnPaint := @uos_logo;
   end;
 
@@ -520,20 +545,22 @@ end;
     SetPosition(136, 0, 320, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of PortAudio Library';
+    Hint := '';
   end;
 
   btnLoad := TfpgButton.Create(self);
   with btnLoad do
   begin
     Name := 'btnLoad';
-    SetPosition(16, 168, 476, 23);
+    SetPosition(8, 204, 488, 23);
     Text := 'Load that libraries';
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 0;
+    Hint := '';
     onclick := @btnLoadClick;
   end;
 
@@ -565,7 +592,7 @@ end;
   with FilenameEdit4 do
   begin
     Name := 'FilenameEdit4';
-    SetPosition(132, 200, 360, 24);
+    SetPosition(132, 236, 360, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -577,13 +604,14 @@ end;
   with btnStart do
   begin
     Name := 'btnStart';
-    SetPosition(136, 372, 44, 23);
+    SetPosition(140, 404, 44, 23);
     Text := 'Play';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 6;
+    Hint := '';
     onclick := @btnstartClick;
   end;
 
@@ -591,13 +619,14 @@ end;
   with btnStop do
   begin
     Name := 'btnStop';
-    SetPosition(360, 372, 80, 23);
+    SetPosition(364, 404, 80, 23);
     Text := 'Stop';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 7;
+    Hint := '';
     onclick := @btnStopClick;
   end;
 
@@ -605,11 +634,12 @@ end;
   with lposition do
   begin
     Name := 'lposition';
-    SetPosition(224, 265, 84, 19);
+    SetPosition(228, 297, 84, 19);
     Alignment := taCenter;
     FontDesc := '#Label2';
-    Hint := '';
+    ParentShowHint := False;
     Text := '00:00:00.000';
+    Hint := '';
   end;
 
   Labelsnf := TfpgLabel.Create(self);
@@ -619,8 +649,9 @@ end;
     SetPosition(140, 40, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of SndFile Library';
+    Hint := '';
   end;
 
   Labelmpg := TfpgLabel.Create(self);
@@ -630,8 +661,9 @@ end;
     SetPosition(136, 80, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of Mpg123 Library';
+    Hint := '';
   end;
 
   Labelst := TfpgLabel.Create(self);
@@ -641,8 +673,9 @@ end;
     SetPosition(136, 120, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of SoundTouch Library';
+    Hint := '';
   end;
 
   FilenameEdit3 := TfpgFileNameEdit.Create(self);
@@ -673,33 +706,36 @@ end;
   with Label1 do
   begin
     Name := 'Label1';
-    SetPosition(308, 265, 12, 15);
+    SetPosition(312, 297, 12, 15);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := '/';
+    Hint := '';
   end;
 
   Llength := TfpgLabel.Create(self);
   with Llength do
   begin
     Name := 'Llength';
-    SetPosition(316, 265, 80, 15);
+    SetPosition(320, 297, 80, 15);
     FontDesc := '#Label2';
-    Hint := '';
+    ParentShowHint := False;
     Text := '00:00:00.000';
+    Hint := '';
   end;
 
   btnpause := TfpgButton.Create(self);
   with btnpause do
   begin
     Name := 'btnpause';
-    SetPosition(200, 372, 52, 23);
+    SetPosition(204, 404, 52, 23);
     Text := 'Pause';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 15;
+    Hint := '';
     onclick := @btnPauseClick;
   end;
 
@@ -707,13 +743,14 @@ end;
   with btnresume do
   begin
     Name := 'btnresume';
-    SetPosition(272, 372, 64, 23);
+    SetPosition(276, 404, 64, 23);
     Text := 'Resume';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 16;
+    Hint := '';
     onclick := @btnResumeClick;
   end;
 
@@ -721,67 +758,73 @@ end;
   with CheckBox1 do
   begin
     Name := 'CheckBox1';
-    SetPosition(12, 372, 104, 19);
+    SetPosition(16, 404, 104, 19);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 17;
     Text := 'Play Reverse';
+    Hint := '';
   end;
 
   RadioButton1 := TfpgRadioButton.Create(self);
   with RadioButton1 do
   begin
     Name := 'RadioButton1';
-    SetPosition(128, 300, 96, 19);
+    SetPosition(132, 324, 96, 19);
     Checked := True;
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 18;
     Text := 'Float 32 bit';
+    Hint := '';
   end;
 
   RadioButton2 := TfpgRadioButton.Create(self);
   with RadioButton2 do
   begin
     Name := 'RadioButton2';
-    SetPosition(128, 316, 100, 19);
+    SetPosition(132, 340, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 19;
     Text := 'Int 32 bit';
+    Hint := '';
   end;
 
   RadioButton3 := TfpgRadioButton.Create(self);
   with RadioButton3 do
   begin
     Name := 'RadioButton3';
-    SetPosition(128, 334, 100, 19);
+    SetPosition(132, 358, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 20;
     Text := 'Int 16 bit';
+    Hint := '';
   end;
 
   Label2 := TfpgLabel.Create(self);
   with Label2 do
   begin
     Name := 'Label2';
-    SetPosition(116, 284, 104, 15);
+    SetPosition(116, 308, 104, 15);
     FontDesc := '#Label2';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Sample format';
+    Hint := '';
   end;
 
   TrackBar1 := TfpgTrackBar.Create(self);
   with TrackBar1 do
   begin
     Name := 'TrackBar1';
-    SetPosition(132, 232, 356, 30);
-    Hint := '';
+    SetPosition(136, 264, 356, 30);
+    ParentShowHint := False;
     TabOrder := 22;
+    Hint := '';
     TrackBar1.OnMouseDown := @btntrackonClick;
     TrackBar1.OnMouseUp := @btntrackoffClick;
   end;
@@ -790,10 +833,11 @@ end;
   with TrackBar2 do
   begin
     Name := 'TrackBar2';
-    SetPosition(4, 216, 32, 134);
-    Hint := '';
+    SetPosition(8, 248, 32, 134);
     Orientation := orVertical;
+    ParentShowHint := False;
     TabOrder := 23;
+    Hint := '';
     OnChange := @volumechange;
   end;
 
@@ -801,10 +845,11 @@ end;
   with TrackBar3 do
   begin
     Name := 'TrackBar3';
-    SetPosition(72, 216, 28, 134);
-    Hint := '';
+    SetPosition(76, 248, 28, 134);
     Orientation := orVertical;
+    ParentShowHint := False;
     TabOrder := 24;
+    Hint := '';
     OnChange := @volumechange;
   end;
 
@@ -812,128 +857,174 @@ end;
   with Label3 do
   begin
     Name := 'Label3';
-    SetPosition(12, 196, 84, 15);
+    SetPosition(16, 232, 84, 15);
     Alignment := taCenter;
     FontDesc := '#Label2';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Volume';
+    Hint := '';
   end;
 
   Label4 := TfpgLabel.Create(self);
   with Label4 do
   begin
     Name := 'Label4';
-    SetPosition(0, 348, 40, 15);
+    SetPosition(4, 380, 40, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Left';
+    Hint := '';
   end;
 
   Label5 := TfpgLabel.Create(self);
   with Label5 do
   begin
     Name := 'Label5';
-    SetPosition(68, 348, 36, 19);
+    SetPosition(72, 380, 36, 19);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Right';
+    Hint := '';
   end;
 
   vuleft := TfpgPanel.Create(self);
   with vuleft do
   begin
     Name := 'vuleft';
-    SetPosition(40, 220, 8, 128);
+    SetPosition(44, 252, 8, 128);
     BackgroundColor := TfpgColor($00D51D);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Style := bsFlat;
     Text := '';
+    Hint := '';
   end;
 
   vuright := TfpgPanel.Create(self);
   with vuright do
   begin
     Name := 'vuright';
-    SetPosition(60, 220, 8, 128);
+    SetPosition(64, 252, 8, 128);
     BackgroundColor := TfpgColor($1DD523);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Style := bsFlat;
     Text := '';
+    Hint := '';
   end;
 
   CheckBox2 := TfpgCheckBox.Create(self);
   with CheckBox2 do
   begin
     Name := 'CheckBox2';
-    SetPosition(268, 284, 184, 19);
+    SetPosition(272, 316, 184, 19);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 32;
     Text := 'Enable SoundTouch PlugIn';
-    OnChange := @ChangePlugSet;
+    Hint := 'Change Tempo with same tuning or change Tuning with same tempo';
+    showhint := true;
+    OnChange := @ChangePlugSetSoundTouch;
   end;
 
   Label6 := TfpgLabel.Create(self);
   with Label6 do
   begin
     Name := 'Label6';
-    SetPosition(272, 312, 80, 19);
+    SetPosition(276, 344, 80, 19);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Tempo: 1.0';
+    Hint := '';
   end;
 
   Label7 := TfpgLabel.Create(self);
   with Label7 do
   begin
     Name := 'Label7';
-    SetPosition(380, 312, 80, 15);
+    SetPosition(384, 344, 80, 15);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Pitch: 1.0';
+    Hint := '';
   end;
 
   TrackBar4 := TfpgTrackBar.Create(self);
   with TrackBar4 do
   begin
     Name := 'TrackBar4';
-    SetPosition(344, 308, 28, 54);
-    Hint := '';
+    SetPosition(348, 340, 28, 54);
     Orientation := orVertical;
-    Position := 50;
+    ParentShowHint := False;
     Position := 50;
     TabOrder := 35;
-    OnChange := @TrackChangePlugSet;
+    Hint := '';
+    OnChange := @TrackChangePlugSetSoundTouch;
   end;
 
   TrackBar5 := TfpgTrackBar.Create(self);
   with TrackBar5 do
   begin
     Name := 'TrackBar5';
-    SetPosition(440, 308, 28, 54);
-    Hint := '';
+    SetPosition(444, 340, 28, 54);
     Orientation := orVertical;
-    Position := 50;
+    ParentShowHint := False;
     Position := 50;
     TabOrder := 36;
-    OnChange := @TrackChangePlugSet;
+    Hint := '';
+    OnChange := @TrackChangePlugSetSoundTouch;
   end;
 
   Button1 := TfpgButton.Create(self);
   with Button1 do
   begin
     Name := 'Button1';
-    SetPosition(260, 336, 60, 23);
+    SetPosition(264, 368, 60, 23);
     Text := 'Reset';
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 37;
+    Hint := '';
     OnClick := @ResetPlugClick;
+  end;
+
+  chkst2b := TfpgCheckBox.Create(self);
+  with chkst2b do
+  begin
+    Name := 'chkst2b';
+    SetPosition(124, 380, 136, 19);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    TabOrder := 38;
+    Hint := 'Stereo to BinAural (for headphones)';
+    Showhint := true;
+    Text := 'Stereo to BinAural';
+    OnChange := @ChangePlugSetBs2b;
+  end;
+
+  Labelst1 := TfpgLabel.Create(self);
+  with Labelst1 do
+  begin
+    Name := 'Labelst1';
+    SetPosition(162, 159, 316, 15);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Folder + filename of bs2b Library';
+  end;
+
+  FilenameEdit6 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit6 do
+  begin
+    Name := 'FilenameEdit6';
+    SetPosition(136, 176, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 40;
   end;
 
   {@VFD_BODY_END: Simpleplayer}
@@ -944,7 +1035,7 @@ end;
     ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
     checkbox1.OnChange := @changecheck;
     RadioButton1.Checked := True;
-    Height := 197;
+    Height := 233;
              {$IFDEF Windows}
      {$if defined(cpu64)}
     FilenameEdit1.FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
@@ -956,6 +1047,7 @@ end;
     FilenameEdit2.FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
     FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\libSoundTouch-32.dll';
+    // FilenameEdit6.FileName := ordir + 'lib\Windows\32bit\LibBs2b-32.dll';
    {$endif}
     FilenameEdit4.FileName := ordir + 'sound\test.mp3';
  {$ENDIF}
@@ -976,6 +1068,7 @@ end;
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
     FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/LibSoundTouch-64.so';
+    FilenameEdit6.FileName := ordir + 'lib/Linux/64bit/libbs2b-64.so';
 {$else}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';

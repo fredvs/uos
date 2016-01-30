@@ -198,8 +198,11 @@ var
   procedure TSimpleplayer.btnLoadClick(Sender: TObject);
    begin
     // Load the libraries
-    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
-if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName), Pchar(FilenameEdit5.FileName)) = 0 then
+ // function uos_LoadLib(PortAudioFileName: PChar; SndFileFileName: PChar;
+  // Mpg123FileName: PChar; SoundTouchFileName: PChar; bs2bFilename: Pchar) : integer;
+
+if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName),
+ Pchar(FilenameEdit5.FileName),nil) = 0 then
     begin
       hide;
       Height := 403;

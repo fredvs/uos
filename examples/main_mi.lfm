@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '1.3'
+  LCLVersion = '1.5'
   object Shape5: TShape
     Left = 230
     Height = 44
@@ -362,7 +362,7 @@ object Form1: TForm1
     Left = 54
     Height = 14
     Top = 192
-    Width = 86
+    Width = 85
     Alignment = taCenter
     Caption = 'Volume Input 1'
     Font.Height = -11
@@ -374,7 +374,7 @@ object Form1: TForm1
     Left = 58
     Height = 14
     Top = 262
-    Width = 86
+    Width = 85
     Alignment = taCenter
     Caption = 'Volume Input 2'
     Font.Height = -11
@@ -386,7 +386,7 @@ object Form1: TForm1
     Left = 58
     Height = 14
     Top = 334
-    Width = 86
+    Width = 85
     Alignment = taCenter
     Caption = 'Volume Input 3'
     Font.Height = -11
@@ -398,7 +398,7 @@ object Form1: TForm1
     Left = 58
     Height = 14
     Top = 400
-    Width = 86
+    Width = 85
     Alignment = taCenter
     Caption = 'Volume Input 4'
     Font.Height = -11
@@ -554,7 +554,7 @@ object Form1: TForm1
     Left = 543
     Height = 14
     Top = 192
-    Width = 86
+    Width = 85
     Alignment = taCenter
     Caption = 'Volume Input 5'
     Font.Height = -11
@@ -566,7 +566,7 @@ object Form1: TForm1
     Left = 547
     Height = 14
     Top = 262
-    Width = 86
+    Width = 85
     Alignment = taCenter
     Caption = 'Volume Input 6'
     Font.Height = -11
@@ -578,7 +578,7 @@ object Form1: TForm1
     Left = 547
     Height = 14
     Top = 334
-    Width = 86
+    Width = 85
     Alignment = taCenter
     Caption = 'Volume Input 7'
     Font.Height = -11
@@ -590,7 +590,7 @@ object Form1: TForm1
     Left = 547
     Height = 14
     Top = 400
-    Width = 86
+    Width = 85
     Alignment = taCenter
     Caption = 'Volume Input 8'
     Font.Height = -11

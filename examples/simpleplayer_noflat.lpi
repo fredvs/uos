@@ -145,17 +145,15 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="main_sp_nf"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="186"/>
-        <CursorPos X="73" Y="391"/>
+        <TopLine Value="243"/>
+        <CursorPos X="37" Y="254"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="uos.pas"/>
-        <UnitName Value="uos"/>
         <EditorIndex Value="2"/>
         <TopLine Value="566"/>
         <CursorPos X="42" Y="587"/>
@@ -164,7 +162,6 @@ install:
       </Unit2>
       <Unit3>
         <Filename Value="simpleplayer_fpGUI_noflat.pas"/>
-        <UnitName Value="simpleplayer_fpGUI_noflat"/>
         <EditorIndex Value="4"/>
         <TopLine Value="400"/>
         <CursorPos X="2" Y="412"/>
@@ -182,7 +179,6 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="main_sp"/>
         <EditorIndex Value="1"/>
         <TopLine Value="169"/>
         <CursorPos X="9" Y="191"/>
@@ -192,21 +188,20 @@ install:
       </Unit5>
       <Unit6>
         <Filename Value="simpleplayer_fpGUI.pas"/>
-        <UnitName Value="simpleplayer_fpGUI"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="146"/>
         <CursorPos X="69" Y="169"/>
         <UsageCount Value="10"/>
       </Unit6>
       <Unit7>
-        <Filename Value="../../../../lib/codetyphon/typhon/lcl/stdctrls.pp"/>
+        <Filename Value="/lib/codetyphon/typhon/lcl/stdctrls.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="165"/>
         <CursorPos X="72" Y="188"/>
         <UsageCount Value="10"/>
       </Unit7>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="122" Column="8" TopLine="110"/>
@@ -323,6 +318,10 @@ install:
         <Filename Value="main_sp_nf.pas"/>
         <Caret Line="107" Column="50" TopLine="95"/>
       </Position29>
+      <Position30>
+        <Filename Value="main_sp_nf.pas"/>
+        <Caret Line="382" Column="65" TopLine="366"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

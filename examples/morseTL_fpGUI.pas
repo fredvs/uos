@@ -88,6 +88,7 @@ chara := copy(Memo1.Text,i,1);
        inc(i);
 
          uos_Play(player);
+          TimerCount.Enabled := true;
                    end
   else
   begin
@@ -112,7 +113,7 @@ end;
 
 procedure TForm1.onTimerCount(Sender: TObject);
 begin
-//  fpgapplication.processmessages;
+  fpgapplication.processmessages;
 end;
 
 
@@ -127,8 +128,6 @@ var
 PA_FileName, MP_FileName : string;
 begin
   {%region 'Auto-generated GUI code' -fold}
-
-
 
   {@VFD_BODY_BEGIN: form1}
   Name := 'form1';
@@ -262,11 +261,11 @@ begin
    {$endif}
    {$ENDIF}
 
- uos_LoadLib(Pchar(PA_FileName), nil, pchar(MP_FileName), nil);
+ uos_LoadLib(Pchar(PA_FileName), nil, pchar(MP_FileName), nil, nil);
 
      TimerCount := Tfpgtimer.Create(100);
      TimerCount.Enabled := False;
-   //  timerCount.OnTimer := @ontimercount;
+  timerCount.OnTimer := @ontimercount;
 
   end;
 

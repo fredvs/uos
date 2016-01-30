@@ -8,4 +8,5 @@
 {$DEFINE sndfile} // uncomment to enable sndfile compiling
 {$DEFINE mpg123} // uncomment to enable mpg123 compiling
 {$DEFINE soundtouch} // uncomment to enable soundtouch compiling
+{$DEFINE bs2b} // uncomment to enable bs2b compiling
 {$DEFINE webstream} // uncomment to enable Internet Audio Stream      

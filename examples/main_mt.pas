@@ -137,7 +137,7 @@ begin
    {$endif}
    {$ENDIF}
 
-uos_LoadLib(Pchar(PA_FileName), nil, pchar(MP_FileName), nil);
+uos_LoadLib(Pchar(PA_FileName), nil, pchar(MP_FileName), nil, nil);
 
    end;
 

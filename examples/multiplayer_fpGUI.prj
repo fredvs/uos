@@ -84,7 +84,7 @@ replacedialog=20
  y=216
  cx=437
  cy=171
-options=110
+options=104
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -170,25 +170,19 @@ options=110
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=4
- [projectoptionsfo.grid]
- propcolwidthref=433
- width0=296
- sortdescend0=0
- width1=426
- sortdescend1=0
+ index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=617
+ propcolwidthref=632
  width0=112
  sortdescend0=0
- width1=610
+ width1=625
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=1
  [projectoptionsfo.tabwidget]
  firsttab=0
- index=0
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=514
@@ -216,9 +210,9 @@ programparameters=18
  cy=348
 settings=13
  [settingsfo.tsplitter2]
- x=192
+ x=193
  y=16
- xprop=0.5906432748538
+ xprop=0.59763313609468
  yprop=0.97297297297297
  [settingsfo]
  x=410
@@ -256,6 +250,50 @@ makeoptions=7
  -B
  -O2 -XX -Xs -CX
  -vewnhibq
+compilerused=21
+ ${COMPILER} (Default)
+ Pascal 1
+ Pascal 2
+ Pascal 3
+ Pascal 4
+ C 1
+ C 2
+ C 3
+ C 4
+ Java 1
+ Java 2
+ Java 3
+ Java 4
+ Python 1
+ Python 2
+ Python 3
+ Python 4
+ Other 1
+ Other 2
+ Other 3
+ Other 4
+debuggerused=6
+ ${DEBUGGER} (Default)
+ Debugger 1
+ Debugger 2
+ Debugger 3
+ Debugger 4
+ None
+exeused=14
+ ${EXEEXT} (Default)
+ No Extension
+ .exe
+ .com
+ .bin
+ .prog
+ .pyc
+ .class
+ .so
+ .dll
+ .lib
+ .o
+ .res
+ .inf
 codetemplatedirs=1
  ${TEMPLATEDIR}
 toolmenus=1
@@ -396,6 +434,50 @@ makeoptionson=7
  32
  48
  63
+compilerusedon=21
+ 69631
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+debuggerusedon=6
+ 69631
+ 0
+ 0
+ 0
+ 0
+ 0
+exeusedon=14
+ 69631
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
 aftcommandon=0
 unitdirson=7
  196671
@@ -489,6 +571,7 @@ showgrid=1
 snaptogrid=1
 moveonfirstclick=1
 noformdesignerdocking=0
+componenthints=1
 gridsizex=8
 gridsizey=8
 autoindent=1
@@ -508,8 +591,11 @@ editfontextraspace=0
 editfontcolor=-1879048183
 editbkcolor=-1879048186
 statementcolor=14745599
+pairmarkcolor=-1610612712
 editfontantialiased=1
 editmarkbrackets=1
+editmarkpairwords=1
+fpgdesigner=1
 backupfilecount=0
 encoding=0
 trimtrailingwhitespace=0
@@ -684,13 +770,13 @@ findhistory=10
  sort
 findoptions=1
 editpos=7
- 0,2
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,578
+ 0,-1073741823
+ 12,576
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -739,13 +825,13 @@ tabsize=60
 firsttab=0
 index=0
 [layout]
-windowlayout=499
+windowlayout=503
  [mainfo.basedock]
  splitdir=2
  useroptions=15488
  [mainfo]
  splitdir=0
- useroptions=65659
+ useroptions=805372031
  stackedunder=
  parent=
  mdistate=0
@@ -759,6 +845,10 @@ windowlayout=499
  cy=621
  rcx=0
  rcy=0
+ children=2
+  statdisp,0,1,1262,18
+  basedock,0,19,1262,585
+ focusedchild=1
  wsize=0
  active=1
  visible=1
@@ -779,7 +869,7 @@ windowlayout=499
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -828,7 +918,7 @@ windowlayout=499
  [disassfo]
  splitdir=0
  useroptions=268451947
- stackedunder=componentstorefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -847,7 +937,7 @@ windowlayout=499
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -873,18 +963,18 @@ windowlayout=499
  x=0
  y=0
  cx=159
- cy=458
+ cy=457
  rcx=0
  rcy=0
- [projecttreefo.grid]
- propcolwidthref=1
- width0=170
+ [projecttreefo.project_tree]
+ propcolwidthref=18
+ width0=141
  sortdescend0=0
- width1=1
+ width1=12
  sortdescend1=0
  sorted=0
- col=0
- row=8
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -990,7 +1080,7 @@ windowlayout=499
  [symbolfo]
  splitdir=0
  useroptions=268451963
- stackedunder=findinfilefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1073,7 +1163,7 @@ windowlayout=499
  value=1
  [messagefo]
  splitdir=0
- useroptions=268517483
+ useroptions=82027
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1082,7 +1172,7 @@ windowlayout=499
  ncx=0
  ncy=0
  x=0
- y=506
+ y=505
  cx=1262
  cy=80
  rcx=0
@@ -1090,7 +1180,7 @@ windowlayout=499
  [componentstorefo]
  splitdir=0
  useroptions=268460155
- stackedunder=symbolfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1153,7 +1243,7 @@ windowlayout=499
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=disassfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1199,8 +1289,8 @@ windowlayout=499
  ncy=0
  x=162
  y=0
- cx=1092
- cy=458
+ cx=1090
+ cy=457
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1236,7 +1326,7 @@ windowlayout=499
  x=0
  y=45
  cx=1262
- cy=458
+ cy=457
  rcx=0
  rcy=0
 [targetconsole]

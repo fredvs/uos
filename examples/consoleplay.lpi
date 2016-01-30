@@ -34,7 +34,6 @@
       <Unit0>
         <Filename Value="consoleplay.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="consoleplay"/>
       </Unit0>
     </Units>
   </ProjectOptions>
@@ -60,7 +59,6 @@
     </Linking>
     <Other>
       <WriteFPCLogo Value="False"/>
-      <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
   <Debugging>

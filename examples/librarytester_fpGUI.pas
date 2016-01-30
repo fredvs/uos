@@ -4,12 +4,12 @@ program librarytester_fpGUI;
   {$DEFINE UseCThreads}
 
 uses
-
   {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
     dynlibs,
+  uos_bs2b,
   ctypes,
   Math,
   Classes,
@@ -99,11 +99,11 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
 
     {@VFD_BODY_BEGIN: Simpleplayer}
   Name := 'Simpleplayer';
-  SetPosition(467, 0, 502, 206);
+  SetPosition(491, 214, 502, 206);
   WindowTitle := 'Libraries Tester';
   IconName := '';
-  Hint := '';
   BackGroundColor := $80000001;
+  Hint := '';
   WindowPosition := wpScreenCenter;
   Ondestroy := @btnCloseClick;
 
@@ -122,20 +122,22 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
     SetPosition(136, 0, 320, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of PortAudio Library';
+    Hint := '';
   end;
 
   btnLoad := TfpgButton.Create(self);
   with btnLoad do
   begin
     Name := 'btnLoad';
-    SetPosition(16, 168, 476, 23);
-    FontDesc := '#Label1';
-    Hint := '';
-    ImageName := '';
-    TabOrder := 0;
+    SetPosition(16, 168, 476, 31);
     Text := 'Test to load that libraries';
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 0;
+    Hint := '';
     onclick := @btnLoadClick;
   end;
 
@@ -170,8 +172,9 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
     SetPosition(140, 40, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of SndFile Library';
+    Hint := '';
   end;
 
   Labelmpg := TfpgLabel.Create(self);
@@ -181,8 +184,9 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
     SetPosition(136, 80, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of Mpg123 Library';
+    Hint := '';
   end;
 
   Labelst := TfpgLabel.Create(self);
@@ -192,8 +196,9 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
     SetPosition(136, 120, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of SoundTouch Library';
+    Hint := '';
   end;
 
   FilenameEdit3 := TfpgFileNameEdit.Create(self);

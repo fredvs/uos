@@ -39,6 +39,7 @@
       <Unit0>
         <Filename Value="testfpguistream.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="testfpgui"/>
       </Unit0>
     </Units>
   </ProjectOptions>

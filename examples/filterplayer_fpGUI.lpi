@@ -39,7 +39,6 @@
       <Unit0>
         <Filename Value="filterplayer_fpGUI.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="filterplayer_fpGUI"/>
       </Unit0>
     </Units>
   </ProjectOptions>

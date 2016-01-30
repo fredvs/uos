@@ -87,10 +87,11 @@ var
     PlayerIndex1 := 0;
 
     // Load the libraries
-    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
+    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar;
+    // SoundTouchFileName: Pchar; bs2bFileName) : integer;
     // for web streaming => Mpg123 is needed
 
-    res := uos_LoadLib(Pchar(PA_FileName), nil, Pchar(MP_FileName), nil) ;
+    res := uos_LoadLib(Pchar(PA_FileName), nil, Pchar(MP_FileName), nil, nil) ;
     if res = 0 then  writeln('===> Libraries are loaded.') else
        writeln('===> Libraries are NOT loaded.') ;
 

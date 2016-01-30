@@ -49,16 +49,15 @@
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="main_mt"/>
         <IsVisibleTab Value="True"/>
-        <CursorPos X="20" Y="9"/>
+        <TopLine Value="125"/>
+        <CursorPos X="66" Y="140"/>
         <UsageCount Value="30"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="uos.pas"/>
-        <UnitName Value="uos"/>
         <EditorIndex Value="1"/>
         <TopLine Value="86"/>
         <CursorPos X="27" Y="94"/>
@@ -66,7 +65,7 @@
         <Loaded Value="True"/>
       </Unit2>
     </Units>
-    <JumpHistory Count="14" HistoryIndex="13">
+    <JumpHistory Count="15" HistoryIndex="14">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="3" Column="3"/>
@@ -123,6 +122,10 @@
         <Filename Value="main_mt.pas"/>
         <Caret Line="5" Column="29"/>
       </Position14>
+      <Position15>
+        <Filename Value="main_mt.pas"/>
+        <Caret Line="9" Column="20"/>
+      </Position15>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -175,4 +178,4 @@
       </Item3>
     </Exceptions>
   </Debugging>
-</CONFIG>
+</CONFIG>

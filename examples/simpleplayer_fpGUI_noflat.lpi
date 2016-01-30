@@ -40,7 +40,6 @@
       <Unit0>
         <Filename Value="simpleplayer_fpGUI_noflat.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="simpleplayer_fpGUI_noflat"/>
       </Unit0>
     </Units>
   </ProjectOptions>

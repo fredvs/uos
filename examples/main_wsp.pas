@@ -204,7 +204,7 @@ begin
   // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
   // You may load one or more libraries . When you want... :
 
-if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), pchar(edit5.Text)) = 0 then
+if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), pchar(edit5.Text),nil) = 0 then
   begin
     form1.hide;
         if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text) then

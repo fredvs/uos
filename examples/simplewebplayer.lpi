@@ -272,7 +272,6 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
-        <UnitName Value="uos"/>
         <WindowIndex Value="1"/>
         <TopLine Value="2326"/>
         <CursorPos X="68" Y="2349"/>
@@ -405,11 +404,9 @@ install:
       </Unit44>
       <Unit45>
         <Filename Value="simplewebplayer_fpGUI.pas"/>
-        <UnitName Value="simplewebplayer_fpGUI"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="212"/>
+        <TopLine Value="222"/>
         <CursorPos X="16" Y="237"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
@@ -459,18 +456,17 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="main_wsp"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="206"/>
-        <CursorPos X="2" Y="221"/>
+        <TopLine Value="198"/>
+        <CursorPos X="73" Y="209"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit53>
       <Unit54>
         <Filename Value="uos_httpgetthread.pas"/>
-        <UnitName Value="uos_httpgetthread"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
         <TopLine Value="76"/>
@@ -504,7 +500,6 @@ install:
       </Unit57>
       <Unit58>
         <Filename Value="conswebstream.pas"/>
-        <UnitName Value="conswebstream"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="1"/>
         <TopLine Value="79"/>
@@ -513,7 +508,7 @@ install:
         <Loaded Value="True"/>
       </Unit58>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="2087" Column="27" TopLine="2063"/>
@@ -629,6 +624,10 @@ install:
         <Filename Value="main_wsp.pas"/>
         <Caret Line="276" Column="49" TopLine="259"/>
       </Position29>
+      <Position30>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="221" Column="2" TopLine="206"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

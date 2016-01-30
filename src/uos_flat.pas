@@ -62,13 +62,13 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
 {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFileName: PChar) : LongInt;
         ////// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
 
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
            ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 
 {$IF (FPC_FULLVERSION >= 20701) or  DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Windows) or DEFINED(Library)}
@@ -334,13 +334,20 @@ function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: cint32;
                      //////////// PlayerIndex : Index of a existing Player
                      //////////// SampleRate : delault : -1 (44100)
                      //////////// Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
-                     ////// Till now, only 'soundtouch' PlugName is registred.
+                     ////// 'soundtouch' and 'bs2b' PlugName is registred.
 {$IF DEFINED(soundtouch)}
 procedure uos_SetPluginSoundTouch(PlayerIndex: cint32; PluginIndex: cint32; Tempo: cfloat;
                        Pitch: cfloat; Enable: boolean);
                      ////////// PluginIndex : PluginIndex Index of a existing Plugin.
                      //////////// PlayerIndex : Index of a existing Player
 {$endif}
+
+ {$IF DEFINED(bs2b)}
+    procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: LongInt;
+  aparam1: cfloat; aparam2: cfloat; Enable: boolean);
+    ////////// PluginIndex : PluginIndex Index of a existing Plugin.
+    //////////                
+     {$endif}
 
 function uos_GetStatus(PlayerIndex: cint32) : cint32 ;
              /////// Get the status of the player : -1 => error,  0 => has stopped, 1 => is running, 2 => is paused.
@@ -796,7 +803,7 @@ function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: cint32;
                      //////////// PlayerIndex : Index of a existing Player
                      //////////// SampleRate : delault : -1 (44100)
                      //////////// Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
-                     ////// Till now, only 'soundtouch' PlugName is registred.
+                     ////// 'soundtouch' and 'bs2b' PlugName are registred.
 begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
@@ -812,6 +819,18 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
  uosPlayers[PlayerIndex].SetPluginSoundTouch(PluginIndex, Tempo, Pitch, Enable);
+end;
+{$endif}
+
+{$IF DEFINED(bs2b)}
+    procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: LongInt;
+  aparam1: cfloat; aparam2: cfloat; Enable: boolean);
+                     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
+                     //////////// PlayerIndex : Index of a existing Player
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+ uosPlayers[PlayerIndex].SetPluginBs2b(PluginIndex, aparam1, aparam2, Enable);
 end;
 {$endif}
 
@@ -1073,10 +1092,10 @@ begin
 end;
 
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar) : cint32;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFileName: PChar) : cint32;
   begin
    ifflat := true;
-result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName)  ;
+result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFileName)  ;
 //uosLoadResult:= uos.uosLoadResult;
   end;
 
@@ -1106,10 +1125,10 @@ procedure uos_unloadlib() ;
 uos.uos_unloadlib() ;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
                     ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 begin
-uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123, SoundTouch) ;
+uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b) ;
 uosLoadResult:= uos.uosLoadResult;
 end;
 

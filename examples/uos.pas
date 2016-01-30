@@ -40,12 +40,16 @@ uses
    {$IF DEFINED(soundtouch)}
    uos_soundtouch,
    {$endif}
+   
+   {$IF DEFINED(bs2b)}
+   uos_bs2b,
+   {$endif}
 
      Classes, ctypes, Math, sysutils;
 
 
 const
-  uos_version : LongInt = 15150506 ;
+  uos_version : LongInt = 160130 ;
 
 type
   TDArFloat = array of cfloat;
@@ -77,6 +81,7 @@ type
     SFloadError: LongInt;
     MPloadError: LongInt;
     STloadError: LongInt;
+    BSloadError: LongInt;
     PAinitError: LongInt;
     MPinitError: LongInt;
   end;
@@ -90,6 +95,7 @@ type
     SF_FileName: pchar; // SndFile
     MP_FileName: pchar; // Mpg123
     Plug_ST_FileName: pchar; // Plugin SoundTouch
+    Plug_BS_FileName: pchar; // Plugin bs2b
 
      {$IF DEFINED(portaudio)}
     DefDevOut: PaDeviceIndex;
@@ -101,7 +107,7 @@ type
     {$endif}
     function loadlib: LongInt;
     procedure unloadlib;
-    procedure unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch: boolean);
+    procedure unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b : boolean);
     function InitLib: LongInt;
   end;
 
@@ -246,9 +252,9 @@ type
   TProc = procedure of object;
     {$endif}
 
-  TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; NumProceed : LongInt;
+  TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; Abs2bd : Tt_bs2bdp; inputData: Tuos_Data;
     param1: float; param2: float; param3: float; param4: float;
-    param5: float; param6: float): TDArFloat;
+    param5: float; param6: float;  param7: float; param8: float): TDArFloat;
 
 type
   Tuos_DSP = class(TObject)
@@ -296,6 +302,7 @@ type
     Enabled: boolean;
     Name: string;
     PlugHandle: THandle;
+    Abs2b : Tt_bs2bdp;
     PlugFunc: TPlugFunc;
     param1: float;
     param2: float;
@@ -303,6 +310,8 @@ type
     param4: float;
     param5: float;
     param6: float;
+    param7: float;
+    param8: float;
     Buffer: TDArFloat;
   end;
 
@@ -431,14 +440,22 @@ type
     /////// Add a plugin , result is PluginIndex
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
-    ////// Till now, only 'soundtouch' PlugName is registred.
+    ////// 'soundtouch' and 'bs2b' PlugName are registred.
 
     {$IF DEFINED(soundtouch)}
     procedure SetPluginSoundTouch(PluginIndex: LongInt; Tempo: cfloat;
       Pitch: cfloat; Enable: boolean);
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
-    //////////                proc : loopprocedure
+    //////////               
     {$endif}
+    
+     {$IF DEFINED(bs2b)}
+    procedure SetPluginBs2b(PluginIndex: LongInt;
+  aparam1: cfloat; aparam2: cfloat; Enable: boolean);
+    ////////// PluginIndex : PluginIndex Index of a existing Plugin.
+    //////////                
+     {$endif}
+
 
     function GetStatus() : LongInt ;
     /////// Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, -1 => error.
@@ -644,13 +661,13 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
    {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFilename: PChar) : LongInt;
         ////// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
 
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
            ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
 function uos_GetVersion() : LongInt ;             //// version of uos
@@ -1505,36 +1522,72 @@ end;
 end;
 
 {$IF DEFINED(soundtouch)}
-function SoundTouchPlug(bufferin: TDArFloat; plugHandle: THandle; NumSample : LongInt;
-  tempo: float; pitch: float; channels: float; ratio: float; notused1: float;
-  notused2: float): TDArFloat;
+function SoundTouchPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; inputData: Tuos_Data;
+  notused1: float; notused2: float; notused3: float;  notused4: float;
+  notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
   numoutbuf, x1, x2: LongInt;
   BufferplugFLTMP: TDArFloat;
   BufferplugFL: TDArFloat;
 begin
   soundtouch_putSamples(plugHandle, pointer(bufferin),
-    length(bufferin) div round(Channels * ratio));
+    length(bufferin) div round(inputData.Channels * inputData.ratio));
 
   numoutbuf := 1;
   SetLength(BufferplugFL, 0);
 
    SetLength(BufferplugFLTMP, length(bufferin));
 
-  if NumSample > 0 then
+  if inputData.outframes > 0 then
     while numoutbuf > 0 do
     begin
       numoutbuf := soundtouch_receiveSamples(PlugHandle,
-        pointer(BufferplugFLTMP), NumSample);
-      SetLength(BufferplugFL, length(BufferplugFL) + round(numoutbuf * Channels));
-      x2 := Length(BufferplugFL) - round(numoutbuf * Channels);
+        pointer(BufferplugFLTMP), inputData.outframes);
+      SetLength(BufferplugFL, length(BufferplugFL) + round(numoutbuf * inputData.Channels));
+      x2 := Length(BufferplugFL) - round(numoutbuf * inputData.Channels);
 
-      for x1 := 0 to round(numoutbuf * Channels) - 1 do
+      for x1 := 0 to round(numoutbuf * inputData.Channels) - 1 do
       begin
         BufferplugFL[x1 + x2] := BufferplugFLTMP[x1];
       end;
     end;
   Result := BufferplugFL;
+end;
+{$endif}
+
+{$IF DEFINED(bs2b)}
+function bs2bPlug(bufferin: TDArFloat; notneeded: THandle; Abs2bd : Tt_bs2bdp; inputData: Tuos_Data;
+ notused1: float; notused2: float; notused3: float;  notused4: float;
+  notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
+var
+  x, x2: LongInt;
+  Bufferplug: TDArFloat;
+ begin
+ 
+  if inputData.libopen = 0 then
+  x2 := round(inputData.ratio * (inputData.outframes div round(inputData.channels))) ;
+  
+  if inputData.libopen = 1 then
+  begin
+  if inputData.SampleFormat < 2 then 
+  x2 := round((inputData.outframes div round(inputData.channels)))
+  else x2 := round(inputData.ratio * (inputData.outframes div round(inputData.channels))) ;
+  end;
+  
+   SetLength(Bufferplug,x2);
+       
+   x := 0;
+  
+   while x < x2  do
+          begin
+       
+     Bufferplug[x] := bufferin[x] ;
+     Bufferplug[x+1] := bufferin[x+1] ;
+     bs2b_cross_feed_f(Abs2bd,Bufferplug[x],1); 
+      bs2b_cross_feed_f(Abs2bd,Bufferplug[x+1],2);  
+      x := x +2;
+          end;
+  Result :=  Bufferplug;
 end;
 {$endif}
 
@@ -1546,8 +1599,10 @@ function Tuos_Player.AddPlugin(PlugName: PChar; SampleRate: LongInt;
 var
   x: LongInt;
 begin
+x := -1 ;
+ {$IF DEFINED(soundtouch)}
    if lowercase(PlugName) = 'soundtouch' then
-  begin /// till now only 'soundtouch' is registered
+  begin /// 
     SetLength(Plugin, Length(Plugin) + 1);
     Plugin[Length(Plugin) - 1] := Tuos_Plugin.Create();
     x := Length(Plugin) - 1;
@@ -1559,8 +1614,9 @@ begin
     Plugin[x].param4 := -1;
     Plugin[x].param5 := -1;
     Plugin[x].param6 := -1;
-    {$IF DEFINED(soundtouch)}
-     Plugin[x].PlugHandle := soundtouch_createInstance();
+    Plugin[x].param7 := -1;
+    Plugin[x].param8 := -1;
+      Plugin[x].PlugHandle := soundtouch_createInstance();
     if SampleRate = -1 then
       soundtouch_setSampleRate(Plugin[x].PlugHandle, 44100)
     else
@@ -1573,10 +1629,32 @@ begin
     soundtouch_setTempo(Plugin[x].PlugHandle, 1);
     soundtouch_clear(Plugin[x].PlugHandle);
     Plugin[x].PlugFunc := @soundtouchplug;
+    end;
    {$endif}
+   
+ {$IF DEFINED(bs2b)}
+   if lowercase(PlugName) = 'bs2b' then
+  begin 
+    SetLength(Plugin, Length(Plugin) + 1);
+    Plugin[Length(Plugin) - 1] := Tuos_Plugin.Create();
+    x := Length(Plugin) - 1;
+    Plugin[x].Name := lowercase(PlugName);
+    Plugin[x].Enabled := true;
+    if assigned(Plugin[x].Abs2b) then bs2b_close(Plugin[x].Abs2b) ;
+    Plugin[x].Abs2b := bs2b_open() ;
+    Plugin[x].param1 := -1;
+    Plugin[x].param2 := -1;
+    Plugin[x].param3 := -1;
+    Plugin[x].param4 := -1;
+    Plugin[x].param5 := -1;
+    Plugin[x].param6 := -1; 
+    Plugin[x].param7 := -1;
+    Plugin[x].param8 := -1;  
+    Plugin[x].PlugFunc := @bs2bplug;
+   end;
+   {$endif}   
     Result := x;
-  end;
-end;
+ end;
 
 {$IF DEFINED(soundtouch)}
 procedure Tuos_Player.SetPluginSoundTouch(PluginIndex: LongInt;
@@ -1587,6 +1665,16 @@ begin
   Plugin[PluginIndex].Enabled := Enable;
   Plugin[PluginIndex].param1 := Tempo;
   Plugin[PluginIndex].param2 := Pitch;
+end;
+{$endif}
+
+{$IF DEFINED(bs2b)}
+procedure Tuos_Player.SetPluginBs2b(PluginIndex: LongInt;
+  aparam1: cfloat; aparam2: cfloat; Enable: boolean);
+begin
+  Plugin[PluginIndex].Enabled := Enable;
+  Plugin[PluginIndex].param1 := aparam1;
+  Plugin[PluginIndex].param2 := aparam2;
 end;
 {$endif}
 
@@ -2678,7 +2766,7 @@ end;
 procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
-  x, x2, x3, x4, err: LongInt;
+  x, x2, x3, x4, x5, err: LongInt;
   plugenabled: boolean;
   curpos: cint64;
  // err: CInt32;
@@ -3087,14 +3175,19 @@ begin
             if PlugIn[x3].Enabled = True then
             begin
               BufferplugFL := Plugin[x3].PlugFunc(BufferplugINFLTMP,
-                Plugin[x3].PlugHandle, StreamIn[x2].Data.outframes, Plugin[x3].param1, Plugin[x3].param2,
-                StreamIn[x2].Data.Channels, StreamIn[x2].Data.Ratio, -1, -1);
+                Plugin[x3].PlugHandle, Plugin[x3].Abs2b, StreamIn[x2].Data,
+                 Plugin[x3].param1, Plugin[x3].param2, Plugin[x3].param3, Plugin[x3].param4,
+                 Plugin[x3].param5, Plugin[x3].param6, Plugin[x3].param7, Plugin[x3].param8);
 
-              if length(plugin) > 1 then
-                for x4 := 0 to length(BufferplugFL) - 1 do
-                  BufferplugINFLTMP[x4] := cfloat(BufferplugFL[x4]);
+            if (length(PlugIn) > 1) then
+            begin
+            // TO CHECK : works only if SoundTouch is last or only plugin
+               for x4 := 0 to length(BufferplugFL) - 1 do
+             BufferplugINFLTMP[x4] := cfloat(BufferplugFL[x4]);
             end;
-
+           end;        
+            
+            end;  
             ///////////////////////////////////////////////////////////////////////////
             ///// give the processed input to output
             if Length(BufferplugFL) > 0 then
@@ -3151,9 +3244,8 @@ begin
                     Length(BufferplugSH));
                 end;
               end;
-            end;
-          end;
-        end
+           end;
+           end
         else   /////////// No plugin
 
         begin
@@ -3232,16 +3324,25 @@ begin
   if status = 0 then
   begin
          if length(PlugIn) > 0 then
-
-         {$IF DEFINED(soundtouch)}
+     begin
         for x := 0 to high(PlugIn) do
-
+       begin         
+        {$IF DEFINED(soundtouch)}
         if Plugin[x].Name = 'soundtouch' then
         begin
           soundtouch_clear(Plugin[x].PlugHandle);
           soundtouch_destroyInstance(Plugin[x].PlugHandle);
         end;
+        {$endif}
+       
+        {$IF DEFINED(bs2b)}
+        if Plugin[x].Name = 'bs2b' then
+        begin
+         bs2b_close(Plugin[x].Abs2b); 
+        end;
        {$endif}
+      end;
+    end;
 
     for x := 0 to high(StreamIn) do
       if (StreamIn[x].Data.HandleSt <> nil) then
@@ -3410,7 +3511,7 @@ begin
   inherited Destroy;
 end;
 
-procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch: boolean);
+procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
                ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 begin
    {$IF DEFINED(portaudio)}
@@ -3424,6 +3525,9 @@ begin
    {$endif}
  {$IF DEFINED(soundtouch)}
  if SoundTouch = true then  st_Unload();
+ {$endif}
+  {$IF DEFINED(bs2b)}
+ if bs2b = true then  bs_Unload();
  {$endif}
 
 end;
@@ -3441,6 +3545,9 @@ begin
     {$endif}
    {$IF DEFINED(soundtouch)}
    ST_Unload();
+   {$endif}
+    {$IF DEFINED(bs2b)}
+   bs_Unload();
    {$endif}
     {$IF DEFINED(windows)}
   Set8087CW(old8087cw);
@@ -3495,6 +3602,7 @@ begin
   uosLoadResult.SFloadERROR := -1;
   uosLoadResult.MPloadERROR := -1;
   uosLoadResult.STloadERROR := -1;
+  uosLoadResult.BSloadERROR := -1;
 
    {$IF DEFINED(portaudio)}
     if (PA_FileName <>  nil) and (PA_FileName <>  '') then
@@ -3593,11 +3701,38 @@ begin
   else
     uosLoadResult.STloadERROR := -1;
    {$endif}
+   
+    {$IF DEFINED(bs2b)}
+  if (Plug_BS_FileName <> nil) and (Plug_BS_FileName <>  '')  then
+  begin
+    if not fileexists(Plug_BS_FileName) then
+    begin
+      Result := -1;
+      uosLoadResult.BSloadERROR := 1;
+    end
+    else
+    if BS_Load(Plug_BS_FileName) then
+    begin
+      if (uosLoadResult.MPloadERROR = -1) and (uosLoadResult.PAloadERROR = -1) and
+        (uosLoadResult.SFloadERROR = -1) and (uosLoadResult.BSloadERROR = -1) then
+        Result := 0;
+      uosLoadResult.BSloadERROR := 0;
+    end
+    else
+    begin
+      uosLoadResult.BSloadERROR := 2;
+      Result := -1;
+    end;
+  end
+  else
+    uosLoadResult.BSloadERROR := -1;
+   {$endif}
+   
     if Result = 0 then
     Result := InitLib();
 end;
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFilename: PChar) : LongInt;
   begin
    result := -1 ;
    if not assigned(uosInit) then begin
@@ -3613,6 +3748,7 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTo
    uosInit.SF_FileName := SndFileFileName;
    uosInit.MP_FileName := Mpg123FileName;
    uosInit.Plug_ST_FileName := SoundTouchFileName;
+   uosInit.Plug_BS_FileName := bs2bFileName;
 
   result := uosInit.loadlib ;
   end;
@@ -3628,10 +3764,10 @@ begin
  uosInit.free;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
                     ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
- uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, SoundTouch) ;
+ uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b) ;
 end;
 
 
@@ -3772,6 +3908,7 @@ begin
     [exDenormalized] + [exOverflow] + [exPrecision]);
   uosLoadResult.PAloadERROR := -1;
   uosLoadResult.SFloadERROR := -1;
+  uosLoadResult.BSloadERROR := -1;
   uosLoadResult.STloadERROR := -1;
   uosLoadResult.MPloadERROR := -1;
   uosLoadResult.PAinitError := -1;
@@ -3785,7 +3922,7 @@ begin
   SF_FileName := nil; // SndFile
   MP_FileName := nil; // Mpg123
   Plug_ST_FileName := nil; // Plugin SoundTouch
-
+  Plug_BS_FileName := nil; // Plugin bs2b
 
 end;
 

@@ -147,10 +147,9 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="main_sr"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="108"/>
-        <CursorPos X="12" Y="122"/>
+        <TopLine Value="136"/>
+        <CursorPos X="70" Y="150"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -224,7 +223,7 @@ install:
         <UsageCount Value="7"/>
       </Unit13>
       <Unit14>
-        <Filename Value="../../../../lib/codetyphon/fpcsrc/rtl/objpas/sysutils/sysstrh.inc"/>
+        <Filename Value="/lib/codetyphon/fpcsrc/rtl/objpas/sysutils/sysstrh.inc"/>
         <TopLine Value="100"/>
         <CursorPos X="10" Y="112"/>
         <UsageCount Value="10"/>
@@ -263,20 +262,19 @@ install:
         <UsageCount Value="10"/>
       </Unit20>
       <Unit21>
-        <Filename Value="../../../../lib/codetyphon/lazarus/lcl/graphics.pp"/>
+        <Filename Value="/lib/codetyphon/lazarus/lcl/graphics.pp"/>
         <TopLine Value="1168"/>
         <CursorPos X="49" Y="1181"/>
         <UsageCount Value="2"/>
       </Unit21>
       <Unit22>
-        <Filename Value="../../../../lib/codetyphon/fpcsrc/rtl/objpas/objpas.pp"/>
+        <Filename Value="/lib/codetyphon/fpcsrc/rtl/objpas/objpas.pp"/>
         <TopLine Value="119"/>
         <CursorPos X="8" Y="28"/>
         <UsageCount Value="10"/>
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
-        <UnitName Value="uos"/>
         <WindowIndex Value="1"/>
         <TopLine Value="52"/>
         <CursorPos Y="64"/>
@@ -304,7 +302,7 @@ install:
         <UsageCount Value="2"/>
       </Unit26>
       <Unit27>
-        <Filename Value="../../../../lib/codetyphon/lazarus/packager/registration/fcllaz.pas"/>
+        <Filename Value="/lib/codetyphon/lazarus/packager/registration/fcllaz.pas"/>
         <CursorPos Y="4"/>
         <UsageCount Value="6"/>
       </Unit27>
@@ -325,7 +323,7 @@ install:
         <UsageCount Value="7"/>
       </Unit30>
       <Unit31>
-        <Filename Value="../../../../lib/codetyphon/lazarus/components/codetools/codebeautifier.pas"/>
+        <Filename Value="/lib/codetyphon/lazarus/components/codetools/codebeautifier.pas"/>
         <TopLine Value="405"/>
         <UsageCount Value="9"/>
       </Unit31>
@@ -370,7 +368,6 @@ install:
       </Unit37>
       <Unit38>
         <Filename Value="uos_flat.pas"/>
-        <UnitName Value="uos_flat"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="1"/>
@@ -380,7 +377,7 @@ install:
         <Loaded Value="True"/>
       </Unit38>
     </Units>
-    <JumpHistory Count="20" HistoryIndex="19">
+    <JumpHistory Count="21" HistoryIndex="20">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="331" Column="55" TopLine="315"/>
@@ -460,6 +457,10 @@ install:
         <Filename Value="main_sr.pas"/>
         <Caret Line="124" Column="2" TopLine="110"/>
       </Position20>
+      <Position21>
+        <Filename Value="main_sr.pas"/>
+        <Caret Line="122" Column="12" TopLine="108"/>
+      </Position21>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

@@ -48,11 +48,10 @@ var
 
   procedure Twaveform.DrawWaveForm;
   begin
-
-    waveformdata := uos_InputGetArrayLevel(PlayerIndex1, In1Index);
+     waveformdata := uos_InputGetArrayLevel(PlayerIndex1, In1Index);
 
     chan := uos_InputGetChannels(PlayerIndex1, In1Index);
-
+  
     fpgapplication.ProcessMessages;
     button1.tag := 1;
     custom1.Visible := True;
@@ -253,7 +252,7 @@ var
     FilenameEdit1.FileName := ordir + 'sound/test.mp3';
  {$ENDIF}
 
-    if uos_LoadLib(nil, PChar(fnsf), PChar(fnmp), nil) = 0 then
+    if uos_LoadLib(nil, PChar(fnsf), PChar(fnmp), nil, nil) = 0 then
       button1.Enabled := True
     else
     begin
