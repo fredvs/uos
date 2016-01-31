@@ -88,6 +88,7 @@ var
   PlayerIndex1: integer;
   ordir, opath: string;
   In1Index, Plugin1Index: integer;
+  plugsoundtouch : boolean = false;
 
 
   procedure TSimpleplayer.ChangePlugSet(Sender: TObject);
@@ -196,15 +197,17 @@ var
   end;
 
   procedure TSimpleplayer.btnLoadClick(Sender: TObject);
+  var
+loadok : boolean = false;
    begin
     // Load the libraries
  // function uos_LoadLib(PortAudioFileName: PChar; SndFileFileName: PChar;
-  // Mpg123FileName: PChar; SoundTouchFileName: PChar; bs2bFilename: Pchar) : integer;
+  // Mpg123FileName: PChar) : integer;
 
-if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName),
- Pchar(FilenameEdit5.FileName),nil) = 0 then
+if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)) = 0 then
     begin
       hide;
+       loadok := true;
       Height := 403;
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
@@ -212,22 +215,31 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
       FilenameEdit3.ReadOnly := True;
       FilenameEdit5.ReadOnly := True;
       UpdateWindowPosition;
-       if (trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName) then
         btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123 and Plugin SoundTouch libraries are loaded...'
-        else
-          begin
-      TrackBar4.enabled := false;
+        'PortAudio, SndFile, Mpg123 libraries are loaded...'
+        end else btnLoad.Text :=
+        'One or more libraries did not load, check filenames...';
+       
+        if loadok = true then
+        begin
+           if ((trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName))
+       and (uos_LoadPlugin('soundtouch', Pchar(FilenameEdit5.FileName)) = 0)  then
+       begin
+      plugsoundtouch := true;
+          btnLoad.Text :=
+        'PortAudio, SndFile, Mpg123 and Plugin SoundTouch are loaded...';
+        end
+         else
+         begin
+        TrackBar4.enabled := false;
        TrackBar5.enabled := false;
        CheckBox2.enabled := false;
        Button1.enabled := false;
        label6.enabled := false;
        label7.enabled := false;
-               btnLoad.Text :=
-        'PortAudio, SndFile and Mpg123 libraries are loaded...'  ;
-
-          end;
-      WindowPosition := wpScreenCenter;
+           end;    
+       
+       WindowPosition := wpScreenCenter;
       WindowTitle := 'Simple Web Player    uos version ' + inttostr(uos_getversion());
 
       // Some audio web streaming
@@ -350,7 +362,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
 
-       if (trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName) then
+       if  plugsoundtouch = true then
   begin
     Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
     ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)

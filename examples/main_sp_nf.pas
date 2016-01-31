@@ -93,6 +93,8 @@ var
    PlayerIndex1: Tuos_Player;
  // ordir, opath: string;
   Out1Index, In1Index, DSP1Index, DSP2Index, Plugin1Index: cardinal;
+  plugsoundtouch : boolean = false;
+  plugbs2b : boolean = false;
 
 implementation
 
@@ -248,42 +250,49 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+loadok : boolean = false;
 begin
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar;
-  //SoundTouchFileName: Pchar ; bs2bFileName: Pchar) : integer;
-  // You may load one or more libraries . When you want... :
+   // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
+    // You may load one or more libraries . When you want... :
 
-if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text), pchar(edit5.Text),nil) = 0 then
+if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text)) = 0 then
   begin
     form1.hide;
+    loadok := true;
     button1.Enabled := False;
     edit1.ReadOnly := True;
     edit2.ReadOnly := True;
     edit3.ReadOnly := True;
     edit5.ReadOnly := True;
-    form1.Height := 418;
-    form1.Position := poScreenCenter;
-          if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text) then
-       button1.Caption :=
-        'PortAudio, SndFile, Mpg123 and Plugin SoundTouch libraries are loaded...'
-        else
-          begin
-      TrackBar4.enabled := false;
+          button1.Caption :=
+        'PortAudio, SndFile and Mpg123 libraries are loaded...'  ;
+             end else  MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
+
+if loadok = true then
+        begin
+           if ((trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text))
+       and (uos_LoadPlugin('soundtouch', Pchar(Edit5.text)) = 0)  then
+       begin
+      plugsoundtouch := true;
+        button1.Caption :=
+        'PortAudio, SndFile, Mpg123 and Plugin are loaded...';
+        end
+         else
+         begin
+       TrackBar4.enabled := false;
        TrackBar5.enabled := false;
        CheckBox2.enabled := false;
        Button7.enabled := false;
        label9.enabled := false;
        label7.enabled := false;
-             button1.Caption :=
-        'PortAudio, SndFile and Mpg123 libraries are loaded...'  ;
-              end;
-
+           end;
+         form1.Height := 417;
+    form1.Position := poScreenCenter;
     form1.Caption := 'Simple Player.    uos version ' + inttostr(uos_getversion());
     form1.Show;
-  end
-  else
-      MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
+        end;
 
 end;
 
@@ -405,7 +414,7 @@ begin
     PlayerIndex1.SetDSPIn(In1Index, DSP1Index, checkbox1.Checked);
     //// set the parameters of custom DSP;
 
-   if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text) then
+   if  plugsoundtouch = true then
     begin
     Plugin1Index := PlayerIndex1.AddPlugin('soundtouch', -1, -1);
     ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)

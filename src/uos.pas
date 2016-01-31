@@ -49,7 +49,7 @@ uses
 
 
 const
-  uos_version : LongInt = 160130 ;
+  uos_version : LongInt = 14160131 ;
 
 type
   TDArFloat = array of cfloat;
@@ -107,8 +107,9 @@ type
     {$endif}
     function loadlib: LongInt;
     procedure unloadlib;
-    procedure unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b : boolean);
+    procedure unloadlibCust(PortAudio, SndFile, Mpg123 : boolean);
     function InitLib: LongInt;
+    procedure unloadPlugin(PluginName: Pchar);
   end;
 
 type
@@ -661,15 +662,21 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
    {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFilename: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName: PChar) : LongInt;
         ////// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
 
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123: boolean);
            ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
+function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
+        ////// load plugin...
+        
+procedure uos_unloadPlugin(PluginName: PChar);
+           ////// Unload Plugin...
+           
 function uos_GetVersion() : LongInt ;             //// version of uos
 
 const
@@ -3511,7 +3518,7 @@ begin
   inherited Destroy;
 end;
 
-procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
+procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123: boolean);
                ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 begin
    {$IF DEFINED(portaudio)}
@@ -3523,11 +3530,17 @@ begin
   {$IF DEFINED(mpg123)}
  if Mpg123 = true then  mp_Unload();
    {$endif}
+end;
+
+procedure Tuos_Init.unloadPlugin(PluginName: Pchar);
+               ////// Unload Plugin... 
+               begin
+  
  {$IF DEFINED(soundtouch)}
- if SoundTouch = true then  st_Unload();
+ if lowercase(PluginName) = 'soundtouch' then  st_Unload();
  {$endif}
   {$IF DEFINED(bs2b)}
- if bs2b = true then  bs_Unload();
+ if lowercase(PluginName) = 'bs2b' then bs_Unload();
  {$endif}
 
 end;
@@ -3543,13 +3556,7 @@ begin
    {$IF DEFINED(portaudio)}
    Pa_Unload();
     {$endif}
-   {$IF DEFINED(soundtouch)}
-   ST_Unload();
-   {$endif}
-    {$IF DEFINED(bs2b)}
-   bs_Unload();
-   {$endif}
-    {$IF DEFINED(windows)}
+   {$IF DEFINED(windows)}
   Set8087CW(old8087cw);
     {$endif}
 
@@ -3676,22 +3683,28 @@ begin
     uosLoadResult.MPloadERROR := -1;
    {$endif}
 
-  {$IF DEFINED(soundtouch)}
-  if (Plug_ST_FileName <> nil) and (Plug_ST_FileName <>  '')  then
+     if Result = 0 then
+    Result := InitLib();
+end;
+
+function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
   begin
-    if not fileexists(Plug_ST_FileName) then
+ Result := -1; 
+   {$IF DEFINED(soundtouch)}
+  if (lowercase(PluginName) = 'soundtouch') and (PluginFileName <> nil) and (PluginFileName <>  '')  then
+  begin
+    if not fileexists(PluginFileName) then
     begin
       Result := -1;
       uosLoadResult.STloadERROR := 1;
     end
     else
-    if ST_Load(Plug_ST_FileName) then
+    if ST_Load(PluginFileName) then
     begin
-      if (uosLoadResult.MPloadERROR = -1) and (uosLoadResult.PAloadERROR = -1) and
-        (uosLoadResult.SFloadERROR = -1) then
-        Result := 0;
+       Result := 0;
       uosLoadResult.STloadERROR := 0;
-    end
+       uosInit.Plug_ST_FileName := PluginFileName;
+      end
     else
     begin
       uosLoadResult.STloadERROR := 2;
@@ -3703,20 +3716,20 @@ begin
    {$endif}
    
     {$IF DEFINED(bs2b)}
-  if (Plug_BS_FileName <> nil) and (Plug_BS_FileName <>  '')  then
+  if (lowercase(PluginName) = 'bs2b') and (PluginFileName <> nil) and (PluginFileName <>  '') then
   begin
-    if not fileexists(Plug_BS_FileName) then
+    if not fileexists(PluginFileName) then
     begin
       Result := -1;
       uosLoadResult.BSloadERROR := 1;
     end
     else
-    if BS_Load(Plug_BS_FileName) then
+    if BS_Load(PluginFileName) then
     begin
-      if (uosLoadResult.MPloadERROR = -1) and (uosLoadResult.PAloadERROR = -1) and
-        (uosLoadResult.SFloadERROR = -1) and (uosLoadResult.BSloadERROR = -1) then
-        Result := 0;
+       Result := 0;
       uosLoadResult.BSloadERROR := 0;
+      uosInit.Plug_BS_FileName := PluginFileName;
+
     end
     else
     begin
@@ -3727,12 +3740,10 @@ begin
   else
     uosLoadResult.BSloadERROR := -1;
    {$endif}
-   
-    if Result = 0 then
-    Result := InitLib();
-end;
-
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFilename: PChar) : LongInt;
+  
+  end;
+ 
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName: PChar) : LongInt;
   begin
    result := -1 ;
    if not assigned(uosInit) then begin
@@ -3747,9 +3758,7 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTo
    uosInit.PA_FileName := PortAudioFileName;
    uosInit.SF_FileName := SndFileFileName;
    uosInit.MP_FileName := Mpg123FileName;
-   uosInit.Plug_ST_FileName := SoundTouchFileName;
-   uosInit.Plug_BS_FileName := bs2bFileName;
-
+   
   result := uosInit.loadlib ;
   end;
 
@@ -3764,10 +3773,16 @@ begin
  uosInit.free;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123: boolean);
                     ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
- uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b) ;
+ uosInit.unloadlibcust(PortAudio, SndFile, Mpg123) ;
+end;
+
+procedure uos_UnloadPlugin(PluginName: PChar);
+        ////// load plugin...
+begin
+ uosInit.unloadplugin(PluginName) ;
 end;
 
 

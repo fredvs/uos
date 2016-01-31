@@ -84,10 +84,9 @@ var
     PlayerIndex1 := 0;
 
     // Load the libraries
-    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar;
-    //SoundTouchFileName: Pchar ; bs2bFileName: Pchar) : integer;
+    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
 
-   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil) ;
+   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 

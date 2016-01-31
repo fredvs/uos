@@ -72,6 +72,7 @@ var
   BufferBMP: TBitmap;
   PlayerIndex1: cardinal;
   Out1Index, In1Index, DSP1Index, Plugin1Index: cardinal;
+  plugsoundtouch : boolean = false;
 
 implementation
 
@@ -199,17 +200,31 @@ end;
 
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+loadok : boolean = false;
 begin
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar; SoundTouchFileName: Pchar) : integer;
+  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName) : integer;
   // You may load one or more libraries . When you want... :
 
-if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), pchar(edit5.Text),nil) = 0 then
+if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text)) = 0 then
   begin
     form1.hide;
-        if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text) then
+      loadok := true;
+       button1.Caption :=
+      'PortAudio and Mpg123 libraries are loaded...'
+      end   else
+      MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
+
+   if loadok = true then
+        begin
+       if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text)
+         and (uos_LoadPlugin('soundtouch', Pchar(edit5.text)) = 0) then
+           begin
           button1.Caption :=
-        'PortAudio, Mpg123 and Plugin SoundTouch libraries are loaded...'
+        'PortAudio, Mpg123 and Plugin SoundTouch libraries are loaded...'   ;
+        plugsoundtouch := true;
+        end
         else
           begin
       TrackBar4.enabled := false;
@@ -218,10 +233,9 @@ if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), pchar(edit5.Text),nil)
        Button7.enabled := false;
        label9.enabled := false;
        label7.enabled := false;
-          button1.Caption :=
-        'PortAudio and Mpg123 libraries are loaded...'  ;
+        end;
 
-          end;
+
     button1.Enabled := False;
     edit1.ReadOnly := True;
     edit3.ReadOnly := True;
@@ -237,9 +251,8 @@ if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), pchar(edit5.Text),nil)
  //  edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
 
     form1.Show;
-  end
-  else
-      MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
+  end ;
+
 
 end;
 
@@ -335,7 +348,7 @@ var
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
 
-     if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text) then
+     if  plugsoundtouch = true  then
     begin
     Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
     ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)

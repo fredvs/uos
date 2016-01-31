@@ -63,8 +63,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=319
- y=205
+ x=520
+ y=213
  cx=298
  cy=116
 replacedialog=20
@@ -701,8 +701,8 @@ path=2
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
 line=2
- 1675
- 3173
+ 1682
+ 3180
 address=2
  0
  0
@@ -792,18 +792,18 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=ChangePlugSetSoundTouch
+finddtext=btnCloseClick
 findhistory=10
- ChangePlugSetSoundTouch
- SoundTouch
- SetPluginSoundTouch
- soundtouchplug
- .exec
- PlugInIndex
- numsample
- PlugFunc
- SampleFormat
- libopen
+ btnCloseClick
+ uos_UnloadPlugin
+ unloadlib
+ loadlib
+ loadPlugin
+ uos_loadPlugin
+ uos_unloadlibCust
+ init
+ load
+ initlib
 findoptions=1
 editpos=16
  0,-1073741823
@@ -813,12 +813,12 @@ editpos=16
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 6,288
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -852,9 +852,9 @@ sourcefiles=16
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/st2bi.pas
- ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
 relpaths=16
  uos.pas
  uos_flat.pas
@@ -869,9 +869,9 @@ relpaths=16
  define.inc
  uos_libsndfile.pas
  st2bi.pas
- uos.pas
  uos_bs2b.pas
  uos.pas
+ uos_flat.pas
 ismoduletexts=16
  0
  0
@@ -894,26 +894,9 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=16
- 0
- 11
- 10
- 8
- 9
- 1
- 2
- 3
- 4
- 5
- 6
- 7
- 15
- 12
- 13
- 14
 tabsize=60
 firsttab=7
-index=11
+index=12
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -936,10 +919,10 @@ windowlayout=503
  rcx=0
  rcy=0
  children=2
-  basedock,0,0,1356,701
-  statdisp,0,1,1356,18
- focusedchild=0
- wsize=4
+  statdisp,0,1,956,18
+  basedock,0,19,956,585
+ focusedchild=1
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1053,7 +1036,7 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=561
+ cy=445
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1262,8 +1245,8 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=613
- cx=1356
+ y=497
+ cx=956
  cy=88
  rcx=0
  rcy=0
@@ -1333,7 +1316,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1363,7 +1346,7 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=956
  cy=46
  rcx=0
  rcy=0
@@ -1379,8 +1362,8 @@ windowlayout=503
  ncy=0
  x=142
  y=0
- cx=1214
- cy=561
+ cx=814
+ cy=445
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1415,8 +1398,8 @@ windowlayout=503
  ncy=0
  x=0
  y=49
- cx=1356
- cy=561
+ cx=956
+ cy=445
  rcx=0
  rcy=0
 [targetconsole]

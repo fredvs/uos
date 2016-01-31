@@ -147,9 +147,10 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="226"/>
-        <CursorPos X="86" Y="240"/>
+        <CursorPos X="76" Y="239"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="lazdyn_portaudio.pas"/>

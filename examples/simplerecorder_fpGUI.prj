@@ -824,7 +824,7 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
-firsttab=0
+firsttab=2
 index=7
 [layout]
 windowlayout=503
@@ -834,7 +834,7 @@ windowlayout=503
  [mainfo]
  splitdir=0
  useroptions=805372031
- stackedunder=
+ stackedunder=sourcehintfo
  parent=
  mdistate=0
  nx=0
@@ -1245,7 +1245,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

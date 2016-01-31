@@ -103,6 +103,7 @@ var
   PlayerIndex1: Tuos_Player;
   ordir, opath: string;
   In1Index, DSP1Index, DSP2Index, Plugin1Index: integer;
+  plugsoundtouch : boolean = true;
 
   procedure TSimpleplayer.btnTrackOnClick(Sender: TObject; Button: TMouseButton;
     Shift: TShiftState; const pos: TPoint);
@@ -226,16 +227,15 @@ var
 
   procedure TSimpleplayer.btnLoadClick(Sender: TObject);
   var
-    str: string;
+   loadok : boolean = false;
   begin
     // Load the libraries
-    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar;
-    //SoundTouchFileName: Pchar ;bs2bFileName: Pchar) : integer;
-if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pchar(FilenameEdit3.FileName),
-Pchar(FilenameEdit5.FileName), nil) = 0 then
+    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
+if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName), Pchar(FilenameEdit3.FileName)) = 0 then
     begin
       hide;
       Height := 403;
+      loadok := true;
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
       FilenameEdit1.ReadOnly := True;
@@ -243,22 +243,30 @@ Pchar(FilenameEdit5.FileName), nil) = 0 then
       FilenameEdit3.ReadOnly := True;
       FilenameEdit5.ReadOnly := True;
        WindowPosition := wpScreenCenter;
-            if (trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName) then
+           btnLoad.Text :=
+        'PortAudio, SndFile, Mpg123 libraries are loaded...'
+        end else btnLoad.Text :=
+        'One or more libraries did not load, check filenames...';
+
+         if loadok = true then
+        begin
+           if ((trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName))
+       and (uos_LoadPlugin('soundtouch', Pchar(FilenameEdit5.FileName)) = 0)  then
+       begin
+      plugsoundtouch := true;
           btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123 and Plugin SoundTouch libraries are loaded...'
-        else
-          begin
-      TrackBar4.enabled := false;
+        'PortAudio, SndFile, Mpg123 and Plugin are loaded...';
+        end
+         else
+         begin
+        TrackBar4.enabled := false;
        TrackBar5.enabled := false;
        CheckBox2.enabled := false;
        Button1.enabled := false;
        label6.enabled := false;
        label7.enabled := false;
-               btnLoad.Text :=
-        'PortAudio, SndFile and Mpg123 libraries are loaded...'  ;
-
-          end;
-            UpdateWindowPosition;
+           end;
+                UpdateWindowPosition;
                WindowTitle := 'Simple Player.    uos version ' + inttostr(uos_getversion());
        fpgapplication.ProcessMessages;
     sleep(500);

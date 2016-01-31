@@ -107,6 +107,8 @@ var
   PlayerIndex1: integer;
   ordir, opath: string;
   OutputIndex1, InputIndex1, DSPIndex1, PluginIndex1, PluginIndex2: integer;
+  plugsoundtouch : boolean = false;
+  plugbs2b : boolean = false;
 
   procedure TSimpleplayer.btnTrackOnClick(Sender: TObject; Button: TMouseButton;
     Shift: TShiftState; const pos: TPoint);
@@ -233,19 +235,25 @@ var
       sleep(100);
     end;
     if btnLoad.Enabled = False then
+    begin
+      uos_UnloadPlugin('soundtouch');
+      uos_UnloadPlugin('bs2b');
       uos_UnloadLib();
+    end;  
   end;
 
   procedure TSimpleplayer.btnLoadClick(Sender: TObject);
-
+var
+loadok : boolean = false;
   begin
     // Load the libraries
     // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar;
-    // Mpg123FileName: Pchar; SoundTouchFileName: Pchar ; bs2bFileName: Pchar) : integer;
+    // Mpg123FileName: Pchar: Pchar) : integer;
 if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
- Pchar(FilenameEdit3.FileName), Pchar(FilenameEdit5.FileName), Pchar(FilenameEdit6.FileName)) = 0 then
+ Pchar(FilenameEdit3.FileName)) = 0 then
     begin
       hide;
+      loadok := true;
       Height := 435;
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
@@ -255,31 +263,40 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
       FilenameEdit5.ReadOnly := True;
       FilenameEdit6.ReadOnly := True;
       UpdateWindowPosition;
-       if ((trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName))  then
-        btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123 and Plugin SoundTouch + bs2b libraries are loaded...'
-        else
-          begin
+       btnLoad.Text :=
+        'PortAudio, SndFile, Mpg123 libraries are loaded...'
+       end else btnLoad.Text :=
+        'One or more libraries did not load, check filenames...';
+        
+        if loadok = true then
+        begin
+           if ((trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName))
+       and (uos_LoadPlugin('soundtouch', Pchar(FilenameEdit5.FileName)) = 0)  then
+       begin
+      plugsoundtouch := true;
+          btnLoad.Text :=
+        'PortAudio, SndFile, Mpg123 and Plugin are loaded...';
+        end
+         else
+         begin
         TrackBar4.enabled := false;
        TrackBar5.enabled := false;
        CheckBox2.enabled := false;
        Button1.enabled := false;
        label6.enabled := false;
        label7.enabled := false;
-               btnLoad.Text :=
-        'PortAudio, SndFile and Mpg123 libraries are loaded...'  ;
-          end;
+           end;    
           
       if ((trim(Pchar(filenameedit6.FileName)) <> '') and fileexists(filenameedit6.FileName)) 
-      then else chkst2b.enabled := false; 
+      and (uos_LoadPlugin('bs2b', Pchar(FilenameEdit6.FileName)) = 0)
+      then plugbs2b := true else chkst2b.enabled := false; 
           
       WindowPosition := wpScreenCenter;
-      WindowTitle := 'Simple Player.    uos version ' + inttostr(uos_getversion());
+      WindowTitle := 'Simple Player.    uos Version ' + inttostr(uos_getversion());
        fpgapplication.ProcessMessages;
       sleep(500);
       Show;
-    end else btnLoad.Text :=
-        'One or more libraries did not load, check filenames...'
+    end;
   end;
 
   procedure TSimpleplayer.ClosePlayer1;
@@ -437,7 +454,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
   
      ///// add bs2b plugin with default samplerate(44100) / channels(2 = stereo)
-       if (trim(Pchar(filenameedit6.FileName)) <> '') and fileexists(filenameedit6.FileName) then
+       if plugbs2b = true then
   begin
   PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b', -1, -1);
   if  chkst2b.checked = true then
@@ -447,7 +464,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     
      ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
     /// SoundTouch plugin must be the last added.
-    if (trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName) then
+    if plugsoundtouch = true then
   begin
     PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
     ChangePlugSetSoundTouch(self); //// custom procedure to Change plugin settings

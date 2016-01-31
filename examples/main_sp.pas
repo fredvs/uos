@@ -96,6 +96,8 @@ var
   BufferBMP: TBitmap;
   PlayerIndex1: integer;
   OutputIndex1, InputIndex1, DSPIndex1, PluginIndex1, PluginIndex2: integer;
+  plugsoundtouch : boolean = false;
+  plugbs2b : boolean = false;
 
 implementation
 
@@ -252,45 +254,55 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+loadok : boolean = false;
 begin
   // Load the libraries
-   // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar;
-    // SoundTouchFileName: Pchar; bs2bFileName) : integer;
+   // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
     // You may load one or more libraries . When you want... :
 
-if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text), pchar(edit5.Text),  pchar(edit6.Text)) = 0 then
+if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text)) = 0 then
   begin
     form1.hide;
-        if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text) then
-          button1.Caption :=
-        'PortAudio, SndFile, Mpg123 and Plugin libraries are loaded...'
-        else
-          begin
-      TrackBar4.enabled := false;
-       TrackBar5.enabled := false;
-       CheckBox2.enabled := false;
-       Button7.enabled := false;
-       label9.enabled := false;
-       label7.enabled := false;
-          button1.Caption :=
-        'PortAudio, SndFile and Mpg123 libraries are loaded...'  ;
-             end;
-
-     if ((trim(Pchar(edit6.text)) <> '') and fileexists(edit6.text))
-      then else CheckBox3.enabled := false;
-
+    loadok := true;
     button1.Enabled := False;
     edit1.ReadOnly := True;
     edit2.ReadOnly := True;
     edit3.ReadOnly := True;
     edit5.ReadOnly := True;
+          button1.Caption :=
+        'PortAudio, SndFile and Mpg123 libraries are loaded...'  ;
+             end else  MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
+
+if loadok = true then
+        begin
+           if ((trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text))
+       and (uos_LoadPlugin('soundtouch', Pchar(Edit5.text)) = 0)  then
+       begin
+      plugsoundtouch := true;
+        button1.Caption :=
+        'PortAudio, SndFile, Mpg123 and Plugin are loaded...';
+        end
+         else
+         begin
+       TrackBar4.enabled := false;
+       TrackBar5.enabled := false;
+       CheckBox2.enabled := false;
+       Button7.enabled := false;
+       label9.enabled := false;
+       label7.enabled := false;
+           end;
+
+      if ((trim(Pchar(edit6.text)) <> '') and fileexists(edit6.text))
+      and (uos_LoadPlugin('bs2b', Pchar(edit6.text)) = 0)
+      then plugbs2b := true else CheckBox3.enabled := false;
+
     form1.Height := 460;
     form1.Position := poScreenCenter;
     form1.Caption := 'Simple Player.    uos version ' + inttostr(uos_getversion());
     form1.Show;
-  end
-  else
-      MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
+  end;
+
 
 end;
 
@@ -417,13 +429,13 @@ begin
     //// set the parameters of custom DSP;
 
     ///// add bs2b plugin with default samplerate(44100) / channels(2 = stereo)
-       if (trim(Pchar(edit6.text)) <> '') and fileexists(edit6.text) then
+       if plugbs2b = true then
   begin
    PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b', -1, -1);
    uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1, checkbox3.checked);
     end;
 
-     if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text) then
+     if plugsoundtouch = true then
     begin
     PluginIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
     ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)

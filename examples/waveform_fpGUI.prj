@@ -631,18 +631,23 @@ hintheight=214
 finddtext=
 findhistory=0
 findoptions=1
-editpos=2
- 0,224
- 5,50
+editpos=3
+ 0,-1073741823
+ 0,-1073741823
+ 0,254
 bookmarks0=0
 bookmarks1=0
-sourcefiles=2
+bookmarks2=0
+sourcefiles=3
  ${PROJECTDIR}/waveform_fpGUI.pas
  ${PROJECTDIR}/uos.pas
-relpaths=2
+ ${PROJECTDIR}/waveform_fpGUI.pas
+relpaths=3
  waveform_fpGUI.pas
  uos.pas
-ismoduletexts=2
+ waveform_fpGUI.pas
+ismoduletexts=3
+ 0
  0
  0
 modules=0
@@ -652,7 +657,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=495
  [mainfo.basedock]
@@ -675,9 +680,9 @@ windowlayout=495
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,956,18
   basedock,0,19,956,585
- focusedchild=1
+  statdisp,0,1,956,18
+ focusedchild=0
  wsize=0
  active=1
  visible=1

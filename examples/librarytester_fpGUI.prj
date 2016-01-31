@@ -771,17 +771,17 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=159
- y=52
- cx=961
+ x=154
+ y=26
+ cx=966
  cy=621
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,1356,18
-  basedock,0,19,1356,779
+  statdisp,0,1,956,18
+  basedock,0,19,956,585
  focusedchild=1
- wsize=4
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -895,7 +895,7 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=643
+ cy=445
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -906,7 +906,7 @@ windowlayout=503
  sortdescend1=0
  sorted=0
  col=1
- row=0
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1064,8 +1064,8 @@ windowlayout=503
  y=0
  cx=247
  cy=44
- rcx=949
- rcy=42
+ rcx=1129
+ rcy=679
  [watchfo.grid]
  propcolwidthref=123
  values0=2
@@ -1104,8 +1104,8 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=691
- cx=1356
+ y=497
+ cx=956
  cy=88
  rcx=0
  rcy=0
@@ -1175,7 +1175,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1205,8 +1205,8 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=1356
- cy=42
+ cx=956
+ cy=46
  rcx=0
  rcy=0
  [sourcefo]
@@ -1221,8 +1221,8 @@ windowlayout=503
  ncy=0
  x=142
  y=0
- cx=1214
- cy=643
+ cx=814
+ cy=445
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1256,9 +1256,9 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=45
- cx=1356
- cy=643
+ y=49
+ cx=956
+ cy=445
  rcx=0
  rcy=0
 [targetconsole]

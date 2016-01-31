@@ -261,7 +261,7 @@ begin
    {$endif}
    {$ENDIF}
 
- uos_LoadLib(Pchar(PA_FileName), nil, pchar(MP_FileName), nil, nil);
+ uos_LoadLib(Pchar(PA_FileName), nil, pchar(MP_FileName));
 
      TimerCount := Tfpgtimer.Create(100);
      TimerCount.Enabled := False;

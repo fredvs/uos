@@ -808,7 +808,7 @@ windowlayout=503
  [mainfo]
  splitdir=0
  useroptions=838860927
- stackedunder=
+ stackedunder=sourcehintfo
  parent=
  mdistate=0
  nx=0
@@ -1219,7 +1219,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

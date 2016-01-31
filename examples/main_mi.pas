@@ -275,9 +275,8 @@ procedure TForm1.Button1Click(Sender: TObject);
 
 begin
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar;
-    // SoundTouchFileName: Pchar; bs2bFileName) : integer;
-    if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text), nil, nil) = 0 then
+  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
+    if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text)) = 0 then
   begin
     form1.hide;
     form1.Position := podefault;

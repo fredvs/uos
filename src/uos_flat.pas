@@ -62,14 +62,19 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
 {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName: PChar) : LongInt;
         ////// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
 
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123: boolean);
            ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
+
+function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
+        ////// load plugin...
+        
+procedure uos_UnloadPlugin(PluginName: PChar);
 
 {$IF (FPC_FULLVERSION >= 20701) or  DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Windows) or DEFINED(Library)}
 procedure uos_CreatePlayer(PlayerIndex: LongInt);
@@ -1092,12 +1097,20 @@ begin
 end;
 
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFileName: PChar) : cint32;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName: PChar) : cint32;
   begin
    ifflat := true;
-result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, SoundTouchFileName, bs2bFileName)  ;
+result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName)  ;
 //uosLoadResult:= uos.uosLoadResult;
   end;
+  
+function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
+        ////// load plugin...
+begin
+   ifflat := true;
+result := uos.uos_loadPlugin(PluginName, PluginFilename)  ;
+  end;
+
 
 function uos_GetVersion() : cint32 ;
 begin
@@ -1125,13 +1138,18 @@ procedure uos_unloadlib() ;
 uos.uos_unloadlib() ;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123: boolean);
                     ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 begin
-uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123, SoundTouch, bs2b) ;
+uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123) ;
 uosLoadResult:= uos.uosLoadResult;
 end;
 
+procedure uos_UnloadPlugin(PluginName: PChar);
+begin
+uos.uos_UnloadPlugin(PluginName) ;
+uosLoadResult:= uos.uosLoadResult;
+end;
 
 {$IF DEFINED(portaudio)}
 procedure uos_GetInfoDevice();
