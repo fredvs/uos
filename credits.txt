@@ -16,6 +16,10 @@ Here are the open source libraries used by uos:
    Copyright (c) Thomas Orgis <thomas@orgis.org>
    http://www.mpg123.de/
 
+=> Bs2b stereo to binaural library. 
+   Copyright (c) Boris Mikhaylov
+   http://www.bs2b.com/
+
 
 
 

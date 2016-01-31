@@ -18,7 +18,9 @@ With uos you can:
 
 . Listen to multiple input and output.
 
-uos uses the SoundTouch, PortAudio, SndFile and Mpg123 audio libraries.
+uos uses:
+PortAudio, SndFile, Mpg123 audio libraries and
+SoundTouch, Bs2b audio-effect libraries.
 
 Included in the package:
 . Examples fpGUI, LCL and console.
