@@ -790,11 +790,11 @@ end;
      {$if defined(cpu64)}
     FilenameEdit1.FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
-    FilenameEdit5.FileName := ordir + 'lib\Windows\64bit\LibSoundTouch-64.dll';
+    FilenameEdit5.FileName := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
 {$else}
     FilenameEdit1.FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
-    FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\LibSoundTouch-32.dll';
+    FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll';
    {$endif}
  {$ENDIF}
 
@@ -803,18 +803,18 @@ end;
     opath := copy(opath, 1, Pos('/uos', opath) - 1);
     FilenameEdit1.FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     FilenameEdit3.FileName := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
-    FilenameEdit5.FileName := opath + '/lib/Mac/32bit/LibSoundTouch-32.dylib';
+    FilenameEdit5.FileName := opath + '/lib/Mac/32bit/plugin/LibSoundTouch-32.dylib';
             {$ENDIF}
 
    {$IFDEF linux}
     {$if defined(cpu64)}
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-    FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/LibSoundTouch-64.so';
+    FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
 {$else}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
-    FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/LibSoundTouch-32.so';
+    FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
 {$endif}
             {$ENDIF}
 

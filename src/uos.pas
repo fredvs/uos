@@ -920,23 +920,21 @@ end;
 procedure Tuos_Player.Play() ;
 var
   x: LongInt;
-  err: LongInt;
-begin
+ begin
   if (isAssigned = True) then
   begin
-  err := -1;
-
+  
    {$IF DEFINED(portaudio)}
   for x := 0 to high(StreamOut) do
     if StreamOut[x].Data.HandleSt <> nil then
     begin
-      err := Pa_StartStream(StreamOut[x].Data.HandleSt);
+      Pa_StartStream(StreamOut[x].Data.HandleSt);
      end;
 
   for x := 0 to high(StreamIn) do
     if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
     begin
-      err := Pa_StartStream(StreamIn[x].Data.HandleSt);
+     Pa_StartStream(StreamIn[x].Data.HandleSt);
       sleep(200);
      end;
     {$endif}
@@ -2253,11 +2251,10 @@ function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
   //  result :  Output Index in array    -1 = error
   //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1,0, -1);
 var
-  x, err: LongInt;
+  x: LongInt;
 begin
   result := -1 ;
   x := 0;
-  err := -1;
   SetLength(StreamOut, Length(StreamOut) + 1);
   StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
   x := Length(StreamOut) - 1;
@@ -2391,10 +2388,10 @@ end;
   //////////// FramesCount : default : -1 (1024)
   ////////// example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1);
 var
-  x, err, inh : LongInt;
+  x, err : LongInt;
   PipeBufferSize : cardinal;
   {$IF DEFINED(sndfile)}
-    sfInfo: TSF_INFO;
+//    sfInfo: TSF_INFO;
    {$endif}
   {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
@@ -2773,16 +2770,17 @@ end;
 procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
-  x, x2, x3, x4, x5, err: LongInt;
+  x, x2, x3, x4 : LongInt;
   plugenabled: boolean;
   curpos: cint64;
- // err: CInt32;
   BufferplugINFLTMP: TDArFloat;
   BufferplugFL: TDArFloat;
   BufferplugSH: TDArShort;
   BufferplugLO: TDArLong;
+  // err: LongInt; // if you want clean buffer
 
-     {$IF ( FPC_FULLVERSION>=20701 ) or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
+     {$IF ( FPC_FULLVERSION>=20701 ) or DEFINED(LCL) or DEFINED(ConsoleApp) or
+      DEFINED(Library) or DEFINED(Windows)}
      {$else}
   msg: TfpgMessageParams;  // for fpgui
     {$endif}
@@ -2881,11 +2879,11 @@ begin
               StreamIn[x].DSP[x2].BefProc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
         ///// end DSP BeforeBuffProc
 
-        RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
+        RTLeventWaitFor(evPause);  ///// Is there a pause waiting ?
         RTLeventSetEvent(evPause);
 
         case StreamIn[x].Data.TypePut of
-          0:   ///// it is a input from audio file...
+          0:   ///// It is a input from audio file.
           begin
             case StreamIn[x].Data.LibOpen of
               //////////// Here we are, reading the data and store it in buffer
@@ -2915,14 +2913,15 @@ begin
 
           end;
 
-
            {$IF DEFINED(portaudio)}
            1:   /////// for Input from device
           begin
             for x2 := 0 to StreamIn[x].Data.WantFrames do
               StreamIn[x].Data.Buffer[x2] := cfloat(0);      ////// clear input
-            err := Pa_ReadStream(StreamIn[x].Data.HandleSt,
+            Pa_ReadStream(StreamIn[x].Data.HandleSt,
               @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.WantFrames);
+           
+           // err := // if you want clean buffer
             StreamIn[x].Data.OutFrames :=
               StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
             //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  /// if you want clean buffer
@@ -2934,7 +2933,9 @@ begin
 
           begin
           {$IF DEFINED(mpg123)}
-         err := mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
+          
+        // err := // if you want clear buffer
+        mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
           StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
          //  writeln('===> mpg123_read error => ' + inttostr(err)) ;
           StreamIn[x].Data.outframes :=
@@ -2973,7 +2974,7 @@ begin
         //// Getting the level before DSP procedure
        if (StreamIn[x].Data.levelEnable = 1) or (StreamIn[x].Data.levelEnable = 3) then StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
 
-       //// Adding level in array-level
+       //// Adding level in array-level  // ideal for pre-wave form
        if (StreamIn[x].Data.levelArrayEnable = 1) then
        begin
        if (StreamIn[x].Data.levelEnable = 0) or (StreamIn[x].Data.levelEnable = 3) then
@@ -3028,7 +3029,7 @@ begin
 
         ///// End DSPin AfterBuffProc
 
-        ///////////// the synchro main loop procedure
+        ///////////// The synchro main loop procedure
          {$IF not DEFINED(Library)}
          if StreamIn[x].LoopProc <> nil then
    {$IF FPC_FULLVERSION>=20701}
@@ -3196,6 +3197,7 @@ begin
             
             end;  
             ///////////////////////////////////////////////////////////////////////////
+           
             ///// give the processed input to output
             if Length(BufferplugFL) > 0 then
             begin
@@ -3221,21 +3223,23 @@ begin
                   case StreamOut[x].Data.SampleFormat of
                     0:
                     begin
-                      err := Pa_WriteStream(StreamOut[x].Data.HandleSt,
+                      Pa_WriteStream(StreamOut[x].Data.HandleSt,
                         @BufferplugFL[0], Length(BufferplugFL) div
                         StreamIn[x2].Data.Channels);
                     end;
                     1:
                     begin
                       BufferplugLO := CvFloat32ToInt32(BufferplugFL);
-                      err := Pa_WriteStream(StreamOut[x].Data.HandleSt,
+                     Pa_WriteStream(StreamOut[x].Data.HandleSt,
                         @BufferplugLO[0], Length(BufferplugLO) div
                         StreamIn[x2].Data.Channels);
                     end;
                     2:
                     begin
                       BufferplugSH := CvFloat32ToInt16(BufferplugFL);
-                      err := Pa_WriteStream(StreamOut[x].Data.HandleSt,
+                   
+                   // err := // if you want clean buffer
+                     Pa_WriteStream(StreamOut[x].Data.HandleSt,
                         @BufferplugSH[0], Length(BufferplugSH) div
                         StreamIn[x2].Data.Channels);
                     end;
@@ -3273,13 +3277,13 @@ begin
          {$IF DEFINED(portaudio)}
           1:     /////// Give to output device
             begin
-
-              err :=
-                Pa_WriteStream(StreamOut[x].Data.HandleSt,
+           
+            // err := // if you want clean buffer
+              Pa_WriteStream(StreamOut[x].Data.HandleSt,
                 @StreamOut[x].Data.Buffer[0], StreamIn[x2].Data.outframes div
                 StreamIn[x2].Data.ratio);
-
               // if err <> 0 then status := 0;   // if you want clean buffer ...
+
             end;
           {$endif}
 
@@ -3656,6 +3660,7 @@ begin
   else
     uosLoadResult.SFloadERROR := -1;
    {$endif}
+   
    {$IF DEFINED(mpg123)}
   if (MP_FileName <> nil) and (MP_FileName <>  '') then
   begin

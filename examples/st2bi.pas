@@ -6,6 +6,7 @@ uses {$IFDEF UNIX}
   cthreads,
   cwstring, {$ENDIF}
   Classes,
+   dynlibs,
   SysUtils,
   CustApp, uos,
   uos_bs2b,
@@ -46,14 +47,23 @@ var
 
  {$IFDEF linux}
     {$if defined(cpu64)}
-   bsFileName := ordir + 'lib/Linux/64bit/libbs2b-64.so';
+   bsFileName := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
        {$else}
-   bsFileName := ordir + 'lib/Linux/64bit/libbs2b-32.so';
+   bsFileName := ordir + 'lib/Linux/64bit/plugin/libbs2b-32.so';
 {$endif}
     
  {$ENDIF}
  
-    res := bs_Load(Pchar(bsFileName)) ;
+ {$IFDEF windows}
+    {$if defined(cpu64)}
+   bsFileName := ordir + 'lib\Windows\64bit\plugin\bs2b.dll';
+       {$else}
+   bsFileName := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
+   {$endif}
+    
+ {$ENDIF}
+ 
+  res := bs_Load(Pchar(bsFileName)) ;
    
    if res = true then
 
@@ -61,32 +71,41 @@ var
       writeln('NO library is NOT loaded...');
 
     //  readln;
-      
+      writeln(); 
+    writeln('Try get Version number');   
+     writeln(); 
    num :=  bs2b_runtime_version_int() ;
+    writeln(); 
    
     writeln('Version number ' + inttostr(num));
     
   //   readln;
-     
+   
+      writeln(); 
+    writeln('Try get Version string'); 
+     writeln();    
     versionstr := bs2b_runtime_version() ;
+     writeln(); 
     
      writeln('Version string ' + versionstr);
     
     // readln; 
        
-     
+     writeln(); 
+    writeln('Try to create a bs2b class'); 
+     writeln();    
   Abs2bd :=   bs2b_open() ;
   
-// Abs2bd^.level := 123456 ;
-  
- //  Abs2bd^.lfs.asis[0] := thebuffer2[0];
-   
- //  Abs2bd^.lfs.asis[1] := thebuffer2[1];
-  
+   writeln(); 
+    writeln('Try to get level'); 
+     writeln();
    writeln('Level is ' + inttostr(bs2b_get_level(Abs2bd)));
    
   //  readln;
   
+   writeln(); 
+    writeln('Try to cross feed'); 
+     writeln();
   bs2b_cross_feed_f(Abs2bd, thesample, 2); 
   
   thesample2 := -1234567 ;
@@ -94,6 +113,9 @@ var
    writeln('Before Cross Level ' + inttostr(thesample2));
  
  
+ writeln(); 
+    writeln('Try to cross feed chanel 2'); 
+     writeln();
   bs2b_cross_feed_s32(Abs2bd, thesample2, 2) ;
   
    writeln('Cross Level 2 is ' + inttostr(thesample2));
@@ -105,6 +127,9 @@ var
    writeln('Before Cross Level ' + inttostr(thesample2));
  
  
+ writeln(); 
+    writeln('Try to cross feed chanel 1'); 
+     writeln();
   bs2b_cross_feed_s32(Abs2bd, thesample2, 1) ;
   
    writeln('Cross Level 1 is ' + inttostr(thesample2));
@@ -115,7 +140,9 @@ var
    
     writeln('Before Cross Level ' + inttostr(thesample2));
  
- 
+ writeln(); 
+    writeln('Try to cross feed chanel 0'); 
+     writeln();
   bs2b_cross_feed_s32(Abs2bd, thesample2, 0) ;
   
    writeln('Cross Level 0 is ' + inttostr(thesample2));

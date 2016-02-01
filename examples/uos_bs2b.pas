@@ -10,7 +10,7 @@ unit uos_bs2b;
 interface
 
 uses
-    SysUtils, dynlibs, ctypes;
+  SysUtils, dynlibs, ctypes;
 
 Type
   PLongint  = ^Longint;
@@ -314,8 +314,7 @@ begin
   // >
   if bs_IsLoaded() then
   begin
-    //  FreeLibrary(bs_Handle);
-     bs2b_close(abs2bd);
+    bs2b_close(abs2bd);
     DynLibs.UnloadLibrary(bs_Handle);
     bs_Handle:=DynLibs.NilHandle;
       bs2b_open:=nil;
@@ -372,53 +371,59 @@ begin
 result:=true {is it already there ?}
 end  else begin {go & load the library}
     if Length(libfilename) = 0 then exit;
+   
+    {$IFDEF windows} // try load dependency if not in /windows/system/
+    DynLibs.LoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_dw2-1.dll');
+    {$endif}
+   
     bs_Handle:=DynLibs.LoadLibrary(libfilename); // obtain the handle we want
   	if bs_Handle <> DynLibs.NilHandle then
        begin {now we tie the functions to the VARs from above}
 
-      pointer(bs2b_open):=DynLibs.GetProcAddress(bs_handle,'bs2b_open');
-      pointer(bs2b_close):=DynLibs.GetProcAddress(bs_handle,'bs2b_close');
-      pointer(bs2b_set_level):=DynLibs.GetProcAddress(bs_handle,'bs2b_set_level');
-      pointer(bs2b_get_level):=DynLibs.GetProcAddress(bs_handle,'bs2b_get_level');
-      pointer(bs2b_set_level_fcut):=DynLibs.GetProcAddress(bs_handle,'bs2b_set_level_fcut');
-      pointer(bs2b_get_level_fcut):=DynLibs.GetProcAddress(bs_handle,'bs2b_get_level_fcut');
-      pointer(bs2b_set_level_feed):=DynLibs.GetProcAddress(bs_handle,'bs2b_set_level_feed');
-      pointer(bs2b_get_level_feed):=DynLibs.GetProcAddress(bs_handle,'bs2b_get_level_feed');
-      pointer(bs2b_get_level_delay):=DynLibs.GetProcAddress(bs_handle,'bs2b_get_level_delay');
-      pointer(bs2b_set_srate):=DynLibs.GetProcAddress(bs_handle,'bs2b_set_srate');
-      pointer(bs2b_get_srate):=DynLibs.GetProcAddress(bs_handle,'bs2b_get_srate');
-      pointer(bs2b_clear):=DynLibs.GetProcAddress(bs_handle,'bs2b_clear');
-      pointer(bs2b_is_clear):=DynLibs.GetProcAddress(bs_handle,'bs2b_is_clear');
-      pointer(bs2b_runtime_version):=DynLibs.GetProcAddress(bs_handle,'bs2b_runtime_version');
-      pointer(bs2b_runtime_version_int):=DynLibs.GetProcAddress(bs_handle,'bs2b_runtime_version_int');
-      pointer(bs2b_cross_feed_d):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_d');
-      pointer(bs2b_cross_feed_dbe):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_dbe');
-      pointer(bs2b_cross_feed_dle):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_dle');
-      pointer(bs2b_cross_feed_f):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_f');
-      pointer(bs2b_cross_feed_fbe):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_fbe');
-      pointer(bs2b_cross_feed_fle):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_fle');
-      pointer(bs2b_cross_feed_s32):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s32');
-      pointer(bs2b_cross_feed_u32):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u32');
-      pointer(bs2b_cross_feed_s32be):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s32be');
-      pointer(bs2b_cross_feed_u32be):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u32be');
-      pointer(bs2b_cross_feed_s32le):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s32le');
-      pointer(bs2b_cross_feed_u32le):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u32le');
-      pointer(bs2b_cross_feed_s16):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s16');
-      pointer(bs2b_cross_feed_u16):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u16');
-      pointer(bs2b_cross_feed_s16be):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s16be');
-      pointer(bs2b_cross_feed_u16be):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u16be');
-      pointer(bs2b_cross_feed_s16le):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s16le');
-      pointer(bs2b_cross_feed_u16le):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u16le');
-      pointer(bs2b_cross_feed_s8):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s8');
-      pointer(bs2b_cross_feed_u8):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u8');
-      pointer(bs2b_cross_feed_s24):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s24');
-      pointer(bs2b_cross_feed_u24):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u24');
-      pointer(bs2b_cross_feed_s24be):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s24be');
-      pointer(bs2b_cross_feed_u24be):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u24be');
-      pointer(bs2b_cross_feed_s24le):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_s24le');
-      pointer(bs2b_cross_feed_u24le):=DynLibs.GetProcAddress(bs_handle,'bs2b_cross_feed_u24le');
+      pointer(bs2b_open):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_open'));
+  //    if bs2b_open = nil then Result := false else Result := true; 
+      pointer(bs2b_close):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_close'));
+      pointer(bs2b_set_level):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_set_level'));
+      pointer(bs2b_get_level):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_get_level'));
+      pointer(bs2b_set_level_fcut):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_set_level_fcut'));
+      pointer(bs2b_get_level_fcut):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_get_level_fcut'));
+      pointer(bs2b_set_level_feed):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_set_level_feed'));
+      pointer(bs2b_get_level_feed):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_get_level_feed'));
+      pointer(bs2b_get_level_delay):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_get_level_delay'));
+      pointer(bs2b_set_srate):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_set_srate'));
+      pointer(bs2b_get_srate):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_get_srate'));
+      pointer(bs2b_clear):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_clear'));
+      pointer(bs2b_is_clear):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_is_clear'));
+      pointer(bs2b_runtime_version):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_runtime_version'));
+      pointer(bs2b_runtime_version_int):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_runtime_version_int'));
+      pointer(bs2b_cross_feed_d):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_d'));
+      pointer(bs2b_cross_feed_dbe):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_dbe'));
+      pointer(bs2b_cross_feed_dle):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_dle'));
+      pointer(bs2b_cross_feed_f):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_f'));
+      pointer(bs2b_cross_feed_fbe):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_fbe'));
+      pointer(bs2b_cross_feed_fle):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_fle'));
+      pointer(bs2b_cross_feed_s32):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s32'));
+      pointer(bs2b_cross_feed_u32):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u32'));
+      pointer(bs2b_cross_feed_s32be):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s32be'));
+      pointer(bs2b_cross_feed_u32be):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u32be'));
+      pointer(bs2b_cross_feed_s32le):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s32le'));
+      pointer(bs2b_cross_feed_u32le):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u32le'));
+      pointer(bs2b_cross_feed_s16):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s16'));
+      pointer(bs2b_cross_feed_u16):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u16'));
+      pointer(bs2b_cross_feed_s16be):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s16be'));
+      pointer(bs2b_cross_feed_u16be):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u16be'));
+      pointer(bs2b_cross_feed_s16le):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s16le'));
+      pointer(bs2b_cross_feed_u16le):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u16le'));
+      pointer(bs2b_cross_feed_s8):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s8'));
+      pointer(bs2b_cross_feed_u8):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u8'));
+      pointer(bs2b_cross_feed_s24):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s24'));
+      pointer(bs2b_cross_feed_u24):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u24'));
+      pointer(bs2b_cross_feed_s24be):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s24be'));
+      pointer(bs2b_cross_feed_u24be):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u24be'));
+      pointer(bs2b_cross_feed_s24le):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s24le'));
+      pointer(bs2b_cross_feed_u24le):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u24le'));
      end;
-     Result := bs_IsLoaded;
+    Result := bs_IsLoaded;
     ReferenceCounter:=1;   
   end;
 end;

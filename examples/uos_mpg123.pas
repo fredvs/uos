@@ -894,6 +894,7 @@ end;
 
 function mp_unload(): boolean;
 begin
+result := false;
   // < Reference counting
   if ReferenceCounter > 0 then
     Dec(ReferenceCounter);
@@ -902,6 +903,7 @@ begin
   // >
   if mp_IsLoaded then
   begin
+    result := true;
     mpg123_exit ;
     DynLibs.UnloadLibrary(mp_Handle);
     mp_Handle := DynLibs.NilHandle;

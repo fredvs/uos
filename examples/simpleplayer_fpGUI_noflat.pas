@@ -950,12 +950,12 @@ end;
     FilenameEdit1.FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     FilenameEdit2.FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
-    FilenameEdit5.FileName := ordir + 'lib\Windows\64bit\LibSoundTouch-64.dll';
+    FilenameEdit5.FileName := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
 {$else}
     FilenameEdit1.FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     FilenameEdit2.FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
-    FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\libSoundTouch-32.dll';
+    FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
    {$endif}
     FilenameEdit4.FileName := ordir + 'sound\test.mp3';
  {$ENDIF}
@@ -966,7 +966,7 @@ end;
     FilenameEdit1.FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     FilenameEdit2.FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
     FilenameEdit3.FileName := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
-    FilenameEdit5.FileName := opath + '/lib/Mac/32bit/libSoundTouch-32.dylib';
+    FilenameEdit5.FileName := opath + '/lib/Mac/32bit/plugin/libSoundTouch-32.dylib';
     FilenameEdit4.FileName := opath + 'sound/test.mp3';
             {$ENDIF}
 
@@ -975,12 +975,12 @@ end;
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-    FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/LibSoundTouch-64.so';
+    FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
 {$else}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
-    FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/libSoundTouch-32.so';
+    FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/plugin/libSoundTouch-32.so';
 {$endif}
     FilenameEdit4.FileName := ordir + 'sound/test.mp3';
             {$ENDIF}

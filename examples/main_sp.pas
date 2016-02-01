@@ -172,13 +172,13 @@ begin
   Edit1.Text := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
   Edit2.Text := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
   Edit3.Text := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
-  Edit5.Text := ordir + 'lib\Windows\64bit\LibSoundTouch-64.dll';
+  Edit5.Text := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
 {$else}
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
-  Edit5.Text := ordir + 'lib\Windows\32bit\LibSoundTouch-32.dll'; ç
- //  Edit6.Text := ordir + 'lib\Windows\32bit\Libbs2b-32.dll';
+  Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
+  Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
    {$endif}
   Edit4.Text := ordir + 'sound\test.mp3';
  {$ENDIF}
@@ -204,7 +204,7 @@ begin
   Edit1.Text := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
   Edit2.Text := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
   Edit3.Text := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
-  Edit5.Text := opath + '/lib/Mac/32bit/LibSoundTouch-32.dylib';
+  Edit5.Text := opath + '/lib/Mac/32bit/plugin/LibSoundTouch-32.dylib';
   Edit4.Text := opath + 'sound/test.mp3';
             {$ENDIF}
 
@@ -213,13 +213,14 @@ begin
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-  Edit5.Text := ordir + 'lib/Linux/64bit/LibSoundTouch-64.so';
-  Edit6.Text := ordir + 'lib/Linux/64bit/libbs2b-64.so';
+  Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
+  Edit6.Text := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
 {$else}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
-  Edit5.Text := ordir + 'lib/Linux/32bit/LibSoundTouch-32.so';
+  Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
+  Edit6.Text := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
 {$endif}
   Edit4.Text := ordir + 'sound/test.mp3';
             {$ENDIF}
