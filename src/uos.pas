@@ -13,16 +13,16 @@ interface
 
 uses
    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Windows) or DEFINED(Library)}
-     {$else}
-  fpg_base, fpg_main,  //// for fpGUI and fpc < 2.7.1
-     {$endif}
+   {$else}
+   fpg_base, fpg_main,  //// for fpGUI and fpc < 2.7.1
+   {$endif}
 
    {$IF DEFINED(Java)}
    uos_jni,
    {$endif}
 
-    {$IF DEFINED(webstream)}
-     uos_httpgetthread, Pipes,
+   {$IF DEFINED(webstream)}
+    uos_httpgetthread, Pipes,
    {$ENDIF}
 
    {$IF DEFINED(portaudio)}
@@ -45,8 +45,7 @@ uses
    uos_bs2b,
    {$endif}
 
-     Classes, ctypes, Math, sysutils;
-
+   Classes, ctypes, Math, sysutils;
 
 const
   uos_version : LongInt = 14160131 ;
@@ -507,7 +506,6 @@ type
                           // 1 => calcul before all DSP procedures.
                           // 2 => calcul after all DSP procedures.
 
-
     function InputGetLevelLeft(InputIndex: LongInt): double;
     ////////// InputIndex : InputIndex of existing input
     ////// result : left level from 0 to 1
@@ -733,9 +731,7 @@ var
   theclass : JClass;
     {$endif}
 
-
 implementation
-
 
 {$IF DEFINED(webstream)}
 function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; cdecl;
@@ -1047,7 +1043,6 @@ begin
 end;
 
 end;
-
 
 procedure Tuos_Player.InputSetArrayLevelEnable(InputIndex: LongInt ; levelcalc : longint);
                   ///////// set add level calculation in level-array (default is 0)
@@ -2158,7 +2153,6 @@ begin
 
 end;
 
-
 {$IF DEFINED(portaudio)}
 
 function Tuos_Player.AddFromDevIn(Device: LongInt; Latency: CDouble;
@@ -2239,7 +2233,6 @@ begin
 end;
   {$endif}
 
-
 function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
   Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt): LongInt;
   /////// Add a Output into audio wav file with Custom parameters
@@ -2304,7 +2297,6 @@ begin
   StreamOut[x].LoopProc := nil;
 end;
 
-
 {$IF DEFINED(portaudio)}
  function Tuos_Player.AddIntoDevOut(Device: LongInt; Latency: CDouble;
   SampleRate: LongInt; Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt): LongInt;
@@ -2339,7 +2331,6 @@ begin
     StreamOut[x].Data.PAParam.SuggestedLatency :=
       ((Pa_GetDeviceInfo(StreamOut[x].Data.PAParam.device)^.
       defaultHighOutputLatency)) * 1
-
   else
     StreamOut[x].Data.PAParam.SuggestedLatency := CDouble(Latency);
 
@@ -2508,12 +2499,10 @@ begin
 
  //  StreamIn[x].Data.httpget.WantedURL(url);
 
-
           Err := mpg123_getformat(StreamIn[x].Data.HandleSt,
         StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
         StreamIn[x].Data.encoding);
          //   writeln('===> mpg123_getformat => ok');
-
 
    if err <> 0 then
    begin
@@ -2606,7 +2595,6 @@ begin
       if StreamIn[x].Data.HandleSt = nil then
       begin
         StreamIn[x].Data.LibOpen := -1;
-
       end
       else
       begin
@@ -2648,7 +2636,6 @@ begin
 
       if Err = 0 then
       begin
-
         if SampleFormat = -1 then
           StreamIn[x].Data.SampleFormat := 2
         else
@@ -2674,6 +2661,7 @@ begin
         Err := mpg123_getformat(StreamIn[x].Data.HandleSt,
           StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
           StreamIn[x].Data.encoding);
+          
       if Err = 0 then
       begin
         mpg123_close(StreamIn[x].Data.HandleSt);
@@ -2695,9 +2683,11 @@ begin
           StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
           StreamIn[x].Data.encoding);
         StreamIn[x].Data.filename := filename;
-                     if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=   65536 div StreamIn[x].Data.Channels  else
 
+       if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=
+          65536 div StreamIn[x].Data.Channels  else
         StreamIn[x].Data.Wantframes := FramesCount ;
+
         SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
 
         mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
@@ -2842,7 +2832,6 @@ begin
       synchronize(@loopBeginProcjava);
         {$endif}
     {$endif}
-
 
     for x := 0 to high(StreamIn) do
     begin
@@ -3260,7 +3249,6 @@ begin
         else   /////////// No plugin
 
         begin
-
           //////// Convert Input format into Output format if needed:
           case StreamOut[x].Data.SampleFormat of
             0: case StreamIn[x2].Data.SampleFormat of
@@ -3318,7 +3306,6 @@ begin
       LoopEndProc;
        {$else}
        if LoopEndProc <> nil then
-
 
       {$IF FPC_FULLVERSION>=20701}
         queue(@endprocjava);
@@ -3434,7 +3421,6 @@ begin
        isAssigned := false ;
 
      end;
-
 end;
 
 procedure Tuos_Player.onTerminate() ;
@@ -3538,7 +3524,7 @@ end;
 
 procedure Tuos_Init.unloadPlugin(PluginName: Pchar);
                ////// Unload Plugin... 
-               begin
+begin
   
  {$IF DEFINED(soundtouch)}
  if lowercase(PluginName) = 'soundtouch' then  st_Unload();
@@ -3746,7 +3732,7 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
     uosLoadResult.BSloadERROR := -1;
    {$endif}
   
-  end;
+end;
  
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName: PChar) : LongInt;
   begin
@@ -3864,18 +3850,18 @@ begin
 
  devtmp := devtmp +
 
- 'DeviceNum: ' + inttostr(uosDeviceInfos[x].DeviceNum) + ' ǀ' +
- ' Name: ' + uosDeviceInfos[x].DeviceName +  ' ǀ' +
- ' Type: ' + uosDeviceInfos[x].DeviceType + ' ǀ' +
- ' DefIn: ' + bool1 + ' ǀ' +
- ' DefOut: ' + bool2 + ' ǀ' +
- ' ChanIn: ' +  IntToStr(uosDeviceInfos[x ].ChannelsIn)+ ' ǀ' +
- ' ChanOut: ' +  IntToStr(uosDeviceInfos[x].ChannelsOut) + ' ǀ' +
- ' SampleRate: ' +  floattostrf(uosDeviceInfos[x].SampleRate, ffFixed, 15, 0) + ' ǀ' +
- ' LatencyHighIn: ' + floattostrf(uosDeviceInfos[x].LatencyHighIn, ffFixed, 15, 8) + ' ǀ' +
- ' LatencyHighOut: ' + floattostrf(uosDeviceInfos[x].LatencyHighOut, ffFixed, 15, 8)+ ' ǀ' +
- ' LatencyLowIn: ' + floattostrf(uosDeviceInfos[x].LatencyLowIn, ffFixed, 15, 8)+ ' ǀ' +
- ' LatencyLowOut: ' + floattostrf(uosDeviceInfos[x].LatencyLowOut, ffFixed, 15, 8)+ ' ǀ' +
+ 'DeviceNum: ' + inttostr(uosDeviceInfos[x].DeviceNum) + ' ??' +
+ ' Name: ' + uosDeviceInfos[x].DeviceName +  ' ??' +
+ ' Type: ' + uosDeviceInfos[x].DeviceType + ' ??' +
+ ' DefIn: ' + bool1 + ' ??' +
+ ' DefOut: ' + bool2 + ' ??' +
+ ' ChanIn: ' +  IntToStr(uosDeviceInfos[x ].ChannelsIn)+ ' ??' +
+ ' ChanOut: ' +  IntToStr(uosDeviceInfos[x].ChannelsOut) + ' ??' +
+ ' SampleRate: ' +  floattostrf(uosDeviceInfos[x].SampleRate, ffFixed, 15, 0) + ' ??' +
+ ' LatencyHighIn: ' + floattostrf(uosDeviceInfos[x].LatencyHighIn, ffFixed, 15, 8) + ' ??' +
+ ' LatencyHighOut: ' + floattostrf(uosDeviceInfos[x].LatencyHighOut, ffFixed, 15, 8)+ ' ??' +
+ ' LatencyLowIn: ' + floattostrf(uosDeviceInfos[x].LatencyLowIn, ffFixed, 15, 8)+ ' ??' +
+ ' LatencyLowOut: ' + floattostrf(uosDeviceInfos[x].LatencyLowOut, ffFixed, 15, 8)+ ' ??' +
  ' HostAPI: ' + uosDeviceInfos[x].HostAPIName ;
  if x < length(uosDeviceInfos)-1 then  devtmp := devtmp +  #13#10 ;
  Inc(x);

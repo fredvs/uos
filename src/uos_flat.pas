@@ -26,7 +26,7 @@ uses
 
  Classes, ctypes, math, SysUtils, uos;
 
-  type
+ type
 
    {$if DEFINED(java)}
   TProc = JMethodID ;
@@ -41,9 +41,10 @@ uses
      Tcount_t    = cint;
   {$endif}
 
-  type
+ type
   TDArFloat = array of cfloat;
-  type
+ 
+ type
   TuosF_Data = Tuos_Data;
   TuosF_FFT = Tuos_FFT ;
 
@@ -54,7 +55,6 @@ uses
       {$ENDIF}
 
 //////////// General public procedure/function (accessible for library uos too)
-
 
 {$IF DEFINED(portaudio)}
 procedure uos_GetInfoDevice();
@@ -81,7 +81,6 @@ procedure uos_CreatePlayer(PlayerIndex: LongInt);
 {$else}
 procedure uos_CreatePlayer(PlayerIndex: LongInt; AParent: TObject);
 {$endif}
-
 
 {$IF DEFINED(portaudio)}
 function uos_AddIntoDevOut(PlayerIndex: LongInt): LongInt;
@@ -407,7 +406,6 @@ procedure uos_InputSetArrayLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ;
 
 function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: LongInt) : TDArFloat;
 
-
 function uos_InputGetLevelLeft(PlayerIndex: cint32; InputIndex: cint32): double;
                      ////////// InputIndex : InputIndex of existing input
                      ////// result : left level(volume) from 0 to 1
@@ -508,8 +506,6 @@ end;
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
                ////////// example  SetDSPVolumeOut(0,InputIndex1,1,0.8,True);
-
-
 
 function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeProc: TFunc;
                     AfterProc: TFunc; LoopProc: TProc): cint32;
@@ -656,9 +652,8 @@ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
                     TypeFilter, AlsoBuf, Enable, LoopProc);
 end;
 
-
  {$IF DEFINED(portaudio)}
- function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
+function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
              SampleRate: cint32; Channels: cint32; OutputIndex: cint32;
              SampleFormat: cint32; FramesCount : cint32): cint32;
               ////// Add a Input from Device Input with custom parameters
@@ -717,8 +712,6 @@ function uos_AddIntoFile(PlayerIndex: cint32;  Filename: PChar): cint32;
      if  uosPlayersStat[PlayerIndex] = 1 then
  Result :=  uosPlayers[PlayerIndex].AddIntoFile(Filename, -1, -1, -1, -1);
 end;
-
-
 
 {$IF DEFINED(portaudio)}
  function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
@@ -1048,7 +1041,6 @@ begin
 uosPlayers[PlayerIndex].Pause() ;
 end;
 
-
 procedure uos_BeginProc(PlayerIndex: cint32; Proc: TProc );
                  ///// Assign the procedure of object to execute at begin, before loop
                  //////////// PlayerIndex : Index of a existing Player
@@ -1096,7 +1088,6 @@ begin
  uosPlayers[PlayerIndex].StreamOut[OutIndex].LoopProc := Proc;
 end;
 
-
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName: PChar) : cint32;
   begin
    ifflat := true;
@@ -1109,8 +1100,7 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
 begin
    ifflat := true;
 result := uos.uos_loadPlugin(PluginName, PluginFilename)  ;
-  end;
-
+end;
 
 function uos_GetVersion() : cint32 ;
 begin
@@ -1208,6 +1198,5 @@ uosPlayersStat[x] := -1 ;
 uosPlayers[x] := nil ;
 end;
 end;
-
 
 end.
