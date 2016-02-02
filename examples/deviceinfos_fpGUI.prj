@@ -17,8 +17,8 @@ order14=0
 order15=0
 order16=0
 [projectoptions]
-projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/deviceinfos_fpGUI.prj
+projectdir=/usr/local/share/prog/uos/examples
+projectfilename=/usr/local/share/prog/uos/examples/deviceinfos_fpGUI.prj
 findinfiledialog=34
  [findinfileadialogfo.subdirs]
  value=0
@@ -701,14 +701,14 @@ units=
   a=0,4100,0,simpleplayer_fpGUI.pas
   )
   (
-  file=uos_flat.pas
-  kind=1
-  a=0,4100,0,uos_flat.pas
-  )
-  (
   file=uos.pas
   kind=1
   a=0,4100,0,uos.pas
+  )
+  (
+  file=uos_flat.pas
+  kind=1
+  a=0,4100,0,uos_flat.pas
   )
   (
   file=uos_portaudio.pas
@@ -725,7 +725,7 @@ files=
  a=0,4133,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/msegui/apps/ide/compstore/
+storedir=/usr/local/share/msegui/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -770,7 +770,7 @@ sourcefiles=6
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/deviceinfos_fpGUI.pas
+ /usr/local/share/prog/uos/examples/deviceinfos_fpGUI.pas
 relpaths=6
  deviceinfos_fpGUI.pas
  uos.pas
@@ -808,7 +808,7 @@ windowlayout=503
  [mainfo]
  splitdir=0
  useroptions=838860927
- stackedunder=sourcehintfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -894,7 +894,7 @@ windowlayout=503
  [disassfo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -913,7 +913,7 @@ windowlayout=503
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=disassfo
  parent=
  mdistate=0
  nx=0
@@ -1056,7 +1056,7 @@ windowlayout=503
  [symbolfo]
  splitdir=0
  useroptions=268451963
- stackedunder=
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1156,7 +1156,7 @@ windowlayout=503
  [componentstorefo]
  splitdir=0
  useroptions=268460155
- stackedunder=
+ stackedunder=symbolfo
  parent=
  mdistate=0
  nx=0
@@ -1219,7 +1219,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=mainfo
+ stackedunder=componentstorefo
  parent=
  mdistate=0
  nx=0

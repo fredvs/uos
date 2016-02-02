@@ -18,8 +18,7 @@ Here are the open source libraries used by uos:
 
 => Bs2b stereo to binaural library. 
    Copyright (c) Boris Mikhaylov
-   http://www.bs2b.com/
-
+   http://bs2b.sourceforge.net/
 
 
 

@@ -243,11 +243,11 @@ var
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
-    fnsf := ordir + 'lib/freeBSD/64bit/libsndfile-64.so';
-    fnmp := ordir + 'lib/freeBSD/64bit/libmpg123-64.so';
+    fnsf := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    fnmp := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
       {$else}
-    fnsf := ordir + 'lib/freeBSD/32bit/libsndfile-32.so';
-    fnmp := ordir + 'lib/freeBSD/32bit/libmpg123-32.so';
+    fnsf := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
+    fnmp := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
  {$endif}
     FilenameEdit1.FileName := ordir + 'sound/test.mp3';
  {$ENDIF}

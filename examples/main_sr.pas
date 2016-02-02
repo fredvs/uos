@@ -123,11 +123,11 @@ begin
 
    {$IFDEF freebsd}
    {$if defined(cpu64)}
-   Edit1.Text := application.Location +  'lib/freeBSD/64bit/libportaudio-64.so';
-  Edit2.Text := application.Location +  'lib/freeBSD/64bit/libsndfile-64.so';
+   Edit1.Text := application.Location +  'lib/FreeBSD/64bit/libportaudio-64.so';
+  Edit2.Text := application.Location +  'lib/FreeBSD/64bit/libsndfile-64.so';
   {$else}
-  Edit1.Text := application.Location +  'lib/freeBSD/32bit/libportaudio-32.so';
-  Edit2.Text := application.Location +  'lib/freeBSD/32bit/libsndfile-32.so';
+  Edit1.Text := application.Location +  'lib/FreeBSD/32bit/libportaudio-32.so';
+  Edit2.Text := application.Location +  'lib/FreeBSD/32bit/libsndfile-32.so';
   {$endif}
   Edit3.Text := application.Location + 'sound/testrecord.wav';
             {$ENDIF}

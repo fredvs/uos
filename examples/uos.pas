@@ -3864,18 +3864,18 @@ begin
 
  devtmp := devtmp +
 
- 'DeviceNum: ' + inttostr(uosDeviceInfos[x].DeviceNum) + ' ǀ' +
- ' Name: ' + uosDeviceInfos[x].DeviceName +  ' ǀ' +
- ' Type: ' + uosDeviceInfos[x].DeviceType + ' ǀ' +
- ' DefIn: ' + bool1 + ' ǀ' +
- ' DefOut: ' + bool2 + ' ǀ' +
- ' ChanIn: ' +  IntToStr(uosDeviceInfos[x ].ChannelsIn)+ ' ǀ' +
- ' ChanOut: ' +  IntToStr(uosDeviceInfos[x].ChannelsOut) + ' ǀ' +
- ' SampleRate: ' +  floattostrf(uosDeviceInfos[x].SampleRate, ffFixed, 15, 0) + ' ǀ' +
- ' LatencyHighIn: ' + floattostrf(uosDeviceInfos[x].LatencyHighIn, ffFixed, 15, 8) + ' ǀ' +
- ' LatencyHighOut: ' + floattostrf(uosDeviceInfos[x].LatencyHighOut, ffFixed, 15, 8)+ ' ǀ' +
- ' LatencyLowIn: ' + floattostrf(uosDeviceInfos[x].LatencyLowIn, ffFixed, 15, 8)+ ' ǀ' +
- ' LatencyLowOut: ' + floattostrf(uosDeviceInfos[x].LatencyLowOut, ffFixed, 15, 8)+ ' ǀ' +
+ 'DeviceNum: ' + inttostr(uosDeviceInfos[x].DeviceNum) + ' ??' +
+ ' Name: ' + uosDeviceInfos[x].DeviceName +  ' ??' +
+ ' Type: ' + uosDeviceInfos[x].DeviceType + ' ??' +
+ ' DefIn: ' + bool1 + ' ??' +
+ ' DefOut: ' + bool2 + ' ??' +
+ ' ChanIn: ' +  IntToStr(uosDeviceInfos[x ].ChannelsIn)+ ' ??' +
+ ' ChanOut: ' +  IntToStr(uosDeviceInfos[x].ChannelsOut) + ' ??' +
+ ' SampleRate: ' +  floattostrf(uosDeviceInfos[x].SampleRate, ffFixed, 15, 0) + ' ??' +
+ ' LatencyHighIn: ' + floattostrf(uosDeviceInfos[x].LatencyHighIn, ffFixed, 15, 8) + ' ??' +
+ ' LatencyHighOut: ' + floattostrf(uosDeviceInfos[x].LatencyHighOut, ffFixed, 15, 8)+ ' ??' +
+ ' LatencyLowIn: ' + floattostrf(uosDeviceInfos[x].LatencyLowIn, ffFixed, 15, 8)+ ' ??' +
+ ' LatencyLowOut: ' + floattostrf(uosDeviceInfos[x].LatencyLowOut, ffFixed, 15, 8)+ ' ??' +
  ' HostAPI: ' + uosDeviceInfos[x].HostAPIName ;
  if x < length(uosDeviceInfos)-1 then  devtmp := devtmp +  #13#10 ;
  Inc(x);

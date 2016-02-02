@@ -286,9 +286,9 @@ var
 
 {$IFDEF freebsd}
     {$if defined(cpu64)}
-   FilenameEdit1.FileName := ordir + 'lib/freeBSD/64bit/libportaudio-64.so';
+   FilenameEdit1.FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
     {$else}
-   FilenameEdit1.FileName := ordir + 'lib/freeBSD/32bit/libportaudio-32.so';
+   FilenameEdit1.FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
  {$endif}
   {$ENDIF}
 

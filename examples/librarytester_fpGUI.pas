@@ -274,15 +274,15 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
 
   {$IFDEF freebsd}
     {$if defined(cpu64)}
-    FilenameEdit1.FileName := ordir + 'lib/freeBSD/64bit/libportaudio-64.so';
-     FilenameEdit2.FileName := ordir + 'lib/freeBSD/64bit/libsndfile-64.so';
-    FilenameEdit3.FileName := ordir + 'lib/freeBSD/64bit/libmpg123-64.so';
-    FilenameEdit5.FileName := ordir + 'lib/freeBSD/64bit/LibSoundTouch-64.so';
+    FilenameEdit1.FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
+     FilenameEdit2.FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    FilenameEdit3.FileName := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
+    FilenameEdit5.FileName := ordir + 'lib/FreeBSD/64bit/LibSoundTouch-64.so';
     {$else}
-   FilenameEdit1.FileName := ordir + 'lib/freeBSD/32bit/libportaudio-32.so';
-     FilenameEdit2.FileName := ordir + 'lib/freeBSD/32bit/libsndfile-32.so';
-    FilenameEdit3.FileName := ordir + 'lib/freeBSD/32bit/libmpg123-32.so';
-    FilenameEdit5.FileName := ordir + 'lib/freeBSD/32bit/LibSoundTouch-32.so';
+   FilenameEdit1.FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
+     FilenameEdit2.FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
+    FilenameEdit3.FileName := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
+    FilenameEdit5.FileName := ordir + 'lib/FreeBSD/32bit/LibSoundTouch-32.so';
 {$endif}
 
  {$ENDIF}

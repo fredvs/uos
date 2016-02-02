@@ -64,11 +64,11 @@ var
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
-    PA_FileName := ordir + 'lib/freeBSD/64bit/libportaudio-64.so';
-    SF_FileName := ordir + 'lib/freeBSD/64bit/libsndfile-64.so';
+    PA_FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
+    SF_FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
     {$else}
-    PA_FileName := ordir + 'lib/freeBSD/32bit/libportaudio-32.so';
-    SF_FileName := ordir + 'lib/freeBSD/32bit/libsndfile-32.so';
+    PA_FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
+    SF_FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
 {$endif}
     sndfilename := ordir + 'sound/test.flac';
  {$ENDIF}

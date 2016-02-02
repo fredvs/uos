@@ -19,19 +19,19 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
-findinfiledialog=38
+findinfiledialog=41
  [findinfileadialogfo.subdirs]
- value=0
+ value=1
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=0
+ value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=1
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
@@ -48,8 +48,11 @@ findinfiledialog=38
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=SetPluginSoundTouch
- history=2
+ value=bsd
+ history=5
+  bsd
+  FreeBSD
+  freebsd
   SetPluginSoundTouch
   
  [findinfileadialogfo]
@@ -67,14 +70,15 @@ finddialog=8
  y=213
  cx=298
  cy=116
-replacedialog=22
+replacedialog=23
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value= 
- history=9
+ value=FreeBSD
+ history=10
+  FreeBSD
    
   stdcall
   InputIndex1
@@ -152,7 +156,7 @@ options=108
  x=0
  y=143
  xprop=1
- yprop=0.32882882882883
+ yprop=0.32808988764045
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -171,7 +175,7 @@ options=108
  sortdescend11=0
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=5
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -252,14 +256,15 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=7
+makeoptions=8
  -fPIC
- -l -Mobjfpc -Schi
+ -l -Mobjfpc -Scghi
  -FE.
  -FUunits
+ -WG
  -B
  -O2 -XX -Xs -CX
- -vewnhibq
+ -vewnbq
 compilerused=21
  ${COMPILER} (Default)
  Pascal 1
@@ -436,18 +441,19 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=7
+makeoptionson=8
  0
  255
  255
  255
+ 192
  127
- 112
+ 113
  127
 compilerusedon=21
- 3903
+ 3887
  0
- 0
+ 16
  64
  128
  0
@@ -474,9 +480,9 @@ debuggerusedon=6
  0
  192
 exeusedon=14
- 4095
+ 4031
  0
- 0
+ 64
  0
  0
  0
@@ -694,7 +700,7 @@ sigsettings=27
  28,28,T,F
  29,29,T,F
  30,30,T,F
-defaultmake=64
+defaultmake=32
 [breakpoints]
 on=2
  0
@@ -799,8 +805,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=dynlibs.
+finddtext=freeBSD
 findhistory=10
+ freeBSD
+ freebsd
  dynlibs.
  dynlibs
  err
@@ -809,75 +817,23 @@ findhistory=10
  btnCloseClick
  uos_UnloadPlugin
  unloadlib
- loadlib
- loadPlugin
-findoptions=1
-editpos=13
+findoptions=0
+editpos=3
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,762
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,1101
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-sourcefiles=13
+sourcefiles=3
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_bs2b.pas
- ${PROJECTDIR}/st2bi.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- /home/fred/sak/sak/sak_fpg/src/sak_fpg.pas
- /home/fred/sak/sak/sak_mse/src/sak_mse_martin/sak_mse.pas
- ${PROJECTDIR}/simplewebplayer_fpGUI.pas
- ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/main_wsp.pas
- ${PROJECTDIR}/main_sp_nf.pas
- ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_portaudio.pas
-relpaths=13
+relpaths=3
  uos.pas
  uos_bs2b.pas
- st2bi.pas
  simpleplayer_fpGUI.pas
- sak/sak/sak_fpg/src/sak_fpg.pas
- ../sak/sak/sak_mse/src/sak_mse_martin/sak_mse.pas
- simplewebplayer_fpGUI.pas
- main_sp.pas
- main_wsp.pas
- main_sp_nf.pas
- simpleplayer_fpGUI_noflat.pas
- uos_flat.pas
- uos_portaudio.pas
-ismoduletexts=13
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=3
  0
  0
  0
@@ -887,8 +843,8 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
-firsttab=0
-index=5
+firsttab=2
+index=2
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -911,10 +867,10 @@ windowlayout=503
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,1356,18
-  basedock,0,19,1356,682
+  statdisp,0,1,956,18
+  basedock,0,19,956,585
  focusedchild=1
- wsize=4
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1028,7 +984,7 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=542
+ cy=445
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1038,8 +994,8 @@ windowlayout=503
  width1=1
  sortdescend1=0
  sorted=0
- col=0
- row=2
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1237,8 +1193,8 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=594
- cx=1356
+ y=497
+ cx=956
  cy=88
  rcx=0
  rcy=0
@@ -1338,7 +1294,7 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=956
  cy=46
  rcx=0
  rcy=0
@@ -1354,8 +1310,8 @@ windowlayout=503
  ncy=0
  x=142
  y=0
- cx=1214
- cy=542
+ cx=814
+ cy=445
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1390,8 +1346,8 @@ windowlayout=503
  ncy=0
  x=0
  y=49
- cx=1356
- cy=542
+ cx=956
+ cy=445
  rcx=0
  rcy=0
 [targetconsole]

@@ -173,12 +173,12 @@ begin
 
 {$IFDEF freebsd}
     {$if defined(cpu64)}
-  Edit1.Text := ordir + 'lib/freeBSD/64bit/libportaudio-64.so';
-  Edit3.Text := ordir + 'lib/freeBSD/64bit/libmpg123-64.so';
+  Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
+  Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
   Edit5.Text := '';
 {$else}
-  Edit1.Text := ordir + 'lib/freeBSD/32bit/libportaudio-32.so';
-  Edit3.Text := ordir + 'lib/freeBSD/32bit/libmpg123-32.so';
+  Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
+  Edit3.Text := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
   Edit5.Text := '';
 {$endif}
            {$ENDIF}
