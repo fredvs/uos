@@ -49,7 +49,20 @@ uses
 
 const
   uos_version : LongInt = 14160131 ;
-
+  
+  {$IF DEFINED(bs2b)}
+  BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
+  BS2B_MIDDLE_CLEVEL = (CInt32(500)) or ((CInt32(45)) shl 16);
+  BS2B_LOW_CLEVEL = (CInt32(360)) or ((CInt32(60)) shl 16);
+  { Easy crossfeed levels (Obsolete)  }
+  BS2B_HIGH_ECLEVEL = (CInt32(700)) or ((CInt32(60)) shl 16);
+  BS2B_MIDDLE_ECLEVEL = (CInt32(500)) or ((CInt32(72)) shl 16);
+  BS2B_LOW_ECLEVEL = (CInt32(360)) or ((CInt32(84)) shl 16);
+  BS2B_DEFAULT_CLEVEL = (CInt32(700)) or ((CInt32(45)) shl 16);
+  BS2B_CMOY_CLEVEL =(CInt32(700)) or ((CInt32(60)) shl 16);
+  BS2B_JMEIER_CLEVEL = (CInt32(650)) or ((CInt32(95)) shl 16);
+   {$endif}
+  
 type
   TDArFloat = array of cfloat;
   TDArShort = array of cInt16;
@@ -450,8 +463,8 @@ type
     {$endif}
     
      {$IF DEFINED(bs2b)}
-    procedure SetPluginBs2b(PluginIndex: LongInt;
-  aparam1: cfloat; aparam2: cfloat; Enable: boolean);
+   procedure SetPluginBs2b(PluginIndex: LongInt; level: CInt32; fcut: CInt32; 
+   feed: CInt32; Enable: boolean);
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
     //////////                
      {$endif}
@@ -1642,6 +1655,12 @@ x := -1 ;
     Plugin[x].Enabled := true;
     if assigned(Plugin[x].Abs2b) then bs2b_close(Plugin[x].Abs2b) ;
     Plugin[x].Abs2b := bs2b_open() ;
+    
+     if SampleRate = -1 then
+    bs2b_set_srate(Plugin[x].Abs2b, 44100)
+   else
+    bs2b_set_srate(Plugin[x].Abs2b, SampleRate);
+     
     Plugin[x].param1 := -1;
     Plugin[x].param2 := -1;
     Plugin[x].param3 := -1;
@@ -1670,11 +1689,26 @@ end;
 
 {$IF DEFINED(bs2b)}
 procedure Tuos_Player.SetPluginBs2b(PluginIndex: LongInt;
-  aparam1: cfloat; aparam2: cfloat; Enable: boolean);
+  level: CInt32; fcut: CInt32; feed: CInt32; Enable: boolean);
 begin
+ 
   Plugin[PluginIndex].Enabled := Enable;
-  Plugin[PluginIndex].param1 := aparam1;
-  Plugin[PluginIndex].param2 := aparam2;
+ 
+  if level > -1 then begin
+  bs2b_set_level(Plugin[PluginIndex].Abs2b,level);
+  Plugin[PluginIndex].param1 := level;
+  end;
+  
+  if fcut > -1 then begin
+  bs2b_set_level_fcut(Plugin[PluginIndex].Abs2b,fcut);
+  Plugin[PluginIndex].param2 := fcut;
+  end;
+  
+  if feed > -1 then begin
+  bs2b_set_level_feed(Plugin[PluginIndex].Abs2b,feed);
+  Plugin[PluginIndex].param3 := feed;
+  end;
+  
 end;
 {$endif}
 

@@ -12,55 +12,40 @@ interface
 uses
   SysUtils, dynlibs, ctypes;
 
-Type
-  PLongint  = ^Longint;
-  PSmallInt = ^SmallInt;
-  PByte     = ^Byte;
-  PWord     = ^Word;
-  PDWord    = ^DWord;
-  PDouble   = ^Double;
-
-{$define BS2B_H}
+const
 
 { Minimum/maximum sample rate (Hz)  }
-
-const
   BS2B_MINSRATE = 2000;  
   BS2B_MAXSRATE = 384000;  
+
 { Minimum/maximum cut frequency (Hz)  }
 { bs2b_set_level_fcut()  }
   BS2B_MINFCUT = 300;  
   BS2B_MAXFCUT = 2000;  
+  
 { Minimum/maximum feed level (dB * 10 @ low frequencies)  }
 { bs2b_set_level_feed()  }
 { 1 dB  }
   BS2B_MINFEED = 10;  
 { 15 dB  }
   BS2B_MAXFEED = 150;  
-{ Normal crossfeed levels (Obsolete)  }
-
-
-function BS2B_HIGH_CLEVEL : longint; 
-
-function BS2B_MIDDLE_CLEVEL : longint; 
-
-function BS2B_LOW_CLEVEL : longint; 
-
-{ Easy crossfeed levels (Obsolete)  }
-function BS2B_HIGH_ECLEVEL : longint; 
-
-function BS2B_MIDDLE_ECLEVEL : longint; 
-
-function BS2B_LOW_ECLEVEL : longint; 
-
-{ Default crossfeed levels  }
-{ bs2b_set_level()  }
-function BS2B_DEFAULT_CLEVEL : longint;
-
-function BS2B_CMOY_CLEVEL : longint; 
-
-function BS2B_JMEIER_CLEVEL : longint; 
-
+  
+const
+  
+  // for using with bs2b_set_level
+  
+  BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
+  BS2B_MIDDLE_CLEVEL = (CInt32(500)) or ((CInt32(45)) shl 16);
+  BS2B_LOW_CLEVEL = (CInt32(360)) or ((CInt32(60)) shl 16);
+  { Easy crossfeed levels (Obsolete)  }
+  BS2B_HIGH_ECLEVEL = (CInt32(700)) or ((CInt32(60)) shl 16);
+  BS2B_MIDDLE_ECLEVEL = (CInt32(500)) or ((CInt32(72)) shl 16);
+  BS2B_LOW_ECLEVEL = (CInt32(360)) or ((CInt32(84)) shl 16);
+  
+  BS2B_DEFAULT_CLEVEL = (CInt32(700)) or ((CInt32(45)) shl 16);
+  BS2B_CMOY_CLEVEL =(CInt32(700)) or ((CInt32(60)) shl 16);
+  BS2B_JMEIER_CLEVEL = (CInt32(650)) or ((CInt32(95)) shl 16);
+ 
 { Default sample rate (Hz)  }
 const
   BS2B_DEFAULT_SRATE = 44100;  
@@ -92,23 +77,18 @@ type
         end;
     end;
 
- // Pt_bs2bdp = ^Tt_bs2bdp;
- // Tt_bs2bdp = Pt_bs2bd;
-
-var
-Abs2bd : Tt_bs2bdp ;
-
 ////// Dynamic load : Vars that will hold our dynamically loaded functions...
 // *************************** functions *******************************
 
 var
+{ Open  }
 bs2b_open : function():Tt_bs2bdp; cdecl;
 
 { Close  }
 bs2b_close : procedure(bs2bdp:Tt_bs2bdp); cdecl;
 
 { Sets a new coefficients by new crossfeed value.
- * level = ( ( uint32_t )fcut | ( ( uint32_t )feed << 16 ) )
+ * level = ( fcut | feed << 16 ) )
  * where 'feed' is crossfeeding level at low frequencies (dB * 10)
  * and 'fcut' is cut frecuency (Hz)
   }
@@ -133,8 +113,7 @@ bs2b_get_level_feed : function(bs2bdp:Tt_bs2bdp): CInt32; cdecl;
 bs2b_get_level_delay : function(bs2bdp:Tt_bs2bdp): CInt32; cdecl;
 
 { Clear buffers and sets a new coefficients with new sample rate value.
- * srate - sample rate by Hz.
-  }
+ * srate - sample rate by Hz. }
 bs2b_set_srate : procedure(bs2bdp:Tt_bs2bdp; srate: CInt32); cdecl;
 
 { Return current sample rate value  }
@@ -245,54 +224,9 @@ bs2b_cross_feed_u24le : procedure(bs2bdp:Tt_bs2bdp; var sample:CInt32; n:CInt); 
 
 implementation
 
-function BS2B_HIGH_CLEVEL : longint; 
-  begin
-    BS2B_HIGH_CLEVEL:=(CInt32(700)) or ((CInt32(30)) shl 16);
-  end;
-
-function BS2B_MIDDLE_CLEVEL : longint; 
-  begin
-    BS2B_MIDDLE_CLEVEL:=(CInt32(500)) or ((CInt32(45)) shl 16);
-  end;
-
-function BS2B_LOW_CLEVEL : longint; 
-  begin
-    BS2B_LOW_CLEVEL:=(CInt32(360)) or ((CInt32(60)) shl 16);
-  end;
-
-function BS2B_HIGH_ECLEVEL : longint; 
-  begin
-    BS2B_HIGH_ECLEVEL:=(CInt32(700)) or ((CInt32(60)) shl 16);
-  end;
-
-function BS2B_MIDDLE_ECLEVEL : longint; 
-  begin
-    BS2B_MIDDLE_ECLEVEL:=(CInt32(500)) or ((CInt32(72)) shl 16);
-  end;
-
-function BS2B_LOW_ECLEVEL : longint; 
-  begin
-    BS2B_LOW_ECLEVEL:=(CInt32(360)) or ((CInt32(84)) shl 16);
-  end;
-
-function BS2B_DEFAULT_CLEVEL : longint; 
-  begin
-    BS2B_DEFAULT_CLEVEL:=(CInt32(700)) or ((CInt32(45)) shl 16);
-  end;
-
-function BS2B_CMOY_CLEVEL : longint; 
-  begin
-    BS2B_CMOY_CLEVEL:=(CInt32(700)) or ((CInt32(60)) shl 16);
-  end;
-
-function BS2B_JMEIER_CLEVEL : longint; 
-  begin
-    BS2B_JMEIER_CLEVEL:=(CInt32(650)) or ((CInt32(95)) shl 16);
-  end;
-
 function bs2b_level_delay(fcut : longint) : longint;
 begin
-  bs2b_level_delay:=round((18700/fcut)*10);
+  result:=round((18700/fcut)*10);
 end;
 
   var
@@ -317,7 +251,6 @@ begin
   // >
   if bs_IsLoaded() then
   begin
-    bs2b_close(abs2bd);
     DynLibs.UnloadLibrary(bs_Handle);
     bs_Handle:=DynLibs.NilHandle;
      {$IFDEF windows}
@@ -388,7 +321,6 @@ end  else begin {go & load the library}
        begin {now we tie the functions to the VARs from above}
 
       pointer(bs2b_open):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_open'));
-  //    if bs2b_open = nil then Result := false else Result := true; 
       pointer(bs2b_close):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_close'));
       pointer(bs2b_set_level):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_set_level'));
       pointer(bs2b_get_level):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_get_level'));

@@ -118,7 +118,7 @@ var
    
    procedure TSimpleplayer.ChangePlugSetBs2b(Sender: TObject);
    begin
-  uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, chkst2b.Checked);   
+  uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, chkst2b.Checked);   
   end;
 
   procedure TSimpleplayer.ChangePlugSetSoundTouch(Sender: TObject);
@@ -271,7 +271,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
         if loadok = true then
         begin
            if ((trim(Pchar(filenameedit5.FileName)) <> '') and fileexists(filenameedit5.FileName))
-       and (uos_LoadPlugin('soundtouch', Pchar(FilenameEdit5.FileName)) = 0)  then
+       then if (uos_LoadPlugin('soundtouch', Pchar(FilenameEdit5.FileName)) = 0)  then
        begin
       plugsoundtouch := true;
           btnLoad.Text :=
@@ -288,7 +288,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
            end;    
           
       if ((trim(Pchar(filenameedit6.FileName)) <> '') and fileexists(filenameedit6.FileName)) 
-      and (uos_LoadPlugin('bs2b', Pchar(FilenameEdit6.FileName)) = 0)
+      then if (uos_LoadPlugin('bs2b', Pchar(FilenameEdit6.FileName)) = 0)
       then plugbs2b := true else chkst2b.enabled := false; 
           
       WindowPosition := wpScreenCenter;
@@ -301,7 +301,6 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
 
   procedure TSimpleplayer.ClosePlayer1;
   begin
-   
     radiobutton1.Enabled := True;
     radiobutton2.Enabled := True;
     radiobutton3.Enabled := True;
@@ -328,7 +327,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
   function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
   begin
     if Data.position > Data.OutFrames div Data.ratio then
-      uos_Seek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.Ratio));
+      uos_Seek(PlayerIndex1, InputIndex1, Data.position - 2 - (Data.OutFrames div Data.Ratio));
   end;
 
   function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
@@ -338,10 +337,10 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
 
   begin
     SetLength(arfl, length(Data.Buffer));
-       while x < length(Data.Buffer) + 2 do
+       while x < length(Data.Buffer) + 1 do
           begin
-      arfl[x] := Data.Buffer[length(Data.Buffer) - x - 2] ;
-      arfl[x+1] := Data.Buffer[length(Data.Buffer) - x - 1] ;
+      arfl[x] := Data.Buffer[length(Data.Buffer) - x - 1] ;
+      arfl[x+1] := Data.Buffer[length(Data.Buffer) - x ]  ;
          x := x +2;
           end;
 
@@ -453,20 +452,21 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     //// set the parameters of custom DSP;
     uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
   
-     ///// add bs2b plugin with default samplerate(44100) / channels(2 = stereo)
-       if plugbs2b = true then
+     ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
+  if plugbs2b = true then
   begin
-  PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b', -1, -1);
-  if  chkst2b.checked = true then
-   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1,true) else
-   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1,false) ;
-    end;  
+  PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b',
+   uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
+
+   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1 , -1, -1, chkst2b.checked);
+  end;  
     
-     ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
+     ///// add SoundTouch plugin with samplerate of input1 / default channels (2 = stereo)
     /// SoundTouch plugin must be the last added.
     if plugsoundtouch = true then
   begin
-    PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
+    PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', 
+    uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
     ChangePlugSetSoundTouch(self); //// custom procedure to Change plugin settings
    end;
          

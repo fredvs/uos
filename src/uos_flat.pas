@@ -25,11 +25,25 @@ uses
       {$ENDIF}
 
  Classes, ctypes, math, SysUtils, uos;
+ 
+ const
+  {$IF DEFINED(bs2b)}
+  BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
+  BS2B_MIDDLE_CLEVEL = (CInt32(500)) or ((CInt32(45)) shl 16);
+  BS2B_LOW_CLEVEL = (CInt32(360)) or ((CInt32(60)) shl 16);
+  { Easy crossfeed levels (Obsolete)  }
+  BS2B_HIGH_ECLEVEL = (CInt32(700)) or ((CInt32(60)) shl 16);
+  BS2B_MIDDLE_ECLEVEL = (CInt32(500)) or ((CInt32(72)) shl 16);
+  BS2B_LOW_ECLEVEL = (CInt32(360)) or ((CInt32(84)) shl 16);
+  BS2B_DEFAULT_CLEVEL = (CInt32(700)) or ((CInt32(45)) shl 16);
+  BS2B_CMOY_CLEVEL =(CInt32(700)) or ((CInt32(60)) shl 16);
+  BS2B_JMEIER_CLEVEL = (CInt32(650)) or ((CInt32(95)) shl 16);
+   {$endif}
 
  type
 
    {$if DEFINED(java)}
-  TProc = JMethodID ;
+ TProc = JMethodID ;
     {$else}
  TProc = procedure of object;
     {$endif}
@@ -348,7 +362,7 @@ procedure uos_SetPluginSoundTouch(PlayerIndex: cint32; PluginIndex: cint32; Temp
 
  {$IF DEFINED(bs2b)}
     procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: LongInt;
-  aparam1: cfloat; aparam2: cfloat; Enable: boolean);
+ level: CInt32; fcut: CInt32; feed: CInt32; Enable: boolean);
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
     //////////                
      {$endif}
@@ -821,14 +835,14 @@ end;
 {$endif}
 
 {$IF DEFINED(bs2b)}
-    procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: LongInt;
-  aparam1: cfloat; aparam2: cfloat; Enable: boolean);
+    procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: LongInt; level: CInt32; fcut: CInt32; 
+   feed: CInt32; Enable: boolean);
                      ////////// PluginIndex : PluginIndex Index of a existing Plugin.
                      //////////// PlayerIndex : Index of a existing Player
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
- uosPlayers[PlayerIndex].SetPluginBs2b(PluginIndex, aparam1, aparam2, Enable);
+ uosPlayers[PlayerIndex].SetPluginBs2b(PluginIndex, level, fcut, feed, Enable);
 end;
 {$endif}
 

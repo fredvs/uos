@@ -132,7 +132,7 @@ options=108
  sorted=0
  col=0
  row=0
- rowheight=15
+ rowheight=17
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -154,9 +154,9 @@ options=108
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=144
+ y=143
  xprop=1
- yprop=0.328125
+ yprop=0.32882882882883
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -196,7 +196,7 @@ options=108
  index=1
  [projectoptionsfo.tabwidget]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=451
@@ -447,9 +447,9 @@ makeoptionson=8
  255
  255
  192
- 127
- 113
- 127
+ 255
+ 241
+ 255
 compilerusedon=21
  3887
  0
@@ -480,9 +480,9 @@ debuggerusedon=6
  0
  192
 exeusedon=14
- 4031
+ 3903
  0
- 64
+ 192
  0
  0
  0
@@ -709,8 +709,8 @@ path=2
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
 line=2
- 1680
- 3181
+ 1714
+ 3215
 address=2
  0
  0
@@ -805,8 +805,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=btnCloseClick
+finddtext=bs2b
 findhistory=10
+ bs2b
+ delay
+ Abs2bd
  btnCloseClick
  destroy
  freeBSD
@@ -814,26 +817,28 @@ findhistory=10
  dynlibs.
  dynlibs
  err
- bs2b
- cdecl
- uos_UnloadPlugin
 findoptions=0
-editpos=3
+editpos=4
+ 0,-1073741823
+ 0,19
  0,-1073741823
  0,-1073741823
- 8,269
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
+bookmarks3=0
+sourcefiles=4
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=3
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=4
  uos.pas
  uos_bs2b.pas
  simpleplayer_fpGUI.pas
-ismoduletexts=3
+ uos_flat.pas
+ismoduletexts=4
+ 0
  0
  0
  0
@@ -842,9 +847,14 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=4
+ 0
+ 1
+ 3
+ 2
 tabsize=60
 firsttab=0
-index=2
+index=1
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -861,16 +871,16 @@ windowlayout=503
  ncx=0
  ncy=0
  x=154
- y=27
+ y=28
  cx=966
  cy=621
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,956,18
-  basedock,0,19,956,587
+  statdisp,0,1,1356,18
+  basedock,0,19,1356,682
  focusedchild=1
- wsize=0
+ wsize=4
  active=1
  visible=1
  [targetconsolefo]
@@ -984,7 +994,7 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=447
+ cy=542
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1193,8 +1203,8 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=499
- cx=956
+ y=594
+ cx=1356
  cy=88
  rcx=0
  rcy=0
@@ -1294,7 +1304,7 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=956
+ cx=1356
  cy=46
  rcx=0
  rcy=0
@@ -1310,8 +1320,8 @@ windowlayout=503
  ncy=0
  x=142
  y=0
- cx=814
- cy=447
+ cx=1214
+ cy=542
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1346,8 +1356,8 @@ windowlayout=503
  ncy=0
  x=0
  y=49
- cx=956
- cy=447
+ cx=1356
+ cy=542
  rcx=0
  rcy=0
 [targetconsole]

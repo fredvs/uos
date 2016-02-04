@@ -431,18 +431,18 @@ begin
    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
     //// set the parameters of custom DSP;
 
-    ///// add bs2b plugin with default samplerate(44100) / channels(2 = stereo)
-       if plugbs2b = true then
+    ///// add bs2b plugin with samplerate_of_input1  / channels(2 = stereo)
+    if plugbs2b = true then
   begin
-   PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b', -1, -1);
-   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1, checkbox3.checked);
+   PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b', uos_InputGetSampleRate(PlayerIndex1, InputIndex1), -1);
+    uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, checkbox3.checked);
     end;
 
+    ///// add SoundTouch plugin with samplerate_of_input1  / channels(2 = stereo)
      if plugsoundtouch = true then
     begin
-    PluginIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
-    ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
-    ChangePlugSet(self); //// Change plugin settings
+    PluginIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', uos_InputGetSampleRate(PlayerIndex1, InputIndex1), -1);
+     ChangePlugSet(self); //// Change plugin settings
     end;
 
     trackbar2.Max := uos_InputLength(PlayerIndex1, InputIndex1);
@@ -500,7 +500,7 @@ procedure TForm1.CheckBox3Change(Sender: TObject);
 begin
   if radiogroup1.Enabled = False then   /// player1 was created
   begin
-   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1,checkbox3.checked);
+   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, checkbox3.checked);
     end;
 end;
 
