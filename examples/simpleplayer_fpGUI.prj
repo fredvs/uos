@@ -17,8 +17,8 @@ order14=0
 order15=0
 order16=0
 [projectoptions]
-projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
+projectdir=/Z:/home/fred/uos/examples
+projectfilename=/Z:/home/fred/uos/examples/simpleplayer_fpGUI.prj
 findinfiledialog=41
  [findinfileadialogfo.subdirs]
  value=1
@@ -132,7 +132,7 @@ options=108
  sorted=0
  col=0
  row=0
- rowheight=17
+ rowheight=15
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -154,9 +154,9 @@ options=108
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=144
  xprop=1
- yprop=0.32882882882883
+ yprop=0.328125
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -196,11 +196,11 @@ options=108
  index=1
  [projectoptionsfo.tabwidget]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
- x=451
- y=130
+ x=339
+ y=127
  cx=773
  cy=497
 programparameters=18
@@ -765,11 +765,6 @@ units=
   a=0,4100,0,uos_mpg123.pas
   )
   (
-  file=uos.pas
-  kind=1
-  a=0,4100,0,uos.pas
-  )
-  (
   file=uos_portaudio.pas
   kind=1
   a=0,4100,0,uos_portaudio.pas
@@ -778,6 +773,11 @@ units=
   file=uos_soundtouch.pas
   kind=1
   a=0,4100,0,uos_soundtouch.pas
+  )
+  (
+  file=uos.pas
+  kind=1
+  a=0,4100,0,uos.pas
   )
  )
 cmodules=
@@ -789,7 +789,7 @@ files=
  a=0,4133,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/msegui/apps/ide/compstore/
+storedir=/Z:/home/fred/mseguinew/apps/mse/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -820,7 +820,7 @@ findhistory=10
 findoptions=0
 editpos=4
  0,-1073741823
- 0,19
+ 14,8
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -829,7 +829,7 @@ bookmarks2=0
 bookmarks3=0
 sourcefiles=4
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_bs2b.pas
+ /Z:/home/fred/uos/examples/uos_bs2b.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
 relpaths=4
@@ -878,7 +878,7 @@ windowlayout=503
  rcy=0
  children=2
   statdisp,0,1,1356,18
-  basedock,0,19,1356,682
+  basedock,0,19,1356,684
  focusedchild=1
  wsize=4
  active=1
@@ -922,7 +922,7 @@ windowlayout=503
  [memoryfo]
  splitdir=0
  useroptions=268451963
- stackedunder=cpuc86_64fo
+ stackedunder=cpui386fo
  parent=
  mdistate=0
  nx=0
@@ -949,7 +949,7 @@ windowlayout=503
  [disassfo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -968,7 +968,7 @@ windowlayout=503
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=symbolfo
  parent=
  mdistate=0
  nx=0
@@ -994,7 +994,7 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=542
+ cy=544
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1006,7 +1006,7 @@ windowlayout=503
  sorted=0
  col=1
  row=-1073741823
- rowheight=17
+ rowheight=14
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1111,7 +1111,7 @@ windowlayout=503
  [symbolfo]
  splitdir=0
  useroptions=268451963
- stackedunder=
+ stackedunder=componentstorefo
  parent=
  mdistate=0
  nx=0
@@ -1203,7 +1203,7 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=594
+ y=596
  cx=1356
  cy=88
  rcx=0
@@ -1211,7 +1211,7 @@ windowlayout=503
  [componentstorefo]
  splitdir=0
  useroptions=268460155
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1274,7 +1274,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=mainfo
+ stackedunder=disassfo
  parent=
  mdistate=0
  nx=0
@@ -1321,10 +1321,10 @@ windowlayout=503
  x=142
  y=0
  cx=1214
- cy=542
+ cy=544
  rcx=0
  rcy=0
- [cpuc86_64fo]
+ [cpui386fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
@@ -1335,10 +1335,10 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=183
- y=113
- cx=352
- cy=277
+ x=337
+ y=295
+ cx=273
+ cy=207
  rcx=0
  rcy=0
  wsize=0
@@ -1357,7 +1357,7 @@ windowlayout=503
  x=0
  y=49
  cx=1356
- cy=542
+ cy=544
  rcx=0
  rcy=0
 [targetconsole]
