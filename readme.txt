@@ -24,10 +24,10 @@ SoundTouch, Bs2b audio-effect libraries.
 
 Included in the package:
 . Examples fpGUI, LCL and console.
-. Binaries of libraries for Linux, Windows, Mac osX, FreeBSD.
-
+. Binaries of libraries for Linux, arm-Rapsberry Pi, Windows, Mac osX, FreeBSD.
+ 
 There are pre-compiled libraries also here:
-=> https://github.com/fredvs/uos/releases/tag/lib-1.0.0
+=> https://github.com/fredvs/uos/releases/
 
 Fred van Stappen
 fiens@hotmail.com
