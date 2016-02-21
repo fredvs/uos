@@ -151,7 +151,6 @@ type
      function FilterNoise(ANoiseSample, ANoisyAudio: PSingle; InFrames: Integer; out Samples: Integer): PSingle;
    end;
 
-
  implementation
 uses
   math;
@@ -180,6 +179,8 @@ var
  
  begin
  
+   OutStream := TMemoryStream.Create; 
+ 
    if isprofiled = false then // take the first chunk as noisy sample
    begin
    
@@ -194,8 +195,6 @@ var
    MNoiseSample.free;
    end ; 
   
-   OutStream := TMemoryStream.Create; 
-      
    MNoisyAudio := TMemoryStream.Create;
    MNoisyAudio.Write(ANoisyAudio^, InFrames*SizeOf(Single));
    MNoisyAudio.Position:=0;
@@ -204,7 +203,7 @@ var
      
    Process(PSingle(MNoisyAudio.Memory), MNoisyAudio.Size div SizeOf(Single), False);
    
-   //  Flush; // output any remaining data // done at end of thread
+   Flush; // output any remaining data 
    
    Result:=GetMem(OutStream.Size);
    Samples := OutStream.Size div SizeOf(Single);
@@ -746,7 +745,7 @@ begin
     Exit;
 
   FinishTrack;
-  Cleanup; // Sets FInited to False
+ // Cleanup; // Sets FInited to False
 end;
 
 

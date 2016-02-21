@@ -1759,7 +1759,7 @@ begin
  
 function uos_EndNoiseRemoval(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 begin
-fft.FNoise.Flush; // output any remaining data
+fft.FNoise.flush; // output any remaining data
 fft.FNoise.free;
 end;
 

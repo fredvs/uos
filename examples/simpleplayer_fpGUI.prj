@@ -815,8 +815,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=noise
+finddtext=flush
 findhistory=10
+ flush
  noise
  DSPNoiseInIndex
  chks
@@ -826,27 +827,27 @@ findhistory=10
  tfunc
  beginproc
  loopproc
- soundtouch
 findoptions=1
-editpos=18
- 0,-1073741823
- 0,-1073741823
- 0,385
- 0,-1073741823
- 0,0
+editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,48
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,0
- 0,-1073741823
- 37,2586
- 0,1109
+ 0,1758
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 1,615
+ 0,-1073741823
+ 0,-1073741823
+ 0,508
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -865,7 +866,8 @@ bookmarks14=0
 bookmarks15=0
 bookmarks16=0
 bookmarks17=0
-sourcefiles=18
+bookmarks18=0
+sourcefiles=19
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -884,7 +886,8 @@ sourcefiles=18
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/uos_soundtouch.pas
  /home/fred/uos/contributors.txt
-relpaths=18
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+relpaths=19
  uos.pas
  uos_bs2b.pas
  simpleplayer_fpGUI.pas
@@ -899,11 +902,13 @@ relpaths=18
  uos_flat.pas
  uos_flat.pas
  define.inc
- ../fpgui/src/corelib/fpg_base.pas
+ fpgui/src/corelib/fpg_base.pas
  uos_dsp_noiseremoval.pas
  uos_soundtouch.pas
  contributors.txt
-ismoduletexts=18
+ simpleplayer_fpGUI.pas
+ismoduletexts=19
+ 0
  0
  0
  0
@@ -927,28 +932,29 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=18
+order=19
  0
+ 1
+ 2
+ 3
+ 4
+ 5
  6
  7
  8
- 5
- 1
- 3
- 2
- 14
- 11
- 4
- 13
  9
- 16
- 15
  18
- 12
  10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
 tabsize=60
 firsttab=7
-index=8
+index=16
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -1098,8 +1104,8 @@ windowlayout=503
  width1=1
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=2
  rowheight=17
  [stackfo]
  splitdir=0
