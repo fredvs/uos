@@ -9,4 +9,5 @@
 {$DEFINE mpg123} // uncomment to enable mpg123 compiling
 {$DEFINE soundtouch} // uncomment to enable soundtouch compiling
 {$DEFINE bs2b} // uncomment to enable bs2b compiling
-{$DEFINE webstream} // uncomment to enable Internet Audio Stream      
+{$DEFINE webstream} // uncomment to enable Internet Audio Stream  
+{$DEFINE noiseremoval} // uncomment to enable noiseremoval compiling (not yet ready)    

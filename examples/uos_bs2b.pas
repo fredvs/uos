@@ -299,7 +299,6 @@ begin
       bs2b_cross_feed_s24le:=nil;
       bs2b_cross_feed_u24le:=nil;
   end;
-
 end;
 
   Function bs_Load(const libfilename:string) :boolean;

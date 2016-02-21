@@ -32,6 +32,7 @@
 * 17 th changes: 2015-03-15 (FreeBSD compatible)                               *
 * 18 th changes: 2015-03-20 (Andrew's Audio Internet Streaming)                *
 * 19 th changes: 2016-01-31 (Stereo to BinAural (bs2b) plugin + new LoadLib()  *
+* 20 th changes: 2016-02-21 (Andrew's Noise Removal DSP)                       *
 *                                                                              *
 ********************************************************************************}
 

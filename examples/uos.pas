@@ -22,7 +22,7 @@ uses
    {$endif}
 
    {$IF DEFINED(webstream)}
-    uos_httpgetthread, Pipes,
+   uos_httpgetthread, Pipes,
    {$ENDIF}
 
    {$IF DEFINED(portaudio)}
@@ -44,11 +44,15 @@ uses
    {$IF DEFINED(bs2b)}
    uos_bs2b,
    {$endif}
+   
+   {$IF DEFINED(noiseremoval)}
+   uos_dsp_noiseremoval,
+   {$endif}
 
    Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 14160131 ;
+  uos_version : LongInt = 15160221 ;
   
   {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -65,6 +69,7 @@ const
   
 type
   TDArFloat = array of cfloat;
+  
   TDArShort = array of cInt16;
   TDArLong = array of cInt32;
 
@@ -164,13 +169,19 @@ type
 type
   Tuos_Data = record  /////////////// common data
     Enabled: boolean;
+    
     TypePut: integer;
     ////// -1 : nothing,  //// for Input : 0:from audio file, 1:from input device (like mic), 2:from internet audio stream, 3:from synthe(TODO)
     //// for Output : 0:into wav file, 1:into output device, 2:to other stream
+    
     Seekable: boolean;
     Status: integer;
     Buffer: TDArFloat;
+    
     DSPVolumeInIndex : LongInt;
+    
+    DSPNoiseInIndex : LongInt;
+        
     DSPVolumeOutIndex : LongInt;
     VLeft, VRight: double;
 
@@ -179,13 +190,13 @@ type
     LevelLeft, LevelRight: cfloat;
     levelArrayEnable : integer;
 
-       {$if defined(cpu64)}
+    {$if defined(cpu64)}
     Wantframes: Tcount_t;
     OutFrames: Tcount_t;
     {$else}
     Wantframes: longint;
     OutFrames: longint;
-       {$endif}
+    {$endif}
 
     SamplerateRoot: longword;
     SampleRate: longword;
@@ -200,7 +211,7 @@ type
      InHandle : Qword;
      OutHandle: Qword;
      {$else}
-      InHandle : longword;
+     InHandle : longword;
      OutHandle: longword;
          {$ENDIF}
     {$else}
@@ -225,7 +236,7 @@ type
     Album: string;
     Genre: byte;
     HDFormat: LongInt;
-    {$IF DEFINED(sndfile)}
+   {$IF DEFINED(sndfile)}
    Frames: Tcount_t;
    {$else}
    Frames: longint;
@@ -254,6 +265,12 @@ type
     a3, a32: array[0..2] of cfloat;
     b2, x0, x1, y0, y1, b22, x02, x12, y02, y12: array[0..1] of cfloat;
     C, D, C2, D2, Gain, LeftResult, RightResult: cfloat;
+ 
+    {$IF DEFINED(noiseremoval)}
+    FNoise : TuosNoiseRemoval;
+   // FNoiseProfiled : boolean;
+   // function NoiseRemovalDone(ASender: TNoiseRemoval; AData:PSingle; ASampleCount: Integer) : TDArFloat;
+   {$endif} 
   end;
 
 type
@@ -268,20 +285,25 @@ type
   TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; Abs2bd : Tt_bs2bdp; inputData: Tuos_Data;
     param1: float; param2: float; param3: float; param4: float;
     param5: float; param6: float;  param7: float; param8: float): TDArFloat;
-
+    
 type
   Tuos_DSP = class(TObject)
   public
     Enabled: boolean;
-    BefProc: TFunc;     //// function to execute before buffer is filled
-    AftProc: TFunc;     //// function to execute after buffer is filled
-    LoopProc: TProc;     //// External Procedure after buffer is filled
+    BefFunc: TFunc;     //// function to execute before buffer is filled
+    AftFunc: TFunc;     //// function to execute after buffer is filled
+    EndFunc: TFunc;     //// function to execute at end of thread;
+    
+    LoopProc: TProc;     //// External Procedure of object to synchronize after buffer is filled 
+   
     ////////////// for FFT
     fftdata: Tuos_FFT;
 
-     {$IF DEFINED(Java)}
+ 
+    {$IF DEFINED(Java)}
     procedure LoopProcjava;
         {$endif}
+ 
     destructor Destroy; override;
 
   end;
@@ -291,7 +313,7 @@ type
   public
     Data: Tuos_Data;
     DSP: array of Tuos_DSP;
-    LoopProc: TProc;    //// external procedure to execute in loop
+    LoopProc: TProc;    //// external procedure of object to synchronize in loop
        {$IF DEFINED(Java)}
     procedure LoopProcjava;
         {$endif}
@@ -303,7 +325,7 @@ type
   public
     Data: Tuos_Data;
     DSP: array of Tuos_DSP;
-    LoopProc: TProc;    //// external procedure to execute in loop
+    LoopProc: TProc;    //// external procedure of object to synchronize in loop
        {$IF DEFINED(Java)}
     procedure LoopProcjava;
         {$endif}
@@ -370,7 +392,7 @@ type
      {$else}
       Refer: TObject;  //// for fpGUI
       constructor Create(CreateSuspended: boolean; AParent: TObject;
-      const StackSize: SizeUInt = DefaultStackSize);     //// for fpGUI
+      const StackSize: SizeUInt = DefaultStackSize);    
     {$endif}
 
     destructor Destroy; override;
@@ -394,7 +416,7 @@ type
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-    //////////// FramesCount : default : -1 (= 65536)
+    //////////// FramesCount : default : -1 (= 4096)
     //  result :  Output Index in array    -1 = error
     /// example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0);
      {$endif}
@@ -406,7 +428,7 @@ type
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-    //////////// FramesCount : default : -1 (= 65536)
+    //////////// FramesCount : default : -1 (= 4096)
     //  result : Output Index in array     -1 = error
     //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1);
 
@@ -422,7 +444,7 @@ type
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-    //////////// FramesCount : default : -1 (65536)
+    //////////// FramesCount : default : -1 (4096)
     //  result :  otherwise Output Index in array   -1 = error
     /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1,-1);
      {$endif}
@@ -433,7 +455,7 @@ type
     ////////// FileName : filename of audio file
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-    //////////// FramesCount : default : -1 (65536)
+    //////////// FramesCount : default : -1 (4096)
     //  result :   Input Index in array    -1 = error
     //////////// example : InputIndex1 := AddFromFile(edit5.Text,-1,0,-1);
 
@@ -444,7 +466,7 @@ type
   ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
-  //////////// FramesCount : default : -1 (65536)
+  //////////// FramesCount : default : -1 (4096)
   ////////// example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1);
      {$ENDIF}
 
@@ -535,13 +557,14 @@ type
     ////////// InputIndex : InputIndex of existing input
     ///////  result : current postion of Input in time format
 
-    function AddDSPin(InputIndex: LongInt; BeforeProc: TFunc;
-      AfterProc: TFunc; LoopProc: TProc): LongInt;
+    function AddDSPin(InputIndex: LongInt; BeforeFunc: TFunc;
+      AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): LongInt;
     ///// add a DSP procedure for input
-    ////////// InputIndex : Input Index of a existing input
-    ////////// BeforeProc : procedure to do before the buffer is filled
-    ////////// AfterProc : procedure to do after the buffer is filled
-    ////////// LoopProc : external procedure to do after the buffer is filled
+    ////////// InputIndex d: Input Index of a existing input
+    ////////// BeforeFunc : function to do before the buffer is filled
+    ////////// AfterFunc : function to do after the buffer is filled
+    ////////// EndedFunc : function to do after thread is finish
+    ////////// LoopProc : external procedure of object to synchronize after the buffer is filled
     //  result :  index of DSPin in array  (DSPinIndex)
     ////////// example : DSPinIndex1 := AddDSPIn(InputIndex1,@beforereverse,@afterreverse,nil);
 
@@ -551,12 +574,13 @@ type
     ////////// Enable :  DSP enabled
     ////////// example : SetDSPIn(InputIndex1,DSPinIndex1,True);
 
-    function AddDSPout(OutputIndex: LongInt; BeforeProc: TFunc;
-      AfterProc: TFunc; LoopProc: TProc): LongInt;    //// usefull if multi output
+    function AddDSPout(OutputIndex: LongInt; BeforeFunc: TFunc;
+      AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): LongInt;    //// usefull if multi output
     ////////// OutputIndex : OutputIndex of a existing Output
-    ////////// BeforeProc : procedure to do before the buffer is filled
-    ////////// AfterProc : procedure to do after the buffer is filled just before to give to output
-    ////////// LoopProc : external procedure to do after the buffer is filled
+    ////////// BeforeFunc : function to do before the buffer is filled
+    ////////// AfterFunc : function to do after the buffer is filled just before to give to output
+    ////////// EndedFunc : function to do after thread is finish
+    ////////// LoopProc : external procedure of object to synchronize after the buffer is filled
     //  result : index of DSPout in array
     ////////// example :DSPoutIndex1 := AddDSPout(OutputIndex1,@volumeproc,nil,nil);
 
@@ -576,7 +600,7 @@ type
     ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
     /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-    ////////// LoopProc : External procedure to execute after DSP done
+    ////////// LoopProc : external procedure of object to synchronize after DSP done
     //  result :  otherwise index of DSPIn in array
     ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1,2,true,nil);
 
@@ -591,7 +615,7 @@ type
     ////////// TypeFilter: Type of filter : ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
     /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-    ////////// LoopProc : External procedure to execute after DSP done
+    ////////// LoopProc : external procedure of object to synchronize after DSP done
     ////////// Enable :  Filter enabled
     ////////// example : SetFilterIn(InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 
@@ -605,7 +629,7 @@ type
     ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
     /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-    ////////// LoopProc : External procedure to execute after DSP done
+    ////////// LoopProc : external procedure of object to synchronize after DSP done
     //  result : index of DSPOut in array
     ////////// example :FilterOutIndex1 := AddFilterOut(OutputIndex1,6000,16000,1,true,nil);
 
@@ -621,7 +645,7 @@ type
     /// fBandPass = 3, fHighPass = 4, fLowPass = 5)
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
     ////////// Enable :  Filter enabled
-    ////////// LoopProc : External procedure to execute after DSP done
+    ////////// LoopProc : external procedure of object to synchronize after DSP done
     ////////// example : SetFilterOut(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
 
     function DSPLevel(Data: Tuos_Data): Tuos_Data;
@@ -644,6 +668,20 @@ type
     ////////// VolRight : Right volume
     //  result :  otherwise index of DSPIn in array
     ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
+    
+     {$IF DEFINED(noiseremoval)}
+    function AddDSPNoiseRemovalIn(InputIndex: LongInt): LongInt;
+    ///// DSP Noise Removal
+    ////////// InputIndex : InputIndex of a existing Input
+    //  result :  otherwise index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSPNoiseRemovalIn(InputIndex1);
+    
+   procedure SetDSPNoiseRemovalIn(InputIndex: LongInt; gain: double;
+      Sensitivity: double; AttackDelayTime: double;
+      FreqSmoothingHz: double; Enable: boolean);
+  
+  {$endif}  
+    
 
     procedure SetDSPVolumeIn(InputIndex: LongInt; DSPVolIndex: LongInt;
       VolLeft: double; VolRight: double; Enable: boolean);
@@ -724,7 +762,6 @@ const
     {$endif}
 
 var
-
   uosPlayers: array of Tuos_Player;
   uosPlayersStat : array of LongInt;
   uosLevelArray : TDArIARFloat ;
@@ -1141,32 +1178,32 @@ begin
  StreamOut[OutputIndex].DSP[DSPoutIndex].Enabled := Enable;
 end;
 
-function Tuos_Player.AddDSPin(InputIndex: LongInt; BeforeProc: TFunc;
-  AfterProc: TFunc; LoopProc: Tproc): LongInt;
+function Tuos_Player.AddDSPin(InputIndex: LongInt; BeforeFunc: TFunc;
+  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): LongInt;
 begin
     SetLength(StreamIn[InputIndex].DSP, Length(StreamIn[InputIndex].DSP) + 1);
     StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1] := Tuos_DSP.Create();
-    StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].BefProc := BeforeProc;
-    StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].AftProc := AfterProc;
+    StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].BefFunc := BeforeFunc;
+    StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].AftFunc := AfterFunc;
+    StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].EndFunc := EndedFunc;
     StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].LoopProc := LoopProc;
     StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].Enabled := True;
-
-    StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].fftdata :=
-      Tuos_FFT.Create();
 
     Result := Length(StreamIn[InputIndex].DSP) - 1;
  end;
 
-function Tuos_Player.AddDSPout(OutputIndex: LongInt; BeforeProc: TFunc;
-  AfterProc: TFunc; LoopProc: Tproc): LongInt;
+function Tuos_Player.AddDSPout(OutputIndex: LongInt; BeforeFunc: TFunc;
+  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): LongInt;
 begin
     SetLength(StreamOut[OutputIndex].DSP, Length(StreamOut[OutputIndex].DSP) + 1);
     StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1] :=
       Tuos_DSP.Create;
-    StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].BefProc :=
-      BeforeProc;
-    StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].AftProc :=
-      AfterProc;
+    StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].BefFunc :=
+      BeforeFunc;
+    StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].AftFunc :=
+      AfterFunc;
+     StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].EndFunc :=
+      EndedFunc;
     StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].LoopProc :=
       LoopProc;
     StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].Enabled := True;
@@ -1184,7 +1221,7 @@ procedure Tuos_Player.SetFilterIn(InputIndex: LongInt; FilterIndex: LongInt;
 ////////// TypeFilter: Type of filter : ( default = -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
 /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
 ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-////////// LoopProc : External procedure to execute after filter
+////////// LoopProc : external procedure of object to synchronize after DSP done
 ////////// Enable :  Filter enabled
 ////////// example : SetFilterIn(InputIndex1,FilterInIndex1,1000,1500,-1,True,nil);
 begin
@@ -1370,7 +1407,7 @@ procedure Tuos_Player.SetFilterOut(OutputIndex: LongInt; FilterIndex: LongInt;
 /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
 ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 ////////// Enable :  Filter enabled
-////////// LoopProc : External procedure to execute after filter
+////////// LoopProc : external procedure of object to synchronize after DSP done
 ////////// example : SetFilterOut(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,nil);
 begin
 if isAssigned = true then
@@ -1564,6 +1601,7 @@ begin
         BufferplugFL[x1 + x2] := BufferplugFLTMP[x1];
       end;
     end;
+  // inputData.outframes := Length(BufferplugFL); 
   Result := BufferplugFL;
 end;
 {$endif}
@@ -1716,6 +1754,42 @@ function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: LongInt) : TDAr
 begin
    result :=  uosLevelArray[PlayerIndex][InputIndex] ;
   end;
+  
+ {$IF DEFINED(noiseremoval)}
+ 
+function uos_EndNoiseRemoval(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+begin
+fft.FNoise.Flush; // output any remaining data
+fft.FNoise.free;
+end;
+
+function uos_NoiseRemoval(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+var
+ ratio, x: LongInt;
+ Outfr : LongInt;
+ tempr : PSingle;
+ pf: TDArFloat;     //////// if input is Float32 format  
+begin
+
+    case Data.LibOpen of
+        0: ratio := 1;
+        1: ratio := 2;
+      end;
+
+//tempr := fft.FNoise.FilterNoise(@Data.Buffer[0], @Data.Buffer[0] ,length(Data.Buffer), Outfr);
+ tempr := fft.FNoise.FilterNoise(pointer(Data.Buffer), pointer(Data.Buffer) ,
+ Data.OutFrames div ratio  , Outfr);
+ 
+ setlength(pf,length(Data.Buffer));
+
+ for x := 0 to Outfr -1 do
+  begin
+  pf[x] := tempr[x];
+  end;
+
+  result := pf ; 
+end;
+ {$endif}
 
 function uos_DSPVolume(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 var
@@ -2078,6 +2152,61 @@ begin
 
 end;
 
+  {$IF DEFINED(noiseremoval)}
+    function Tuos_Player.AddDSPNoiseRemovalIn(InputIndex: LongInt): LongInt;
+    ///// DSP Noise Removal
+    ////////// InputIndex : InputIndex of a existing Input
+    //  result :  otherwise index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSPNoiseRemovalIn(InputIndex1);
+    begin
+    
+ Result := AddDSPin(InputIndex, nil, @uos_NoiseRemoval, @uos_EndNoiseRemoval, nil);   
+ 
+ StreamIn[InputIndex].data.DSPNoiseInIndex := Result ;
+ 
+   StreamIn[InputIndex].DSP[result].fftdata :=
+      Tuos_FFT.Create();
+    
+ StreamIn[InputIndex].DSP[result].fftdata.FNoise:= TuosNoiseRemoval.Create;
+ 
+     
+// Use default or change .Gain .Sensitivity .AttackDelayTime .FreqSmoothingHz
+
+StreamIn[InputIndex].DSP[result].fftdata.FNoise.Init(
+StreamIn[InputIndex].data.SampleRate);
+
+StreamIn[InputIndex].DSP[result].fftdata.FNoise.samprate :=
+StreamIn[InputIndex].data.SampleRate;
+
+StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteProc:=
+@StreamIn[InputIndex].DSP[result].fftdata.FNoise.DataWrite; 
+
+// StreamIn[InputIndex].DSP[result].fftdata.FNoise.OutStream := TMemoryStream.Create; 
+
+StreamIn[InputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
+ 
+end;
+    
+procedure Tuos_Player.SetDSPNoiseRemovalIn(InputIndex: LongInt; gain: double;
+    Sensitivity: double; AttackDelayTime: double;
+    FreqSmoothingHz: double; Enable: boolean);
+      
+ begin
+ if gain <> -1 then 
+StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].fftdata.FNoise.gain := gain ; 
+ if Sensitivity <> -1 then 
+StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].fftdata.FNoise.Sensitivity := Sensitivity ; 
+ if AttackDelayTime <> -1 then 
+StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].fftdata.FNoise.AttackDecayTime := AttackDelayTime ; 
+ if FreqSmoothingHz <> -1 then 
+StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].fftdata.FNoise.FreqSmoothingHz := FreqSmoothingHz ; 
+
+StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].enabled := Enable ; 
+
+ end;     
+  
+  {$endif}  
+
 function Tuos_Player.AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
   VolRight: double): LongInt;  ///// DSP Volume changer
   ////////// InputIndex : InputIndex of a existing Input
@@ -2086,7 +2215,7 @@ function Tuos_Player.AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
   //  result : index of DSPIn in array
   ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
 begin
-  Result := AddDSPin(InputIndex, nil, @uos_DSPVolume, nil);
+  Result := AddDSPin(InputIndex, nil, @uos_DSPVolume, nil, nil);
   StreamIn[InputIndex].Data.VLeft := VolLeft;
   StreamIn[InputIndex].Data.VRight := VolRight;
 end;
@@ -2099,7 +2228,7 @@ function Tuos_Player.AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;
   //  result :  index of DSPIn in array
   ////////// example  DSPIndex1 := AddDSPVolumeOut(OutputIndex1,1,1);
 begin
-  Result := AddDSPin(OutputIndex, nil, @uos_DSPVolume, nil);
+  Result := AddDSPin(OutputIndex, nil, @uos_DSPVolume, nil, nil);
   StreamOut[OutputIndex].Data.VLeft := VolLeft;
   StreamOut[OutputIndex].Data.VRight := VolRight;
 end;
@@ -2136,8 +2265,6 @@ begin
   StreamOut[OutputIndex].DSP[DSPVolIndex].Enabled := Enable;
 end;
 
-
-
 function Tuos_Player.AddFilterIn(InputIndex: LongInt; LowFrequency: LongInt;
   HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt; AlsoBuf: boolean;
   LoopProc: TProc): LongInt;
@@ -2148,13 +2275,17 @@ function Tuos_Player.AddFilterIn(InputIndex: LongInt; LowFrequency: LongInt;
   ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
   /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-  ////////// LoopProc : External procedure to execute after filter
+  ////////// LoopProc : external procedure of object to synchronize after DSP done
   //  result : index of DSPIn in array
   ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1,1,True);
 var
   FilterIndex: LongInt;
 begin
-  FilterIndex := AddDSPin(InputIndex, nil, @uos_BandFilter, LoopProc);
+  FilterIndex := AddDSPin(InputIndex, nil, @uos_BandFilter, nil, LoopProc);
+
+   StreamIn[InputIndex].DSP[FilterIndex].fftdata :=
+      Tuos_FFT.Create();
+      
   if TypeFilter = -1 then
     TypeFilter := 1;
   SetFilterIn(InputIndex, FilterIndex, LowFrequency, HighFrequency,
@@ -2172,12 +2303,17 @@ function Tuos_Player.AddFilterOut(OutputIndex: LongInt; LowFrequency: LongInt;
   ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
   /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+  ////////// LoopProc : external procedure of object to synchronize after DSP done
   //  result :  index of DSPOut in array
   ////////// example :FilterOutIndex1 := AddFilterOut(OutputIndex1,6000,16000,1,true);
 var
   FilterIndex: LongInt;
 begin
-  FilterIndex := AddDSPOut(OutputIndex, nil, @uos_BandFilter, LoopProc);
+  FilterIndex := AddDSPOut(OutputIndex, nil, @uos_BandFilter, nil, LoopProc);
+  
+    StreamOut[OutputIndex].DSP[FilterIndex].fftdata :=
+      Tuos_FFT.Create();
+      
   if TypeFilter = -1 then
     TypeFilter := 1;
   SetFilterOut(OutputIndex, FilterIndex, LowFrequency, HighFrequency,
@@ -2274,7 +2410,7 @@ function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
   //////////// SampleRate : delault : -1 (44100)
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-  //////////// FramesCount : -1 default : 65536
+  //////////// FramesCount : -1 default : 65536 div channels
   //  result :  Output Index in array    -1 = error
   //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1,0, -1);
 var
@@ -2340,7 +2476,7 @@ end;
   //////////// SampleRate : delault : -1 (44100)
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
-  //////////// FramesCount : default : -1 (65536)
+  //////////// FramesCount : default : -1 (65536 div channels)
   //////////// example : AddInoDevOut(-1,-1,-1,-1,-1,-1);
 var
   x, err: LongInt;
@@ -2591,7 +2727,7 @@ function Tuos_Player.AddFromFile(Filename: PChar; OutputIndex: LongInt;
   ////////// FileName : filename of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
-  //////////// FramesCount : default : -1 (65536)
+  //////////// FramesCount : default : -1 (65536 div channels)
   ////////// example : InputIndex := AddFromFile('/usr/home/test.ogg',-1,-1,-1);
 var
   x, err: LongInt;
@@ -2898,8 +3034,8 @@ begin
         if (StreamIn[x].Data.Status = 1) and (length(StreamIn[x].DSP) > 0) then
           for x2 := 0 to high(StreamIn[x].DSP) do
             if (StreamIn[x].DSP[x2].Enabled = True) and
-              (StreamIn[x].DSP[x2].BefProc <> nil) then
-              StreamIn[x].DSP[x2].BefProc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
+              (StreamIn[x].DSP[x2].BefFunc <> nil) then
+              StreamIn[x].DSP[x2].BefFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
         ///// end DSP BeforeBuffProc
 
         RTLeventWaitFor(evPause);  ///// Is there a pause waiting ?
@@ -3016,9 +3152,9 @@ begin
             if (StreamIn[x].DSP[x2].Enabled = True) then
             begin
 
-              if (StreamIn[x].DSP[x2].AftProc <> nil) then
+              if (StreamIn[x].DSP[x2].AftFunc <> nil) then
                 StreamIn[x].Data.Buffer :=
-                  StreamIn[x].DSP[x2].AftProc(StreamIn[x].Data,
+                  StreamIn[x].DSP[x2].AftFunc(StreamIn[x].Data,
                   StreamIn[x].DSP[x2].fftdata);
 
               {$IF not DEFINED(Library)}
@@ -3139,9 +3275,9 @@ begin
           for x3 := 0 to high(StreamOut[x].DSP) do
             if (StreamOut[x].DSP[x3].Enabled = True) then
             begin
-              if (StreamOut[x].DSP[x3].AftProc <> nil) then
+              if (StreamOut[x].DSP[x3].AftFunc <> nil) then
                 StreamOut[x].Data.Buffer :=
-                  StreamOut[x].DSP[x3].AftProc(StreamOut[x].Data,
+                  StreamOut[x].DSP[x3].AftFunc(StreamOut[x].Data,
                   StreamOut[x].DSP[x3].fftdata);
 
                 {$IF not DEFINED(Library)}
@@ -3375,7 +3511,25 @@ begin
        {$endif}
       end;
     end;
-
+    
+    // EndFunc of DSP In
+    for x := 0 to high(StreamIn) do
+    begin
+      if (length(StreamIn[x].DSP) > 0) then
+          for x2 := 0 to high(StreamIn[x].DSP) do
+          if (StreamIn[x].DSP[x2].EndFunc <> nil) then
+        StreamIn[x].DSP[x2].EndFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
+    end;
+              
+    // EndFunc of DSP Out
+    for x := 0 to high(StreamOut) do
+    begin
+      if (length(StreamOut[x].DSP) > 0) then
+            for x2 := 0 to high(StreamOut[x].DSP) do
+            if (StreamOut[x].DSP[x2].EndFunc <> nil) then
+              StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
+     end;
+  
     for x := 0 to high(StreamIn) do
       if (StreamIn[x].Data.HandleSt <> nil) then
         case StreamIn[x].Data.TypePut of

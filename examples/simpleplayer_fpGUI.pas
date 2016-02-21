@@ -67,6 +67,7 @@ type
     TrackBar5: TfpgTrackBar;
     Button1: TfpgButton;
     chkst2b: TfpgCheckBox;
+    chknoise: TfpgCheckBox;
     Labelst1: TfpgLabel;
     FilenameEdit6: TfpgFileNameEdit;
     {@VFD_HEAD_END: Simpleplayer}
@@ -93,6 +94,7 @@ type
     procedure ShowLevel;
     procedure changecheck(Sender: TObject);
     procedure VolumeChange(Sender: TObject; pos: integer);
+    procedure ChangeNoise(Sender: TObject);
     procedure ChangePlugSetSoundTouch(Sender: TObject);
     procedure ChangePlugSetbs2b(Sender: TObject);
     procedure TrackChangePlugSetSoundTouch(Sender: TObject; pos: integer);
@@ -109,7 +111,7 @@ var
   OutputIndex1, InputIndex1, DSPIndex1, PluginIndex1, PluginIndex2: integer;
   plugsoundtouch : boolean = false;
   plugbs2b : boolean = false;
-
+ 
   procedure TSimpleplayer.btnTrackOnClick(Sender: TObject; Button: TMouseButton;
     Shift: TShiftState; const pos: TPoint);
   begin
@@ -119,6 +121,11 @@ var
    procedure TSimpleplayer.ChangePlugSetBs2b(Sender: TObject);
    begin
   uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, chkst2b.Checked);   
+  end;
+  
+  procedure TSimpleplayer.ChangeNoise(Sender: TObject);
+   begin
+   uos_SetDSPNoiseRemovalIn(PlayerIndex1, PluginIndex1, -1, -1, -1, -1, chknoise.Checked);   
   end;
 
   procedure TSimpleplayer.ChangePlugSetSoundTouch(Sender: TObject);
@@ -346,12 +353,38 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
 
     Result := arfl;
   end;
+  
+  /// WARNING: This is only to show a DSP effect, it is not the best reverb it exists ;-)
+  function DSPReverb(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+  var
+    x: integer = 0;
+    arfl: TDArFloat;
+  begin
+    SetLength(arfl, length(Data.Buffer));
+         while x < length(Data.Buffer)   do
+          begin
+      if x > 10000 then
+      begin
+        arfl[x] := Data.Buffer[x] + (Data.Buffer[x-10000] / 2);
+        arfl[x+1] := Data.Buffer[x+1] + (Data.Buffer[x+1-10000] / 2);
+      end else 
+     begin
+        arfl[x] := Data.Buffer[x] ;
+        arfl[x+1] := Data.Buffer[x+1];
+      end;
+       x := x + 2;
+          end;
+       Result := arfl;
+  end;
+
 
   procedure TSimpleplayer.btnStartClick(Sender: TObject);
   var
     samformat: shortint;
     temptime: ttime;
     ho, mi, se, ms: word;
+    dspindex2 : integer;
+    
   begin
 
     if radiobutton1.Checked = True then
@@ -378,20 +411,22 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-     InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(filenameEdit4.filename), -1, samformat, -1);
+     InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(filenameEdit4.filename), -1, 
+     samformat, -1);
     //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     //////////// PlayerIndex : Index of a existing Player
     ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
     ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-    //////////// FramesCount : default : -1 (65536)
+    //////////// FramesCount : default : -1 (65536 div channels)
     //  result : -1 nothing created, otherwise Input Index in array
 
     if InputIndex1 > -1 then begin
 
       // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
-    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1), -1, samformat, -1);
+    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -421,15 +456,19 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     //////////// PlayerIndex : Index of a existing Player
     //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
-
-    uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
+   
+     uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
+     uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, -1, -1, -1, -1, chknoise.Checked);
+     /// Add DSP Noise removal. First chunck will be the noise sample.
+   
+     uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : Index of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-    uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1,
+     uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1,
       (100 - TrackBar2.position) / 100,
       (100 - TrackBar3.position) / 100, True);
     /// Set volume
@@ -438,37 +477,42 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
-
-    DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
-      @DSPReverseAfter, nil);
-    ///// add a custom DSP procedure for input
+  
+   // This is a custom reverb... but not the best... only to show how to do a DSP ;-) 
+  // {
+  // DSPIndex2 := uos_AddDSPIn(PlayerIndex1, InputIndex1, nil, @DSPReverb, nil, nil);
+  // uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, true);
+  // }
+  
+   DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
+     @DSPReverseAfter, nil, nil);
+      ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1: InputIndex of existing input
     ////////// BeforeProc : procedure to do before the buffer is filled
     ////////// AfterProc : procedure to do after the buffer is filled
+    ////////// EndedProc : procedure to do at end of thread
     ////////// LoopProc : external procedure to do after the buffer is filled
-
    
-    //// set the parameters of custom DSP;
-    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
-  
-     ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
+   //// set the parameters of custom DSP;
+   uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+   
+  ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
   if plugbs2b = true then
   begin
-  PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b',
+   PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b',
    uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
-
    uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1 , -1, -1, chkst2b.checked);
-  end;  
-    
-     ///// add SoundTouch plugin with samplerate of input1 / default channels (2 = stereo)
-    /// SoundTouch plugin must be the last added.
+  end; 
+  
+  /// add SoundTouch plugin with samplerate of input1 / default channels (2 = stereo)
+  /// SoundTouch plugin should be the last added.
     if plugsoundtouch = true then
   begin
     PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', 
     uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
     ChangePlugSetSoundTouch(self); //// custom procedure to Change plugin settings
-   end;
+   end;    
          
    trackbar1.Max := uos_InputLength(PlayerIndex1, InputIndex1);
     ////// Length of Input in samples
@@ -621,7 +665,7 @@ end;
   with btnStart do
   begin
     Name := 'btnStart';
-    SetPosition(140, 404, 44, 23);
+    SetPosition(140, 408, 44, 23);
     Text := 'Play';
     Enabled := False;
     FontDesc := '#Label1';
@@ -636,7 +680,7 @@ end;
   with btnStop do
   begin
     Name := 'btnStop';
-    SetPosition(364, 404, 80, 23);
+    SetPosition(364, 408, 80, 23);
     Text := 'Stop';
     Enabled := False;
     FontDesc := '#Label1';
@@ -745,7 +789,7 @@ end;
   with btnpause do
   begin
     Name := 'btnpause';
-    SetPosition(204, 404, 52, 23);
+    SetPosition(204, 408, 52, 23);
     Text := 'Pause';
     Enabled := False;
     FontDesc := '#Label1';
@@ -760,7 +804,7 @@ end;
   with btnresume do
   begin
     Name := 'btnresume';
-    SetPosition(276, 404, 64, 23);
+    SetPosition(276, 408, 64, 23);
     Text := 'Resume';
     Enabled := False;
     FontDesc := '#Label1';
@@ -787,7 +831,7 @@ end;
   with RadioButton1 do
   begin
     Name := 'RadioButton1';
-    SetPosition(132, 324, 96, 19);
+    SetPosition(112, 312, 96, 19);
     Checked := True;
     FontDesc := '#Label1';
     GroupIndex := 0;
@@ -801,7 +845,7 @@ end;
   with RadioButton2 do
   begin
     Name := 'RadioButton2';
-    SetPosition(132, 340, 100, 19);
+    SetPosition(112, 328, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
     ParentShowHint := False;
@@ -814,7 +858,7 @@ end;
   with RadioButton3 do
   begin
     Name := 'RadioButton3';
-    SetPosition(132, 358, 100, 19);
+    SetPosition(112, 346, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
     ParentShowHint := False;
@@ -827,7 +871,7 @@ end;
   with Label2 do
   begin
     Name := 'Label2';
-    SetPosition(116, 308, 104, 15);
+    SetPosition(108, 296, 104, 15);
     FontDesc := '#Label2';
     ParentShowHint := False;
     Text := 'Sample format';
@@ -942,7 +986,6 @@ end;
     TabOrder := 32;
     Text := 'Enable SoundTouch PlugIn';
     Hint := 'Change Tempo with same tuning or change Tuning with same tempo';
-    showhint := true;
     OnChange := @ChangePlugSetSoundTouch;
   end;
 
@@ -998,7 +1041,7 @@ end;
   with Button1 do
   begin
     Name := 'Button1';
-    SetPosition(264, 368, 60, 23);
+    SetPosition(276, 368, 60, 23);
     Text := 'Reset';
     FontDesc := '#Label1';
     ImageName := '';
@@ -1012,14 +1055,26 @@ end;
   with chkst2b do
   begin
     Name := 'chkst2b';
-    SetPosition(124, 380, 136, 19);
+    SetPosition(120, 368, 136, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 38;
-    Hint := 'Stereo to BinAural (for headphones)';
-    Showhint := true;
     Text := 'Stereo to BinAural';
+    Hint := 'Stereo to BinAural (for headphones)';
     OnChange := @ChangePlugSetBs2b;
+  end;
+
+  chknoise := TfpgCheckBox.Create(self);
+  with chknoise do
+  begin
+    Name := 'chknoise';
+    SetPosition(120, 384, 136, 19);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    TabOrder := 38;
+    Text := 'Noise Remover';
+    Hint := 'Noise remover';
+    OnChange := @Changenoise;
   end;
 
   Labelst1 := TfpgLabel.Create(self);

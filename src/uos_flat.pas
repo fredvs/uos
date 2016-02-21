@@ -212,6 +212,14 @@ procedure uos_LoopProcOut(PlayerIndex: cint32; OutIndex: cint32; Proc: TProc);
             //////////// PlayerIndex : Index of a existing Player
             //////////// OutIndex : Index of a existing Output
 
+ {$IF DEFINED(noiseremoval)}
+procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt);
+      
+procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; gain: double;
+    Sensivity: double; AttackDelayTime: double;
+    FreqSmoothingHz: double; Enable: boolean);
+ {$endif}  
+
 procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                  VolRight: double) ;
                ///// DSP Volume changer
@@ -239,7 +247,7 @@ procedure uos_SetDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32;
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
                ////////// example  uos_SetDSPVolumeIn(0,InputIndex1,DSPIndex1,1,0.8,True);
-
+               
 procedure uos_SetDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32;
                  VolLeft: double; VolRight: double; Enable: boolean);
                ////////// OutputIndex : OutputIndex of a existing Output
@@ -249,14 +257,15 @@ procedure uos_SetDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32;
                ////////// Enable : Enabled
                ////////// example  uos_SetDSPVolumeOut(0,outputIndex1,DSPIndex1,1,0.8,True);
 
-function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeProc: TFunc;
-                    AfterProc: TFunc; LoopProc: TProc): cint32;
+function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc: TFunc;
+                    AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
                   ///// add a DSP procedure for input
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// InputIndex : Input Index of a existing input
-                  ////////// BeforeProc : procedure to do before the buffer is filled
-                  ////////// AfterProc : procedure to do after the buffer is filled
-                  ////////// LoopProc : external procedure to do after the buffer is filled
+                  ////////// BeforeFunc : Function to do before the buffer is filled
+                  ////////// AfterFunc : Function to do after the buffer is filled
+                  ////////// EndedFunc : Function to do at end of thread
+                  ////////// LoopProc : external procedure of object to synchronize after DSP done
                   //  result : -1 nothing created, otherwise index of DSPin in array  (DSPinIndex)
                   ////////// example : DSPinIndex1 := uos_AddDSPin(0,InputIndex1,@beforereverse,@afterreverse,nil);
 
@@ -267,15 +276,17 @@ procedure uos_SetDSPin(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: cint
                   ////////// Enable :  DSP enabled
                   ////////// example : uos_SetDSPin(0,InputIndex1,DSPinIndex1,True);
 
-function uos_AddDSPout(PlayerIndex: cint32; OutputIndex: cint32; BeforeProc: TFunc;
-                    AfterProc: TFunc; LoopProc: TProc): cint32;    //// usefull if multi output
+function uos_AddDSPout(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFunc;
+                    AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;   
+                     //// usefull if multi output
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// OutputIndex : OutputIndex of a existing Output
-                  ////////// BeforeProc : procedure to do before the buffer is filled
-                  ////////// AfterProc : procedure to do after the buffer is filled just before to give to output
-                  ////////// LoopProc : external procedure to do after the buffer is filled
+                  ////////// BeforeFunc : Function to do before the buffer is filled
+                  ////////// AfterFunc : Function to do after the buffer is filled just before to give to output
+                  ////////// EndedFunc : Function to do at end of thread
+                  ////////// LoopProc : external procedure of object to synchronize after DSP done
                   //  result : index of DSPout in array
-                  ////////// example :DSPoutIndex1 := uos_AddDSPout(0,OutputIndex1,@volumeproc,nil,nil);
+                  ////////// example :DSPoutIndex1 := uos_AddDSPout(0,OutputIndex1,nil,@volumeproc,nil,nil);
 
 procedure uos_SetDSPout(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
                   //////////// PlayerIndex : Index of a existing Player
@@ -463,6 +474,28 @@ var
 
 implementation
 
+ {$IF DEFINED(noiseremoval)}
+procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt);
+begin
+    if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+    uosPlayers[PlayerIndex].StreamIn[InputIndex].data.DSPNoiseInIndex :=
+    uosPlayers[PlayerIndex].AddDSPNoiseRemovalIn(InputIndex);
+end;
+
+      
+procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; gain: double;
+    Sensivity: double; AttackDelayTime: double;
+    FreqSmoothingHz: double; Enable: boolean);
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+uosPlayers[PlayerIndex].SetDSPNoiseRemovalIn(InputIndex, gain, Sensivity, AttackDelayTime, 
+FreqSmoothingHz, Enable);
+end;
+
+ {$endif} 
+
 procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                  VolRight: double);
 begin
@@ -521,13 +554,14 @@ end;
                ////////// Enable : Enabled
                ////////// example  SetDSPVolumeOut(0,InputIndex1,1,0.8,True);
 
-function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeProc: TFunc;
-                    AfterProc: TFunc; LoopProc: TProc): cint32;
+function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc : TFunc;
+                    AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
                   ///// add a DSP procedure for input
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// InputIndex : Input Index of a existing input
-                  ////////// BeforeProc : procedure to do before the buffer is filled
-                  ////////// AfterProc : procedure to do after the buffer is filled
+                  ////////// BeforeFunc : Function to do before the buffer is filled
+                  ////////// AfterFunc : Function to do after the buffer is filled
+                  ////////// EndedFunc : Function to do at end of thread
                   ////////// LoopProc : external procedure to do after the buffer is filled
                   //  result : index of DSPin in array  (DSPinIndex)
                  ////////// example : DSPinIndex1 := AddDSPIn(0,InputIndex1,@beforereverse,@afterreverse,nil);
@@ -535,7 +569,7 @@ begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-result := uosPlayers[PlayerIndex].AddDSPin(InputIndex, BeforeProc, AfterProc, LoopProc) ;
+result := uosPlayers[PlayerIndex].AddDSPin(InputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
 end;
 
 procedure uos_SetDSPin(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
@@ -550,12 +584,13 @@ begin
 uosPlayers[PlayerIndex].SetDSPin(InputIndex, DSPinIndex, Enable) ;
 end;
 
-function uos_AddDSPout(PlayerIndex: cint32; OutputIndex: cint32; BeforeProc: TFunc;
-                    AfterProc: TFunc; LoopProc: TProc): cint32;    //// usefull if multi output
+function uos_AddDSPout(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFunc;
+                    AfterFunc: TFunc; EndedFunc : TFunc; LoopProc: TProc): cint32;    //// usefull if multi output
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// OutputIndex : OutputIndex of a existing Output
-                  ////////// BeforeProc : procedure to do before the buffer is filled
-                  ////////// AfterProc : procedure to do after the buffer is filled just before to give to output
+                  ////////// BeforeFunc : Function to do before the buffer is filled
+                  ////////// AfterFunc : Function to do after the buffer is filled just before to give to output
+                  ////////// EndedFunc : Function to do at end of thread
                   ////////// LoopProc : external procedure to do after the buffer is filled
                   //  result :index of DSPout in array
                   ////////// example :DSPoutIndex1 := AddDSPout(0,OutputIndex1,@volumeproc,nil,nil);
@@ -563,7 +598,7 @@ begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-result := uosPlayers[PlayerIndex].AddDSPout(OutputIndex, BeforeProc, AfterProc, LoopProc) ;
+result := uosPlayers[PlayerIndex].AddDSPout(OutputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
 end;
 
 procedure uos_SetDSPout(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
