@@ -63,7 +63,6 @@ const
   // full index with every individual frame.
   MPG123_PREFRAMES = 16;
 
-
 {** mpg123_param_flags - Flag bits for MPG123_FLAGS, use the usual binary or to combine. **}
 const
   MPG123_FORCE_MONO = $7;   //     0111 Force some mono mode: This is a test bitmask
@@ -95,7 +94,6 @@ const
         MPG123_AUTO_RESAMPLE = $8000;
         MPG123_PICTURE = $10000;
     {$endif}
-
 
 {** mpg123_param_rva - Choices for MPG123_RVA **}
 const
@@ -290,7 +288,6 @@ type
 type
   Tmpg123_format_support = function(mh: Tmpg123_handle; rate: cardinal;
     encoding: integer): integer; cdecl;
-
 
 type
   Tmpg123_getformat = function(mh: Tmpg123_handle; var rate: cardinal;
@@ -491,7 +488,6 @@ type
 type
   Tmpg123_init_string = procedure(psb: Pmpg123_string); cdecl;
 
-
 type
   Tmpg123_free_string = procedure(psb: Pmpg123_string); cdecl;
 
@@ -557,8 +553,6 @@ type
     Text: Tmpg123_string;       (**< ... *)
   end;
 
-
-
     {$IF DEFINED(newversion)}
        {* The picture type values from ID3v2.  }
       mpg123_id3_pic_type =  Longint;
@@ -584,7 +578,6 @@ type
         mpg123_id3_pic_illustration = 18;
         mpg123_id3_pic_artist_logo = 19;
         mpg123_id3_pic_publisher_logo = 20;
-
 
      {* Sub data structure for ID3v2, for storing picture data including comment.
      *  This is for the ID3v2 APIC field. You should consult the ID3v2 specification
@@ -873,7 +866,6 @@ var
 
 {Special function for dynamic loading of lib ...}
 
-
 var
   Mp_Handle: TLibHandle;
   // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
@@ -894,7 +886,6 @@ end;
 
 function mp_unload(): boolean;
 begin
-result := false;
   // < Reference counting
   if ReferenceCounter > 0 then
     Dec(ReferenceCounter);
@@ -903,7 +894,6 @@ result := false;
   // >
   if mp_IsLoaded then
   begin
-    result := true;
     mpg123_exit ;
     DynLibs.UnloadLibrary(mp_Handle);
     mp_Handle := DynLibs.NilHandle;
@@ -1042,6 +1032,5 @@ begin
 
   end;
 end;
-
 
 end.

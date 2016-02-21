@@ -38,7 +38,6 @@ type
   off_t = int64;
    {$IFEND}
 
-
 const
   //* Major formats. *//
   SF_FORMAT_WAV = $010000;    // Microsoft WAV format (little endian default).
@@ -62,7 +61,6 @@ const
   SF_FORMAT_SD2 = $160000;    // Sound Designer 2
   SF_FORMAT_FLAC = $170000;    // FLAC lossless file format
   SF_FORMAT_CAF = $180000;    // Core Audio File format
-
 
 const
   //Subtypes from here on.
@@ -96,7 +94,6 @@ const
   SF_FORMAT_DPCM_8 = $0050;    // 8 bit differential PCM (XI only)
   SF_FORMAT_DPCM_16 = $0051;    // 16 bit differential PCM (XI only)
 
-
 const
   //* Endian-ness options. *//
   SF_ENDIAN_FILE = $00000000;  // Default file endian-ness.
@@ -107,7 +104,6 @@ const
   SF_FORMAT_SUBMASK = $0000FFFF;
   SF_FORMAT_TYPEMASK = $0FFF0000;
   SF_FORMAT_ENDMASK = $30000000;
-
 
 {
 ** The following are the valid command numbers for the sf_command()
@@ -265,7 +261,6 @@ type
     seekable: ctypes.cint;
   end;
 
-
 {
 ** The SF_FORMAT_INFO struct is used to retrieve information about the sound
 ** file formats libsndfile supports using the sf_command () interface.
@@ -410,7 +405,6 @@ type
 
   Tsf_vio_tell = function(user_data: Pointer): Tsf_count_t; cdecl;
 
-
   PSF_VIRTUAL_IO = ^TSF_VIRTUAL_IO;
 
   TSF_VIRTUAL_IO = record
@@ -485,7 +479,6 @@ var
 var
   sf_format_check: function(var info: TSF_INFO): ctypes.cint; cdecl;
 
-
 {
 ** Seek within the waveform data chunk of the SNDFILE. sf_seek () uses
 ** the same values for whence (SEEK_SET, SEEK_CUR and SEEK_END) as
@@ -521,7 +514,6 @@ var
   sf_seek: function(sndfile: TSNDFILE_HANDLE; frame: Tsf_count_t;
   whence: ctypes.cint): Tsf_count_t; cdecl;
 
-
 {
 ** Functions for retrieving and setting string data within sound files.
 ** Not all file types support this features; AIFF and WAV do. For both
@@ -545,7 +537,6 @@ var
 var
   sf_write_raw: function(sndfile: TSNDFILE_HANDLE; ptr: Pointer;
   bytes: Tsf_count_t): Tsf_count_t; cdecl;
-
 
 {
 ** Functions for reading and writing the data chunk in terms of frames.
@@ -589,7 +580,6 @@ var
   sf_writef_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
   frames: Tsf_count_t): Tsf_count_t; cdecl;
 
-
 {
 ** Functions for reading and writing the data chunk in terms of items.
 ** Otherwise similar to above.
@@ -627,7 +617,6 @@ var
   sf_write_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
   frames: Tsf_count_t): Tsf_count_t; cdecl;
 
-
 {
 ** Close the SNDFILE and clean up all memory allocations associated
 ** with this file.
@@ -636,7 +625,6 @@ var
 var
   sf_close: function(sndfile: TSNDFILE_HANDLE): ctypes.cint; cdecl;
 
-
 {
 ** If the file is opened SFM_WRITE or SFM_RDWR, call fsync() on the file
 ** to force the writing of data to disk. If the file is opened SFM_READ
@@ -644,7 +632,6 @@ var
 }
 var
   sf_write_sync: function(sndfile: TSNDFILE_HANDLE): ctypes.cint; cdecl;
-
 
 /////////////////////////////////////////////////////
 {Special function for dynamic loading of lib ...}
@@ -661,7 +648,6 @@ procedure sf_Unload();
 ////////////////////////////////////////////////
 
 function sf_IsLoaded: boolean; inline;
-
 
 implementation
 
