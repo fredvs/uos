@@ -383,8 +383,6 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     samformat: shortint;
     temptime: ttime;
     ho, mi, se, ms: word;
-    dspindex2 : integer;
-    
   begin
 
     if radiobutton1.Checked = True then
