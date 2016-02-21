@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 37
+  Left = 544
   Height = 466
-  Top = 58
+  Top = 83
   Width = 505
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'
@@ -182,7 +182,7 @@ object Form1: TForm1
     TabOrder = 0
   end
   object CheckBox1: TCheckBox
-    Left = 54
+    Left = 16
     Height = 22
     Top = 424
     Width = 98
@@ -232,7 +232,7 @@ object Form1: TForm1
     TabOrder = 2
   end
   object Button3: TButton
-    Left = 202
+    Left = 264
     Height = 23
     Top = 420
     Width = 58
@@ -241,7 +241,7 @@ object Form1: TForm1
     TabOrder = 1
   end
   object Button4: TButton
-    Left = 336
+    Left = 384
     Height = 23
     Top = 420
     Width = 58
@@ -251,7 +251,7 @@ object Form1: TForm1
     TabOrder = 9
   end
   object Button5: TButton
-    Left = 272
+    Left = 328
     Height = 23
     Top = 420
     Width = 54
@@ -261,10 +261,10 @@ object Form1: TForm1
     TabOrder = 10
   end
   object Button6: TButton
-    Left = 410
+    Left = 448
     Height = 23
     Top = 420
-    Width = 47
+    Width = 39
     Caption = 'Stop'
     Enabled = False
     OnClick = Button6Click
@@ -472,9 +472,9 @@ object Form1: TForm1
     TabOrder = 19
   end
   object CheckBox3: TCheckBox
-    Left = 124
+    Left = 128
     Height = 22
-    Top = 398
+    Top = 394
     Width = 133
     Caption = 'Stereo to BinAural'
     OnChange = CheckBox3Change
@@ -501,6 +501,15 @@ object Form1: TForm1
     Alignment = taCenter
     AutoSize = False
     TabOrder = 21
+  end
+  object Chknoise: TCheckBox
+    Left = 130
+    Height = 22
+    Top = 416
+    Width = 112
+    Caption = 'Noise Remover'
+    OnChange = ChknoiseChange
+    TabOrder = 22
   end
   object OpenDialog1: TOpenDialog
     left = 76

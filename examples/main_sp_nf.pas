@@ -402,12 +402,13 @@ begin
     ////////// Enable : Enabled
 
       DSP1Index := PlayerIndex1.AddDSPIn(In1Index, @DSPReverseBefore,
-      @DSPReverseAfter, nil);
+      @DSPReverseAfter, nil, nil);
    ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// In1Index: InputIndex of existing input
-    ////////// BeforeProc : procedure to do before the buffer is filled
-    ////////// AfterProc : procedure to do after the buffer is filled
+    ////////// BeforeFunc : function to do before the buffer is filled
+    ////////// AfterFunc : function to do after the buffer is filled
+    ////////// EndedFunc : function to do at end of thread
     ////////// LoopProc : external procedure to do after the buffer is filled
     //////// result = DSPIndex of the custom  DSP
 

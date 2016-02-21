@@ -487,9 +487,9 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
       ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1: InputIndex of existing input
-    ////////// BeforeProc : procedure to do before the buffer is filled
-    ////////// AfterProc : procedure to do after the buffer is filled
-    ////////// EndedProc : procedure to do at end of thread
+    ////////// BeforeFunc : function to do before the buffer is filled
+    ////////// AfterFunc : function to do after the buffer is filled
+    ////////// EndedFunc : function to do at end of thread
     ////////// LoopProc : external procedure to do after the buffer is filled
    
    //// set the parameters of custom DSP;

@@ -24,6 +24,7 @@ type
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
+    Chknoise: TCheckBox;
     Edit1: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
@@ -64,6 +65,7 @@ type
     procedure Button6Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure CheckBox3Change(Sender: TObject);
+    procedure ChknoiseChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -403,6 +405,10 @@ begin
     //////////// InIndex : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
+    uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
+     uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, -1, -1, -1, -1, chknoise.Checked);
+     /// Add DSP Noise removal. First chunck will be the noise sample.
+
     uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
@@ -419,12 +425,13 @@ begin
     ////////// Enable : Enabled
 
    DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
-    @DSPReverseAfter, nil);
+    @DSPReverseAfter, nil, nil);
     ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1: InputIndex of existing input
-    ////////// BeforeProc : procedure to do before the buffer is filled
-    ////////// AfterProc : procedure to do after the buffer is filled
+    ////////// BeforeFunc : function to do before the buffer is filled
+    ////////// AfterFunc : function to do after the buffer is filled
+    ////////// EndedFunc : function to do at end of thread
     ////////// LoopProc : external procedure to do after the buffer is filled
     //////// result = DSPIndex of the custom  DSP
 
@@ -502,6 +509,11 @@ begin
   begin
    uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, checkbox3.checked);
     end;
+end;
+
+procedure TForm1.ChknoiseChange(Sender: TObject);
+begin
+  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, -1, -1, -1, -1, chknoise.Checked);
 end;
 
 procedure uos_logo();
