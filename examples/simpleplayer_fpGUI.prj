@@ -715,8 +715,8 @@ path=3
  /home/fred/uos/examples/uos.pas
 line=3
  1752
- 3351
- 1766
+ 3356
+ 1767
 address=3
  0
  0
@@ -815,8 +815,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=flush
+finddtext=RawNoise
 findhistory=10
+ RawNoise
+ float
+ TuosNoiseRemoval
  flush
  noise
  DSPNoiseInIndex
@@ -824,11 +827,8 @@ findhistory=10
  volume
  putSamples
  uos_AddDSPin
- tfunc
- beginproc
- loopproc
 findoptions=1
-editpos=19
+editpos=23
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -837,17 +837,21 @@ editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,1078
  0,0
- 0,1758
+ 0,0
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 1,615
- 0,-1073741823
- 0,-1073741823
- 0,508
+ 0,1763
+ 0,7
+ 0,1218
+ 0,12
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -867,7 +871,11 @@ bookmarks15=0
 bookmarks16=0
 bookmarks17=0
 bookmarks18=0
-sourcefiles=19
+bookmarks19=0
+bookmarks20=0
+bookmarks21=0
+bookmarks22=0
+sourcefiles=23
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -887,7 +895,11 @@ sourcefiles=19
  ${PROJECTDIR}/uos_soundtouch.pas
  /home/fred/uos/contributors.txt
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=19
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ /home/fred/fpgui/src/gui/fpg_tab.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+relpaths=23
  uos.pas
  uos_bs2b.pas
  simpleplayer_fpGUI.pas
@@ -907,7 +919,15 @@ relpaths=19
  uos_soundtouch.pas
  contributors.txt
  simpleplayer_fpGUI.pas
-ismoduletexts=19
+ uos.pas
+ simpleplayer_fpGUI.pas
+ ../fpgui/src/gui/fpg_tab.pas
+ uos_mpg123.pas
+ismoduletexts=23
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -932,7 +952,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=19
+order=23
  0
  1
  2
@@ -950,11 +970,15 @@ order=19
  13
  14
  15
+ 21
+ 19
+ 22
+ 20
  16
  17
 tabsize=60
-firsttab=7
-index=16
+firsttab=11
+index=19
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -1000,7 +1024,7 @@ windowlayout=503
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1374,7 +1398,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

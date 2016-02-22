@@ -126,8 +126,6 @@ type
     property AttackDecayTime: Double read FAttackDecayTime write SetAttackDecayTime;
     property LeaveNoise: Boolean read FbLeaveNoise write FbLeaveNoise;
 
-
-
     // don't mess with these.
     property SampleRate: Double read FSampleRate;// write FSampleRate;
     property WindowSize: Integer read FWindowSize;// write FWindowSize;
@@ -148,7 +146,7 @@ type
      samprate : integer ;
      property OutStream: TMemoryStream read FOutStream write FOutStream;
      procedure DataWrite(ASender: TNoiseRemoval; AData: PSingle; ASampleCount: Integer);
-     function FilterNoise(ANoiseSample, ANoisyAudio: PSingle; InFrames: Integer; out Samples: Integer): PSingle;
+     function FilterNoise(ANoisyAudio: PSingle; InFrames: Integer; out Samples: Integer): PSingle;
    end;
 
  implementation
@@ -162,48 +160,38 @@ uses
   var
   FFTArray: array[0..MAX_HFFT-1] of PFFT;
   FFTLockCount: array[0..MAX_HFFT-1] of Integer;
-  RawNoise: PSingle;
-  RawAudio: PSingle;
-  FilteredAudio: PSingle;
-  FilteredSamples: Integer;
-
+ 
 procedure TuosNoiseRemoval.DataWrite(ASender: TNoiseRemoval; AData: PSingle;
    ASampleCount: Integer);
  begin
    TuosNoiseRemoval(ASender).OutStream.Write(Adata^, ASampleCount*SizeOf(Single));
  end;
  
-function TuosNoiseRemoval.FilterNoise(ANoiseSample, ANoisyAudio: PSingle; InFrames: Integer; out Samples: Integer): PSingle;
+function TuosNoiseRemoval.FilterNoise(ANoisyAudio: PSingle; InFrames: Integer; out Samples: Integer): PSingle;
 var
-   MNoiseSample, MNoisyAudio: TMemoryStream;
- 
+  MNoisyAudio: TMemoryStream;
  begin
  
    OutStream := TMemoryStream.Create; 
+   
+   MNoisyAudio := TMemoryStream.Create;
+   MNoisyAudio.Write(ANoisyAudio^, InFrames*SizeOf(Single));
+   MNoisyAudio.Position:=0;
  
    if isprofiled = false then // take the first chunk as noisy sample
    begin
    
    Init(samprate);
-   MNoiseSample := TMemoryStream.Create;
-   MNoiseSample.Write(ANoiseSample^, InFrames*SizeOf(Single));
-   MNoiseSample.Position:=0;
- 
-   Process(PSingle(MNoiseSample.Memory), MNoiseSample.Size div SizeOf(Single), True);
+   
+   Process(PSingle(MNoisyAudio.Memory), MNoisyAudio.Size div SizeOf(Single), True);
    Init(samprate);
    isprofiled := true;
-   MNoiseSample.free;
-   end ; 
-  
-   MNoisyAudio := TMemoryStream.Create;
-   MNoisyAudio.Write(ANoisyAudio^, InFrames*SizeOf(Single));
-   MNoisyAudio.Position:=0;
-  
+   
+   end;
+   
    Result := nil;
      
    Process(PSingle(MNoisyAudio.Memory), MNoisyAudio.Size div SizeOf(Single), False);
-   
-   Flush; // output any remaining data 
    
    Result:=GetMem(OutStream.Size);
    Samples := OutStream.Size div SizeOf(Single);
@@ -412,7 +400,6 @@ begin
   start := FHistoryLen - FMinSignalBlocks;
   finish := FHistoryLen;
 
-
   for j := 0 to FSpectrumSize-1 do
   begin
     min := FSpectrums[start][j];
@@ -485,7 +472,6 @@ begin
      end;
    end;
 
-
    // Apply frequency smoothing to output gain
    out_ := FHistoryLen - 1;  // end of the queue
 
@@ -519,7 +505,6 @@ begin
       //FOutputTrack->Append((samplePtr)mOutOverlapBuffer, floatSample, mWindowSize / 2);
      FWriteProc(Self, FOutOverlapBuffer, FWindowSize div 2);
    end;
-
 
    FOutSampleCount += FWindowSize div 2;
    //for(j = 0; j < mWindowSize / 2; j++)
@@ -593,7 +578,6 @@ begin
 
    if (FDoProfile) then
       ApplyFreqSmoothing(@FNoiseThreshold[0]);
-
 
    for i := 0 to FHistoryLen-1 do
    begin
@@ -709,7 +693,6 @@ begin
   if not AGetNoiseProfile and not FHasProfile then
     raise Exception.Create('Tried to remove noise without profile.');
 
-
   FDoProfile:=AGetNoiseProfile;
 
   if FDoProfile and (FTotalRead = 0) then
@@ -745,9 +728,8 @@ begin
     Exit;
 
   FinishTrack;
- // Cleanup; // Sets FInited to False
+  Cleanup; // Sets FInited to False
 end;
-
 
 { TFFT }
 
@@ -760,7 +742,6 @@ begin
    Result := New(PFFT);
    if Result = nil then
      raise EOutOfMemory.Create('Error allocating memory for FFT');
-
 
    with Result^ do begin
 
@@ -810,8 +791,6 @@ begin
 {$endif}
 
    end; // with Result^
-
-
 end;
 
 procedure TFFT.EndFFT;
@@ -857,7 +836,6 @@ procedure TFFT.ReleaseFFT;
 var
   h: Integer = 0;
 begin
-
    while (h<MAX_HFFT) and (FFTArray[h] <> @Self) do
    begin
      if(h<MAX_HFFT) then
@@ -967,7 +945,6 @@ procedure TFFT.CleanupFFT;
 var
   h: Integer;
 begin
-
    for h :=0 to  MAX_HFFT-1do begin
       if((FFTLockCount[h] <= 0) and (FFTArray[h] <> nil)) then
       begin
@@ -1016,7 +993,6 @@ begin
            v2 := B^ * sin_ - B[1] * cos_;  //v2=*B*sin - *(B+1)*cos;
            B^ := A^+v1;                    //*B=(*A+v1);
            A^ := B^-2*v1; Inc(A); Inc(B);  //*(A++)=*(B++)-2*v1;
-
            B^ := A^-v2;                    //*B=(*A-v2);
            A^ := B^+2*v2; Inc(A); Inc(B);  //*(A++)=*(B++)+2*v2;
          end;
@@ -1092,7 +1068,6 @@ begin
   //for(int i=1;i<hFFT->Points;i++)
   for i := 1 to Points-1 do
   begin
-
       RealOut[i]:=buffer[BitReversed[i]  ];
       ImagOut[i]:=buffer[BitReversed[i]+1];
    end;

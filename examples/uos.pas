@@ -69,7 +69,7 @@ const
   
 type
   TDArFloat = array of cfloat;
-  
+    
   TDArShort = array of cInt16;
   TDArLong = array of cInt32;
 
@@ -1761,6 +1761,7 @@ function uos_EndNoiseRemoval(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 begin
 fft.FNoise.flush; // output any remaining data
 fft.FNoise.free;
+result := nil; // result not needed
 end;
 
 function uos_NoiseRemoval(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
@@ -1768,26 +1769,30 @@ var
  ratio, x: LongInt;
  Outfr : LongInt;
  tempr : PSingle;
- pf: TDArFloat;     //////// if input is Float32 format  
+ pf: TDArFloat;      
 begin
 
     case Data.LibOpen of
-        0: ratio := 1;
-        1: ratio := 2;
+        0: ratio := 1; // sndfile
+        1: ratio := 2; // mpg123
       end;
+      
+if Data.SampleFormat = 0 then // TODO for Array of integer.
+begin
 
-//tempr := fft.FNoise.FilterNoise(@Data.Buffer[0], @Data.Buffer[0] ,length(Data.Buffer), Outfr);
- tempr := fft.FNoise.FilterNoise(pointer(Data.Buffer), pointer(Data.Buffer) ,
- Data.OutFrames div ratio  , Outfr);
+ tempr := fft.FNoise.FilterNoise(pointer(Data.Buffer) ,
+           Data.OutFrames div ratio  , Outfr);
  
  setlength(pf,length(Data.Buffer));
-
- for x := 0 to Outfr -1 do
+ 
+ for x := 0 to length(pf) -1 do
   begin
-  pf[x] := tempr[x];
+ if x < Outfr then pf[x] := tempr[x] else
+ pf[x] := 0.0;
   end;
 
   result := pf ; 
+end else result := Data.Buffer; // TODO for Array of integer.
 end;
  {$endif}
 

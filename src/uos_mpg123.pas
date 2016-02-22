@@ -886,6 +886,7 @@ end;
 
 function mp_unload(): boolean;
 begin
+result := false;
   // < Reference counting
   if ReferenceCounter > 0 then
     Dec(ReferenceCounter);
@@ -897,8 +898,8 @@ begin
     mpg123_exit ;
     DynLibs.UnloadLibrary(mp_Handle);
     mp_Handle := DynLibs.NilHandle;
+    result := true;
   end;
-
 end;
 
 function Mp_Load(const libfilename: string): boolean;
@@ -925,7 +926,6 @@ begin
       mpg123_param := Tmpg123_param(GetProcAddress(Mp_Handle, 'mpg123_param'));
       mpg123_getparam := Tmpg123_getparam(
         GetProcAddress(Mp_Handle, 'mpg123_getparam'));
-
       mpg123_plain_strerror := Tmpg123_plain_strerror(
         GetProcAddress(Mp_Handle, 'mpg123_plain_strerror'));
       mpg123_strerror := Tmpg123_strerror(
