@@ -1,9 +1,4 @@
-
 program conswebstream;
-
-{$IFDEF windows}
-///WARNING => not for Windows yet...
- {$ENDIF}
 
 ///WARNING : needs FPC version > 2.7.1
 
@@ -30,10 +25,8 @@ type
   protected
     procedure doRun; override;
   public
-    procedure Consoleclose;
     constructor Create(TheOwner: TComponent); override;
   end;
-
 
 var
   res: integer;
@@ -45,17 +38,17 @@ var
   procedure TuosConsole.ConsolePlay;
   begin
 
-      ordir := (ExtractFilePath(ParamStr(0)));
+  ordir := (ExtractFilePath(ParamStr(0)));
 
-          {$IFDEF Windows}
-     {$if defined(cpu64)}
+ {$IFDEF Windows}
+    {$if defined(cpu64)}
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     MP_FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
-{$else}
+    {$else}
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     MP_FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
-   {$endif}
-  {$ENDIF}
+    {$endif}
+ {$ENDIF}
 
  {$IFDEF linux}
     {$if defined(cpu64)}
@@ -64,8 +57,8 @@ var
     {$else}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
-{$endif}
-  {$ENDIF}
+    {$endif}
+ {$ENDIF}
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
@@ -74,18 +67,16 @@ var
     {$else}
     PA_FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     MP_FileName := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
-{$endif}
-   {$ENDIF}
+    {$endif}
+ {$ENDIF}
 
-
-            {$IFDEF Darwin}
+ {$IFDEF Darwin}
     opath := ordir;
     opath := copy(opath, 1, Pos('/UOS', opath) - 1);
     PA_FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     MP_FileName := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
-                {$ENDIF}
-    PlayerIndex1 := 0;
-
+ {$ENDIF}
+    
     // Load the libraries
     // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
     // for web streaming => Mpg123 is needed
@@ -93,7 +84,8 @@ var
     res := uos_LoadLib(Pchar(PA_FileName), nil, Pchar(MP_FileName)) ;
     if res = 0 then  writeln('===> Libraries are loaded.') else
        writeln('===> Libraries are NOT loaded.') ;
-
+     
+     PlayerIndex1 := 0;
      uos_CreatePlayer(PlayerIndex1); //// Create the player
      writeln('===> uos_CreatePlayer => ok');
 
@@ -105,24 +97,27 @@ var
 
    {
  with TfpHttpClient.Create(nil) do
-
-   try   WriteLn( Get(theurl));
+   try   WriteLn(Get(theurl));
     finally  Free;
    end;
   // }
 
-      uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
+   uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
 
      writeln('===> uos_AddFromURL => ok');
 
       //// add a Output  => change framecount => 1024
      uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, 1024);
      writeln('===> uos_AddIntoDevOut => ok');
-      writeln('===> All ready to play.');
+     writeln('===> All ready to play.');
      writeln('Press a key to play...');
-       readln;
+     readln;
+     
+     /// OK, let play it.
+         
      uos_Play(PlayerIndex1);
-        end;
+ 
+  end;
 
   procedure TuosConsole.doRun;
   begin
@@ -133,13 +128,7 @@ var
       Terminate;
     end;
 
-  procedure TuosConsole.ConsoleClose;
-  begin
-   uos_unloadLib();
-    Terminate;
-  end;
-
-  constructor TuosConsole.Create(TheOwner: TComponent);
+ constructor TuosConsole.Create(TheOwner: TComponent);
   begin
     inherited Create(TheOwner);
     StopOnException := True;

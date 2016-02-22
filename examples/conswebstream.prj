@@ -18,27 +18,24 @@ order15=0
 order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
-findinfiledialog=44
+projectfilename=/home/fred/uos/examples/conswebstream.prj
+findinfiledialog=34
  [findinfileadialogfo.subdirs]
- value=1
+ value=0
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
  value=0
- [findinfileadialogfo.inprojectdir]
- value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
- filenames=1
-  /home/fred/uos/examples/
+ filenames=0
  filecolwidth=0
  x=0
  y=0
@@ -48,53 +45,38 @@ findinfiledialog=44
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=psingle
- history=8
-  psingle
-  putSamples
-  DSPVolumeinin
-  bsd
-  FreeBSD
-  freebsd
-  SetPluginSoundTouch
+ value=
+ history=1
   
  [findinfileadialogfo]
  stackedunder=
- x=121
- y=239
+ x=386
+ y=189
  cx=339
- cy=315
+ cy=251
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
  [finddialogfo]
  stackedunder=
- x=520
- y=213
- cx=298
+ x=319
+ y=205
+ cx=331
  cy=116
-replacedialog=23
+replacedialog=15
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=BeginFunc
- history=10
-  BeginFunc
-  FreeBSD
-   
-  stdcall
-  InputIndex1
-  OutputIndex1
-  PluginIndex1
-  PluginIndex
-  DSPIndex1
+ value=DocView
+ history=2
   DocView
+  
  [replacedialogfo]
  stackedunder=
- x=260
- y=216
+ x=142
+ y=302
  cx=437
  cy=171
 options=108
@@ -135,7 +117,7 @@ options=108
  sorted=0
  col=0
  row=0
- rowheight=15
+ rowheight=17
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -157,9 +139,9 @@ options=108
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=144
+ y=143
  xprop=1
- yprop=0.328125
+ yprop=0.32882882882883
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -178,7 +160,7 @@ options=108
  sortdescend11=0
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=5
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -202,8 +184,8 @@ options=108
  index=2
  [projectoptionsfo]
  stackedunder=
- x=339
- y=127
+ x=292
+ y=97
  cx=773
  cy=497
 programparameters=18
@@ -227,9 +209,9 @@ programparameters=18
  cy=348
 settings=13
  [settingsfo.tsplitter2]
- x=193
+ x=192
  y=16
- xprop=0.59763313609468
+ xprop=0.5906432748538
  yprop=0.97297297297297
  [settingsfo]
  x=410
@@ -239,8 +221,8 @@ settings=13
  wsize=0
  active=1
  visible=1
-mainfile=${PROJECTDIR}simpleplayer_fpGUI.pas
-targetfile=${PROJECTDIR}/simpleplayer_fpGUI
+mainfile=${PROJECTDIR}conswebstream.pas
+targetfile=${PROJECTDIR}/conswebstream
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
@@ -259,15 +241,14 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=8
+makeoptions=7
  -fPIC
- -l -Mobjfpc -Scghi
+ -l -Mobjfpc -Schi
  -FE.
  -FUunits
- -WG
  -B
  -O2 -XX -Xs -CX
- -vewnbq
+ -vewnhibq
 compilerused=21
  ${COMPILER} (Default)
  Pascal 1
@@ -444,21 +425,20 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=8
+makeoptionson=7
  0
- 255
- 255
- 255
- 192
- 255
- 241
- 255
+ 63
+ 63
+ 63
+ 32
+ 48
+ 63
 compilerusedon=21
- 3887
+ 4095
  0
- 16
- 64
- 128
+ 0
+ 0
+ 0
  0
  0
  0
@@ -476,16 +456,16 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 3903
+ 4095
  0
  0
  0
  0
- 192
+ 0
 exeusedon=14
- 3903
+ 4095
  0
- 192
+ 0
  0
  0
  0
@@ -499,13 +479,13 @@ exeusedon=14
  0
 aftcommandon=0
 unitdirson=7
- 196863
- 196863
- 196800
- 196863
  196671
- 196863
- 196863
+ 196671
+ 0
+ 196671
+ 196671
+ 196671
+ 196671
 macroon=5
  1
  3
@@ -703,76 +683,35 @@ sigsettings=27
  28,28,T,F
  29,29,T,F
  30,30,T,F
-defaultmake=32
+defaultmake=4
 [breakpoints]
-on=3
- 0
- -1
- 0
-path=3
- /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/uos.pas
-line=3
- 1752
- 3356
- 1767
-address=3
- 0
- 0
- 0
-addbkpt=3
- 0
- 0
- 0
-ignore=3
- 0
- 0
- 0
-condition=3
- 
- 
- 
+on=0
+path=0
+line=0
+address=0
+addbkpt=0
+ignore=0
+condition=0
 panels=1
  panel1
 units=
  (
  a=0,4149,6,Pascal Units
- c=10
+ c=5
   (
   file=define.inc
   kind=1
   a=0,4100,0,define.inc
   )
   (
-  file=simpleplayer_fpGUI.pas
+  file=sak_fpGUI_test.lpr
   kind=1
   a=0,4100,0,simpleplayer_fpGUI.pas
-  )
-  (
-  file=st2bi.pas
-  kind=1
-  a=0,4100,0,st2bi.pas
-  )
-  (
-  file=uos_bs2b.pas
-  kind=1
-  a=0,4100,0,uos_bs2b.pas
   )
   (
   file=uos_flat.pas
   kind=1
   a=0,4100,0,uos_flat.pas
-  )
-  (
-  file=uos_libsndfile.pas
-  kind=1
-  a=0,4100,0,uos_libsndfile.pas
-  )
-  (
-  file=uos_mpg123.pas
-  kind=1
-  a=0,4100,0,uos_mpg123.pas
   )
   (
   file=uos.pas
@@ -783,11 +722,6 @@ units=
   file=uos_portaudio.pas
   kind=1
   a=0,4100,0,uos_portaudio.pas
-  )
-  (
-  file=uos_soundtouch.pas
-  kind=1
-  a=0,4100,0,uos_soundtouch.pas
   )
  )
 cmodules=
@@ -814,44 +748,25 @@ workdirparamhistory=0
 envvarons=0
 [edit]
 hintwidth=462
-hintheight=95
-finddtext=RawNoise
-findhistory=10
- RawNoise
- float
- TuosNoiseRemoval
- flush
- noise
- DSPNoiseInIndex
- chks
- volume
- putSamples
- uos_AddDSPin
+hintheight=19
+finddtext=res=
+findhistory=7
+ res=
+ 30005
+ NewView
+ images
+ Sort
+ sort
+ uses
 findoptions=1
-editpos=23
+editpos=7
+ 0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,12
+ 0,62
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -859,87 +774,23 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-sourcefiles=23
+sourcefiles=7
+ ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_bs2b.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
- /home/fred/fpgui/src/corelib/fpg_base.pas
- ${PROJECTDIR}/uos_dsp_noiseremoval.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- /home/fred/uos/contributors.txt
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- /home/fred/fpgui/src/gui/fpg_tab.pas
- ${PROJECTDIR}/uos_mpg123.pas
-relpaths=23
+ ${PROJECTDIR}/deviceinfos_fpGUI.pas
+ ${PROJECTDIR}/conswebstream.pas
+relpaths=7
+ deviceinfos_fpGUI.pas
  uos.pas
- uos_bs2b.pas
- simpleplayer_fpGUI.pas
  uos_flat.pas
- uos_dsp_noiseremoval.pas
  define.inc
  uos_portaudio.pas
- uos_mpg123.pas
- uos_soundtouch.pas
- uos.pas
- uos_flat.pas
- uos_flat.pas
- uos_flat.pas
- define.inc
- fpgui/src/corelib/fpg_base.pas
- uos_dsp_noiseremoval.pas
- uos_soundtouch.pas
- contributors.txt
- simpleplayer_fpGUI.pas
- uos.pas
- simpleplayer_fpGUI.pas
- fpgui/src/gui/fpg_tab.pas
- uos_mpg123.pas
-ismoduletexts=23
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ deviceinfos_fpGUI.pas
+ conswebstream.pas
+ismoduletexts=7
  0
  0
  0
@@ -952,33 +803,17 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=23
+order=7
  0
+ 5
  1
+ 6
  2
  3
  4
- 5
- 6
- 7
- 8
- 9
- 18
- 10
- 11
- 12
- 13
- 14
- 15
- 21
- 19
- 22
- 20
- 16
- 17
 tabsize=60
-firsttab=15
-index=19
+firsttab=0
+index=3
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -994,17 +829,17 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=124
+ x=96
  y=24
- cx=1196
+ cx=966
  cy=621
  rcx=0
  rcy=0
  children=2
-  basedock,0,19,1356,682
-  statdisp,0,1,1356,18
- focusedchild=0
- wsize=4
+  statdisp,0,1,956,18
+  basedock,0,19,956,585
+ focusedchild=1
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1118,7 +953,7 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=542
+ cy=445
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1128,8 +963,8 @@ windowlayout=503
  width1=1
  sortdescend1=0
  sorted=0
- col=0
- row=2
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1327,8 +1162,8 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=594
- cx=1356
+ y=497
+ cx=956
  cy=88
  rcx=0
  rcy=0
@@ -1428,7 +1263,7 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=956
  cy=46
  rcx=0
  rcy=0
@@ -1444,8 +1279,8 @@ windowlayout=503
  ncy=0
  x=142
  y=0
- cx=1214
- cy=542
+ cx=814
+ cy=445
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1480,8 +1315,8 @@ windowlayout=503
  ncy=0
  x=0
  y=49
- cx=1356
- cy=542
+ cx=956
+ cy=445
  rcx=0
  rcy=0
 [targetconsole]
