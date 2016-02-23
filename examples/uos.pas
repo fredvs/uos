@@ -52,7 +52,7 @@ uses
    Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 15160221 ;
+  uos_version : LongInt = 15160223 ;
   
   {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -1785,17 +1785,19 @@ if Data.SampleFormat = 0 then // TODO for Array of integer.
 begin
 
  tempr := fft.FNoise.FilterNoise(pointer(Data.Buffer) ,
-           Data.OutFrames div ratio  , Outfr);
- 
+           (Data.OutFrames div ratio) , Outfr);
+           
  setlength(pf,length(Data.Buffer));
  
  for x := 0 to length(pf) -1 do
   begin
- if x < Outfr then pf[x] := tempr[x] else
- pf[x] := 0.0;
+  if x < Outfr then
+  pf[x] := tempr[x] 
+ else pf[x] := 0.0;
   end;
 
   result := pf ; 
+   
 end else result := Data.Buffer; // TODO for Array of integer.
 end;
  {$endif}
@@ -2173,8 +2175,7 @@ end;
  
  StreamIn[InputIndex].data.DSPNoiseIndex := Result ;
  
-   StreamIn[InputIndex].DSP[result].fftdata :=
-      Tuos_FFT.Create();
+ StreamIn[InputIndex].DSP[result].fftdata := Tuos_FFT.Create();
     
  StreamIn[InputIndex].DSP[result].fftdata.FNoise:= 
  TuosNoiseRemoval.Create(StreamIn[InputIndex].data.Channels,StreamIn[InputIndex].data.SampleRate);
@@ -2184,8 +2185,6 @@ StreamIn[InputIndex].data.SampleRate;
 
 StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteProc:=
 @StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteData; 
-
-// StreamIn[InputIndex].DSP[result].fftdata.FNoise.OutStream := TMemoryStream.Create; 
 
 StreamIn[InputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
  
@@ -2210,19 +2209,16 @@ function Tuos_Player.AddDSPNoiseRemovalOut(OutputIndex: LongInt): LongInt;
  
  StreamOut[OutputIndex].data.DSPNoiseIndex := Result ;
  
-   StreamOut[OutputIndex].DSP[result].fftdata :=
-      Tuos_FFT.Create();
+ StreamOut[OutputIndex].DSP[result].fftdata :=  Tuos_FFT.Create();
     
  StreamOut[OutputIndex].DSP[result].fftdata.FNoise:= 
  TuosNoiseRemoval.Create(StreamOut[OutputIndex].data.Channels,StreamOut[OutputIndex].data.SampleRate);
- 
+
 StreamOut[OutputIndex].DSP[result].fftdata.FNoise.samprate :=
 StreamOut[OutputIndex].data.SampleRate;
 
 StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteProc:=
 @StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteData; 
-
-// StreamIn[InputIndex].DSP[result].fftdata.FNoise.OutStream := TMemoryStream.Create; 
 
 StreamOut[OutputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
  
@@ -3295,10 +3291,19 @@ begin
           if  (StreamIn[x2].Data.status > 0) and (StreamIn[x2].Data.HandleSt <> nil) and
             (StreamIn[x2].Data.Enabled = True) and
             ((StreamIn[x2].Data.Output = x) or (StreamIn[x2].Data.Output = -1)) then
+            begin
             for x3 := 0 to high(StreamIn[x2].Data.Buffer) do
               StreamOut[x].Data.Buffer[x3] :=
                 cfloat(StreamOut[x].Data.Buffer[x3]) +
                 cfloat(StreamIn[x2].Data.Buffer[x3]);
+             
+            case StreamIn[x2].Data.LibOpen of
+            0:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes ; // sndfile
+            1:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes div StreamIn[x2].Data.Channels; // mpg123
+            end;  
+            
+            end;   
+            
         //////// copy buffer-in into buffer-out
 
         //////// DSPOut AfterBuffProc
@@ -3433,6 +3438,7 @@ begin
                         @BufferplugSH[0], Length(BufferplugSH) div
                         StreamIn[x2].Data.Channels);
                     end;
+                    
                   end;
                   // if err <> 0 then status := 0;   // if you want clean buffer ...
                 end;
@@ -3485,8 +3491,8 @@ begin
        end;
       end;
 
-      {$IF not DEFINED(Library)}
-        if LoopEndProc <> nil then
+    {$IF not DEFINED(Library)}
+    if LoopEndProc <> nil then
 
     /////  Execute LoopEndProc procedure
     {$IF FPC_FULLVERSION>=20701}

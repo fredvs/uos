@@ -719,7 +719,7 @@ path=4
  /home/fred/uos/examples/paio_channelhelper.pas
 line=4
  1756
- 3382
+ 3387
  1771
  33
 address=4
@@ -824,18 +824,18 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=audac
+finddtext=uos_NoiseRemoval
 findhistory=10
- audac
- NoiseRemoval
+ uos_NoiseRemoval
+ .exec
+ processnoise
+ FilterNoise
  AddDSPNoiseRemovalOut
- DSPVolumeInIndex
- SetDSPNoiseRemovalIn
- RawNoise
- float
- TuosNoiseRemoval
- flush
- noise
+ 440
+ 44
+ etDSPNoiseRemoval
+ etDSPNoiseRemovalO
+ audac
 findoptions=1
 editpos=26
  0,-1073741823
@@ -853,17 +853,17 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,15
- 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
- 0,48
- 0,0
+ 0,458
+ 0,2177
+ 0,457
+ 0,515
  0,-1073741823
  0,0
  0,9
+ 0,268
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -912,11 +912,11 @@ sourcefiles=26
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_dsp_utils.pas
+ ${PROJECTDIR}/uos_dsp_noiseremoval.pas
 relpaths=26
  uos.pas
  uos_bs2b.pas
@@ -939,11 +939,11 @@ relpaths=26
  simpleplayer_fpGUI.pas
  uos.pas
  simpleplayer_fpGUI.pas
- uos.pas
  uos_flat.pas
  simpleplayer_fpGUI.pas
  simpleplayer_fpGUI.pas
  uos_dsp_utils.pas
+ uos_dsp_noiseremoval.pas
 ismoduletexts=26
  0
  0
@@ -987,25 +987,25 @@ order=26
  7
  8
  9
- 18
  10
  11
  12
  13
  14
  15
- 19
- 35
- 26
- 30
- 28
- 29
- 20
  16
  17
+ 18
+ 19
+ 26
+ 20
+ 22
+ 23
+ 24
+ 25
 tabsize=60
-firsttab=16
-index=18
+firsttab=17
+index=19
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -1155,8 +1155,8 @@ windowlayout=503
  width1=1
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=8
  rowheight=17
  [stackfo]
  splitdir=0

@@ -302,8 +302,9 @@ var
    MNoisyAudio.free;
    OutStream.Free;
 
-   //  Result := ANoisyAudio;
+ // Result := ANoisyAudio;
  end;
+
 { TNoiseRemoval }
 
 function NewFloatArray(ALength: Integer): PSingle; inline;
