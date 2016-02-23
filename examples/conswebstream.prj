@@ -761,7 +761,7 @@ findhistory=7
 findoptions=1
 editpos=7
  0,-1073741823
- 0,0
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -836,9 +836,9 @@ windowlayout=503
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,956,18
   basedock,0,19,956,585
- focusedchild=1
+  statdisp,0,1,956,18
+ focusedchild=0
  wsize=0
  active=1
  visible=1

@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
-findinfiledialog=44
+findinfiledialog=46
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.inopenfiles]
@@ -48,8 +48,10 @@ findinfiledialog=44
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=psingle
- history=8
+ value=IPAIODataIOInterface
+ history=10
+  IPAIODataIOInterface
+  audacity_noiseremoval
   psingle
   putSamples
   DSPVolumeinin
@@ -705,31 +707,38 @@ sigsettings=27
  30,30,T,F
 defaultmake=32
 [breakpoints]
-on=3
+on=4
  0
  -1
  0
-path=3
+ 0
+path=4
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
-line=3
- 1752
- 3356
- 1767
-address=3
+ /home/fred/uos/examples/paio_channelhelper.pas
+line=4
+ 1756
+ 3382
+ 1771
+ 33
+address=4
  0
  0
  0
-addbkpt=3
+ 0
+addbkpt=4
  0
  0
  0
-ignore=3
+ 0
+ignore=4
  0
  0
  0
-condition=3
+ 0
+condition=4
+ 
  
  
  
@@ -815,20 +824,20 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=RawNoise
+finddtext=audac
 findhistory=10
+ audac
+ NoiseRemoval
+ AddDSPNoiseRemovalOut
+ DSPVolumeInIndex
+ SetDSPNoiseRemovalIn
  RawNoise
  float
  TuosNoiseRemoval
  flush
  noise
- DSPNoiseInIndex
- chks
- volume
- putSamples
- uos_AddDSPin
 findoptions=1
-editpos=23
+editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -844,14 +853,17 @@ editpos=23
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,15
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,0
+ 0,48
+ 0,0
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,12
+ 0,0
+ 0,9
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -875,7 +887,10 @@ bookmarks19=0
 bookmarks20=0
 bookmarks21=0
 bookmarks22=0
-sourcefiles=23
+bookmarks23=0
+bookmarks24=0
+bookmarks25=0
+sourcefiles=26
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -897,9 +912,12 @@ sourcefiles=23
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- /home/fred/fpgui/src/gui/fpg_tab.pas
- ${PROJECTDIR}/uos_mpg123.pas
-relpaths=23
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/uos_dsp_utils.pas
+relpaths=26
  uos.pas
  uos_bs2b.pas
  simpleplayer_fpGUI.pas
@@ -921,9 +939,15 @@ relpaths=23
  simpleplayer_fpGUI.pas
  uos.pas
  simpleplayer_fpGUI.pas
- fpgui/src/gui/fpg_tab.pas
- uos_mpg123.pas
-ismoduletexts=23
+ uos.pas
+ uos_flat.pas
+ simpleplayer_fpGUI.pas
+ simpleplayer_fpGUI.pas
+ uos_dsp_utils.pas
+ismoduletexts=26
+ 0
+ 0
+ 0
  0
  0
  0
@@ -952,7 +976,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=23
+order=26
  0
  1
  2
@@ -970,15 +994,18 @@ order=23
  13
  14
  15
- 21
  19
- 22
+ 35
+ 26
+ 30
+ 28
+ 29
  20
  16
  17
 tabsize=60
-firsttab=15
-index=19
+firsttab=16
+index=18
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -994,16 +1021,16 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=124
- y=24
- cx=1196
+ x=153
+ y=25
+ cx=966
  cy=621
  rcx=0
  rcy=0
  children=2
-  basedock,0,19,1356,682
   statdisp,0,1,1356,18
- focusedchild=0
+  basedock,0,19,1356,682
+ focusedchild=1
  wsize=4
  active=1
  visible=1
@@ -1024,7 +1051,7 @@ windowlayout=503
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1128,8 +1155,8 @@ windowlayout=503
  width1=1
  sortdescend1=0
  sorted=0
- col=0
- row=2
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1398,7 +1425,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

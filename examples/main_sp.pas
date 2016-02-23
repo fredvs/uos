@@ -406,7 +406,7 @@ begin
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
     uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
-     uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, -1, -1, -1, -1, chknoise.Checked);
+     uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
      /// Add DSP Noise removal. First chunck will be the noise sample.
 
     uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
@@ -513,7 +513,7 @@ end;
 
 procedure TForm1.ChknoiseChange(Sender: TObject);
 begin
-  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, -1, -1, -1, -1, chknoise.Checked);
+  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
 end;
 
 procedure uos_logo();

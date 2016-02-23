@@ -178,11 +178,10 @@ type
     Status: integer;
     Buffer: TDArFloat;
     
-    DSPVolumeInIndex : LongInt;
+    DSPVolumeIndex : LongInt;
     
-    DSPNoiseInIndex : LongInt;
+    DSPNoiseIndex : LongInt;
         
-    DSPVolumeOutIndex : LongInt;
     VLeft, VRight: double;
 
     PositionEnable : integer;
@@ -669,18 +668,23 @@ type
     //  result :  otherwise index of DSPIn in array
     ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
     
-     {$IF DEFINED(noiseremoval)}
+    {$IF DEFINED(noiseremoval)}
     function AddDSPNoiseRemovalIn(InputIndex: LongInt): LongInt;
     ///// DSP Noise Removal
     ////////// InputIndex : InputIndex of a existing Input
     //  result :  otherwise index of DSPIn in array
     ////////// example  DSPIndex1 := AddDSPNoiseRemovalIn(InputIndex1);
     
-   procedure SetDSPNoiseRemovalIn(InputIndex: LongInt; gain: double;
-      Sensitivity: double; AttackDelayTime: double;
-      FreqSmoothingHz: double; Enable: boolean);
-  
-  {$endif}  
+    procedure SetDSPNoiseRemovalIn(InputIndex: LongInt; Enable: boolean);
+    
+    function AddDSPNoiseRemovalOut(OutputIndex: LongInt): LongInt;
+    ///// DSP Noise Removal
+    ////////// InputIndex : OutputIndex of a existing Output
+    //  result :  otherwise index of DSPOut in array
+    ////////// example  DSPIndex1 := AddDSPNoiseRemovalOut(OutputIndex1);
+    
+    procedure SetDSPNoiseRemovalOUT(OutputIndex: LongInt; Enable: boolean);
+    {$endif}  
     
 
     procedure SetDSPVolumeIn(InputIndex: LongInt; DSPVolIndex: LongInt;
@@ -2167,24 +2171,19 @@ end;
     
  Result := AddDSPin(InputIndex, nil, @uos_NoiseRemoval, @uos_EndNoiseRemoval, nil);   
  
- StreamIn[InputIndex].data.DSPNoiseInIndex := Result ;
+ StreamIn[InputIndex].data.DSPNoiseIndex := Result ;
  
    StreamIn[InputIndex].DSP[result].fftdata :=
       Tuos_FFT.Create();
     
- StreamIn[InputIndex].DSP[result].fftdata.FNoise:= TuosNoiseRemoval.Create;
+ StreamIn[InputIndex].DSP[result].fftdata.FNoise:= 
+ TuosNoiseRemoval.Create(StreamIn[InputIndex].data.Channels,StreamIn[InputIndex].data.SampleRate);
  
-     
-// Use default or change .Gain .Sensitivity .AttackDelayTime .FreqSmoothingHz
-
-StreamIn[InputIndex].DSP[result].fftdata.FNoise.Init(
-StreamIn[InputIndex].data.SampleRate);
-
 StreamIn[InputIndex].DSP[result].fftdata.FNoise.samprate :=
 StreamIn[InputIndex].data.SampleRate;
 
 StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteProc:=
-@StreamIn[InputIndex].DSP[result].fftdata.FNoise.DataWrite; 
+@StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteData; 
 
 // StreamIn[InputIndex].DSP[result].fftdata.FNoise.OutStream := TMemoryStream.Create; 
 
@@ -2192,21 +2191,48 @@ StreamIn[InputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
  
 end;
     
-procedure Tuos_Player.SetDSPNoiseRemovalIn(InputIndex: LongInt; gain: double;
-    Sensitivity: double; AttackDelayTime: double;
-    FreqSmoothingHz: double; Enable: boolean);
+procedure Tuos_Player.SetDSPNoiseRemovalIn(InputIndex: LongInt; Enable: boolean);
       
  begin
- if gain <> -1 then 
-StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].fftdata.FNoise.gain := gain ; 
- if Sensitivity <> -1 then 
-StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].fftdata.FNoise.Sensitivity := Sensitivity ; 
- if AttackDelayTime <> -1 then 
-StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].fftdata.FNoise.AttackDecayTime := AttackDelayTime ; 
- if FreqSmoothingHz <> -1 then 
-StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].fftdata.FNoise.FreqSmoothingHz := FreqSmoothingHz ; 
 
-StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseInIndex].enabled := Enable ; 
+StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseIndex].enabled := Enable ; 
+
+ end;     
+ 
+function Tuos_Player.AddDSPNoiseRemovalOut(OutputIndex: LongInt): LongInt;
+    ///// DSP Noise Removal
+    ////////// OutputIndex : OutputIndex of a existing Output
+    //  result :  otherwise index of DSPInOut in array
+    ////////// example  DSPIndex1 := AddDSPNoiseRemovalOut(OutputIndex1);
+ begin
+    
+ Result := AddDSPOut(OutputIndex, nil, @uos_NoiseRemoval, @uos_EndNoiseRemoval, nil);   
+ 
+ StreamOut[OutputIndex].data.DSPNoiseIndex := Result ;
+ 
+   StreamOut[OutputIndex].DSP[result].fftdata :=
+      Tuos_FFT.Create();
+    
+ StreamOut[OutputIndex].DSP[result].fftdata.FNoise:= 
+ TuosNoiseRemoval.Create(StreamOut[OutputIndex].data.Channels,StreamOut[OutputIndex].data.SampleRate);
+ 
+StreamOut[OutputIndex].DSP[result].fftdata.FNoise.samprate :=
+StreamOut[OutputIndex].data.SampleRate;
+
+StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteProc:=
+@StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteData; 
+
+// StreamIn[InputIndex].DSP[result].fftdata.FNoise.OutStream := TMemoryStream.Create; 
+
+StreamOut[OutputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
+ 
+end;
+    
+procedure Tuos_Player.SetDSPNoiseRemovalOut(OutputIndex: LongInt; Enable: boolean);
+      
+ begin
+
+StreamOut[OutputIndex].DSP[StreamOut[OutputIndex].data.DSPNoiseIndex].enabled := Enable ; 
 
  end;     
   

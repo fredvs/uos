@@ -215,9 +215,11 @@ procedure uos_LoopProcOut(PlayerIndex: cint32; OutIndex: cint32; Proc: TProc);
  {$IF DEFINED(noiseremoval)}
 procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt);
       
-procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; gain: double;
-    Sensivity: double; AttackDelayTime: double;
-    FreqSmoothingHz: double; Enable: boolean);
+procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; Enable: boolean);
+
+procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt);
+      
+procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt; Enable: boolean);
  {$endif}  
 
 procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
@@ -479,21 +481,33 @@ procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt);
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-    uosPlayers[PlayerIndex].StreamIn[InputIndex].data.DSPNoiseInIndex :=
+    uosPlayers[PlayerIndex].StreamIn[InputIndex].data.DSPNoiseIndex :=
     uosPlayers[PlayerIndex].AddDSPNoiseRemovalIn(InputIndex);
 end;
 
       
-procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; gain: double;
-    Sensivity: double; AttackDelayTime: double;
-    FreqSmoothingHz: double; Enable: boolean);
+procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; Enable: boolean);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].SetDSPNoiseRemovalIn(InputIndex, gain, Sensivity, AttackDelayTime, 
-FreqSmoothingHz, Enable);
+uosPlayers[PlayerIndex].SetDSPNoiseRemovalIn(InputIndex, Enable);
 end;
 
+procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt);
+begin
+    if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+    uosPlayers[PlayerIndex].StreamOut[OutputIndex].data.DSPNoiseIndex :=
+    uosPlayers[PlayerIndex].AddDSPNoiseRemovalOut(OutputIndex);
+end;
+
+      
+procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt; Enable: boolean);
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+uosPlayers[PlayerIndex].SetDSPNoiseRemovalOut(OutputIndex, Enable);
+end;
  {$endif} 
 
 procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
@@ -501,7 +515,7 @@ procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: d
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeInIndex := uosPlayers[PlayerIndex].AddDSPVolumeIn(InputIndex, VolLeft, VolRight);
+  uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].AddDSPVolumeIn(InputIndex, VolLeft, VolRight);
 end;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
@@ -516,7 +530,7 @@ procedure uos_AddDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32; VolLeft:
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeOutIndex := uosPlayers[PlayerIndex].AddDSPVolumeOut(OutputIndex, VolLeft, VolRight);
+uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].AddDSPVolumeOut(OutputIndex, VolLeft, VolRight);
 end;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
@@ -531,7 +545,7 @@ procedure uos_SetDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].SetDSPVolumeIn(InputIndex,  uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeInIndex, VolLeft, VolRight, Enable);
+uosPlayers[PlayerIndex].SetDSPVolumeIn(InputIndex,  uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex, VolLeft, VolRight, Enable);
 end;
                ////////// InputIndex : InputIndex of a existing Input
                //////////// PlayerIndex : Index of a existing Player
@@ -545,7 +559,7 @@ procedure uos_SetDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].SetDSPVolumeOut(OutputIndex, uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeOutIndex, VolLeft, VolRight, Enable);
+uosPlayers[PlayerIndex].SetDSPVolumeOut(OutputIndex, uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex, VolLeft, VolRight, Enable);
 end;
                ////////// OutputIndex : OutputIndex of a existing Output
                //////////// PlayerIndex : Index of a existing Player
