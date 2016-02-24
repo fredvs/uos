@@ -70,6 +70,7 @@ type
     chknoise: TfpgCheckBox;
     Labelst1: TfpgLabel;
     FilenameEdit6: TfpgFileNameEdit;
+    chkstereo2mono: TfpgCheckBox;
     {@VFD_HEAD_END: Simpleplayer}
   public
     procedure AfterCreate; override;
@@ -95,6 +96,7 @@ type
     procedure changecheck(Sender: TObject);
     procedure VolumeChange(Sender: TObject; pos: integer);
     procedure ChangeNoise(Sender: TObject);
+    procedure ChangeStereo2Mono(Sender: TObject);
     procedure ChangePlugSetSoundTouch(Sender: TObject);
     procedure ChangePlugSetbs2b(Sender: TObject);
     procedure TrackChangePlugSetSoundTouch(Sender: TObject; pos: integer);
@@ -108,7 +110,7 @@ type
 var
   PlayerIndex1: integer;
   ordir, opath: string;
-  OutputIndex1, InputIndex1, DSPIndex1, PluginIndex1, PluginIndex2: integer;
+  OutputIndex1, InputIndex1, DSPIndex1, DSPIndex2, PluginIndex1, PluginIndex2: integer;
   plugsoundtouch : boolean = false;
   plugbs2b : boolean = false;
  
@@ -120,12 +122,20 @@ var
    
    procedure TSimpleplayer.ChangePlugSetBs2b(Sender: TObject);
    begin
+  if radiobutton1.Enabled = False then   /// player1 was created
   uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, chkst2b.Checked);   
   end;
   
   procedure TSimpleplayer.ChangeNoise(Sender: TObject);
   begin
+  if radiobutton1.Enabled = False then   /// player1 was created
   uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);   
+  end;
+  
+  procedure TSimpleplayer.Changestereo2mono(Sender: TObject);
+  begin
+   if radiobutton1.Enabled = False then   /// player1 was created
+   uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.Checked); 
   end;
 
   procedure TSimpleplayer.ChangePlugSetSoundTouch(Sender: TObject);
@@ -218,12 +228,12 @@ var
   begin
     vuLeft.Visible := True;
     vuRight.Visible := True;
-    if round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 128) >= 0 then
-      vuLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 128);
-    if round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 128) >= 0 then
-      vuRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 128);
-    vuLeft.top := 380 - vuLeft.Height;
-    vuRight.top := 380 - vuRight.Height;
+    if round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 74) >= 0 then
+      vuLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 74);
+    if round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 74) >= 0 then
+      vuRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 74);
+    vuLeft.top := 326 - vuLeft.Height;
+    vuRight.top := 326 - vuRight.Height;
     vuright.UpdateWindowPosition;
     vuLeft.UpdateWindowPosition;
   end;
@@ -331,6 +341,8 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     closeplayer1;
   end;
 
+  ///// example how to do custom dsp
+  
   function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
   begin
     if Data.position > Data.OutFrames div Data.ratio then
@@ -376,7 +388,27 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
           end;
        Result := arfl;
   end;
-
+  
+  function DSPStereo2Mono(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+  var
+    x: integer = 0;
+    arfl: TDArFloat;
+    sample : cFloat;
+  begin
+   if (Data.channels = 2) and (data.SampleFormat = 0) then   // TODO for integer too
+  begin
+    SetLength(arfl, length(Data.Buffer));
+         while x < length(Data.Buffer)   do
+          begin
+        sample := (Data.Buffer[x] + Data.Buffer[x+1]) / 2 ;
+        arfl[x] := sample ;
+        arfl[x+1] := sample;
+        x := x + 2;
+          end;
+       Result := arfl;
+  end 
+  else Result := Data.Buffer; 
+  end;
 
   procedure TSimpleplayer.btnStartClick(Sender: TObject);
   var
@@ -476,12 +508,6 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
   
-   // This is a custom reverb... but not the best... only to show how to do a DSP ;-) 
-  // {
-  // DSPIndex2 := uos_AddDSPIn(PlayerIndex1, InputIndex1, nil, @DSPReverb, nil, nil);
-  // uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, true);
-  // }
-  
    DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
      @DSPReverseAfter, nil, nil);
       ///// add a custom DSP procedure for input
@@ -492,10 +518,14 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     ////////// EndedFunc : function to do at end of thread
     ////////// LoopProc : external procedure to do after the buffer is filled
    
-   //// set the parameters of custom DSP;
+   //// set the parameters of custom DSP
    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+    
+   // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)  
+    DSPIndex2 := uos_AddDSPIn(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
+    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked); 
    
-  ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
+   ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
   if plugbs2b = true then
   begin
    PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b',
@@ -581,7 +611,7 @@ end;
 
     {@VFD_BODY_BEGIN: Simpleplayer}
   Name := 'Simpleplayer';
-  SetPosition(571, 86, 503, 455);
+  SetPosition(618, 164, 503, 455);
   WindowTitle := 'Simple player ';
   IconName := '';
   BackGroundColor := $80000001;
@@ -663,7 +693,7 @@ end;
   with btnStart do
   begin
     Name := 'btnStart';
-    SetPosition(140, 408, 44, 23);
+    SetPosition(140, 404, 66, 23);
     Text := 'Play';
     Enabled := False;
     FontDesc := '#Label1';
@@ -678,7 +708,7 @@ end;
   with btnStop do
   begin
     Name := 'btnStop';
-    SetPosition(364, 408, 80, 23);
+    SetPosition(368, 404, 66, 23);
     Text := 'Stop';
     Enabled := False;
     FontDesc := '#Label1';
@@ -787,7 +817,7 @@ end;
   with btnpause do
   begin
     Name := 'btnpause';
-    SetPosition(204, 408, 52, 23);
+    SetPosition(216, 404, 66, 23);
     Text := 'Pause';
     Enabled := False;
     FontDesc := '#Label1';
@@ -802,7 +832,7 @@ end;
   with btnresume do
   begin
     Name := 'btnresume';
-    SetPosition(276, 408, 64, 23);
+    SetPosition(292, 404, 66, 23);
     Text := 'Resume';
     Enabled := False;
     FontDesc := '#Label1';
@@ -817,7 +847,7 @@ end;
   with CheckBox1 do
   begin
     Name := 'CheckBox1';
-    SetPosition(16, 404, 104, 19);
+    SetPosition(132, 376, 104, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 17;
@@ -829,7 +859,7 @@ end;
   with RadioButton1 do
   begin
     Name := 'RadioButton1';
-    SetPosition(112, 312, 96, 19);
+    SetPosition(12, 368, 96, 19);
     Checked := True;
     FontDesc := '#Label1';
     GroupIndex := 0;
@@ -843,7 +873,7 @@ end;
   with RadioButton2 do
   begin
     Name := 'RadioButton2';
-    SetPosition(112, 328, 100, 19);
+    SetPosition(12, 384, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
     ParentShowHint := False;
@@ -856,7 +886,7 @@ end;
   with RadioButton3 do
   begin
     Name := 'RadioButton3';
-    SetPosition(112, 346, 100, 19);
+    SetPosition(12, 402, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
     ParentShowHint := False;
@@ -869,7 +899,7 @@ end;
   with Label2 do
   begin
     Name := 'Label2';
-    SetPosition(108, 296, 104, 15);
+    SetPosition(12, 352, 104, 15);
     FontDesc := '#Label2';
     ParentShowHint := False;
     Text := 'Sample format';
@@ -892,7 +922,7 @@ end;
   with TrackBar2 do
   begin
     Name := 'TrackBar2';
-    SetPosition(8, 248, 32, 134);
+    SetPosition(8, 248, 32, 78);
     Orientation := orVertical;
     ParentShowHint := False;
     TabOrder := 23;
@@ -904,7 +934,7 @@ end;
   with TrackBar3 do
   begin
     Name := 'TrackBar3';
-    SetPosition(76, 248, 28, 134);
+    SetPosition(76, 248, 28, 78);
     Orientation := orVertical;
     ParentShowHint := False;
     TabOrder := 24;
@@ -928,7 +958,7 @@ end;
   with Label4 do
   begin
     Name := 'Label4';
-    SetPosition(4, 380, 40, 15);
+    SetPosition(8, 328, 40, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -940,7 +970,7 @@ end;
   with Label5 do
   begin
     Name := 'Label5';
-    SetPosition(72, 380, 36, 19);
+    SetPosition(72, 328, 36, 19);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -952,7 +982,7 @@ end;
   with vuleft do
   begin
     Name := 'vuleft';
-    SetPosition(44, 252, 8, 128);
+    SetPosition(44, 252, 8, 74);
     BackgroundColor := TfpgColor($00D51D);
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -965,7 +995,7 @@ end;
   with vuright do
   begin
     Name := 'vuright';
-    SetPosition(64, 252, 8, 128);
+    SetPosition(64, 252, 8, 74);
     BackgroundColor := TfpgColor($1DD523);
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -978,7 +1008,7 @@ end;
   with CheckBox2 do
   begin
     Name := 'CheckBox2';
-    SetPosition(272, 316, 184, 19);
+    SetPosition(280, 320, 184, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 32;
@@ -1053,7 +1083,7 @@ end;
   with chkst2b do
   begin
     Name := 'chkst2b';
-    SetPosition(120, 368, 136, 19);
+    SetPosition(132, 336, 136, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 38;
@@ -1066,7 +1096,7 @@ end;
   with chknoise do
   begin
     Name := 'chknoise';
-    SetPosition(120, 384, 136, 19);
+    SetPosition(132, 356, 136, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 38;
@@ -1079,7 +1109,7 @@ end;
   with Labelst1 do
   begin
     Name := 'Labelst1';
-    SetPosition(162, 159, 316, 15);
+    SetPosition(162, 160, 316, 15);
     FontDesc := '#Label1';
     ParentShowHint := False;
     Text := 'Folder + filename of bs2b Library';
@@ -1095,6 +1125,19 @@ end;
     Filter := '';
     InitialDir := '';
     TabOrder := 40;
+  end;
+
+  chkstereo2mono := TfpgCheckBox.Create(self);
+  with chkstereo2mono do
+  begin
+    Name := 'chkstereo2mono';
+    SetPosition(132, 316, 120, 19);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    TabOrder := 42;
+    Text := 'Stereo to Mono';
+     Hint := 'Convert Stereo to Mono';
+    OnChange := @Changestereo2mono;
   end;
 
   {@VFD_BODY_END: Simpleplayer}

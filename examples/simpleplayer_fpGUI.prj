@@ -137,7 +137,7 @@ options=108
  sorted=0
  col=0
  row=0
- rowheight=15
+ rowheight=17
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -159,9 +159,9 @@ options=108
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=144
+ y=143
  xprop=1
- yprop=0.328125
+ yprop=0.32882882882883
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -180,7 +180,7 @@ options=108
  sortdescend11=0
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=5
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -268,7 +268,7 @@ makeoptions=8
  -FUunits
  -WG
  -B
- -O2 -XX -Xs -CX
+ -O4 -XX -Xs -CX
  -vewnbq
 compilerused=21
  ${COMPILER} (Default)
@@ -824,8 +824,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=uos_NoiseRemoval
+finddtext=vuright
 findhistory=10
+ vuright
  uos_NoiseRemoval
  .exec
  processnoise
@@ -835,7 +836,6 @@ findhistory=10
  44
  etDSPNoiseRemoval
  etDSPNoiseRemovalO
- audac
 findoptions=1
 editpos=26
  0,-1073741823
@@ -856,14 +856,14 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,458
- 0,2177
- 0,457
- 0,515
  0,-1073741823
- 0,0
- 0,9
- 0,268
+ 0,-1073741823
+ 22,388
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -976,36 +976,9 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=26
- 0
- 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 26
- 20
- 22
- 23
- 24
- 25
 tabsize=60
 firsttab=17
-index=19
+index=20
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -1014,7 +987,7 @@ windowlayout=503
  [mainfo]
  splitdir=0
  useroptions=838860927
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1032,7 +1005,7 @@ windowlayout=503
   basedock,0,19,1356,682
  focusedchild=1
  wsize=4
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1050,7 +1023,7 @@ windowlayout=503
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1425,7 +1398,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

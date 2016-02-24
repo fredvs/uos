@@ -24,6 +24,7 @@ type
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
+    chkstereo2mono: TCheckBox;
     Chknoise: TCheckBox;
     Edit1: TEdit;
     Edit2: TEdit;
@@ -66,6 +67,7 @@ type
     procedure CheckBox1Change(Sender: TObject);
     procedure CheckBox3Change(Sender: TObject);
     procedure ChknoiseChange(Sender: TObject);
+    procedure chkstereo2monoChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -91,13 +93,15 @@ type
 function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
 function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
 
+function DSPStereo2Mono(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+
 procedure uos_logo();
 
 var
   Form1: TForm1;
   BufferBMP: TBitmap;
   PlayerIndex1: integer;
-  OutputIndex1, InputIndex1, DSPIndex1, PluginIndex1, PluginIndex2: integer;
+  OutputIndex1, InputIndex1, DSPIndex1, DSPIndex2, PluginIndex1, PluginIndex2: integer;
   plugsoundtouch : boolean = false;
   plugbs2b : boolean = false;
 
@@ -155,8 +159,8 @@ begin
   Form1.TrackBar2.Position := 0;
   Form1.ShapeLeft.Height := 0;
   Form1.ShapeRight.Height := 0;
-  Form1.ShapeLeft.top := 320;
-  Form1.ShapeRight.top := 320;
+  Form1.ShapeLeft.top := 342;
+  Form1.ShapeRight.top := 342;
   form1.lposition.Caption := '00:00:00.000';
 end;
 
@@ -318,8 +322,8 @@ begin
   Button5.Enabled := False;
   Form1.ShapeLeft.Height := 0;
   Form1.ShapeRight.Height := 0;
-  Form1.ShapeLeft.top := 320;
-  Form1.ShapeRight.top := 320;
+  Form1.ShapeLeft.top := 342;
+  Form1.ShapeRight.top := 342;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -438,6 +442,10 @@ begin
    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
     //// set the parameters of custom DSP;
 
+    // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)
+    DSPIndex2 := uos_AddDSPIn(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
+    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked);
+
     ///// add bs2b plugin with samplerate_of_input1  / channels(2 = stereo)
     if plugbs2b = true then
   begin
@@ -513,8 +521,15 @@ end;
 
 procedure TForm1.ChknoiseChange(Sender: TObject);
 begin
+   if radiogroup1.Enabled = False then
   uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
 end;
+
+procedure TForm1.chkstereo2monoChange(Sender: TObject);
+begin
+   if radiogroup1.Enabled = False then
+    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked);
+ end;
 
 procedure uos_logo();
 var
@@ -588,10 +603,10 @@ begin
 
 procedure Tform1.ShowLevel;
 begin
-  ShapeLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 146);
-  ShapeRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 146);
-  ShapeLeft.top := 400 - ShapeLeft.Height;
-  ShapeRight.top := 400 - ShapeRight.Height;
+  ShapeLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 92);
+  ShapeRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 92);
+  ShapeLeft.top := 342 - ShapeLeft.Height;
+  ShapeRight.top := 342 - ShapeRight.Height;
 end;
 
 procedure Tform1.LoopProcPlayer1;
@@ -621,6 +636,27 @@ begin
   Result := arfl;
 end;
 //}
+
+function DSPStereo2Mono(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+  var
+    x: integer = 0;
+    arfl: TDArFloat;
+    sample : cFloat;
+  begin
+  if (Data.channels = 2) and (data.SampleFormat = 0) then   // TODO for integer too
+  begin
+    SetLength(arfl, length(Data.Buffer));
+         while x < length(Data.Buffer)   do
+          begin
+        sample := (Data.Buffer[x] + Data.Buffer[x+1]) / 2 ;
+        arfl[x] := sample ;
+        arfl[x+1] := sample;
+        x := x + 2;
+          end;
+       Result := arfl;
+  end
+  else Result := Data.Buffer;
+  end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
