@@ -392,20 +392,56 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
   function DSPStereo2Mono(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
   var
     x: integer = 0;
-    arfl: TDArFloat;
-    sample : cFloat;
+    ps: PDArShort;     //////// if input is Int16 format
+    pl: PDArLong;      //////// if input is Int32 format
+    pf: PDArFloat;     //////// if input is Float32 format
+    
+    samplef : cFloat;
+    samplei : integer;
   begin
-   if (Data.channels = 2) and (data.SampleFormat = 0) then   // TODO for integer too
+   if (Data.channels = 2) then  
   begin
-    SetLength(arfl, length(Data.Buffer));
-         while x < length(Data.Buffer)   do
+  
+   case Data.SampleFormat of
+    2:
+    begin
+      ps := @Data.Buffer;
+     while x < Data.OutFrames  do
           begin
-        sample := (Data.Buffer[x] + Data.Buffer[x+1]) / 2 ;
-        arfl[x] := sample ;
-        arfl[x+1] := sample;
+        samplei := round((ps^[x] + ps^[x+1])/2);
+        ps^[x] := samplei ;
+        ps^[x+1] := samplei ;
         x := x + 2;
-          end;
-       Result := arfl;
+        end;
+     end;
+     
+    1:
+    begin
+      pl := @Data.Buffer;
+     while x < Data.OutFrames  do
+          begin
+        samplei := round((pl^[x] + pl^[x+1])/2);   
+        pl^[x] := samplei ;
+        pl^[x+1] := samplei ;
+        x := x + 2;
+        end;
+     end;
+     
+    0:
+    begin
+      pf := @Data.Buffer;
+     while x < Data.OutFrames  do
+          begin
+        samplef := (pf^[x] + pf^[x+1])/2;   
+        pf^[x] := samplef ;
+        pf^[x+1] := samplef ;
+        x := x + 2;
+        end;
+     end;
+        
+  
+  end;
+  Result := Data.Buffer; 
   end 
   else Result := Data.Buffer; 
   end;

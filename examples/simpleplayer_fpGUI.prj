@@ -824,8 +824,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=vuright
+finddtext=volume
 findhistory=10
+ volume
  vuright
  uos_NoiseRemoval
  .exec
@@ -835,7 +836,6 @@ findhistory=10
  440
  44
  etDSPNoiseRemoval
- etDSPNoiseRemovalO
 findoptions=1
 editpos=26
  0,-1073741823
@@ -856,9 +856,9 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,34
  0,-1073741823
  0,-1073741823
- 22,388
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -978,7 +978,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=17
-index=20
+index=18
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -987,7 +987,7 @@ windowlayout=503
  [mainfo]
  splitdir=0
  useroptions=838860927
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1005,7 +1005,7 @@ windowlayout=503
   basedock,0,19,1356,682
  focusedchild=1
  wsize=4
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1023,7 +1023,7 @@ windowlayout=503
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1398,7 +1398,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

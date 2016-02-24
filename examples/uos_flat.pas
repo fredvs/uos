@@ -38,7 +38,20 @@ uses
   BS2B_DEFAULT_CLEVEL = (CInt32(700)) or ((CInt32(45)) shl 16);
   BS2B_CMOY_CLEVEL =(CInt32(700)) or ((CInt32(60)) shl 16);
   BS2B_JMEIER_CLEVEL = (CInt32(650)) or ((CInt32(95)) shl 16);
-   {$endif}
+     {$endif}
+
+  type
+  TDArFloat = array of cfloat;
+
+  TDArShort = array of cInt16;
+  TDArLong = array of cInt32;
+
+  TDArPARFloat = array of TDArFloat;
+  TDArIARFloat = array of TDArPARFloat;
+
+  PDArFloat = ^TDArFloat;
+  PDArShort = ^TDArShort;
+  PDArLong = ^TDArLong;
 
  type
 
@@ -55,10 +68,7 @@ uses
      Tcount_t    = cint;
   {$endif}
 
- type
-  TDArFloat = array of cfloat;
- 
- type
+  type
   TuosF_Data = Tuos_Data;
   TuosF_FFT = Tuos_FFT ;
 

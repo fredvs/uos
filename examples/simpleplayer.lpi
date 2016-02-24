@@ -145,8 +145,7 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="637"/>
-        <CursorPos X="86" Y="646"/>
+        <CursorPos Y="14"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -410,8 +409,8 @@ install:
         <Filename Value="simpleplayer_fpGUI.pas"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="348"/>
-        <CursorPos X="69" Y="348"/>
+        <TopLine Value="19"/>
+        <CursorPos Y="26"/>
         <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit45>
@@ -439,8 +438,8 @@ install:
       <Unit50>
         <Filename Value="uos_flat.pas"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="836"/>
-        <CursorPos X="93" Y="783"/>
+        <TopLine Value="43"/>
+        <CursorPos X="2" Y="71"/>
         <UsageCount Value="15"/>
         <Loaded Value="True"/>
       </Unit50>
@@ -481,7 +480,7 @@ install:
         <UsageCount Value="10"/>
       </Unit55>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="simpleplayer_fpGUI.pas"/>
         <Caret Line="997" Column="21" TopLine="976"/>
@@ -598,6 +597,10 @@ install:
         <Filename Value="main_sp.pas"/>
         <Caret Line="629" Column="84" TopLine="596"/>
       </Position29>
+      <Position30>
+        <Filename Value="main_sp.pas"/>
+        <Caret Line="696" Column="5"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
