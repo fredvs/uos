@@ -149,9 +149,9 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="266"/>
-        <CursorPos X="98" Y="278"/>
+        <TopLine Value="348"/>
+        <CursorPos X="158" Y="353"/>
+        <ComponentState Value="1"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -291,9 +291,10 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="2658"/>
-        <CursorPos X="76" Y="2665"/>
+        <TopLine Value="3889"/>
+        <CursorPos X="84" Y="3922"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>

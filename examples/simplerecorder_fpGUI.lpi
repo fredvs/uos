@@ -39,7 +39,6 @@
       <Unit0>
         <Filename Value="simplerecorder_fpGUI.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="simplerecorder_fpGUI"/>
       </Unit0>
     </Units>
   </ProjectOptions>

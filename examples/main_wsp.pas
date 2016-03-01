@@ -207,7 +207,7 @@ begin
   // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName) : integer;
   // You may load one or more libraries . When you want... :
 
-if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text)) = 0 then
+if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), nil, nil) = 0 then
   begin
     form1.hide;
       loadok := true;

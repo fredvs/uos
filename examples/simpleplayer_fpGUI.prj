@@ -48,8 +48,9 @@ findinfiledialog=46
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=IPAIODataIOInterface
+ value=Data.OutFrames
  history=10
+  Data.OutFrames
   IPAIODataIOInterface
   audacity_noiseremoval
   psingle
@@ -59,7 +60,6 @@ findinfiledialog=46
   FreeBSD
   freebsd
   SetPluginSoundTouch
-  
  [findinfileadialogfo]
  stackedunder=
  x=121
@@ -72,7 +72,7 @@ finddialog=8
  [finddialogfo]
  stackedunder=
  x=520
- y=213
+ y=215
  cx=298
  cy=116
 replacedialog=23
@@ -81,8 +81,9 @@ replacedialog=23
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=BeginFunc
+ value=unix
  history=10
+  unix
   BeginFunc
   FreeBSD
    
@@ -92,7 +93,6 @@ replacedialog=23
   PluginIndex1
   PluginIndex
   DSPIndex1
-  DocView
  [replacedialogfo]
  stackedunder=
  x=260
@@ -261,7 +261,7 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=8
+makeoptions=9
  -fPIC
  -l -Mobjfpc -Scghi
  -FE.
@@ -270,6 +270,7 @@ makeoptions=8
  -B
  -O4 -XX -Xs -CX
  -vewnbq
+ -CX -Cg  -g -gl -Xg -vewnhibq 
 compilerused=21
  ${COMPILER} (Default)
  Pascal 1
@@ -446,19 +447,20 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=8
+makeoptionson=9
  0
- 255
- 255
- 255
+ 511
+ 511
+ 511
  192
- 255
- 241
- 255
+ 511
+ 497
+ 253
+ 2
 compilerusedon=21
- 3887
+ 3631
  0
- 16
+ 272
  64
  128
  0
@@ -485,9 +487,9 @@ debuggerusedon=6
  0
  192
 exeusedon=14
- 3903
+ 4095
  0
- 192
+ 0
  0
  0
  0
@@ -501,13 +503,13 @@ exeusedon=14
  0
 aftcommandon=0
 unitdirson=7
- 196863
- 196863
+ 197119
+ 197119
  196800
- 196863
- 196671
- 196863
- 196863
+ 197119
+ 196927
+ 197119
+ 197119
 macroon=5
  1
  3
@@ -616,7 +618,7 @@ editfontextraspace=0
 editfontcolor=-1879048183
 editbkcolor=-1879048186
 statementcolor=14745599
-pairmarkcolor=-1610612712
+pairmarkcolor=-1610612713
 editfontantialiased=1
 editmarkbrackets=1
 editmarkpairwords=1
@@ -654,7 +656,7 @@ progworkingdirectory=
 envvarnames=0
 envvarvalues=0
 defineson=0
-stoponexception=0
+stoponexception=1
 valuehints=1
 activateonbreak=1
 raiseonbreak=1
@@ -707,37 +709,44 @@ sigsettings=27
  30,30,T,F
 defaultmake=32
 [breakpoints]
-on=4
+on=5
  0
  -1
  0
  0
-path=4
+ -1
+path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/paio_channelhelper.pas
-line=4
+ /home/fred/uos_aac_new/examples/uos_aac.pas
+line=5
  1756
  3387
  1771
  33
-address=4
+ 913
+address=5
+ 4918365
+ 4946380
+ 4918583
+ 0
+ 0
+addbkpt=5
  0
  0
  0
  0
-addbkpt=4
+ 0
+ignore=5
  0
  0
  0
  0
-ignore=4
  0
- 0
- 0
- 0
-condition=4
+condition=5
+ 
  
  
  
@@ -824,20 +833,20 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=volume
+finddtext=writeln
 findhistory=10
- volume
- vuright
- uos_NoiseRemoval
- .exec
- processnoise
- FilterNoise
- AddDSPNoiseRemovalOut
- 440
- 44
- etDSPNoiseRemoval
+ writeln
+ getproc
+ FilenameEdit7
+ filenameedit6.FileName
+ loadlib
+ height :=
+ heigh t:=
+ .height:=
+ .height :=
+ unload
 findoptions=1
-editpos=26
+editpos=16
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -852,18 +861,8 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,34
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,537
+ 0,1342
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -880,81 +879,41 @@ bookmarks12=0
 bookmarks13=0
 bookmarks14=0
 bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-bookmarks23=0
-bookmarks24=0
-bookmarks25=0
-sourcefiles=26
+sourcefiles=16
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_dsp_noiseremoval.pas
- ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_soundtouch.pas
+ ${PROJECTDIR}/uos_cdrom.pas
  ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_aac.pas
+ /home/fred/fpgui/src/corelib/x11/fpg_x11.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
- /home/fred/fpgui/src/corelib/fpg_base.pas
- ${PROJECTDIR}/uos_dsp_noiseremoval.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- /home/fred/uos/contributors.txt
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ /home/fred/uos_aac_new (copie)/examples/uos.pas
  ${PROJECTDIR}/uos_flat.pas
+ /home/fred/fpgui/src/corelib/x11/fpg_impl.pas
+ ${PROJECTDIR}/uos_aac.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_dsp_utils.pas
- ${PROJECTDIR}/uos_dsp_noiseremoval.pas
-relpaths=26
+relpaths=16
  uos.pas
  uos_bs2b.pas
  simpleplayer_fpGUI.pas
  uos_flat.pas
- uos_dsp_noiseremoval.pas
- define.inc
  uos_portaudio.pas
- uos_mpg123.pas
- uos_soundtouch.pas
+ uos_cdrom.pas
  uos.pas
+ uos_aac.pas
+ fpgui/src/corelib/x11/fpg_x11.pas
  uos_flat.pas
- uos_flat.pas
- uos_flat.pas
- define.inc
- fpgui/src/corelib/fpg_base.pas
- uos_dsp_noiseremoval.pas
- uos_soundtouch.pas
- contributors.txt
- simpleplayer_fpGUI.pas
  uos.pas
- simpleplayer_fpGUI.pas
+ uos_aac_new (copie)/examples/uos.pas
  uos_flat.pas
+ fpgui/src/corelib/x11/fpg_impl.pas
+ uos_aac.pas
  simpleplayer_fpGUI.pas
- simpleplayer_fpGUI.pas
- uos_dsp_utils.pas
- uos_dsp_noiseremoval.pas
-ismoduletexts=26
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=16
  0
  0
  0
@@ -977,8 +936,8 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
-firsttab=17
-index=18
+firsttab=7
+index=15
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -994,8 +953,8 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=153
- y=25
+ x=197
+ y=36
  cx=966
  cy=621
  rcx=0
@@ -1005,7 +964,7 @@ windowlayout=503
   basedock,0,19,1356,682
  focusedchild=1
  wsize=4
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1073,7 +1032,7 @@ windowlayout=503
  [disassfo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1129,7 +1088,7 @@ windowlayout=503
  sortdescend1=0
  sorted=0
  col=0
- row=8
+ row=2
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1287,8 +1246,8 @@ windowlayout=503
  y=0
  cx=247
  cy=44
- rcx=1129
- rcy=679
+ rcx=956
+ rcy=585
  [watchfo.grid]
  propcolwidthref=123
  values0=2
@@ -1315,7 +1274,7 @@ windowlayout=503
  [watchfo.watchon]
  [watchfo.expression]
  [watchfo.watcheson]
- value=1
+ value=0
  [messagefo]
  splitdir=0
  useroptions=114795
@@ -1398,7 +1357,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=disassfo
  parent=
  mdistate=0
  nx=0
@@ -1485,6 +1444,9 @@ windowlayout=503
  rcx=0
  rcy=0
 [targetconsole]
-finddtext=
-findhistory=0
+finddtext=MP4OpenFile
+findhistory=3
+ MP4OpenFile
+ dsp_vol
+ dspvol
 findoptions=1

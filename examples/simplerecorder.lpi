@@ -148,8 +148,8 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="136"/>
-        <CursorPos X="59" Y="149"/>
+        <TopLine Value="132"/>
+        <CursorPos X="69" Y="149"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -377,7 +377,7 @@ install:
         <Loaded Value="True"/>
       </Unit38>
     </Units>
-    <JumpHistory Count="21" HistoryIndex="20">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="331" Column="55" TopLine="315"/>
@@ -461,6 +461,10 @@ install:
         <Filename Value="main_sr.pas"/>
         <Caret Line="122" Column="12" TopLine="108"/>
       </Position21>
+      <Position22>
+        <Filename Value="main_sr.pas"/>
+        <Caret Line="149" Column="59" TopLine="136"/>
+      </Position22>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

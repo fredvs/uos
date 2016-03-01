@@ -130,7 +130,7 @@ install:
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="40">
+    <Units Count="42">
       <Unit0>
         <Filename Value="filterplayer.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -144,10 +144,9 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="226"/>
-        <CursorPos X="76" Y="239"/>
+        <TopLine Value="284"/>
+        <CursorPos X="17" Y="306"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -276,9 +275,9 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="3070"/>
-        <CursorPos X="2" Y="3069"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="2987"/>
+        <CursorPos X="33" Y="2987"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -386,12 +385,100 @@ install:
         <CursorPos X="24" Y="160"/>
         <UsageCount Value="10"/>
       </Unit39>
+      <Unit40>
+        <Filename Value="uos_flat.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="112"/>
+        <CursorPos X="10" Y="129"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="define.inc"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="3" Y="16"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit41>
     </Units>
-    <JumpHistory Count="1">
+    <JumpHistory Count="19" HistoryIndex="18">
       <Position1>
         <Filename Value="main_fp.pas"/>
         <Caret Line="64" Column="43" TopLine="38"/>
       </Position1>
+      <Position2>
+        <Filename Value="main_fp.pas"/>
+        <Caret Line="285" Column="79" TopLine="284"/>
+      </Position2>
+      <Position3>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="132" Column="10" TopLine="115"/>
+      </Position3>
+      <Position4>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3069" Column="2" TopLine="3069"/>
+      </Position4>
+      <Position5>
+        <Filename Value="uos.pas"/>
+        <Caret Line="485" Column="25" TopLine="470"/>
+      </Position5>
+      <Position6>
+        <Filename Value="uos.pas"/>
+        <Caret Line="493" Column="54" TopLine="470"/>
+      </Position6>
+      <Position7>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2949" Column="69" TopLine="2924"/>
+      </Position7>
+      <Position8>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4188" Column="33" TopLine="4185"/>
+      </Position8>
+      <Position9>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4190" Column="37" TopLine="4184"/>
+      </Position9>
+      <Position10>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4196" Column="33" TopLine="4184"/>
+      </Position10>
+      <Position11>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4445" Column="28" TopLine="4418"/>
+      </Position11>
+      <Position12>
+        <Filename Value="uos.pas"/>
+        <Caret Line="110" Column="16" TopLine="93"/>
+      </Position12>
+      <Position13>
+        <Filename Value="uos.pas"/>
+        <Caret Line="8" Column="143"/>
+      </Position13>
+      <Position14>
+        <Filename Value="uos.pas"/>
+        <Caret Line="179" Column="31" TopLine="146"/>
+      </Position14>
+      <Position15>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2385" Column="129" TopLine="2379"/>
+      </Position15>
+      <Position16>
+        <Filename Value="uos.pas"/>
+        <Caret Line="2403" Column="14" TopLine="2403"/>
+      </Position16>
+      <Position17>
+        <Filename Value="uos.pas"/>
+        <Caret Column="64"/>
+      </Position17>
+      <Position18>
+        <Filename Value="uos.pas"/>
+        <Caret Line="58" Column="54" TopLine="25"/>
+      </Position18>
+      <Position19>
+        <Filename Value="uos.pas"/>
+        <Caret Line="110" Column="16" TopLine="82"/>
+      </Position19>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
@@ -409,8 +496,7 @@ install:
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <GenerateDebugInfo Value="False"/>
-        <StripSymbols Value="True"/>
+        <UseExternalDbgSyms Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>
       <Options>

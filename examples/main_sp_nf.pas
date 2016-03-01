@@ -23,12 +23,21 @@ type
     Button7: TButton;
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
+    chkstereo2mono: TCheckBox;
+    Chknoise: TCheckBox;
     Edit1: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
     Edit4: TEdit;
     Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Edit8: TEdit;
     Label1: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -60,6 +69,10 @@ type
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
+    procedure CheckBox3Change(Sender: TObject);
+    procedure ChknoiseChange(Sender: TObject);
+    procedure chkstereo2monoChange(Sender: TObject);
+    procedure Edit5Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -85,16 +98,20 @@ type
 function DSPReverseBefore(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 function DSPReverseAfter(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 
+function DSPStereo2Mono(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+
 procedure uos_logo();
 
 var
   Form1: TForm1;
   BufferBMP: TBitmap;
-   PlayerIndex1: Tuos_Player;
- // ordir, opath: string;
-  Out1Index, In1Index, DSP1Index, DSP2Index, Plugin1Index: cardinal;
   plugsoundtouch : boolean = false;
   plugbs2b : boolean = false;
+
+  PlayerIndex1: Tuos_Player;
+
+  OutputIndex1, InputIndex1, DSPIndex1, DSPIndex2, DSPVolume, PluginIndex1, PluginIndex2: integer;
+
 
 implementation
 
@@ -106,9 +123,9 @@ procedure TForm1.ChangePlugSet(Sender: TObject);
 var
   tempo, rate: cfloat;
 begin
-  if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text) then
-    begin
-  if (2 * (TrackBar4.Position / 100)) < 0.3 then
+   if (trim(Pchar(edit5.text)) <> '') and fileexists(edit5.text) then
+   begin
+   if (2 * (TrackBar4.Position / 100)) < 0.3 then
     tempo := 0.3
   else
     tempo := (2 * (TrackBar4.Position / 100));
@@ -118,14 +135,14 @@ begin
     rate := (2 * (TrackBar5.Position / 100));
 
   label7.Caption := 'Tempo: ' + floattostrf(tempo, ffFixed, 15, 1);
-  label9.Caption := 'Rate: ' + floattostrf(rate, ffFixed, 15, 1);
+  label9.Caption := 'Pitch: ' + floattostrf(rate, ffFixed, 15, 1);
 
   if radiogroup1.Enabled = False then   /// player1 was created
   begin
-    PlayerIndex1.SetPluginSoundTouch(Plugin1Index, tempo, rate, checkbox2.Checked);
+   PlayerIndex1.SetPluginSoundTouch(PluginIndex2, tempo, rate, checkbox2.Checked);
   end;
+end;
 
-    end;
 end;
 
 procedure TForm1.ResetPlugClick(Sender: TObject);
@@ -134,7 +151,7 @@ begin
   TrackBar5.Position := 50;
   if radiogroup1.Enabled = False then   /// player1 was created
   begin
-   PlayerIndex1.SetPluginSoundTouch(Plugin1Index, 1, 1, checkbox2.Checked);
+    PlayerIndex1.SetPluginSoundTouch(PluginIndex2, 1, 1, checkbox2.Checked);
   end;
 
 end;
@@ -150,8 +167,8 @@ begin
   Form1.TrackBar2.Position := 0;
   Form1.ShapeLeft.Height := 0;
   Form1.ShapeRight.Height := 0;
-  Form1.ShapeLeft.top := 280;
-  Form1.ShapeRight.top := 280;
+  Form1.ShapeLeft.top := 342;
+  Form1.ShapeRight.top := 342;
   form1.lposition.Caption := '00:00:00.000';
 end;
 
@@ -174,9 +191,29 @@ begin
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
-  Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll';
+  Edit7.text := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
+  Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
+  Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
+  Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
    {$endif}
   Edit4.Text := ordir + 'sound\test.mp3';
+ {$ENDIF}
+
+ {$IFDEF freebsd}
+    {$if defined(cpu64)}
+    Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
+     Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
+    Edit5.Text := '' ;
+    Edit6.text := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
+  
+    {$else}
+   Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
+     Edit2.Text := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
+    Edit3.Text := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
+     Edit5.Text := '' ;
+{$endif}
+     Edit4.Text := ordir + 'sound/test.mp3';
  {$ENDIF}
 
   {$IFDEF Darwin}
@@ -194,31 +231,21 @@ begin
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+  Edit7.text := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
+  Edit8.text := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
+  Edit6.Text := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
 {$else}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+  Edit7.text := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
+  Edit8.text := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
   Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
+  Edit6.Text := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
 {$endif}
   Edit4.Text := ordir + 'sound/test.mp3';
             {$ENDIF}
-
-{$IFDEF freebsd}
-    {$if defined(cpu64)}
-    Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
-     Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
-    Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
-     Edit5.Text := '' ;
-    {$else}
-   Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
-     Edit2.Text := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
-    Edit3.Text := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
-    Edit5.Text := '' ;
-{$endif}
-  Edit4.Text := ordir + 'sound/test.mp3';
-            {$ENDIF}
-
 
   opendialog1.Initialdir := application.Location + 'sound';
 
@@ -232,7 +259,7 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
-    PlayerIndex1.SetDSPVolumeIn(In1Index, DSP2Index, TrackBar1.position / 100,
+    PlayerIndex1.SetDSPVolumeIn(InputIndex1, DSPVolume, TrackBar1.position / 100,
       TrackBar3.position / 100, True);
 end;
 
@@ -245,7 +272,7 @@ end;
 procedure TForm1.TrackBar2MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
-  PlayerIndex1.Seek(In1Index, TrackBar2.position);
+  PlayerIndex1.Seek( InputIndex1, TrackBar2.position);
   TrackBar2.Tag := 0;
 end;
 
@@ -254,11 +281,13 @@ var
 loadok : boolean = false;
 begin
   // Load the libraries
-   // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
-    // You may load one or more libraries . When you want... :
+  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
 
-if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text)) = 0 then
-  begin
+  if uos_LoadLib(Pchar(Edit1.text), Pchar(Edit2.text),
+     Pchar(Edit3.text), Pchar(Edit7.text), Pchar(Edit8.text)) = 0 then
+  // You may load one or more libraries . When you want... :
+
+ begin
     form1.hide;
     loadok := true;
     button1.Enabled := False;
@@ -288,11 +317,17 @@ if loadok = true then
        label9.enabled := false;
        label7.enabled := false;
            end;
-         form1.Height := 417;
+
+      if ((trim(Pchar(edit6.text)) <> '') and fileexists(edit6.text))
+      and (uos_LoadPlugin('bs2b', Pchar(edit6.text)) = 0)
+      then plugbs2b := true else CheckBox3.enabled := false;
+
+    form1.Height := 556;
     form1.Position := poScreenCenter;
     form1.Caption := 'Simple Player.    uos version ' + inttostr(uos_getversion());
     form1.Show;
-        end;
+  end;
+
 
 end;
 
@@ -303,8 +338,8 @@ begin
   Button5.Enabled := False;
   Form1.ShapeLeft.Height := 0;
   Form1.ShapeRight.Height := 0;
-  Form1.ShapeLeft.top := 280;
-  Form1.ShapeRight.top := 280;
+  Form1.ShapeLeft.top := 342;
+  Form1.ShapeRight.top := 342;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -326,6 +361,8 @@ begin
   if fileexists(Edit4.Text) then
   begin
 
+   // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
+    // If PlayerIndex exists already, it will be overwritten...
 
     if radiobutton1.Checked = True then
       samformat := 0;
@@ -336,26 +373,31 @@ begin
 
     radiogroup1.Enabled := False;
 
-   {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
-   PlayerIndex1 := Tuos_Player.Create(true);
+    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
+    PlayerIndex1 := Tuos_Player.Create(true);
      {$else}
     PlayerIndex1 := Tuos_Player.Create(true,self);
     {$endif}
 
-    // In1Index := uos_AddFromFile(PlayerIndex1, Edit4.Text);
-    //// add input from audio file with default parameters
-    In1Index := PlayerIndex1.AddFromFile(pchar(Edit4.Text), -1, samformat, -1);
+    //// Create the player.
+    //// PlayerIndex : from 0 to what your computer can do !
+    //// If PlayerIndex exists already, it will be overwriten...
+
+     InputIndex1 := PlayerIndex1.AddFromFile( pchar(Edit4.text), -1, samformat, -1);
     //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     //////////// PlayerIndex : Index of a existing Player
     ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
     ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-    //////////// FramesCount : default : -1 (65536)
+    //////////// FramesCount : default : -1 (65536 div channels)
     //  result : -1 nothing created, otherwise Input Index in array
 
-    // Out1Index := uos_AddIntoDevOut(PlayerIndex1) ;
+    if InputIndex1 > -1 then begin
+
+      // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
-    Out1Index :=  PlayerIndex1.AddIntoDevOut( -1, -1, PlayerIndex1.StreamIn[In1Index].Data.SampleRate, -1, samformat, -1);
+
+    OutputIndex1 := PlayerIndex1.AddIntoDevOut(-1, -1, PlayerIndex1.StreamIn[InputIndex1].Data.SampleRate, -1, samformat, -1);
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -366,94 +408,110 @@ begin
     //////////// FramesCount : default : -1 (65536)
     //  result : -1 nothing created, otherwise Output Index in array
 
-    PlayerIndex1.StreamIn[In1Index].Data.LevelEnable:= 2 ;
-    ///// set calculation of level/volume (usefull for showvolume procedure)
+  //  PlayerIndex1.StreamIn[In1Index].Data.levelEnable:=2 ;
+    PlayerIndex1.InputSetLevelEnable(InputIndex1, 2) ;
+     ///// set calculation of level/volume (usefull for showvolume procedure)
                        ///////// set level calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul before all DSP procedures.
                           // 2 => calcul after all DSP procedures.
                           // 3 => calcul before and after all DSP procedures.
 
-    PlayerIndex1.StreamIn[In1Index].Data.PositionEnable:= 1 ;
+  //  PlayerIndex1.StreamIn[In1Index].Data.PositionEnable:= 1 ;
+    PlayerIndex1.InputSetPositionEnable(InputIndex1, 1) ;
      ///// set calculation of position (usefull for positions procedure)
                        ///////// set position calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul position.
 
-    PlayerIndex1.StreamIn[In1Index].LoopProc := @LoopProcPlayer1;
-   ///// Assign the procedure of object to execute inside the loop for a Input
+   PlayerIndex1.StreamIn[InputIndex1].LoopProc := @LoopProcPlayer1;
+     ///// Assign the procedure of object to execute inside the loop
     //////////// PlayerIndex : Index of a existing Player
-    //////////// InIndex : Index of a existing Input
+    //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
-    DSP2Index := PlayerIndex1.AddDSPVolumeIn(In1Index, 1, 1);
+     PlayerIndex1.AddDSPNoiseRemovalIn(InputIndex1);
+     PlayerIndex1.SetDSPNoiseRemovalIn(InputIndex1, chknoise.Checked);
+     /// Add DSP Noise removal. First chunck will be the noise sample.
+
+   DSPVolume := PlayerIndex1.AddDSPVolumeIn(InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing input
-    ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
+    ////////// InputIndex1 : Index of a existing input
+    ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-    PlayerIndex1.SetDSPVolumeIn(In1Index,DSP2Index, TrackBar1.position / 100,
-      TrackBar3.position / 100, True); /// Set volume
+    PlayerIndex1.SetDSPVolumeIn(InputIndex1, DSPVolume, TrackBar1.position / 100,
+      TrackBar3.position / 100, True);    /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing Input
+    ////////// DSPVolume : Index of a existing dsp
+    ////////// InputIndex1 : InputIndex of a existing Input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
 
-      DSP1Index := PlayerIndex1.AddDSPIn(In1Index, @DSPReverseBefore,
-      @DSPReverseAfter, nil, nil);
-   ///// add a custom DSP procedure for input
+   DSPIndex1 := PlayerIndex1.AddDSPIn(InputIndex1, @DSPReverseBefore,
+     @DSPReverseAfter, nil, nil);
+      ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index: InputIndex of existing input
+    ////////// InputIndex1: InputIndex of existing input
     ////////// BeforeFunc : function to do before the buffer is filled
     ////////// AfterFunc : function to do after the buffer is filled
     ////////// EndedFunc : function to do at end of thread
     ////////// LoopProc : external procedure to do after the buffer is filled
-    //////// result = DSPIndex of the custom  DSP
 
-    PlayerIndex1.SetDSPIn(In1Index, DSP1Index, checkbox1.Checked);
-    //// set the parameters of custom DSP;
+   //// set the parameters of custom DSP
+   PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex1, checkbox1.Checked);
 
-   if  plugsoundtouch = true then
-    begin
-    Plugin1Index := PlayerIndex1.AddPlugin('soundtouch', -1, -1);
-    ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
+   // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)
+    DSPIndex2 := PlayerIndex1.AddDSPIn(InputIndex1, nil, @DSPStereo2Mono, nil, nil);
+    PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex2, chkstereo2mono.checked);
 
-    ChangePlugSet(self); //// Change plugin settings
-     end;
+   ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
+  if plugbs2b = true then
+  begin
+   PlugInIndex1 := PlayerIndex1.AddPlugin('bs2b',PlayerIndex1.StreamIn[InputIndex1].Data.SampleRate , -1);
+   PlayerIndex1.SetPluginbs2b(PluginIndex1, -1 , -1, -1, checkbox3.checked);
+  end;
 
-    trackbar2.Max := PlayerIndex1.InputLength( In1Index);
+  /// add SoundTouch plugin with samplerate of input1 / default channels (2 = stereo)
+  /// SoundTouch plugin should be the last added.
+    if plugsoundtouch = true then
+  begin
+    PlugInIndex2 := PlayerIndex1.AddPlugin('soundtouch',
+    PlayerIndex1.StreamIn[InputIndex1].Data.SampleRate , -1);
+    ChangePlugSet(self); //// custom procedure to Change plugin settings
+   end;
+
+   trackbar2.Max := PlayerIndex1.InputLength(InputIndex1);
     ////// Length of Input in samples
 
-    temptime := PlayerIndex1.InputLengthTime(In1Index);
+   temptime := PlayerIndex1.InputLengthTime(InputIndex1);
     ////// Length of input in time
 
     DecodeTime(temptime, ho, mi, se, ms);
 
-    llength.Caption := format('%d:%d:%d.%d', [ho, mi, se, ms]);
+    llength.caption := format('%d:%d:%d.%d', [ho, mi, se, ms]);
 
     /////// procedure to execute when stream is terminated
-    PlayerIndex1.EndProc := @ClosePlayer1;
+     PlayerIndex1.EndProc := @ClosePlayer1;
     ///// Assign the procedure of object to execute at end
     //////////// PlayerIndex : Index of a existing Player
-    //////////// ClosePlayer1 : procedure of object to execute inside the loop
+    //////////// ClosePlayer1 : procedure of object to execute inside the general loop
 
     TrackBar2.position := 0;
-    trackbar2.Enabled := True;
-    Button3.Enabled := False;
-    Button4.Enabled := False;
-    Button6.Enabled := True;
-    Button5.Enabled := True;
+    trackbar1.Enabled := True;
     CheckBox1.Enabled := True;
 
-    application.ProcessMessages;
+    button3.Enabled := False;
+    button6.Enabled := True;
+    button5.Enabled := True;
+    button4.Enabled := False;
 
-     PlayerIndex1.Play();  /////// everything is ready, here we are, lets play it...
+    PlayerIndex1.Play();
 
-  end
-  else
-    MessageDlg(edit4.Text + ' do not exist...', mtWarning, [mbYes], 0);
+    end;
+  end;
 
 end;
 
@@ -471,7 +529,32 @@ end;
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
-  PlayerIndex1.SetDSPIn(In1Index, DSP1Index, checkbox1.Checked);
+    PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex1, checkbox1.Checked);
+end;
+
+procedure TForm1.CheckBox3Change(Sender: TObject);
+begin
+  if radiogroup1.Enabled = False then   /// player1 was created
+  begin
+   PlayerIndex1.SetPluginbs2b(PluginIndex1, -1, -1, -1, checkbox3.checked);
+    end;
+end;
+
+procedure TForm1.ChknoiseChange(Sender: TObject);
+begin
+   if radiogroup1.Enabled = False then
+  PlayerIndex1.SetDSPNoiseRemovalIn(InputIndex1, chknoise.Checked);
+end;
+
+procedure TForm1.chkstereo2monoChange(Sender: TObject);
+begin
+   if radiogroup1.Enabled = False then
+    PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex2, chkstereo2mono.checked);
+ end;
+
+procedure TForm1.Edit5Change(Sender: TObject);
+begin
+
 end;
 
 procedure uos_logo();
@@ -536,8 +619,8 @@ var
 begin
   if form1.TrackBar2.Tag = 0 then
   begin
-    form1.TrackBar2.Position := PlayerIndex1.InputPosition(In1Index);
-    temptime := PlayerIndex1.InputPositionTime(In1Index);
+    form1.TrackBar2.Position := PlayerIndex1.InputPosition(InputIndex1);
+    temptime :=PlayerIndex1.InputPositionTime(InputIndex1);
     ////// Length of input in time
     DecodeTime(temptime, ho, mi, se, ms);
     form1.lposition.Caption := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
@@ -546,10 +629,10 @@ begin
 
 procedure Tform1.ShowLevel;
 begin
-  ShapeLeft.Height := round(PlayerIndex1.InputGetLevelLeft(In1Index) * 146);
-  ShapeRight.Height := round(PlayerIndex1.InputGetLevelRight( In1Index) * 146);
-  ShapeLeft.top := 354 - ShapeLeft.Height;
-  ShapeRight.top := 354 - ShapeRight.Height;
+  ShapeLeft.Height := round(PlayerIndex1.InputGetLevelLeft(InputIndex1) * 92);
+  ShapeRight.Height := round(PlayerIndex1.InputGetLevelRight(InputIndex1) * 92);
+  ShapeLeft.top := 430- ShapeLeft.Height;
+  ShapeRight.top := 430 - ShapeRight.Height;
 end;
 
 procedure Tform1.LoopProcPlayer1;
@@ -561,7 +644,7 @@ end;
 function DSPReverseBefore(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 begin
   if Data.position > Data.OutFrames div Data.ratio then
- PlayerIndex1.Seek(In1Index, Data.position - (Data.OutFrames div (Data.Ratio)));
+    PlayerIndex1.Seek(InputIndex1, Data.position - (Data.OutFrames div (Data.Ratio)));
 end;
 
 function DSPReverseAfter(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
@@ -580,11 +663,69 @@ begin
 end;
 //}
 
+function DSPStereo2Mono(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+var
+  x: integer = 0;
+  ps: PDArShort;     //////// if input is Int16 format
+  pl: PDArLong;      //////// if input is Int32 format
+  pf: PDArFloat;     //////// if input is Float32 format
+
+  samplef : cFloat;
+  samplei : integer;
+begin
+ if (Data.channels = 2) then
+begin
+
+ case Data.SampleFormat of
+  2:
+  begin
+    ps := @Data.Buffer;
+   while x < Data.OutFrames  do
+        begin
+      samplei := round((ps^[x] + ps^[x+1])/2);        ps^[x] := samplei ;
+      ps^[x+1] := samplei ;
+      x := x + 2;
+      end;
+   end;
+
+  1:
+  begin
+    pl := @Data.Buffer;
+   while x < Data.OutFrames  do
+        begin
+      samplei := round((pl^[x] + pl^[x+1])/2);
+      pl^[x] := samplei ;
+      pl^[x+1] := samplei ;
+      x := x + 2;
+      end;
+   end;
+
+  0:
+  begin
+    pf := @Data.Buffer;
+   while x < Data.OutFrames  do
+        begin
+      samplef := (pf^[x] + pf^[x+1])/2;
+      pf^[x] := samplef ;
+      pf^[x+1] := samplef ;
+      x := x + 2;
+      end;
+   end;
+
+
+end;
+Result := Data.Buffer;
+end
+else Result := Data.Buffer;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Form1.Height := 193;
+  Form1.Height := 326;
   ShapeLeft.Height := 0;
   ShapeRight.Height := 0;
+  trackbar1.Position:=100;
+  trackbar3.Position:=100;
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
@@ -597,5 +738,6 @@ begin
   if button1.Enabled = False then
     uos_UnloadLib();
 end;
+
 
 end.

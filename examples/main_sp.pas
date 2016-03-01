@@ -32,8 +32,12 @@ type
     Edit4: TEdit;
     Edit5: TEdit;
     Edit6: TEdit;
+    Edit7: TEdit;
+    Edit8: TEdit;
     Label1: TLabel;
     Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -68,6 +72,7 @@ type
     procedure CheckBox3Change(Sender: TObject);
     procedure ChknoiseChange(Sender: TObject);
     procedure chkstereo2monoChange(Sender: TObject);
+    procedure Edit5Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -183,10 +188,12 @@ begin
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
+  Edit7.text := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
+  Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
   Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
   Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
    {$endif}
-  Edit4.Text := ordir + 'sound\test.mp3';
+  Edit4.Text := ordir + 'sound\test.ogg';
  {$ENDIF}
 
  {$IFDEF freebsd}
@@ -203,7 +210,7 @@ begin
     Edit3.Text := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
      Edit5.Text := '' ;
 {$endif}
-     Edit4.Text := ordir + 'sound/test.mp3';
+     Edit4.Text := ordir + 'sound/test.ogg';
  {$ENDIF}
 
   {$IFDEF Darwin}
@@ -213,7 +220,7 @@ begin
   Edit2.Text := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
   Edit3.Text := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
   Edit5.Text := opath + '/lib/Mac/32bit/plugin/LibSoundTouch-32.dylib';
-  Edit4.Text := opath + 'sound/test.mp3';
+  Edit4.Text := opath + 'sound/test.ogg';
             {$ENDIF}
 
    {$IFDEF linux}
@@ -221,16 +228,20 @@ begin
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+  Edit7.text := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
+  Edit8.text := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
   Edit6.Text := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
 {$else}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+  Edit7.text := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
+  Edit8.text := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
   Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
   Edit6.Text := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
 {$endif}
-  Edit4.Text := ordir + 'sound/test.mp3';
+  Edit4.Text := ordir + 'sound/test.ogg';
             {$ENDIF}
 
   opendialog1.Initialdir := application.Location + 'sound';
@@ -267,11 +278,13 @@ var
 loadok : boolean = false;
 begin
   // Load the libraries
-   // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
-    // You may load one or more libraries . When you want... :
+  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
 
-if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text)) = 0 then
-  begin
+  if uos_LoadLib(Pchar(Edit1.text), Pchar(Edit2.text),
+     Pchar(Edit3.text), Pchar(Edit7.text), Pchar(Edit8.text)) = 0 then
+  // You may load one or more libraries . When you want... :
+
+ begin
     form1.hide;
     loadok := true;
     button1.Enabled := False;
@@ -306,7 +319,7 @@ if loadok = true then
       and (uos_LoadPlugin('bs2b', Pchar(edit6.text)) = 0)
       then plugbs2b := true else CheckBox3.enabled := false;
 
-    form1.Height := 460;
+    form1.Height := 556;
     form1.Position := poScreenCenter;
     form1.Caption := 'Simple Player.    uos version ' + inttostr(uos_getversion());
     form1.Show;
@@ -403,14 +416,14 @@ begin
                           // 0 => no calcul
                           // 1 => calcul position.
 
-   uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
+    uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
     ///// Assign the procedure of object to execute inside the loop for a Input
     //////////// PlayerIndex : Index of a existing Player
     //////////// InIndex : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
     uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
-     uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
+    uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
      /// Add DSP Noise removal. First chunck will be the noise sample.
 
     uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
@@ -420,7 +433,7 @@ begin
     ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
     ////////// VolRight : Right volume
 
-   uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1, TrackBar1.position / 100,
+    uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1, TrackBar1.position / 100,
      TrackBar3.position / 100, True); /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : InputIndex of a existing Input
@@ -428,8 +441,8 @@ begin
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
 
-   DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
-    @DSPReverseAfter, nil, nil);
+    DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
+      @DSPReverseAfter, nil, nil);
     ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1: InputIndex of existing input
@@ -439,7 +452,7 @@ begin
     ////////// LoopProc : external procedure to do after the buffer is filled
     //////// result = DSPIndex of the custom  DSP
 
-   uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
     //// set the parameters of custom DSP;
 
     // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)
@@ -457,7 +470,7 @@ begin
      if plugsoundtouch = true then
     begin
     PluginIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', uos_InputGetSampleRate(PlayerIndex1, InputIndex1), -1);
-     ChangePlugSet(self); //// Change plugin settings
+    ChangePlugSet(self); //// Change plugin settings
     end;
 
     trackbar2.Max := uos_InputLength(PlayerIndex1, InputIndex1);
@@ -530,6 +543,11 @@ begin
    if radiogroup1.Enabled = False then
     uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked);
  end;
+
+procedure TForm1.Edit5Change(Sender: TObject);
+begin
+
+end;
 
 procedure uos_logo();
 var
@@ -605,8 +623,8 @@ procedure Tform1.ShowLevel;
 begin
   ShapeLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 92);
   ShapeRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 92);
-  ShapeLeft.top := 342 - ShapeLeft.Height;
-  ShapeRight.top := 342 - ShapeRight.Height;
+  ShapeLeft.top := 430- ShapeLeft.Height;
+  ShapeRight.top := 430 - ShapeRight.Height;
 end;
 
 procedure Tform1.LoopProcPlayer1;
@@ -695,7 +713,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Form1.Height := 235;
+  Form1.Height := 326;
   ShapeLeft.Height := 0;
   ShapeRight.Height := 0;
 end;

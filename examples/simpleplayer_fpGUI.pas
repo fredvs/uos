@@ -5,6 +5,7 @@ program simpleplayer_fpGUI;
 
 uses
   {$IFDEF UNIX} {$IFDEF UseCThreads}
+  // cmem,
   cthreads, 
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
@@ -71,6 +72,10 @@ type
     Labelst1: TfpgLabel;
     FilenameEdit6: TfpgFileNameEdit;
     chkstereo2mono: TfpgCheckBox;
+    Labelst11: TfpgLabel;
+    FilenameEdit7: TfpgFileNameEdit;
+    Labelst111: TfpgLabel;
+    FilenameEdit8: TfpgFileNameEdit;
     {@VFD_HEAD_END: Simpleplayer}
   public
     procedure AfterCreate; override;
@@ -232,8 +237,8 @@ var
       vuLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 74);
     if round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 74) >= 0 then
       vuRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 74);
-    vuLeft.top := 326 - vuLeft.Height;
-    vuRight.top := 326 - vuRight.Height;
+    vuLeft.top := 402 - vuLeft.Height;
+    vuRight.top := 402 - vuRight.Height;
     vuright.UpdateWindowPosition;
     vuLeft.UpdateWindowPosition;
   end;
@@ -264,14 +269,13 @@ var
 loadok : boolean = false;
   begin
     // Load the libraries
-    // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar;
-    // Mpg123FileName: Pchar: Pchar) : integer;
+// function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
 if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
- Pchar(FilenameEdit3.FileName)) = 0 then
+ Pchar(FilenameEdit3.FileName), Pchar(FilenameEdit7.FileName), Pchar(FilenameEdit8.FileName)) = 0 then
     begin
       hide;
       loadok := true;
-      Height := 435;
+      Height := 514;
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
       FilenameEdit1.ReadOnly := True;
@@ -279,9 +283,11 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
       FilenameEdit3.ReadOnly := True;
       FilenameEdit5.ReadOnly := True;
       FilenameEdit6.ReadOnly := True;
+      FilenameEdit7.ReadOnly := True;
+      FilenameEdit8.ReadOnly := True;
       UpdateWindowPosition;
        btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123 libraries are loaded...'
+        'PortAudio, SndFile, Mpg123, AAC libraries are loaded...'
        end else btnLoad.Text :=
         'One or more libraries did not load, check filenames...';
         
@@ -292,7 +298,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
        begin
       plugsoundtouch := true;
           btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123 and Plugin are loaded...';
+        'PortAudio, SndFile, Mpg123, AAC and Plugin are loaded...';
         end
          else
          begin
@@ -527,17 +533,17 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
      uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
      /// Add DSP Noise removal. First chunck will be the noise sample.
    
-     uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
+    uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : Index of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
-
+// {
      uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1,
       (100 - TrackBar2.position) / 100,
       (100 - TrackBar3.position) / 100, True);
-    /// Set volume
+// }   /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : InputIndex of a existing Input
     ////////// VolLeft : Left volume
@@ -647,7 +653,7 @@ end;
 
     {@VFD_BODY_BEGIN: Simpleplayer}
   Name := 'Simpleplayer';
-  SetPosition(618, 164, 503, 455);
+  SetPosition(600, 57, 503, 515);
   WindowTitle := 'Simple player ';
   IconName := '';
   BackGroundColor := $80000001;
@@ -659,7 +665,7 @@ end;
   with Custom1 do
   begin
     Name := 'Custom1';
-    SetPosition(10, 4, 115, 195);
+    SetPosition(10, 16, 115, 259);
     OnPaint := @uos_logo;
   end;
 
@@ -679,7 +685,7 @@ end;
   with btnLoad do
   begin
     Name := 'btnLoad';
-    SetPosition(8, 204, 488, 23);
+    SetPosition(8, 282, 488, 24);
     Text := 'Load that libraries';
     FontDesc := '#Label1';
     ImageName := '';
@@ -717,7 +723,7 @@ end;
   with FilenameEdit4 do
   begin
     Name := 'FilenameEdit4';
-    SetPosition(132, 236, 360, 24);
+    SetPosition(132, 312, 360, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -729,7 +735,7 @@ end;
   with btnStart do
   begin
     Name := 'btnStart';
-    SetPosition(140, 404, 66, 23);
+    SetPosition(140, 480, 66, 23);
     Text := 'Play';
     Enabled := False;
     FontDesc := '#Label1';
@@ -744,7 +750,7 @@ end;
   with btnStop do
   begin
     Name := 'btnStop';
-    SetPosition(368, 404, 66, 23);
+    SetPosition(368, 480, 66, 23);
     Text := 'Stop';
     Enabled := False;
     FontDesc := '#Label1';
@@ -759,7 +765,7 @@ end;
   with lposition do
   begin
     Name := 'lposition';
-    SetPosition(228, 297, 84, 19);
+    SetPosition(228, 373, 84, 19);
     Alignment := taCenter;
     FontDesc := '#Label2';
     ParentShowHint := False;
@@ -795,11 +801,11 @@ end;
   with Labelst do
   begin
     Name := 'Labelst';
-    SetPosition(136, 120, 316, 15);
+    SetPosition(140, 200, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
-    Text := 'Folder + filename of SoundTouch Library';
+    Text := 'Folder + filename of SoundTouch plugin Library';
     Hint := '';
   end;
 
@@ -819,7 +825,7 @@ end;
   with FilenameEdit5 do
   begin
     Name := 'FilenameEdit5';
-    SetPosition(136, 136, 356, 24);
+    SetPosition(138, 216, 356, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -831,7 +837,7 @@ end;
   with Label1 do
   begin
     Name := 'Label1';
-    SetPosition(312, 297, 12, 15);
+    SetPosition(312, 373, 12, 15);
     FontDesc := '#Label1';
     ParentShowHint := False;
     Text := '/';
@@ -842,7 +848,7 @@ end;
   with Llength do
   begin
     Name := 'Llength';
-    SetPosition(320, 297, 80, 15);
+    SetPosition(320, 373, 80, 15);
     FontDesc := '#Label2';
     ParentShowHint := False;
     Text := '00:00:00.000';
@@ -853,7 +859,7 @@ end;
   with btnpause do
   begin
     Name := 'btnpause';
-    SetPosition(216, 404, 66, 23);
+    SetPosition(216, 480, 66, 23);
     Text := 'Pause';
     Enabled := False;
     FontDesc := '#Label1';
@@ -868,7 +874,7 @@ end;
   with btnresume do
   begin
     Name := 'btnresume';
-    SetPosition(292, 404, 66, 23);
+    SetPosition(292, 480, 66, 23);
     Text := 'Resume';
     Enabled := False;
     FontDesc := '#Label1';
@@ -883,7 +889,7 @@ end;
   with CheckBox1 do
   begin
     Name := 'CheckBox1';
-    SetPosition(132, 376, 104, 19);
+    SetPosition(132, 452, 104, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 17;
@@ -895,7 +901,7 @@ end;
   with RadioButton1 do
   begin
     Name := 'RadioButton1';
-    SetPosition(12, 368, 96, 19);
+    SetPosition(12, 444, 96, 19);
     Checked := True;
     FontDesc := '#Label1';
     GroupIndex := 0;
@@ -909,7 +915,7 @@ end;
   with RadioButton2 do
   begin
     Name := 'RadioButton2';
-    SetPosition(12, 384, 100, 19);
+    SetPosition(12, 460, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
     ParentShowHint := False;
@@ -922,7 +928,7 @@ end;
   with RadioButton3 do
   begin
     Name := 'RadioButton3';
-    SetPosition(12, 402, 100, 19);
+    SetPosition(12, 478, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
     ParentShowHint := False;
@@ -935,7 +941,7 @@ end;
   with Label2 do
   begin
     Name := 'Label2';
-    SetPosition(12, 352, 104, 15);
+    SetPosition(12, 428, 104, 15);
     FontDesc := '#Label2';
     ParentShowHint := False;
     Text := 'Sample format';
@@ -946,7 +952,7 @@ end;
   with TrackBar1 do
   begin
     Name := 'TrackBar1';
-    SetPosition(136, 264, 356, 30);
+    SetPosition(136, 340, 356, 30);
     ParentShowHint := False;
     TabOrder := 22;
     Hint := '';
@@ -958,7 +964,7 @@ end;
   with TrackBar2 do
   begin
     Name := 'TrackBar2';
-    SetPosition(8, 248, 32, 78);
+    SetPosition(8, 324, 32, 78);
     Orientation := orVertical;
     ParentShowHint := False;
     TabOrder := 23;
@@ -970,7 +976,7 @@ end;
   with TrackBar3 do
   begin
     Name := 'TrackBar3';
-    SetPosition(76, 248, 28, 78);
+    SetPosition(76, 324, 28, 78);
     Orientation := orVertical;
     ParentShowHint := False;
     TabOrder := 24;
@@ -982,7 +988,7 @@ end;
   with Label3 do
   begin
     Name := 'Label3';
-    SetPosition(16, 232, 84, 15);
+    SetPosition(16, 308, 84, 15);
     Alignment := taCenter;
     FontDesc := '#Label2';
     ParentShowHint := False;
@@ -994,7 +1000,7 @@ end;
   with Label4 do
   begin
     Name := 'Label4';
-    SetPosition(8, 328, 40, 15);
+    SetPosition(8, 404, 40, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -1006,7 +1012,7 @@ end;
   with Label5 do
   begin
     Name := 'Label5';
-    SetPosition(72, 328, 36, 19);
+    SetPosition(72, 404, 36, 19);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -1018,7 +1024,7 @@ end;
   with vuleft do
   begin
     Name := 'vuleft';
-    SetPosition(44, 252, 8, 74);
+    SetPosition(44, 328, 8, 74);
     BackgroundColor := TfpgColor($00D51D);
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -1031,7 +1037,7 @@ end;
   with vuright do
   begin
     Name := 'vuright';
-    SetPosition(64, 252, 8, 74);
+    SetPosition(64, 328, 8, 74);
     BackgroundColor := TfpgColor($1DD523);
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -1044,7 +1050,7 @@ end;
   with CheckBox2 do
   begin
     Name := 'CheckBox2';
-    SetPosition(280, 320, 184, 19);
+    SetPosition(280, 396, 184, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 32;
@@ -1057,7 +1063,7 @@ end;
   with Label6 do
   begin
     Name := 'Label6';
-    SetPosition(276, 344, 80, 19);
+    SetPosition(272, 416, 80, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     Text := 'Tempo: 1.0';
@@ -1068,7 +1074,7 @@ end;
   with Label7 do
   begin
     Name := 'Label7';
-    SetPosition(384, 344, 80, 15);
+    SetPosition(384, 416, 68, 15);
     FontDesc := '#Label1';
     ParentShowHint := False;
     Text := 'Pitch: 1.0';
@@ -1079,7 +1085,7 @@ end;
   with TrackBar4 do
   begin
     Name := 'TrackBar4';
-    SetPosition(348, 340, 28, 54);
+    SetPosition(348, 416, 28, 54);
     Orientation := orVertical;
     ParentShowHint := False;
     Position := 50;
@@ -1092,7 +1098,7 @@ end;
   with TrackBar5 do
   begin
     Name := 'TrackBar5';
-    SetPosition(444, 340, 28, 54);
+    SetPosition(444, 416, 28, 54);
     Orientation := orVertical;
     ParentShowHint := False;
     Position := 50;
@@ -1105,7 +1111,7 @@ end;
   with Button1 do
   begin
     Name := 'Button1';
-    SetPosition(276, 368, 60, 23);
+    SetPosition(276, 444, 60, 23);
     Text := 'Reset';
     FontDesc := '#Label1';
     ImageName := '';
@@ -1119,7 +1125,7 @@ end;
   with chkst2b do
   begin
     Name := 'chkst2b';
-    SetPosition(132, 336, 136, 19);
+    SetPosition(132, 412, 136, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 38;
@@ -1132,7 +1138,7 @@ end;
   with chknoise do
   begin
     Name := 'chknoise';
-    SetPosition(132, 356, 136, 19);
+    SetPosition(132, 432, 136, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 38;
@@ -1145,17 +1151,18 @@ end;
   with Labelst1 do
   begin
     Name := 'Labelst1';
-    SetPosition(162, 160, 316, 15);
+    SetPosition(146, 240, 316, 15);
+    Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
-    Text := 'Folder + filename of bs2b Library';
+    Text := 'Folder + filename of bs2b plugin Library';
   end;
 
   FilenameEdit6 := TfpgFileNameEdit.Create(self);
   with FilenameEdit6 do
   begin
     Name := 'FilenameEdit6';
-    SetPosition(136, 176, 356, 24);
+    SetPosition(138, 256, 356, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -1167,13 +1174,59 @@ end;
   with chkstereo2mono do
   begin
     Name := 'chkstereo2mono';
-    SetPosition(132, 316, 120, 19);
+    SetPosition(132, 392, 120, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 42;
     Text := 'Stereo to Mono';
-     Hint := 'Convert Stereo to Mono';
+    Hint := 'Convert Stereo to Mono';
     OnChange := @Changestereo2mono;
+  end;
+
+  Labelst11 := TfpgLabel.Create(self);
+  with Labelst11 do
+  begin
+    Name := 'Labelst11';
+    SetPosition(140, 120, 316, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Folder + filename of mp4ff Library';
+  end;
+
+  FilenameEdit7 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit7 do
+  begin
+    Name := 'FilenameEdit7';
+    SetPosition(138, 136, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 44;
+  end;
+
+  Labelst111 := TfpgLabel.Create(self);
+  with Labelst111 do
+  begin
+    Name := 'Labelst111';
+    SetPosition(138, 160, 316, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Folder + filename of Faad Library';
+  end;
+
+  FilenameEdit8 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit8 do
+  begin
+    Name := 'FilenameEdit8';
+    SetPosition(138, 176, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 46;
   end;
 
   {@VFD_BODY_END: Simpleplayer}
@@ -1184,7 +1237,7 @@ end;
     ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
     checkbox1.OnChange := @changecheck;
     RadioButton1.Checked := True;
-    Height := 233;
+    Height := 312;
              {$IFDEF Windows}
      {$if defined(cpu64)}
     FilenameEdit1.FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
@@ -1195,10 +1248,14 @@ end;
     FilenameEdit1.FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     FilenameEdit2.FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
+    FilenameEdit7.FileName := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
+    FilenameEdit8.FileName := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
+    
     FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
     FilenameEdit6.FileName := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
+    
   {$endif}
-    FilenameEdit4.FileName := ordir + 'sound\test.mp3';
+    FilenameEdit4.FileName := ordir + 'sound\test.ogg';
  {$ENDIF}
 
   {$IFDEF Darwin}
@@ -1208,7 +1265,7 @@ end;
     FilenameEdit2.FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
     FilenameEdit3.FileName := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
     FilenameEdit5.FileName := opath + '/lib/Mac/32bit/plugin/libSoundTouch-32.dylib';
-    FilenameEdit4.FileName := opath + 'sound/test.mp3';
+    FilenameEdit4.FileName := opath + 'sound/test.ogg';
             {$ENDIF}
 
    {$IFDEF linux}
@@ -1216,16 +1273,24 @@ end;
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+    FilenameEdit7.FileName := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
+    FilenameEdit8.FileName := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
+    
     FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
     FilenameEdit6.FileName := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
+    
 {$else}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+    FilenameEdit7.FileName := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
+    FilenameEdit8.FileName := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
+    
     FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
     FilenameEdit6.FileName := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
+    
 {$endif}
-    FilenameEdit4.FileName := ordir + 'sound/test.mp3';
+    FilenameEdit4.FileName := ordir + 'sound/test.ogg';
             {$ENDIF}
 
   {$IFDEF freebsd}
@@ -1241,7 +1306,7 @@ end;
     FilenameEdit3.FileName := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
     FilenameEdit5.FileName := '';
 {$endif}
-    FilenameEdit4.FileName := ordir + 'sound/test.mp3';
+    FilenameEdit4.FileName := ordir + 'sound/test.ogg';
 {$ENDIF}
     FilenameEdit4.Initialdir := ordir + 'sound';
     FilenameEdit1.Initialdir := ordir + 'lib';

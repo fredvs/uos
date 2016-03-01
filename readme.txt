@@ -6,7 +6,7 @@ For fpc, fpGUI, LCL and Delphi.
 
 With uos you can:
 
-. Listen to mp3, ogg, wav, flac,... audio files.
+. Listen to mp3, ogg, wav, flac, m4a ... audio files.
 
 . Deal with 16, 32 or float 32 bit resolution.
 
@@ -19,7 +19,7 @@ With uos you can:
 . Listen to multiple input and output.
 
 uos uses:
-PortAudio, SndFile, Mpg123 audio libraries and
+PortAudio, SndFile, Mpg123, Faad, Mp4ff audio libraries and
 SoundTouch, Bs2b audio-effect libraries.
 
 Included in the package:

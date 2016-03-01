@@ -1,12 +1,12 @@
 object Form1: TForm1
   Left = 497
-  Height = 476
-  Top = 16
-  Width = 505
+  Height = 231
+  Top = 15
+  Width = 501
   BorderIcons = [biSystemMenu]
   Caption = 'Multi Player U0S Portaudio + SndFile + Mpg123'
-  ClientHeight = 476
-  ClientWidth = 505
+  ClientHeight = 231
+  ClientWidth = 501
   Color = clMoneyGreen
   Icon.Data = {
     BE0800000000010001002020000001000800A808000016000000280000002000
@@ -87,37 +87,37 @@ object Form1: TForm1
   Position = poDesktopCenter
   LCLVersion = '1.5'
   object Shape5: TShape
-    Left = 11
+    Left = 9
     Height = 44
-    Top = 429
+    Top = 512
     Width = 483
     Brush.Color = clRed
   end
   object Shape4: TShape
-    Left = 11
+    Left = 9
     Height = 65
-    Top = 360
+    Top = 443
     Width = 483
     Brush.Color = clYellow
   end
   object Shape3: TShape
-    Left = 11
+    Left = 9
     Height = 65
-    Top = 292
+    Top = 375
     Width = 483
     Brush.Color = clLime
   end
   object Shape2: TShape
-    Left = 11
+    Left = 9
     Height = 68
-    Top = 220
+    Top = 303
     Width = 483
     Brush.Color = clFuchsia
   end
   object Shape1: TShape
-    Left = 11
+    Left = 9
     Height = 66
-    Top = 150
+    Top = 233
     Width = 483
     Brush.Color = clAqua
   end
@@ -149,9 +149,9 @@ object Form1: TForm1
     TabOrder = 3
   end
   object Button2: TButton
-    Left = 143
+    Left = 141
     Height = 25
-    Top = 186
+    Top = 269
     Width = 62
     Caption = 'Play'
     OnClick = Button2Click
@@ -197,18 +197,18 @@ object Form1: TForm1
     ParentFont = False
   end
   object Edit4: TEdit
-    Left = 17
+    Left = 15
     Height = 27
-    Top = 156
+    Top = 239
     Width = 471
     Alignment = taCenter
     AutoSize = False
     TabOrder = 5
   end
   object Button3: TButton
-    Left = 371
+    Left = 369
     Height = 25
-    Top = 186
+    Top = 269
     Width = 54
     Caption = 'Stop'
     Enabled = False
@@ -216,36 +216,36 @@ object Form1: TForm1
     TabOrder = 6
   end
   object Button4: TButton
-    Left = 66
+    Left = 64
     Height = 25
-    Top = 186
+    Top = 269
     Width = 70
     Caption = 'Choose'
     OnClick = Button4Click
     TabOrder = 7
   end
   object Button5: TButton
-    Left = 143
+    Left = 141
     Height = 25
-    Top = 258
+    Top = 341
     Width = 62
     Caption = 'Play'
     OnClick = Button5Click
     TabOrder = 8
   end
   object Edit5: TEdit
-    Left = 18
+    Left = 16
     Height = 27
-    Top = 226
+    Top = 309
     Width = 471
     Alignment = taCenter
     AutoSize = False
     TabOrder = 9
   end
   object Button6: TButton
-    Left = 371
+    Left = 369
     Height = 25
-    Top = 258
+    Top = 341
     Width = 54
     Caption = 'Stop'
     Enabled = False
@@ -253,36 +253,36 @@ object Form1: TForm1
     TabOrder = 10
   end
   object Button7: TButton
-    Left = 66
+    Left = 64
     Height = 25
-    Top = 258
+    Top = 341
     Width = 70
     Caption = 'Choose'
     OnClick = Button7Click
     TabOrder = 11
   end
   object Button8: TButton
-    Left = 143
+    Left = 141
     Height = 25
-    Top = 326
+    Top = 409
     Width = 62
     Caption = 'Play'
     OnClick = Button8Click
     TabOrder = 12
   end
   object Edit6: TEdit
-    Left = 18
+    Left = 16
     Height = 27
-    Top = 296
+    Top = 379
     Width = 471
     Alignment = taCenter
     AutoSize = False
     TabOrder = 13
   end
   object Button9: TButton
-    Left = 371
+    Left = 369
     Height = 25
-    Top = 326
+    Top = 409
     Width = 54
     Caption = 'Stop'
     Enabled = False
@@ -290,36 +290,36 @@ object Form1: TForm1
     TabOrder = 14
   end
   object Button10: TButton
-    Left = 66
+    Left = 64
     Height = 25
-    Top = 326
+    Top = 409
     Width = 70
     Caption = 'Choose'
     OnClick = Button10Click
     TabOrder = 15
   end
   object Edit7: TEdit
-    Left = 18
+    Left = 16
     Height = 27
-    Top = 365
+    Top = 448
     Width = 471
     Alignment = taCenter
     AutoSize = False
     TabOrder = 16
   end
   object Button14: TButton
-    Left = 142
+    Left = 140
     Height = 25
-    Top = 438
+    Top = 521
     Width = 212
     Caption = 'Play All Together'
     OnClick = Button14Click
     TabOrder = 17
   end
   object Button15: TButton
-    Left = 217
+    Left = 215
     Height = 25
-    Top = 186
+    Top = 269
     Width = 62
     Caption = 'Pause'
     Enabled = False
@@ -327,9 +327,9 @@ object Form1: TForm1
     TabOrder = 18
   end
   object Button16: TButton
-    Left = 287
+    Left = 285
     Height = 25
-    Top = 186
+    Top = 269
     Width = 73
     Caption = 'Resume'
     Enabled = False
@@ -337,9 +337,9 @@ object Form1: TForm1
     TabOrder = 19
   end
   object Button17: TButton
-    Left = 217
+    Left = 215
     Height = 25
-    Top = 258
+    Top = 341
     Width = 62
     Caption = 'Pause'
     Enabled = False
@@ -347,9 +347,9 @@ object Form1: TForm1
     TabOrder = 20
   end
   object Button18: TButton
-    Left = 287
+    Left = 285
     Height = 25
-    Top = 258
+    Top = 341
     Width = 73
     Caption = 'Resume'
     Enabled = False
@@ -357,9 +357,9 @@ object Form1: TForm1
     TabOrder = 21
   end
   object Button19: TButton
-    Left = 217
+    Left = 215
     Height = 25
-    Top = 326
+    Top = 409
     Width = 62
     Caption = 'Pause'
     Enabled = False
@@ -367,9 +367,9 @@ object Form1: TForm1
     TabOrder = 22
   end
   object Button20: TButton
-    Left = 287
+    Left = 285
     Height = 25
-    Top = 326
+    Top = 409
     Width = 73
     Caption = 'Resume'
     Enabled = False
@@ -377,34 +377,34 @@ object Form1: TForm1
     TabOrder = 23
   end
   object PaintBox1: TPaintBox
-    Left = 17
+    Left = 16
     Height = 105
-    Top = 8
+    Top = 54
     Width = 105
     OnPaint = PaintBox1Paint
   end
   object Button1: TButton
-    Left = 11
+    Left = 9
     Height = 20
-    Top = 125
+    Top = 208
     Width = 483
     Caption = 'Load that libraries'
     OnClick = Button1Click
     TabOrder = 0
   end
   object Button11: TButton
-    Left = 143
+    Left = 141
     Height = 25
-    Top = 394
+    Top = 477
     Width = 62
     Caption = 'Play'
     OnClick = Button11Click
     TabOrder = 24
   end
   object Button22: TButton
-    Left = 287
+    Left = 285
     Height = 25
-    Top = 394
+    Top = 477
     Width = 73
     Caption = 'Resume'
     Enabled = False
@@ -412,9 +412,9 @@ object Form1: TForm1
     TabOrder = 25
   end
   object Button21: TButton
-    Left = 217
+    Left = 215
     Height = 25
-    Top = 394
+    Top = 477
     Width = 62
     Caption = 'Pause'
     Enabled = False
@@ -422,9 +422,9 @@ object Form1: TForm1
     TabOrder = 26
   end
   object Button12: TButton
-    Left = 371
+    Left = 369
     Height = 25
-    Top = 394
+    Top = 477
     Width = 54
     Caption = 'Stop'
     Enabled = False
@@ -432,13 +432,57 @@ object Form1: TForm1
     TabOrder = 27
   end
   object Button13: TButton
-    Left = 66
+    Left = 64
     Height = 25
-    Top = 394
+    Top = 477
     Width = 64
     Caption = 'Choose'
     OnClick = Button13Click
     TabOrder = 28
+  end
+  object Edit8: TEdit
+    Left = 132
+    Height = 27
+    Top = 134
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    TabOrder = 29
+  end
+  object Label4: TLabel
+    Left = 132
+    Height = 18
+    Top = 120
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Folder + filename of Mp4ff Library'
+    Font.Height = -11
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 132
+    Height = 18
+    Top = 160
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Folder + filename of Faac2 Library'
+    Font.Height = -11
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Edit9: TEdit
+    Left = 132
+    Height = 27
+    Top = 174
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    TabOrder = 30
   end
   object OpenDialog1: TOpenDialog
     left = 76

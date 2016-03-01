@@ -154,7 +154,7 @@ var
     // Load the libraries
     // function uos_LoadLib(PortAudioFileName: PChar; SndFileFileName: PChar;
   // Mpg123FileName: PChar) : integer;
-  if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),nil) = 0 then
+  if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),nil, nil, nil) = 0 then
   begin
       hide;
       Height := 305;

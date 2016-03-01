@@ -1,3 +1,5 @@
+{This unit is part of United Openlibraries of Sound (uos)}
+
 {This is the Dynamic loading version of PortAudio Pascal Wrapper.
  Load library with pa_load() and release with pa_unload().
  License : modified LGPL. 

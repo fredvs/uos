@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 668
-  Height = 419
-  Top = 130
+  Left = 755
+  Height = 555
+  Top = 70
   Width = 505
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'
-  ClientHeight = 419
+  ClientHeight = 555
   ClientWidth = 505
   Color = clMoneyGreen
   Icon.Data = {
@@ -89,14 +89,14 @@ object Form1: TForm1
   object Shape1: TShape
     Left = 8
     Height = 216
-    Top = 194
+    Top = 331
     Width = 489
     Brush.Color = clSilver
   end
   object TrackBar1: TTrackBar
     Left = 24
-    Height = 160
-    Top = 200
+    Height = 98
+    Top = 338
     Width = 26
     Max = 100
     OnChange = TrackBar1Change
@@ -173,34 +173,34 @@ object Form1: TForm1
     ParentFont = False
   end
   object Edit4: TEdit
-    Left = 126
+    Left = 124
     Height = 27
-    Top = 202
+    Top = 337
     Width = 278
     Alignment = taCenter
     AutoSize = False
     TabOrder = 0
   end
   object CheckBox1: TCheckBox
-    Left = 56
+    Left = 128
     Height = 22
-    Top = 380
+    Top = 483
     Width = 98
     Caption = 'Play Reverse'
     OnChange = CheckBox1Change
     TabOrder = 6
   end
   object PaintBox1: TPaintBox
-    Left = 18
+    Left = 16
     Height = 105
-    Top = 32
+    Top = 99
     Width = 105
     OnPaint = PaintBox1Paint
   end
   object TrackBar2: TTrackBar
-    Left = 120
-    Height = 33
-    Top = 228
+    Left = 118
+    Height = 35
+    Top = 363
     Width = 369
     Max = 100
     Position = 0
@@ -211,9 +211,9 @@ object Form1: TForm1
     TabOrder = 7
   end
   object Label4: TLabel
-    Left = 30
+    Left = 24
     Height = 14
-    Top = 358
+    Top = 443
     Width = 27
     Alignment = taCenter
     Caption = 'Vol L'
@@ -223,79 +223,79 @@ object Form1: TForm1
     ParentFont = False
   end
   object Button1: TButton
-    Left = 10
+    Left = 8
     Height = 26
-    Top = 164
+    Top = 296
     Width = 483
     Caption = 'Load that libraries'
     OnClick = Button1Click
     TabOrder = 2
   end
   object Button3: TButton
-    Left = 204
+    Left = 136
     Height = 23
-    Top = 376
-    Width = 58
+    Top = 515
+    Width = 75
     Caption = 'Play'
     OnClick = Button3Click
     TabOrder = 1
   end
   object Button4: TButton
-    Left = 338
+    Left = 312
     Height = 23
-    Top = 376
-    Width = 58
+    Top = 516
+    Width = 80
     Caption = 'Resume'
     Enabled = False
     OnClick = Button4Click
     TabOrder = 9
   end
   object Button5: TButton
-    Left = 274
+    Left = 224
     Height = 23
-    Top = 376
-    Width = 54
+    Top = 515
+    Width = 76
     Caption = 'Pause'
     Enabled = False
     OnClick = Button5Click
     TabOrder = 10
   end
   object Button6: TButton
-    Left = 412
+    Left = 408
     Height = 23
-    Top = 376
-    Width = 47
+    Top = 515
+    Width = 63
     Caption = 'Stop'
     Enabled = False
     OnClick = Button6Click
     TabOrder = 11
   end
   object Button2: TButton
-    Left = 416
+    Left = 414
     Height = 26
-    Top = 203
+    Top = 338
     Width = 66
     Caption = 'Choose'
     OnClick = Button2Click
     TabOrder = 12
   end
   object TrackBar3: TTrackBar
-    Left = 89
-    Height = 162
-    Top = 200
+    Left = 84
+    Height = 100
+    Top = 337
     Width = 26
     Max = 100
     OnChange = TrackBar1Change
     Orientation = trVertical
-    Position = 100
+    Position = 0
     Reversed = True
     TickStyle = tsNone
     TabOrder = 13
   end
   object Label5: TLabel
-    Left = 86
+    Left = 81
     Height = 14
-    Top = 358
+    Top = 443
     Width = 29
     Alignment = taCenter
     Caption = 'Vol R'
@@ -305,10 +305,10 @@ object Form1: TForm1
     ParentFont = False
   end
   object RadioGroup1: TRadioGroup
-    Left = 124
-    Height = 86
-    Top = 282
-    Width = 120
+    Left = 16
+    Height = 78
+    Top = 461
+    Width = 107
     AutoFill = True
     Caption = 'Sample Format'
     ChildSizing.LeftRightSpacing = 6
@@ -319,16 +319,16 @@ object Form1: TForm1
     ChildSizing.ShrinkVertical = crsScaleChilds
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 70
-    ClientWidth = 118
+    ClientHeight = 62
+    ClientWidth = 105
     Color = clSilver
     ParentColor = False
     TabOrder = 14
     object RadioButton1: TRadioButton
       Left = 6
-      Height = 19
+      Height = 16
       Top = 6
-      Width = 106
+      Width = 93
       Caption = 'Float 32 bit'
       Checked = True
       TabOrder = 0
@@ -336,33 +336,33 @@ object Form1: TForm1
     end
     object RadioButton2: TRadioButton
       Left = 6
-      Height = 19
-      Top = 25
-      Width = 106
+      Height = 17
+      Top = 22
+      Width = 93
       Caption = 'Int 32 bit'
       TabOrder = 1
     end
     object RadioButton3: TRadioButton
       Left = 6
-      Height = 20
-      Top = 44
-      Width = 106
+      Height = 17
+      Top = 39
+      Width = 93
       Caption = 'Int 16 bit'
       TabOrder = 2
     end
   end
   object llength: TLabel
-    Left = 314
+    Left = 312
     Height = 15
-    Top = 262
+    Top = 387
     Width = 84
     Caption = '00:00:00.000'
     ParentColor = False
   end
   object lposition: TLabel
-    Left = 214
+    Left = 208
     Height = 15
-    Top = 262
+    Top = 387
     Width = 84
     Caption = '00:00:00.000'
     ParentColor = False
@@ -370,38 +370,39 @@ object Form1: TForm1
   object Label8: TLabel
     Left = 302
     Height = 15
-    Top = 262
+    Top = 387
     Width = 4
     Caption = '/'
     ParentColor = False
   end
   object ShapeRight: TShape
-    Left = 72
-    Height = 146
-    Top = 208
+    Left = 70
+    Height = 92
+    Top = 343
     Width = 8
     Brush.Color = clLime
   end
   object ShapeLeft: TShape
-    Left = 56
-    Height = 146
-    Top = 208
+    Left = 54
+    Height = 92
+    Top = 343
     Width = 8
     Brush.Color = clLime
   end
   object Edit5: TEdit
-    Left = 132
+    Left = 130
     Height = 27
-    Top = 134
+    Top = 223
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    OnChange = Edit5Change
     TabOrder = 15
   end
   object Label6: TLabel
-    Left = 132
+    Left = 130
     Height = 18
-    Top = 120
+    Top = 208
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -412,43 +413,43 @@ object Form1: TForm1
     ParentFont = False
   end
   object CheckBox2: TCheckBox
-    Left = 274
+    Left = 272
     Height = 22
-    Top = 278
+    Top = 413
     Width = 184
     Caption = 'Enable SoundTouch Plugin'
     OnChange = ChangePlugSet
     TabOrder = 16
   end
   object Button7: TButton
-    Left = 280
+    Left = 278
     Height = 25
-    Top = 338
+    Top = 473
     Width = 55
     Caption = 'Reset'
     OnClick = ResetPlugClick
     TabOrder = 17
   end
   object Label7: TLabel
-    Left = 280
+    Left = 278
     Height = 15
-    Top = 314
+    Top = 449
     Width = 67
     Caption = 'Tempo: 1.0'
     ParentColor = False
   end
   object Label9: TLabel
-    Left = 396
+    Left = 394
     Height = 15
-    Top = 314
-    Width = 55
-    Caption = 'Rate: 1.0'
+    Top = 449
+    Width = 58
+    Caption = 'Pitch: 1.0'
     ParentColor = False
   end
   object TrackBar4: TTrackBar
-    Left = 350
+    Left = 348
     Height = 66
-    Top = 300
+    Top = 435
     Width = 34
     Max = 100
     OnChange = ChangePlugSet
@@ -459,9 +460,9 @@ object Form1: TForm1
     TabOrder = 18
   end
   object TrackBar5: TTrackBar
-    Left = 455
+    Left = 453
     Height = 66
-    Top = 300
+    Top = 435
     Width = 34
     Max = 100
     OnChange = ChangePlugSet
@@ -470,6 +471,100 @@ object Form1: TForm1
     Reversed = True
     TickStyle = tsNone
     TabOrder = 19
+  end
+  object CheckBox3: TCheckBox
+    Left = 128
+    Height = 22
+    Top = 414
+    Width = 133
+    Caption = 'Stereo to BinAural'
+    OnChange = CheckBox3Change
+    TabOrder = 20
+  end
+  object Label10: TLabel
+    Left = 125
+    Height = 18
+    Top = 249
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Folder + filename of Plugin bs2b Library'
+    Font.Height = -11
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Edit6: TEdit
+    Left = 130
+    Height = 27
+    Top = 265
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    TabOrder = 21
+  end
+  object Chknoise: TCheckBox
+    Left = 128
+    Height = 22
+    Top = 459
+    Width = 112
+    Caption = 'Noise Remover'
+    OnChange = ChknoiseChange
+    TabOrder = 22
+  end
+  object chkstereo2mono: TCheckBox
+    Left = 128
+    Height = 22
+    Top = 435
+    Width = 115
+    Caption = 'Stereo to Mono'
+    OnChange = chkstereo2monoChange
+    TabOrder = 23
+  end
+  object Label11: TLabel
+    Left = 130
+    Height = 18
+    Top = 120
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Folder + filename of Mp4ff Library'
+    Font.Height = -11
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Edit7: TEdit
+    Left = 130
+    Height = 27
+    Top = 136
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    OnChange = Edit5Change
+    TabOrder = 24
+  end
+  object Label12: TLabel
+    Left = 130
+    Height = 18
+    Top = 161
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Folder + filename of Faad2 Library'
+    Font.Height = -11
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Edit8: TEdit
+    Left = 130
+    Height = 27
+    Top = 177
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    TabOrder = 25
   end
   object OpenDialog1: TOpenDialog
     left = 76

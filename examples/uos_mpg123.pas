@@ -1,3 +1,5 @@
+{This unit is part of United Openlibraries of Sound (uos)}
+
 { This is the dynamical loader for mpg123 library with reference counting.
   Load the library with mp_load() and release with mp_unload().
   License : modified LGPL.

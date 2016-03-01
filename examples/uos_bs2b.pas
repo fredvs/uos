@@ -1,4 +1,6 @@
-{This is the Dynamic loading Pascal Wrapper of 
+{This unit is part of United Openlibraries of Sound (uos)}
+
+{This is the Dynamic loading Pascal Wrapper of
     bs2b library of Boris Mikhaylov
  Load library with bs_load() and release with bs_unload().
  License : modified LGPL. 

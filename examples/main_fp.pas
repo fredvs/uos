@@ -235,8 +235,8 @@ procedure TForm1.Button1Click(Sender: TObject);
 begin
 
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
-     if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text)) = 0 then
+  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName ; Mp4ff, Faad2: Pchar) : integer;
+     if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text), nil, nil) = 0 then
   begin
     form1.hide;
     button1.Caption := 'PortAudio, SndFile and Mpg123 libraries are loaded...';
@@ -301,7 +301,9 @@ begin
   ////////// FileName : filename of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-  ////////// FramesCount : default : -1 (= 65536)
+  ////////// FramesCount : default: -1 (= 65536)
+
+  if  In1Index > -1 then begin
 
   Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, 0, -1);
   //// add a Output into device with custom parameters
@@ -399,6 +401,8 @@ begin
   Button6.Enabled := True;
   Button5.Enabled := True;
   CheckBox1.Enabled := True;
+
+  end;
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);

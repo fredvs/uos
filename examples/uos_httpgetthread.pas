@@ -1,6 +1,8 @@
-{This is HTTP Thread Getter
- created by Andrew Haines => andrewd207@aol.com
- License : modified LGPL.
+{This unit is part of United Openlibraries of Sound (uos)}
+
+{      This is HTTP Thread Getter
+ created by Andrew Haines -> andrewd207@aol.com
+       License : modified LGPL.
  Fred van Stappen / fiens@hotmail.com}
 
 unit uos_httpgetthread;
@@ -10,7 +12,7 @@ unit uos_httpgetthread;
 interface
 
 uses
-  Classes, SysUtils, strutils, Pipes;
+  Classes, SysUtils,  Pipes;
 
 type
 

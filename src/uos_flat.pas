@@ -1,5 +1,6 @@
-{ United Openlibraries of Sound (uos)
-  License : modified LGPL.
+{This unit is part of United Openlibraries of Sound (uos)}
+
+{  License : modified LGPL.
   Fred van Stappen fiens@hotmail.com }
 
 // This is the "Flat Layer" of uos => for universal procedures.
@@ -86,13 +87,13 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
 {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName: PChar) : LongInt;
-        ////// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+         ////// load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...
 
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
            ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
@@ -1161,10 +1162,10 @@ begin
  uosPlayers[PlayerIndex].StreamOut[OutIndex].LoopProc := Proc;
 end;
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName: PChar) : cint32;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
   begin
    ifflat := true;
-result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName)  ;
+result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName)  ;
 //uosLoadResult:= uos.uosLoadResult;
   end;
   
@@ -1201,10 +1202,10 @@ procedure uos_unloadlib() ;
 uos.uos_unloadlib() ;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
                     ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 begin
-uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123) ;
+uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123, AAC) ;
 uosLoadResult:= uos.uosLoadResult;
 end;
 

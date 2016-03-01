@@ -204,7 +204,7 @@ loadok : boolean = false;
  // function uos_LoadLib(PortAudioFileName: PChar; SndFileFileName: PChar;
   // Mpg123FileName: PChar) : integer;
 
-if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)) = 0 then
+if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName),nil, nil) = 0 then
     begin
       hide;
        loadok := true;

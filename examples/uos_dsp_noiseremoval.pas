@@ -1,8 +1,9 @@
+{This unit is part of United Openlibraries of Sound (uos)}
 {
  audacity which this file was converted from is GPLv2
  http://www.audacityteam.org/about/license/
       Converted By Andrew Haines
- 
+        License : modified LGPL.
     Fred van Stappen fiens@hotmail.com
  }
 

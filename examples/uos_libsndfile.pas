@@ -1,3 +1,5 @@
+{This unit is part of United Openlibraries of Sound (uos)}
+
 {This is the Dynamic loading version with reference counting of LibSndFile.pas.
  Load the library with sf_load() and release with sf_unload().
  License : modified LGPL.

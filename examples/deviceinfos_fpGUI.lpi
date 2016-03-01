@@ -39,7 +39,6 @@
       <Unit0>
         <Filename Value="deviceinfos_fpGUI.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="deviceinfos_fpGUI"/>
       </Unit0>
     </Units>
   </ProjectOptions>

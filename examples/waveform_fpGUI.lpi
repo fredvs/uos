@@ -40,7 +40,6 @@
       <Unit0>
         <Filename Value="waveform_fpGUI.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="waveform_fpGUI"/>
       </Unit0>
     </Units>
   </ProjectOptions>

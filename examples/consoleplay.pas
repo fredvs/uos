@@ -80,7 +80,7 @@ var
     // Load the libraries
     // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
 
-   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil) ;
+   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 

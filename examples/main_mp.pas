@@ -45,9 +45,13 @@ type
     Edit5: TEdit;
     Edit6: TEdit;
     Edit7: TEdit;
+    Edit8: TEdit;
+    Edit9: TEdit;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
     OpenDialog1: TOpenDialog;
     PaintBox1: TPaintBox;
     Shape1: TShape;
@@ -157,6 +161,8 @@ begin
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
+  Edit8.text := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
+  Edit9.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
    {$endif}
   {$ENDIF}
 
@@ -173,16 +179,20 @@ begin
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+  Edit8.text := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
+  Edit9.text := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
   {$else}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+  Edit8.text := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
+  Edit9.text := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
  {$endif}
     {$ENDIF}
 
 {$IFDEF freebsd}
     {$if defined(cpu64)}
-   Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
+  Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
   Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
   Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
   {$else}
@@ -216,9 +226,11 @@ procedure TForm1.Button1Click(Sender: TObject);
 
 begin
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
-    if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text)) = 0 then
-  begin
+  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+
+  if uos_LoadLib(Pchar(Edit1.text), Pchar(Edit2.text),
+     Pchar(Edit3.text), Pchar(Edit8.text), Pchar(Edit9.text)) = 0 then
+ begin
     form1.hide;
     form1.Position := podefault;
     button1.Caption := 'PortAudio, SndFile and Mpg123 libraries are loaded...';
@@ -226,7 +238,7 @@ begin
     edit1.ReadOnly := True;
     edit2.ReadOnly := True;
     edit3.ReadOnly := True;
-    form1.Height := 478;
+    form1.Height := 566;
     form1.Position := poScreenCenter;
     form1.Show;
   end
@@ -584,7 +596,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  form1.Height := 148;
+  form1.Height := 230;
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);

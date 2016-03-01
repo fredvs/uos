@@ -1,3 +1,5 @@
+{This unit is part of United Openlibraries of Sound (uos)}
+
 {This is the Dynamic loading version of SoundTouch Pascal Wrapper
  from Sandro Cumerlato <sandro.cumerlato@gmail.com>.
  Load library with St_load() and release with St_unload().

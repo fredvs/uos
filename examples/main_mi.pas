@@ -135,7 +135,6 @@ begin
    if (button14.Enabled = False) then
     uos_SetDSPVolumeIn(PlayerIndex0, InIndex1, TrackBar1.position / 100,
       TrackBar1.position / 100, True);
-
 end;
 
 procedure TForm1.TrackBar2Change(Sender: TObject);
@@ -276,7 +275,7 @@ procedure TForm1.Button1Click(Sender: TObject);
 begin
   // Load the libraries
   // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
-    if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text)) = 0 then
+    if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text), nil, nil) = 0 then
   begin
     form1.hide;
     form1.Position := podefault;
@@ -337,12 +336,11 @@ begin
 
   uos_CreatePlayer(PlayerIndex0);
 
- inindex1 :=  uos_AddFromFile(PlayerIndex0, pchar(Edit4.Text), -1, 0, -1);
+ inindex1 := uos_AddFromFile(PlayerIndex0, pchar(Edit4.Text), -1, 0, -1);
  inindex2 := uos_AddFromFile(PlayerIndex0, pchar(Edit5.Text), -1, 0, -1);
  inindex3 := uos_AddFromFile(PlayerIndex0, pchar(Edit6.Text), -1, 0, -1);
  inindex4 := uos_AddFromFile(PlayerIndex0, pchar(Edit7.Text), -1, 0, -1);
-
- inindex5 :=  uos_AddFromFile(PlayerIndex0, pchar(Edit8.Text), -1, 0, -1);
+ inindex5 := uos_AddFromFile(PlayerIndex0, pchar(Edit8.Text), -1, 0, -1);
  inindex6 := uos_AddFromFile(PlayerIndex0, pchar(Edit9.Text), -1, 0, -1);
  inindex7 := uos_AddFromFile(PlayerIndex0, pchar(Edit10.Text), -1, 0, -1);
  inindex8 := uos_AddFromFile(PlayerIndex0, pchar(Edit11.Text), -1, 0, -1);
@@ -358,8 +356,7 @@ begin
   uos_AddDSPVolumeIn(PlayerIndex0, InIndex2, 1, 1);
   uos_AddDSPVolumeIn(PlayerIndex0, InIndex3, 1, 1);
   uos_AddDSPVolumeIn(PlayerIndex0, InIndex4, 1, 1);
-
-   uos_AddDSPVolumeIn(PlayerIndex0, InIndex5, 1, 1);
+  uos_AddDSPVolumeIn(PlayerIndex0, InIndex5, 1, 1);
   uos_AddDSPVolumeIn(PlayerIndex0, InIndex6, 1, 1);
   uos_AddDSPVolumeIn(PlayerIndex0, InIndex7, 1, 1);
   uos_AddDSPVolumeIn(PlayerIndex0, InIndex8, 1, 1);
@@ -368,6 +365,7 @@ begin
     ////////// In1Index : InputIndex of a existing input
     ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
     ////////// VolRight : Right volume
+
 
   uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, -1);
   //// add a Output with custom parameters

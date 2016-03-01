@@ -1,3 +1,4 @@
+{This unit is part of United Openlibraries of Sound (uos)}
 {
     This unit uses part of Pascal Audio IO package.
     (paio_channelhelper, pa_ringbuffer, pa_utils)  
