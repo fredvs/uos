@@ -833,8 +833,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=writeln
+finddtext=statustemp
 findhistory=10
+ statustemp
  writeln
  getproc
  FilenameEdit7
@@ -844,7 +845,6 @@ findhistory=10
  heigh t:=
  .height:=
  .height :=
- unload
 findoptions=1
 editpos=25
  0,-1073741823
@@ -870,8 +870,8 @@ editpos=25
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,4
+ 0,11
+ 0,3496
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -922,7 +922,7 @@ sourcefiles=25
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/librarytester_fpGUI.pas
  /home/fred/fpGUI-develop/examples/gui/led_matrix_display/frm_main.pas
- /home/fred/fpGUI-develop/examples/gui/led_matrix_display/led_demo.pas
+ ${PROJECTDIR}/uos.pas
 relpaths=25
  uos.pas
  uos_bs2b.pas
@@ -947,8 +947,8 @@ relpaths=25
  uos_portaudio.pas
  uos_soundtouch.pas
  librarytester_fpGUI.pas
- fpGUI-develop/examples/gui/led_matrix_display/frm_main.pas
- ../fpGUI-develop/examples/gui/led_matrix_display/led_demo.pas
+ ../fpGUI-develop/examples/gui/led_matrix_display/frm_main.pas
+ uos.pas
 ismoduletexts=25
  0
  0
@@ -991,25 +991,25 @@ windowlayout=503
  [mainfo]
  splitdir=0
  useroptions=838860927
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=197
- y=36
- cx=966
+ x=71
+ y=33
+ cx=1272
  cy=621
  rcx=0
  rcy=0
  children=2
   statdisp,0,1,1356,18
-  basedock,0,19,1356,682
+  basedock,0,19,1356,779
  focusedchild=1
  wsize=4
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1027,7 +1027,7 @@ windowlayout=503
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1122,7 +1122,7 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=542
+ cy=639
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1133,7 +1133,7 @@ windowlayout=503
  sortdescend1=0
  sorted=0
  col=0
- row=2
+ row=8
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1331,7 +1331,7 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=594
+ y=691
  cx=1356
  cy=88
  rcx=0
@@ -1402,7 +1402,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1449,7 +1449,7 @@ windowlayout=503
  x=142
  y=0
  cx=1214
- cy=542
+ cy=639
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1485,7 +1485,7 @@ windowlayout=503
  x=0
  y=49
  cx=1356
- cy=542
+ cy=639
  rcx=0
  rcy=0
 [targetconsole]

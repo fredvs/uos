@@ -3494,10 +3494,15 @@ begin
 
 
    ////////////////// Seeking if StreamIn is terminated
-    statustemp := status; 
-   
+     
+   statustemp := 0 ;
     for x := 0 to high(StreamIn) do
-    if (StreamIn[x].Data.Status <> 0) and  (StreamIn[x].Data.TypePut = 0) then statustemp := StreamIn[x].Data.Status ;
+    if (StreamIn[x].Data.Status <> 0) and  (StreamIn[x].Data.TypePut = 0) then
+     statustemp := StreamIn[x].Data.Status
+      else  
+      if (StreamIn[x].Data.TypePut > 0) then statustemp := status;   ;
+
+
 
    if statustemp <> status then status := statustemp;
 
