@@ -265,9 +265,7 @@ type
  
     {$IF DEFINED(noiseremoval)}
     FNoise : TuosNoiseRemoval;
-   // FNoiseProfiled : boolean;
-   // function NoiseRemovalDone(ASender: TNoiseRemoval; AData:PSingle; ASampleCount: Integer) : TDArFloat;
-   {$endif} 
+    {$endif} 
   end;
 
 type
@@ -339,11 +337,11 @@ type
     OutPipe: TOutputPipeStream;
    {$ENDIF}
 
-     {$IF DEFINED(portaudio)}
+    {$IF DEFINED(portaudio)}
     PAParam: PaStreamParameters;
    {$endif}
-  // FileBuffer: Tuos_FileBuffer;
-    LoopProc: TProc;    //// external procedure of object to synchronize in loop
+ 
+   LoopProc: TProc;    //// external procedure of object to synchronize in loop
        {$IF DEFINED(Java)}
     procedure LoopProcjava;
         {$endif}
@@ -355,10 +353,10 @@ type
   public
     Data: Tuos_Data;
     DSP: array of Tuos_DSP;
-      {$IF DEFINED(portaudio)}
+   {$IF DEFINED(portaudio)}
     PAParam: PaStreamParameters;
    {$endif}
-   FileBuffer: Tuos_FileBuffer;
+    FileBuffer: Tuos_FileBuffer;
     LoopProc: TProc;    //// external procedure of object to synchronize in loop
        {$IF DEFINED(Java)}
     procedure LoopProcjava;
@@ -440,7 +438,6 @@ type
 
     procedure Pause();                 ///// Pause playing
 
-
    {$IF DEFINED(portaudio)}
      function AddIntoDevOut(Device: LongInt; Latency: CDouble;
       SampleRate: LongInt; Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
@@ -465,7 +462,6 @@ type
     //////////// FramesCount : default : -1 (= 4096)
     //  result : Output Index in array     -1 = error
     //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1);
-
 
       {$IF DEFINED(portaudio)}
      function AddFromDevIn(Device: LongInt; Latency: CDouble;
@@ -524,7 +520,6 @@ type
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
     //////////                
      {$endif}
-
 
     function GetStatus() : LongInt ;
     /////// Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, -1 => error.
@@ -1897,7 +1892,6 @@ var
   minf, maxf: array[0..1] of cfloat;    //////// if input is Float32 format
 begin
 
-
   case Data.SampleFormat of
     2:
     begin
@@ -3127,7 +3121,7 @@ end;
 procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
-  x, x2, x3, x4 : LongInt;
+  x, x2, x3, x4, statustemp : LongInt;
   plugenabled: boolean;
   curpos: cint64;
   BufferplugINFLTMP: TDArFloat;
@@ -3332,7 +3326,7 @@ begin
            {$IF DEFINED(portaudio)}
            1:   /////// for Input from device
           begin
-            for x2 := 0 to StreamIn[x].Data.WantFrames do
+             for x2 := 0 to StreamIn[x].Data.WantFrames do
               StreamIn[x].Data.Buffer[x2] := cfloat(0);      ////// clear input
             Pa_ReadStream(StreamIn[x].Data.HandleSt,
               @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.WantFrames);
@@ -3498,10 +3492,14 @@ begin
 
   end;   //////////////// end for low(StreamIn[x]) to high(StreamIn[x])
 
+
    ////////////////// Seeking if StreamIn is terminated
-   status := 0 ;
+    statustemp := status; 
+   
     for x := 0 to high(StreamIn) do
-    if (StreamIn[x].Data.Status) <> 0 then status := StreamIn[x].Data.Status ;
+    if (StreamIn[x].Data.Status <> 0) and  (StreamIn[x].Data.TypePut = 0) then statustemp := StreamIn[x].Data.Status ;
+
+   if statustemp <> status then status := statustemp;
 
     RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
     RTLeventSetEvent(evPause);
@@ -3831,20 +3829,23 @@ begin
               {$endif}
               
             end;
-           {$IF DEFINED(portaudio)}
+            
+        {$IF DEFINED(portaudio)}
         1: begin
             Pa_StopStream(StreamIn[x].Data.HandleSt);
             Pa_CloseStream(StreamIn[x].Data.HandleSt);
           end;
-           {$endif}
+        {$endif}
+           
         {$IF DEFINED(webstream)}
         2: begin
-                mpg123_close(StreamIn[x].Data.HandleSt);
-                mpg123_delete(StreamIn[x].Data.HandleSt);
-                 StreamIn[x].httpget.Terminate;
-                 StreamIn[x].httpget.Free;
+            mpg123_close(StreamIn[x].Data.HandleSt);
+            mpg123_delete(StreamIn[x].Data.HandleSt);
+            StreamIn[x].httpget.Terminate;
+            StreamIn[x].httpget.Free;
            end;
-           {$ENDIF}
+        {$ENDIF}
+       
         end;
 
        for x := 0 to high(StreamOut) do
@@ -3859,11 +3860,11 @@ begin
 
       if (StreamOut[x].Data.TypePut = 0) then
       begin
-        sleep(100);
+      //  sleep(100);
         WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
-        sleep(200);
+       // sleep(100);
         StreamOut[x].FileBuffer.Data.Free;
-        Sleep(200);
+      //  Sleep(200);
        end;
     end;
     
@@ -3991,6 +3992,7 @@ destructor Tuos_OutStream.Destroy;
 var
   x: LongInt;
 begin
+if assigned(FileBuffer.Data) then FileBuffer.Data.free;
   if length(DSP) > 0 then
     for x := 0 to high(DSP) do
       DSP[x].Free;

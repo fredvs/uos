@@ -917,7 +917,7 @@ begin
   begin {go & load the library}
     if Length(libfilename) = 0 then
       exit;
-    Mp_Handle := DynLibs.LoadLibrary(libfilename); // obtain the handle we want
+    Mp_Handle := DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
     if Mp_Handle <> DynLibs.NilHandle then
 
     begin

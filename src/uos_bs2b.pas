@@ -314,10 +314,10 @@ end  else begin {go & load the library}
     if Length(libfilename) = 0 then exit;
    
     {$IFDEF windows} // try load dependency if not in /windows/system/
-   gc_Handle:= DynLibs.LoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_dw2-1.dll');
+   gc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_dw2-1.dll');
     {$endif}
    
-    bs_Handle:=DynLibs.LoadLibrary(libfilename); // obtain the handle we want
+    bs_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
   	if bs_Handle <> DynLibs.NilHandle then
        begin {now we tie the functions to the VARs from above}
 

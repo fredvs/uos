@@ -71,7 +71,7 @@ begin
 result:=true 
 end  else begin 
     if Length(libfilename) = 0 then exit;
-    LibHandle:=DynLibs.LoadLibrary(libfilename); // obtain the handle we want.
+    LibHandle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want.
   	if LibHandle <> DynLibs.NilHandle then
        begin
     try

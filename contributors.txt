@@ -17,6 +17,6 @@ Leledumbo : Helps me with threads managing and gives courage to continue uos.
 Sandro Cumerlato : He gives the DSPLevel procedure and lot of others, did SounTouch wrapper and other perfect codes and ideas.
 
 
-And many other in fpc, Lazarus, CodeTyphon, fpGUI, MSE forum.
+And many other in fpc, fpGUI, MSE, Lazarus, CodeTyphon forum.
 
 Fred van Stappen : fiens@hotmail.com 

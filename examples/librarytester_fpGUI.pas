@@ -62,7 +62,7 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
 
   begin
 
-    Pa_Handle:=DynLibs.LoadLibrary(FilenameEdit1.FileName); // obtain the handle we want
+    Pa_Handle:=DynLibs.SafeLoadLibrary(FilenameEdit1.FileName); // obtain the handle we want
   	if Pa_Handle <> DynLibs.NilHandle then
 
                         btnLoad.Text :=  'PortAudio=OK '
@@ -70,21 +70,21 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
 
     	if Pa_Handle <> DynLibs.NilHandle then  DynLibs.UnloadLibrary(Pa_Handle);
 
-      Pa_Handle:=DynLibs.LoadLibrary(FilenameEdit2.FileName); // obtain the handle we want
+      Pa_Handle:=DynLibs.SafeLoadLibrary(FilenameEdit2.FileName); // obtain the handle we want
   	if Pa_Handle <> DynLibs.NilHandle then
                         btnLoad.Text := btnLoad.Text + 'SndFile=OK '
            else btnLoad.Text := btnLoad.Text + 'SndFile not load ' ;
 
     	if Pa_Handle <> DynLibs.NilHandle then DynLibs.UnloadLibrary(Pa_Handle);
 
-      Pa_Handle:=DynLibs.LoadLibrary(FilenameEdit3.FileName); // obtain the handle we want
+      Pa_Handle:=DynLibs.SafeLoadLibrary(FilenameEdit3.FileName); // obtain the handle we want
   	if Pa_Handle <> DynLibs.NilHandle then
                         btnLoad.Text := btnLoad.Text + 'MPG123=OK '
            else btnLoad.Text := btnLoad.Text + 'MPG123 not load ' ;
 
     	if Pa_Handle <> DynLibs.NilHandle then  DynLibs.UnloadLibrary(Pa_Handle);
 
-      Pa_Handle:=DynLibs.LoadLibrary(FilenameEdit5.FileName); // obtain the handle we want
+      Pa_Handle:=DynLibs.SafeLoadLibrary(FilenameEdit5.FileName); // obtain the handle we want
   	if Pa_Handle <> DynLibs.NilHandle then
                         btnLoad.Text := btnLoad.Text + 'SoundTouch=OK'
            else btnLoad.Text := btnLoad.Text + 'SoundTouch not load' ;

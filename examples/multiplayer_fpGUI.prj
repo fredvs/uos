@@ -756,8 +756,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=In1Index
+finddtext=.play
 findhistory=10
+ .play
+ play
  In1Index
  Plugin1Index
  DSP1Index
@@ -766,17 +768,15 @@ findhistory=10
  30005
  NewView
  images
- Sort
- sort
 findoptions=1
 editpos=7
- 0,3906
- 0,1190
- 0,0
+ 17,926
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,13
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -785,13 +785,13 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 sourcefiles=7
- /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/uos_flat.pas
- /home/fred/uos/examples/define.inc
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
- /home/fred/uos/examples/multiplayer_fpGUI.pas
+ ${PROJECTDIR}/multiplayer_fpGUI.pas
 relpaths=7
  uos.pas
  uos_flat.pas
@@ -823,7 +823,7 @@ order=7
  3
 tabsize=60
 firsttab=0
-index=2
+index=3
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -846,9 +846,9 @@ windowlayout=503
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,1262,18
   basedock,0,19,1262,585
- focusedchild=1
+  statdisp,0,1,1262,18
+ focusedchild=0
  wsize=0
  active=1
  visible=1
@@ -869,7 +869,7 @@ windowlayout=503
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1243,7 +1243,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

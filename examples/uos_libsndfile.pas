@@ -669,7 +669,7 @@ begin
   begin {go & load the library}
     if Length(libfilename) = 0 then
       exit;
-    sf_Handle := DynLibs.LoadLibrary(libfilename); // obtain the handle we want
+    sf_Handle := DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
     if sf_Handle <> DynLibs.NilHandle then
     begin {now we tie the functions to the VARs from above}
 

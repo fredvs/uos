@@ -307,7 +307,7 @@ begin
 end  else 
 begin {go & load the library}
     if Length(libfilename) = 0 then exit;
-    Pa_Handle:=DynLibs.LoadLibrary(libfilename); // obtain the handle we want
+    Pa_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
   	if Pa_Handle <> DynLibs.NilHandle then
 begin {now we tie the functions to the VARs from above}
 

@@ -4,6 +4,7 @@ program simplerecorder_fpGUI;
   {$DEFINE UseCThreads}
 
 uses {$IFDEF UNIX} {$IFDEF UseCThreads}
+// cmem,
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
@@ -72,6 +73,8 @@ var
 
   procedure TSimplerecorder.btnPlaySavedClick(Sender: TObject);
   begin
+  
+ if fileexists( Pchar(filenameedit4.FileName)) then begin
      PlayerIndex1 := 0 ; // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
                        // If PlayerIndex exists already, it will be overwritten...
 
@@ -83,7 +86,6 @@ var
   //// Create the player.
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
-
 
    uos_AddIntoDevOut(PlayerIndex1); //// add a Output into OUT device with default parameters
     //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 0,-1);   //// add a Output into device with custom parameters
@@ -125,6 +127,7 @@ var
     button4.Enabled := False;
     button5.Enabled := True;
 
+  end;
   end;
 
   procedure TSimplerecorder.VolumeChange(Sender: TObject; pos: integer);
@@ -182,7 +185,6 @@ var
   procedure TSimplerecorder.btnStopClick(Sender: TObject);
   begin
     uos_Stop(PlayerIndex1);
-    sleep(100);
     closeplayer1;
   end;
 

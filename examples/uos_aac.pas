@@ -681,7 +681,7 @@ end;
 procedure LoadNeAAC(NeAAC : AnsiString);
 Begin
   
-   hNeAAC:= DynLibs.LoadLibrary(PChar(NeAAC));
+   hNeAAC:= DynLibs.SafeLoadLibrary(PChar(NeAAC));
   NeAACLoaded:= hNeAAC <> 0;
 
      Pointer(NeAACDecGetErrorMessage) :=
@@ -771,7 +771,7 @@ begin
   if Mp4ffLoaded then
     Exit;
 
-  hMp4ff := DynLibs.LoadLibrary(PChar(mp4ff));
+  hMp4ff := DynLibs.SafeLoadLibrary(PChar(mp4ff));
   Mp4ffLoaded := hMp4ff <> 0;
   
   // writeln('hMp4ff' + inttostr(hMp4ff));

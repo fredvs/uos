@@ -682,13 +682,20 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=0
-path=0
-line=0
-address=0
-addbkpt=0
-ignore=0
-condition=0
+on=1
+ -1
+path=1
+ /home/fred/uos/examples/simplerecorder_fpGUI.pas
+line=1
+ 188
+address=1
+ 0
+addbkpt=1
+ 0
+ignore=1
+ 0
+condition=1
+ 
 panels=1
  panel1
 units=
@@ -761,20 +768,20 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=In1Index
+finddtext=sleep(
 findhistory=10
+ sleep(
+ stop
+ FileBuffer
+ WriteWave
+ .Create
+ AddIntoFile
+ destroy
+ uos_AddIntoFile
  In1Index
  Plugin1Index
- DSP1Index
- Out1Index
- res=
- 30005
- NewView
- images
- Sort
- sort
 findoptions=1
-editpos=8
+editpos=9
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -782,7 +789,8 @@ editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,156
+ 0,125
+ 0,3864
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -791,7 +799,8 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 bookmarks7=0
-sourcefiles=8
+bookmarks8=0
+sourcefiles=9
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -800,7 +809,8 @@ sourcefiles=8
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
-relpaths=8
+ ${PROJECTDIR}/uos.pas
+relpaths=9
  uos.pas
  uos_flat.pas
  define.inc
@@ -809,7 +819,9 @@ relpaths=8
  uos_portaudio.pas
  uos_soundtouch.pas
  simplerecorder_fpGUI.pas
-ismoduletexts=8
+ uos.pas
+ismoduletexts=9
+ 0
  0
  0
  0
@@ -824,8 +836,8 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
-firsttab=2
-index=7
+firsttab=4
+index=8
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -834,24 +846,24 @@ windowlayout=503
  [mainfo]
  splitdir=0
  useroptions=805372031
- stackedunder=sourcehintfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=64
- y=80
+ x=90
+ y=65
  cx=1272
  cy=621
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,1262,18
-  basedock,0,19,1262,682
+  statdisp,0,1,1356,18
+  basedock,0,19,1356,682
  focusedchild=1
- wsize=0
+ wsize=4
  active=1
  visible=1
  [targetconsolefo]
@@ -871,7 +883,7 @@ windowlayout=503
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -975,8 +987,8 @@ windowlayout=503
  width1=12
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=6
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1175,7 +1187,7 @@ windowlayout=503
  ncy=0
  x=0
  y=589
- cx=1262
+ cx=1356
  cy=93
  rcx=0
  rcy=0
@@ -1275,7 +1287,7 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=1262
+ cx=1356
  cy=49
  rcx=0
  rcy=0
@@ -1291,7 +1303,7 @@ windowlayout=503
  ncy=0
  x=162
  y=0
- cx=1090
+ cx=1184
  cy=534
  rcx=0
  rcy=0
@@ -1327,7 +1339,7 @@ windowlayout=503
  ncy=0
  x=0
  y=52
- cx=1262
+ cx=1356
  cy=534
  rcx=0
  rcy=0

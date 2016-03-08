@@ -48,8 +48,9 @@ findinfiledialog=46
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=Data.OutFrames
+ value=loadlibrary
  history=10
+  loadlibrary
   Data.OutFrames
   IPAIODataIOInterface
   audacity_noiseremoval
@@ -59,7 +60,6 @@ findinfiledialog=46
   bsd
   FreeBSD
   freebsd
-  SetPluginSoundTouch
  [findinfileadialogfo]
  stackedunder=
  x=121
@@ -846,7 +846,7 @@ findhistory=10
  .height :=
  unload
 findoptions=1
-editpos=16
+editpos=25
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -861,8 +861,17 @@ editpos=16
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,537
- 0,1342
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,4
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -879,7 +888,16 @@ bookmarks12=0
 bookmarks13=0
 bookmarks14=0
 bookmarks15=0
-sourcefiles=16
+bookmarks16=0
+bookmarks17=0
+bookmarks18=0
+bookmarks19=0
+bookmarks20=0
+bookmarks21=0
+bookmarks22=0
+bookmarks23=0
+bookmarks24=0
+sourcefiles=25
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -896,7 +914,16 @@ sourcefiles=16
  /home/fred/fpgui/src/corelib/x11/fpg_impl.pas
  ${PROJECTDIR}/uos_aac.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=16
+ ${PROJECTDIR}/uos_aac.pas
+ ${PROJECTDIR}/uos_bs2b.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/uos_soundtouch.pas
+ ${PROJECTDIR}/librarytester_fpGUI.pas
+ /home/fred/fpGUI-develop/examples/gui/led_matrix_display/frm_main.pas
+ /home/fred/fpGUI-develop/examples/gui/led_matrix_display/led_demo.pas
+relpaths=25
  uos.pas
  uos_bs2b.pas
  simpleplayer_fpGUI.pas
@@ -913,7 +940,25 @@ relpaths=16
  fpgui/src/corelib/x11/fpg_impl.pas
  uos_aac.pas
  simpleplayer_fpGUI.pas
-ismoduletexts=16
+ uos_aac.pas
+ uos_bs2b.pas
+ uos_libsndfile.pas
+ uos_mpg123.pas
+ uos_portaudio.pas
+ uos_soundtouch.pas
+ librarytester_fpGUI.pas
+ fpGUI-develop/examples/gui/led_matrix_display/frm_main.pas
+ ../fpGUI-develop/examples/gui/led_matrix_display/led_demo.pas
+ismoduletexts=25
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -936,8 +981,8 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
-firsttab=7
-index=15
+firsttab=20
+index=24
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -946,7 +991,7 @@ windowlayout=503
  [mainfo]
  splitdir=0
  useroptions=838860927
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -982,7 +1027,7 @@ windowlayout=503
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1032,7 +1077,7 @@ windowlayout=503
  [disassfo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1357,7 +1402,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=disassfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
