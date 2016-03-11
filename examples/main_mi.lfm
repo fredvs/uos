@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 7
+  Left = 236
   Height = 476
-  Top = 19
+  Top = 167
   Width = 993
   BorderIcons = [biSystemMenu]
   Caption = 'Multi Input into one Player'
@@ -124,7 +124,7 @@ object Form1: TForm1
   object Edit1: TEdit
     Left = 387
     Height = 27
-    Top = 14
+    Top = 24
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -133,25 +133,16 @@ object Form1: TForm1
   object Edit2: TEdit
     Left = 387
     Height = 27
-    Top = 54
+    Top = 72
     Width = 360
     Alignment = taCenter
     AutoSize = False
     TabOrder = 2
   end
-  object Edit3: TEdit
-    Left = 387
-    Height = 27
-    Top = 94
-    Width = 360
-    Alignment = taCenter
-    AutoSize = False
-    TabOrder = 3
-  end
   object Label1: TLabel
     Left = 385
     Height = 18
-    Top = 0
+    Top = 8
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -162,26 +153,13 @@ object Form1: TForm1
     ParentFont = False
   end
   object Label2: TLabel
-    Left = 385
+    Left = 384
     Height = 18
-    Top = 40
+    Top = 56
     Width = 360
     Alignment = taCenter
     AutoSize = False
     Caption = 'Folder + filename of SndFile Library'
-    Font.Height = -11
-    Font.Name = 'Sans'
-    ParentColor = False
-    ParentFont = False
-  end
-  object Label3: TLabel
-    Left = 387
-    Height = 18
-    Top = 80
-    Width = 360
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'Folder + filename of Mpg123 Library'
     Font.Height = -11
     Font.Name = 'Sans'
     ParentColor = False
@@ -194,7 +172,7 @@ object Form1: TForm1
     Width = 387
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 4
+    TabOrder = 3
   end
   object Button3: TButton
     Left = 613
@@ -204,7 +182,7 @@ object Form1: TForm1
     Caption = 'Stop'
     Enabled = False
     OnClick = Button3Click
-    TabOrder = 5
+    TabOrder = 4
   end
   object Button4: TButton
     Left = 26
@@ -213,7 +191,7 @@ object Form1: TForm1
     Width = 70
     Caption = 'Choose'
     OnClick = Button4Click
-    TabOrder = 6
+    TabOrder = 5
   end
   object Edit5: TEdit
     Left = 100
@@ -222,7 +200,7 @@ object Form1: TForm1
     Width = 387
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 7
+    TabOrder = 6
   end
   object Button7: TButton
     Left = 22
@@ -231,7 +209,7 @@ object Form1: TForm1
     Width = 70
     Caption = 'Choose'
     OnClick = Button7Click
-    TabOrder = 8
+    TabOrder = 7
   end
   object Edit6: TEdit
     Left = 100
@@ -240,7 +218,7 @@ object Form1: TForm1
     Width = 387
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 9
+    TabOrder = 8
   end
   object Button10: TButton
     Left = 24
@@ -249,7 +227,7 @@ object Form1: TForm1
     Width = 70
     Caption = 'Choose'
     OnClick = Button10Click
-    TabOrder = 10
+    TabOrder = 9
   end
   object Edit7: TEdit
     Left = 100
@@ -258,7 +236,7 @@ object Form1: TForm1
     Width = 387
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 11
+    TabOrder = 10
   end
   object Button14: TButton
     Left = 243
@@ -267,7 +245,7 @@ object Form1: TForm1
     Width = 132
     Caption = 'Play All Together'
     OnClick = Button14Click
-    TabOrder = 12
+    TabOrder = 11
   end
   object Button15: TButton
     Left = 423
@@ -277,7 +255,7 @@ object Form1: TForm1
     Caption = 'Pause'
     Enabled = False
     OnClick = Button15Click
-    TabOrder = 13
+    TabOrder = 12
   end
   object Button16: TButton
     Left = 511
@@ -287,7 +265,7 @@ object Form1: TForm1
     Caption = 'Resume'
     Enabled = False
     OnClick = Button16Click
-    TabOrder = 14
+    TabOrder = 13
   end
   object PaintBox1: TPaintBox
     Left = 272
@@ -312,7 +290,7 @@ object Form1: TForm1
     Width = 64
     Caption = 'Choose'
     OnClick = Button13Click
-    TabOrder = 15
+    TabOrder = 14
   end
   object TrackBar1: TTrackBar
     Left = 158
@@ -323,7 +301,7 @@ object Form1: TForm1
     OnChange = TrackBar1Change
     Position = 100
     TickStyle = tsNone
-    TabOrder = 16
+    TabOrder = 15
   end
   object TrackBar2: TTrackBar
     Left = 158
@@ -334,7 +312,7 @@ object Form1: TForm1
     OnChange = TrackBar2Change
     Position = 100
     TickStyle = tsNone
-    TabOrder = 17
+    TabOrder = 16
   end
   object TrackBar3: TTrackBar
     Left = 158
@@ -345,7 +323,7 @@ object Form1: TForm1
     OnChange = TrackBar3Change
     Position = 100
     TickStyle = tsNone
-    TabOrder = 18
+    TabOrder = 17
   end
   object TrackBar4: TTrackBar
     Left = 158
@@ -356,7 +334,7 @@ object Form1: TForm1
     OnChange = TrackBar4Change
     Position = 100
     TickStyle = tsNone
-    TabOrder = 19
+    TabOrder = 18
   end
   object Label4: TLabel
     Left = 54
@@ -415,7 +393,7 @@ object Form1: TForm1
     OnChange = TrackBar5Change
     Position = 100
     TickStyle = tsNone
-    TabOrder = 20
+    TabOrder = 19
   end
   object Shape6: TShape
     Left = 500
@@ -452,7 +430,7 @@ object Form1: TForm1
     Width = 387
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 21
+    TabOrder = 20
   end
   object Button5: TButton
     Left = 515
@@ -461,7 +439,7 @@ object Form1: TForm1
     Width = 70
     Caption = 'Choose'
     OnClick = Button5Click
-    TabOrder = 22
+    TabOrder = 21
   end
   object Edit9: TEdit
     Left = 589
@@ -470,7 +448,7 @@ object Form1: TForm1
     Width = 387
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 23
+    TabOrder = 22
   end
   object Button8: TButton
     Left = 511
@@ -479,7 +457,7 @@ object Form1: TForm1
     Width = 70
     Caption = 'Choose'
     OnClick = Button8Click
-    TabOrder = 24
+    TabOrder = 23
   end
   object Edit10: TEdit
     Left = 589
@@ -488,7 +466,7 @@ object Form1: TForm1
     Width = 387
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 25
+    TabOrder = 24
   end
   object Button11: TButton
     Left = 513
@@ -497,7 +475,7 @@ object Form1: TForm1
     Width = 70
     Caption = 'Choose'
     OnClick = Button11Click
-    TabOrder = 26
+    TabOrder = 25
   end
   object Edit11: TEdit
     Left = 589
@@ -506,7 +484,7 @@ object Form1: TForm1
     Width = 387
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 27
+    TabOrder = 26
   end
   object Button17: TButton
     Left = 517
@@ -515,7 +493,7 @@ object Form1: TForm1
     Width = 64
     Caption = 'Choose'
     OnClick = Button17Click
-    TabOrder = 28
+    TabOrder = 27
   end
   object TrackBar6: TTrackBar
     Left = 647
@@ -526,7 +504,7 @@ object Form1: TForm1
     OnChange = TrackBar6Change
     Position = 100
     TickStyle = tsNone
-    TabOrder = 29
+    TabOrder = 28
   end
   object TrackBar7: TTrackBar
     Left = 647
@@ -537,7 +515,7 @@ object Form1: TForm1
     OnChange = TrackBar7Change
     Position = 100
     TickStyle = tsNone
-    TabOrder = 30
+    TabOrder = 29
   end
   object TrackBar8: TTrackBar
     Left = 647
@@ -548,7 +526,7 @@ object Form1: TForm1
     OnChange = TrackBar8Change
     Position = 100
     TickStyle = tsNone
-    TabOrder = 31
+    TabOrder = 30
   end
   object Label8: TLabel
     Left = 543

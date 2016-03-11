@@ -134,11 +134,11 @@ install:
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="33">
+    <Units Count="34">
       <Unit0>
         <Filename Value="multiinput.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <CursorPos X="7" Y="7"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -149,9 +149,8 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="348"/>
-        <CursorPos X="158" Y="353"/>
-        <ComponentState Value="1"/>
+        <TopLine Value="237"/>
+        <CursorPos X="12" Y="243"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -292,9 +291,9 @@ install:
       <Unit23>
         <Filename Value="uos.pas"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="3889"/>
-        <CursorPos X="84" Y="3922"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="3740"/>
+        <CursorPos X="54" Y="3755"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -352,12 +351,20 @@ install:
       </Unit31>
       <Unit32>
         <Filename Value="uos_flat.pas"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="852"/>
         <CursorPos X="68" Y="866"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit32>
+      <Unit33>
+        <Filename Value="simpleplayer_fpGUI.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="242"/>
+        <CursorPos Y="272"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit33>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

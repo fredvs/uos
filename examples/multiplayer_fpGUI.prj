@@ -846,9 +846,9 @@ windowlayout=503
  rcx=0
  rcy=0
  children=2
-  basedock,0,19,1262,585
   statdisp,0,1,1262,18
- focusedchild=0
+  basedock,0,19,1262,585
+ focusedchild=1
  wsize=0
  active=1
  visible=1

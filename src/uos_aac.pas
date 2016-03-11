@@ -564,9 +564,7 @@ var
   NewBytesDecoded   : longword;
 
   Function readNextSample(var audioBuf : pByte; var audioSize : longword): longword;
-  Var
-    RetCount : longint;
-  Begin
+   Begin
     audioSize := 0;
     Result:= 0;
     audioBuf  := nil;
@@ -765,8 +763,6 @@ Begin
 end;
 
 procedure Loadmp4ff(mp4ff : AnsiString);
-Var
-  Lib : AnsiString;
 begin
   if Mp4ffLoaded then
     Exit;

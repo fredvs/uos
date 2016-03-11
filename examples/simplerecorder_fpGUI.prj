@@ -781,7 +781,7 @@ findhistory=10
  In1Index
  Plugin1Index
 findoptions=1
-editpos=9
+editpos=10
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -791,6 +791,7 @@ editpos=9
  0,-1073741823
  0,-1073741823
  37,3849
+ 0,765
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -800,7 +801,8 @@ bookmarks5=0
 bookmarks6=0
 bookmarks7=0
 bookmarks8=0
-sourcefiles=9
+bookmarks9=0
+sourcefiles=10
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -810,7 +812,8 @@ sourcefiles=9
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
-relpaths=9
+ ${PROJECTDIR}/uos_aac.pas
+relpaths=10
  uos.pas
  uos_flat.pas
  define.inc
@@ -820,7 +823,9 @@ relpaths=9
  uos_soundtouch.pas
  simplerecorder_fpGUI.pas
  uos.pas
-ismoduletexts=9
+ uos_aac.pas
+ismoduletexts=10
+ 0
  0
  0
  0
@@ -837,7 +842,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=4
-index=8
+index=9
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -846,7 +851,7 @@ windowlayout=503
  [mainfo]
  splitdir=0
  useroptions=805372031
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -864,7 +869,7 @@ windowlayout=503
   basedock,0,19,1356,682
  focusedchild=1
  wsize=4
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -882,7 +887,7 @@ windowlayout=503
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1257,7 +1262,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

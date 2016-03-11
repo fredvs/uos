@@ -11,6 +11,7 @@
       <XPManifest>
         <DpiAware Value="True"/>
       </XPManifest>
+      <ActiveWindowIndexAtStart Value="1"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -275,9 +276,10 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
+        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="52"/>
-        <CursorPos Y="64"/>
+        <TopLine Value="3195"/>
+        <CursorPos X="49" Y="3211"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -368,16 +370,15 @@ install:
       </Unit37>
       <Unit38>
         <Filename Value="uos_flat.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="71"/>
-        <CursorPos Y="76"/>
+        <TopLine Value="13"/>
+        <CursorPos X="41" Y="13"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit38>
     </Units>
-    <JumpHistory Count="22" HistoryIndex="21">
+    <JumpHistory Count="23" HistoryIndex="22">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="331" Column="55" TopLine="315"/>
@@ -465,6 +466,10 @@ install:
         <Filename Value="main_sr.pas"/>
         <Caret Line="149" Column="59" TopLine="136"/>
       </Position22>
+      <Position23>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3402" Column="2" TopLine="3369"/>
+      </Position23>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

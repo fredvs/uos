@@ -33,7 +33,6 @@ type
     Edit10: TEdit;
     Edit11: TEdit;
     Edit2: TEdit;
-    Edit3: TEdit;
     Edit4: TEdit;
     Edit5: TEdit;
     Edit6: TEdit;
@@ -44,7 +43,6 @@ type
     Label10: TLabel;
     Label11: TLabel;
     Label2: TLabel;
-    Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
@@ -219,44 +217,39 @@ begin
   opath := copy(opath, 1, Pos('/uos', opath) - 1);
   Edit1.Text := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
   Edit2.Text := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
-  Edit3.Text := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
            {$ENDIF}
 
    {$IFDEF linux}
     {$if defined(cpu64)}
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
-  Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-  {$else}
+   {$else}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-  Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
  {$endif}
     {$ENDIF}
 
 {$IFDEF freebsd}
     {$if defined(cpu64)}
    Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
-  Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
-  Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+   Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
   {$else}
   Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
   Edit2.Text := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
-  Edit3.Text := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
   {$endif}
     {$ENDIF}
 
 
   opendialog1.Initialdir := application.Location + 'sound';
 
-  Edit4.Text := application.Location + 'sound' + directoryseparator + 'test.mp3';
+  Edit4.Text := application.Location + 'sound' + directoryseparator + 'test.wav';
   Edit5.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
   Edit6.Text := application.Location + 'sound' + directoryseparator + 'test.wav';
   Edit7.Text := application.Location + 'sound' + directoryseparator + 'test.flac';
-   Edit8.Text := application.Location + 'sound' + directoryseparator + 'test.mp3';
-  Edit9.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
+   Edit8.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
+  Edit9.Text := application.Location + 'sound' + directoryseparator + 'test.flac';
   Edit10.Text := application.Location + 'sound' + directoryseparator + 'test.wav';
-  Edit11.Text := application.Location + 'sound' + directoryseparator + 'test.flac';
+  Edit11.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
 
 end;
 
@@ -274,16 +267,15 @@ procedure TForm1.Button1Click(Sender: TObject);
 
 begin
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
-    if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text), nil, nil) = 0 then
+ // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+   if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), nil, nil, nil) = 0 then
   begin
     form1.hide;
     form1.Position := podefault;
-    button1.Caption := 'PortAudio, SndFile and Mpg123 libraries are loaded...';
+    button1.Caption := 'PortAudio and SndFile libraries are loaded...';
     button1.Enabled := False;
     edit1.ReadOnly := True;
     edit2.ReadOnly := True;
-    edit3.ReadOnly := True;
     form1.Height := 478;
     form1.Position := poScreenCenter;
     form1.Show;
@@ -298,11 +290,7 @@ begin
       MessageDlg(edit2.Text + ' do not exist...', mtWarning, [mbYes], 0);
     if uosLoadResult.SFloaderror = 2 then
       MessageDlg(edit2.Text + ' do not load...', mtWarning, [mbYes], 0);
-    if uosLoadResult.MPloaderror = 1 then
-      MessageDlg(edit3.Text + ' do not exist...', mtWarning, [mbYes], 0);
-    if uosLoadResult.MPloaderror = 2 then
-      MessageDlg(edit3.Text + ' do not load...', mtWarning, [mbYes], 0);
-  end;
+    end;
 
 end;
 
@@ -366,7 +354,6 @@ begin
     ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
     ////////// VolRight : Right volume
 
-
   uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, -1);
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
@@ -379,7 +366,6 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
 
-
   /////// procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex0, @ClosePlayer0);
   ///// Assign the procedure of object to execute at end
@@ -390,9 +376,19 @@ begin
   button3.Enabled := True;
   button14.Enabled := false;
   button16.Enabled := false;
+
+  // set the volume from the sliders.
+  TrackBar1Change(self);
+  TrackBar2Change(self);
+   TrackBar3Change(self);
+    TrackBar4Change(self);
+     TrackBar5Change(self);
+      TrackBar6Change(self);
+       TrackBar7Change(self);
+        TrackBar8Change(self);
+
   uos_Play(PlayerIndex0);
   ////// Ok let start it
-
 
 end;
 

@@ -3201,14 +3201,14 @@ begin
     for x := 0 to high(StreamIn) do
     begin
 
-      RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
+       RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
       RTLeventSetEvent(evPause);
 
       if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.Status > 0) and
         (StreamIn[x].Data.Enabled = True) then
       begin
 
-        if (StreamIn[x].Data.Poseek > -1) and (StreamIn[x].Data.Seekable = True) then
+        if (StreamIn[x].Data.Poseek > -1) and  (StreamIn[x].Data.Seekable = True) then
          begin                    ////// is there a seek waiting ?
           case StreamIn[x].Data.LibOpen of
             {$IF DEFINED(sndfile)}
@@ -3221,11 +3221,12 @@ begin
             2 : MP4Seek(StreamIn[x].AACI, StreamIn[x].Data.Poseek);
            {$endif}
            end;
-          curpos := StreamIn[x].Data.Poseek;
-          StreamIn[x].Data.Poseek := -1;
-        end;
+           curpos := StreamIn[x].Data.Poseek;
+           StreamIn[x].Data.Poseek := -1;
+            end;
 
-           if (StreamIn[x].Data.positionEnable = 1) then
+
+           if (StreamIn[x].Data.positionEnable = 1)  and (StreamIn[x].Data.Seekable = True) then
           StreamIn[x].Data.position := curpos;
 
         //////// DSPin BeforeBuffProc
@@ -3269,37 +3270,24 @@ begin
               {$IF DEFINED(neaac)}
               2 :
               begin
-                // writeln('uos_getdata1');
-              StreamIn[x].AACI.lwDataLen:= 0;
-                //      writeln('uos_getdata2');
+               StreamIn[x].AACI.lwDataLen:= 0;
               Case StreamIn[x].AACI.outputFormat of
               FAAD_FMT_16BIT, FAAD_FMT_32BIT, FAAD_FMT_FLOAT : 
                 begin
                 outBytes := StreamIn[x].Data.Wantframes;
-           //  writeln('uos_getdata3');
-           
                 MP4GetData(StreamIn[x].AACI, StreamIn[x].AACI.pData, outBytes);
-           // writeln('uos_getdata4');
-          
                 Move(StreamIn[x].AACI.pData^, StreamIn[x].Data.Buffer[0], outBytes);
-           // writeln('uos_getdata5');
-          
                 StreamIn[x].AACI.lwDataLen:= outBytes;
-           // writeln('uos_getdata6');
-                end;
+                 end;
                End;
-         
-          //    writeln('uos_getdata7');
-          if StreamIn[x].AACI.lwDataLen > (StreamIn[x].AACI.BitsPerSample div 8) then
-           StreamIn[x].Data.outframes := round(StreamIn[x].AACI.lwDataLen div (StreamIn[x].AACI.BitsPerSample div 8))
-          else
-          StreamIn[x].Data.outframes := 0;
-          //  writeln('outframes = ' + inttostr(StreamIn[x].Data.outframes));
-          //  writeln('uos_getdata End');
-           end;
-          {$endif}
+               if StreamIn[x].AACI.lwDataLen > (StreamIn[x].AACI.BitsPerSample div 8) then
+               StreamIn[x].Data.outframes := round(StreamIn[x].AACI.lwDataLen div (StreamIn[x].AACI.BitsPerSample div 8))
+                else
+                StreamIn[x].Data.outframes := 0;
+              end;
+             {$endif}
              
-          {$IF DEFINED(cdrom)}
+             {$IF DEFINED(cdrom)}
               3: 
           Begin
             StreamIn[x].pCD^.pDataLen:= 0;
@@ -3310,8 +3298,7 @@ begin
                 Move(StreamIn[x].pCD^.pData^, StreamIn[x].Data.Buffer[0], outBytes);
                StreamIn[x].pCD^.pDataLen:= outBytes;
                 end;
-     
-            End;
+             End;
 
            if StreamIn[x].pCD^.pDataLen > (StreamIn[x].pCD^.BitsPerSample div 8) then
            StreamIn[x].Data.outframes := StreamIn[x].pCD^.pDataLen div (StreamIn[x].pCD^.BitsPerSample div 8)
@@ -3327,7 +3314,7 @@ begin
            1:   /////// for Input from device
           begin
              for x2 := 0 to StreamIn[x].Data.WantFrames do
-              StreamIn[x].Data.Buffer[x2] := cfloat(0);      ////// clear input
+              StreamIn[x].Data.Buffer[x2] := cfloat(0.0);      ////// clear input
             Pa_ReadStream(StreamIn[x].Data.HandleSt,
               @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.WantFrames);
            
@@ -3340,31 +3327,30 @@ begin
 
            {$IF DEFINED(webstream)}
            2:  /////// for Input from Internet audio stream.
-
           begin
           {$IF DEFINED(mpg123)}
           
         // err := // if you want clear buffer
-        mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
+          mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
           StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
-         //  writeln('===> mpg123_read error => ' + inttostr(err)) ;
+          //  writeln('===> mpg123_read error => ' + inttostr(err)) ;
           StreamIn[x].Data.outframes :=
-            StreamIn[x].Data.outframes div StreamIn[x].Data.Channels;
+          StreamIn[x].Data.outframes div StreamIn[x].Data.Channels;
           {$ENDIF}
          end;
             {$ENDIF}
         end;
-      // writeln('check if internet');
+
+        // writeln('check if internetis stopped.');
         //// check if internet stream is stopped.
     {$IF DEFINED(webstream)}
      if (StreamIn[x].Data.TypePut = 2) then if StreamIn[x].httpget.IsRunning = false
      then  StreamIn[x].Data.status := 0; //////// no more data then close the stream
    {$ENDIF}
-      //  writeln('Data.Seekable = True');
+
      if (StreamIn[x].Data.Seekable = True) then if StreamIn[x].Data.OutFrames < 100 then
-          StreamIn[x].Data.status := 0;  //////// no more data then close the stream
-     // writeln('Data.Seekable = True fin');
-    
+     StreamIn[x].Data.status := 0;  //////// no more data then close the stream
+
       if  StreamIn[x].Data.status > 0 then
       begin
     // writeln('positionEnable = 1');
@@ -3497,12 +3483,10 @@ begin
      
    statustemp := 0 ;
     for x := 0 to high(StreamIn) do
-    if (StreamIn[x].Data.Status <> 0) and  (StreamIn[x].Data.TypePut = 0) then
+    if (StreamIn[x].Data.Status <> 0) and  (StreamIn[x].Data.TypePut <> 1) then
      statustemp := StreamIn[x].Data.Status
       else  
       if (StreamIn[x].Data.TypePut > 0) then statustemp := status;   ;
-
-
 
    if statustemp <> status then status := statustemp;
 
@@ -3521,7 +3505,7 @@ begin
       then
       begin
         for x2 := 0 to high(StreamOut[x].Data.Buffer) do
-          StreamOut[x].Data.Buffer[x2] := cfloat(0);      ////// clear output
+          StreamOut[x].Data.Buffer[x2] := cfloat(0.0);      ////// clear output
 
         for x2 := 0 to high(StreamIn) do
           if  (StreamIn[x2].Data.status > 0) and (StreamIn[x2].Data.HandleSt <> nil) and
@@ -3757,8 +3741,15 @@ begin
       synchronize(@endprocjava); /////  Execute EndProc procedure
             {$endif}
 
+
     {$endif}
-   until status = 0;
+
+    if length(StreamIn) > 1 then  ////// clear buffer for multi input
+   for x2 := 0 to high(StreamIn) do
+   for x3 := 0 to high(StreamIn[x2].Data.Buffer) do
+   StreamIn[x2].Data.Buffer[x3] := cfloat(0.0);
+
+    until status = 0;
 
   ////////////////////////////////////// End of Loop ////////////////////////////////////////
 
