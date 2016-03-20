@@ -5,7 +5,6 @@ program simpleplayer_fpGUI;
 
 uses
   {$IFDEF UNIX} {$IFDEF UseCThreads}
-  // cmem,
   cthreads, 
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,

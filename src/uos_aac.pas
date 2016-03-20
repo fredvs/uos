@@ -169,10 +169,6 @@ Function isMp4ffLoaded : Boolean;
 Type
   PNeAACDec = Pointer;
 
- // NeAAC_byte     = {$IFDEF FPC}{$IFDEF CPU64}Word    {$ELSE}Byte    {$ENDIF}{$ELSE}Byte    {$ENDIF};
- // NeAAC_word     = {$IFDEF FPC}{$IFDEF CPU64}LongWord{$ELSE}Word    {$ENDIF}{$ELSE}Word    {$ENDIF};
- // NeAAC_longword = {$IFDEF FPC}{$IFDEF CPU64}QWord   {$ELSE}LongWord{$ENDIF}{$ELSE}LongWord{$ENDIF};
-  
   NeAAC_byte     = {$IFDEF FPC}{$IFDEF CPU64}cuint32    {$ELSE}Byte    {$ENDIF}{$ELSE}Byte    {$ENDIF};
   NeAAC_word     = {$IFDEF FPC}{$IFDEF CPU64}cuint64{$ELSE}Word    {$ENDIF}{$ELSE}Word    {$ENDIF};
   NeAAC_longword = {$IFDEF FPC}{$IFDEF CPU64}culong    {$ELSE}LongWord{$ENDIF}{$ELSE}LongWord{$ENDIF};

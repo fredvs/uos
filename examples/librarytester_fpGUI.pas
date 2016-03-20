@@ -4,9 +4,10 @@ program librarytester_fpGUI;
   {$DEFINE UseCThreads}
 
 uses
-  {$IFDEF UNIX} {$IFDEF UseCThreads}
+  {$IFDEF UNIX} 
   cthreads,
-  cwstring, {$ENDIF} {$ENDIF}
+  cwstring,
+  {$ENDIF}
   SysUtils,
     dynlibs,
   uos_bs2b,

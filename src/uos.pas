@@ -61,7 +61,7 @@ uses
    Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 16260223 ;
+  uos_version : LongInt = 160320 ;
   
   {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -3224,7 +3224,6 @@ begin
            StreamIn[x].Data.Poseek := -1;
             end;
 
-
            if (StreamIn[x].Data.positionEnable = 1)  and (StreamIn[x].Data.Seekable = True) then
           StreamIn[x].Data.position := curpos;
 
@@ -3285,7 +3284,6 @@ begin
                 StreamIn[x].Data.outframes := 0;
               end;
              {$endif}
-             
              {$IF DEFINED(cdrom)}
               3: 
           Begin
@@ -3340,7 +3338,7 @@ begin
             {$ENDIF}
         end;
 
-        // writeln('check if internetis stopped.');
+        // writeln('check if internet is stopped.');
         //// check if internet stream is stopped.
     {$IF DEFINED(webstream)}
      if (StreamIn[x].Data.TypePut = 2) then if StreamIn[x].httpget.IsRunning = false
