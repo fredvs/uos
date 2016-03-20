@@ -42,6 +42,9 @@ type
   uint32_t = LongWord;
 
 var
+{$IF DEFINED(unix)}
+ap1 : pointer;
+{$endif}
   mp4ff_open_read            : function(f : p_mp4ff_callback_t) : mp4ff_t; cdecl;
   mp4ff_open_read_metaonly   : function(f : p_mp4ff_callback_t) : mp4ff_t; cdecl;
   mp4ff_close               : procedure(f : mp4ff_t); cdecl;
@@ -89,7 +92,14 @@ var
 function GetAACTrack(infile : mp4ff_t) : Integer;
 procedure Loadmp4ff(mp4ff : AnsiString);
 procedure UnLoadMp4ff;
-Function isMp4ffLoaded : Boolean;
+Function isMp4ffLoaded : Boolean; 
+
+ {$IF DEFINED(unix)}
+    Function dlopen(filename: PChar; flags: cint): Pointer; cdecl; external;
+    Function dlclose(handle: Pointer): cint; cdecl; external;
+    Function dlsym(handle: Pointer; Name: PChar): Pointer; cdecl; external;
+    Function dlerror: PChar; cdecl; external;
+  {$endif} 
 
 //////////// from mcwNeAACDec.pas by Franklyn A. Harlow 
  Const
@@ -753,7 +763,11 @@ end;
 procedure UnLoadMp4ff;
 begin
   if Mp4ffLoaded then
+  {$IF DEFINED(unix)}
+    dlclose(ap1);
+  {$else}
     DynLibs.UnloadLibrary(hMp4ff);
+  {$endif}    
   Mp4ffLoaded := False;
 end;
 
@@ -762,7 +776,122 @@ Begin
   Result:= Mp4ffLoaded;
 end;
 
-procedure Loadmp4ff(mp4ff : AnsiString);
+{$IF DEFINED(unix)}
+ procedure Loadmp4ff(mp4ff : AnsiString);
+begin
+  if Mp4ffLoaded then
+    Exit;
+ap1 := dlopen(Pchar(mp4ff), 1);
+  Mp4ffLoaded := ap1 <> nil;
+  
+    Pointer(mp4ff_open_read) :=
+        dlsym(ap1, pchar('mp4ff_open_read'));
+        
+ if Pointer(mp4ff_open_read) <> nil then
+    writeln('mp4ff_open_read OK') else 
+ writeln('mp4ff_open_read NOT OK'); 
+      
+     Pointer(mp4ff_open_read_metaonly) :=
+        dlsym(ap1, PChar('mp4ff_open_read_metaonly'));
+     Pointer(mp4ff_close) :=
+            dlsym(ap1, PChar('mp4ff_close'));
+     Pointer(mp4ff_get_sample_duration) :=
+            dlsym(ap1, PChar('mp4ff_get_sample_duration'));
+     Pointer(mp4ff_get_sample_duration_use_offsets) :=
+            dlsym(ap1, PChar('mp4ff_get_sample_duration_use_offsets'));
+     Pointer(mp4ff_get_sample_position) :=
+            dlsym(ap1, PChar('mp4ff_get_sample_position'));
+     Pointer(mp4ff_get_sample_offset) :=
+            dlsym(ap1, PChar('mp4ff_get_sample_offset'));
+     Pointer(mp4ff_find_sample) :=
+            dlsym(ap1, PChar('mp4ff_find_sample'));
+
+     Pointer(mp4ff_find_sample_use_offsets) :=
+        dlsym(ap1, PChar('mp4ff_find_sample_use_offsets'));
+     Pointer(mp4ff_set_sample_position) :=
+        dlsym(ap1, PChar('mp4ff_set_sample_position'));
+     Pointer(mp4ff_read_sample) :=
+            dlsym(ap1, PChar('mp4ff_read_sample'));
+     Pointer(mp4ff_read_sample_v2) :=
+            dlsym(ap1, PChar('mp4ff_read_sample_v2'));
+     Pointer(mp4ff_read_sample_getsize) :=
+            dlsym(ap1, PChar('mp4ff_read_sample_getsize'));
+     Pointer(mp4ff_get_sample_position) :=
+            dlsym(ap1, PChar('mp4ff_get_sample_position'));
+     Pointer(mp4ff_get_sample_offset) :=
+            dlsym(ap1, PChar('mp4ff_get_sample_offset'));
+     Pointer(mp4ff_find_sample) :=
+            dlsym(ap1, PChar('mp4ff_find_sample'));
+
+       Pointer(mp4ff_get_decoder_config) :=
+        dlsym(ap1, PChar('mp4ff_get_decoder_config'));
+     Pointer(mp4ff_get_track_type) :=
+        dlsym(ap1, PChar('mp4ff_get_track_type'));
+     Pointer(mp4ff_total_tracks) :=
+            dlsym(ap1, PChar('mp4ff_total_tracks'));
+     Pointer(mp4ff_num_samples) :=
+            dlsym(ap1, PChar('mp4ff_num_samples'));
+     Pointer(mp4ff_time_scale) :=
+            dlsym(ap1, PChar('mp4ff_time_scale'));
+     Pointer(mp4ff_get_avg_bitrate) :=
+            dlsym(ap1, PChar('mp4ff_get_avg_bitrate'));
+     Pointer(mp4ff_get_max_bitrate) :=
+            dlsym(ap1, PChar('mp4ff_get_max_bitrate'));
+     Pointer(mp4ff_get_track_duration) :=
+            dlsym(ap1, PChar('mp4ff_get_track_duration'));
+
+       Pointer(mp4ff_get_track_duration_use_offsets) :=
+        dlsym(ap1, PChar('mp4ff_get_track_duration_use_offsets'));
+     Pointer(mp4ff_get_sample_rate) :=
+        dlsym(ap1, PChar('mp4ff_get_sample_rate'));
+     Pointer(mp4ff_get_channel_count) :=
+            dlsym(ap1, PChar('mp4ff_get_channel_count'));
+     Pointer(mp4ff_get_audio_type) :=
+            dlsym(ap1, PChar('mp4ff_get_audio_type'));
+     Pointer(mp4ff_free_decoder_config) :=
+            dlsym(ap1, PChar('mp4ff_free_decoder_config'));
+     Pointer(mp4ff_meta_get_num_items) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_num_items'));
+     Pointer(mp4ff_meta_get_by_index) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_by_index'));
+     Pointer(mp4ff_meta_get_title) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_title'));
+
+        Pointer(mp4ff_meta_get_artist) :=
+        dlsym(ap1, PChar('mp4ff_meta_get_artist'));
+     Pointer(mp4ff_meta_get_writer) :=
+        dlsym(ap1, PChar('mp4ff_meta_get_writer'));
+     Pointer(mp4ff_meta_get_album) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_album'));
+     Pointer(mp4ff_meta_get_date) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_date'));
+     Pointer(mp4ff_meta_get_tool) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_tool'));
+     Pointer(mp4ff_meta_get_comment) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_comment'));
+     Pointer(mp4ff_meta_get_genre) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_genre'));
+     Pointer(mp4ff_meta_get_track) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_track'));
+
+        Pointer(mp4ff_meta_get_disc) :=
+        dlsym(ap1, PChar('mp4ff_meta_get_disc'));
+     Pointer(mp4ff_meta_get_totaltracks) :=
+        dlsym(ap1, PChar('mp4ff_meta_get_totaltracks'));
+     Pointer(mp4ff_meta_get_totaldiscs) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_totaldiscs'));
+     Pointer(mp4ff_meta_get_compilation) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_compilation'));
+     Pointer(mp4ff_meta_get_tempo) :=
+            dlsym(ap1, PChar('mp4ff_meta_get_tempo'));
+     Pointer(mp4ff_meta_get_coverart) :=
+           dlsym(ap1, PChar('mp4ff_meta_get_coverart'));
+
+end;
+
+{$else}
+
+ procedure Loadmp4ff(mp4ff : AnsiString);
 begin
   if Mp4ffLoaded then
     Exit;
@@ -777,8 +906,7 @@ begin
         
   //  if Pointer(mp4ff_open_read) <> nil then
   //    writeln('mp4ff_open_read OK') else 
-     //   Mp4ffLoaded := false;
-     // writeln('mp4ff_open_read NOT OK'); 
+  // writeln('mp4ff_open_read NOT OK'); 
       
      Pointer(mp4ff_open_read_metaonly) :=
         GetProcAddress(hMp4ff, PChar('mp4ff_open_read_metaonly'));
@@ -877,6 +1005,7 @@ begin
            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_coverart'));
 
 end;
+{$endif}
 
 initialization
   NeAACLoaded:= False;

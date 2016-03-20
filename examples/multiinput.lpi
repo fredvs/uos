@@ -292,8 +292,8 @@ install:
         <Filename Value="uos.pas"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="3740"/>
-        <CursorPos X="54" Y="3755"/>
+        <TopLine Value="2529"/>
+        <CursorPos X="3" Y="1440"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -354,7 +354,7 @@ install:
         <EditorIndex Value="4"/>
         <TopLine Value="852"/>
         <CursorPos X="68" Y="866"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit32>
       <Unit33>
@@ -362,7 +362,7 @@ install:
         <EditorIndex Value="1"/>
         <TopLine Value="242"/>
         <CursorPos Y="272"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit33>
     </Units>

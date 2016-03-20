@@ -11,7 +11,6 @@
       <XPManifest>
         <DpiAware Value="True"/>
       </XPManifest>
-      <ActiveWindowIndexAtStart Value="1"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -148,12 +147,11 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="132"/>
-        <CursorPos X="69" Y="149"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="55"/>
+        <CursorPos X="8" Y="142"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="lazdyn_portaudio.pas"/>
@@ -278,8 +276,8 @@ install:
         <Filename Value="uos.pas"/>
         <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="3195"/>
-        <CursorPos X="49" Y="3211"/>
+        <TopLine Value="3465"/>
+        <CursorPos X="61" Y="3491"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -378,7 +376,7 @@ install:
         <Loaded Value="True"/>
       </Unit38>
     </Units>
-    <JumpHistory Count="23" HistoryIndex="22">
+    <JumpHistory Count="19" HistoryIndex="18">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="331" Column="55" TopLine="315"/>
@@ -451,25 +449,9 @@ install:
         <Caret Line="49" TopLine="41"/>
       </Position18>
       <Position19>
-        <Filename Value="main_sr.pas"/>
-        <Caret Line="374" Column="36" TopLine="346"/>
-      </Position19>
-      <Position20>
-        <Filename Value="main_sr.pas"/>
-        <Caret Line="124" Column="2" TopLine="110"/>
-      </Position20>
-      <Position21>
-        <Filename Value="main_sr.pas"/>
-        <Caret Line="122" Column="12" TopLine="108"/>
-      </Position21>
-      <Position22>
-        <Filename Value="main_sr.pas"/>
-        <Caret Line="149" Column="59" TopLine="136"/>
-      </Position22>
-      <Position23>
         <Filename Value="uos.pas"/>
         <Caret Line="3402" Column="2" TopLine="3369"/>
-      </Position23>
+      </Position19>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

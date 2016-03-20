@@ -125,7 +125,6 @@ type
     AA_FileName : PChar; // Faad
     M4_FileName : PChar; // Mp4ff
 
-
     Plug_ST_FileName: pchar; // Plugin SoundTouch
     Plug_BS_FileName: pchar; // Plugin bs2b
 
@@ -137,6 +136,7 @@ type
     DefDevInInfo: PPaDeviceInfo;
     DefDevInAPIInfo: PPaHostApiInfo;
     {$endif}
+
     function loadlib: LongInt;
     procedure unloadlib;
     procedure unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
@@ -294,7 +294,6 @@ type
     ////////////// for FFT
     fftdata: Tuos_FFT;
 
- 
     {$IF DEFINED(Java)}
     procedure LoopProcjava;
         {$endif}
@@ -463,8 +462,8 @@ type
     //  result : Output Index in array     -1 = error
     //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1);
 
-      {$IF DEFINED(portaudio)}
-     function AddFromDevIn(Device: LongInt; Latency: CDouble;
+    {$IF DEFINED(portaudio)}
+    function AddFromDevIn(Device: LongInt; Latency: CDouble;
   SampleRate: LongInt; Channels: LongInt; OutputIndex: LongInt;
   SampleFormat: LongInt; FramesCount : LongInt): LongInt;
    ////// Add a Input from Device Input with custom parameters
@@ -498,7 +497,7 @@ type
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (4096)
   ////////// example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1);
-     {$ENDIF}
+  {$ENDIF}
 
     function AddPlugin(PlugName: Pchar; SampleRate: LongInt;
       Channels: LongInt): LongInt;
@@ -3201,7 +3200,7 @@ begin
     for x := 0 to high(StreamIn) do
     begin
 
-       RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
+      RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
       RTLeventSetEvent(evPause);
 
       if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.Status > 0) and
@@ -3456,13 +3455,12 @@ begin
        synchronize(@Streamin[x].LoopProcjava);
        {$endif}
     {$endif}
-      end;
 
     //// Getting the level after DSP procedure
-  if  (StreamIn[x].Data.status > 0) and((StreamIn[x].Data.levelEnable = 2) or (StreamIn[x].Data.levelEnable = 3)) then StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
+  if ((StreamIn[x].Data.levelEnable = 2) or (StreamIn[x].Data.levelEnable = 3)) then StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
 
   //// Adding level in array-level
-       if  (StreamIn[x].Data.status > 0) and (StreamIn[x].Data.levelArrayEnable = 2) then
+       if (StreamIn[x].Data.levelArrayEnable = 2) then
        begin
        if (StreamIn[x].Data.levelEnable = 0) or (StreamIn[x].Data.levelEnable = 1) then
        StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
@@ -3474,21 +3472,26 @@ begin
        uosLevelArray[index][x][length(uosLevelArray[index][x]) -1 ] := StreamIn[x].Data.LevelRight;
        end;
 
+      end;
+
    end;
 
   end;   //////////////// end for low(StreamIn[x]) to high(StreamIn[x])
 
 
-   ////////////////// Seeking if StreamIn is terminated
-     
-   statustemp := 0 ;
-    for x := 0 to high(StreamIn) do
-    if (StreamIn[x].Data.Status <> 0) and  (StreamIn[x].Data.TypePut <> 1) then
-     statustemp := StreamIn[x].Data.Status
-      else  
-      if (StreamIn[x].Data.TypePut > 0) then statustemp := status;   ;
+ ////////////////// Seeking if StreamIn is terminated
 
-   if statustemp <> status then status := statustemp;
+   if status <> 0 then
+   begin
+    statustemp := 0 ;
+    for x := 0 to high(StreamIn) do
+    begin
+    if (StreamIn[x].Data.TypePut <> 1) and (StreamIn[x].Data.Status <> 0)
+    then statustemp := StreamIn[x].Data.Status else if
+    (StreamIn[x].Data.TypePut = 1) then statustemp := status ;
+    end ;
+    if statustemp <> status then status := statustemp;
+   end;
 
     RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
     RTLeventSetEvent(evPause);
@@ -3504,6 +3507,7 @@ begin
         ( (StreamOut[x].Data.TypePut = 0)  and (StreamOut[x].Data.Enabled = True))
       then
       begin
+
         for x2 := 0 to high(StreamOut[x].Data.Buffer) do
           StreamOut[x].Data.Buffer[x2] := cfloat(0.0);      ////// clear output
 
@@ -3741,10 +3745,9 @@ begin
       synchronize(@endprocjava); /////  Execute EndProc procedure
             {$endif}
 
-
     {$endif}
 
-    if length(StreamIn) > 1 then  ////// clear buffer for multi input
+   if length(StreamIn) > 1 then  ////// clear buffer for multi-input
    for x2 := 0 to high(StreamIn) do
    for x3 := 0 to high(StreamIn[x2].Data.Buffer) do
    StreamIn[x2].Data.Buffer[x3] := cfloat(0.0);
@@ -3896,7 +3899,7 @@ end;
 
 procedure Tuos_Player.onTerminate() ;
 begin
-  if ifflat = true then
+if ifflat = true then
   begin
 FreeAndNil(uosPlayers[Index]);
 uosPlayersStat[Index] := -1 ;
@@ -4450,7 +4453,8 @@ begin
   PA_FileName := nil; // PortAudio
   SF_FileName := nil; // SndFile
   MP_FileName := nil; // Mpg123
-  AA_FileName := nil; // Mpg123
+  AA_FileName := nil; // Faad
+  M4_FileName := nil; // Mp4ff
   Plug_ST_FileName := nil; // Plugin SoundTouch
   Plug_BS_FileName := nil; // Plugin bs2b
 
