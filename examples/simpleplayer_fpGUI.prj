@@ -709,56 +709,49 @@ sigsettings=27
  30,30,T,F
 defaultmake=32
 [breakpoints]
-on=7
+on=6
  0
  -1
  0
  0
  -1
  0
- 0
-path=7
+path=6
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/paio_channelhelper.pas
  /home/fred/uos_aac_new/examples/uos_aac.pas
  /home/fred/uos/examples/uos_aac.pas
- /home/fred/uos/examples/uos_aac.pas
-line=7
+line=6
  1756
  3385
  1771
  33
  913
- 775
- 47
-address=7
+ 764
+address=6
  4918365
  4946380
  4918583
  0
  0
  0
- 0
-addbkpt=7
- 0
+addbkpt=6
  0
  0
  0
  0
  0
  0
-ignore=7
+ignore=6
  0
  0
  0
  0
  0
  0
- 0
-condition=7
- 
+condition=6
  
  
  
@@ -847,20 +840,20 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=unix
+finddtext=writeln
 findhistory=10
+ writeln
  unix
+ loadlibr
+ hNeAAC
+ hmp4ff
+ hmpaff
+ mswindows
+ Pa_Handle
  linux
  freebsd
- getproc
- synchronize
- .cue
- statustemp
- writeln
- FilenameEdit7
- filenameedit6.FileName
 findoptions=1
-editpos=28
+editpos=29
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -883,12 +876,13 @@ editpos=28
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,9
  0,-1073741823
- 0,65
- 0,7
  0,-1073741823
- 0,34
+ 0,64
+ 0,-1073741823
+ 0,-1073741823
+ 0,399
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -917,7 +911,8 @@ bookmarks24=0
 bookmarks25=0
 bookmarks26=0
 bookmarks27=0
-sourcefiles=28
+bookmarks28=0
+sourcefiles=29
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -946,7 +941,8 @@ sourcefiles=28
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/st2bi.pas
  ${PROJECTDIR}/uos_aac.pas
-relpaths=28
+ ${PROJECTDIR}/uos_portaudio.pas
+relpaths=29
  uos.pas
  uos_bs2b.pas
  simpleplayer_fpGUI.pas
@@ -975,7 +971,9 @@ relpaths=28
  simpleplayer_fpGUI.pas
  st2bi.pas
  uos_aac.pas
-ismoduletexts=28
+ uos_portaudio.pas
+ismoduletexts=29
+ 0
  0
  0
  0
@@ -1011,7 +1009,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=22
-index=25
+index=24
 [layout]
 windowlayout=503
  [mainfo.basedock]
@@ -1161,8 +1159,8 @@ windowlayout=503
  width1=1
  sortdescend1=0
  sorted=0
- col=0
- row=3
+ col=1
+ row=9
  rowheight=17
  [stackfo]
  splitdir=0

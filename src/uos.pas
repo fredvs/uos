@@ -61,7 +61,7 @@ uses
    Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 160320 ;
+  uos_version : LongInt = 160321 ;
   
   {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
