@@ -1,0 +1,586 @@
+object simple_player: tmainfo
+  color = 10734762
+  bounds_x = 637
+  bounds_y = 24
+  bounds_cx = 485
+  bounds_cy = 524
+  container.optionswidget1 = []
+  container.frame.localprops = []
+  container.frame.localprops1 = []
+  container.frame.sbhorz.width = 0
+  container.frame.sbhorz.buttonminlength = 10
+  container.frame.sbvert.width = 0
+  container.frame.sbvert.buttonminlength = 10
+  container.bounds = (
+    0
+    0
+    485
+    524
+  )
+  options = [fo_main, fo_terminateonclose, fo_screencentered, fo_autoreadstat, fo_autowritestat, fo_savepos, fo_savezorder, fo_savestate]
+  caption = 'Simple Player'
+  onclose = closeit
+  moduleclassname = 'tmainform'
+  object padir: tfilenameedit
+    frame.caption = 'Folder + filename of PortAudio library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 1
+    bounds_x = 48
+    bounds_y = -2
+    bounds_cx = 388
+    bounds_cy = 39
+    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    reffontheight = 15
+  end
+  object btnload: tbutton
+    color = 15132390
+    bounds_x = 8
+    bounds_y = 280
+    bounds_cx = 466
+    bounds_cy = 21
+    state = [as_localcaption, as_localcolor, as_localonexecute]
+    caption = 'Load that libraries'
+    onexecute = loadlibr
+  end
+  object sfdir: tfilenameedit
+    frame.caption = 'Folder + filename of SndFile library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 2
+    bounds_x = 48
+    bounds_y = 38
+    bounds_cx = 388
+    bounds_cy = 39
+    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    reffontheight = 15
+  end
+  object mpdir: tfilenameedit
+    frame.caption = 'Folder + filename of Mpg123 library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 3
+    bounds_x = 48
+    bounds_y = 78
+    bounds_cx = 388
+    bounds_cy = 39
+    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    reffontheight = 15
+  end
+  object bsdir: tfilenameedit
+    frame.caption = 'Folder + filename of bs2b Plugin library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 4
+    bounds_x = 48
+    bounds_y = 238
+    bounds_cx = 388
+    bounds_cy = 39
+    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    reffontheight = 15
+  end
+  object m4dir: tfilenameedit
+    frame.caption = 'Folder + filename of mp4ff library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 5
+    bounds_x = 48
+    bounds_y = 118
+    bounds_cx = 388
+    bounds_cy = 39
+    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    reffontheight = 15
+  end
+  object stdir: tfilenameedit
+    frame.caption = 'Folder + filename of SoundTouch Plugin library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 6
+    bounds_x = 48
+    bounds_y = 198
+    bounds_cx = 388
+    bounds_cy = 39
+    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    reffontheight = 15
+  end
+  object tdockpanel1: tdockpanel
+    taborder = 7
+    bounds_x = 0
+    bounds_y = 304
+    bounds_cx = 482
+    bounds_cy = 210
+    object tlabel3: tlabel
+      bounds_x = 88
+      bounds_y = 107
+      bounds_cx = 32
+      bounds_cy = 15
+      caption = 'Right'
+      reffontheight = 15
+    end
+    object tlabel2: tlabel
+      taborder = 1
+      bounds_x = 8
+      bounds_y = 107
+      bounds_cx = 23
+      bounds_cy = 15
+      caption = 'Left'
+      reffontheight = 15
+    end
+    object tlabel1: tlabel
+      taborder = 2
+      bounds_x = 40
+      bounds_y = 0
+      bounds_cx = 45
+      bounds_cy = 15
+      caption = 'Volume'
+      reffontheight = 15
+    end
+    object TrackBar2: tslider
+      color = 15132390
+      frame.localprops = [frl_fileft, frl_fitop, frl_firight, frl_fibottom]
+      frame.localprops1 = []
+      taborder = 3
+      bounds_x = 8
+      bounds_y = 18
+      bounds_cx = 28
+      bounds_cy = 88
+      onchange = changevolume
+      value = 1
+      scrollbar.buttonendlength = 11
+      scrollbar.face.localprops = []
+      direction = gd_up
+    end
+    object TrackBar3: tslider
+      color = 15132390
+      frame.localprops = [frl_fileft, frl_fitop, frl_firight, frl_fibottom]
+      frame.localprops1 = []
+      taborder = 4
+      bounds_x = 88
+      bounds_y = 18
+      bounds_cx = 28
+      bounds_cy = 88
+      onchange = changevolume
+      value = 1
+      scrollbar.buttonendlength = 11
+      scrollbar.face.localprops = []
+      direction = gd_up
+    end
+    object songdir: tfilenameedit
+      frame.caption = 'File to play'
+      frame.localprops = []
+      frame.localprops1 = []
+      frame.buttons.count = 1
+      frame.buttons.items = <      
+        item
+          imagenr = 17
+        end>
+      frame.button.imagenr = 17
+      frame.outerframe = (
+        0
+        18
+        0
+        0
+      )
+      taborder = 5
+      bounds_x = 136
+      bounds_y = 3
+      bounds_cx = 340
+      bounds_cy = 39
+      reffontheight = 15
+    end
+    object trackbar1: tslider
+      color = 15132390
+      frame.localprops = [frl_fileft, frl_fitop, frl_firight, frl_fibottom]
+      frame.localprops1 = []
+      taborder = 6
+      bounds_x = 136
+      bounds_y = 46
+      bounds_cx = 340
+      value = 0
+      scrollbar.buttonendlength = 11
+      scrollbar.face.localprops = []
+      onsetvalue = changepos
+    end
+    object checkbox1: tbooleanedit
+      frame.caption = 'Play Reverse'
+      frame.localprops = []
+      frame.localprops1 = []
+      frame.outerframe = (
+        0
+        2
+        78
+        2
+      )
+      taborder = 7
+      bounds_x = 144
+      bounds_y = 145
+      bounds_cx = 91
+      bounds_cy = 17
+      onchange = changereverse
+    end
+    object btnstart: tbutton
+      color = 15132390
+      taborder = 8
+      bounds_x = 128
+      bounds_y = 181
+      bounds_cx = 82
+      bounds_cy = 21
+      state = [as_localcaption, as_localcolor, as_localonexecute]
+      caption = 'Play'
+      onexecute = playit
+    end
+    object btnresume: tbutton
+      color = 15132390
+      taborder = 9
+      bounds_x = 312
+      bounds_y = 181
+      bounds_cx = 74
+      bounds_cy = 21
+      state = [as_disabled, as_localdisabled, as_localcaption, as_localcolor, as_localonexecute]
+      caption = 'Resume'
+      onexecute = resumeit
+    end
+    object btnpause: tbutton
+      color = 15132390
+      taborder = 10
+      bounds_x = 224
+      bounds_y = 181
+      bounds_cx = 74
+      bounds_cy = 21
+      state = [as_disabled, as_localdisabled, as_localcaption, as_localcolor, as_localonexecute]
+      caption = 'Pause'
+      onexecute = pauseit
+    end
+    object button1: tbutton
+      color = 15132390
+      taborder = 11
+      bounds_x = 280
+      bounds_y = 141
+      bounds_cx = 50
+      bounds_cy = 21
+      state = [as_localcaption, as_localcolor, as_localonexecute]
+      caption = 'Reset'
+      onexecute = resetplugst
+    end
+    object label6: tlabel
+      taborder = 12
+      bounds_x = 280
+      bounds_y = 115
+      bounds_cx = 69
+      bounds_cy = 15
+      caption = 'Tempo: 1.0'
+      reffontheight = 15
+    end
+    object TrackBar4: tslider
+      color = 15132390
+      frame.localprops = [frl_fileft, frl_fitop, frl_firight, frl_fibottom]
+      frame.localprops1 = []
+      taborder = 13
+      bounds_x = 352
+      bounds_y = 114
+      bounds_cx = 28
+      bounds_cy = 56
+      onchange = changetempo
+      value = 0.5
+      scrollbar.buttonendlength = 11
+      scrollbar.face.localprops = []
+      direction = gd_down
+    end
+    object label7: tlabel
+      taborder = 14
+      bounds_x = 384
+      bounds_y = 115
+      bounds_cx = 58
+      bounds_cy = 15
+      caption = 'Pitch: 1.0'
+      reffontheight = 15
+    end
+    object TrackBar5: tslider
+      color = 15132390
+      frame.localprops = [frl_fileft, frl_fitop, frl_firight, frl_fibottom]
+      frame.localprops1 = []
+      taborder = 15
+      bounds_x = 448
+      bounds_y = 114
+      bounds_cx = 28
+      bounds_cy = 56
+      onchange = changetempo
+      value = 0.5
+      scrollbar.buttonendlength = 11
+      scrollbar.face.localprops = []
+      direction = gd_down
+    end
+    object btnstop: tbutton
+      color = 15132390
+      taborder = 16
+      bounds_x = 400
+      bounds_y = 181
+      bounds_cx = 74
+      bounds_cy = 21
+      state = [as_disabled, as_localdisabled, as_localcaption, as_localcolor, as_localonexecute]
+      caption = 'Stop'
+      onexecute = stopit
+    end
+    object tgroupbox1: tgroupbox
+      frame.caption = 'Sample Format'
+      frame.localprops = []
+      frame.localprops1 = []
+      frame.outerframe = (
+        0
+        8
+        0
+        0
+      )
+      taborder = 17
+      bounds_x = 8
+      bounds_y = 128
+      bounds_cx = 106
+      bounds_cy = 66
+      object radiobutton3: tbooleaneditradio
+        frame.caption = 'Int 16 bit'
+        frame.localprops = []
+        frame.localprops1 = []
+        frame.outerframe = (
+          0
+          2
+          60
+          2
+        )
+        bounds_x = 8
+        bounds_y = 47
+        bounds_cx = 73
+        bounds_cy = 17
+      end
+      object radiobutton2: tbooleaneditradio
+        frame.caption = 'Int 32 bit'
+        frame.localprops = []
+        frame.localprops1 = []
+        frame.outerframe = (
+          0
+          2
+          60
+          2
+        )
+        taborder = 1
+        bounds_x = 8
+        bounds_y = 31
+        bounds_cx = 73
+        bounds_cy = 17
+      end
+      object radiobutton1: tbooleaneditradio
+        frame.caption = 'Float 32 bit'
+        frame.localprops = []
+        frame.localprops1 = []
+        frame.outerframe = (
+          0
+          2
+          72
+          2
+        )
+        taborder = 2
+        bounds_x = 8
+        bounds_y = 15
+        bounds_cx = 85
+        bounds_cy = 17
+        value = True
+      end
+    end
+    object llength: tlabel
+      taborder = 18
+      bounds_x = 300
+      bounds_y = 72
+      bounds_cx = 96
+      bounds_cy = 15
+      caption = ' / 00:00:00.000'
+      reffontheight = 15
+    end
+    object lposition: tlabel
+      taborder = 19
+      bounds_x = 216
+      bounds_y = 72
+      bounds_cx = 84
+      bounds_cy = 15
+      caption = '00:00:00.000'
+      reffontheight = 15
+    end
+    object chkstereo2mono: tbooleanedit
+      frame.caption = 'Stereo to Mono'
+      frame.localprops = []
+      frame.localprops1 = []
+      frame.outerframe = (
+        0
+        2
+        94
+        2
+      )
+      taborder = 20
+      bounds_x = 144
+      bounds_y = 94
+      bounds_cx = 107
+      bounds_cy = 17
+      onchange = ChangeStereo2Mono
+    end
+    object chkst2b: tbooleanedit
+      frame.caption = 'Stereo to Binaural'
+      frame.localprops = []
+      frame.localprops1 = []
+      frame.outerframe = (
+        0
+        2
+        111
+        2
+      )
+      taborder = 21
+      bounds_x = 144
+      bounds_y = 110
+      bounds_cx = 124
+      bounds_cy = 17
+      onchange = ChangePlugSetbs2b
+    end
+    object chknoise: tbooleanedit
+      frame.caption = 'Noise Remover'
+      frame.localprops = []
+      frame.localprops1 = []
+      frame.outerframe = (
+        0
+        2
+        92
+        2
+      )
+      taborder = 22
+      bounds_x = 144
+      bounds_y = 126
+      bounds_cx = 105
+      bounds_cy = 17
+      onchange = ChangeNoise
+    end
+    object checkbox2: tbooleanedit
+      frame.caption = 'Enable SoundTouch Plugin'
+      frame.localprops = []
+      frame.localprops1 = []
+      frame.outerframe = (
+        0
+        2
+        165
+        2
+      )
+      taborder = 23
+      bounds_x = 280
+      bounds_y = 94
+      bounds_cx = 178
+      bounds_cy = 17
+    end
+    object vuRight: tdockpanel
+      color = 976914
+      taborder = 25
+      bounds_x = 66
+      bounds_y = 24
+      bounds_cx = 18
+      bounds_cy = 82
+    end
+    object vuLeft: tdockpanel
+      color = 976914
+      taborder = 24
+      bounds_x = 40
+      bounds_y = 24
+      bounds_cx = 18
+      bounds_cy = 82
+    end
+  end
+  object fadir: tfilenameedit
+    frame.caption = 'Folder + filename of faad2 library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 8
+    bounds_x = 48
+    bounds_y = 158
+    bounds_cx = 388
+    bounds_cy = 39
+    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    reffontheight = 15
+  end
+end

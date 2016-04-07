@@ -7,14 +7,13 @@ unit uos;
 
 {$mode objfpc}{$H+}
 
-// for custom config =>  edit define.inc
+// for custom config =>  edit define.inc  ( also if using fpGUI and fpc < 2.7 )
 {$I define.inc}
 
 interface
 
 uses
-   {$IF (FPC_FULLVERSION >= 20701) or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Windows) or DEFINED(Library)}
-   {$else}
+   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
    fpg_base, fpg_main,  //// for fpGUI and fpc < 2.7.1
    {$endif}
 
@@ -61,7 +60,7 @@ uses
    Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 160321 ;
+  uos_version : LongInt = 160406 ;
   
   {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -417,14 +416,15 @@ type
     procedure LoopEndProcjava;
       {$endif}
 
-     {$IF (FPC_FULLVERSION >= 20701) or DEFINED(LCL) or DEFINED(Windows) or DEFINED(ConsoleApp) or DEFINED(Library)}
-      constructor Create(CreateSuspended: boolean;
-      const StackSize: SizeUInt = DefaultStackSize);
-     {$else}
-      Refer: TObject;  //// for fpGUI
+
+      {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+     Refer: TObject;  //// for fpGUI
       constructor Create(CreateSuspended: boolean; AParent: TObject;
-      const StackSize: SizeUInt = DefaultStackSize);    
-    {$endif}
+         const StackSize: SizeUInt = DefaultStackSize);
+     {$else}
+      constructor Create(CreateSuspended: boolean;
+          const StackSize: SizeUInt = DefaultStackSize);
+      {$endif}
 
     destructor Destroy; override;
 
@@ -788,8 +788,7 @@ const
   fBandPass = 3;
   fHighPass = 4;
   fLowPass = 5;
-   {$IF (FPC_FULLVERSION >= 20701) or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-     {$else}
+  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   MSG_CUSTOM1 = FPGM_USER + 1;
     {$endif}
 
@@ -3131,9 +3130,7 @@ var
  
   outBytes: longword; /// for AAC
  
-   {$IF ( FPC_FULLVERSION>=20701 ) or DEFINED(LCL) or DEFINED(ConsoleApp) or
-      DEFINED(Library) or DEFINED(Windows)}
-     {$else}
+  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   msg: TfpgMessageParams;  // for fpgui
     {$endif}
 
@@ -3146,13 +3143,13 @@ begin
      {$IF FPC_FULLVERSION>=20701}
      queue(BeginProc);
         {$else}
-  {$IF DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-     synchronize(BeginProc);
-  {$else}    /// for fpGUI
-  begin
+     {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+   begin
     msg.user.Param1 := -2 ;  // it is the first proc
     fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
    end;
+    {$else}
+  synchronize(BeginProc);
     {$endif}
     {$endif}
       {$elseif not DEFINED(java)}
@@ -3174,13 +3171,13 @@ begin
    {$IF FPC_FULLVERSION>=20701}
   queue(LoopBeginProc);
         {$else}
-  {$IF DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-  synchronize(LoopBeginProc);
-  {$else}    /// for fpGUI
-  begin
+  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+   begin
     msg.user.Param1 := -2 ;  // it is the first proc
     fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
    end;
+   {$else}
+  synchronize(LoopBeginProc);
   {$endif}
   {$endif}
      {$elseif not DEFINED(java)}
@@ -3399,14 +3396,14 @@ begin
             {$IF FPC_FULLVERSION>=20701}
           queue(StreamIn[x].DSP[x2].LoopProc);
         {$else}
-  {$IF DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-      synchronize(StreamIn[x].DSP[x2].LoopProc);
-  {$else}
+  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
     msg.user.Param1 := x2 ;   //// the index of the dsp
     msg.user.Param2 := 0;   ////  it is a In DSP
     fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
    end;
+   {$else}
+   synchronize(StreamIn[x].DSP[x2].LoopProc);
     {$endif}
     {$endif}
     {$elseif not DEFINED(java)}
@@ -3431,14 +3428,14 @@ begin
    {$IF FPC_FULLVERSION>=20701}
           queue(StreamIn[x].LoopProc);
         {$else}
-  {$IF DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-        synchronize(StreamIn[x].LoopProc);
-  {$else}   /// for fpGUI
-  begin
+   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+    begin
     msg.user.Param1 := -1 ;  //// it is the main loop procedure
     msg.user.Param2 := 0 ;////  it is a INput procedure
     fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
    end;
+   {$else}
+   synchronize(StreamIn[x].LoopProc);
     {$endif}
     {$endif}
 
@@ -3544,14 +3541,14 @@ begin
             {$IF FPC_FULLVERSION>=20701}
          queue(StreamOut[x].DSP[x3].LoopProc);
         {$else}
-  {$IF DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-       synchronize(StreamOut[x].DSP[x3].LoopProc);
-  {$else}
-  begin
+ {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+ begin
     msg.user.Param1 := x3 ;   //// the index of the dsp
     msg.user.Param2 := 1;   //// it is a OUT DSP
     fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
    end;
+ {$else}
+   synchronize(StreamOut[x].DSP[x3].LoopProc);
     {$endif}
     {$endif}
 
@@ -3560,7 +3557,7 @@ begin
         StreamOut[x].DSP[x3].LoopProc;
        {$else}
        if (StreamOut[x].DSP[x3].LoopProc <> nil) then
-      {$IF FPC_FULLVERSION>=20701}
+      {$IF FPC_FULLVERSION >= 20701}
          queue(@StreamOut[x].DSP[x3].LoopProcjava);
         {$else}
        synchronize(@StreamOut[x].DSP[x3].LoopProcjava);
@@ -3719,16 +3716,15 @@ begin
 
     /////  Execute LoopEndProc procedure
     {$IF FPC_FULLVERSION>=20701}
-  // sleep(200);
-        queue(LoopEndProc);
+     queue(LoopEndProc);
       {$else}
-  {$IF DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-     synchronize(LoopEndProc);
-  {$else}    /// for fpGUI
+  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
     msg.user.Param1 := -2 ;  // it is the first proc
     fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
    end;
+  {$else}
+  synchronize(LoopEndProc);
     {$endif}
     {$endif}
        {$elseif not DEFINED(java)}
@@ -3871,8 +3867,8 @@ begin
       if EndProc <> nil then
        {$IF FPC_FULLVERSION>=20701}
        begin
-         queue(EndProc);
-        end;
+       queue(EndProc);
+       end;
          {$else}
       synchronize(EndProc); /////  Execute EndProc procedure
             {$endif}
@@ -3886,7 +3882,7 @@ begin
         queue(@endprocjava);
          {$else}
       synchronize(@endprocjava); /////  Execute EndProc procedure
-            {$endif}
+         {$endif}
 
        {$endif}
        isAssigned := false ;
@@ -3904,30 +3900,22 @@ uosPlayersStat[Index] := -1 ;
 end else Free;
 end;
 
-{$IF FPC_FULLVERSION>=20701}
- constructor Tuos_Player.Create(CreateSuspended: boolean;
-  const StackSize: SizeUInt);
-      {$else}
-     {$IF DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
- constructor Tuos_Player.Create(CreateSuspended: boolean;
-  const StackSize: SizeUInt);
-     {$else}
+  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
  constructor Tuos_Player.Create(CreateSuspended: boolean; AParent: TObject;
-  const StackSize: SizeUInt);      //// for fpGUI
-    {$endif}
+  const StackSize: SizeUInt);
+    {$else}
+  constructor Tuos_Player.Create(CreateSuspended: boolean;
+  const StackSize: SizeUInt);
     {$endif}
 begin
   inherited Create(CreateSuspended, StackSize);
   FreeOnTerminate := false;
   Priority :=  tpTimeCritical;
   evPause := RTLEventCreate;
-     {$IF FPC_FULLVERSION<20701}
-     {$IF DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-     {$else}
+    {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
    refer := aparent; //// for fpGUI
     {$endif}
-    {$endif}
-  isAssigned := true ;
+   isAssigned := true ;
   status := 2;
   BeginProc := nil;
   EndProc := nil;

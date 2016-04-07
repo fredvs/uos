@@ -481,7 +481,7 @@ begin
 
     DecodeTime(temptime, ho, mi, se, ms);
 
-    llength.Caption := format('%d:%d:%d.%d', [ho, mi, se, ms]);
+    llength.Caption := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
 
     /////// procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex1, @ClosePlayer1);

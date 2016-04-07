@@ -1,5 +1,55 @@
 [componentpalette]
-order0=0
+order0=50
+ 0
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 39
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
 order1=0
 order2=0
 order3=0
@@ -18,8 +68,8 @@ order15=0
 order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
-findinfiledialog=46
+projectfilename=/home/fred/uos/examples/SimplePlayer_MSE.prj
+findinfiledialog=49
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.inopenfiles]
@@ -27,78 +77,75 @@ findinfiledialog=46
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=1
+ value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
- value="*.pas" "*.pp" "*.inc"
- history=1
+ value="*.pas" "*.pp" "*.inc" "*.mfm"
+ history=2
+  "*.pas" "*.pp" "*.inc" "*.mfm"
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/uos/examples/
- filecolwidth=0
+  /home/fred/ideu/src/
+ filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
+ filehistory=2
+  /home/fred/ideu/src/
+  /home/fred/msegui/
  filefilterindex=0
- filefilter=
+ filefilter="*.pas" "*.pp" "*.inc" "*.mfm"
  [findinfileadialogfo.findtext]
- value=loadlibrary
+ value=***running***
  history=10
-  loadlibrary
-  Data.OutFrames
-  IPAIODataIOInterface
-  audacity_noiseremoval
-  psingle
-  putSamples
-  DSPVolumeinin
-  bsd
-  FreeBSD
-  freebsd
+  ***running***
+  ***runing***
+  save file
+  getassistivehint
+  saveacton
+  save
+  savefile
+  syntaxpainter
+  sdef
+  keyworddefs
  [findinfileadialogfo]
  stackedunder=
- x=121
- y=239
+ x=296
+ y=279
  cx=339
- cy=315
+ cy=275
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
  [finddialogfo]
  stackedunder=
- x=520
- y=215
- cx=298
+ x=365
+ y=219
+ cx=331
  cy=116
-replacedialog=23
+replacedialog=17
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=unix
- history=10
-  unix
-  BeginFunc
-  FreeBSD
-   
-  stdcall
-  InputIndex1
-  OutputIndex1
-  PluginIndex1
-  PluginIndex
-  DSPIndex1
+ value=ES_ExeFileName
+ history=4
+  ES_ExeFileName
+  sak
+  SakCancel
+  
  [replacedialogfo]
  stackedunder=
- x=260
- y=216
- cx=437
- cy=171
+ x=280
+ y=299
+ cx=421
+ cy=163
 options=108
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -106,33 +153,33 @@ options=108
   70
   70
  [projectoptionsfo.twidgetgrid3]
- propcolwidthref=740
+ propcolwidthref=718
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
  sortdescend3=0
- width4=345
+ width4=261
  sortdescend4=0
- width5=186
+ width5=117
  sortdescend5=0
- width6=158
+ width6=292
  sortdescend6=0
- width7=51
+ width7=49
  sortdescend7=0
  width8=1
  sortdescend8=0
- width9=302
+ width9=293
  sortdescend9=0
  [projectoptionsfo.twidgetgrid4]
- propcolwidthref=564
+ propcolwidthref=542
  width0=96
  sortdescend0=0
  sortdescend1=0
  width2=73
  sortdescend2=0
- width3=271
+ width3=259
  sortdescend3=0
- width4=283
+ width4=273
  sortdescend4=0
  sorted=0
  col=0
@@ -140,12 +187,12 @@ options=108
  rowheight=17
  [projectoptionsfo.newfile]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo.fontaliasgrid]
- propcolwidthref=423
+ propcolwidthref=401
  width0=98
  sortdescend0=0
- width1=412
+ width1=390
  sortdescend1=0
  width2=30
  sortdescend2=0
@@ -159,11 +206,11 @@ options=108
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=204
  xprop=1
- yprop=0.32882882882883
+ yprop=0.34214876033058
  [projectoptionsfo.macrogrid]
- propcolwidthref=495
+ propcolwidthref=473
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
@@ -176,38 +223,38 @@ options=108
  sortdescend9=0
  width10=146
  sortdescend10=0
- width11=479
+ width11=457
  sortdescend11=0
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo.exceptionsgrid]
- propcolwidthref=724
+ propcolwidthref=702
  width0=47
  sortdescend0=0
- width1=718
+ width1=696
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
  index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=632
+ propcolwidthref=610
  width0=112
  sortdescend0=0
- width1=625
+ width1=603
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo.tabwidget]
  firsttab=0
  index=1
  [projectoptionsfo]
  stackedunder=
- x=339
- y=127
- cx=773
- cy=497
+ x=207
+ y=47
+ cx=751
+ cy=658
 programparameters=18
  [programparametersfo.grid]
  propcolwidthref=304
@@ -229,31 +276,33 @@ programparameters=18
  cy=348
 settings=13
  [settingsfo.tsplitter2]
- x=193
+ x=192
  y=16
- xprop=0.59763313609468
+ xprop=0.5906432748538
  yprop=0.97297297297297
  [settingsfo]
- x=410
- y=41
- cx=344
- cy=651
+ x=402
+ y=24
+ cx=346
+ cy=660
  wsize=0
  active=1
  visible=1
-mainfile=${PROJECTDIR}simpleplayer_fpGUI.pas
-targetfile=${PROJECTDIR}/simpleplayer_fpGUI
+colordialog=5
+ [colordialogfo]
+ x=140
+ y=234
+ cx=338
+ cy=298
+mainfile=${PROJECTNAME}.pas
+targetfile=${PROJECTNAME}${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=7
- ${FPGUIDIR}/lib/${TargetCPU}-${TargetOS}
- ${FPGUIDIR}
- ${FPGUIDIR}/src/corelib/gdi
- ${FPGUIDIR}/src
- ${FPGUIDIR}/src/corelib/x11
- ${FPGUIDIR}/src/gui
- ${FPGUIDIR}/src/corelib
+unitdirs=3
+ ${MSEDIR}lib/addon/*/
+ ${MSELIBDIR}kernel/$TARGETOSDIR/
+ ${MSELIBDIR}*/
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -261,45 +310,41 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=9
- -fPIC
- -l -Mobjfpc -Scghi
- -FE.
+makeoptions=5
  -FUunits
- -WG
+ -Xg -l -Mobjfpc -Sh -Fcutf8
+ -gl -O-
  -B
- -O4 -XX -Xs -CX
- -vewnbq
- -CX -Cg  -g -gl -Xg -vewnhibq 
+ -O2 -XX -Xs -CX
 compilerused=21
- ${COMPILER} (Default)
- Pascal 1
- Pascal 2
- Pascal 3
- Pascal 4
- C 1
- C 2
- C 3
- C 4
- Java 1
- Java 2
- Java 3
- Java 4
- Python 1
- Python 2
- Python 3
- Python 4
- Other 1
- Other 2
- Other 3
- Other 4
+  Default Compiler
+  Pascal 1
+  Pascal 2
+  Pascal 3
+  Pascal 4
+  C 1
+  C 2
+  C 3
+  C 4
+  Java 1
+  Java 2
+  Java 3
+  Java 4
+  Python 1
+  Python 2
+  Python 3
+  Python 4
+  Other 1
+  Other 2
+  Other 3
+  Other 4
 debuggerused=6
- ${DEBUGGER} (Default)
- Debugger 1
- Debugger 2
- Debugger 3
- Debugger 4
- None
+  Default Debugger
+  Debugger 1
+  Debugger 2
+  Debugger 3
+  Debugger 4
+  None
 exeused=14
  ${EXEEXT} (Default)
  No Extension
@@ -317,25 +362,22 @@ exeused=14
  .inf
 codetemplatedirs=1
  ${TEMPLATEDIR}
-toolmenus=1
-   fpGUI &DocView  
-toolfiles=1
- ${DOCVIEWDIR}/docview
-toolparams=1
- FPCHELP -k ${cursword}
+toolmenus=0
+toolfiles=0
+toolparams=0
 fontnames=0
 scriptbeforecopy=
 scriptaftercopy=
 newprojectfiles=4
- ${TEMPLATEDIR}/fpgui_single_unit/project.pas
- ${TEMPLATEDIR}fpgui/units/i386-linux/placeholder.txt
- ${TEMPLATEDIR}fpgui/units/i386-win32/placeholder.txt
- ${TEMPLATEDIR}fpgui/units/x86_64-linux/placeholder.txt
+ ${TEMPLATEDIR}mse/default/project.pas
+ ${TEMPLATEDIR}mse/default/main.pas
+ ${TEMPLATEDIR}mse/default/main.mfm
+ ${TEMPLATEDIR}mse/default/main_mfm.pas
 newprojectfilesdest=4
  ${%PROJECTNAME%}.pas
- ${%PROJECTDIR%}units/i386-linux/placeholder.txt
- ${%PROJECTDIR%}units/i386-win32/placeholder.txt
- ${%PROJECTDIR%}units/x86_64-linux/placeholder.txt
+ 
+ 
+ 
 newfinames=3
  Program
  Unit
@@ -349,25 +391,61 @@ newfiexts=3
  pas
  
 newfisources=3
- ${TEMPLATEDIR}default/program.pas
- ${TEMPLATEDIR}default/unit.pas
+ ${TEMPLATEDIR}mse/default/program.pas
+ ${TEMPLATEDIR}mse/default/unit.pas
  
-newfonames=2
+newfonames=11
  Mainform
  Simple Form
-newfonamebases=2
- 
- 
-newfosources=2
- ${TEMPLATEDIR}fpgui/mainform.pas
- ${TEMPLATEDIR}fpgui/simpleform.pas
-newfoforms=2
- 
- 
-forcezorder=-1
+ Docking Form
+ Datamodule
+ Subform
+ Scrollboxform
+ Tabform
+ Dockpanel
+ Report
+ Scriptform
+ Inherited Form
+newfonamebases=11
+ form
+ form
+ form
+ module
+ form
+ form
+ form
+ form
+ report
+ script
+ form
+newfosources=11
+ ${TEMPLATEDIR}mse/default/mainform.pas
+ ${TEMPLATEDIR}mse/default/simpleform.pas
+ ${TEMPLATEDIR}mse/default/dockingform.pas
+ ${TEMPLATEDIR}mse/default/datamodule.pas
+ ${TEMPLATEDIR}mse/default/subform.pas
+ ${TEMPLATEDIR}mse/default/scrollboxform.pas
+ ${TEMPLATEDIR}mse/default/tabform.pas
+ ${TEMPLATEDIR}mse/default/dockpanelform.pas
+ ${TEMPLATEDIR}mse/default/report.pas
+ ${TEMPLATEDIR}mse/default/pascform.pas
+ ${TEMPLATEDIR}mse/default/inheritedform.pas
+newfoforms=11
+ ${TEMPLATEDIR}mse/default/mainform.mfm
+ ${TEMPLATEDIR}mse/default/simpleform.mfm
+ ${TEMPLATEDIR}mse/default/dockingform.mfm
+ ${TEMPLATEDIR}mse/default/datamodule.mfm
+ ${TEMPLATEDIR}mse/default/subform.mfm
+ ${TEMPLATEDIR}mse/default/scrollboxform.mfm
+ ${TEMPLATEDIR}mse/default/tabform.mfm
+ ${TEMPLATEDIR}mse/default/dockpanelform.mfm
+ ${TEMPLATEDIR}mse/default/report.mfm
+ ${TEMPLATEDIR}mse/default/pascform.mfm
+ ${TEMPLATEDIR}mse/default/inheritedform.mfm
+forcezorder=0
 stripmessageesc=0
 copymessages=0
-closemessages=0
+closemessages=1
 checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
@@ -443,26 +521,25 @@ settingsstorage=0
 settingsprojecttree=0
 settingsautoload=0
 settingsautosave=0
-modulenames=0
-moduletypes=0
-modulefiles=0
+modulenames=1
+ SIMPLE_PLAYER
+moduletypes=1
+ TMAINFO
+modulefiles=1
+ /home/fred/uos/examples/mainmse_sp.mfm
 befcommandon=0
-makeoptionson=9
- 0
- 511
- 511
- 511
- 192
- 511
- 497
- 253
- 2
+makeoptionson=5
+ 2559
+ 2559
+ 2559
+ 2338
+ 2530
 compilerusedon=21
- 3631
+ 4095
  0
- 272
- 64
- 128
+ 0
+ 0
+ 0
  0
  0
  0
@@ -480,12 +557,12 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 3887
+ 4094
  0
  0
  0
  0
- 208
+ 1
 exeusedon=14
  4095
  0
@@ -502,37 +579,15 @@ exeusedon=14
  0
  0
 aftcommandon=0
-unitdirson=7
- 197119
- 197119
- 196800
- 197119
- 196927
- 197119
- 197119
-macroon=5
- 1
- 3
- 6
- 4
- 63
-macronames=5
- TargetCPU
- TargetOS
- TargetCPU
- TargetOS
- HelpPath
-macrovalues=5
- x86_64
- linux
- i386
- win32
- /opt/FPC_Docs/inf/
+unitdirson=3
+ 200703
+ 69631
+ 69631
+macroon=0
+macronames=0
+macrovalues=0
 macrogroup=0
 groupcomments=10
- Linux 64-bit
- Linux 32-bit
- Windows 32-bit
  
  
  
@@ -540,16 +595,14 @@ groupcomments=10
  
  
  
-toolsave=1
- 0
-toolhide=1
- 0
-toolparse=1
- 0
-toolmessages=1
- 0
-toolshortcuts=1
- -1
+ 
+ 
+ 
+toolsave=0
+toolhide=0
+toolparse=0
+toolmessages=0
+toolshortcuts=0
 fontalias=0
 fontancestors=0
 fontheights=0
@@ -558,41 +611,42 @@ fontoptions=0
 fontxscales=0
 expandprojectfilemacros=4
  1
- -1
- -1
- -1
-loadprojectfile=4
+ 1
  1
  0
+loadprojectfile=4
+ 1
+ 1
+ 1
+ 0
+newinheritedforms=11
  0
  0
-newinheritedforms=2
  0
  0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ -1
 uid=0
-sourcefilemasks=5
- "*.pas" "*.dpr" "*.pp" "*.inc" "*.lpr"
+sourcefilemasks=3
+ "*.pas" "*.dpr" "*.lpr" "*.pp" "*.inc"
  "*.c" "*.cc" "*.h"
  "*.mfm"
- "*.ipf"
- "*.sql"
-syntaxdeffiles=5
+syntaxdeffiles=3
  ${SYNTAXDEFDIR}pascal_ideu.sdef
  ${SYNTAXDEFDIR}cpp.sdef
  ${SYNTAXDEFDIR}objecttext.sdef
- ${SYNTAXDEFDIR}ipf2.sdef
- ${SYNTAXDEFDIR}sql.sdef
-filemasknames=5
+filemasknames=3
  Source
  Forms
- Text
- IPF help
  All Files
-filemasks=5
+filemasks=3
  "*.pp" "*.pas" "*.inc" "*.dpr" "*.lpr"
  *.mfm
- *.txt
- *.ipf
  *
 showgrid=1
 snaptogrid=1
@@ -602,29 +656,29 @@ componenthints=1
 gridsizex=8
 gridsizey=8
 autoindent=1
-blockindent=2
+blockindent=1
 linenumberson=1
 rightmarginon=1
 rightmarginchars=80
 scrollheight=0
-tabstops=2
-spacetabs=1
+tabstops=4
+spacetabs=0
 showtabs=0
 tabindent=0
 editfontname=mseide_source
-editfontheight=16
+editfontheight=0
 editfontwidth=0
 editfontextraspace=0
 editfontcolor=-1879048183
 editbkcolor=-1879048186
 statementcolor=14745599
-pairmarkcolor=-1610612713
+pairmarkcolor=-1610612712
 editfontantialiased=1
 editmarkbrackets=1
 editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
-encoding=0
+encoding=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -644,11 +698,10 @@ beforeload=
 afterload=
 beforerun=
 sourcebase=
-sourcedirs=5
- ${FPGUIDIR}/src/gui/
- ${FPGUIDIR}/src/corelib/gdi/X/
- ${FPGUIDIR}/src/corelib/x11/
- ${FPGUIDIR}/src/corelib/
+sourcedirs=4
+ ${MSEDIR}lib/addon/*/
+ ${MSEDIR}lib/common/kernel/$TARGETOSDIR/
+ ${MSEDIR}lib/common/*/
  ./
 defines=0
 progparameters=
@@ -656,11 +709,11 @@ progworkingdirectory=
 envvarnames=0
 envvarvalues=0
 defineson=0
-stoponexception=1
+stoponexception=0
 valuehints=1
 activateonbreak=1
 raiseonbreak=1
-showconsole=1
+showconsole=0
 externalconsole=0
 settty=1
 gdbdownload=0
@@ -705,114 +758,48 @@ sigsettings=27
  26,26,T,F
  27,27,T,F
  28,28,T,F
- 29,29,T,F
+ 29,29,F,F
  30,30,T,F
-defaultmake=32
+defaultmake=1
 [breakpoints]
-on=6
+on=1
  0
- -1
+path=1
+ /home/fred/assistive/monitormse/main.pas
+line=1
+ 67
+address=1
+ 4542000
+addbkpt=1
  0
+ignore=1
  0
- -1
- 0
-path=6
- /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/paio_channelhelper.pas
- /home/fred/uos_aac_new/examples/uos_aac.pas
- /home/fred/uos/examples/uos_aac.pas
-line=6
- 1756
- 3385
- 1771
- 33
- 913
- 764
-address=6
- 4918365
- 4946380
- 4918583
- 0
- 0
- 0
-addbkpt=6
- 0
- 0
- 0
- 0
- 0
- 0
-ignore=6
- 0
- 0
- 0
- 0
- 0
- 0
-condition=6
- 
- 
- 
- 
- 
+condition=1
  
 panels=1
  panel1
 units=
  (
  a=0,4149,6,Pascal Units
- c=10
+ c=2
   (
-  file=define.inc
+  file=mainmse_sp.pas
   kind=1
-  a=0,4100,0,define.inc
+  a=0,4116,2,mainmse_sp.pas
+  c=1
+   (
+   file=mainmse_sp.mfm
+   kind=2
+   a=0,5140,4,mainmse_sp
+   classtype=tmainfo
+   formname=simple_player
+   instancevarname=simple_player
+   )
   )
   (
-  file=simpleplayer_fpGUI.pas
+  file=SimplePlayer_MSE.pas
   kind=1
-  a=0,4100,0,simpleplayer_fpGUI.pas
-  )
-  (
-  file=st2bi.pas
-  kind=1
-  a=0,4100,0,st2bi.pas
-  )
-  (
-  file=uos_bs2b.pas
-  kind=1
-  a=0,4100,0,uos_bs2b.pas
-  )
-  (
-  file=uos_flat.pas
-  kind=1
-  a=0,4100,0,uos_flat.pas
-  )
-  (
-  file=uos_libsndfile.pas
-  kind=1
-  a=0,4100,0,uos_libsndfile.pas
-  )
-  (
-  file=uos_mpg123.pas
-  kind=1
-  a=0,4100,0,uos_mpg123.pas
-  )
-  (
-  file=uos.pas
-  kind=1
-  a=0,4100,0,uos.pas
-  )
-  (
-  file=uos_portaudio.pas
-  kind=1
-  a=0,4100,0,uos_portaudio.pas
-  )
-  (
-  file=uos_soundtouch.pas
-  kind=1
-  a=0,4100,0,uos_soundtouch.pas
+  a=0,4100,0,SimplePlayer_MSE.pas
   )
  )
 cmodules=
@@ -821,66 +808,42 @@ cmodules=
  )
 files=
  (
- a=0,4133,6,Text Files
+ a=0,4132,6,Text Files
  )
 [componentstore]
 storedir=/home/fred/msegui/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
-colwidth=162
-x=974
-y=129
-cx=169
+colwidth=100
+x=331
+y=135
+cx=704
 cy=473
 [progparams]
 progparamhistory=0
 workdirparamhistory=0
 envvarons=0
 [edit]
-hintwidth=462
-hintheight=95
-finddtext=writeln
+hintwidth=270
+hintheight=200
+finddtext=radiobutton1
 findhistory=10
- writeln
- unix
- loadlibr
- hNeAAC
- hmp4ff
- hmpaff
- mswindows
- Pa_Handle
- linux
- freebsd
+ radiobutton1
+ process
+ btnStopClick
+ changecheck
+ uos_SetDSPIn
+ vuLeft
+ changenoise
+ ***running***
+ ntimerkey
+ WhatChar
 findoptions=1
-editpos=29
+editpos=5
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,64
- 0,593
- 0,-1073741823
+ 0,189
+ 0,587
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -888,130 +851,44 @@ bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-bookmarks23=0
-bookmarks24=0
-bookmarks25=0
-bookmarks26=0
-bookmarks27=0
-bookmarks28=0
-sourcefiles=29
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_bs2b.pas
+sourcefiles=5
+ ${PROJECTDIR}/SimplePlayer_MSE.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_cdrom.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_aac.pas
- /home/fred/fpgui/src/corelib/x11/fpg_x11.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
- /home/fred/uos_aac_new (copie)/examples/uos.pas
- ${PROJECTDIR}/uos_flat.pas
- /home/fred/fpgui/src/corelib/x11/fpg_impl.pas
- ${PROJECTDIR}/uos_aac.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_aac.pas
- ${PROJECTDIR}/uos_bs2b.pas
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/librarytester_fpGUI.pas
- /home/fred/fpGUI-develop/examples/gui/led_matrix_display/frm_main.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/st2bi.pas
- ${PROJECTDIR}/uos_aac.pas
- ${PROJECTDIR}/uos_portaudio.pas
-relpaths=29
- uos.pas
- uos_bs2b.pas
+ ${PROJECTDIR}/mainmse_sp.pas
+ /home/fred/msegui/lib/common/kernel/msegui.pas
+ /home/fred/msegui/lib/common/editwidgets/msegraphedits.pas
+relpaths=5
+ SimplePlayer_MSE.pas
  simpleplayer_fpGUI.pas
- uos_flat.pas
- uos_portaudio.pas
- uos_cdrom.pas
- uos.pas
- uos_aac.pas
- fpgui/src/corelib/x11/fpg_x11.pas
- uos_flat.pas
- uos.pas
- uos_aac_new (copie)/examples/uos.pas
- uos_flat.pas
- fpgui/src/corelib/x11/fpg_impl.pas
- uos_aac.pas
- simpleplayer_fpGUI.pas
- uos_aac.pas
- uos_bs2b.pas
- uos_libsndfile.pas
- uos_mpg123.pas
- uos_portaudio.pas
- uos_soundtouch.pas
- librarytester_fpGUI.pas
- fpGUI-develop/examples/gui/led_matrix_display/frm_main.pas
- uos.pas
- simpleplayer_fpGUI.pas
- st2bi.pas
- uos_aac.pas
- uos_portaudio.pas
-ismoduletexts=29
+ mainmse_sp.pas
+ msegui/lib/common/kernel/msegui.pas
+ msegui/lib/common/editwidgets/msegraphedits.pas
+ismoduletexts=5
  0
  0
  0
  0
  0
+modules=1
+ /home/fred/uos/examples/mainmse_sp.mfm
+moduleoptions=1
  0
+visiblemodules=1
+ -1
+nomenumodules=1
  0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
-modules=0
-moduleoptions=0
-visiblemodules=0
-nomenumodules=0
 [sourcefo.files_tab]
+order=5
+ 0
+ 1
+ 2
+ 4
+ 3
 tabsize=60
-firsttab=22
-index=25
+firsttab=0
+index=2
 [layout]
-windowlayout=503
+windowlayout=518
  [mainfo.basedock]
  splitdir=2
  useroptions=15488
@@ -1025,17 +902,17 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=154
- y=26
+ x=11
+ y=90
  cx=966
  cy=621
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,1356,18
-  basedock,0,19,1356,779
+  statdisp,0,1,956,18
+  basedock,0,19,956,585
  focusedchild=1
- wsize=4
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1149,7 +1026,7 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=639
+ cy=536
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1160,7 +1037,7 @@ windowlayout=503
  sortdescend1=0
  sorted=0
  col=1
- row=9
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1201,26 +1078,30 @@ windowlayout=503
  [watchpointsfo.grid]
  propcolwidthref=352
  sortdescend0=0
- values1=0
+ values1=1
+  0
  values1_ci=-1
  width1=33
  sortdescend1=0
- values2=0
+ values2=1
+  pinteger(0x126c6b4)^
  width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
- values5=0
+ values5=1
+  0
  values5_ci=-1
  width5=38
  sortdescend5=0
- values6=0
+ values6=1
+  
  width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=memoryfo
  parent=
  mdistate=0
  nx=0
@@ -1237,7 +1118,7 @@ windowlayout=503
  active=0
  visible=0
  [breakpointsfo.bkptson]
- value=0
+ value=1
  [objectinspectorfo]
  splitdir=0
  useroptions=268451947
@@ -1248,20 +1129,20 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=670
- y=179
+ x=141
+ y=167
  cx=316
  cy=484
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [objectinspectorfo.grid]
  propcolwidthref=306
- width0=73
+ width0=123
  sortdescend0=0
- width1=227
+ width1=177
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1322,24 +1203,16 @@ windowlayout=503
  rcy=679
  [watchfo.grid]
  propcolwidthref=123
- values0=2
-  -1
-  -1
+ values0=0
  values0_ci=-1
  sortdescend0=0
- values1=2
-  po2^
-  test
+ values1=0
  width1=66
  sortdescend1=0
- values3=2
-  0
-  0
+ values3=0
  values3_ci=-1
  sortdescend3=0
- values4=2
-  0
-  0
+ values4=0
  values4_ci=-1
  width4=13
  sortdescend4=0
@@ -1351,18 +1224,18 @@ windowlayout=503
  splitdir=0
  useroptions=114795
  parent=mainfo.basedock
- visible=1
+ visible=0
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
  x=0
- y=691
- cx=1356
- cy=88
- rcx=0
- rcy=0
+ y=498
+ cx=956
+ cy=87
+ rcx=956
+ rcy=585
  [componentstorefo]
  splitdir=0
  useroptions=268460155
@@ -1429,15 +1302,15 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=objectinspectorfo
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=428
- y=66
+ x=165
+ y=44
  cx=440
  cy=129
  rcx=0
@@ -1446,7 +1319,7 @@ windowlayout=503
  active=0
  visible=0
  [componentpalettefo.componentpages]
- activetab=1
+ activetab=0
  [debuggerfo]
  splitdir=0
  useroptions=122987
@@ -1459,7 +1332,7 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=956
  cy=46
  rcx=0
  rcy=0
@@ -1475,8 +1348,8 @@ windowlayout=503
  ncy=0
  x=142
  y=0
- cx=1214
- cy=639
+ cx=814
+ cy=536
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1511,14 +1384,30 @@ windowlayout=503
  ncy=0
  x=0
  y=49
- cx=1356
- cy=639
+ cx=956
+ cy=536
  rcx=0
  rcy=0
+ [_mse_simple_player_mse_]
+ splitdir=0
+ useroptions=268451963
+ stackedunder=objectinspectorfo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=637
+ y=24
+ cx=495
+ cy=524
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=1
 [targetconsole]
-finddtext=MP4OpenFile
-findhistory=3
- MP4OpenFile
- dsp_vol
- dspvol
+finddtext=
+findhistory=0
 findoptions=1

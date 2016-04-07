@@ -9,7 +9,7 @@ unit uos_flat;
 
 {$mode objfpc}{$H+}
 
-// for custom config =>  edit define.inc
+// for custom config =>  edit define.inc ( also if using fpGUI and fpc < 2.7 )
 {$I define.inc}
 
 interface
@@ -20,8 +20,7 @@ uses
    uos_jni,
    {$endif}
 
-        {$IF (FPC_FULLVERSION >= 20701) or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Windows) or DEFINED(Library)}
-     {$else}
+    {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
      fpg_base,
       {$ENDIF}
 
@@ -73,10 +72,9 @@ uses
   TuosF_Data = Tuos_Data;
   TuosF_FFT = Tuos_FFT ;
 
-  {$IF (FPC_FULLVERSION >= 20701) or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Windows) or DEFINED(Library)}
-         {$else}
-          const
-         MSG_CUSTOM1 = FPGM_USER + 1;
+{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+  const
+  MSG_CUSTOM1 = FPGM_USER + 1;
       {$ENDIF}
 
 //////////// General public procedure/function (accessible for library uos too)
@@ -101,10 +99,10 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
         
 procedure uos_UnloadPlugin(PluginName: PChar);
 
-{$IF (FPC_FULLVERSION >= 20701) or  DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Windows) or DEFINED(Library)}
-procedure uos_CreatePlayer(PlayerIndex: LongInt);
-{$else}
+{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
 procedure uos_CreatePlayer(PlayerIndex: LongInt; AParent: TObject);
+{$else}
+procedure uos_CreatePlayer(PlayerIndex: LongInt);
 {$endif}
 
 {$IF DEFINED(portaudio)}
@@ -1240,11 +1238,11 @@ end;
 // Create the player , PlayerIndex1 : from 0 to what your computer can do !
 //// If PlayerIndex exists already, it will be overwriten...
 
-{$IF (FPC_FULLVERSION>=20701) or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-  procedure uos_CreatePlayer(PlayerIndex : cint32);
-     {$else}
-  procedure uos_CreatePlayer(PlayerIndex : cint32 ; AParent: TObject);            //// for fpGUI
-    {$endif}
+{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+procedure uos_CreatePlayer(PlayerIndex : cint32 ; AParent: TObject);
+{$else}
+procedure uos_CreatePlayer(PlayerIndex : cint32);
+{$endif}
 
  var
 x : cint32;
@@ -1257,11 +1255,11 @@ begin
 end;
        if uosPlayers[PlayerIndex] <> nil then uosPlayers[PlayerIndex].Terminate;
 
- {$IF ( FPC_FULLVERSION>=20701)or DEFINED(LCL) or DEFINED(ConsoleApp) or DEFINED(Library) or DEFINED(Windows)}
-     uosPlayers[PlayerIndex] := Tuos_Player.Create(true);
-     {$else}
-    uosPlayers[PlayerIndex] := Tuos_Player.Create(true,AParent);         //// for fpGUI
-    {$endif}
+       {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+         uosPlayers[PlayerIndex] := Tuos_Player.Create(true,AParent);         //// for fpGUI
+       {$else}
+        uosPlayers[PlayerIndex] := Tuos_Player.Create(true);
+       {$endif}
 
    uosPlayers[PlayerIndex].Index := PlayerIndex;
    uosPlayersStat[PlayerIndex] := 1 ;

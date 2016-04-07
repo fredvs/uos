@@ -591,7 +591,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
 
     DecodeTime(temptime, ho, mi, se, ms);
     
-    llength.Text := format('%d:%d:%d.%d', [ho, mi, se, ms]);
+    llength.Text := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
 
     /////// procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex1, @ClosePlayer1);
