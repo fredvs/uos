@@ -68,6 +68,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure CheckBox3Change(Sender: TObject);
     procedure ChknoiseChange(Sender: TObject);
@@ -509,8 +510,7 @@ begin
     button4.Enabled := False;
 
     PlayerIndex1.Play();
-
-    end;
+     end;
   end;
 
 end;
@@ -518,6 +518,11 @@ end;
 procedure TForm1.Button6Click(Sender: TObject);
 begin
   PlayerIndex1.Stop();
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+  PlayerIndex1.PlayNoFree();
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);

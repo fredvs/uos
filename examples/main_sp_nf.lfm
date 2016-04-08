@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '1.5'
+  LCLVersion = '5.7'
   object Shape1: TShape
     Left = 8
     Height = 216
@@ -223,7 +223,7 @@ object Form1: TForm1
     ParentFont = False
   end
   object Button1: TButton
-    Left = 8
+    Left = 7
     Height = 26
     Top = 296
     Width = 483

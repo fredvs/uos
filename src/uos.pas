@@ -391,6 +391,8 @@ type
     Status: LongInt;
     Index: LongInt;
 
+    NoFree : boolean;
+
     BeginProc: TProc;
     //// external procedure to execute at begin of thread
 
@@ -430,6 +432,8 @@ type
 
     /////////////////////Audio procedure
     Procedure Play() ;        ///// Start playing
+
+    Procedure PlayNoFree() ;        ///// Start playing but do not free the player after stop
 
     procedure RePlay();                ///// Resume playing after pause
 
@@ -998,9 +1002,10 @@ procedure Tuos_Player.Play() ;
 var
   x: LongInt;
  begin
+
   if (isAssigned = True) then
   begin
-  
+   NoFree := false;
    {$IF DEFINED(portaudio)}
   for x := 0 to high(StreamOut) do
     if StreamOut[x].Data.HandleSt <> nil then
@@ -1020,6 +1025,38 @@ var
   Status := 1;
   RTLeventSetEvent(evPause);
 end;
+
+end;
+
+procedure Tuos_Player.PlayNoFree() ;
+var
+  x: LongInt;
+ begin
+  if (isAssigned = True) then
+  begin
+     NoFree := true;
+
+   {$IF DEFINED(portaudio)}
+  for x := 0 to high(StreamOut) do
+    if StreamOut[x].Data.HandleSt <> nil then
+    begin
+      Pa_StartStream(StreamOut[x].Data.HandleSt);
+     end;
+
+  for x := 0 to high(StreamIn) do
+  begin
+    Seek(x, 0);
+    StreamIn[x].Data.status  := 1 ;
+    if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
+    begin
+       Pa_StartStream(StreamIn[x].Data.HandleSt);
+     end;
+    end;
+    {$endif}
+  Status := 1;
+  start;   // resume;  { if fpc version <= 2.4.4}
+  RTLeventSetEvent(evPause);
+ end;
 
 end;
 
@@ -3746,6 +3783,53 @@ begin
    for x3 := 0 to high(StreamIn[x2].Data.Buffer) do
    StreamIn[x2].Data.Buffer[x3] := cfloat(0.0);
 
+     if (nofree = true) and (status = 0)  then
+  begin
+    for x := 0 to high(StreamIn) do
+    begin
+      if (length(StreamIn[x].DSP) > 0) then
+          for x2 := 0 to high(StreamIn[x].DSP) do
+          if (StreamIn[x].DSP[x2].EndFunc <> nil) then
+        StreamIn[x].DSP[x2].EndFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
+    end;
+
+     for x := 0 to high(StreamOut) do
+    begin
+      if (length(StreamOut[x].DSP) > 0) then
+            for x2 := 0 to high(StreamOut[x].DSP) do
+            if (StreamOut[x].DSP[x2].EndFunc <> nil) then
+              StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
+     end;
+
+     if (StreamOut[x].Data.TypePut = 0) then
+      begin
+        WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
+      end;
+
+        {$IF not DEFINED(Library)}
+      if EndProc <> nil then
+       {$IF FPC_FULLVERSION>=20701}
+             queue(EndProc);
+             {$else}
+      synchronize(EndProc); /////  Execute EndProc procedure
+            {$endif}
+
+       {$elseif not DEFINED(java)}
+     if (EndProc <> nil) then
+        EndProc;
+       {$else}
+     if (EndProc <> nil) then
+      {$IF FPC_FULLVERSION>=20701}
+        queue(@endprocjava);
+         {$else}
+      synchronize(@endprocjava); /////  Execute EndProc procedure
+         {$endif}
+
+       {$endif}
+     RTLeventResetEvent(evPause);
+    Status := 2;
+  end;
+
     until status = 0;
 
   ////////////////////////////////////// End of Loop ////////////////////////////////////////
@@ -3753,9 +3837,9 @@ begin
   ////////////////////////// Terminate Thread
   if status = 0 then
   begin
+
       // writeln(' status = 0');
-   
-         if length(PlugIn) > 0 then
+    if length(PlugIn) > 0 then
      begin
         for x := 0 to high(PlugIn) do
        begin         
@@ -3775,8 +3859,8 @@ begin
        {$endif}
       end;
     end;
-    
-  //  writeln('x := 0 to high(StreamIn EndFunc)');
+
+    //  writeln('x := 0 to high(StreamIn EndFunc)');
     // EndFunc of DSP In
      
     for x := 0 to high(StreamIn) do
@@ -3796,8 +3880,8 @@ begin
             if (StreamOut[x].DSP[x2].EndFunc <> nil) then
               StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
      end;
-  
-    for x := 0 to high(StreamIn) do
+
+   for x := 0 to high(StreamIn) do
       if (StreamIn[x].Data.HandleSt <> nil) then
         case StreamIn[x].Data.TypePut of
          0: case StreamIn[x].Data.LibOpen of
@@ -3851,25 +3935,21 @@ begin
       end;
        {$endif}
 
-      if (StreamOut[x].Data.TypePut = 0) then
-      begin
-      //  sleep(100);
-        WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
-       // sleep(100);
-        StreamOut[x].FileBuffer.Data.Free;
-      //  Sleep(200);
        end;
-    end;
-    
+
+    if (StreamOut[x].Data.TypePut = 0) then
+      begin
+        WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
+        StreamOut[x].FileBuffer.Data.Free;
+       end;
+
     //  writeln('EndProc---');
 
          {$IF not DEFINED(Library)}
       if EndProc <> nil then
        {$IF FPC_FULLVERSION>=20701}
-       begin
-       queue(EndProc);
-       end;
-         {$else}
+             queue(EndProc);
+             {$else}
       synchronize(EndProc); /////  Execute EndProc procedure
             {$endif}
 
@@ -3885,7 +3965,7 @@ begin
          {$endif}
 
        {$endif}
-       isAssigned := false ;
+     isAssigned := false ;
       //   writeln('EndProc');
         
      end;
@@ -3893,11 +3973,14 @@ end;
 
 procedure Tuos_Player.onTerminate() ;
 begin
+  if nofree = false then
+  begin
 if ifflat = true then
   begin
 FreeAndNil(uosPlayers[Index]);
 uosPlayersStat[Index] := -1 ;
 end else Free;
+ end;
 end;
 
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
@@ -3933,6 +4016,10 @@ destructor Tuos_Player.Destroy;
 var
   x: LongInt;
 begin
+
+if nofree = false then
+  begin
+
   RTLeventdestroy(evPause);
   
   if length(StreamOut) > 0 then
@@ -3948,6 +4035,8 @@ begin
       Plugin[x].Free;
       
   inherited Destroy;
+
+  end;
 end;
 
 destructor Tuos_InStream.Destroy;

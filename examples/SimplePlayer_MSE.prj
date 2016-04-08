@@ -317,34 +317,34 @@ makeoptions=5
  -B
  -O2 -XX -Xs -CX
 compilerused=21
-  Default Compiler
-  Pascal 1
-  Pascal 2
-  Pascal 3
-  Pascal 4
-  C 1
-  C 2
-  C 3
-  C 4
-  Java 1
-  Java 2
-  Java 3
-  Java 4
-  Python 1
-  Python 2
-  Python 3
-  Python 4
-  Other 1
-  Other 2
-  Other 3
-  Other 4
+ ${COMPILER} (Default)
+ Pascal 1
+ Pascal 2
+ Pascal 3
+ Pascal 4
+ C 1
+ C 2
+ C 3
+ C 4
+ Java 1
+ Java 2
+ Java 3
+ Java 4
+ Python 1
+ Python 2
+ Python 3
+ Python 4
+ Other 1
+ Other 2
+ Other 3
+ Other 4
 debuggerused=6
-  Default Debugger
-  Debugger 1
-  Debugger 2
-  Debugger 3
-  Debugger 4
-  None
+ ${DEBUGGER} (Default)
+ Debugger 1
+ Debugger 2
+ Debugger 3
+ Debugger 4
+ None
 exeused=14
  ${EXEEXT} (Default)
  No Extension
@@ -535,7 +535,7 @@ makeoptionson=5
  2338
  2530
 compilerusedon=21
- 4095
+ 69631
  0
  0
  0
@@ -557,14 +557,14 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 4094
+ 69631
  0
  0
  0
  0
- 1
+ 0
 exeusedon=14
- 4095
+ 69631
  0
  0
  0
@@ -841,8 +841,8 @@ findhistory=10
  WhatChar
 findoptions=1
 editpos=5
+ 0,0
  0,-1073741823
- 0,189
  0,587
  0,-1073741823
  0,-1073741823
@@ -878,15 +878,9 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=5
- 0
- 1
- 2
- 4
- 3
 tabsize=60
 firsttab=0
-index=2
+index=0
 [layout]
 windowlayout=518
  [mainfo.basedock]
@@ -903,14 +897,14 @@ windowlayout=518
  ncx=0
  ncy=0
  x=11
- y=90
- cx=966
+ y=89
+ cx=1063
  cy=621
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,956,18
-  basedock,0,19,956,585
+  statdisp,0,1,1053,18
+  basedock,0,19,1053,585
  focusedchild=1
  wsize=0
  active=1
@@ -1036,7 +1030,7 @@ windowlayout=518
  width1=1
  sortdescend1=0
  sorted=0
- col=1
+ col=-1073741823
  row=-1073741823
  rowheight=17
  [stackfo]
@@ -1122,27 +1116,27 @@ windowlayout=518
  [objectinspectorfo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=141
- y=167
- cx=316
+ x=230
+ y=137
+ cx=414
  cy=484
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [objectinspectorfo.grid]
- propcolwidthref=306
- width0=123
+ propcolwidthref=404
+ width0=162
  sortdescend0=0
- width1=177
+ width1=236
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1232,9 +1226,9 @@ windowlayout=518
  ncy=0
  x=0
  y=498
- cx=956
+ cx=1053
  cy=87
- rcx=956
+ rcx=1053
  rcy=585
  [componentstorefo]
  splitdir=0
@@ -1302,7 +1296,7 @@ windowlayout=518
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=_mse_simple_player_mse_
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1332,7 +1326,7 @@ windowlayout=518
  ncy=0
  x=0
  y=0
- cx=956
+ cx=1053
  cy=46
  rcx=0
  rcy=0
@@ -1348,7 +1342,7 @@ windowlayout=518
  ncy=0
  x=142
  y=0
- cx=814
+ cx=911
  cy=536
  rcx=0
  rcy=0
@@ -1384,14 +1378,14 @@ windowlayout=518
  ncy=0
  x=0
  y=49
- cx=956
+ cx=1053
  cy=536
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

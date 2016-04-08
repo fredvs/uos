@@ -269,6 +269,7 @@ object simple_player: tmainfo
       bounds_y = 46
       bounds_cx = 340
       value = 0
+      scrollbar.options = [sbo_moveauto, sbo_showauto, sbo_valuekeys]
       scrollbar.buttonendlength = 11
       scrollbar.face.localprops = []
       onsetvalue = changepos

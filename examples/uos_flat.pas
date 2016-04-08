@@ -1093,6 +1093,14 @@ begin
 uosPlayers[PlayerIndex].Play() ;
 end;
 
+Procedure uos_PlayNoFree(PlayerIndex: cint32) ;        ///// Start playing but do not free the player after stop
+
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+uosPlayers[PlayerIndex].PlayNoFree() ;
+end;
+
 procedure uos_RePlay(PlayerIndex: cint32);                ///// Resume playing after pause
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
