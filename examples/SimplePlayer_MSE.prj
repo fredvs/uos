@@ -841,9 +841,9 @@ findhistory=10
  WhatChar
 findoptions=1
 editpos=5
- 0,0
+ 0,80
  0,-1073741823
- 0,587
+ 0,592
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -880,7 +880,7 @@ nomenumodules=1
 [sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=0
+index=2
 [layout]
 windowlayout=518
  [mainfo.basedock]
@@ -1116,7 +1116,7 @@ windowlayout=518
  [objectinspectorfo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=breakpointsfo
  parent=
  mdistate=0
  nx=0
@@ -1296,7 +1296,7 @@ windowlayout=518
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

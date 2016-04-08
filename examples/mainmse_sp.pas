@@ -590,7 +590,7 @@ end;
 procedure tmainfo.changepos(const sender: TObject; var avalue: realty;
                var accept: Boolean);
 begin
-   uos_Seek(PlayerIndex1, InputIndex1, round(TrackBar1.value * inputlength));
+   uos_Seek(PlayerIndex1, InputIndex1, round(avalue * inputlength));
 end;
 
 end.
