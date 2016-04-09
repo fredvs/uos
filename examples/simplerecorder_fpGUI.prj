@@ -781,17 +781,18 @@ findhistory=10
  In1Index
  Plugin1Index
 findoptions=1
-editpos=10
+editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,0
+ 0,181
  0,-1073741823
  0,-1073741823
- 37,3849
- 0,765
+ 0,157
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -802,7 +803,8 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 bookmarks9=0
-sourcefiles=10
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -813,7 +815,8 @@ sourcefiles=10
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_aac.pas
-relpaths=10
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=11
  uos.pas
  uos_flat.pas
  define.inc
@@ -824,7 +827,9 @@ relpaths=10
  simplerecorder_fpGUI.pas
  uos.pas
  uos_aac.pas
-ismoduletexts=10
+ uos_flat.pas
+ismoduletexts=11
+ 0
  0
  0
  0
@@ -840,9 +845,21 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=11
+ 0
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 10
+ 8
+ 9
 tabsize=60
 firsttab=4
-index=9
+index=7
 [layout]
 windowlayout=503
  [mainfo.basedock]

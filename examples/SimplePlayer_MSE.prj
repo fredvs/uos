@@ -827,8 +827,9 @@ envvarons=0
 [edit]
 hintwidth=270
 hintheight=200
-finddtext=radiobutton1
+finddtext=AddFromFile
 findhistory=10
+ AddFromFile
  radiobutton1
  process
  btnStopClick
@@ -838,32 +839,36 @@ findhistory=10
  changenoise
  ***running***
  ntimerkey
- WhatChar
 findoptions=1
-editpos=5
- 0,80
- 0,-1073741823
- 0,592
+editpos=6
  0,-1073741823
  0,-1073741823
+ 0,389
+ 0,-1073741823
+ 0,-1073741823
+ 18,2884
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+sourcefiles=6
  ${PROJECTDIR}/SimplePlayer_MSE.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/mainmse_sp.pas
  /home/fred/msegui/lib/common/kernel/msegui.pas
  /home/fred/msegui/lib/common/editwidgets/msegraphedits.pas
-relpaths=5
+ ${PROJECTDIR}/uos.pas
+relpaths=6
  SimplePlayer_MSE.pas
  simpleplayer_fpGUI.pas
  mainmse_sp.pas
  msegui/lib/common/kernel/msegui.pas
  msegui/lib/common/editwidgets/msegraphedits.pas
-ismoduletexts=5
+ uos.pas
+ismoduletexts=6
+ 0
  0
  0
  0
@@ -878,9 +883,16 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
+order=6
+ 0
+ 1
+ 2
+ 5
+ 3
+ 4
 tabsize=60
 firsttab=0
-index=2
+index=3
 [layout]
 windowlayout=518
  [mainfo.basedock]
@@ -1296,7 +1308,7 @@ windowlayout=518
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0

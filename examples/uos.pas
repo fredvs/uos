@@ -468,18 +468,17 @@ type
 
     {$IF DEFINED(portaudio)}
     function AddFromDevIn(Device: LongInt; Latency: CDouble;
-  SampleRate: LongInt; Channels: LongInt; OutputIndex: LongInt;
+  SampleRate: LongInt; OutputIndex: LongInt;
   SampleFormat: LongInt; FramesCount : LongInt): LongInt;
    ////// Add a Input from Device Input with custom parameters
     //////////// Device ( -1 is default Input device )
     //////////// Latency  ( -1 is latency suggested ) )
     //////////// SampleRate : delault : -1 (44100)
-    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (4096)
     //  result :  otherwise Output Index in array   -1 = error
-    /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1,-1);
+    /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1);
      {$endif}
 
     function AddFromFile(Filename: Pchar; OutputIndex: LongInt;
@@ -929,6 +928,29 @@ begin
   Result := arfl;
 end;
 
+function CvSteroToMono(Inbuf: TDArFloat; len : longint): TDArFloat;
+var
+  x, y: LongInt;
+  arsh: TDArFloat;
+ begin
+
+   if len > 0 then begin
+    setlength(arsh, len);
+
+   x := 0;
+   y := 0;
+
+    while x < len * 2 do
+    begin
+    /// TODO -> this takes only chan1, not (chan1+chan2)/2 -> it get bad noise dont know why ...
+    arsh[y]   := Inbuf[x];
+    inc(y);
+     x := x + 2 ;
+    end;
+    Result := arsh;
+   end else Result := Inbuf;
+end;
+
 function CvInt32ToFloat32(Inbuf: TDArFloat): TDArFloat;
 var
   x: LongInt;
@@ -966,9 +988,13 @@ begin
     wChunkSize := SizeOf(Header);
     f.WriteBuffer(wChunkSize, 4);
     Header.wFormatTag := 1;
+
     Header.wChannels := Data.wChannels;
+
     Header.wSamplesPerSec := Data.wSamplesPerSec;
+
     Header.wBlockAlign := Data.wChannels * (Data.wBitsPerSample div 8);
+
     Header.wAvgBytesPerSec := Data.wSamplesPerSec * Header.wBlockAlign;
     Header.wBitsPerSample := Data.wBitsPerSample;
     Header.wcbSize := 0;
@@ -1002,10 +1028,9 @@ procedure Tuos_Player.Play() ;
 var
   x: LongInt;
  begin
-
   if (isAssigned = True) then
   begin
-   NoFree := false;
+    NoFree := false;
    {$IF DEFINED(portaudio)}
   for x := 0 to high(StreamOut) do
     if StreamOut[x].Data.HandleSt <> nil then
@@ -1059,6 +1084,7 @@ var
  end;
 
 end;
+
 
 procedure Tuos_Player.RePlay();   /////// Resume Playing after Pause
 begin
@@ -2422,18 +2448,17 @@ end;
 {$IF DEFINED(portaudio)}
 
 function Tuos_Player.AddFromDevIn(Device: LongInt; Latency: CDouble;
-  SampleRate: LongInt; Channels: LongInt; OutputIndex: LongInt;
+  SampleRate: LongInt; OutputIndex: LongInt;
   SampleFormat: LongInt; FramesCount : LongInt): LongInt;
   /// Add Input from IN device with custom parameters
   //////////// Device ( -1 is default Input device )
   //////////// Latency  ( -1 is latency suggested ) )
   //////////// SampleRate : delault : -1 (44100)
-  //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex
                            // (if multi-output then OutName = name of each output separeted by ';')
   //////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : -1 default : 4096
-  //////////// example : AddFromDevice(-1,-1,-1,-1,-1);
+  //////////// example : AddFromDevice(-1,-1,-1,-1);
 var
   x, err: LongInt;
 begin
@@ -2459,21 +2484,28 @@ begin
     StreamIn[x].Data.SampleRate := DefRate
   else
     StreamIn[x].Data.SampleRate := SampleRate;
+
   StreamIn[x].PAParam.SuggestedLatency := CDouble(0);
+
   StreamIn[x].PAParam.SampleFormat := paInt16;
+
   case SampleFormat of
     0: StreamIn[x].PAParam.SampleFormat := paFloat32;
     1: StreamIn[x].PAParam.SampleFormat := paInt32;
     2: StreamIn[x].PAParam.SampleFormat := paInt16;
   end;
+
   if SampleFormat = -1 then
     StreamIn[x].Data.SampleFormat := CInt32(2)
   else
     StreamIn[x].Data.SampleFormat := CInt32(SampleFormat);
-  if Channels = -1 then
-    StreamIn[x].PAParam.channelCount := CInt32(2)
-  else
-    StreamIn[x].PAParam.channelCount := CInt32(Channels);
+
+
+  //      StreamIn[x].PAParam.channelCount :=
+  //   ((Pa_GetDeviceInfo(StreamIn[x].PAParam.device)^.
+  //   maxInputChannels)) ;
+
+  StreamIn[x].PAParam.channelCount := CInt32(2)  ;
 
    StreamIn[x].data.channels := StreamIn[x].PAParam.channelCount;
 
@@ -2532,7 +2564,8 @@ begin
     StreamOut[x].FileBuffer.wChannels := 2
   else
     StreamOut[x].FileBuffer.wChannels := Channels;
-  StreamOut[x].Data.Channels := StreamOut[x].FileBuffer.wChannels;
+
+   StreamOut[x].Data.Channels := StreamOut[x].FileBuffer.wChannels;
 
     if FramesCount = -1 then  StreamOut[x].Data.Wantframes :=  65536 div StreamOut[x].Data.Channels else
   StreamOut[x].Data.Wantframes := FramesCount ;
@@ -3352,7 +3385,7 @@ begin
            // err := // if you want clean buffer
             StreamIn[x].Data.OutFrames :=
               StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
-            //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  /// if you want clean buffer
+           //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  /// if you want clean buffer
           end;
            {$endif}
 
@@ -3361,7 +3394,7 @@ begin
           begin
           {$IF DEFINED(mpg123)}
           
-        // err := // if you want clear buffer
+           // err := // if you want clear buffer
           mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
           StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
           //  writeln('===> mpg123_read error => ' + inttostr(err)) ;
@@ -3457,7 +3490,7 @@ begin
 
     end;
 
-        ///// Ended DSPin AfterBuffProc
+///// Ended DSPin AfterBuffProc
 // writeln('the synchro main loop procedurebefore');
         ///////////// The synchro main loop procedure
          {$IF not DEFINED(Library)}
@@ -3647,11 +3680,14 @@ begin
             end;
            end;        
             
-            end;  
-            ///////////////////////////////////////////////////////////////////////////
+            end;
+
+
+        ///////////////////////////////////////////////////////////////////////////
         //   writeln('give the processed');
-            ///// give the processed input to output
-            if Length(BufferplugFL) > 0 then
+        ///// give the processed input to output
+
+        if Length(BufferplugFL) > 0 then
             begin
 
               case StreamOut[x].Data.SampleFormat of
@@ -3663,7 +3699,9 @@ begin
                 2:
                 begin
                   SetLength(BufferplugSH, length(BufferplugFL));
+                  //
                   BufferplugSH := CvFloat32ToInt16(BufferplugFL);
+
                 end;
               end;
 
@@ -3703,7 +3741,11 @@ begin
 
                 0:
                 begin  /////// Give to wav file
-                  BufferplugSH := CvFloat32ToInt16(BufferplugFL);
+
+                if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
+                 BufferplugFL :=    CvSteroToMono(BufferplugFL, Length(BufferplugFL) div 2);
+
+                   BufferplugSH := CvFloat32ToInt16(BufferplugFL);
                   StreamOut[x].FileBuffer.Data.WriteBuffer(BufferplugSH[0],
                     Length(BufferplugSH));
                 end;
@@ -3740,13 +3782,25 @@ begin
           {$endif}
 
             0:     /////// Give to wav file
-              StreamOut[x].FileBuffer.Data.WriteBuffer(
+            begin
+
+              if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
+              begin
+               StreamOut[x].Data.Buffer := CvSteroToMono(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
+               StreamOut[x].FileBuffer.Data.WriteBuffer(
                 StreamOut[x].Data.Buffer[0],
-                StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels);
+                StreamIn[x2].Data.outframes);
+               end else
+                StreamOut[x].FileBuffer.Data.WriteBuffer(
+                StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels);
+              end;
+
+            end;
           end;
         end;
        end;
-      end;
+
+
 
     {$IF not DEFINED(Library)}
     if LoopEndProc <> nil then
@@ -3783,7 +3837,7 @@ begin
    for x3 := 0 to high(StreamIn[x2].Data.Buffer) do
    StreamIn[x2].Data.Buffer[x3] := cfloat(0.0);
 
-     if (nofree = true) and (status = 0)  then
+  if (nofree = true) and (status = 0)  then
   begin
     for x := 0 to high(StreamIn) do
     begin
@@ -3830,6 +3884,7 @@ begin
     Status := 2;
   end;
 
+
     until status = 0;
 
   ////////////////////////////////////// End of Loop ////////////////////////////////////////
@@ -3837,9 +3892,9 @@ begin
   ////////////////////////// Terminate Thread
   if status = 0 then
   begin
-
       // writeln(' status = 0');
-    if length(PlugIn) > 0 then
+   
+         if length(PlugIn) > 0 then
      begin
         for x := 0 to high(PlugIn) do
        begin         
@@ -3859,8 +3914,8 @@ begin
        {$endif}
       end;
     end;
-
-    //  writeln('x := 0 to high(StreamIn EndFunc)');
+    
+  //  writeln('x := 0 to high(StreamIn EndFunc)');
     // EndFunc of DSP In
      
     for x := 0 to high(StreamIn) do
@@ -3880,8 +3935,8 @@ begin
             if (StreamOut[x].DSP[x2].EndFunc <> nil) then
               StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
      end;
-
-   for x := 0 to high(StreamIn) do
+  
+    for x := 0 to high(StreamIn) do
       if (StreamIn[x].Data.HandleSt <> nil) then
         case StreamIn[x].Data.TypePut of
          0: case StreamIn[x].Data.LibOpen of
@@ -3935,21 +3990,22 @@ begin
       end;
        {$endif}
 
-       end;
-
-    if (StreamOut[x].Data.TypePut = 0) then
+      if (StreamOut[x].Data.TypePut = 0) then
       begin
         WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
         StreamOut[x].FileBuffer.Data.Free;
-       end;
-
+      end;
+    end;
+    
     //  writeln('EndProc---');
 
          {$IF not DEFINED(Library)}
       if EndProc <> nil then
        {$IF FPC_FULLVERSION>=20701}
-             queue(EndProc);
-             {$else}
+       begin
+       queue(EndProc);
+       end;
+         {$else}
       synchronize(EndProc); /////  Execute EndProc procedure
             {$endif}
 
@@ -3965,7 +4021,7 @@ begin
          {$endif}
 
        {$endif}
-     isAssigned := false ;
+       isAssigned := false ;
       //   writeln('EndProc');
         
      end;
@@ -3973,14 +4029,11 @@ end;
 
 procedure Tuos_Player.onTerminate() ;
 begin
-  if nofree = false then
-  begin
 if ifflat = true then
   begin
 FreeAndNil(uosPlayers[Index]);
 uosPlayersStat[Index] := -1 ;
 end else Free;
- end;
 end;
 
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
@@ -4016,10 +4069,6 @@ destructor Tuos_Player.Destroy;
 var
   x: LongInt;
 begin
-
-if nofree = false then
-  begin
-
   RTLeventdestroy(evPause);
   
   if length(StreamOut) > 0 then
@@ -4035,8 +4084,6 @@ if nofree = false then
       Plugin[x].Free;
       
   inherited Destroy;
-
-  end;
 end;
 
 destructor Tuos_InStream.Destroy;

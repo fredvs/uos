@@ -172,19 +172,18 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar): cint32;
 
 {$IF DEFINED(portaudio)}
 function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-             SampleRate: cint32; Channels: cint32; OutputIndex: cint32;
+             SampleRate: cint32; OutputIndex: cint32;
              SampleFormat: cint32; FramesCount : cint32): cint32;
               ////// Add a Input from Device Input with custom parameters
               //////////// PlayerIndex : Index of a existing Player
                //////////// Device ( -1 is default Input device )
                //////////// Latency  ( -1 is latency suggested ) )
                //////////// SampleRate : delault : -1 (44100)
-               //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
                //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
                //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
                //////////// FramesCount : default : -1 (65536)
                //  result :  Output Index in array
-               /// example : OutputIndex1 := uos_AddFromDevIn(-1,-1,-1,-1,-1,-1);
+               /// example : OutputIndex1 := uos_AddFromDevIn(-1,-1,-1,-1,-1);
 
 function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
               ////// Add a Input from Device Input with custom parameters
@@ -728,7 +727,7 @@ end;
 
  {$IF DEFINED(portaudio)}
 function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-             SampleRate: cint32; Channels: cint32; OutputIndex: cint32;
+             SampleRate: cint32; OutputIndex: cint32;
              SampleFormat: cint32; FramesCount : cint32): cint32;
               ////// Add a Input from Device Input with custom parameters
               //////////// PlayerIndex : Index of a existing Player
@@ -745,7 +744,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  Result :=  uosPlayers[PlayerIndex].AddFromDevIn(Device, Latency, SampleRate, Channels, OutputIndex,
+  Result :=  uosPlayers[PlayerIndex].AddFromDevIn(Device, Latency, SampleRate, OutputIndex,
              SampleFormat, FramesCount) ;
 end;
 
@@ -755,7 +754,7 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  Result :=  uosPlayers[PlayerIndex].AddFromDevIn(-1, -1, -1, -1, -1, -1, -1) ;
+  Result :=  uosPlayers[PlayerIndex].AddFromDevIn(-1, -1, -1, -1, -1, -1) ;
 end;
    {$endif}
 

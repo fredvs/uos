@@ -208,19 +208,23 @@ var
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
-    uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
+  uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
+
+      // uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
+  //               Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
     //// add Output into wav file (save record)  with default parameters
     // uos_AddIntoDevOut(0, 'test.wav', -1, -1, -1);   //// add a Output into wav file (save record) with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Filename : name of new file for recording
     //////////// SampleRate : delault : -1 (44100)
-    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// Channels : delault : -1 (2:stereo) ( 1:mono, 2:stereo, ...)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
 
     if checkbox1.Checked = True then
-      uos_AddIntoDevOut(PlayerIndex1);
-    //// add a Output into OUT device with default parameters
+    uos_AddIntoDevOut(PlayerIndex1);
+  
+     //// add a Output into OUT device with default parameters
     // Out2Index := uos_AddIntoDevOut(0, -1, -1, -1, -1, 0,-1);   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -231,13 +235,13 @@ var
     //////////// FramesCount : -1 default : 65536
 
     In1Index :=uos_AddFromDevIn(PlayerIndex1);
-    /// add Input from mic into IN device with default parameters
+    
+     /// add Input from mic into IN device with default parameters
     //   In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, -1, 0, -1);   //// add input from mic with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Input device )
     //////////// Latency  ( -1 is latency suggested ) )
     //////////// SampleRate : delault : -1 (44100)
-    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
