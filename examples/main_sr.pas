@@ -185,9 +185,9 @@ begin
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));  //// add Output into wav file (save record)  with default parameters
+     uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));  //// add Output into wav file (save record)  with default parameters
 
-    // uos_addIntoFile(PlayerIndex1, Pchar(edit3.Text) ,8000,1,-1,65536 ); //  add a Output into wav with custom parameters mono radio-quality
+   //  uos_addIntoFile(PlayerIndex1, Pchar(edit3.Text) ,8000,1,-1,4096 ); //  add a Output into wav with custom parameters mono radio-quality
     //////////// PlayerIndex : Index of a existing Player
     //////////// Filename : name of new file for recording
     //////////// SampleRate : delault : -1 (44100)
@@ -195,10 +195,10 @@ begin
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)  (till now, only int16 is implemented)
     //////////// FramesCount : -1 default : 65536
 
-    if checkbox1.Checked = True then
+   if checkbox1.Checked = True then
     uos_AddIntoDevOut(PlayerIndex1);  //// add a Output into OUT device with default parameters
 
-  //  uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536 );   //// add a Output into device with custom parameters
+   // uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536 );   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -209,7 +209,7 @@ begin
 
     In1Index := uos_AddFromDevIn(PlayerIndex1);  /// add Input from mic into IN device with default parameters
 
-   // In1Index := uos_AddFromDevIn(PlayerIndex1, -1, -1, 8000, -1, -1, -1);   //// add input from mic with custom parameters
+  //  In1Index := uos_AddFromDevIn(PlayerIndex1, -1, -1, 8000, -1, -1, 4096);   //// add input from mic with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Input device )
     //////////// Latency  ( -1 is latency suggested ) )
