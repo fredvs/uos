@@ -376,9 +376,10 @@ begin
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    // InputIndex1 := uos_AddFromFile(PlayerIndex1, Edit4.Text);
+     // InputIndex1 := uos_AddFromFile(PlayerIndex1, Edit4.Text);
     //// add input from audio file with default parameters
-    InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text), -1, samformat, -1);
+
+    /InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text), -1, samformat, -1);
     //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     //////////// PlayerIndex : Index of a existing Player
@@ -389,9 +390,11 @@ begin
 
     if InputIndex1 > -1 then begin
 
-    // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
+  //  OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
-    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1), -1, samformat, -1);
+
+     OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )

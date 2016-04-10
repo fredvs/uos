@@ -185,11 +185,9 @@ begin
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));
+    uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));  //// add Output into wav file (save record)  with default parameters
 
-    //  addIntoFile(plidx,pchar('C:\snd.wav'),8000,1,2,65536);
-    //// add Output into wav file (save record)  with default parameters
-    /// uos_AddIntoDevOut(0, 'test.wav', -1, -1, -1);   //// add a Output into wav file (save record) with custom parameters
+    // uos_addIntoFile(PlayerIndex1, Pchar(edit3.Text) ,8000,1,-1,65536 ); //  add a Output into wav with custom parameters mono radio-quality
     //////////// PlayerIndex : Index of a existing Player
     //////////// Filename : name of new file for recording
     //////////// SampleRate : delault : -1 (44100)
@@ -198,9 +196,9 @@ begin
     //////////// FramesCount : -1 default : 65536
 
     if checkbox1.Checked = True then
-     uos_AddIntoDevOut(PlayerIndex1);
-    //// add a Output into OUT device with default parameters
-    // uos_AddIntoDevOut(0, -1, -1, -1, -1, 0,-1);   //// add a Output into device with custom parameters
+    uos_AddIntoDevOut(PlayerIndex1);  //// add a Output into OUT device with default parameters
+
+  //  uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536 );   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -209,10 +207,9 @@ begin
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
 
-   In1Index := uos_AddFromDevIn(PlayerIndex1);
+    In1Index := uos_AddFromDevIn(PlayerIndex1);  /// add Input from mic into IN device with default parameters
 
-     /// add Input from mic into IN device with default parameters
-    //   In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, 0, -1);   //// add input from mic with custom parameters
+   // In1Index := uos_AddFromDevIn(PlayerIndex1, -1, -1, 8000, -1, -1, -1);   //// add input from mic with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Input device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -264,10 +261,19 @@ begin
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
+  In1Index := uos_AddFromFile(PlayerIndex1, Pchar(Edit3.Text));
+   //// add input from audio file with default parameters
+   // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
+   //////////// PlayerIndex : Index of a existing Player
+   ////////// FileName : filename of audio file
+   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
 
-  uos_AddIntoDevOut(PlayerIndex1);
-  //// add a Output into OUT device with default parameters
-  // uos_AddIntoDevOut(0, -1, -1, -1, -1, 0,-1);   //// add a Output into device with custom parameters
+//  uos_AddIntoDevOut(PlayerIndex1); //// add a Output into OUT device with default parameters
+
+  uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+    uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1);
+    //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
   //////////// Latency  ( -1 is latency suggested ) )
@@ -276,15 +282,7 @@ begin
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : -1 default : 65536
 
-  In1Index := uos_AddFromFile(PlayerIndex1, Pchar(Edit3.Text));
-  //// add input from audio file with default parameters
-  // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
-  //////////// PlayerIndex : Index of a existing Player
-  ////////// FileName : filename of audio file
-  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-
-  uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+   uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
   ///// DSP Volume changer
   //////////// PlayerIndex : Index of a existing Player
   ////////// In1Index : InputIndex of a existing input

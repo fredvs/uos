@@ -935,14 +935,16 @@ var
  begin
 
    if len > 0 then begin
-    setlength(arsh, len);
+    setlength(arsh, len+1);
 
    x := 0;
    y := 0;
 
-    while x < len * 2 do
+    while x < (len * 2) -1 do
     begin
     /// TODO -> this takes only chan1, not (chan1+chan2)/2 -> it get bad noise dont know why ...
+    // arsh[y]   := ((Inbuf[x] + Inbuf[x+1])/ 2) ;
+
     arsh[y]   := Inbuf[x];
     inc(y);
      x := x + 2 ;
@@ -2500,12 +2502,10 @@ begin
   else
     StreamIn[x].Data.SampleFormat := CInt32(SampleFormat);
 
-
-  //      StreamIn[x].PAParam.channelCount :=
-  //   ((Pa_GetDeviceInfo(StreamIn[x].PAParam.device)^.
-  //   maxInputChannels)) ;
-
-  StreamIn[x].PAParam.channelCount := CInt32(2)  ;
+   if  ((Pa_GetDeviceInfo(StreamIn[x].PAParam.device)^.
+   maxInputChannels)) > 1 then
+    StreamIn[x].PAParam.channelCount := CInt32(2) else
+     StreamIn[x].PAParam.channelCount := CInt32(1) ;
 
    StreamIn[x].data.channels := StreamIn[x].PAParam.channelCount;
 
@@ -3194,6 +3194,9 @@ var
   curpos: cint64;
   BufferplugINFLTMP: TDArFloat;
   BufferplugFL: TDArFloat;
+
+  Bufferst2mo: TDArFloat;
+
   BufferplugSH: TDArShort;
   BufferplugLO: TDArLong;
   // err: LongInt; // if you want clean buffer
@@ -3743,10 +3746,9 @@ begin
                 begin  /////// Give to wav file
 
                 if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
-                 BufferplugFL :=    CvSteroToMono(BufferplugFL, Length(BufferplugFL) div 2);
-
-                   BufferplugSH := CvFloat32ToInt16(BufferplugFL);
-                  StreamOut[x].FileBuffer.Data.WriteBuffer(BufferplugSH[0],
+                 Bufferst2mo :=    CvSteroToMono(BufferplugFL, Length(BufferplugFL) div 2);
+                 BufferplugSH := CvFloat32ToInt16(Bufferst2mo);
+                 StreamOut[x].FileBuffer.Data.WriteBuffer(BufferplugSH[0],
                     Length(BufferplugSH));
                 end;
               end;
@@ -3786,9 +3788,9 @@ begin
 
               if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
               begin
-               StreamOut[x].Data.Buffer := CvSteroToMono(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
-               StreamOut[x].FileBuffer.Data.WriteBuffer(
-                StreamOut[x].Data.Buffer[0],
+               Bufferst2mo  := CvSteroToMono(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
+                StreamOut[x].FileBuffer.Data.WriteBuffer(
+                Bufferst2mo[0],
                 StreamIn[x2].Data.outframes);
                end else
                 StreamOut[x].FileBuffer.Data.WriteBuffer(
@@ -3799,7 +3801,6 @@ begin
           end;
         end;
        end;
-
 
 
     {$IF not DEFINED(Library)}
