@@ -379,7 +379,7 @@ begin
      // InputIndex1 := uos_AddFromFile(PlayerIndex1, Edit4.Text);
     //// add input from audio file with default parameters
 
-    /InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text), -1, samformat, -1);
+    InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text), -1, samformat, -1);
     //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     //////////// PlayerIndex : Index of a existing Player
@@ -677,7 +677,8 @@ begin
     ps := @Data.Buffer;
    while x < Data.OutFrames  do
         begin
-      samplei := round((ps^[x] + ps^[x+1])/2);        ps^[x] := samplei ;
+      samplei := round((ps^[x] + ps^[x+1])/2);
+      ps^[x] := samplei ;
       ps^[x+1] := samplei ;
       x := x + 2;
       end;

@@ -60,7 +60,7 @@ uses
    Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 160410 ;
+  uos_version : LongInt = 160412 ;
   
   {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -461,7 +461,7 @@ type
      ////////// FileName : filename of saved audio wav file
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (= 4096)
     //  result : Output Index in array     -1 = error
     //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1);
@@ -2462,7 +2462,7 @@ function Tuos_Player.AddFromDevIn(Device: LongInt; Latency: CDouble;
                            // (if multi-output then OutName = name of each output separeted by ';')
   //////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : -1 default : 4096
-  //////////// example : AddFromDevice(-1,-1,-1,-1);
+  //////////// example : AddFromDevIn(-1,-1,-1,-1);
 var
   x, err: LongInt;
 begin
@@ -2539,10 +2539,9 @@ function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
   /////// Add a Output into audio wav file with Custom parameters
   ////////// FileName : filename of saved audio wav file
   //////////// SampleRate : delault : -1 (44100)
-  //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-  //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-                                  // Warning, till now, only Int16 implemented
-  //////////// FramesCount : -1 default : 65536 div channels
+  //////////// Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
+  //////////// SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)
+   //////////// FramesCount : -1 default : 65536 div channels
   //  result :  Output Index in array    -1 = error
   //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1,0, -1);
 var
@@ -2578,12 +2577,6 @@ begin
   begin
     StreamOut[x].FileBuffer.wBitsPerSample := 16;
     StreamOut[x].Data.SampleFormat := 2;
-  end;
-
-  if (SampleFormat = 0) then
-  begin
-    StreamOut[x].FileBuffer.wBitsPerSample := 32;
-    StreamOut[x].Data.SampleFormat := 0;
   end;
 
   if (SampleFormat = 1) then
@@ -3191,7 +3184,7 @@ end;
 procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
-  x, x2, x3, x4, statustemp : LongInt;
+  x, x2, x3, x4, statustemp, rat : LongInt;
   plugenabled: boolean;
   curpos: cint64;
   BufferplugINFLTMP: TDArFloat;
@@ -3417,7 +3410,7 @@ begin
      then  StreamIn[x].Data.status := 0; //////// no more data then close the stream
    {$ENDIF}
 
-     if (StreamIn[x].Data.Seekable = True) then if StreamIn[x].Data.OutFrames < 100 then
+    if (StreamIn[x].Data.Seekable = True) then if StreamIn[x].Data.OutFrames < 100 then
      StreamIn[x].Data.status := 0;  //////// no more data then close the stream
 
       if  StreamIn[x].Data.status > 0 then
@@ -3766,6 +3759,7 @@ begin
 
         begin
           //////// Convert Input format into Output format if needed:
+
           case StreamOut[x].Data.SampleFormat of
             0: case StreamIn[x2].Data.SampleFormat of
                 1: StreamOut[x].Data.Buffer :=
@@ -3794,6 +3788,11 @@ begin
             0:     /////// Give to wav file
             begin
 
+             case StreamOut[x].Data.SampleFormat of
+                1: rat := 2 ;
+                2: rat := 1 ;
+             end;
+
               if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
               begin
 
@@ -3801,10 +3800,10 @@ begin
 
                StreamOut[x].FileBuffer.Data.WriteBuffer(
                 Bufferst2mo[0],
-                StreamIn[x2].Data.outframes);
+                StreamIn[x2].Data.outframes * rat);
                end else
                 StreamOut[x].FileBuffer.Data.WriteBuffer(
-                StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels);
+                StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels * rat);
               end;
 
             end;
@@ -4132,7 +4131,7 @@ if assigned(FileBuffer.Data) then FileBuffer.Data.free;
 end;
 
 procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc: boolean);
-               ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
+               ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
    {$IF DEFINED(portaudio)}
   if PortAudio = true then  Pa_Unload();
@@ -4508,18 +4507,18 @@ begin
 
  devtmp := devtmp +
 
- 'DeviceNum: ' + inttostr(uosDeviceInfos[x].DeviceNum) + ' ??' +
- ' Name: ' + uosDeviceInfos[x].DeviceName +  ' ??' +
- ' Type: ' + uosDeviceInfos[x].DeviceType + ' ??' +
- ' DefIn: ' + bool1 + ' ??' +
- ' DefOut: ' + bool2 + ' ??' +
- ' ChanIn: ' +  IntToStr(uosDeviceInfos[x ].ChannelsIn)+ ' ??' +
- ' ChanOut: ' +  IntToStr(uosDeviceInfos[x].ChannelsOut) + ' ??' +
- ' SampleRate: ' +  floattostrf(uosDeviceInfos[x].SampleRate, ffFixed, 15, 0) + ' ??' +
- ' LatencyHighIn: ' + floattostrf(uosDeviceInfos[x].LatencyHighIn, ffFixed, 15, 8) + ' ??' +
- ' LatencyHighOut: ' + floattostrf(uosDeviceInfos[x].LatencyHighOut, ffFixed, 15, 8)+ ' ??' +
- ' LatencyLowIn: ' + floattostrf(uosDeviceInfos[x].LatencyLowIn, ffFixed, 15, 8)+ ' ??' +
- ' LatencyLowOut: ' + floattostrf(uosDeviceInfos[x].LatencyLowOut, ffFixed, 15, 8)+ ' ??' +
+ 'DeviceNum: ' + inttostr(uosDeviceInfos[x].DeviceNum) + ' |' +
+ ' Name: ' + uosDeviceInfos[x].DeviceName +  ' |' +
+ ' Type: ' + uosDeviceInfos[x].DeviceType + ' |' +
+ ' DefIn: ' + bool1 + ' |' +
+ ' DefOut: ' + bool2 + ' |' +
+ ' ChanIn: ' +  IntToStr(uosDeviceInfos[x ].ChannelsIn)+ ' |' +
+ ' ChanOut: ' +  IntToStr(uosDeviceInfos[x].ChannelsOut) + ' |' +
+ ' SampleRate: ' +  floattostrf(uosDeviceInfos[x].SampleRate, ffFixed, 15, 0) + ' |' +
+ ' LatencyHighIn: ' + floattostrf(uosDeviceInfos[x].LatencyHighIn, ffFixed, 15, 8) + ' |' +
+ ' LatencyHighOut: ' + floattostrf(uosDeviceInfos[x].LatencyHighOut, ffFixed, 15, 8)+ ' |' +
+ ' LatencyLowIn: ' + floattostrf(uosDeviceInfos[x].LatencyLowIn, ffFixed, 15, 8)+ ' |' +
+ ' LatencyLowOut: ' + floattostrf(uosDeviceInfos[x].LatencyLowOut, ffFixed, 15, 8)+ ' |' +
  ' HostAPI: ' + uosDeviceInfos[x].HostAPIName ;
  if x < length(uosDeviceInfos)-1 then  devtmp := devtmp +  #13#10 ;
  Inc(x);

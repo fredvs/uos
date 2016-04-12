@@ -185,14 +185,14 @@ begin
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-     uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));  //// add Output into wav file (save record)  with default parameters
+    uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));  //// add Output into wav file (save record)  with default parameters
 
-   //  uos_addIntoFile(PlayerIndex1, Pchar(edit3.Text) ,8000,1,-1,4096 ); //  add a Output into wav with custom parameters mono radio-quality
+    //   uos_addIntoFile(PlayerIndex1, Pchar(edit3.Text) ,8000,1,1,-1 ); //  add a Output into wav with custom parameters mono radio-quality
     //////////// PlayerIndex : Index of a existing Player
     //////////// Filename : name of new file for recording
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) ( 1:mono, 2:stereo)
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)  (till now, only int16 is implemented)
+    //////////// SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)  (only int16 and int32 are implemented)
     //////////// FramesCount : -1 default : 65536
 
    if checkbox1.Checked = True then
@@ -207,9 +207,9 @@ begin
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
 
-    In1Index := uos_AddFromDevIn(PlayerIndex1);  /// add Input from mic into IN device with default parameters
+   In1Index := uos_AddFromDevIn(PlayerIndex1);  /// add Input from mic into IN device with default parameters
 
-  //  In1Index := uos_AddFromDevIn(PlayerIndex1, -1, -1, 8000, -1, -1, 4096);   //// add input from mic with custom parameters
+    // In1Index := uos_AddFromDevIn(PlayerIndex1, -1, -1, 8000, -1, 1, 4096);   //// add input from mic with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Input device )
     //////////// Latency  ( -1 is latency suggested ) )
