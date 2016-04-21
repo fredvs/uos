@@ -276,10 +276,12 @@ type
   TProc = procedure of object;
     {$endif}
 
-  TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; Abs2bd : Tt_bs2bdp; inputData: Tuos_Data;
+    {$IF DEFINED(bs2b)}
+   TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; Abs2bd : Tt_bs2bdp; inputData: Tuos_Data;
     param1: float; param2: float; param3: float; param4: float;
     param5: float; param6: float;  param7: float; param8: float): TDArFloat;
-    
+     {$endif}
+
 type
   Tuos_DSP = class(TObject)
   public
@@ -367,8 +369,10 @@ type
     Enabled: boolean;
     Name: string;
     PlugHandle: THandle;
+    {$IF DEFINED(bs2b)}
     Abs2b : Tt_bs2bdp;
     PlugFunc: TPlugFunc;
+    {$endif}
     param1: float;
     param2: float;
     param3: float;
@@ -3375,7 +3379,7 @@ begin
            {$IF DEFINED(portaudio)}
            1:   /////// for Input from device
           begin
-             for x2 := 0 to StreamIn[x].Data.WantFrames do
+             for x2 := 0 to StreamIn[x].Data.WantFrames -1 do
               StreamIn[x].Data.Buffer[x2] := cfloat(0.0);      ////// clear input
             Pa_ReadStream(StreamIn[x].Data.HandleSt,
               @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.WantFrames);
@@ -3665,10 +3669,13 @@ begin
           begin
             if PlugIn[x3].Enabled = True then
             begin
-              BufferplugFL := Plugin[x3].PlugFunc(BufferplugINFLTMP,
+
+            {$IF DEFINED(bs2b)}
+               BufferplugFL := Plugin[x3].PlugFunc(BufferplugINFLTMP,
                 Plugin[x3].PlugHandle, Plugin[x3].Abs2b, StreamIn[x2].Data,
                  Plugin[x3].param1, Plugin[x3].param2, Plugin[x3].param3, Plugin[x3].param4,
                  Plugin[x3].param5, Plugin[x3].param6, Plugin[x3].param7, Plugin[x3].param8);
+              {$endif}
 
             if (length(PlugIn) > 1) then
             begin
@@ -4070,10 +4077,15 @@ begin
 end;
 
 destructor Tuos_DSP.Destroy;
-begin
-if assigned(fftdata.FNoise) then fftdata.FNoise.free;
-   fftdata.Free;
-end;
+  begin
+    if assigned(fftdata) then
+    begin
+      {$IF DEFINED(noiseremoval)}
+      if assigned(fftdata.FNoise) then FreeAndNil(fftdata.FNoise);
+      {$endif}
+      FreeandNil(fftdata);
+    end;
+  end;
 
 destructor Tuos_Player.Destroy;
 var
@@ -4100,10 +4112,11 @@ destructor Tuos_InStream.Destroy;
 var
   x: LongInt;
 begin
-  if assigned(AACI) then
-begin
 
-if assigned(AACI.fsStream) then
+   {$IF DEFINED(neaac)}
+   if assigned(AACI) then
+begin
+ if assigned(AACI.fsStream) then
    begin
    AACI.fsStream.Free;
    sleep(100);
@@ -4111,7 +4124,8 @@ if assigned(AACI.fsStream) then
    AACI.free;
    sleep(100);
 end;
- 
+  {$endif}
+
    if length(DSP) > 0 then
     for
   x := 0 to high(DSP) do

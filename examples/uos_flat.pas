@@ -25,9 +25,9 @@ uses
       {$ENDIF}
 
  Classes, ctypes, math, SysUtils, uos;
- 
- const
+
   {$IF DEFINED(bs2b)}
+   const
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
   BS2B_MIDDLE_CLEVEL = (CInt32(500)) or ((CInt32(45)) shl 16);
   BS2B_LOW_CLEVEL = (CInt32(360)) or ((CInt32(60)) shl 16);

@@ -17,7 +17,7 @@
 {$DEFINE soundtouch} // uncomment to enable soundtouch tempo plugin
 {$DEFINE bs2b} // uncomment to enable bs2b binaural to stereo plugin
 
-{$DEFINE webstream} // uncomment to enable Internet Audio Stream  
+{$DEFINE webstream} // uncomment to enable Internet Audio Stream
 {$DEFINE noiseremoval} // uncomment to enable noiseremoval DSP
 
 {.$DEFINE cdrom} // uncomment to enable cdrom audio decoder
