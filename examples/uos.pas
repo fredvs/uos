@@ -3287,7 +3287,8 @@ begin
             {$endif}
            {$IF DEFINED(neaac)}
             2 : MP4Seek(StreamIn[x].AACI, StreamIn[x].Data.Poseek);
-           {$endif}
+           {$endif} 
+            3 :
            end;
            curpos := StreamIn[x].Data.Poseek;
            StreamIn[x].Data.Poseek := -1;
@@ -3372,6 +3373,7 @@ begin
             StreamIn[x].Data.outframes := 0;
          end;
          {$endif}
+         99: // if nothing was defined
              end;
 
           end;
@@ -3976,7 +3978,7 @@ begin
                CDROM_Close(StreamIn[x].pCD);
               End;
               {$endif}
-              
+           99: // if nothing was defined
             end;
             
         {$IF DEFINED(portaudio)}

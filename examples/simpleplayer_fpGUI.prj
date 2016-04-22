@@ -17,8 +17,8 @@ order14=0
 order15=0
 order16=0
 [projectoptions]
-projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
+projectdir=/Z:/home/fred/uos/examples
+projectfilename=/Z:/home/fred/uos/examples/simpleplayer_fpGUI.prj
 findinfiledialog=46
  [findinfileadialogfo.subdirs]
  value=1
@@ -800,11 +800,6 @@ units=
   a=0,4100,0,uos_mpg123.pas
   )
   (
-  file=uos.pas
-  kind=1
-  a=0,4100,0,uos.pas
-  )
-  (
   file=uos_portaudio.pas
   kind=1
   a=0,4100,0,uos_portaudio.pas
@@ -813,6 +808,11 @@ units=
   file=uos_soundtouch.pas
   kind=1
   a=0,4100,0,uos_soundtouch.pas
+  )
+  (
+  file=uos.pas
+  kind=1
+  a=0,4100,0,uos.pas
   )
  )
 cmodules=
@@ -824,7 +824,7 @@ files=
  a=0,4133,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/msegui/apps/ide/compstore/
+storedir=/Z:/home/fred/mseguinew/apps/mse/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -878,7 +878,7 @@ editpos=29
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,64
+ 0,-1073741823
  0,593
  0,-1073741823
  0,-1073741823
@@ -938,7 +938,7 @@ sourcefiles=29
  ${PROJECTDIR}/librarytester_fpGUI.pas
  /home/fred/fpGUI-develop/examples/gui/led_matrix_display/frm_main.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ /Z:/home/fred/uos/examples/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/st2bi.pas
  ${PROJECTDIR}/uos_aac.pas
  ${PROJECTDIR}/uos_portaudio.pas
@@ -1032,9 +1032,9 @@ windowlayout=503
  rcx=0
  rcy=0
  children=2
+  basedock,0,0,1356,703
   statdisp,0,1,1356,18
-  basedock,0,19,1356,779
- focusedchild=1
+ focusedchild=0
  wsize=4
  active=1
  visible=1
@@ -1077,7 +1077,7 @@ windowlayout=503
  [memoryfo]
  splitdir=0
  useroptions=268451963
- stackedunder=cpuc86_64fo
+ stackedunder=cpui386fo
  parent=
  mdistate=0
  nx=0
@@ -1104,7 +1104,7 @@ windowlayout=503
  [disassfo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1123,7 +1123,7 @@ windowlayout=503
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=breakpointsfo
  parent=
  mdistate=0
  nx=0
@@ -1149,7 +1149,7 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=639
+ cy=563
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1161,7 +1161,7 @@ windowlayout=503
  sorted=0
  col=1
  row=9
- rowheight=17
+ rowheight=14
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1220,7 +1220,7 @@ windowlayout=503
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=symbolfo
  parent=
  mdistate=0
  nx=0
@@ -1241,7 +1241,7 @@ windowlayout=503
  [objectinspectorfo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=disassfo
  parent=
  mdistate=0
  nx=0
@@ -1266,7 +1266,7 @@ windowlayout=503
  [symbolfo]
  splitdir=0
  useroptions=268451963
- stackedunder=
+ stackedunder=componentstorefo
  parent=
  mdistate=0
  nx=0
@@ -1358,7 +1358,7 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=691
+ y=615
  cx=1356
  cy=88
  rcx=0
@@ -1366,7 +1366,7 @@ windowlayout=503
  [componentstorefo]
  splitdir=0
  useroptions=268460155
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1476,10 +1476,10 @@ windowlayout=503
  x=142
  y=0
  cx=1214
- cy=639
+ cy=563
  rcx=0
  rcy=0
- [cpuc86_64fo]
+ [cpui386fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
@@ -1490,10 +1490,10 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=183
- y=113
- cx=352
- cy=277
+ x=337
+ y=295
+ cx=273
+ cy=207
  rcx=0
  rcy=0
  wsize=0
@@ -1512,7 +1512,7 @@ windowlayout=503
  x=0
  y=49
  cx=1356
- cy=639
+ cy=563
  rcx=0
  rcy=0
 [targetconsole]

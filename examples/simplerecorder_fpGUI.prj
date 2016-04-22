@@ -867,7 +867,7 @@ windowlayout=503
  useroptions=15488
  [mainfo]
  splitdir=0
- useroptions=805372031
+ useroptions=838860927
  stackedunder=
  parent=
  mdistate=0
@@ -875,9 +875,9 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=90
- y=65
- cx=1272
+ x=154
+ y=26
+ cx=966
  cy=621
  rcx=0
  rcy=0
@@ -897,15 +897,15 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=495
+ y=172
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -998,19 +998,19 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=159
- cy=534
+ cx=139
+ cy=542
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
- propcolwidthref=18
+ propcolwidthref=1
  width0=141
  sortdescend0=0
- width1=12
+ width1=1
  sortdescend1=0
  sorted=0
- col=0
- row=6
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1169,9 +1169,9 @@ windowlayout=503
  cx=247
  cy=44
  rcx=1129
- rcy=681
+ rcy=679
  [watchfo.grid]
- propcolwidthref=113
+ propcolwidthref=123
  values0=2
   -1
   -1
@@ -1199,7 +1199,7 @@ windowlayout=503
  value=1
  [messagefo]
  splitdir=0
- useroptions=82027
+ useroptions=114795
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1208,9 +1208,9 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=589
+ y=594
  cx=1356
- cy=93
+ cy=88
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1279,7 +1279,7 @@ windowlayout=503
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1296,10 +1296,10 @@ windowlayout=503
  active=0
  visible=0
  [componentpalettefo.componentpages]
- activetab=0
+ activetab=1
  [debuggerfo]
  splitdir=0
- useroptions=24683
+ useroptions=122987
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1310,7 +1310,7 @@ windowlayout=503
  x=0
  y=0
  cx=1356
- cy=49
+ cy=46
  rcx=0
  rcy=0
  [sourcefo]
@@ -1323,10 +1323,10 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=162
+ x=142
  y=0
- cx=1184
- cy=534
+ cx=1214
+ cy=542
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1351,7 +1351,7 @@ windowlayout=503
  visible=0
  [mainfo.panel1]
  splitdir=1
- useroptions=838958571
+ useroptions=838893035
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1360,9 +1360,9 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=52
+ y=49
  cx=1356
- cy=534
+ cy=542
  rcx=0
  rcy=0
 [targetconsole]

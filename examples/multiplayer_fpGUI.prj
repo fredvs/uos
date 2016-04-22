@@ -778,14 +778,14 @@ findhistory=10
  images
 findoptions=1
 editpos=8
- 4,926
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 107,835
+ 0,-1073741823
+ 71,835
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -802,7 +802,7 @@ sourcefiles=8
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/multiplayer_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
+ /home/fred/uos/examples/uos_flat.pas
 relpaths=8
  uos.pas
  uos_flat.pas
@@ -860,9 +860,9 @@ windowlayout=503
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,1356,18
   basedock,0,19,1356,682
- focusedchild=1
+  statdisp,0,1,1356,18
+ focusedchild=0
  wsize=4
  active=1
  visible=1
