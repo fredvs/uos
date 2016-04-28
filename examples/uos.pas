@@ -60,7 +60,7 @@ uses
    Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 160412 ;
+  uos_version : LongInt = 160428 ;
   
   {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -3811,6 +3811,12 @@ begin
                 Bufferst2mo[0],
                 StreamIn[x2].Data.outframes * rat);
                end else
+                  if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 1) then
+              begin
+                StreamOut[x].FileBuffer.Data.WriteBuffer(
+                StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.ratio * rat);
+              end else
+
                 StreamOut[x].FileBuffer.Data.WriteBuffer(
                 StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels * rat);
               end;
