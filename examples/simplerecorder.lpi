@@ -277,8 +277,8 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="8"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="3800"/>
-        <CursorPos X="97" Y="3817"/>
+        <TopLine Value="3781"/>
+        <CursorPos X="13" Y="3798"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -439,7 +439,7 @@ install:
         <Loaded Value="True"/>
       </Unit45>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="3061" Column="37" TopLine="3037"/>
@@ -556,6 +556,10 @@ install:
         <Filename Value="uos.pas"/>
         <Caret Line="3395" Column="72" TopLine="3395"/>
       </Position29>
+      <Position30>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3795" Column="13" TopLine="3777"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
