@@ -86,7 +86,13 @@ function uos_GetInfoDeviceStr() : Pansichar ;
 {$endif}
 
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
-         ////// load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...
+         ////// load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...    
+     // PortAudio => needed for dealing with audio-device
+     // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
+     // Mpg123 => needed for dealing with mp* audio-files
+     // Mp4ff and Faad => needed for dealing with acc, m4a audio-files
+
+    // If some libraries are not needed, replace it by "nil", for example : uos_loadlib(PortAudioFileName, SndFileFileName, nil, nil, nil)
 
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
