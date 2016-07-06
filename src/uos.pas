@@ -1905,8 +1905,9 @@ var
   pf: PDArFloat;     //////// if input is Float32 format
 begin
 
-if (Data.VLeft <> 1)  or (Data.Vright <> 1) then
-begin
+//if (Data.VLeft <> 1)  or (Data.Vright <> 1) then
+// begin
+
   vleft := Data.VLeft;
   vright := Data.VRight;
 
@@ -1915,19 +1916,35 @@ begin
     begin
       ps := @Data.Buffer;
       for x := 0 to (Data.OutFrames -1) do
+       begin
         if odd(x) then
           ps^[x] := trunc(ps^[x] * vright)
         else
           ps^[x] := trunc(ps^[x] * vleft);
+
+       /// This to avoid distortion
+     if ps^[x] < (-32760) then ps^[x] := -32760 ;
+     if ps^[x] > (32760) then ps^[x] := 32760 ;
+
+       end;
+
     end;
     1:    /// int32
     begin
       pl := @Data.Buffer;
       for x := 0 to (Data.OutFrames -1) do
-        if odd(x) then
-          pl^[x] := trunc(pl^[x] * vright)
-        else
-          pl^[x] := trunc(pl^[x] * vleft);
+       begin
+       if odd(x) then
+         pl^[x] := trunc(pl^[x] * vright)
+       else
+           pl^[x] := trunc(pl^[x] * vleft);
+
+        /// This to avoid distortion
+     if pl^[x] < (-2147000000) then pl^[x] := -2147000000 ;
+    if pl^[x] > (2147000000) then pl^[x] := 2147000000 ;
+
+       end;
+
     end;
     0:      /// float32
     begin
@@ -1940,13 +1957,22 @@ begin
 
      pf := @Data.Buffer;
       for x := 0 to (Data.OutFrames div ratio) do
+      begin
+
         if odd(x) then
           pf^[x] := pf^[x] * vright
         else
           pf^[x] := pf^[x] * vleft;
+
+         /// This to avoid distortion
+          if pf^[x] < (-1) then pf^[x] := -1 ;
+     if pf^[x] > 1 then pf^[x] := 1 ;
+
+      end;
+
     end;
   end;
-end;
+// end;
   Result := Data.Buffer;
 end;
 
