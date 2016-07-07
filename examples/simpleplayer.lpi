@@ -277,8 +277,8 @@ install:
         <Filename Value="uos.pas"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="1912"/>
-        <CursorPos X="29" Y="1928"/>
+        <TopLine Value="1972"/>
+        <CursorPos Y="1984"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
