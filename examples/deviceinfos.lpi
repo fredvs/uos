@@ -134,7 +134,8 @@ install:
       <Unit0>
         <Filename Value="deviceinfos.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="30" Y="3"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="3" Y="7"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -274,7 +275,6 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <TopLine Value="2491"/>
         <CursorPos X="45" Y="2507"/>

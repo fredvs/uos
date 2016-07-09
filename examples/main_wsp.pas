@@ -138,17 +138,17 @@ var
 {$ENDIF}
 begin
   ordir := application.Location;
-  uos_logo();
+ uos_logo();
              {$IFDEF Windows}
      {$if defined(cpu64)}
   Edit1.Text := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
   Edit3.Text := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
   Edit5.Text := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
 {$else}
-  Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
-  Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
-  Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll';
-   {$endif}
+ Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
+ Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
+ Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll';
+  {$endif}
   {$ENDIF}
 
   {$IFDEF Darwin}
@@ -300,7 +300,8 @@ var
     //// If PlayerIndex exists already, it will be overwriten...
 
     In1Index :=  uos_AddFromURL(PlayerIndex1, pchar(edit4.text),-1,samformat,-1) ;
-      /////// Add a Input from Audio URL with custom parameters
+
+    /////// Add a Input from Audio URL with custom parameters
               ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
               ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
@@ -308,7 +309,7 @@ var
               ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
               //  result : -1 nothing created, otherwise Input Index in array
 
-    Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, samformat, -1);
+   Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, samformat, -1);
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )

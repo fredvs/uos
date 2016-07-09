@@ -58,10 +58,10 @@ type
     ShapeRight: TShape;
     ShapeLeft: TShape;
     TrackBar2: TTrackBar;
-    TrackBar1: TTrackBar;
     TrackBar3: TTrackBar;
     TrackBar4: TTrackBar;
     TrackBar5: TTrackBar;
+    TrackBar1: TTrackBar;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);

@@ -4,7 +4,8 @@ program consoleplay;
 
 {$mode objfpc}{$H+}
    {$DEFINE UseCThreads}
-uses {$IFDEF UNIX}
+uses
+{$IFDEF UNIX}
   cthreads, 
   cwstring, {$ENDIF}
   Classes,

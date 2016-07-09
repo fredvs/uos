@@ -134,9 +134,11 @@ install:
       <Unit0>
         <Filename Value="simpleplayer_noflat.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="41" Y="3"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="3" Y="7"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="main_sp_nf.pas"/>
@@ -144,7 +146,7 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="505"/>
+        <TopLine Value="506"/>
         <CursorPos X="79" Y="508"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -152,8 +154,7 @@ install:
       </Unit1>
       <Unit2>
         <Filename Value="uos.pas"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="3784"/>
         <CursorPos X="7" Y="3807"/>
         <UsageCount Value="100"/>
@@ -198,7 +199,7 @@ install:
       </Unit7>
       <Unit8>
         <Filename Value="uos_flat.pas"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="1083"/>
         <CursorPos X="35" Y="1101"/>
         <UsageCount Value="10"/>

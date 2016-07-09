@@ -138,8 +138,9 @@ install:
       <Unit0>
         <Filename Value="multiplayer.lpr"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="7" Y="7"/>
+        <CursorPos X="3" Y="7"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -149,8 +150,7 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="213"/>
+        <TopLine Value="225"/>
         <CursorPos X="55" Y="232"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>

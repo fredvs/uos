@@ -134,8 +134,11 @@ install:
       <Unit0>
         <Filename Value="waveform.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="13" Y="9"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="2" Y="7"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="main_wf.pas"/>
@@ -143,8 +146,7 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="132"/>
+        <TopLine Value="143"/>
         <CursorPos X="73" Y="149"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -152,7 +154,7 @@ install:
       </Unit1>
       <Unit2>
         <Filename Value="uos.pas"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="59"/>
         <CursorPos X="2" Y="71"/>
         <UsageCount Value="100"/>
@@ -160,7 +162,7 @@ install:
       </Unit2>
       <Unit3>
         <Filename Value="uos_flat.pas"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="36"/>
         <CursorPos X="6" Y="50"/>
         <UsageCount Value="19"/>
@@ -177,7 +179,7 @@ install:
       </Unit4>
       <Unit5>
         <Filename Value="simpleplayer_fpGUI.pas"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="353"/>
         <CursorPos X="2" Y="361"/>
         <UsageCount Value="10"/>

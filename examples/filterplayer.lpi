@@ -134,7 +134,8 @@ install:
       <Unit0>
         <Filename Value="filterplayer.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="95" Y="14"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="3" Y="7"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -395,7 +396,6 @@ install:
       </Unit40>
       <Unit41>
         <Filename Value="define.inc"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <CursorPos X="3" Y="16"/>
         <UsageCount Value="10"/>

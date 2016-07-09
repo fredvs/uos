@@ -4,7 +4,7 @@ program multiplayer;
  {$DEFINE UseCThreads}
 
 uses
-  Cmem, {$IFDEF UNIX} {$IFDEF UseCThreads}
+  {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
   Interfaces, // this includes the LCL widgetset

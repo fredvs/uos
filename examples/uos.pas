@@ -844,6 +844,7 @@ begin
   try
     if aoffset <> 0 then
       Result := Stream.Seek(soFromCurrent, aoffset);
+
   except
     Result := 0;
   end;
