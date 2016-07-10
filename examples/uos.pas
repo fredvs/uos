@@ -60,7 +60,7 @@ uses
    Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 160429 ;
+  uos_version : LongInt = 15160710 ;
   
   {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -237,7 +237,7 @@ type
     Sections: LongInt;
     Encoding: LongInt;
     Lengthst: LongInt;     ///////  in sample ;
-    LibOpen: integer;    //// -1: nothing open, 0: sndfile open, 1: mpg123 open
+    LibOpen: integer;    //// -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom
     Ratio: integer;      ////  if mpg123 or aac then ratio := 2
    
     Output: LongInt;
@@ -1199,6 +1199,12 @@ begin
             1:
             StreamIn[InputIndex].Data.Wantframes:= (framecount * StreamIn[InputIndex].Data.Channels)  * 2  ;
 
+            2:
+            StreamIn[InputIndex].Data.Wantframes:= (framecount * StreamIn[InputIndex].Data.Channels) ;
+
+            3:
+            StreamIn[InputIndex].Data.Wantframes:= (framecount * StreamIn[InputIndex].Data.Channels) ;
+
 end;
 
 end;
@@ -1724,7 +1730,7 @@ var
   Bufferplug: TDArFloat;
  begin
  
-  if (inputData.libopen = 0) or (inputData.libopen = 2) then
+  if (inputData.libopen = 0) or (inputData.libopen = 2)  or (inputData.libopen = 3) then
   x2 := round(inputData.ratio * (inputData.outframes div round(inputData.channels))) ;
   
   if (inputData.libopen = 1)   then
@@ -3630,6 +3636,7 @@ begin
             0:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes ; // sndfile
             1:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes div StreamIn[x2].Data.Channels; // mpg123
             2:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes ; // aac
+            3:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes ; // CDRom
             end;  
             
             end;   

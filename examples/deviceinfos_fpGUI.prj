@@ -755,13 +755,13 @@ findhistory=10
  uses
 findoptions=1
 editpos=7
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,0
  0,-1073741823
  0,-1073741823
- 0,22
  0,-1073741823
- 0,106
- 0,3682
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
