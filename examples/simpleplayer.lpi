@@ -10,7 +10,14 @@
       <UseXPManifest Value="True"/>
       <XPManifest>
         <DpiAware Value="True"/>
+        <UseCompatibility Value="True"/>
+        <UseCompatibilityVista Value="True"/>
+        <UseCompatibilityWin7 Value="True"/>
+        <UseCompatibilityWin8 Value="True"/>
+        <UseCompatibilityWin81 Value="True"/>
+        <UseCompatibilityWin10 Value="True"/>
       </XPManifest>
+      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -145,8 +152,8 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="256"/>
-        <CursorPos X="7" Y="260"/>
+        <TopLine Value="633"/>
+        <CursorPos X="63" Y="640"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -566,7 +573,7 @@ install:
         <UsageCount Value="10"/>
       </Unit70>
     </Units>
-    <JumpHistory Count="28" HistoryIndex="27">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="700" Column="21" TopLine="677"/>
@@ -679,6 +686,10 @@ install:
         <Filename Value="main_sp.pas"/>
         <Caret Line="259" Column="7" TopLine="255"/>
       </Position28>
+      <Position29>
+        <Filename Value="main_sp.pas"/>
+        <Caret Line="260" Column="7" TopLine="256"/>
+      </Position29>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

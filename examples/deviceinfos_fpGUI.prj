@@ -773,7 +773,7 @@ sourcefiles=7
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
+ /home/fred/uos/examples/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
@@ -831,9 +831,9 @@ windowlayout=503
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,1356,18
   basedock,0,19,1356,682
- focusedchild=1
+  statdisp,0,1,1356,18
+ focusedchild=0
  wsize=4
  active=1
  visible=1
