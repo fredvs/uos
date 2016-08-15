@@ -568,8 +568,8 @@ var
     FilenameEdit1.FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
      FilenameEdit2.FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
       {$else}
-   FilenameEdit1.FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-64.so';
-     FilenameEdit2.FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-64.so';
+   FilenameEdit1.FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
+     FilenameEdit2.FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
  {$endif}
      FilenameEdit4.FileName := ordir + 'sound/testrecord.wav';
  {$ENDIF}
