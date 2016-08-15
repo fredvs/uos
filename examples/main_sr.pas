@@ -115,7 +115,7 @@ begin
   edit2.Text := application.Location + 'lib/Linux/64bit/LibSndFile-64.so';
 {$else}
   edit1.Text := application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
-  edit2.Text := application.Location + 'lib/Linux/32bit/LibSndFile-64.so';
+  edit2.Text := application.Location + 'lib/Linux/32bit/LibSndFile-32.so';
 {$endif}
   Edit3.Text := application.Location + 'sound/testrecord.wav';
             {$ENDIF}

@@ -1318,8 +1318,8 @@ end;
     vuRight.Visible := False;
     vuLeft.Height := 0;
     vuRight.Height := 0;
-    vuright.UpdateWindowPosition;
-    vuLeft.UpdateWindowPosition;
+    vuright.UpdatewindowPosition;
+    vuLeft.UpdatewindowPosition;
   end;
 
   procedure TSimpleplayer.uos_logo(Sender: TObject);

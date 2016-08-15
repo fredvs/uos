@@ -134,8 +134,7 @@ install:
       <Unit0>
         <Filename Value="simplerecorder.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
         <CursorPos X="3" Y="7"/>
         <UsageCount Value="200"/>
@@ -147,10 +146,11 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="198"/>
-        <CursorPos X="38" Y="217"/>
+        <TopLine Value="109"/>
+        <CursorPos X="70" Y="118"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit1>
@@ -379,7 +379,7 @@ install:
       </Unit38>
       <Unit39>
         <Filename Value="uos_portaudio.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
         <TopLine Value="79"/>
         <CursorPos X="21" Y="98"/>
@@ -396,7 +396,7 @@ install:
       </Unit40>
       <Unit41>
         <Filename Value="/usr/local/codetyphon/fpcsrc/rtl/inc/mathh.inc"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
         <TopLine Value="83"/>
         <CursorPos X="19" Y="101"/>
@@ -405,7 +405,7 @@ install:
       </Unit41>
       <Unit42>
         <Filename Value="/usr/local/codetyphon/fpcsrc/rtl/objpas/classes/classesh.inc"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
         <TopLine Value="960"/>
         <CursorPos X="62" Y="968"/>
