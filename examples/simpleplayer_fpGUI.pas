@@ -169,7 +169,7 @@ var
 
   procedure TSimpleplayer.ResetPlugClick(Sender: TObject);
   begin
-    TrackBar4.Position := 50;
+       TrackBar4.Position := 50;
     TrackBar5.Position := 50;
     if radiobutton1.Enabled = False then   /// player1 was created
     begin
@@ -562,6 +562,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
    //// set the parameters of custom DSP
    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
     
+    
    // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)  
     DSPIndex2 := uos_AddDSPIn(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
     uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked); 
@@ -650,6 +651,7 @@ end;
   begin
     {%region 'Auto-generated GUI code' -fold}
 
+
     {@VFD_BODY_BEGIN: Simpleplayer}
   Name := 'Simpleplayer';
   SetPosition(600, 57, 503, 515);
@@ -659,6 +661,8 @@ end;
   Hint := '';
   WindowPosition := wpScreenCenter;
   Ondestroy := @btnCloseClick;
+
+  WindowOpacity:= 0.2;
 
   Custom1 := TfpgWidget.Create(self);
   with Custom1 do
@@ -1320,6 +1324,8 @@ end;
     vuRight.Height := 0;
     vuright.UpdatewindowPosition;
     vuLeft.UpdatewindowPosition;
+    
+    windowopacity := 0.5;
   end;
 
   procedure TSimpleplayer.uos_logo(Sender: TObject);
