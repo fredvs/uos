@@ -197,7 +197,7 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
 
 function uos_AddFromSynth(PlayerIndex: cint32; Sine: LongInt; OutputIndex: LongInt;
       SampleFormat: LongInt): LongInt;
-    /////// Add a input from synth with custom parameters
+    /////// Add a input from Synthesizer with custom parameters
     ////////// Sine length : default : -1 (200)
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
@@ -776,7 +776,7 @@ end;
 
 function uos_AddFromSynth(PlayerIndex: cint32; Sine: LongInt; OutputIndex: LongInt;
       SampleFormat: LongInt): LongInt;
-    /////// Add a input from synth with custom parameters
+    /////// Add a input from Synthesizer with custom parameters
     ////////// Sine length : default : -1 (200)
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)

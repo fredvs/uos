@@ -18,6 +18,8 @@ With uos you can:
 
 . Listen to multiple input and output.
 
+. Produce sound from built-in synthesizer.
+
 uos uses:
 PortAudio, SndFile, Mpg123, Faad, Mp4ff audio libraries and
 SoundTouch, Bs2b audio-effect libraries.

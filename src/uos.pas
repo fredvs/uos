@@ -185,7 +185,7 @@ type
     Enabled: boolean;
     
     TypePut: integer;
-    ////// -1 : nothing,  //// for Input  : 0:from audio file, 1:from input device (like mic), 2:from internet audio stream, 3:from synthe(TODO)
+    ////// -1 : nothing,  //// for Input  : 0:from audio file, 1:from input device (like mic), 2:from internet audio stream, 3:from Synthesizer)
                           //// for Output : 0:into wav file, 1:into output device, 2:to other stream
     Seekable: boolean;
     Status: integer;
@@ -483,7 +483,17 @@ type
     //////////// FramesCount : default : -1 (4096)
     //  result :  otherwise Output Index in array   -1 = error
     /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1);
-     {$endif}
+
+ function AddFromSynth(Sine: LongInt; OutputIndex: LongInt;
+      SampleFormat: LongInt): LongInt;
+    /////// Add a input from Synthesizer with custom parameters
+    ////////// Sine length : default : -1 (200)
+    ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+    //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+     //  result :   Input Index in array    -1 = error
+    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1);
+    
+         {$endif}
 
     function AddFromFile(Filename: Pchar; OutputIndex: LongInt;
       SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
@@ -2578,6 +2588,57 @@ begin
   else
     Result := x;
 end;
+
+function Tuos_Player.AddFromSynth(Sine: LongInt; OutputIndex: LongInt;
+      SampleFormat: LongInt): LongInt;
+    /////// Add a input from Synthesizer with custom parameters
+    ////////// Sine length : default : -1 (200)
+    ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+    //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+     //  result :   Input Index in array    -1 = error
+    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1);
+  
+var
+  x : LongInt;
+begin
+ result := -1 ;
+  x := 0;
+
+  SetLength(StreamIn, Length(StreamIn) + 1);
+  StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create();
+  x := Length(StreamIn) - 1;
+   StreamIn[x].Data.levelEnable := 0;
+   StreamIn[x].Data.PositionEnable := 0;
+   StreamIn[x].Data.levelArrayEnable := 0;
+
+   StreamIn[x].data.channels := 2;
+
+  if sine = -1 then  StreamIn[x].Data.Wantframes :=  200 else
+     StreamIn[x].Data.Wantframes := (sine) ;
+
+  SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
+  
+   if SampleFormat = -1 then
+    StreamIn[x].Data.SampleFormat := CInt32(0)
+  else
+    StreamIn[x].Data.SampleFormat := CInt32(SampleFormat);
+
+ 
+  StreamIn[x].Data.outframes := length(StreamIn[x].Data.Buffer);
+  StreamIn[x].Data.Enabled := True;
+  StreamIn[x].Data.Status := 1;
+  StreamIn[x].Data.TypePut := 3;
+  StreamIn[x].Data.HandleSt := pchar('synth');
+  StreamIn[x].Data.ratio := 2;
+  StreamIn[x].Data.Output := OutputIndex;
+  StreamIn[x].Data.seekable := False;
+  StreamIn[x].Data.LibOpen := -1;
+  StreamIn[x].LoopProc := nil;
+
+    Result := x;
+end;
+
+
   {$endif}
 
 function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
@@ -3307,7 +3368,6 @@ begin
     {$endif}
    
    //////////// Dealing with input
-   
     for x := 0 to high(StreamIn) do
     begin
 
@@ -3349,7 +3409,7 @@ begin
 
         RTLeventWaitFor(evPause);  ///// Is there a pause waiting ?
         RTLeventSetEvent(evPause);
-
+        
         case StreamIn[x].Data.TypePut of
           0:   ///// It is a input from audio file.
           begin
@@ -3433,6 +3493,19 @@ begin
               StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
            //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  /// if you want clean buffer
           end;
+
+
+            3:   /////// for Input from Synthesizer
+          begin
+     
+             { Fill a Sine wavetable (Float Data -1 .. +1) }
+             for x2 := 0 to StreamIn[x].Data.WantFrames -1 do
+             StreamIn[x].Data.Buffer[x2] := CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
+
+               StreamIn[x].Data.OutFrames := StreamIn[x].Data.WantFrames;
+            // StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
+          end;
+
            {$endif}
 
            {$IF DEFINED(webstream)}

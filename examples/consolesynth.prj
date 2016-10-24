@@ -771,8 +771,8 @@ editpos=9
  0,-1073741823
  0,0
  0,-1073741823
- 0,89
- 0,204
+ 0,86
+ 0,199
  0,478
 bookmarks0=0
 bookmarks1=0
@@ -875,7 +875,7 @@ windowlayout=502
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1249,7 +1249,7 @@ windowlayout=502
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

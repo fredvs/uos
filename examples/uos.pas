@@ -185,7 +185,7 @@ type
     Enabled: boolean;
     
     TypePut: integer;
-    ////// -1 : nothing,  //// for Input  : 0:from audio file, 1:from input device (like mic), 2:from internet audio stream, 3:from synthe(TODO)
+    ////// -1 : nothing,  //// for Input  : 0:from audio file, 1:from input device (like mic), 2:from internet audio stream, 3:from Synthesizer)
                           //// for Output : 0:into wav file, 1:into output device, 2:to other stream
     Seekable: boolean;
     Status: integer;
@@ -486,7 +486,7 @@ type
 
  function AddFromSynth(Sine: LongInt; OutputIndex: LongInt;
       SampleFormat: LongInt): LongInt;
-    /////// Add a input from synth with custom parameters
+    /////// Add a input from Synthesizer with custom parameters
     ////////// Sine length : default : -1 (200)
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
@@ -2591,7 +2591,7 @@ end;
 
 function Tuos_Player.AddFromSynth(Sine: LongInt; OutputIndex: LongInt;
       SampleFormat: LongInt): LongInt;
-    /////// Add a input from synth with custom parameters
+    /////// Add a input from Synthesizer with custom parameters
     ////////// Sine length : default : -1 (200)
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
@@ -3495,7 +3495,7 @@ begin
           end;
 
 
-            3:   /////// for Input from Synth
+            3:   /////// for Input from Synthesizer
           begin
      
              { Fill a Sine wavetable (Float Data -1 .. +1) }
