@@ -1,4 +1,4 @@
-program consoleplay;
+program consolesynth;
 
 ///WARNING : if FPC version < 2.7.1 => Do not forget to uncoment {$DEFINE ConsoleApp} in define.inc !
 
@@ -28,7 +28,7 @@ type
 
 var
   res: integer;
-  ordir, opath, SoundFilename, PA_FileName, SF_FileName: string;
+  ordir, opath, PA_FileName: string;
   PlayerIndex1 : integer;
   
   { TuosConsole }
@@ -40,48 +40,37 @@ var
  {$IFDEF Windows}
      {$if defined(cpu64)}
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
-    SF_FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
      {$else}
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
-    SF_FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
      {$endif}
-    SoundFilename := ordir + 'sound\test.flac';
  {$ENDIF}
 
  {$IFDEF linux}
     {$if defined(cpu64)}
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
-    SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     {$else}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
-    SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     {$endif}
-    SoundFilename := ordir + 'sound/test.flac';
- {$ENDIF}
+  {$ENDIF}
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
     PA_FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
-    SF_FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
     {$else}
     PA_FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
-    SF_FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
     {$endif}
-    SoundFilename := ordir + 'sound/test.flac';
- {$ENDIF}
+  {$ENDIF}
 
  {$IFDEF Darwin}
     opath := ordir;
     opath := copy(opath, 1, Pos('/UOS', opath) - 1);
     PA_FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
-    SF_FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
-    SoundFilename := opath + '/sound/test.flac';
  {$ENDIF}
  
-    // Load the libraries
-   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+    // Load the libraries (here only portaudio is needed)
+    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
 
-   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil) ;
+   res := uos_LoadLib(Pchar(PA_FileName), nil, nil, nil, nil) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 
@@ -94,23 +83,21 @@ var
    PlayerIndex1 := 0;
    uos_CreatePlayer(PlayerIndex1); 
 
-    //// add a Input from audio-file with default parameters
-    //////////// PlayerIndex : Index of a existing Player
-    ////////// FileName : filename of audio file
-    //  result : -1 nothing created, otherwise Input Index in array
-    
-    uos_AddFromFile(PlayerIndex1,(pchar(SoundFilename)));
+    //// add a Input from synth 
+//  function uos_AddFromSynth(PlayerIndex: cint32; Sine: LongInt; OutputIndex: LongInt; SampleFormat: LongInt): LongInt;
+  
+    uos_AddFromSynth(PlayerIndex1,300,-1,-1);
 
     //// add a Output into device with default parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
 
-    uos_AddIntoDevOut(PlayerIndex1);
+    uos_AddIntoDevOut(PlayerIndex1,-1,-1,-1,-1, 0,-1);
 
     /////// everything is ready, here we are, lets play it...
     
     uos_Play(PlayerIndex1);
-
+   
    end;
 
  end;
@@ -120,6 +107,8 @@ var
     ConsolePlay;
     writeln('Press a key to exit...');
     readln;
+    uos_stop(PlayerIndex1);
+    sleep(200);
     uos_unloadLib();
     Terminate;
   end;
@@ -134,7 +123,7 @@ var
   Application: TUOSConsole;
 begin
   Application := TUOSConsole.Create(nil);
-  Application.Title := 'Console Player';
+  Application.Title := 'Console Synth';
   Application.Run;
   Application.Free;
-end.
+end.   

@@ -714,14 +714,14 @@ units=
   a=0,4100,0,uos_flat.pas
   )
   (
-  file=uos.pas
-  kind=1
-  a=0,4100,0,uos.pas
-  )
-  (
   file=uos_portaudio.pas
   kind=1
   a=0,4100,0,uos_portaudio.pas
+  )
+  (
+  file=uos.pas
+  kind=1
+  a=0,4100,0,uos.pas
   )
  )
 cmodules=
@@ -749,8 +749,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=res=
-findhistory=7
+finddtext=Synth
+findhistory=8
+ Synth
  res=
  30005
  NewView
@@ -761,11 +762,11 @@ findhistory=7
 findoptions=1
 editpos=7
  0,-1073741823
+ 0,2473
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,106
  0,7
 bookmarks0=0
 bookmarks1=0
@@ -813,38 +814,37 @@ order=7
  4
 tabsize=60
 firsttab=0
-index=2
+index=3
 [layout]
-windowlayout=503
+windowlayout=502
  [mainfo.basedock]
  splitdir=2
  useroptions=15488
  [mainfo]
  splitdir=0
- useroptions=838860927
- stackedunder=
+ useroptions=838860925
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=334
+ x=159
  y=24
  cx=966
  cy=621
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,956,18
-  basedock,0,19,956,585
+  statdisp,0,1,1356,18
+  basedock,0,19,1356,682
  focusedchild=1
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
  splitdir=0
- useroptions=268451945
+ useroptions=805322857
  parent=
  mdistate=0
  nx=0
@@ -862,7 +862,7 @@ windowlayout=503
  visible=0
  [threadsfo]
  splitdir=0
- useroptions=268451945
+ useroptions=805322857
  parent=
  mdistate=0
  nx=0
@@ -880,7 +880,7 @@ windowlayout=503
  visible=0
  [memoryfo]
  splitdir=0
- useroptions=268451963
+ useroptions=805322875
  stackedunder=cpuc86_64fo
  parent=
  mdistate=0
@@ -942,7 +942,7 @@ windowlayout=503
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -953,22 +953,22 @@ windowlayout=503
  x=0
  y=0
  cx=139
- cy=445
+ cy=542
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
+ [projecttreefo.grid]
  propcolwidthref=1
  width0=141
  sortdescend0=0
  width1=1
  sortdescend1=0
  sorted=0
- col=1
+ col=0
  row=-1073741823
- rowheight=17
+ rowheight=18
  [stackfo]
  splitdir=0
- useroptions=268460137
+ useroptions=805331049
  parent=
  mdistate=0
  nx=0
@@ -986,7 +986,7 @@ windowlayout=503
  visible=0
  [watchpointsfo]
  splitdir=0
- useroptions=268451945
+ useroptions=805322857
  parent=
  mdistate=0
  nx=0
@@ -1003,14 +1003,14 @@ windowlayout=503
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1019,7 +1019,7 @@ windowlayout=503
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1044,7 +1044,7 @@ windowlayout=503
  value=0
  [objectinspectorfo]
  splitdir=0
- useroptions=268451947
+ useroptions=805322859
  stackedunder=breakpointsfo
  parent=
  mdistate=0
@@ -1069,7 +1069,7 @@ windowlayout=503
  sortdescend1=0
  [symbolfo]
  splitdir=0
- useroptions=268451963
+ useroptions=805322875
  stackedunder=
  parent=
  mdistate=0
@@ -1110,7 +1110,7 @@ windowlayout=503
  [symbolfo.symbol]
  [watchfo]
  splitdir=0
- useroptions=268460137
+ useroptions=805331049
  parent=mainfo.basedock
  visible=0
  mdistate=0
@@ -1125,7 +1125,7 @@ windowlayout=503
  rcx=1129
  rcy=679
  [watchfo.grid]
- propcolwidthref=123
+ propcolwidthref=121
  values0=2
   -1
   -1
@@ -1162,14 +1162,14 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=497
- cx=956
+ y=594
+ cx=1356
  cy=88
  rcx=0
  rcy=0
  [componentstorefo]
  splitdir=0
- useroptions=268460155
+ useroptions=805331067
  stackedunder=
  parent=
  mdistate=0
@@ -1232,7 +1232,7 @@ windowlayout=503
  filefilter=
  [componentpalettefo]
  splitdir=0
- useroptions=268460139
+ useroptions=805331051
  stackedunder=mainfo
  parent=
  mdistate=0
@@ -1263,7 +1263,7 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=956
+ cx=1356
  cy=46
  rcx=0
  rcy=0
@@ -1279,8 +1279,8 @@ windowlayout=503
  ncy=0
  x=142
  y=0
- cx=814
- cy=445
+ cx=1214
+ cy=542
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1315,8 +1315,8 @@ windowlayout=503
  ncy=0
  x=0
  y=49
- cx=956
- cy=445
+ cx=1356
+ cy=542
  rcx=0
  rcy=0
 [targetconsole]

@@ -662,8 +662,6 @@ end;
   WindowPosition := wpScreenCenter;
   Ondestroy := @btnCloseClick;
 
-  WindowOpacity:= 0.2;
-
   Custom1 := TfpgWidget.Create(self);
   with Custom1 do
   begin
@@ -1324,8 +1322,7 @@ end;
     vuRight.Height := 0;
     vuright.UpdatewindowPosition;
     vuLeft.UpdatewindowPosition;
-    
-    windowopacity := 0.5;
+
   end;
 
   procedure TSimpleplayer.uos_logo(Sender: TObject);
