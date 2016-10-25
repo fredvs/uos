@@ -83,14 +83,21 @@ var
    PlayerIndex1 := 0;
    uos_CreatePlayer(PlayerIndex1); 
 
-    //// add a Input from Synthesizer 
-//  function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; OutputIndex: LongInt;
- //     SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
-
-   inindex1 := uos_AddFromSynth(PlayerIndex1,1000,-1,-1,-1);
-
+// function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
+  //    SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
  
-    //// add a Output into device with default parameters
+    /////// Add a input from Synthesizer with custom parameters
+    ////////// Frequency : default : -1 (440 htz)
+     ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
+     ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+    //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleRate : delault : -1 (44100)
+     //  result :   Input Index in array    -1 = error
+ 
+   inindex1 := uos_AddFromSynth(PlayerIndex1,1000,-1,-1, -1,-1, -1);
+   
+   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
 
@@ -100,20 +107,22 @@ var
     
     uos_Play(PlayerIndex1);
     
+    sleep(200) ;
+    uos_InputSetSynth(PlayerIndex1,inindex1, 880, -1,-1);
     sleep(300) ;
-    uos_InputSetSynthFreq(PlayerIndex1,inindex1, 880);
-    sleep(300) ;
-     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 630);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 630, 0.5,1);
       sleep(300) ;
-     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 440);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 440, 1,0.5);
     sleep(300) ;
-    uos_InputSetSynthFreq(PlayerIndex1,inindex1, 220);
+    uos_InputSetSynth(PlayerIndex1,inindex1, 220, 0.5,1);
      sleep(300) ; 
-     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 320);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 320,1,0.5);
      sleep(300) ; 
-     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 360);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 360, 0.5,1);
      sleep(300) ; 
-     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 280);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 280, 1,0.5);
+      sleep(300) ; 
+     uos_InputSetSynth(PlayerIndex1,inindex1, 440, -1,-1);
       sleep(1200) ; 
       
    end;
@@ -141,7 +150,7 @@ var
   Application: TUOSConsole;
 begin
   Application := TUOSConsole.Create(nil);
-  Application.Title := 'Console Synth';
+  Application.Title := 'Console Synthesizer';
   Application.Run;
   Application.Free;
 end.   

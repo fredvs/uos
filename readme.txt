@@ -20,7 +20,7 @@ With uos you can:
 
 . Produce sound from built-in synthesizer.
 
-uos uses:
+uos can use:
 PortAudio, SndFile, Mpg123, Faad, Mp4ff audio libraries and
 SoundTouch, Bs2b audio-effect libraries.
 

@@ -484,18 +484,20 @@ type
     //  result :  otherwise Output Index in array   -1 = error
     /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1);
 
- function AddFromSynth(Frequency: float; OutputIndex: LongInt;
+ function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
-    ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+     ////////// VolumeL : default : -1 (= 1) (from 0 to 1)
+     ////////// VolumeR : default : -1 (= 1) (from 0 to 1)
+       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1);
+    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1,-1,-1);
     
-  procedure InputSetSynthFreq(InputIndex: LongInt; Frequency: float);
-  /// set the frequency of a input Synthesizer
+  procedure InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
+  /// set the frequency and volume of a input Synthesizer
       
          {$endif}
 
@@ -2593,16 +2595,17 @@ begin
     Result := x;
 end;
 
-function Tuos_Player.AddFromSynth(Frequency: float; OutputIndex: LongInt;
+function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
-    ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+     ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
+     ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1);
-
+    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1,-1,-1);
   
 var
   x : LongInt;
@@ -2635,6 +2638,11 @@ begin
   else
     StreamIn[x].Data.SampleFormat := CInt32(SampleFormat);
 
+  if VolumeL = -1 then StreamIn[x].Data.VLeft := 1 else
+   StreamIn[x].Data.VLeft := VolumeL;
+   
+  if VolumeR = -1 then StreamIn[x].Data.Vright := 1 else
+   StreamIn[x].Data.Vright := VolumeR;
  
   StreamIn[x].Data.outframes := length(StreamIn[x].Data.Buffer);
   StreamIn[x].Data.Enabled := True;
@@ -2650,14 +2658,21 @@ begin
     Result := x;
 end;
 
- procedure Tuos_Player.InputSetSynthFreq(InputIndex: LongInt; Frequency: float);
-  /// set the frequency of a input Synthesizer
-  var
+ procedure Tuos_Player.InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
+  /// set the frequency and volume of a input Synthesizer
+
+ var
   x2 : longint;
  begin
  if Frequency = -1 then  StreamIn[InputIndex].Data.Wantframes :=  (StreamIn[InputIndex].Data.SampleRate div 440) * StreamIn[InputIndex].data.channels else
      StreamIn[InputIndex].Data.Wantframes := round(StreamIn[InputIndex].Data.SampleRate / Frequency * StreamIn[InputIndex].data.channels) ;
 
+ if VolumeL = -1 then StreamIn[InputIndex].Data.VLeft := 1 else
+   StreamIn[InputIndex].Data.VLeft := VolumeL;
+   
+  if VolumeR = -1 then StreamIn[InputIndex].Data.Vright := 1 else
+   StreamIn[InputIndex].Data.Vright := VolumeR;
+ 
 if length(StreamIn[InputIndex].Data.Buffer) <> StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels then
 begin
  SetLength(StreamIn[InputIndex].Data.Buffer, StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels);
@@ -3531,15 +3546,17 @@ begin
              while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
              begin
              
-             StreamIn[x].Data.Buffer[x2] := CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
-             
              if StreamIn[x].Data.Channels > 1 then
              begin
-             // stereo
-              StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.Buffer[x2] ;
-               x2 := x2 + 2 ;
+              StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
+              StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.Vright * CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
+              x2 := x2 + 2 ;
              end 
-             else x2 := x2 + 1 ;
+             else
+             begin
+              StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
+              x2 := x2 + 1 ;
+              end;
                
               end;
       

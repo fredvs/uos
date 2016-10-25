@@ -196,18 +196,21 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
               ////// Add a Input from Device Input with default parameters
               ///////// PlayerIndex : Index of a existing Player
 
-function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; OutputIndex: LongInt;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
-    ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+     ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
+     ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := AddFromSynth(0,-1,-1,-1,-1);
+    //////////// example : InputIndex1 := AddFromSynth(0,-1,-1,-1,-1,-1,-1);
+
     
-procedure uos_InputSetSynthFreq(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float);
-  /// set the frequency of a input Synthesizer
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
+  /// set the frequency and volume of a input Synthesizer
 
 {$endif}
 
@@ -778,29 +781,31 @@ begin
   Result :=  uosPlayers[PlayerIndex].AddFromDevIn(-1, -1, -1, -1, -1, -1) ;
 end;
 
-function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; OutputIndex: LongInt;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
-    ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+     ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
+     ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := uos_AddFromSynth(0,-1,-1,-1,-1);
+    //////////// example : InputIndex1 := AddFromSynth(0,-1,-1,-1,-1,-1,-1);
  begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  Result :=  uosPlayers[PlayerIndex].AddFromSynth(Frequency, OutputIndex,
+  Result :=  uosPlayers[PlayerIndex].AddFromSynth(Frequency, VolumeL, VolumeR, OutputIndex,
              SampleFormat, SampleRate) ;
 end;
 
-procedure uos_InputSetSynthFreq(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float);
-  /// set the frequency of a input Synthesizer
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
+  /// set the frequency and volume of a input Synthesizer
   begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  uosPlayers[PlayerIndex].InputSetSynthFreq(InputIndex, Frequency) ;
+  uosPlayers[PlayerIndex].InputSetSynth(InputIndex, Frequency, VolumeL, VolumeR) ;
 end;
 
    {$endif}
