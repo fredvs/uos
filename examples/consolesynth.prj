@@ -749,11 +749,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromSynth
+finddtext=synth
 findhistory=12
+ synth
  AddFromSynth
  writeln
- synth
  HandleSt
  typeput
  res=
@@ -764,16 +764,18 @@ findhistory=12
  sort
  uses
 findoptions=1
-editpos=9
- 0,-1073741823
- 0,495
+editpos=11
  0,-1073741823
  0,-1073741823
- 0,0
  0,-1073741823
- 0,86
- 0,199
- 0,478
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,13
+ 0,-1073741823
+ 0,-1073741823
+ 0,30
+ 0,20
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -783,7 +785,9 @@ bookmarks5=0
 bookmarks6=0
 bookmarks7=0
 bookmarks8=0
-sourcefiles=9
+bookmarks9=0
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -793,7 +797,9 @@ sourcefiles=9
  ${PROJECTDIR}/consolesynth.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_libsndfile.pas
-relpaths=9
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/define.inc
+relpaths=11
  deviceinfos_fpGUI.pas
  uos.pas
  uos_flat.pas
@@ -803,7 +809,11 @@ relpaths=9
  consolesynth.pas
  uos_flat.pas
  uos_libsndfile.pas
-ismoduletexts=9
+ uos_flat.pas
+ define.inc
+ismoduletexts=11
+ 0
+ 0
  0
  0
  0
@@ -818,10 +828,12 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=9
+order=11
  0
  5
  6
+ 9
+ 10
  7
  1
  8
@@ -830,7 +842,7 @@ order=9
  4
 tabsize=60
 firsttab=0
-index=2
+index=4
 [layout]
 windowlayout=502
  [mainfo.basedock]
@@ -867,15 +879,15 @@ windowlayout=502
  ny=0
  ncx=0
  ncy=0
- x=495
- y=172
- cx=497
+ x=553
+ y=166
+ cx=496
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1141,7 +1153,7 @@ windowlayout=502
  rcx=1129
  rcy=679
  [watchfo.grid]
- propcolwidthref=123
+ propcolwidthref=121
  values0=2
   -1
   -1
@@ -1249,7 +1261,7 @@ windowlayout=502
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

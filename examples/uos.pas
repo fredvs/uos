@@ -60,7 +60,7 @@ uses
    Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 15160710 ;
+  uos_version : LongInt = 16161025 ;
   
   {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -484,15 +484,19 @@ type
     //  result :  otherwise Output Index in array   -1 = error
     /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1);
 
- function AddFromSynth(Sine: LongInt; OutputIndex: LongInt;
-      SampleFormat: LongInt): LongInt;
+ function AddFromSynth(Frequency: float; OutputIndex: LongInt;
+      SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
-    ////////// Sine length : default : -1 (200)
+    ////////// Frequency : default : -1 (440 htz)
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleRate : delault : -1 (44100)
      //  result :   Input Index in array    -1 = error
     //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1);
     
+  procedure InputSetSynthFreq(InputIndex: LongInt; Frequency: float);
+  /// set the frequency of a input Synthesizer
+      
          {$endif}
 
     function AddFromFile(Filename: Pchar; OutputIndex: LongInt;
@@ -2589,14 +2593,16 @@ begin
     Result := x;
 end;
 
-function Tuos_Player.AddFromSynth(Sine: LongInt; OutputIndex: LongInt;
-      SampleFormat: LongInt): LongInt;
+function Tuos_Player.AddFromSynth(Frequency: float; OutputIndex: LongInt;
+      SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
-    ////////// Sine length : default : -1 (200)
+    ////////// Frequency : default : -1 (440 htz)
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleRate : delault : -1 (44100)
      //  result :   Input Index in array    -1 = error
     //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1);
+
   
 var
   x : LongInt;
@@ -2612,11 +2618,17 @@ begin
    StreamIn[x].Data.levelArrayEnable := 0;
 
    StreamIn[x].data.channels := 2;
+   
+    if SampleRate = -1 then
+    StreamIn[x].Data.SampleRate := DefRate
+  else
+    StreamIn[x].Data.SampleRate := SampleRate;
+   
+  if Frequency = -1 then  StreamIn[x].Data.Wantframes :=  (StreamIn[x].Data.SampleRate div 440) * StreamIn[x].data.channels else
+     StreamIn[x].Data.Wantframes := round(StreamIn[x].Data.SampleRate / Frequency * StreamIn[x].data.channels) ;
 
-  if sine = -1 then  StreamIn[x].Data.Wantframes :=  200 else
-     StreamIn[x].Data.Wantframes := (sine) ;
+ SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
 
-  SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
   
    if SampleFormat = -1 then
     StreamIn[x].Data.SampleFormat := CInt32(0)
@@ -2638,6 +2650,22 @@ begin
     Result := x;
 end;
 
+ procedure Tuos_Player.InputSetSynthFreq(InputIndex: LongInt; Frequency: float);
+  /// set the frequency of a input Synthesizer
+  var
+  x2 : longint;
+ begin
+ if Frequency = -1 then  StreamIn[InputIndex].Data.Wantframes :=  (StreamIn[InputIndex].Data.SampleRate div 440) * StreamIn[InputIndex].data.channels else
+     StreamIn[InputIndex].Data.Wantframes := round(StreamIn[InputIndex].Data.SampleRate / Frequency * StreamIn[InputIndex].data.channels) ;
+
+if length(StreamIn[InputIndex].Data.Buffer) <> StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels then
+begin
+ SetLength(StreamIn[InputIndex].Data.Buffer, StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels);
+  for x2 := 0 to (StreamIn[InputIndex].Data.WantFrames * StreamIn[InputIndex].Data.Channels) -1 do
+              StreamIn[InputIndex].Data.Buffer[x2] := cfloat(0.0);      ////// clear input
+           
+ end;
+ end;
 
   {$endif}
 
@@ -3498,12 +3526,24 @@ begin
             3:   /////// for Input from Synthesizer
           begin
      
-             { Fill a Sine wavetable (Float Data -1 .. +1) }
-             for x2 := 0 to StreamIn[x].Data.WantFrames -1 do
+               x2 := 0 ;
+   
+             while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
+             begin
+             
              StreamIn[x].Data.Buffer[x2] := CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
-
-               StreamIn[x].Data.OutFrames := StreamIn[x].Data.WantFrames;
-            // StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
+             
+             if StreamIn[x].Data.Channels > 1 then
+             begin
+             // stereo
+              StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.Buffer[x2] ;
+               x2 := x2 + 2 ;
+             end 
+             else x2 := x2 + 1 ;
+               
+              end;
+      
+             StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
           end;
 
            {$endif}

@@ -7,7 +7,7 @@ program consolesynth;
 uses
 {$IFDEF UNIX}
   cthreads, 
-  cwstring, {$ENDIF}
+ {$ENDIF}
   Classes,
   SysUtils,
   CustApp,
@@ -29,7 +29,7 @@ type
 var
   res: integer;
   ordir, opath, PA_FileName: string;
-  PlayerIndex1 : integer;
+  PlayerIndex1, inindex1 : integer;
   
   { TuosConsole }
 
@@ -83,11 +83,13 @@ var
    PlayerIndex1 := 0;
    uos_CreatePlayer(PlayerIndex1); 
 
-    //// add a Input from synth 
-//  function uos_AddFromSynth(PlayerIndex: cint32; Sine: LongInt; OutputIndex: LongInt; SampleFormat: LongInt): LongInt;
-  
-    uos_AddFromSynth(PlayerIndex1,300,-1,-1);
+    //// add a Input from Synthesizer 
+//  function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; OutputIndex: LongInt;
+ //     SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
 
+   inindex1 := uos_AddFromSynth(PlayerIndex1,1000,-1,-1,-1);
+
+ 
     //// add a Output into device with default parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
@@ -97,7 +99,23 @@ var
     /////// everything is ready, here we are, lets play it...
     
     uos_Play(PlayerIndex1);
-   
+    
+    sleep(300) ;
+    uos_InputSetSynthFreq(PlayerIndex1,inindex1, 880);
+    sleep(300) ;
+     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 630);
+      sleep(300) ;
+     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 440);
+    sleep(300) ;
+    uos_InputSetSynthFreq(PlayerIndex1,inindex1, 220);
+     sleep(300) ; 
+     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 320);
+     sleep(300) ; 
+     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 360);
+     sleep(300) ; 
+     uos_InputSetSynthFreq(PlayerIndex1,inindex1, 280);
+      sleep(1200) ; 
+      
    end;
 
  end;

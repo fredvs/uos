@@ -26,8 +26,9 @@ uses
 
  Classes, ctypes, math, SysUtils, uos;
  
- const
+
   {$IF DEFINED(bs2b)}
+   const
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
   BS2B_MIDDLE_CLEVEL = (CInt32(500)) or ((CInt32(45)) shl 16);
   BS2B_LOW_CLEVEL = (CInt32(360)) or ((CInt32(60)) shl 16);
@@ -189,21 +190,24 @@ function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
                //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
                //////////// FramesCount : default : -1 (65536)
                //  result :  Output Index in array
-               /// example : OutputIndex1 := uos_AddFromDevIn(-1,-1,-1,-1,-1);
+               /// example : OutputIndex1 := uos_AddFromDevIn(0,-1,-1,-1,-1,-1);
 
 function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
               ////// Add a Input from Device Input with default parameters
               ///////// PlayerIndex : Index of a existing Player
 
-function uos_AddFromSynth(PlayerIndex: cint32; Sine: LongInt; OutputIndex: LongInt;
-      SampleFormat: LongInt): LongInt;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; OutputIndex: LongInt;
+      SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
-    ////////// Sine length : default : -1 (200)
+    ////////// Frequency : default : -1 (440 htz)
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleRate : delault : -1 (44100)
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1);
+    //////////// example : InputIndex1 := AddFromSynth(0,-1,-1,-1,-1);
     
+procedure uos_InputSetSynthFreq(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float);
+  /// set the frequency of a input Synthesizer
 
 {$endif}
 
@@ -550,7 +554,7 @@ end;
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                //  result : -1 nothing created, otherwise index of DSPIn in array
-               ////////// example  DSPIndex1 := AddDSPVolumeIn(0,InputIndex1,1,1);
+               ////////// example  DSPIndex1 := uos_AddDSPVolumeIn(0,InputIndex1,1,1);
 
 procedure uos_AddDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
                  VolRight: double);
@@ -565,7 +569,7 @@ end;
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                //  result : -1 nothing created, otherwise index of DSPIn in array
-               ////////// example  DSPIndex1 := AddDSPVolumeOut(0,InputIndex1,1,1);
+               ////////// example  DSPIndex1 := uos_AddDSPVolumeOut(0,InputIndex1,1,1);
 
 procedure uos_SetDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32;
                  VolLeft: double; VolRight: double; Enable: boolean);
@@ -579,7 +583,7 @@ end;
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
-               ////////// example  SetDSPVolumeIn(0,InputIndex1,1,0.8,True);
+               ////////// example  uos_SetDSPVolumeIn(0,InputIndex1,1,0.8,True);
 
 procedure uos_SetDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32;
                  VolLeft: double; VolRight: double; Enable: boolean);
@@ -593,7 +597,7 @@ end;
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
-               ////////// example  SetDSPVolumeOut(0,InputIndex1,1,0.8,True);
+               ////////// example  uos_SetDSPVolumeOut(0,InputIndex1,1,0.8,True);
 
 function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc : TFunc;
                     AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
@@ -605,7 +609,7 @@ function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc : TFun
                   ////////// EndedFunc : Function to do at end of thread
                   ////////// LoopProc : external procedure to do after the buffer is filled
                   //  result : index of DSPin in array  (DSPinIndex)
-                 ////////// example : DSPinIndex1 := AddDSPIn(0,InputIndex1,@beforereverse,@afterreverse,nil);
+                 ////////// example : DSPinIndex1 := uos_AddDSPIn(0,InputIndex1,@beforereverse,@afterreverse,nil);
 begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
@@ -618,7 +622,7 @@ procedure uos_SetDSPin(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: cint
                   ////////// InputIndex : Input Index of a existing input
                   ////////// DSPIndexIn : DSP Index of a existing DSP In
                   ////////// Enable :  DSP enabled
-                  ////////// example : SetDSPIn(0,InputIndex1,DSPinIndex1,True);
+                  ////////// example : uos_SetDSPIn(0,InputIndex1,DSPinIndex1,True);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
@@ -634,7 +638,7 @@ function uos_AddDSPout(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFu
                   ////////// EndedFunc : Function to do at end of thread
                   ////////// LoopProc : external procedure to do after the buffer is filled
                   //  result :index of DSPout in array
-                  ////////// example :DSPoutIndex1 := AddDSPout(0,OutputIndex1,@volumeproc,nil,nil);
+                  ////////// example :DSPoutIndex1 := uos_AddDSPout(0,OutputIndex1,@volumeproc,nil,nil);
 begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
@@ -647,7 +651,7 @@ procedure uos_SetDSPout(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex: c
                   ////////// OutputIndex : OutputIndex of a existing Output
                   ////////// DSPoutIndex : DSPoutIndex of existing DSPout
                   ////////// Enable :  DSP enabled
-                  ////////// example : SetDSPIn(0,OutputIndex1,DSPoutIndex1,True);
+                  ////////// example : uos_SetDSPIn(0,OutputIndex1,DSPoutIndex1,True);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
@@ -667,7 +671,7 @@ function uos_AddFilterIn(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: 
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// LoopProc : External procedure to execute after DSP done
                   //  result :  index of DSPIn in array    -1 = error
-                  ////////// example :FilterInIndex1 := AddFilterIn(0,InputIndex1,6000,16000,1,2,true,nil);
+                  ////////// example :FilterInIndex1 := uos_AddFilterIn(0,InputIndex1,6000,16000,1,2,true,nil);
 begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
@@ -690,7 +694,7 @@ procedure uos_SetFilterIn(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: 
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// LoopProc : External procedure to execute after DSP done
                   ////////// Enable :  Filter enabled
-                  ////////// example : SetFilterIn(0,InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
+                  ////////// example : uos_SetFilterIn(0,InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 begin
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
@@ -711,7 +715,7 @@ function uos_AddFilterOut(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// LoopProc : External procedure to execute after DSP done
                   //  result : index of DSPOut in array
-                  ////////// example :FilterOutIndex1 := AddFilterOut(0,OutputIndex1,6000,16000,1,true,nil);
+                  ////////// example :FilterOutIndex1 := uos_AddFilterOut(0,OutputIndex1,6000,16000,1,true,nil);
 begin
  result := -1 ;
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
@@ -734,7 +738,7 @@ procedure uos_SetFilterOut(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// Enable :  Filter enabled
                   ////////// LoopProc : External procedure to execute after DSP done
-                  ////////// example : SetFilterOut(0,OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
+                  ////////// example : uos_SetFilterOut(0,OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
 begin
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
@@ -756,7 +760,7 @@ function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
                //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
                //////////// FramesCount : default : -1 (65536)
                //  result : Output Index in array , -1 is error
-               /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1,-1);
+               /// example : OutputIndex1 := uos_AddFromDevIn(0,-1,-1,-1,-1,-1,-1);
 begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
@@ -774,20 +778,29 @@ begin
   Result :=  uosPlayers[PlayerIndex].AddFromDevIn(-1, -1, -1, -1, -1, -1) ;
 end;
 
-function uos_AddFromSynth(PlayerIndex: cint32; Sine: LongInt; OutputIndex: LongInt;
-      SampleFormat: LongInt): LongInt;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; OutputIndex: LongInt;
+      SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
-    ////////// Sine length : default : -1 (200)
+    ////////// Frequency : default : -1 (440 htz)
     ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleRate : delault : -1 (44100)
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1);
+    //////////// example : InputIndex1 := uos_AddFromSynth(0,-1,-1,-1,-1);
  begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  Result :=  uosPlayers[PlayerIndex].AddFromSynth(Sine, OutputIndex,
-             SampleFormat) ;
+  Result :=  uosPlayers[PlayerIndex].AddFromSynth(Frequency, OutputIndex,
+             SampleFormat, SampleRate) ;
+end;
+
+procedure uos_InputSetSynthFreq(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float);
+  /// set the frequency of a input Synthesizer
+  begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+  uosPlayers[PlayerIndex].InputSetSynthFreq(InputIndex, Frequency) ;
 end;
 
    {$endif}
