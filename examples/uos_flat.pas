@@ -199,7 +199,7 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
 {$endif}
 
 function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
-      SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
+      SampleFormat: LongInt ; SampleRate: LongInt ; FramesCount : LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
      ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
@@ -207,13 +207,15 @@ function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float;
        ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
+    //////////// FramesCount : -1 default : 1024
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := AddFromSynth(0,-1,-1,-1,-1,-1,-1);
+    //////////// example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
     
-procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
      ////////// Frequency : in Hertz (-1 = do not change)
-     ////////// VolumeL :  from 0 to 1 (-1 = do not change) => volume left
-     ////////// VolumeR :  from 0 to 1 (-1 = do not change) => volume right
+     ////////// VolumeL :  from 0 to 1 (-1 = do not change)
+     ////////// VolumeR :  from 0 to 1 (-1 = do not change)
+    //////////// Enabled : true or false ;
      
 procedure uos_BeginProc(PlayerIndex: cint32; Proc: TProc);
             ///// Assign the procedure of object to execute  at begining, before loop
@@ -782,7 +784,7 @@ end;
 {$endif}
 
 function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
-      SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
+      SampleFormat: LongInt ; SampleRate: LongInt; FramesCount : LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
      ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
@@ -790,24 +792,26 @@ function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float;
        ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
+    //////////// FramesCount : -1 default : 1024
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := AddFromSynth(0,-1,-1,-1,-1,-1,-1);
+    //////////// example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
  begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
   Result :=  uosPlayers[PlayerIndex].AddFromSynth(Frequency, VolumeL, VolumeR, OutputIndex,
-             SampleFormat, SampleRate) ;
+             SampleFormat, SampleRate,  FramesCount) ;
 end;
 
-procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
      ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
+    //////////// Enabled : true or false ;
   begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  uosPlayers[PlayerIndex].InputSetSynth(InputIndex, Frequency, VolumeL, VolumeR) ;
+  uosPlayers[PlayerIndex].InputSetSynth(InputIndex, Frequency, VolumeL, VolumeR, Enable) ;
 end;
 
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;

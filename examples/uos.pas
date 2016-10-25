@@ -199,8 +199,12 @@ type
 
     PositionEnable : integer;
     LevelEnable : integer;
-    LevelLeft, LevelRight, freqsine: cfloat;
+    LevelLeft, LevelRight: cfloat;
     levelArrayEnable : integer;
+    
+    freqsine: cfloat;
+    lensine: longint;
+    posLsine, posRsine: longint;
    
 {$if defined(cpu64)}
     Wantframes: Tcount_t;
@@ -485,25 +489,26 @@ type
     /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1);
 {$endif}
 
- function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
-      SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
+function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
+      SampleFormat: LongInt ; SampleRate: LongInt ; FramesCount : LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
-     ////////// VolumeL : default : -1 (= 1) (from 0 to 1)
-     ////////// VolumeR : default : -1 (= 1) (from 0 to 1)
+     ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
+     ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
        ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
+    //////////// FramesCount : -1 default : 1024
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1,-1,-1);
+    //////////// example : InputIndex1 := AddFromSynth(880,-1,-1,-1,-1,-1,-1);
     
-  procedure InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
-  /// set the frequency and volume of a input Synthesizer
-    ////////// Frequency : in Hertz (-1 = do not change)
+procedure InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
+     ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
+    //////////// Enable : true or false ;
 
-    function AddFromFile(Filename: Pchar; OutputIndex: LongInt;
+function AddFromFile(Filename: Pchar; OutputIndex: LongInt;
       SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
     /////// Add a input from audio file with custom parameters
     ////////// FileName : filename of audio file
@@ -513,8 +518,8 @@ type
     //  result :   Input Index in array    -1 = error
     //////////// example : InputIndex1 := AddFromFile(edit5.Text,-1,0,-1);
 
-  {$IF DEFINED(webstream)}
-  function AddFromURL(URL: PChar; OutputIndex: LongInt;
+{$IF DEFINED(webstream)}
+function AddFromURL(URL: PChar; OutputIndex: LongInt;
    SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
   /////// Add a Input from Audio URL
   ////////// URL : URL of audio file
@@ -522,95 +527,95 @@ type
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (4096)
   ////////// example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1);
-  {$ENDIF}
+{$ENDIF}
 
-    function AddPlugin(PlugName: Pchar; SampleRate: LongInt;
+function AddPlugin(PlugName: Pchar; SampleRate: LongInt;
       Channels: LongInt): LongInt;
     /////// Add a plugin , result is PluginIndex
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
     ////// 'soundtouch' and 'bs2b' PlugName are registred.
 
-    {$IF DEFINED(soundtouch)}
-    procedure SetPluginSoundTouch(PluginIndex: LongInt; Tempo: cfloat;
+{$IF DEFINED(soundtouch)}
+procedure SetPluginSoundTouch(PluginIndex: LongInt; Tempo: cfloat;
       Pitch: cfloat; Enable: boolean);
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
     //////////               
-    {$endif}
+{$endif}
     
-     {$IF DEFINED(bs2b)}
-   procedure SetPluginBs2b(PluginIndex: LongInt; level: CInt32; fcut: CInt32; 
+{$IF DEFINED(bs2b)}
+procedure SetPluginBs2b(PluginIndex: LongInt; level: CInt32; fcut: CInt32; 
    feed: CInt32; Enable: boolean);
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
     //////////                
-     {$endif}
+{$endif}
 
-    function GetStatus() : LongInt ;
+function GetStatus() : LongInt ;
     /////// Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, -1 => error.
 
-    procedure Seek(InputIndex: LongInt; pos: Tcount_t);
+procedure Seek(InputIndex: LongInt; pos: Tcount_t);
     //// change position in sample
 
-    procedure SeekSeconds(InputIndex: LongInt; pos: cfloat);
+procedure SeekSeconds(InputIndex: LongInt; pos: cfloat);
     //// change position in seconds
 
-    procedure SeekTime(InputIndex: LongInt; pos: TTime);
+procedure SeekTime(InputIndex: LongInt; pos: TTime);
     //// change position in time format
 
-    function InputLength(InputIndex: LongInt): longint;
+function InputLength(InputIndex: LongInt): longint;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : Length of Input in samples
 
-    function InputLengthSeconds(InputIndex: LongInt): cfloat;
+function InputLengthSeconds(InputIndex: LongInt): cfloat;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : Length of Input in seconds
-
-    function InputLengthTime(InputIndex: LongInt): TTime;
+    
+function InputLengthTime(InputIndex: LongInt): TTime;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : Length of Input in time format
 
-    function InputPosition(InputIndex: LongInt): longint;
+function InputPosition(InputIndex: LongInt): longint;
     ////////// InputIndex : InputIndex of existing input
     ////// result : current postion in sample
 
-    procedure InputSetFrameCount(InputIndex: LongInt ; framecount : longint);
+procedure InputSetFrameCount(InputIndex: LongInt ; framecount : longint);
                    ///////// set number of frames to be done. (usefull for recording and level precision)
 
-    procedure InputSetLevelEnable(InputIndex: LongInt ; levelcalc : longint);
+procedure InputSetLevelEnable(InputIndex: LongInt ; levelcalc : longint);
                    ///////// set level calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul before all DSP procedures.
                           // 2 => calcul after all DSP procedures.
                           // 3 => calcul before and after all DSP procedures.
 
-     procedure InputSetPositionEnable(InputIndex: LongInt ; poscalc : longint);
+procedure InputSetPositionEnable(InputIndex: LongInt ; poscalc : longint);
                    ///////// set position calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul of position.
 
-    procedure InputSetArrayLevelEnable(InputIndex: LongInt ; levelcalc : longint);
+procedure InputSetArrayLevelEnable(InputIndex: LongInt ; levelcalc : longint);
                    ///////// set add level calculation in level-array (default is 0)
                           // 0 => no calcul
                           // 1 => calcul before all DSP procedures.
                           // 2 => calcul after all DSP procedures.
 
-    function InputGetLevelLeft(InputIndex: LongInt): double;
+function InputGetLevelLeft(InputIndex: LongInt): double;
     ////////// InputIndex : InputIndex of existing input
     ////// result : left level from 0 to 1
 
-    function InputGetLevelRight(InputIndex: LongInt): double;
+function InputGetLevelRight(InputIndex: LongInt): double;
     ////////// InputIndex : InputIndex of existing input
     ////// result : right level from 0 to 1
 
-    function InputPositionSeconds(InputIndex: LongInt): float;
+function InputPositionSeconds(InputIndex: LongInt): float;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : current postion of Input in seconds
 
-    function InputPositionTime(InputIndex: LongInt): TTime;
+function InputPositionTime(InputIndex: LongInt): TTime;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : current postion of Input in time format
 
-    function AddDSPin(InputIndex: LongInt; BeforeFunc: TFunc;
+function AddDSPin(InputIndex: LongInt; BeforeFunc: TFunc;
       AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): LongInt;
     ///// add a DSP procedure for input
     ////////// InputIndex d: Input Index of a existing input
@@ -621,13 +626,13 @@ type
     //  result :  index of DSPin in array  (DSPinIndex)
     ////////// example : DSPinIndex1 := AddDSPIn(InputIndex1,@beforereverse,@afterreverse,nil);
 
-    procedure SetDSPin(InputIndex: LongInt; DSPinIndex: LongInt; Enable: boolean);
+procedure SetDSPin(InputIndex: LongInt; DSPinIndex: LongInt; Enable: boolean);
     ////////// InputIndex : Input Index of a existing input
     ////////// DSPIndexIn : DSP Index of a existing DSP In
     ////////// Enable :  DSP enabled
     ////////// example : SetDSPIn(InputIndex1,DSPinIndex1,True);
 
-    function AddDSPout(OutputIndex: LongInt; BeforeFunc: TFunc;
+function AddDSPout(OutputIndex: LongInt; BeforeFunc: TFunc;
       AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): LongInt;    //// usefull if multi output
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// BeforeFunc : function to do before the buffer is filled
@@ -637,13 +642,13 @@ type
     //  result : index of DSPout in array
     ////////// example :DSPoutIndex1 := AddDSPout(OutputIndex1,@volumeproc,nil,nil);
 
-    procedure SetDSPout(OutputIndex: LongInt; DSPoutIndex: LongInt; Enable: boolean);
+procedure SetDSPout(OutputIndex: LongInt; DSPoutIndex: LongInt; Enable: boolean);
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// DSPoutIndex : DSPoutIndex of existing DSPout
     ////////// Enable :  DSP enabled
     ////////// example : SetDSPIn(OutputIndex1,DSPoutIndex1,True);
 
-    function AddFilterIn(InputIndex: LongInt; LowFrequency: LongInt;
+function AddFilterIn(InputIndex: LongInt; LowFrequency: LongInt;
       HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
       AlsoBuf: boolean; LoopProc: TProc): LongInt;
     ////////// InputIndex : InputIndex of a existing Input
@@ -657,7 +662,7 @@ type
     //  result :  otherwise index of DSPIn in array
     ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1,2,true,nil);
 
-    procedure SetFilterIn(InputIndex: LongInt; FilterIndex: LongInt;
+procedure SetFilterIn(InputIndex: LongInt; FilterIndex: LongInt;
       LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
       TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
     ////////// InputIndex : InputIndex of a existing Input
@@ -672,7 +677,7 @@ type
     ////////// Enable :  Filter enabled
     ////////// example : SetFilterIn(InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 
-    function AddFilterOut(OutputIndex: LongInt; LowFrequency: LongInt;
+function AddFilterOut(OutputIndex: LongInt; LowFrequency: LongInt;
       HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
       AlsoBuf: boolean; LoopProc: TProc): LongInt;
     ////////// OutputIndex : OutputIndex of a existing Output
@@ -686,7 +691,7 @@ type
     //  result : index of DSPOut in array
     ////////// example :FilterOutIndex1 := AddFilterOut(OutputIndex1,6000,16000,1,true,nil);
 
-    procedure SetFilterOut(OutputIndex: LongInt; FilterIndex: LongInt;
+procedure SetFilterOut(OutputIndex: LongInt; FilterIndex: LongInt;
       LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
       TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
     ////////// OutputIndex : OutputIndex of a existing Output
@@ -701,10 +706,10 @@ type
     ////////// LoopProc : external procedure of object to synchronize after DSP done
     ////////// example : SetFilterOut(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
 
-    function DSPLevel(Data: Tuos_Data): Tuos_Data;
+function DSPLevel(Data: Tuos_Data): Tuos_Data;
     //////////// to get level of buffer (volume)
 
-    function AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
+function AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
       VolRight: double): LongInt;
     ///// DSP Volume changer
     ////////// InputIndex : InputIndex of a existing Input
@@ -713,7 +718,7 @@ type
     //  result :  index of DSPIn in array
     ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
 
-    function AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;
+function AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;
       VolRight: double): LongInt;
     ///// DSP Volume changer
     ////////// OutputIndex : OutputIndex of a existing Output
@@ -722,25 +727,25 @@ type
     //  result :  otherwise index of DSPIn in array
     ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
     
-    {$IF DEFINED(noiseremoval)}
-    function AddDSPNoiseRemovalIn(InputIndex: LongInt): LongInt;
+{$IF DEFINED(noiseremoval)}
+function AddDSPNoiseRemovalIn(InputIndex: LongInt): LongInt;
     ///// DSP Noise Removal
     ////////// InputIndex : InputIndex of a existing Input
     //  result :  otherwise index of DSPIn in array
     ////////// example  DSPIndex1 := AddDSPNoiseRemovalIn(InputIndex1);
     
-    procedure SetDSPNoiseRemovalIn(InputIndex: LongInt; Enable: boolean);
+procedure SetDSPNoiseRemovalIn(InputIndex: LongInt; Enable: boolean);
     
-    function AddDSPNoiseRemovalOut(OutputIndex: LongInt): LongInt;
+function AddDSPNoiseRemovalOut(OutputIndex: LongInt): LongInt;
     ///// DSP Noise Removal
     ////////// InputIndex : OutputIndex of a existing Output
     //  result :  otherwise index of DSPOut in array
     ////////// example  DSPIndex1 := AddDSPNoiseRemovalOut(OutputIndex1);
     
-    procedure SetDSPNoiseRemovalOUT(OutputIndex: LongInt; Enable: boolean);
-    {$endif}  
+procedure SetDSPNoiseRemovalOUT(OutputIndex: LongInt; Enable: boolean);
+{$endif}  
     
-    procedure SetDSPVolumeIn(InputIndex: LongInt; DSPVolIndex: LongInt;
+procedure SetDSPVolumeIn(InputIndex: LongInt; DSPVolIndex: LongInt;
       VolLeft: double; VolRight: double; Enable: boolean);
     ////////// InputIndex : InputIndex of a existing Input
     ////////// DSPIndex : DSPIndex of a existing DSP
@@ -749,7 +754,7 @@ type
     ////////// Enable : Enabled
     ////////// example  SetDSPVolumeIn(InputIndex1,DSPIndex1,1,0.8,True);
 
-    procedure SetDSPVolumeOut(OutputIndex: LongInt; DSPVolIndex: LongInt;
+procedure SetDSPVolumeOut(OutputIndex: LongInt; DSPVolIndex: LongInt;
       VolLeft: double; VolRight: double; Enable: boolean);
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// DSPIndex : DSPIndex of a existing DSP
@@ -758,7 +763,7 @@ type
     ////////// Enable : Enabled
     ////////// example  SetDSPVolumeOut(InputIndex1,DSPIndex1,1,0.8,True);
 
-   end;
+end;
 
 //////////// General public procedure/function (accessible for library uos too)
 
@@ -2599,7 +2604,7 @@ end;
 {$endif}
 
 function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
-      SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
+      SampleFormat: LongInt ; SampleRate: LongInt ; FramesCount : LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
      ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
@@ -2607,9 +2612,10 @@ function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: flo
        ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
+    //////////// FramesCount : -1 default : 1024
      //  result :   Input Index in array    -1 = error
-    //////////// example : InputIndex1 := AddFromSynth(-1,-1,-1,-1,-1,-1);
-  
+    //////////// example : InputIndex1 := AddFromSynth(880,-1,-1,-1,-1,-1,-1);
+ 
 var
   x : LongInt;
 begin
@@ -2630,9 +2636,23 @@ begin
   else
     StreamIn[x].Data.SampleRate := SampleRate;
    
-  if Frequency = -1 then  StreamIn[x].Data.Wantframes :=  (StreamIn[x].Data.SampleRate div 440) * StreamIn[x].data.channels else
-     StreamIn[x].Data.Wantframes := round(StreamIn[x].Data.SampleRate / Frequency * StreamIn[x].data.channels) ;
-
+   if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=  1024 else
+     StreamIn[x].Data.Wantframes := FramesCount ;
+ 
+  if Frequency = -1 then 
+  begin
+   StreamIn[x].Data.freqsine := 440 ;
+   StreamIn[x].Data.lensine :=  (StreamIn[x].Data.SampleRate div 440) ;
+   end
+    else
+   begin
+    StreamIn[x].Data.freqsine := Frequency ;
+    StreamIn[x].Data.lensine := round(StreamIn[x].Data.SampleRate / Frequency) ;
+   end;
+   
+   StreamIn[x].Data.posLsine := 0 ;
+   StreamIn[x].Data.posRsine := 0 ;
+     
  SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
 
   
@@ -2647,7 +2667,6 @@ begin
   if VolumeR = -1 then StreamIn[x].Data.Vright := 1 else
    StreamIn[x].Data.Vright := VolumeR;
  
-  StreamIn[x].Data.outframes := length(StreamIn[x].Data.Buffer);
   StreamIn[x].Data.Enabled := True;
   StreamIn[x].Data.Status := 1;
   StreamIn[x].Data.TypePut := 3;
@@ -2661,23 +2680,20 @@ begin
     Result := x;
 end;
 
-procedure Tuos_Player.InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
+procedure Tuos_Player.InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
      ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
+    //////////// Enabled : true or false ;
 
  var
   x2 : longint;
  begin
  if Frequency <> -1 then
  begin
- StreamIn[InputIndex].Data.Wantframes := round(StreamIn[InputIndex].Data.SampleRate / Frequency * StreamIn[InputIndex].data.channels) ;
- if length(StreamIn[InputIndex].Data.Buffer) <> StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels then
-   begin
-   SetLength(StreamIn[InputIndex].Data.Buffer, StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels);
-   for x2 := 0 to (StreamIn[InputIndex].Data.WantFrames * StreamIn[InputIndex].Data.Channels) -1 do
-              StreamIn[InputIndex].Data.Buffer[x2] := cfloat(0.0);      ////// clear input
-   end;
+ StreamIn[InputIndex].Data.Enabled := Enable;
+ StreamIn[InputIndex].Data.freqsine := Frequency ;
+ StreamIn[InputIndex].Data.lensine := round(StreamIn[InputIndex].Data.SampleRate / Frequency) ;
  end;
  if VolumeL <> -1 then StreamIn[InputIndex].Data.VLeft := VolumeL;
    
@@ -3336,7 +3352,7 @@ procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
   x, x2, x3, x4, statustemp, rat : LongInt;
-  sinevar : cfloat;
+  sinevarL, sinevarR : cfloat;
   plugenabled: boolean;
   curpos: cint64;
   BufferplugINFLTMP: TDArFloat;
@@ -3538,35 +3554,54 @@ begin
               StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
            //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  /// if you want clean buffer
           end;
-
-
-            3:   /////// for Input from Synthesizer
+ 
+            {$endif}
+            
+                   3:   /////// for Input from Synthesizer
           begin
      
              x2 := 0 ;
+             x3 := 0 ;
+             
+          //     for x2 := 0 to length(StreamIn[x].Data.Buffer) -1 do
+          //    StreamIn[x].Data.Buffer[x2] := cfloat(0.0);  
+             
+               x2 := 0 ; 
    
              while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
+             
              begin
-             sinevar := CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
-           
-             if StreamIn[x].Data.Channels > 1 then
+                      
+             if StreamIn[x].Data.Channels = 2 then
              begin
-              StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * sinevar;
-              StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.Vright * sinevar;
-              x2 := x2 + 2 ;
-             end 
-             else
+             StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x3+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+             StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.VRight * CFloat((Sin( ( CFloat(x3+ StreamIn[x].Data.posRsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+             
+            if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine-1 then
+             StreamIn[x].Data.posLsine := 0 else
+             StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
+             
+            if StreamIn[x].Data.posRsine +1 > StreamIn[x].Data.lensine-1 then
+            StreamIn[x].Data.posRsine := 0 else
+             StreamIn[x].Data.posRsine := StreamIn[x].Data.posRsine +1 ;
+            
+             inc(x3);
+             x2 := x2 + 2 ;
+             end;
+            
+             if StreamIn[x].Data.Channels = 1 then 
              begin
-              StreamIn[x].Data.Buffer[x2] :=  StreamIn[x].Data.VLeft * sinevar;
-              x2 := x2 + 1 ;
-              end;
-               
-              end;
-      
-             StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
+              if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine then
+             StreamIn[x].Data.posLsine := 0 else
+             StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
+        
+             StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+             x2 := x2 + 1 ;
+             end;
+             end;
+         
+            StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames ;
           end;
-
-           {$endif}
 
            {$IF DEFINED(webstream)}
            2:  /////// for Input from Internet audio stream.
