@@ -16,15 +16,15 @@ interface
 
 uses
   
-    {$IF DEFINED(Java)}
+   {$IF DEFINED(Java)}
    uos_jni,
    {$endif}
 
-    {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-     fpg_base,
-      {$ENDIF}
+   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+   fpg_base,
+   {$ENDIF}
 
- Classes, ctypes, math, SysUtils, uos;
+   Classes, ctypes, math, SysUtils, uos;
  
 
   {$IF DEFINED(bs2b)}
@@ -146,7 +146,7 @@ function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar; OutputIndex: Lon
             //  result : Input Index in array  -1 = error
             //////////// example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);
 
-        {$IF DEFINED(webstream)}
+{$IF DEFINED(webstream)}
 function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar): LongInt;
           /////// Add a Input from Audio URL with default parameters
 
@@ -158,7 +158,7 @@ function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
               //////////// FramesCount : default : -1 (1024)
               ////////// example : InputIndex := AddFromURL(0,'http://someserver/somesound.mp3',-1,-1,-1);
-             {$ENDIF}
+{$ENDIF}
 
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
                  Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
@@ -196,6 +196,8 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
               ////// Add a Input from Device Input with default parameters
               ///////// PlayerIndex : Index of a existing Player
 
+{$endif}
+
 function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
@@ -207,13 +209,12 @@ function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float;
     //////////// SampleRate : delault : -1 (44100)
      //  result :   Input Index in array    -1 = error
     //////////// example : InputIndex1 := AddFromSynth(0,-1,-1,-1,-1,-1,-1);
-
     
 procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
-  /// set the frequency and volume of a input Synthesizer
-
-{$endif}
-
+     ////////// Frequency : in Hertz (-1 = do not change)
+     ////////// VolumeL :  from 0 to 1 (-1 = do not change) => volume left
+     ////////// VolumeR :  from 0 to 1 (-1 = do not change) => volume right
+     
 procedure uos_BeginProc(PlayerIndex: cint32; Proc: TProc);
             ///// Assign the procedure of object to execute  at begining, before loop
             //////////// PlayerIndex : Index of a existing Player
@@ -244,7 +245,7 @@ procedure uos_LoopProcOut(PlayerIndex: cint32; OutIndex: cint32; Proc: TProc);
             //////////// PlayerIndex : Index of a existing Player
             //////////// OutIndex : Index of a existing Output
 
- {$IF DEFINED(noiseremoval)}
+{$IF DEFINED(noiseremoval)}
 procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt);
       
 procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; Enable: boolean);
@@ -252,7 +253,7 @@ procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; Ena
 procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt);
       
 procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt; Enable: boolean);
- {$endif}  
+{$endif}  
 
 procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                  VolRight: double) ;
@@ -405,12 +406,12 @@ procedure uos_SetPluginSoundTouch(PlayerIndex: cint32; PluginIndex: cint32; Temp
                      //////////// PlayerIndex : Index of a existing Player
 {$endif}
 
- {$IF DEFINED(bs2b)}
-    procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: LongInt;
+{$IF DEFINED(bs2b)}
+procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: LongInt;
  level: CInt32; fcut: CInt32; feed: CInt32; Enable: boolean);
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
     //////////                
-     {$endif}
+{$endif}
 
 function uos_GetStatus(PlayerIndex: cint32) : cint32 ;
              /////// Get the status of the player : -1 => error,  0 => has stopped, 1 => is running, 2 => is paused.
@@ -510,7 +511,7 @@ var
 
 implementation
 
- {$IF DEFINED(noiseremoval)}
+{$IF DEFINED(noiseremoval)}
 procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt);
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
@@ -518,7 +519,6 @@ begin
     uosPlayers[PlayerIndex].StreamIn[InputIndex].data.DSPNoiseIndex :=
     uosPlayers[PlayerIndex].AddDSPNoiseRemovalIn(InputIndex);
 end;
-
       
 procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; Enable: boolean);
 begin
@@ -534,7 +534,6 @@ begin
     uosPlayers[PlayerIndex].StreamOut[OutputIndex].data.DSPNoiseIndex :=
     uosPlayers[PlayerIndex].AddDSPNoiseRemovalOut(OutputIndex);
 end;
-
       
 procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt; Enable: boolean);
 begin
@@ -542,7 +541,7 @@ begin
     if  uosPlayersStat[PlayerIndex] = 1 then
 uosPlayers[PlayerIndex].SetDSPNoiseRemovalOut(OutputIndex, Enable);
 end;
- {$endif} 
+{$endif} 
 
 procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                  VolRight: double);
@@ -749,7 +748,7 @@ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
                     TypeFilter, AlsoBuf, Enable, LoopProc);
 end;
 
- {$IF DEFINED(portaudio)}
+{$IF DEFINED(portaudio)}
 function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
              SampleRate: cint32; OutputIndex: cint32;
              SampleFormat: cint32; FramesCount : cint32): cint32;
@@ -780,6 +779,7 @@ begin
     if  uosPlayersStat[PlayerIndex] = 1 then
   Result :=  uosPlayers[PlayerIndex].AddFromDevIn(-1, -1, -1, -1, -1, -1) ;
 end;
+{$endif}
 
 function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
@@ -801,14 +801,14 @@ function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float;
 end;
 
 procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
-  /// set the frequency and volume of a input Synthesizer
+     ////////// Frequency : in Hertz (-1 = do not change)
+     ////////// VolumeL :  from 0 to 1 (-1 = do not change)
+     ////////// VolumeR :  from 0 to 1 (-1 = do not change)
   begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
   uosPlayers[PlayerIndex].InputSetSynth(InputIndex, Frequency, VolumeL, VolumeR) ;
 end;
-
-   {$endif}
 
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
                  Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
@@ -894,7 +894,7 @@ begin
   Result := uosPlayers[PlayerIndex].AddFromFile(Filename, -1, -1, -1);
 end;
 
- {$IF DEFINED(webstream)}
+{$IF DEFINED(webstream)}
 function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
                SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
             /////// Add a Input from Audio URL
@@ -917,7 +917,6 @@ begin
     if  uosPlayersStat[PlayerIndex] = 1 then
   Result := uosPlayers[PlayerIndex].AddFromURL(URL, -1, -1, -1);
 end;
-
 {$ENDIF}
 
 function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: cint32;
@@ -933,6 +932,7 @@ begin
     if  uosPlayersStat[PlayerIndex] = 1 then
   Result := uosPlayers[PlayerIndex].AddPlugin(PlugName, SampleRate, Channels);
 end;
+
 {$IF DEFINED(soundtouch)}
 procedure uos_SetPluginSoundTouch(PlayerIndex: cint32; PluginIndex: cint32; Tempo: cfloat;
                        Pitch: cfloat; Enable: boolean);
@@ -1293,16 +1293,15 @@ uosDeviceCount:= uos.uosDeviceCount;
 uosDefaultDeviceIn:= uos.uosDefaultDeviceIn;
 uosDefaultDeviceOut:= uos.uosDefaultDeviceOut;
 end;
- {$endif}
-
-// Create the player , PlayerIndex1 : from 0 to what your computer can do !
-//// If PlayerIndex exists already, it will be overwriten...
+{$endif}
 
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
 procedure uos_CreatePlayer(PlayerIndex : cint32 ; AParent: TObject);
 {$else}
 procedure uos_CreatePlayer(PlayerIndex : cint32);
 {$endif}
+// Create the player , PlayerIndex1 : from 0 to what your computer can do !
+//// If PlayerIndex exists already, it will be overwriten...
 
  var
 x : cint32;

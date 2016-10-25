@@ -13,56 +13,56 @@ unit uos;
 interface
 
 uses
-   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-   fpg_base, fpg_main,  //// for fpGUI and fpc < 2.7.1
-   {$endif}
+{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+fpg_base, fpg_main,  //// for fpGUI and fpc < 2.7.1
+{$endif}
 
-   {$IF DEFINED(Java)}
-   uos_jni,
-   {$endif}
+{$IF DEFINED(Java)}
+uos_jni,
+{$endif}
 
-   {$IF DEFINED(webstream)}
-   uos_httpgetthread, Pipes,
-   {$ENDIF}
+{$IF DEFINED(webstream)}
+uos_httpgetthread, Pipes,
+{$ENDIF}
 
-   {$IF DEFINED(portaudio)}
-   uos_portaudio,
-   {$endif}
+{$IF DEFINED(portaudio)}
+uos_portaudio,
+{$endif}
 
-   {$IF DEFINED(sndfile)}
-   uos_LibSndFile,
-   {$endif}
+{$IF DEFINED(sndfile)}
+uos_LibSndFile,
+{$endif}
 
-   {$IF DEFINED(mpg123)}
-   uos_Mpg123,
-   {$endif}
+{$IF DEFINED(mpg123)}
+uos_Mpg123,
+{$endif}
 
-   {$IF DEFINED(soundtouch)}
-   uos_soundtouch,
-   {$endif}
+{$IF DEFINED(soundtouch)}
+uos_soundtouch,
+{$endif}
    
-   {$IF DEFINED(bs2b)}
-   uos_bs2b,
-   {$endif}
+{$IF DEFINED(bs2b)}
+uos_bs2b,
+{$endif}
    
-   {$IF DEFINED(noiseremoval)}
-   uos_dsp_noiseremoval,
-   {$endif}
+{$IF DEFINED(noiseremoval)}
+uos_dsp_noiseremoval,
+{$endif}
 
-   {$IF DEFINED(neaac)}
-   uos_aac,
-   {$endif}
+{$IF DEFINED(neaac)}
+uos_aac,
+{$endif}
 
-   {$IF DEFINED(cdrom)}
-   uos_cdrom,
-   {$endif}
+{$IF DEFINED(cdrom)}
+uos_cdrom,
+{$endif}
 
-   Classes, ctypes, Math, sysutils;
+Classes, ctypes, Math, sysutils;
 
 const
   uos_version : LongInt = 16161025 ;
   
-  {$IF DEFINED(bs2b)}
+{$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
   BS2B_MIDDLE_CLEVEL = (CInt32(500)) or ((CInt32(45)) shl 16);
   BS2B_LOW_CLEVEL = (CInt32(360)) or ((CInt32(60)) shl 16);
@@ -73,7 +73,7 @@ const
   BS2B_DEFAULT_CLEVEL = (CInt32(700)) or ((CInt32(45)) shl 16);
   BS2B_CMOY_CLEVEL =(CInt32(700)) or ((CInt32(60)) shl 16);
   BS2B_JMEIER_CLEVEL = (CInt32(650)) or ((CInt32(95)) shl 16);
-   {$endif}
+{$endif}
   
 type
   TDArFloat = array of cfloat;
@@ -88,17 +88,17 @@ type
   PDArShort = ^TDArShort;
   PDArLong = ^TDArLong;
 
-  {$IF not DEFINED(windows)}
+{$IF not DEFINED(windows)}
   THandle = pointer;
   TArray = single;
-  {$endif}
+{$endif}
 
 type
-  {$if not defined(fs32bit)}
-     Tcount_t    = cint64;          { used for file sizes }
-  {$else}
-     Tcount_t    = longint;
-  {$endif}
+{$if not defined(fs32bit)}
+  Tcount_t    = cint64;          { used for file sizes }
+{$else}
+  Tcount_t    = longint;
+{$endif}
 
 type
   Tuos_LoadResult = record
@@ -127,14 +127,14 @@ type
     Plug_ST_FileName: pchar; // Plugin SoundTouch
     Plug_BS_FileName: pchar; // Plugin bs2b
 
-     {$IF DEFINED(portaudio)}
+{$IF DEFINED(portaudio)}
     DefDevOut: PaDeviceIndex;
     DefDevOutInfo: PPaDeviceInfo;
     DefDevOutAPIInfo: PPaHostApiInfo;
     DefDevIn: PaDeviceIndex;
     DefDevInInfo: PPaDeviceInfo;
     DefDevInAPIInfo: PPaHostApiInfo;
-    {$endif}
+{$endif}
 
     function loadlib: LongInt;
     procedure unloadlib;
@@ -199,16 +199,16 @@ type
 
     PositionEnable : integer;
     LevelEnable : integer;
-    LevelLeft, LevelRight: cfloat;
+    LevelLeft, LevelRight, freqsine: cfloat;
     levelArrayEnable : integer;
    
-     {$if defined(cpu64)}
+{$if defined(cpu64)}
     Wantframes: Tcount_t;
     OutFrames: Tcount_t;
-    {$else}
+{$else}
     Wantframes: longint;
     OutFrames: longint;
-    {$endif}
+{$endif}
     
     SamplerateRoot: longword;
     SampleRate: longword;
@@ -228,11 +228,11 @@ type
     Album: string;
     Genre: byte;
     HDFormat: LongInt;
-   {$IF DEFINED(sndfile)}
+{$IF DEFINED(sndfile)}
    Frames: Tcount_t;
-   {$else}
+{$else}
    Frames: longint;
-    {$endif}
+{$endif}
 
     Sections: LongInt;
     Encoding: LongInt;
@@ -242,13 +242,13 @@ type
    
     Output: LongInt;
 
-    {$if defined(cpu64)}   /// TO CHECK
+{$if defined(cpu64)}   /// TO CHECK
     Position: LongInt;
     Poseek:  LongInt;
-    {$else}
+{$else}
     Position: LongInt;
     Poseek:  LongInt;
-    {$endif}
+{$endif}
 
    end;
 
@@ -262,9 +262,9 @@ type
     b2, x0, x1, y0, y1, b22, x02, x12, y02, y12: array[0..1] of cfloat;
     C, D, C2, D2, Gain, LeftResult, RightResult: cfloat;
  
-    {$IF DEFINED(noiseremoval)}
+{$IF DEFINED(noiseremoval)}
     FNoise : TuosNoiseRemoval;
-    {$endif} 
+{$endif} 
   end;
 
 type
@@ -457,7 +457,7 @@ type
     //////////// FramesCount : default : -1 (= 4096)
     //  result :  Output Index in array    -1 = error
     /// example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0);
-     {$endif}
+   {$endif}
 
     function AddIntoFile(Filename: PChar; SampleRate: LongInt;
       Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
@@ -483,6 +483,7 @@ type
     //////////// FramesCount : default : -1 (4096)
     //  result :  otherwise Output Index in array   -1 = error
     /// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1);
+{$endif}
 
  function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
@@ -498,8 +499,9 @@ type
     
   procedure InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
   /// set the frequency and volume of a input Synthesizer
-      
-         {$endif}
+    ////////// Frequency : in Hertz (-1 = do not change)
+     ////////// VolumeL :  from 0 to 1 (-1 = do not change)
+     ////////// VolumeR :  from 0 to 1 (-1 = do not change)
 
     function AddFromFile(Filename: Pchar; OutputIndex: LongInt;
       SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
@@ -833,9 +835,9 @@ var
   uosDefaultDeviceOut: LongInt;
   uosInit: Tuos_Init;
 
-    {$IF DEFINED(windows)}
+ {$IF DEFINED(windows)}
    old8087cw: word;
-    {$endif}
+ {$endif}
 
    {$IF DEFINED(Java)}
   theclass : JClass;
@@ -969,7 +971,7 @@ var
 
      while x < (len * 2)-1 do
     begin
-    /// TODO -> this takes only chan1, not (chan1+chan2)/2 -> it get bad noise dont know why ...
+    /// TODO -> this takes only chan1, not (chan1+chan2)/2 -> it get bad noise dont know why ???...
     // arsh[y]   := round((Inbuf[x] + Inbuf[x+1])/ 2) ;
 
       arsh[y]   := Inbuf[x+1] ;
@@ -1062,7 +1064,7 @@ var
   if (isAssigned = True) then
   begin
     NoFree := false;
-   {$IF DEFINED(portaudio)}
+{$IF DEFINED(portaudio)}
   for x := 0 to high(StreamOut) do
     if StreamOut[x].Data.HandleSt <> nil then
     begin
@@ -1075,7 +1077,7 @@ var
      Pa_StartStream(StreamIn[x].Data.HandleSt);
     // if x > 0 then sleep(200);
      end;
-    {$endif}
+{$endif}
 
   start;   // resume;  { if fpc version <= 2.4.4}
   Status := 1;
@@ -2594,6 +2596,7 @@ begin
   else
     Result := x;
 end;
+{$endif}
 
 function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt): LongInt;
@@ -2658,31 +2661,28 @@ begin
     Result := x;
 end;
 
- procedure Tuos_Player.InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
-  /// set the frequency and volume of a input Synthesizer
+procedure Tuos_Player.InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float);
+     ////////// Frequency : in Hertz (-1 = do not change)
+     ////////// VolumeL :  from 0 to 1 (-1 = do not change)
+     ////////// VolumeR :  from 0 to 1 (-1 = do not change)
 
  var
   x2 : longint;
  begin
- if Frequency = -1 then  StreamIn[InputIndex].Data.Wantframes :=  (StreamIn[InputIndex].Data.SampleRate div 440) * StreamIn[InputIndex].data.channels else
-     StreamIn[InputIndex].Data.Wantframes := round(StreamIn[InputIndex].Data.SampleRate / Frequency * StreamIn[InputIndex].data.channels) ;
-
- if VolumeL = -1 then StreamIn[InputIndex].Data.VLeft := 1 else
-   StreamIn[InputIndex].Data.VLeft := VolumeL;
-   
-  if VolumeR = -1 then StreamIn[InputIndex].Data.Vright := 1 else
-   StreamIn[InputIndex].Data.Vright := VolumeR;
- 
-if length(StreamIn[InputIndex].Data.Buffer) <> StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels then
-begin
- SetLength(StreamIn[InputIndex].Data.Buffer, StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels);
-  for x2 := 0 to (StreamIn[InputIndex].Data.WantFrames * StreamIn[InputIndex].Data.Channels) -1 do
+ if Frequency <> -1 then
+ begin
+ StreamIn[InputIndex].Data.Wantframes := round(StreamIn[InputIndex].Data.SampleRate / Frequency * StreamIn[InputIndex].data.channels) ;
+ if length(StreamIn[InputIndex].Data.Buffer) <> StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels then
+   begin
+   SetLength(StreamIn[InputIndex].Data.Buffer, StreamIn[InputIndex].Data.Wantframes* StreamIn[InputIndex].Data.channels);
+   for x2 := 0 to (StreamIn[InputIndex].Data.WantFrames * StreamIn[InputIndex].Data.Channels) -1 do
               StreamIn[InputIndex].Data.Buffer[x2] := cfloat(0.0);      ////// clear input
-           
+   end;
  end;
- end;
-
-  {$endif}
+ if VolumeL <> -1 then StreamIn[InputIndex].Data.VLeft := VolumeL;
+   
+ if VolumeR <> -1 then StreamIn[InputIndex].Data.Vright := VolumeR;
+end;
 
 function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
   Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt): LongInt;
@@ -2739,6 +2739,7 @@ begin
     StreamOut[x].FileBuffer.wSamplesPerSec := 44100
   else
     StreamOut[x].FileBuffer.wSamplesPerSec := samplerate;
+    
   StreamOut[x].Data.Samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
   StreamOut[x].LoopProc := nil;
 end;
@@ -3335,6 +3336,7 @@ procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
   x, x2, x3, x4, statustemp, rat : LongInt;
+  sinevar : cfloat;
   plugenabled: boolean;
   curpos: cint64;
   BufferplugINFLTMP: TDArFloat;
@@ -3541,20 +3543,21 @@ begin
             3:   /////// for Input from Synthesizer
           begin
      
-               x2 := 0 ;
+             x2 := 0 ;
    
              while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
              begin
-             
+             sinevar := CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
+           
              if StreamIn[x].Data.Channels > 1 then
              begin
-              StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
-              StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.Vright * CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
+              StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * sinevar;
+              StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.Vright * sinevar;
               x2 := x2 + 2 ;
              end 
              else
              begin
-              StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2)/CFloat( StreamIn[x].Data.WantFrames) ) * Pi * 2 )));
+              StreamIn[x].Data.Buffer[x2] :=  StreamIn[x].Data.VLeft * sinevar;
               x2 := x2 + 1 ;
               end;
                

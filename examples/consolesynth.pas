@@ -108,7 +108,12 @@ var
     uos_Play(PlayerIndex1);
     
     sleep(200) ;
+    
     uos_InputSetSynth(PlayerIndex1,inindex1, 880, -1,-1);
+       ////////// Frequency : in Hertz (-1 = do not change)
+     ////////// VolumeL :  from 0 to 1 (-1 = do not change)
+     ////////// VolumeR :  from 0 to 1 (-1 = do not change)
+   
     sleep(300) ;
      uos_InputSetSynth(PlayerIndex1,inindex1, 630, 0.5,1);
       sleep(300) ;
@@ -122,7 +127,7 @@ var
      sleep(300) ; 
      uos_InputSetSynth(PlayerIndex1,inindex1, 280, 1,0.5);
       sleep(300) ; 
-     uos_InputSetSynth(PlayerIndex1,inindex1, 440, -1,-1);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 440, 1, 1);
       sleep(1200) ; 
       
    end;
