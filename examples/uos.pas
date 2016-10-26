@@ -3471,8 +3471,9 @@ begin
         RTLeventWaitFor(evPause);  ///// Is there a pause waiting ?
         RTLeventSetEvent(evPause);
         
-        case StreamIn[x].Data.TypePut of
-          0:   ///// It is a input from audio file.
+ case StreamIn[x].Data.TypePut of
+ 
+   0:   ///// It is a input from audio file.
           begin
             case StreamIn[x].Data.LibOpen of
               //////////// Here we are, reading the data and store it in buffer
@@ -3541,8 +3542,8 @@ begin
 
           end;
 
-           {$IF DEFINED(portaudio)}
-           1:   /////// for Input from device
+   {$IF DEFINED(portaudio)}
+   1:   /////// for Input from device
           begin
              for x2 := 0 to StreamIn[x].Data.WantFrames -1 do
               StreamIn[x].Data.Buffer[x2] := cfloat(0.0);      ////// clear input
@@ -3554,69 +3555,64 @@ begin
               StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
            //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  /// if you want clean buffer
           end;
- 
-            {$endif}
-            
-                   3:   /////// for Input from Synthesizer
-          begin
-     
-             x2 := 0 ;
-             x3 := 0 ;
-             
-          //     for x2 := 0 to length(StreamIn[x].Data.Buffer) -1 do
-          //    StreamIn[x].Data.Buffer[x2] := cfloat(0.0);  
-             
-               x2 := 0 ; 
-   
-             while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
-             
-             begin
-                      
-             if StreamIn[x].Data.Channels = 2 then
-             begin
-             StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x3+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
-             StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.VRight * CFloat((Sin( ( CFloat(x3+ StreamIn[x].Data.posRsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
-             
-            if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine-1 then
-             StreamIn[x].Data.posLsine := 0 else
-             StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
-             
-            if StreamIn[x].Data.posRsine +1 > StreamIn[x].Data.lensine-1 then
-            StreamIn[x].Data.posRsine := 0 else
-             StreamIn[x].Data.posRsine := StreamIn[x].Data.posRsine +1 ;
-            
-             inc(x3);
-             x2 := x2 + 2 ;
-             end;
-            
-             if StreamIn[x].Data.Channels = 1 then 
-             begin
-              if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine then
-             StreamIn[x].Data.posLsine := 0 else
-             StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
-        
-             StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
-             x2 := x2 + 1 ;
-             end;
-             end;
-         
-            StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames ;
-          end;
+   {$endif}
 
-           {$IF DEFINED(webstream)}
-           2:  /////// for Input from Internet audio stream.
+   {$IF DEFINED(webstream)}
+    2:  /////// for Input from Internet audio stream.
           begin
-          {$IF DEFINED(mpg123)}
-          
+   {$IF DEFINED(mpg123)}
            // err := // if you want clear buffer
           mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
           StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
           //  writeln('===> mpg123_read error => ' + inttostr(err)) ;
           StreamIn[x].Data.outframes :=
           StreamIn[x].Data.outframes div StreamIn[x].Data.Channels;
-          {$ENDIF}
+   {$ENDIF}
          end;
-            {$ENDIF}
+   {$ENDIF}
+            
+   3:   /////// for Input from Synthesizer
+          begin
+     
+             x2 := 0 ;
+            
+             while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
+             
+             begin
+           
+             if StreamIn[x].Data.Channels = 2 then
+             begin
+             StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat((x2 div 2)+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+             StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.VRight * CFloat((Sin( ( CFloat((x2 div 2)+ StreamIn[x].Data.posRsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+             
+            if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine -1 then
+             StreamIn[x].Data.posLsine := 0 else
+             StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
+             
+            if StreamIn[x].Data.posRsine +1 > StreamIn[x].Data.lensine -1 then
+             StreamIn[x].Data.posRsine := 0 else
+             StreamIn[x].Data.posRsine := StreamIn[x].Data.posRsine +1 ;
+            
+             x2 := x2 + 2 ;
+             end;
+            
+             if StreamIn[x].Data.Channels = 1 then 
+             begin
+             
+             StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+        
+             if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine - 1  then
+             StreamIn[x].Data.posLsine := 0 else
+             StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
+        
+              inc(x2) ;
+             end;
+             end;
+         
+            StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames ;
+          end;
+
+          
         end;
 
         // writeln('check if internet is stopped.');
@@ -3675,11 +3671,11 @@ begin
                   StreamIn[x].DSP[x2].fftdata);
             // writeln('DSPin AfterBuffProc 2');
              
-              {$IF not DEFINED(Library)}
+  {$IF not DEFINED(Library)}
               if (StreamIn[x].DSP[x2].LoopProc <> nil) then
-            {$IF FPC_FULLVERSION>=20701}
+  {$IF FPC_FULLVERSION>=20701}
           queue(StreamIn[x].DSP[x2].LoopProc);
-        {$else}
+  {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
     msg.user.Param1 := x2 ;   //// the index of the dsp
@@ -3688,30 +3684,30 @@ begin
    end;
    {$else}
    synchronize(StreamIn[x].DSP[x2].LoopProc);
-    {$endif}
-    {$endif}
-    {$elseif not DEFINED(java)}
+   {$endif}
+   {$endif}
+   {$elseif not DEFINED(java)}
      if (StreamIn[x].DSP[x2].LoopProc <> nil) then
         StreamIn[x].DSP[x2].LoopProc;
-       {$else}
+   {$else}
   if (StreamIn[x].DSP[x2].LoopProc <> nil) then
    {$IF FPC_FULLVERSION>=20701}
          queue(@Streamin[x].DSP[x2].LoopProcjava);
-        {$else}
+   {$else}
        synchronize(@Streamin[x].DSP[x2].LoopProcjava);
-       {$endif}
-    {$endif}
+   {$endif}
+   {$endif}
 
     end;
 
 ///// Ended DSPin AfterBuffProc
 // writeln('the synchro main loop procedurebefore');
         ///////////// The synchro main loop procedure
-         {$IF not DEFINED(Library)}
-         if StreamIn[x].LoopProc <> nil then
+  {$IF not DEFINED(Library)}
+   if StreamIn[x].LoopProc <> nil then
    {$IF FPC_FULLVERSION>=20701}
-          queue(StreamIn[x].LoopProc);
-        {$else}
+   queue(StreamIn[x].LoopProc);
+   {$else}
    {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
     begin
     msg.user.Param1 := -1 ;  //// it is the main loop procedure
@@ -3720,20 +3716,20 @@ begin
    end;
    {$else}
    synchronize(StreamIn[x].LoopProc);
-    {$endif}
-    {$endif}
+   {$endif}
+   {$endif}
 
     {$elseif not DEFINED(java)}
-      if (StreamIn[x].LoopProc <> nil) then
-        StreamIn[x].LoopProc;
-       {$else}
-       if (StreamIn[x].LoopProc <> nil) then
-  {$IF FPC_FULLVERSION>=20701}
-         queue(@Streamin[x].LoopProcjava);
-        {$else}
-       synchronize(@Streamin[x].LoopProcjava);
-       {$endif}
-    {$endif}
+   if (StreamIn[x].LoopProc <> nil) then
+   StreamIn[x].LoopProc;
+    {$else}
+   if (StreamIn[x].LoopProc <> nil) then
+   {$IF FPC_FULLVERSION>=20701}
+   queue(@Streamin[x].LoopProcjava);
+   {$else}
+   synchronize(@Streamin[x].LoopProcjava);
+   {$endif}
+   {$endif}
 
     //// Getting the level after DSP procedure
   if ((StreamIn[x].Data.levelEnable = 2) or (StreamIn[x].Data.levelEnable = 3)) then StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
@@ -4130,8 +4126,7 @@ begin
     Status := 2;
   end;
 
-
-    until status = 0;
+ until status = 0;
 
   ////////////////////////////////////// End of Loop ////////////////////////////////////////
 
