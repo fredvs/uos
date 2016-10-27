@@ -40,6 +40,71 @@ uses
   BS2B_CMOY_CLEVEL =(CInt32(700)) or ((CInt32(60)) shl 16);
   BS2B_JMEIER_CLEVEL = (CInt32(650)) or ((CInt32(95)) shl 16);
      {$endif}
+     
+{$IF DEFINED(synthesizer)}
+const // musical note ==> frequency in hertz
+la0  = 55.0; 
+la0_d = 58.3;
+si0 = 61.7;
+do0 =  65.4;
+do0_d = 69.3;
+re0 = 73.4;
+re0_d =77.8;
+mi0  =82.4;
+fa0  = 87.3; 
+fa0_d = 92.5;
+sol0 = 98.0;
+sol0_d = 103.8;
+la1  = 110.0; 
+la1_d = 116.5;
+si1 = 123.5;
+do1 =  130.8;
+do1_d = 138.6;
+re1 = 146.8;
+re1_d =155.6;
+mi1  =164.8;
+fa1  = 174.6; 
+fa1_d = 185.0;
+sol1 = 196.0;
+sol1_d = 207.7;
+la2 = 220.0; 
+la2_d = 233.1;
+si2 = 2246.9;
+do2 =  261.6;
+do2_d = 277.2;
+re2 = 293.7;
+re2_d =311.1;
+mi2  =329.6;
+fa2  = 349.2; 
+fa2_d = 370.0;
+sol2 = 392.0;
+sol2_d = 415.3;
+la3  = 440.0;
+la3_d = 466.2;
+si3 = 493.9;
+do3 =  523.3;
+do3_d = 554.4;
+re3 = 587.3;
+re3_d = 622.3;
+mi3 = 659.3;
+fa3  = 698.5;
+fa3_d = 740.0;
+sol3 = 784.0;
+sol3_d = 830.6;
+la4 = 880.0;
+la4_d = 932.4;
+si4 = 987.8;
+do4 =  1046.6;
+do4_d = 1108.8;
+re4 = 1174.6;
+re4_d = 1244.6;
+mi4 = 1318.6;
+fa4  = 1397.0;
+fa4_d = 1480.0;
+sol4 = 1568.0;
+sol4_d = 1661.2;
+la5 = 1760.0;
+{$endif}
 
   type
   TDArFloat = array of cfloat;
@@ -198,6 +263,8 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
 
 {$endif}
 
+
+{$IF DEFINED(synthesizer)}
 function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt ; FramesCount : LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
@@ -216,6 +283,7 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency:
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
     //////////// Enabled : true or false ;
+{$endif}
      
 procedure uos_BeginProc(PlayerIndex: cint32; Proc: TProc);
             ///// Assign the procedure of object to execute  at begining, before loop
@@ -783,6 +851,7 @@ begin
 end;
 {$endif}
 
+{$IF DEFINED(synthesizer)}
 function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
       SampleFormat: LongInt ; SampleRate: LongInt; FramesCount : LongInt): LongInt;
     /////// Add a input from Synthesizer with custom parameters
@@ -813,6 +882,7 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency:
     if  uosPlayersStat[PlayerIndex] = 1 then
   uosPlayers[PlayerIndex].InputSetSynth(InputIndex, Frequency, VolumeL, VolumeR, Enable) ;
 end;
+{$endif}
 
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
                  Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;

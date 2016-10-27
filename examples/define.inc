@@ -20,5 +20,7 @@
 {$DEFINE webstream} // uncomment to enable Internet Audio Stream
 {$DEFINE noiseremoval} // uncomment to enable noiseremoval DSP
 
+{$DEFINE synthesizer} // uncomment to enable Synthesizer
+
 {.$DEFINE cdrom} // uncomment to enable cdrom audio decoder
 

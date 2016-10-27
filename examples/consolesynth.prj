@@ -181,7 +181,7 @@ options=108
  index=1
  [projectoptionsfo.tabwidget]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -209,14 +209,14 @@ programparameters=18
  cy=348
 settings=13
  [settingsfo.tsplitter2]
- x=192
+ x=254
  y=16
- xprop=0.5906432748538
+ xprop=0.54010695187166
  yprop=0.97297297297297
  [settingsfo]
  x=410
  y=41
- cx=344
+ cx=507
  cy=651
  wsize=0
  active=1
@@ -685,13 +685,20 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=0
-path=0
-line=0
-address=0
-addbkpt=0
-ignore=0
-condition=0
+on=1
+ 0
+path=1
+ /home/fred/uos/examples/consolesynth.pas
+line=1
+ 87
+address=1
+ 0
+addbkpt=1
+ 0
+ignore=1
+ 0
+condition=1
+ 
 panels=1
  panel1
 units=
@@ -764,11 +771,9 @@ findhistory=12
  sort
  uses
 findoptions=1
-editpos=15
+editpos=17
  0,-1073741823
- 0,4295
- 0,-1073741823
- 0,-1073741823
+ 0,77
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -779,7 +784,11 @@ editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,43
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,23
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -795,7 +804,9 @@ bookmarks11=0
 bookmarks12=0
 bookmarks13=0
 bookmarks14=0
-sourcefiles=15
+bookmarks15=0
+bookmarks16=0
+sourcefiles=17
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -811,7 +822,9 @@ sourcefiles=15
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/consolesynth.pas
  ${PROJECTDIR}/uos_libsndfile.pas
-relpaths=15
+ /home/fred/ideu_bin/ideu_1.1.0_linux64/syntaxdefs/pascal_ideu.sdef
+ ${PROJECTDIR}/define.inc
+relpaths=17
  deviceinfos_fpGUI.pas
  uos.pas
  uos_flat.pas
@@ -827,7 +840,11 @@ relpaths=15
  uos_flat.pas
  consolesynth.pas
  uos_libsndfile.pas
-ismoduletexts=15
+ ideu_bin/ideu_1.1.0_linux64/syntaxdefs/pascal_ideu.sdef
+ define.inc
+ismoduletexts=17
+ 0
+ 0
  0
  0
  0
@@ -848,25 +865,27 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=15
+order=17
+ 11
  0
  5
  6
  1
  12
+ 16
  14
  13
  9
  10
  7
- 11
+ 15
  8
  2
  3
  4
 tabsize=60
-firsttab=0
-index=3
+firsttab=2
+index=5
 [layout]
 windowlayout=502
  [mainfo.basedock]
@@ -881,17 +900,17 @@ windowlayout=502
  ny=0
  ncx=0
  ncy=0
- x=155
- y=24
- cx=1208
+ x=154
+ y=26
+ cx=966
  cy=621
  rcx=0
  rcy=0
  children=2
-  statdisp,0,1,1356,18
-  basedock,0,19,1356,682
+  statdisp,0,1,956,18
+  basedock,0,19,956,585
  focusedchild=1
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -903,9 +922,9 @@ windowlayout=502
  ny=0
  ncx=0
  ncy=0
- x=553
- y=166
- cx=496
+ x=495
+ y=172
+ cx=497
  cy=314
  rcx=0
  rcy=0
@@ -1005,7 +1024,7 @@ windowlayout=502
  x=0
  y=0
  cx=139
- cy=542
+ cy=445
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1016,7 +1035,7 @@ windowlayout=502
  sortdescend1=0
  sorted=0
  col=0
- row=5
+ row=1
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1214,8 +1233,8 @@ windowlayout=502
  ncx=0
  ncy=0
  x=0
- y=594
- cx=1356
+ y=497
+ cx=956
  cy=88
  rcx=0
  rcy=0
@@ -1315,7 +1334,7 @@ windowlayout=502
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=956
  cy=46
  rcx=0
  rcy=0
@@ -1331,8 +1350,8 @@ windowlayout=502
  ncy=0
  x=142
  y=0
- cx=1214
- cy=542
+ cx=814
+ cy=445
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1367,8 +1386,8 @@ windowlayout=502
  ncy=0
  x=0
  y=49
- cx=1356
- cy=542
+ cx=956
+ cy=445
  rcx=0
  rcy=0
 [targetconsole]
