@@ -20,3 +20,4 @@ Sandro Cumerlato : He gives the DSPLevel procedure and lot of others, did SounTo
 And many other in fpc, fpGUI, MSE, Lazarus, CodeTyphon forum.
 
 Fred van Stappen : fiens@hotmail.com 
+

@@ -16,7 +16,6 @@ library, you may extend this exception to your version of the library, but
 you are not obligated to do so. If you do not wish to do so, delete this
 exception statement from your version.
 
-
 If you didn't receive a copy of the file COPYING.txt, contact:
       Free Software Foundation, Inc.,
       675 Mass Ave

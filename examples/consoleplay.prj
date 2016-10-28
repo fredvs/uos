@@ -762,7 +762,7 @@ findhistory=8
 findoptions=1
 editpos=8
  0,-1073741823
- 0,2473
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -785,7 +785,7 @@ sourcefiles=8
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/consoleplay.pas
- ${PROJECTDIR}/define.inc
+ /home/fred/uos/examples/define.inc
 relpaths=8
  deviceinfos_fpGUI.pas
  uos.pas
@@ -842,9 +842,9 @@ windowlayout=502
  rcx=0
  rcy=0
  children=2
+  basedock,0,0,1356,701
   statdisp,0,1,1356,18
-  basedock,0,19,1356,779
- focusedchild=1
+ focusedchild=0
  wsize=6
  active=1
  visible=1
@@ -959,7 +959,7 @@ windowlayout=502
  x=0
  y=0
  cx=139
- cy=639
+ cy=561
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1168,7 +1168,7 @@ windowlayout=502
  ncx=0
  ncy=0
  x=0
- y=691
+ y=613
  cx=1356
  cy=88
  rcx=0
@@ -1286,7 +1286,7 @@ windowlayout=502
  x=142
  y=0
  cx=1214
- cy=639
+ cy=561
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1322,7 +1322,7 @@ windowlayout=502
  x=0
  y=49
  cx=1356
- cy=639
+ cy=561
  rcx=0
  rcy=0
 [targetconsole]
