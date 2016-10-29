@@ -4896,7 +4896,6 @@ begin
   M4_FileName := nil; // Mp4ff
   Plug_ST_FileName := nil; // Plugin SoundTouch
   Plug_BS_FileName := nil; // Plugin bs2b
-
 end;
 
 end.
