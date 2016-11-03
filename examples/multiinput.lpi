@@ -138,7 +138,6 @@ install:
       <Unit0>
         <Filename Value="multiinput.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos X="29" Y="14"/>
         <UsageCount Value="200"/>
@@ -150,8 +149,9 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="228"/>
-        <CursorPos X="2" Y="253"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="468"/>
+        <CursorPos X="16" Y="504"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>

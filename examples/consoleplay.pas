@@ -110,7 +110,7 @@ var
     /////// everything is ready, here we are, lets play it...
     
     uos_Play(PlayerIndex1);
-
+    sleep(2000);
    end;
 
  end;
@@ -120,7 +120,7 @@ var
     ConsolePlay;
     writeln('Press a key to exit...');
     readln;
-    uos_unloadLib();
+    uos_free;
     Terminate;
   end;
 

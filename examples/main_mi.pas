@@ -501,7 +501,7 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-     uos_UnloadLib();
+   uos_free;
 end;
 
 end.

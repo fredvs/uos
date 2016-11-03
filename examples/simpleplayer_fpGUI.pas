@@ -67,7 +67,6 @@ type
     TrackBar5: TfpgTrackBar;
     Button1: TfpgButton;
     chkst2b: TfpgCheckBox;
-    chknoise: TfpgCheckBox;
     Labelst1: TfpgLabel;
     FilenameEdit6: TfpgFileNameEdit;
     chkstereo2mono: TfpgCheckBox;
@@ -99,7 +98,6 @@ type
     procedure ShowLevel;
     procedure changecheck(Sender: TObject);
     procedure VolumeChange(Sender: TObject; pos: integer);
-    procedure ChangeNoise(Sender: TObject);
     procedure ChangeStereo2Mono(Sender: TObject);
     procedure ChangePlugSetSoundTouch(Sender: TObject);
     procedure ChangePlugSetbs2b(Sender: TObject);
@@ -128,12 +126,6 @@ var
    begin
   if radiobutton1.Enabled = False then   /// player1 was created
   uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, chkst2b.Checked);   
-  end;
-  
-  procedure TSimpleplayer.ChangeNoise(Sender: TObject);
-  begin
-  if radiobutton1.Enabled = False then   /// player1 was created
-  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);   
   end;
   
   procedure TSimpleplayer.Changestereo2mono(Sender: TObject);
@@ -508,7 +500,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     //////////// FramesCount : default : -1 (65536)
     //  result : -1 nothing created, otherwise Output Index in array
 
-    uos_InputSetLevelEnable(PlayerIndex1, InputIndex1, 2) ;
+  uos_InputSetLevelEnable(PlayerIndex1, InputIndex1, 2) ;
      ///// set calculation of level/volume (usefull for showvolume procedure)
                        ///////// set level calculation (default is 0)
                           // 0 => no calcul
@@ -516,41 +508,37 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
                           // 2 => calcul after all DSP procedures.
                           // 3 => calcul before and after all DSP procedures.
 
-    uos_InputSetPositionEnable(PlayerIndex1, InputIndex1, 1) ;
+   uos_InputSetPositionEnable(PlayerIndex1, InputIndex1, 1) ;
      ///// set calculation of position (usefull for positions procedure)
                        ///////// set position calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul position.
 
-    uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
+   uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
     ///// Assign the procedure of object to execute inside the loop
     //////////// PlayerIndex : Index of a existing Player
     //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
-   
-     uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
-     uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
-     /// Add DSP Noise removal. First chunck will be the noise sample.
-   
-    uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
+ 
+     uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : Index of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
-// {
+ //{
      uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1,
       (100 - TrackBar2.position) / 100,
       (100 - TrackBar3.position) / 100, True);
-// }   /// Set volume
+ //}   /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : InputIndex of a existing Input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
   
-   DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
-     @DSPReverseAfter, nil, nil);
+  DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
+    @DSPReverseAfter, nil, nil);
       ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1: InputIndex of existing input
@@ -564,24 +552,24 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     
     
    // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)  
-    DSPIndex2 := uos_AddDSPIn(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
-    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked); 
+ DSPIndex2 := uos_AddDSPIn(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
+ uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked); 
    
    ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
   if plugbs2b = true then
   begin
-   PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b',
-   uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
-   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1 , -1, -1, chkst2b.checked);
+  PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b',
+  uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
+  uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1 , -1, -1, chkst2b.checked);
   end; 
   
   /// add SoundTouch plugin with samplerate of input1 / default channels (2 = stereo)
   /// SoundTouch plugin should be the last added.
     if plugsoundtouch = true then
   begin
-    PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', 
-    uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
-    ChangePlugSetSoundTouch(self); //// custom procedure to Change plugin settings
+   PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', 
+   uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
+   ChangePlugSetSoundTouch(self); //// custom procedure to Change plugin settings
    end;    
          
    trackbar1.Max := uos_InputLength(PlayerIndex1, InputIndex1);
@@ -1126,26 +1114,13 @@ end;
   with chkst2b do
   begin
     Name := 'chkst2b';
-    SetPosition(132, 412, 136, 19);
+    SetPosition(132, 424, 136, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 38;
     Text := 'Stereo to BinAural';
     Hint := 'Stereo to BinAural (for headphones)';
     OnChange := @ChangePlugSetBs2b;
-  end;
-
-  chknoise := TfpgCheckBox.Create(self);
-  with chknoise do
-  begin
-    Name := 'chknoise';
-    SetPosition(132, 432, 136, 19);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    TabOrder := 38;
-    Text := 'Noise Remover';
-    Hint := 'Noise remover';
-    OnChange := @Changenoise;
   end;
 
   Labelst1 := TfpgLabel.Create(self);
@@ -1345,6 +1320,9 @@ end;
      frm.Show;
       fpgApplication.Run;
     finally
+   //   uos_FreePlayer(PlayerIndex1); 
+    // uosPlayers[PlayerIndex1].destroy; // do not forget this...
+      uos_free; // do not forget this...
       frm.Free;
     end;
   end;

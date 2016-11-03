@@ -871,6 +871,7 @@ end;
       frm.Show;
       fpgApplication.Run;
     finally
+      uos_free;
       frm.Free;
     end;
   end;

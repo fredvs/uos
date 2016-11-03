@@ -254,7 +254,7 @@ var
     ////////// VolRight : Right volume
 
     uos_SetDSPVolumeIn(PlayerIndex1,  In1Index, (100 - TrackBar2.position) / 100,
-        (100 - TrackBar3.position) / 100, True);  /// Set volume
+     (100 - TrackBar3.position) / 100, True);  /// Set volume
 
    /////// procedure to execute when stream is terminated
      uos_EndProc(PlayerIndex1, @ClosePlayer1);
@@ -613,7 +613,8 @@ var
       fpgApplication.Run;
     finally
       frm.Free;
-    end;
+      uos_free;
+       end;
   end;
 
 begin

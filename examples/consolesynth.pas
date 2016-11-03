@@ -141,7 +141,7 @@ var
     readln;
     uos_stop(PlayerIndex1);
     sleep(200);
-    uos_unloadLib();
+    uos_free;
     Terminate;
   end;
 

@@ -464,7 +464,7 @@ begin
     sleep(500);
   end;
   if button1.Enabled = False then
-    uos_UnloadLib();
+   uos_free;
 end;
 
 end.

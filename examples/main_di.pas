@@ -245,7 +245,7 @@ end;
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
   if button1.Enabled = False then
-    uos_UnloadLib();
+    uos_free;
 end;
 
 end.

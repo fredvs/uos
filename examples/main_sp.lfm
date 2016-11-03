@@ -170,9 +170,9 @@ object Form1: TForm1
   end
   object CheckBox1: TCheckBox
     Left = 128
-    Height = 17
+    Height = 22
     Top = 483
-    Width = 83
+    Width = 98
     Caption = 'Play Reverse'
     OnChange = CheckBox1Change
     TabOrder = 6
@@ -199,9 +199,9 @@ object Form1: TForm1
   end
   object Label4: TLabel
     Left = 24
-    Height = 12
+    Height = 14
     Top = 443
-    Width = 25
+    Width = 27
     Alignment = taCenter
     Caption = 'Vol L'
     Font.Height = -11
@@ -281,9 +281,9 @@ object Form1: TForm1
   end
   object Label5: TLabel
     Left = 81
-    Height = 12
+    Height = 14
     Top = 443
-    Width = 26
+    Width = 29
     Alignment = taCenter
     Caption = 'Vol R'
     Font.Height = -11
@@ -306,8 +306,8 @@ object Form1: TForm1
     ChildSizing.ShrinkVertical = crsScaleChilds
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 60
-    ClientWidth = 103
+    ClientHeight = 62
+    ClientWidth = 105
     Color = clSilver
     ParentColor = False
     TabOrder = 13
@@ -315,7 +315,7 @@ object Form1: TForm1
       Left = 6
       Height = 16
       Top = 6
-      Width = 91
+      Width = 93
       Caption = 'Float 32 bit'
       Checked = True
       TabOrder = 0
@@ -323,40 +323,40 @@ object Form1: TForm1
     end
     object RadioButton2: TRadioButton
       Left = 6
-      Height = 16
+      Height = 17
       Top = 22
-      Width = 91
+      Width = 93
       Caption = 'Int 32 bit'
       TabOrder = 1
     end
     object RadioButton3: TRadioButton
       Left = 6
-      Height = 16
-      Top = 38
-      Width = 91
+      Height = 17
+      Top = 39
+      Width = 93
       Caption = 'Int 16 bit'
       TabOrder = 2
     end
   end
   object llength: TLabel
     Left = 312
-    Height = 13
+    Height = 15
     Top = 387
-    Width = 63
+    Width = 84
     Caption = '00:00:00.000'
     ParentColor = False
   end
   object lposition: TLabel
     Left = 208
-    Height = 13
+    Height = 15
     Top = 387
-    Width = 63
+    Width = 84
     Caption = '00:00:00.000'
     ParentColor = False
   end
   object Label8: TLabel
     Left = 302
-    Height = 13
+    Height = 15
     Top = 387
     Width = 4
     Caption = '/'
@@ -401,9 +401,9 @@ object Form1: TForm1
   end
   object CheckBox2: TCheckBox
     Left = 272
-    Height = 17
+    Height = 22
     Top = 413
-    Width = 153
+    Width = 184
     Caption = 'Enable SoundTouch Plugin'
     OnChange = ChangePlugSet
     TabOrder = 15
@@ -419,17 +419,17 @@ object Form1: TForm1
   end
   object Label7: TLabel
     Left = 278
-    Height = 13
+    Height = 15
     Top = 449
-    Width = 56
+    Width = 67
     Caption = 'Tempo: 1.0'
     ParentColor = False
   end
   object Label9: TLabel
     Left = 394
-    Height = 13
+    Height = 15
     Top = 449
-    Width = 47
+    Width = 58
     Caption = 'Pitch: 1.0'
     ParentColor = False
   end
@@ -461,9 +461,9 @@ object Form1: TForm1
   end
   object CheckBox3: TCheckBox
     Left = 128
-    Height = 17
+    Height = 22
     Top = 414
-    Width = 111
+    Width = 133
     Caption = 'Stereo to BinAural'
     OnChange = CheckBox3Change
     TabOrder = 19
@@ -492,18 +492,18 @@ object Form1: TForm1
   end
   object Chknoise: TCheckBox
     Left = 128
-    Height = 17
+    Height = 22
     Top = 459
-    Width = 93
+    Width = 112
     Caption = 'Noise Remover'
     OnChange = ChknoiseChange
     TabOrder = 21
   end
   object chkstereo2mono: TCheckBox
     Left = 128
-    Height = 17
+    Height = 22
     Top = 435
-    Width = 96
+    Width = 115
     Caption = 'Stereo to Mono'
     OnChange = chkstereo2monoChange
     TabOrder = 22

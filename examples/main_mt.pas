@@ -143,7 +143,7 @@ uos_LoadLib(Pchar(PA_FileName), nil, pchar(MP_FileName), nil, nil);
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-   uos_UnloadLib(); /// for release dynamic loaded libraries
+  uos_free;    /// for release dynamic loaded libraries
   end;
 
 end.

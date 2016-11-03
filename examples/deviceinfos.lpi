@@ -134,7 +134,6 @@ install:
       <Unit0>
         <Filename Value="deviceinfos.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <CursorPos X="3" Y="7"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -145,9 +144,10 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="143"/>
-        <CursorPos X="3" Y="157"/>
+        <TopLine Value="211"/>
+        <CursorPos X="13" Y="248"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>

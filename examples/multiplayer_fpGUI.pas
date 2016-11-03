@@ -96,8 +96,10 @@ type
   {@VFD_NEWFORM_IMPL}
 
 var
-  PlayerIndex0, PlayerIndex1, PlayerIndex2, PlayerIndex3: Cardinal;
+  PlayerIndex0,  PlayerIndex2, PlayerIndex3: Cardinal;
   ordir, opath: string;
+  PlayerIndex1 : cardinal;
+  //PlayerIndex1 : tuos_player;
 
   procedure TMultiplayer.AfterCreate;
   begin
@@ -553,7 +555,8 @@ var
     end;
     if (btnstart2.Enabled = False) then
     begin
-       uos_stop(PlayerIndex1);
+    //PlayerIndex1.stop;
+     uos_stop(PlayerIndex1);
     end;
     if  (btnstart3.Enabled = False) then
     begin
@@ -702,13 +705,17 @@ var
 
   procedure TMultiplayer.btnStopClick2(Sender: TObject);
   begin
-   uos_Stop(PlayerIndex1);
-    closeplayer1;
+  // PlayerIndex1.stop;
+  uos_Stop(PlayerIndex1);
+//   closeplayer1;
+ //    sleep(1000);
+   //   PlayerIndex1.stop;
+// if assigned(PlayerIndex1) then PlayerIndex1.destroy;
   end;
 
   procedure TMultiplayer.btnResumeClick2(Sender: TObject);
   begin
-    uos_RePlay(PlayerIndex1);
+  //  uos_RePlay(PlayerIndex1);
     btnStart2.Enabled := False;
     btnStop2.Enabled := True;
     btnPause2.Enabled := True;
@@ -717,7 +724,7 @@ var
 
   procedure TMultiplayer.btnPauseClick2(Sender: TObject);
   begin
-     uos_Pause(PlayerIndex1);
+    // uos_Pause(PlayerIndex1);
     btnStart2.Enabled := False;
     btnStop2.Enabled := True;
     btnPause2.Enabled := False;
@@ -731,13 +738,14 @@ var
   PlayerIndex1 := 1 ;
 
      {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
-      uos_CreatePlayer(PlayerIndex1);
+  uos_CreatePlayer(PlayerIndex1);
           {$else}
-      uos_CreatePlayer(PlayerIndex1, sender);
+     uos_CreatePlayer(PlayerIndex1, sender);
+    
       {$ENDIF}
 
-    InIndex :=   uos_AddFromFile(PlayerIndex1, pchar(FilenameEdit5.filename), -1, 0, -1);  ;
-     //// add input from audio file with custom parameters
+   InIndex :=   uos_AddFromFile(PlayerIndex1, pchar(FilenameEdit5.filename), -1, 0, -1);  ;
+  //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
@@ -746,7 +754,8 @@ var
   //  result : -1 nothing created, otherwise Input Index in array
 
 
-   uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1);
+  uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1);
+   
  //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
@@ -758,8 +767,9 @@ var
   //  result : -1 nothing created, otherwise Output Index in array
 
   /////// procedure to execute when stream is terminated
-     uos_EndProc(PlayerIndex1, @ClosePlayer1);
-   ///// Assign the procedure of object to execute at end
+  uos_EndProc(PlayerIndex1, @ClosePlayer1);
+     
+  ///// Assign the procedure of object to execute at end
    //////////// PlayerIndex : Index of a existing Player
    //////////// ClosePlayer1 : procedure of object to execute inside the loop
 
@@ -769,7 +779,7 @@ var
     btnresume2.Enabled := False;
 
     uos_Play(PlayerIndex1);
-  ////// Ok let start it
+   ////// Ok let start it
 
   end;
 
@@ -952,6 +962,7 @@ var
   procedure MainProc;
   var
     frm: TMultiplayer;
+    x : integer;
   begin
     fpgApplication.Initialize;
     frm := TMultiplayer.Create(nil);
@@ -959,6 +970,7 @@ var
       frm.Show;
       fpgApplication.Run;
     finally
+      uos_free;
       frm.Free;
     end;
   end;

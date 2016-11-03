@@ -425,8 +425,8 @@ begin
     //////////// InIndex : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
-    uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
-    uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
+  //  uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
+  //  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
      /// Add DSP Noise removal. First chunck will be the noise sample.
 
     uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
@@ -729,9 +729,10 @@ begin
     button6.Click;
     sleep(500);
   end;
-  if button1.Enabled = False then
-    uos_UnloadLib();
-end;
+    uos_free;
+    BufferBMP.free;
+  end;
+
 
 
 end.

@@ -861,6 +861,10 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
 procedure uos_unloadPlugin(PluginName: PChar);
            ////// Unload Plugin...
            
+procedure uos_Free();
+     /// To call at end of application.
+     //// If uos_flat.pas was used, it will free all the uos_player created.
+           
 function uos_GetVersion() : LongInt ;             //// version of uos
 
 const
@@ -916,6 +920,9 @@ var
     {$endif}
 
 implementation
+
+//uses
+//uos_flat;
 
 {$IF DEFINED(webstream)}
 function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; cdecl;
@@ -4227,7 +4234,7 @@ begin
     
   //  writeln('x := 0 to high(StreamIn EndFunc)');
     // EndFunc of DSP In
-     
+   
     for x := 0 to high(StreamIn) do
     begin
       if (length(StreamIn[x].DSP) > 0) then
@@ -4235,19 +4242,22 @@ begin
           if (StreamIn[x].DSP[x2].EndFunc <> nil) then
         StreamIn[x].DSP[x2].EndFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
     end;
-        
+      
  //    writeln('x := 0 to high(StreamOut endfunc)');          
     // EndFunc of DSP Out
+   
+   
     for x := 0 to high(StreamOut) do
     begin
-      if (length(StreamOut[x].DSP) > 0) then
+      if (assigned(StreamOut[x].DSP)) and  (assigned(StreamOut[x]))  then if  (length(StreamOut[x].DSP) > 0) then
             for x2 := 0 to high(StreamOut[x].DSP) do
             if (StreamOut[x].DSP[x2].EndFunc <> nil) then
               StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
      end;
+    
   
     for x := 0 to high(StreamIn) do
-      if (StreamIn[x].Data.HandleSt <> nil) then
+      if assigned(StreamIn[x].Data.HandleSt) then if (StreamIn[x].Data.HandleSt <> nil) then
         case StreamIn[x].Data.TypePut of
          0: case StreamIn[x].Data.LibOpen of
             {$IF DEFINED(sndfile)}
@@ -4333,17 +4343,16 @@ begin
        {$endif}
        isAssigned := false ;
       //   writeln('EndProc');
-        
-     end;
+    end;
 end;
 
 procedure Tuos_Player.onTerminate() ;
 begin
 if ifflat = true then
   begin
-FreeAndNil(uosPlayers[Index]);
+  uosPlayers[Index].destroy;
 uosPlayersStat[Index] := -1 ;
-end else Free;
+end else destroy;
 end;
 
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
@@ -4378,6 +4387,8 @@ destructor Tuos_DSP.Destroy;
       {$endif}
       FreeandNil(fftdata);
     end;
+    
+      inherited Destroy;
   end;
 
 destructor Tuos_Player.Destroy;
@@ -4385,19 +4396,24 @@ var
   x: LongInt;
 begin
   RTLeventdestroy(evPause);
-  
+ 
   if length(StreamOut) > 0 then
     for x := 0 to high(StreamOut) do
-      StreamOut[x].Free;
-     
+     freeandnil(StreamOut[x]);
+ //     StreamOut[x].Free;
+
+//  { 
   if length(StreamIn) > 0 then
     for x := 0 to high(StreamIn) do
-      StreamIn[x].Free;
-      
+     freeandnil(StreamIn[x]);
+  //    StreamIn[x].Free;
+     
+// }
   if length(Plugin) > 0 then
     for x := 0 to high(Plugin) do
-      Plugin[x].Free;
-      
+      freeandnil(Plugin[x]);
+    //  Plugin[x].Free;
+   
   inherited Destroy;
 end;
 
@@ -4405,36 +4421,42 @@ destructor Tuos_InStream.Destroy;
 var
   x: LongInt;
 begin
-
    {$IF DEFINED(neaac)}
    if assigned(AACI) then
 begin
  if assigned(AACI.fsStream) then
    begin
-   AACI.fsStream.Free;
+  // AACI.fsStream.Free;
+   freeandnil(AACI.fsStream);
    sleep(100);
    end;
-   AACI.free;
+  // AACI.free;
+   freeandnil(AACI);
    sleep(100);
 end;
   {$endif}
-
-   if length(DSP) > 0 then
-    for
-  x := 0 to high(DSP) do
-      DSP[x].Free;
+ 
+  if length(DSP) > 0 then
+    for x := 0 to high(DSP) do
+      freeandnil(DSP[x]);
+   
    inherited Destroy;
+  
 end;
 
 destructor Tuos_OutStream.Destroy;
 var
   x: LongInt;
 begin
-if assigned(FileBuffer.Data) then FileBuffer.Data.free;
   if length(DSP) > 0 then
     for x := 0 to high(DSP) do
-      DSP[x].Free;
-    inherited Destroy;
+     // DSP[x].Free;
+      freeandnil(DSP[x]);
+ 
+ if assigned(FileBuffer.Data) then 
+ freeandnil(FileBuffer.Data);
+ 
+   inherited Destroy;
 end;
 
 procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc: boolean);
@@ -4470,13 +4492,13 @@ end;
 procedure Tuos_Init.unloadlib;
 begin
   {$IF DEFINED(sndfile)}
-   Sf_Unload();
+  Sf_Unload();
     {$endif}
   {$IF DEFINED(mpg123)}
    Mp_Unload();
     {$endif}
    {$IF DEFINED(portaudio)}
-    Pa_Unload();
+   Pa_Unload();
     {$endif}
    {$IF DEFINED(neaac)}
     Aa_Unload;
@@ -4484,6 +4506,7 @@ begin
    {$IF DEFINED(windows)}
     Set8087CW(old8087cw);
     {$endif}
+   
 end;
 
 function Tuos_Init.InitLib(): LongInt;
@@ -4724,8 +4747,10 @@ end;
 
 procedure uos_unloadlib() ;
 begin
+ if assigned(uosInit) then
+  begin
  uosInit.unloadlib ;
- uosInit.free;
+ end;
 end;
 
 procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
@@ -4896,7 +4921,24 @@ begin
   M4_FileName := nil; // Mp4ff
   Plug_ST_FileName := nil; // Plugin SoundTouch
   Plug_BS_FileName := nil; // Plugin bs2b
+end;
 
+procedure uos_Free();
+var
+x : integer;
+begin
+{
+if ifflat = true then
+begin
+if length(uosPlayers) > 0 then
+ for x := 0 to length(uosPlayers) -1 do
+  begin
+  uosPlayers[x].destroy;
+  end;
+end;
+}
+if assigned(uosInit) then freeandnil(uosInit);
+ uos_unloadlib() ;
 end;
 
 end.

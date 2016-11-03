@@ -163,6 +163,10 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
 
+procedure uos_free;   
+        /// Free uos;
+        // To use when program terminate.
+
 procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
            ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 
@@ -578,7 +582,7 @@ var
   uosDeviceCount: cint32;
   uosDefaultDeviceIn: cint32;
   uosDefaultDeviceOut: cint32;
-
+ 
 implementation
 
 {$IF DEFINED(noiseremoval)}
@@ -1317,6 +1321,8 @@ procedure uos_unloadlib() ;
   var
    x: cint32;
   begin
+  if assigned(uosPlayers) then
+  begin
      if (length(uosPlayers) > 0) then
       for x := 0 to high(uosPlayers) do
        if  uosPlayersStat[x] = 1 then
@@ -1330,8 +1336,9 @@ procedure uos_unloadlib() ;
 
      setlength(uosPlayers, 0) ;
      setlength(uosPlayersStat, 0) ;
+     end;
 
-uos.uos_unloadlib() ;
+ uos.uos_unloadlib() ;
 end;
 
 procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
@@ -1402,6 +1409,18 @@ begin
 uosPlayersStat[x] := -1 ;
 uosPlayers[x] := nil ;
 end;
+end;
+
+procedure uos_Free();
+var
+x : integer;
+begin
+if length(uosPlayers) > 0 then
+ for x := 0 to length(uosPlayers) -1 do
+  begin
+  uosPlayers[x].destroy;
+  end;
+uos.uos_free();
 end;
 
 end.

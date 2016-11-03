@@ -1,6 +1,6 @@
 object simple_player: tmainfo
   color = 10734762
-  bounds_x = 637
+  bounds_x = 366
   bounds_y = 24
   bounds_cx = 485
   bounds_cy = 524
@@ -505,27 +505,10 @@ object simple_player: tmainfo
       )
       taborder = 21
       bounds_x = 144
-      bounds_y = 110
+      bounds_y = 118
       bounds_cx = 124
       bounds_cy = 17
       onchange = ChangePlugSetbs2b
-    end
-    object chknoise: tbooleanedit
-      frame.caption = 'Noise Remover'
-      frame.localprops = []
-      frame.localprops1 = []
-      frame.outerframe = (
-        0
-        2
-        92
-        2
-      )
-      taborder = 22
-      bounds_x = 144
-      bounds_y = 126
-      bounds_cx = 105
-      bounds_cy = 17
-      onchange = ChangeNoise
     end
     object checkbox2: tbooleanedit
       frame.caption = 'Enable SoundTouch Plugin'
@@ -537,7 +520,7 @@ object simple_player: tmainfo
         165
         2
       )
-      taborder = 23
+      taborder = 22
       bounds_x = 280
       bounds_y = 94
       bounds_cx = 178
@@ -545,7 +528,7 @@ object simple_player: tmainfo
     end
     object vuRight: tdockpanel
       color = 976914
-      taborder = 25
+      taborder = 24
       bounds_x = 66
       bounds_y = 24
       bounds_cx = 18
@@ -553,7 +536,7 @@ object simple_player: tmainfo
     end
     object vuLeft: tdockpanel
       color = 976914
-      taborder = 24
+      taborder = 23
       bounds_x = 40
       bounds_y = 24
       bounds_cx = 18

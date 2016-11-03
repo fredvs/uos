@@ -610,7 +610,7 @@ begin
   if button12.Enabled = True then
     uos_Stop(PlayerIndex3);
   if button1.Enabled = False then
-    uos_UnloadLib();
+  uos_free;
 end;
 
 end.

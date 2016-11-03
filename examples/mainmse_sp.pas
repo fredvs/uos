@@ -2,7 +2,7 @@ unit mainmse_sp;
 {$ifdef FPC}{$mode objfpc}{$h+}{$endif}
 interface
 uses
- uos_flat,  ctypes,msetypes,mseglob,mseguiglob,mseguiintf,mseapplication,
+ uos_flat, ctypes,msetypes,mseglob,mseguiglob,mseguiintf,mseapplication,
  msestat,msemenus,msegui,msegraphics,msegraphutils,mseevent,mseclasses,
  msewidgets,mseforms,msesimplewidgets,msedataedits,mseedit,mseificomp,
  mseificompglob,mseifiglob,msestatfile,msestream,msestrings,sysutils,
@@ -47,7 +47,6 @@ type
    lposition: tlabel;
    chkstereo2mono: tbooleanedit;
    chkst2b: tbooleanedit;
-   chknoise: tbooleanedit;
    checkbox2: tbooleanedit;
    vuLeft: tdockpanel;
    vuRight: tdockpanel;
@@ -58,7 +57,6 @@ type
     procedure ShowPosition;
     procedure ShowLevel;
     procedure changereverse(const Sender: TObject);
-    procedure ChangeNoise(const Sender: TObject);
     procedure ChangeStereo2Mono(const Sender: TObject);
     procedure ChangePlugSetSoundTouch(const Sender: TObject);
     procedure ChangePlugSetbs2b(const Sender: TObject);
@@ -171,13 +169,6 @@ uses
    begin
   if radiobutton1.enabled = False then   /// player1 was created
   uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, chkst2b.value);   
-  application.processmessages;
-  end;
-  
-  procedure tmainfo.ChangeNoise(const Sender: TObject);
-  begin
-  if radiobutton1.enabled = False then   /// player1 was created
-  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.value);   
   application.processmessages;
   end;
   
@@ -433,10 +424,6 @@ var
     //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
    
-     uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
-     uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.value);
-     /// Add DSP Noise removal. First chunck will be the noise sample.
-   
     uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
@@ -573,8 +560,11 @@ begin
     begin
       uos_UnloadPlugin('soundtouch');
       uos_UnloadPlugin('bs2b');
-      uos_UnloadLib();
-    end;  
+    end; 
+   // uos_FreePlayer(PlayerIndex1);
+   // uosPlayers[PlayerIndex1].destroy; // do not forget this...
+    uos_free; // do not forget this...
+    
 end;
 
 procedure tmainfo.resetplugst(const sender: TObject);

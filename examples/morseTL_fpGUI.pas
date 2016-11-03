@@ -280,7 +280,8 @@ begin
     frm.UpdateWindowPosition;
     fpgApplication.Run;
   finally
-    frm.Free;
+  uos_free;
+  frm.Free;
   end;
 end;
 

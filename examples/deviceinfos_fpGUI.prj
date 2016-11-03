@@ -79,7 +79,7 @@ replacedialog=15
  y=302
  cx=437
  cy=171
-options=104
+options=108
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -115,8 +115,8 @@ options=104
  width4=283
  sortdescend4=0
  sorted=0
- col=0
- row=0
+ col=-1073741823
+ row=-1073741823
  rowheight=17
  [projectoptionsfo.newfile]
  firsttab=0
@@ -141,19 +141,23 @@ options=104
  x=0
  y=143
  xprop=1
- yprop=0.32808988764045
+ yprop=0.32882882882883
  [projectoptionsfo.macrogrid]
- propcolwidthref=547
+ propcolwidthref=495
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
  sortdescend3=0
  sortdescend4=0
  sortdescend5=0
- width6=146
  sortdescend6=0
- width7=535
  sortdescend7=0
+ sortdescend8=0
+ sortdescend9=0
+ width10=146
+ sortdescend10=0
+ width11=479
+ sortdescend11=0
  [projectoptionsfo.makegroupbox]
  firsttab=0
  index=2
@@ -177,7 +181,7 @@ options=104
  index=1
  [projectoptionsfo.tabwidget]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -237,13 +241,14 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=7
+makeoptions=8
  -fPIC
  -l -Mobjfpc -Schi
  -FE.
  -FUunits
  -B
  -O2 -XX -Xs -CX
+ -ghl
  -vewnhibq
 compilerused=21
  ${COMPILER} (Default)
@@ -421,16 +426,17 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=7
+makeoptionson=8
  0
  63
  63
  63
  32
  48
+ 2
  63
 compilerusedon=21
- 69631
+ 4095
  0
  0
  0
@@ -452,14 +458,14 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 69631
+ 4095
  0
  0
  0
  0
  0
 exeusedon=14
- 69631
+ 4095
  0
  0
  0
@@ -501,10 +507,14 @@ macrovalues=5
  win32
  /opt/FPC_Docs/inf/
 macrogroup=0
-groupcomments=6
+groupcomments=10
  Linux 64-bit
  Linux 32-bit
  Windows 32-bit
+ 
+ 
+ 
+ 
  
  
  
@@ -706,14 +716,14 @@ units=
   a=0,4100,0,uos_flat.pas
   )
   (
-  file=uos.pas
-  kind=1
-  a=0,4100,0,uos.pas
-  )
-  (
   file=uos_portaudio.pas
   kind=1
   a=0,4100,0,uos_portaudio.pas
+  )
+  (
+  file=uos.pas
+  kind=1
+  a=0,4100,0,uos.pas
   )
  )
 cmodules=
@@ -741,8 +751,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=4 :
-findhistory=10
+finddtext=.create
+findhistory=13
+ .create
+ unloadlib
+ uos_unloadlib()
  4 :
  4:
  3:
@@ -754,12 +767,13 @@ findhistory=10
  sort
  uses
 findoptions=1
-editpos=7
+editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
  0,-1073741823
+ 0,-1073741823
+ 0,336
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -769,15 +783,17 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
+bookmarks7=0
+sourcefiles=8
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/examples/define.inc
+ ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
-relpaths=7
+ ${PROJECTDIR}/uos.pas
+relpaths=8
  deviceinfos_fpGUI.pas
  uos.pas
  uos_flat.pas
@@ -785,7 +801,9 @@ relpaths=7
  uos_portaudio.pas
  deviceinfos_fpGUI.pas
  uos.pas
-ismoduletexts=7
+ uos.pas
+ismoduletexts=8
+ 0
  0
  0
  0
@@ -798,56 +816,68 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=7
+order=8
  0
  5
  1
  2
+ 7
  3
  6
  4
 tabsize=60
 firsttab=0
-index=4
+index=1
 [layout]
-windowlayout=503
+windowlayout=530
  [mainfo.basedock]
  splitdir=2
- useroptions=15488
+ useroptions=11395
+ parent=mainfo.container
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=954
+ ncy=585
+ x=0
+ y=0
+ cx=954
+ cy=585
+ rcx=0
+ rcy=0
  [mainfo]
  splitdir=0
- useroptions=838860927
- stackedunder=
+ useroptions=838860925
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=206
- y=75
- cx=966
+ x=240
+ y=61
+ cx=964
  cy=621
  rcx=0
  rcy=0
- children=2
-  basedock,0,19,1356,682
-  statdisp,0,1,1356,18
+ children=1
+  basedock,0,0,954,585
  focusedchild=0
- wsize=4
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
  splitdir=0
- useroptions=268451945
+ useroptions=805322857
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=495
- y=172
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
@@ -857,17 +887,17 @@ windowlayout=503
  visible=0
  [threadsfo]
  splitdir=0
- useroptions=268451945
+ useroptions=805322857
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=0
- y=0
- cx=0
- cy=0
+ x=444
+ y=431
+ cx=418
+ cy=126
  rcx=0
  rcy=0
  wsize=0
@@ -875,7 +905,7 @@ windowlayout=503
  visible=0
  [memoryfo]
  splitdir=0
- useroptions=268451963
+ useroptions=805322875
  stackedunder=cpuc86_64fo
  parent=
  mdistate=0
@@ -902,7 +932,7 @@ windowlayout=503
  value=0
  [disassfo]
  splitdir=0
- useroptions=268451947
+ useroptions=805322859
  stackedunder=
  parent=
  mdistate=0
@@ -947,15 +977,15 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=139
- cy=542
+ cx=159
+ cy=426
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
- propcolwidthref=1
+ propcolwidthref=18
  width0=141
  sortdescend0=0
- width1=1
+ width1=12
  sortdescend1=0
  sorted=0
  col=1
@@ -963,17 +993,17 @@ windowlayout=503
  rowheight=17
  [stackfo]
  splitdir=0
- useroptions=268460137
+ useroptions=805331049
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=0
- y=0
- cx=0
- cy=0
+ x=423
+ y=321
+ cx=344
+ cy=155
  rcx=0
  rcy=0
  wsize=0
@@ -981,7 +1011,7 @@ windowlayout=503
  visible=0
  [watchpointsfo]
  splitdir=0
- useroptions=268451945
+ useroptions=805322857
  parent=
  mdistate=0
  nx=0
@@ -998,14 +1028,14 @@ windowlayout=503
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1014,7 +1044,7 @@ windowlayout=503
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1039,8 +1069,8 @@ windowlayout=503
  value=0
  [objectinspectorfo]
  splitdir=0
- useroptions=268451947
- stackedunder=breakpointsfo
+ useroptions=805322859
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1064,7 +1094,7 @@ windowlayout=503
  sortdescend1=0
  [symbolfo]
  splitdir=0
- useroptions=268451963
+ useroptions=805322875
  stackedunder=
  parent=
  mdistate=0
@@ -1082,7 +1112,7 @@ windowlayout=503
  active=0
  visible=0
  [symbolfo.grid]
- propcolwidthref=222
+ propcolwidthref=207
  values0=14
   
   
@@ -1100,12 +1130,12 @@ windowlayout=503
   
  width0=111
  sortdescend0=0
- width1=135
+ width1=125
  sortdescend1=0
  [symbolfo.symbol]
  [watchfo]
  splitdir=0
- useroptions=268460137
+ useroptions=805331049
  parent=mainfo.basedock
  visible=0
  mdistate=0
@@ -1117,10 +1147,10 @@ windowlayout=503
  y=0
  cx=247
  cy=44
- rcx=1129
- rcy=679
+ rcx=1262
+ rcy=583
  [watchfo.grid]
- propcolwidthref=123
+ propcolwidthref=121
  values0=2
   -1
   -1
@@ -1148,7 +1178,7 @@ windowlayout=503
  value=1
  [messagefo]
  splitdir=0
- useroptions=114795
+ useroptions=82027
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1157,14 +1187,14 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=594
- cx=1356
- cy=88
+ y=488
+ cx=954
+ cy=97
  rcx=0
  rcy=0
  [componentstorefo]
  splitdir=0
- useroptions=268460155
+ useroptions=805331067
  stackedunder=
  parent=
  mdistate=0
@@ -1227,28 +1257,28 @@ windowlayout=503
  filefilter=
  [componentpalettefo]
  splitdir=0
- useroptions=268460139
- stackedunder=mainfo
+ useroptions=805331051
+ stackedunder=targetconsolefo
  parent=
- mdistate=0
+ mdistate=3
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=428
- y=66
- cx=440
- cy=129
+ x=240
+ y=139
+ cx=956
+ cy=77
  rcx=0
  rcy=0
  wsize=0
  active=0
  visible=0
  [componentpalettefo.componentpages]
- activetab=1
+ activetab=0
  [debuggerfo]
  splitdir=0
- useroptions=122987
+ useroptions=24683
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1258,8 +1288,24 @@ windowlayout=503
  ncy=0
  x=0
  y=0
- cx=1356
- cy=46
+ cx=954
+ cy=56
+ rcx=0
+ rcy=0
+ [debuggerfo.basedock]
+ splitdir=2
+ useroptions=146563
+ parent=debuggerfo.container
+ visible=1
+ mdistate=0
+ nx=0
+ ny=52
+ ncx=956
+ ncy=6
+ x=0
+ y=52
+ cx=954
+ cy=3
  rcx=0
  rcy=0
  [sourcefo]
@@ -1272,17 +1318,17 @@ windowlayout=503
  ny=0
  ncx=0
  ncy=0
- x=142
+ x=162
  y=0
- cx=1214
- cy=542
+ cx=792
+ cy=426
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=componentpalettefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1300,7 +1346,7 @@ windowlayout=503
  visible=0
  [mainfo.panel1]
  splitdir=1
- useroptions=838893035
+ useroptions=838958571
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1309,9 +1355,9 @@ windowlayout=503
  ncx=0
  ncy=0
  x=0
- y=49
- cx=1356
- cy=542
+ y=59
+ cx=954
+ cy=426
  rcx=0
  rcy=0
 [targetconsole]

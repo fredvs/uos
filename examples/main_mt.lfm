@@ -8,7 +8,7 @@ object Form1: TForm1
   ClientWidth = 420
   Font.Height = -20
   OnActivate = FormActivate
-  LCLVersion = '1.5'
+  LCLVersion = '5.7'
   object BitBtnPlay: TBitBtn
     Left = 30
     Height = 47

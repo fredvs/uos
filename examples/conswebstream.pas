@@ -125,6 +125,7 @@ var
     writeln('Press a key to exit...');
       readln;
       uos_unloadLib();
+      uos_free;
       Terminate;
     end;
 
