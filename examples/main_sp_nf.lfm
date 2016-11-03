@@ -503,23 +503,14 @@ object Form1: TForm1
     AutoSize = False
     TabOrder = 21
   end
-  object Chknoise: TCheckBox
-    Left = 128
-    Height = 22
-    Top = 459
-    Width = 112
-    Caption = 'Noise Remover'
-    OnChange = ChknoiseChange
-    TabOrder = 22
-  end
   object chkstereo2mono: TCheckBox
     Left = 128
     Height = 22
-    Top = 435
+    Top = 448
     Width = 115
     Caption = 'Stereo to Mono'
     OnChange = chkstereo2monoChange
-    TabOrder = 23
+    TabOrder = 22
   end
   object Label11: TLabel
     Left = 130
@@ -542,7 +533,7 @@ object Form1: TForm1
     Alignment = taCenter
     AutoSize = False
     OnChange = Edit5Change
-    TabOrder = 24
+    TabOrder = 23
   end
   object Label12: TLabel
     Left = 130
@@ -564,7 +555,7 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 25
+    TabOrder = 24
   end
   object OpenDialog1: TOpenDialog
     left = 76

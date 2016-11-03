@@ -25,7 +25,6 @@ type
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
     chkstereo2mono: TCheckBox;
-    Chknoise: TCheckBox;
     Edit1: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
@@ -71,7 +70,6 @@ type
     procedure Button8Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure CheckBox3Change(Sender: TObject);
-    procedure ChknoiseChange(Sender: TObject);
     procedure chkstereo2monoChange(Sender: TObject);
     procedure Edit5Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -431,11 +429,7 @@ begin
     //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
-     PlayerIndex1.AddDSPNoiseRemovalIn(InputIndex1);
-     PlayerIndex1.SetDSPNoiseRemovalIn(InputIndex1, chknoise.Checked);
-     /// Add DSP Noise removal. First chunck will be the noise sample.
-
-   DSPVolume := PlayerIndex1.AddDSPVolumeIn(InputIndex1, 1, 1);
+    DSPVolume := PlayerIndex1.AddDSPVolumeIn(InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : Index of a existing input
@@ -543,12 +537,6 @@ begin
   begin
    PlayerIndex1.SetPluginbs2b(PluginIndex1, -1, -1, -1, checkbox3.checked);
     end;
-end;
-
-procedure TForm1.ChknoiseChange(Sender: TObject);
-begin
-   if radiogroup1.Enabled = False then
-  PlayerIndex1.SetDSPNoiseRemovalIn(InputIndex1, chknoise.Checked);
 end;
 
 procedure TForm1.chkstereo2monoChange(Sender: TObject);
@@ -741,7 +729,10 @@ begin
     sleep(500);
   end;
   if button1.Enabled = False then
-    uos_UnloadLib();
+  begin
+   PlayerIndex1.free;
+    uos_free;
+  end;
 end;
 
 

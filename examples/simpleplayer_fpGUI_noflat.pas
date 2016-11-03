@@ -68,7 +68,6 @@ type
     TrackBar5: TfpgTrackBar;
     Button1: TfpgButton;
     chkst2b: TfpgCheckBox;
-    chknoise: TfpgCheckBox;
     Labelst1: TfpgLabel;
     FilenameEdit6: TfpgFileNameEdit;
     chkstereo2mono: TfpgCheckBox;
@@ -100,7 +99,6 @@ type
     procedure ShowLevel;
     procedure changecheck(Sender: TObject);
     procedure VolumeChange(Sender: TObject; pos: integer);
-    procedure ChangeNoise(Sender: TObject);
     procedure ChangeStereo2Mono(Sender: TObject);
     procedure ChangePlugSetSoundTouch(Sender: TObject);
     procedure ChangePlugSetbs2b(Sender: TObject);
@@ -129,12 +127,6 @@ var
    begin
   if radiobutton1.Enabled = False then   /// player1 was created
   PlayerIndex1.SetPluginBs2b(PluginIndex1, -1, -1, -1, chkst2b.Checked);
-  end;
-  
-  procedure TSimpleplayer.ChangeNoise(Sender: TObject);
-  begin
-  if radiobutton1.Enabled = False then   /// player1 was created
-  PlayerIndex1.SetDSPNoiseRemovalIn(InputIndex1, chknoise.Checked);
   end;
   
   procedure TSimpleplayer.Changestereo2mono(Sender: TObject);
@@ -528,10 +520,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
    
-     PlayerIndex1.AddDSPNoiseRemovalIn(InputIndex1);
-     PlayerIndex1.SetDSPNoiseRemovalIn(InputIndex1, chknoise.Checked);
-     /// Add DSP Noise removal. First chunck will be the noise sample.
-   
+    
    DSPVolume := PlayerIndex1.AddDSPVolumeIn(InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
@@ -1125,26 +1114,13 @@ end;
   with chkst2b do
   begin
     Name := 'chkst2b';
-    SetPosition(132, 412, 136, 19);
+    SetPosition(132, 424, 136, 19);
     FontDesc := '#Label1';
     ParentShowHint := False;
     TabOrder := 38;
     Text := 'Stereo to BinAural';
     Hint := 'Stereo to BinAural (for headphones)';
     OnChange := @ChangePlugSetBs2b;
-  end;
-
-  chknoise := TfpgCheckBox.Create(self);
-  with chknoise do
-  begin
-    Name := 'chknoise';
-    SetPosition(132, 432, 136, 19);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    TabOrder := 38;
-    Text := 'Noise Remover';
-    Hint := 'Noise remover';
-    OnChange := @Changenoise;
   end;
 
   Labelst1 := TfpgLabel.Create(self);
@@ -1341,6 +1317,8 @@ end;
      frm.Show;
       fpgApplication.Run;
     finally
+      PlayerIndex1.free;
+      uos_free;
       frm.Free;
     end;
   end;

@@ -888,26 +888,31 @@ findhistory=20
  loadlibr
  hNeAAC
 findoptions=1
-editpos=4
- 0,522
+editpos=5
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,1319
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/uos.pas
-relpaths=4
+ ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
+relpaths=5
  simpleplayer_fpGUI.pas
  uos_flat.pas
  uos_dsp_noiseremoval.pas
  uos.pas
-ismoduletexts=4
+ simpleplayer_fpGUI_noflat.pas
+ismoduletexts=5
+ 0
  0
  0
  0
@@ -917,9 +922,15 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=5
+ 0
+ 4
+ 1
+ 2
+ 3
 tabsize=60
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=530
  [mainfo.basedock]
