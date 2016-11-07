@@ -2,7 +2,7 @@ uos : United OpenLib of Sound.
 
 uos unifies the best open-source audio libraries.
 
-For fpc, fpGUI, LCL, MSEgui and Delphi.
+For fpc, fpGUI, MSEgui and LCL.
 
 With uos you can:
 

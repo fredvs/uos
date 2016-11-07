@@ -964,7 +964,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=cpuc86_64fo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1128,7 +1128,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1316,7 +1316,7 @@ windowlayout=530
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0

@@ -7,14 +7,14 @@ unit uos;
 
 {$mode objfpc}{$H+}
 
-// for custom config =>  edit define.inc  ( also if using fpGUI and fpc < 2.7 )
+// for custom config =>  edit define.inc
 {$I define.inc}
 
 interface
 
 uses
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-fpg_base, fpg_main,  //// for fpGUI and fpc < 2.7.1
+fpg_base, fpg_main, 
 {$endif}
 
 {$IF DEFINED(Java)}
@@ -4355,127 +4355,7 @@ uosPlayersStat[Index] := -1 ;
 end else destroy;
 end;
 
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
- constructor Tuos_Player.Create(CreateSuspended: boolean; AParent: TObject;
-  const StackSize: SizeUInt);
-    {$else}
-  constructor Tuos_Player.Create(CreateSuspended: boolean;
-  const StackSize: SizeUInt);
-    {$endif}
-begin
-  inherited Create(CreateSuspended, StackSize);
-  FreeOnTerminate := false;
-  Priority :=  tpTimeCritical;
-  evPause := RTLEventCreate;
-    {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-   refer := aparent; //// for fpGUI
-    {$endif}
-   isAssigned := true ;
-  status := 2;
-  BeginProc := nil;
-  EndProc := nil;
-  loopBeginProc := nil;
-  loopEndProc := nil;
-end;
-
-destructor Tuos_DSP.Destroy;
-  begin
-    if assigned(fftdata) then
-    begin
-      {$IF DEFINED(noiseremoval)}
-      if assigned(fftdata.FNoise) then FreeAndNil(fftdata.FNoise);
-      {$endif}
-      FreeandNil(fftdata);
-    end;
-    
-      inherited Destroy;
-  end;
-
-destructor Tuos_Player.Destroy;
-var
-  x: LongInt;
-begin
-  RTLeventdestroy(evPause);
  
-  if length(StreamOut) > 0 then
-    for x := 0 to high(StreamOut) do
-     freeandnil(StreamOut[x]);
- //     StreamOut[x].Free;
-
-//  { 
-  if length(StreamIn) > 0 then
-    for x := 0 to high(StreamIn) do
-     freeandnil(StreamIn[x]);
-  //    StreamIn[x].Free;
-     
-// }
-  if length(Plugin) > 0 then
-    for x := 0 to high(Plugin) do
-      freeandnil(Plugin[x]);
-    //  Plugin[x].Free;
-   
-  inherited Destroy;
-end;
-
-destructor Tuos_InStream.Destroy;
-var
-  x: LongInt;
-begin
-   {$IF DEFINED(neaac)}
-   if assigned(AACI) then
-begin
- if assigned(AACI.fsStream) then
-   begin
-  // AACI.fsStream.Free;
-   freeandnil(AACI.fsStream);
-   sleep(100);
-   end;
-  // AACI.free;
-   freeandnil(AACI);
-   sleep(100);
-end;
-  {$endif}
- 
-  if length(DSP) > 0 then
-    for x := 0 to high(DSP) do
-      freeandnil(DSP[x]);
-   
-   inherited Destroy;
-  
-end;
-
-destructor Tuos_OutStream.Destroy;
-var
-  x: LongInt;
-begin
-  if length(DSP) > 0 then
-    for x := 0 to high(DSP) do
-     // DSP[x].Free;
-      freeandnil(DSP[x]);
- 
- if assigned(FileBuffer.Data) then 
- freeandnil(FileBuffer.Data);
- 
-   inherited Destroy;
-end;
-
-procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc: boolean);
-               ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
-begin
-   {$IF DEFINED(portaudio)}
-  if PortAudio = true then  Pa_Unload();
-   {$endif}
-  {$IF DEFINED(sndfile)}
-  if SndFile = true then  sf_Unload();
-   {$endif}
-  {$IF DEFINED(mpg123)}
-  if Mpg123 = true then  mp_Unload();
-   {$endif}
-  {$IF DEFINED(neaac)}
-  if AAC = True then aa_Unload();
-   {$endif}
-end;
-
 procedure Tuos_Init.unloadPlugin(PluginName: Pchar);
                ////// Unload Plugin... 
 begin
@@ -4921,6 +4801,128 @@ begin
   M4_FileName := nil; // Mp4ff
   Plug_ST_FileName := nil; // Plugin SoundTouch
   Plug_BS_FileName := nil; // Plugin bs2b
+end;
+
+ {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+ constructor Tuos_Player.Create(CreateSuspended: boolean; AParent: TObject;
+  const StackSize: SizeUInt);
+    {$else}
+  constructor Tuos_Player.Create(CreateSuspended: boolean;
+  const StackSize: SizeUInt);
+    {$endif}
+begin
+  inherited Create(CreateSuspended, StackSize);
+  FreeOnTerminate := false;
+  Priority :=  tpTimeCritical;
+  evPause := RTLEventCreate;
+    {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+   refer := aparent; //// for fpGUI
+    {$endif}
+   isAssigned := true ;
+  status := 2;
+  BeginProc := nil;
+  EndProc := nil;
+  loopBeginProc := nil;
+  loopEndProc := nil;
+end;
+
+destructor Tuos_Player.Destroy;
+var
+  x: LongInt;
+begin
+  RTLeventdestroy(evPause);
+ 
+  if length(StreamOut) > 0 then
+    for x := 0 to high(StreamOut) do
+     freeandnil(StreamOut[x]);
+ //     StreamOut[x].Free;
+
+//  { 
+  if length(StreamIn) > 0 then
+    for x := 0 to high(StreamIn) do
+     freeandnil(StreamIn[x]);
+  //    StreamIn[x].Free;
+     
+// }
+  if length(Plugin) > 0 then
+    for x := 0 to high(Plugin) do
+      freeandnil(Plugin[x]);
+    //  Plugin[x].Free;
+   
+  inherited Destroy;
+end;
+
+destructor Tuos_DSP.Destroy;
+  begin
+    if assigned(fftdata) then
+    begin
+      {$IF DEFINED(noiseremoval)}
+      if assigned(fftdata.FNoise) then FreeAndNil(fftdata.FNoise);
+      {$endif}
+      FreeandNil(fftdata);
+    end;
+    
+      inherited Destroy;
+  end;
+
+destructor Tuos_InStream.Destroy;
+var
+  x: LongInt;
+begin
+   {$IF DEFINED(neaac)}
+   if assigned(AACI) then
+begin
+ if assigned(AACI.fsStream) then
+   begin
+  // AACI.fsStream.Free;
+   freeandnil(AACI.fsStream);
+   sleep(100);
+   end;
+  // AACI.free;
+   freeandnil(AACI);
+   sleep(100);
+end;
+  {$endif}
+ 
+  if length(DSP) > 0 then
+    for x := 0 to high(DSP) do
+      freeandnil(DSP[x]);
+   
+   inherited Destroy;
+  
+end;
+
+destructor Tuos_OutStream.Destroy;
+var
+  x: LongInt;
+begin
+ if assigned(FileBuffer.Data) then 
+ freeandnil(FileBuffer.Data);
+ 
+ 
+  if length(DSP) > 0 then
+    for x := 0 to high(DSP) do
+     // DSP[x].Free;
+      freeandnil(DSP[x]);
+ 
+    inherited Destroy;
+end;
+
+procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc: boolean);
+               ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
+begin
+   {$IF DEFINED(portaudio)}
+  if PortAudio = true then  Pa_Unload();
+   {$endif}
+  {$IF DEFINED(sndfile)}
+  if SndFile = true then  sf_Unload();
+   {$endif}
+  {$IF DEFINED(mpg123)}
+  if Mpg123 = true then  mp_Unload();
+   {$endif}
+  {$IF DEFINED(neaac)}
+  if AAC = True then aa_Unload();
+   {$endif}
 end;
 
 procedure uos_Free();

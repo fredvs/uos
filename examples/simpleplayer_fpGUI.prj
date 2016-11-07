@@ -180,7 +180,7 @@ options=108
  sortdescend11=0
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=4
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -201,7 +201,7 @@ options=108
  index=1
  [projectoptionsfo.tabwidget]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=339
@@ -461,18 +461,18 @@ makeoptionson=10
  511
  511
  511
- 0
+ 64
  511
- 497
- 253
- 2
- 2
+ 499
+ 255
+ 0
+ 0
 compilerusedon=29
- 4095
+ 3903
  0
  0
- 0
- 0
+ 128
+ 64
  0
  0
  0
@@ -498,16 +498,16 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4095
+ 3903
  0
  0
  0
  0
- 0
+ 192
 exeusedon=14
- 4095
+ 3903
  0
- 0
+ 192
  0
  0
  0
@@ -523,9 +523,9 @@ aftcommandon=0
 unitdirson=7
  197119
  197119
- 196736
+ 196800
  197119
- 196991
+ 196927
  197119
  197119
 macroon=5
@@ -888,31 +888,26 @@ findhistory=20
  loadlibr
  hNeAAC
 findoptions=1
-editpos=5
+editpos=4
+ 0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,1319
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-bookmarks4=0
-sourcefiles=5
+sourcefiles=4
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
-relpaths=5
+relpaths=4
  simpleplayer_fpGUI.pas
  uos_flat.pas
  uos_dsp_noiseremoval.pas
  uos.pas
- simpleplayer_fpGUI_noflat.pas
-ismoduletexts=5
- 0
+ismoduletexts=4
  0
  0
  0
@@ -922,12 +917,6 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=5
- 0
- 4
- 1
- 2
- 3
 tabsize=60
 firsttab=0
 index=1
@@ -959,7 +948,7 @@ windowlayout=530
  ncx=0
  ncy=0
  x=240
- y=60
+ y=61
  cx=964
  cy=621
  rcx=0

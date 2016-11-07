@@ -9,6 +9,7 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
   uos_flat,
+  uos,
   ctypes,
   Math,
   Classes,
@@ -75,7 +76,7 @@ var
   begin
   
  if fileexists( Pchar(filenameedit4.FileName)) then begin
-     PlayerIndex1 := 0 ; // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
+     PlayerIndex1 := 1 ; // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
                        // If PlayerIndex exists already, it will be overwritten...
 
       {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
@@ -104,7 +105,7 @@ var
   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
 
-  uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+ uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
     ///// DSP Volume changer
     //////////// PlayerIndex : Index of a existing Player
     ////////// In1Index : InputIndex of a existing input
@@ -122,7 +123,7 @@ var
 
    uos_Play(PlayerIndex1);  /////// everything is ready to play...
 
-   btnStart.Enabled := False;
+    btnStart.Enabled := False;
     btnStop.Enabled := False;
     button4.Enabled := False;
     button5.Enabled := True;
@@ -246,15 +247,15 @@ var
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
 
-    uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+ //   uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
     ///// DSP Volume changer
     //////////// PlayerIndex : Index of a existing Player
     ////////// In1Index : InputIndex of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-    uos_SetDSPVolumeIn(PlayerIndex1,  In1Index, (100 - TrackBar2.position) / 100,
-     (100 - TrackBar3.position) / 100, True);  /// Set volume
+   // uos_SetDSPVolumeIn(PlayerIndex1,  In1Index, (100 - TrackBar2.position) / 100,
+   //  (100 - TrackBar3.position) / 100, True);  /// Set volume
 
    /////// procedure to execute when stream is terminated
      uos_EndProc(PlayerIndex1, @ClosePlayer1);
@@ -269,7 +270,6 @@ var
       btnStop.Enabled := True;
       button5.Enabled := False;
       button4.Enabled := False;
-
     end;
 
   end;
@@ -574,8 +574,6 @@ var
      FilenameEdit4.FileName := ordir + 'sound/testrecord.wav';
  {$ENDIF}
 
-
-
     //////////////////////////////////////////////////////////////////////////
 
     FilenameEdit4.Initialdir := ordir + 'sound';
@@ -612,9 +610,9 @@ var
       frm.Show;
       fpgApplication.Run;
     finally
-      frm.Free;
       uos_free;
-       end;
+      frm.Free;
+    end;
   end;
 
 begin
