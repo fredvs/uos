@@ -865,8 +865,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=fnoise
+finddtext=synth
 findhistory=20
+ synth
+ reverse
  fnoise
  FPCSinTable
  FNoise
@@ -885,14 +887,12 @@ findhistory=20
  AddDSPin
  writeln
  unix
- loadlibr
- hNeAAC
 findoptions=1
 editpos=4
  0,-1073741823
- 0,0
  0,-1073741823
  0,-1073741823
+ 22,557
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -919,7 +919,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=1
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]

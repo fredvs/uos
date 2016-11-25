@@ -4669,8 +4669,8 @@ begin
     devinf := Pa_GetDeviceInfo(x);
     apiinf := Pa_GetHostApiInfo(devinf^.hostApi);
 
-    uosDeviceInfos[x].HostAPIName := apiinf^._name;
-    uosDeviceInfos[x].DeviceName := devinf^._name;
+    uosDeviceInfos[x].HostAPIName := UTF8ToAnsi(apiinf^._name);
+    uosDeviceInfos[x].DeviceName := UTF8ToAnsi(devinf^._name);
 
     if x = uosDefaultDeviceIn then
       uosDeviceInfos[x].DefaultDevIn := True
