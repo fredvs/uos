@@ -273,8 +273,8 @@ install:
         <Filename Value="uos.pas"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="4732"/>
-        <CursorPos X="75" Y="4755"/>
+        <TopLine Value="4663"/>
+        <CursorPos X="2" Y="4673"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -353,9 +353,9 @@ install:
       <Unit36>
         <Filename Value="uos_portaudio.pas"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="261"/>
-        <CursorPos X="42" Y="273"/>
-        <UsageCount Value="16"/>
+        <TopLine Value="65"/>
+        <CursorPos X="5" Y="76"/>
+        <UsageCount Value="17"/>
         <Loaded Value="True"/>
       </Unit36>
       <Unit37>
@@ -394,130 +394,130 @@ install:
         <EditorIndex Value="4"/>
         <TopLine Value="568"/>
         <CursorPos X="3" Y="580"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit43>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="main_di.pas"/>
-        <Caret Line="132" Column="58" TopLine="120"/>
+        <Caret Line="135" Column="58" TopLine="123"/>
       </Position1>
       <Position2>
         <Filename Value="main_di.pas"/>
-        <Caret Line="133" Column="58" TopLine="121"/>
+        <Caret Line="137" Column="33" TopLine="125"/>
       </Position2>
       <Position3>
         <Filename Value="main_di.pas"/>
-        <Caret Line="135" Column="58" TopLine="123"/>
+        <Caret Line="138" Column="47" TopLine="126"/>
       </Position3>
       <Position4>
         <Filename Value="main_di.pas"/>
-        <Caret Line="137" Column="33" TopLine="125"/>
+        <Caret Line="139" Column="47" TopLine="127"/>
       </Position4>
       <Position5>
-        <Filename Value="main_di.pas"/>
-        <Caret Line="138" Column="47" TopLine="126"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="2" Column="98"/>
       </Position5>
       <Position6>
-        <Filename Value="main_di.pas"/>
-        <Caret Line="139" Column="47" TopLine="127"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="379" Column="17" TopLine="367"/>
       </Position6>
       <Position7>
         <Filename Value="uos_flat.pas"/>
-        <Caret Line="2" Column="98"/>
+        <Caret Line="370" Column="91" TopLine="367"/>
       </Position7>
       <Position8>
         <Filename Value="uos_flat.pas"/>
-        <Caret Line="379" Column="17" TopLine="367"/>
+        <Caret Line="984" Column="53" TopLine="976"/>
       </Position8>
       <Position9>
         <Filename Value="uos_flat.pas"/>
-        <Caret Line="370" Column="91" TopLine="367"/>
+        <Caret Line="989" Column="19" TopLine="977"/>
       </Position9>
       <Position10>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="984" Column="53" TopLine="976"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="597" Column="17" TopLine="590"/>
       </Position10>
       <Position11>
         <Filename Value="uos_flat.pas"/>
-        <Caret Line="989" Column="19" TopLine="977"/>
+        <Caret Line="8" Column="57"/>
       </Position11>
       <Position12>
-        <Filename Value="uos.pas"/>
-        <Caret Line="597" Column="17" TopLine="590"/>
+        <Filename Value="main_di.pas"/>
+        <Caret Line="9" Column="76"/>
       </Position12>
       <Position13>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="8" Column="57"/>
+        <Filename Value="main_di.pas"/>
+        <Caret Line="82" Column="11" TopLine="67"/>
       </Position13>
       <Position14>
         <Filename Value="main_di.pas"/>
-        <Caret Line="9" Column="76"/>
+        <Caret Line="157" Column="45" TopLine="144"/>
       </Position14>
       <Position15>
         <Filename Value="main_di.pas"/>
-        <Caret Line="82" Column="11" TopLine="67"/>
+        <Caret Line="158" Column="44" TopLine="143"/>
       </Position15>
       <Position16>
-        <Filename Value="main_di.pas"/>
-        <Caret Line="157" Column="45" TopLine="144"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3014" Column="51" TopLine="3007"/>
       </Position16>
       <Position17>
-        <Filename Value="main_di.pas"/>
-        <Caret Line="158" Column="44" TopLine="143"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4212" Column="80" TopLine="4185"/>
       </Position17>
       <Position18>
         <Filename Value="uos.pas"/>
-        <Caret Line="3014" Column="51" TopLine="3007"/>
+        <Caret Line="4442" Column="47" TopLine="4424"/>
       </Position18>
       <Position19>
         <Filename Value="uos.pas"/>
-        <Caret Line="4212" Column="80" TopLine="4185"/>
+        <Caret Line="4447" Column="31" TopLine="4424"/>
       </Position19>
       <Position20>
-        <Filename Value="uos.pas"/>
-        <Caret Line="4442" Column="47" TopLine="4424"/>
-      </Position20>
-      <Position21>
-        <Filename Value="uos.pas"/>
-        <Caret Line="4447" Column="31" TopLine="4424"/>
-      </Position21>
-      <Position22>
         <Filename Value="main_di.pas"/>
         <Caret Line="111" Column="67" TopLine="111"/>
-      </Position22>
-      <Position23>
+      </Position20>
+      <Position21>
         <Filename Value="uos_flat.pas"/>
         <Caret Line="580" Column="3" TopLine="568"/>
+      </Position21>
+      <Position22>
+        <Filename Value="uos.pas"/>
+        <Caret Line="214" Column="15" TopLine="208"/>
+      </Position22>
+      <Position23>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4673" Column="33" TopLine="4654"/>
       </Position23>
       <Position24>
         <Filename Value="uos.pas"/>
-        <Caret Line="214" Column="15" TopLine="208"/>
+        <Caret Line="4723" Column="42" TopLine="4703"/>
       </Position24>
       <Position25>
         <Filename Value="uos.pas"/>
-        <Caret Line="4673" Column="33" TopLine="4654"/>
+        <Caret Line="214" Column="15" TopLine="202"/>
       </Position25>
       <Position26>
         <Filename Value="uos.pas"/>
-        <Caret Line="4723" Column="42" TopLine="4703"/>
+        <Caret Line="4673" Column="33" TopLine="4654"/>
       </Position26>
       <Position27>
         <Filename Value="uos.pas"/>
-        <Caret Line="214" Column="15" TopLine="202"/>
+        <Caret Line="4723" Column="42" TopLine="4703"/>
       </Position27>
       <Position28>
         <Filename Value="uos.pas"/>
-        <Caret Line="4673" Column="33" TopLine="4654"/>
+        <Caret Line="214" Column="15" TopLine="202"/>
       </Position28>
       <Position29>
         <Filename Value="uos.pas"/>
-        <Caret Line="4723" Column="42" TopLine="4703"/>
+        <Caret Line="4676" Column="101" TopLine="4654"/>
       </Position29>
       <Position30>
         <Filename Value="uos.pas"/>
-        <Caret Line="214" Column="15" TopLine="202"/>
+        <Caret Line="4675" Column="2" TopLine="4654"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
