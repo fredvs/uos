@@ -221,6 +221,41 @@ settings=13
  wsize=0
  active=1
  visible=1
+sysenvmanagereditor=34
+ [msesysenvmanagereditorfo.grid]
+ propcolwidthref=582
+ width0=70
+ sortdescend0=0
+ width1=66
+ sortdescend1=0
+ width2=114
+ sortdescend2=0
+ sortdescend3=0
+ sortdescend4=0
+ sortdescend5=0
+ sortdescend6=0
+ sortdescend7=0
+ sortdescend8=0
+ sortdescend9=0
+ width10=121
+ sortdescend10=0
+ width11=70
+ sortdescend11=0
+ width12=99
+ sortdescend12=0
+ width13=71
+ sortdescend13=0
+ width14=71
+ sortdescend14=0
+ [msesysenvmanagereditorfo]
+ stackedunder=
+ x=51
+ y=266
+ cx=861
+ cy=229
+ wsize=0
+ active=1
+ visible=1
 mainfile=${PROJECTDIR}consoleplay.pas
 targetfile=${PROJECTDIR}/consoleplay
 messageoutputfile=
@@ -250,16 +285,25 @@ makeoptions=8
  -B
  -O2 -XX -Xs -CX
  -vewnhibq
-compilerused=21
+makeoptpurpose=0
+compilerused=29
  ${COMPILER} (Default)
  Pascal 1
  Pascal 2
  Pascal 3
  Pascal 4
+ Pascal 5
+ Pascal 6
+ Pascal 7
+ Pascal 8
  C 1
  C 2
  C 3
  C 4
+ C 5
+ C 6
+ C 7
+ C 8
  Java 1
  Java 2
  Java 3
@@ -422,9 +466,12 @@ settingsstorage=0
 settingsprojecttree=0
 settingsautoload=0
 settingsautosave=0
-modulenames=0
-moduletypes=0
-modulefiles=0
+modulenames=1
+ GUITEMPLATESMO
+moduletypes=1
+ TGUITEMPLATESMO
+modulefiles=1
+ /home/fred/ideu/src/guitemplates.mfm
 befcommandon=0
 makeoptionson=8
  0
@@ -435,8 +482,16 @@ makeoptionson=8
  32
  48
  63
-compilerusedon=21
- 4095
+compilerusedon=29
+ 69631
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -458,14 +513,14 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 4095
+ 69631
  0
  0
  0
  0
  0
 exeusedon=14
- 4095
+ 69631
  0
  0
  0
@@ -479,6 +534,25 @@ exeusedon=14
  0
  0
  0
+comment_M=
+comment_B=
+comment_1=
+comment_2=
+comment_3=
+comment_4=
+comment_5=
+comment_6=
+comment_7=
+comment_8=
+comment_9=
+comment_0=
+project_name=
+project_creator=
+project_copyright=
+project_license=
+project_time=
+project_date=
+project_comment=
 aftcommandon=0
 unitdirson=7
  196671
@@ -764,12 +838,12 @@ findhistory=8
 findoptions=1
 editpos=8
  0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 31,128
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -781,7 +855,7 @@ bookmarks6=0
 bookmarks7=0
 sourcefiles=8
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
@@ -806,25 +880,20 @@ ismoduletexts=8
  0
  0
  0
-modules=0
-moduleoptions=0
-visiblemodules=0
-nomenumodules=0
-[sourcefo.files_tab]
-order=8
+modules=1
+ /home/fred/ideu/src/guitemplates.mfm
+moduleoptions=1
  0
- 5
- 6
- 1
- 7
- 2
- 3
- 4
+visiblemodules=1
+ -1
+nomenumodules=1
+ 0
+[sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=2
+index=1
 [layout]
-windowlayout=530
+windowlayout=549
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -833,12 +902,12 @@ windowlayout=530
  mdistate=0
  nx=0
  ny=0
- ncx=668
- ncy=0
+ ncx=687
+ ncy=211
  x=0
  y=0
  cx=954
- cy=585
+ cy=811
  rcx=0
  rcy=0
  [mainfo]
@@ -850,14 +919,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=240
- y=61
+ x=238
+ y=24
  cx=964
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,954,585
+  basedock,0,0,954,811
  focusedchild=0
  wsize=0
  active=1
@@ -901,7 +970,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=cpuc86_64fo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -973,7 +1042,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=426
+ cy=608
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -983,7 +1052,7 @@ windowlayout=530
  width1=12
  sortdescend1=0
  sorted=0
- col=1
+ col=-1073741823
  row=-1073741823
  rowheight=17
  [stackfo]
@@ -1065,7 +1134,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1074,7 +1143,7 @@ windowlayout=530
  ncy=0
  x=670
  y=179
- cx=316
+ cx=693
  cy=484
  rcx=0
  rcy=0
@@ -1082,10 +1151,10 @@ windowlayout=530
  active=0
  visible=0
  [objectinspectorfo.grid]
- propcolwidthref=306
- width0=73
+ propcolwidthref=683
+ width0=163
  sortdescend0=0
- width1=227
+ width1=514
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1182,9 +1251,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=488
+ y=676
  cx=954
- cy=97
+ cy=135
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1253,7 +1322,7 @@ windowlayout=530
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1284,7 +1353,7 @@ windowlayout=530
  x=0
  y=0
  cx=954
- cy=56
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1294,13 +1363,13 @@ windowlayout=530
  visible=1
  mdistate=0
  nx=0
- ny=52
- ncx=956
- ncy=6
+ ny=53
+ ncx=957
+ ncy=11
  x=0
- y=52
+ y=53
  cx=954
- cy=3
+ cy=12
  rcx=0
  rcy=0
  [sourcefo]
@@ -1316,14 +1385,14 @@ windowlayout=530
  x=162
  y=0
  cx=792
- cy=426
+ cy=608
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0
@@ -1350,11 +1419,30 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=59
+ y=65
  cx=954
- cy=426
+ cy=608
  rcx=0
  rcy=0
+ [_mse_guitemplatesmo_mse_]
+ splitdir=0
+ useroptions=805322875
+ stackedunder=mainfo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=99
+ y=135
+ cx=493
+ cy=132
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=1
 [targetconsole]
 finddtext=
 findhistory=0

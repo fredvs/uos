@@ -242,7 +242,7 @@ type
     wSamplesPerSec: LongInt;
     wBitsPerSample: word;
     wChannels: word;
-    Data: TMemoryStream;
+    Data: TFileStream;
   end;
 
 type
@@ -1076,58 +1076,17 @@ begin
   Result := arfl;
 end;
 
-function WriteWave(FileName: ansistring; Data: Tuos_FileBuffer): word;
+procedure WriteWave(FileName: ansistring; Data: Tuos_FileBuffer);
 var
-  f: TFileStream;
   wFileSize: LongInt;
-  wChunkSize: LongInt;
   ID: array[0..3] of char;
-  Header: Tuos_WaveHeaderChunk;
 begin
-  Result := noError;
-  f := nil;
-  try
-    f := TFileStream.Create(FileName, fmCreate);
-    f.Seek(0, soFromBeginning);
-    ID := 'RIFF';
-    f.WriteBuffer(ID, 4);
-    wFileSize := 0;
-    f.WriteBuffer(wFileSize, 4);
-    ID := 'WAVE';
-    f.WriteBuffer(ID, 4);
-    ID := 'fmt ';
-    f.WriteBuffer(ID, 4);
-    wChunkSize := SizeOf(Header);
-    f.WriteBuffer(wChunkSize, 4);
-    Header.wFormatTag := 1;
-
-    Header.wChannels := Data.wChannels;
-
-    Header.wSamplesPerSec := Data.wSamplesPerSec;
-
-    Header.wBlockAlign := Data.wChannels * (Data.wBitsPerSample div 8);
-
-    Header.wAvgBytesPerSec := Data.wSamplesPerSec * Header.wBlockAlign;
-    Header.wBitsPerSample := Data.wBitsPerSample;
-    Header.wcbSize := 0;
-    f.WriteBuffer(Header, SizeOf(Header));
-  except
-    Result := HeaderWriteError;
-  end;
-  try
-    ID := 'data';
-    f.WriteBuffer(ID, 4);
-    wChunkSize := Data.Data.Size;
-    f.WriteBuffer(wChunkSize, 4);
-    Data.Data.Seek(0, soFromBeginning);
-    f.CopyFrom(Data.Data, Data.Data.Size);
-  except
-    Result := StreamError;
-  end;
-  f.Seek(SizeOf(ID), soFromBeginning);
-  wFileSize := f.Size - SizeOf(ID) - SizeOf(wFileSize);
-  f.Write(wFileSize, 4);
-  f.Free;
+  ID := 'data';
+  wFileSize := 0;
+  Data.data.Seek(SizeOf(ID), soFromBeginning);
+  wFileSize := Data.data.Size - SizeOf(ID) - SizeOf(wFileSize);
+  Data.data.Write(wFileSize, 4);
+  Data.data.Free;
 end;
 
 function Tuos_Player.GetStatus() : LongInt ;
@@ -2787,6 +2746,11 @@ function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
   //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1,0, -1);
 var
   x: LongInt;
+  wChunkSize: LongInt;
+  wFileSize: LongInt;
+  ID: array[0..3] of char;
+  Header: Tuos_WaveHeaderChunk;
+
 begin
   result := -1 ;
   x := 0;
@@ -2798,7 +2762,6 @@ begin
   StreamOut[x].Data.Filename := filename;
   StreamOut[x].Data.TypePut := 0;
     FillChar(StreamOut[x].FileBuffer, sizeof(StreamOut[x].FileBuffer), 0);
-  StreamOut[x].FileBuffer.Data := TMemoryStream.Create;
 
   result := x;
 
@@ -2833,7 +2796,38 @@ begin
     
   StreamOut[x].Data.Samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
   StreamOut[x].LoopProc := nil;
-end;
+
+  try
+     StreamOut[x].FileBuffer.Data := TFileStream.Create(filename,fmCreate);
+     StreamOut[x].FileBuffer.Data.Seek(0, soFromBeginning);
+    ID := 'RIFF';
+    StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+    wFileSize := 0;
+    StreamOut[x].FileBuffer.Data.WriteBuffer(wFileSize, 4);
+    ID := 'WAVE';
+    StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+    ID := 'fmt ';
+    StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+    wChunkSize := SizeOf(Header);
+    StreamOut[x].FileBuffer.Data.WriteBuffer(wChunkSize, 4);
+    Header.wFormatTag := 1;
+
+    Header.wChannels := StreamOut[x].FileBuffer.wChannels;
+
+    Header.wSamplesPerSec := StreamOut[x].FileBuffer.wSamplesPerSec;
+
+    Header.wBlockAlign := StreamOut[x].FileBuffer.wChannels * (StreamOut[x].FileBuffer.wBitsPerSample div 8);
+
+    Header.wAvgBytesPerSec := StreamOut[x].FileBuffer.wSamplesPerSec * Header.wBlockAlign;
+    Header.wBitsPerSample := StreamOut[x].FileBuffer.wBitsPerSample;
+    Header.wcbSize := 0;
+    StreamOut[x].FileBuffer.Data.WriteBuffer(Header, SizeOf(Header));
+     ID := 'data';
+     StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+  except
+  //  Result := HeaderWriteError;
+  end;
+ end;
 
 {$IF DEFINED(portaudio)}
  function Tuos_Player.AddIntoDevOut(Device: LongInt; Latency: CDouble;
@@ -4176,6 +4170,7 @@ begin
      if (StreamOut[x].Data.TypePut = 0) then
       begin
         WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
+      // StreamOut[x].FileBuffer.Data.Free;
       end;
 
         {$IF not DEFINED(Library)}
@@ -4313,7 +4308,7 @@ begin
       if (StreamOut[x].Data.TypePut = 0) then
       begin
         WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
-        StreamOut[x].FileBuffer.Data.Free;
+      //  StreamOut[x].FileBuffer.Data.Free;
       end;
     end;
     

@@ -3,15 +3,15 @@ program simplerecorder_fpGUI;
 {$mode objfpc}{$H+}
   {$DEFINE UseCThreads}
 
-uses {$IFDEF UNIX} {$IFDEF UseCThreads}
-// cmem,
+uses
+ cmem,
+ {$IFDEF UNIX} {$IFDEF UseCThreads}
+ 
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
   uos_flat,
   uos,
-  ctypes,
-  Math,
   Classes,
   fpg_button,
   fpg_widget,

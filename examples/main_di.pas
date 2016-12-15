@@ -119,7 +119,7 @@ begin
   while x < uosDeviceCount + 1  do
   begin
 
-    stringgrid1.Cells[0, x] := IntToStr(uosDeviceInfos[x - 1].DeviceNum);
+      stringgrid1.Cells[0, x] := IntToStr(uosDeviceInfos[x - 1].DeviceNum);
     stringgrid1.Cells[1, x] := uosDeviceInfos[x - 1].DeviceName;
     if uosDeviceInfos[x - 1].DefaultDevIn = True then
       stringgrid1.Cells[2, x] := 'Yes'
@@ -142,7 +142,8 @@ begin
       floattostrf(uosDeviceInfos[x - 1].LatencyLowOut, ffFixed, 15, 8);
     stringgrid1.Cells[11, x] := uosDeviceInfos[x - 1].HostAPIName;
     stringgrid1.Cells[12, x] := uosDeviceInfos[x - 1].DeviceType;
-    Inc(x);
+
+     Inc(x);
   end;
 
 end;
