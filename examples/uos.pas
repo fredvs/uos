@@ -1789,20 +1789,36 @@ function SoundTouchPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_
   notused1: float; notused2: float; notused3: float;  notused4: float;
   notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
+ ratio : integer;
  numoutbuf, x1, x2: LongInt;
   BufferplugFLTMP: TDArFloat;
   BufferplugFL: TDArFloat;
  begin
-    
+ 
+ case inputData.LibOpen of
+        0: ratio := 1; // sndfile
+        1:begin        // mpg123
+           case inputData.SampleFormat of
+            0: ratio := 2; // float32
+            1: ratio := 2; // int32
+            2: ratio := 1; // int16
+           end;   
+          end;
+        2: ratio := 1; // aac
+        3: ratio := 1; // cdrom
+        4: ratio := 1; // opus
+      end;
+      
     if inputData.LibOpen <> 4 then //not working yet for opus files
     begin
    soundtouch_putSamples(plugHandle, pointer(bufferin),
-    length(bufferin) div round(inputData.Channels * inputData.ratio));
-
+   inputData.outframes div round(inputData.Channels * ratio));
+      
   numoutbuf := 1;
   SetLength(BufferplugFL, 0);
 
    SetLength(BufferplugFLTMP, Length(Bufferin));
+   
   
   if inputData.outframes > 0 then
     while numoutbuf > 0 do
@@ -1830,17 +1846,8 @@ var
    end
   else 
   begin
-
-   SetLength(BufferplugFL, inputData.outframes);
-  x1 := 0;
-  while x1 < inputData.outframes  do
-          begin
-         BufferplugFL[x1] := (bufferin[x1]);
-        x1 := x1 + 1;
-        end;
-  
-// Result := pf^; 
-   Result := BufferplugFL; 
+    SetLength(bufferin, inputData.outframes);
+     Result := bufferin; 
 end;
 end;
 {$endif}
