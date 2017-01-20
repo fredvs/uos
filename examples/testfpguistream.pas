@@ -122,7 +122,7 @@ procedure Ttest.btnCloseClick(Sender: TObject);
     PlayerIndex1 := 0;
 
     // Load the libraries
-    res := uos_LoadLib(Pchar(PA_FileName), nil, Pchar(MP_FileName), nil , nil) ;
+    res := uos_LoadLib(Pchar(PA_FileName), nil, Pchar(MP_FileName), nil , nil, nil, nil) ;
   //  if res = 0 then  writeln('===> Libraries are loaded.') else  writeln('===> Libraries are NOT loaded.') ;
 
 

@@ -280,10 +280,11 @@ var
 loadok : boolean = false;
 begin
   // Load the libraries
-  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+ //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
+  // Mp4ffFileName, FaadFileName, opusfilename, opusfilefilename: PChar) : LongInt;
 
   if uos_LoadLib(Pchar(Edit1.text), Pchar(Edit2.text),
-     Pchar(Edit3.text), Pchar(Edit7.text), Pchar(Edit8.text)) = 0 then
+     Pchar(Edit3.text), Pchar(Edit7.text), Pchar(Edit8.text), nil, nil) = 0 then
   // You may load one or more libraries . When you want... :
 
  begin

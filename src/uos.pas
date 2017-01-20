@@ -53,6 +53,10 @@ uos_dsp_noiseremoval,
 uos_aac,
 {$endif}
 
+{$IF DEFINED(opus)}
+uos_opus, uos_opusfile,
+{$endif}
+
 {$IF DEFINED(cdrom)}
 uos_cdrom,
 {$endif}
@@ -60,7 +64,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 16161025 ;
+  uos_version : LongInt = 17170120 ;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -173,6 +177,7 @@ type
     STloadError: shortint;
     BSloadError: shortint;
     AAloadError: shortint;
+    OPloadError: shortint;
     PAinitError: shortint;
     MPinitError: shortint;
 end;
@@ -188,6 +193,8 @@ type
     MP_FileName: pchar; // Mpg123
     AA_FileName : PChar; // Faad
     M4_FileName : PChar; // Mp4ff
+    OP_FileName : PChar; // opus
+    OF_FileName : PChar; // opusfile
 
     Plug_ST_FileName: pchar; // Plugin SoundTouch
     Plug_BS_FileName: pchar; // Plugin bs2b
@@ -203,7 +210,7 @@ type
 
     function loadlib: LongInt;
     procedure unloadlib;
-    procedure unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
+    procedure unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
     function InitLib: LongInt;
     procedure unloadPlugin(PluginName: Pchar);
   end;
@@ -286,6 +293,11 @@ type
     
         /////////// audio file data
     HandleSt: pointer;
+    
+    {$IF DEFINED(opus)}
+   HandleOP: TOggOpusFile;
+   {$endif}
+    
     Filename: string;
     Title: string;
     Copyright: string;
@@ -306,7 +318,7 @@ type
     Sections: LongInt;
     Encoding: LongInt;
     Lengthst: LongInt;     ///////  in sample ;
-    LibOpen: integer;    //// -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom
+    LibOpen: integer;    //// -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom, 4: opus
     Ratio: integer;      ////  if mpg123 or aac then ratio := 2
    
     Output: LongInt;
@@ -519,7 +531,7 @@ type
       SampleRate: LongInt; Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
      ////// Add a Output into Device Output
     //////////// Device ( -1 is default device )
-    //////////// Latency  ( -1 is latency suggested ) )
+    //////////// Latency  ( -1 is latency suggested )
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
@@ -840,19 +852,20 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
    {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusFileName, opusfileFileName : PChar) : LongInt;
        ////// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
      // PortAudio => needed for dealing with audio-device
      // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
      // Mpg123 => needed for dealing with mp* audio-files
      // Mp4ff and Faad => needed for dealing with acc, m4a audio-files
+     // opus and opusfile => needed for dealing with opus audio-files
 
-     // If some libraries are not needed, replace it by "nil", for example : uos_loadlib(PortAudioFileName, SndFileFileName, nil, nil, nil)
+     // If some libraries are not needed, replace it by "nil", for example : uos_loadlib(PortAudioFileName, SndFileFileName, nil, nil, nil, nil, nil)
 
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
            ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
@@ -876,6 +889,8 @@ const
   LoadSFError = 21;
   FileMPError = 30;
   LoadMPError = 31;
+  LoadOPError = 41;
+  FileOPError = 50;
   ///// uos Audio
   Stereo = 2;
   Mono = 1;
@@ -1023,6 +1038,30 @@ begin
   Result := arlo;
 end;
 
+function CvFloat32ToInt32fl(Inbuf: TDArFloat; nb:integer): TDArFloat;
+var
+   i: cint32;
+   x : LongInt;
+  arlo: TDArFloat;
+begin
+  SetLength(arlo, length(inbuf));
+    for x := 0 to length(arlo) -1 do
+             arlo[x] := 0; 
+  
+  for x := 0 to nb -1 do
+  begin
+    i := round(Inbuf[x] * 2147483647);
+    if i > 2147483647 then
+      i := 2147483647
+    else
+    if i < -2147483648 then
+      i := -2147483648;
+    arlo[x] := int32(i);
+  end;
+  Result := arlo;
+end;
+
+
 function CvInt16ToFloat32(Inbuf: TDArFloat): TDArFloat;
 var
   x: LongInt;
@@ -1051,9 +1090,9 @@ var
      while x < (len * 2)-1 do
     begin
     /// TODO -> this takes only chan1, not (chan1+chan2)/2 -> it get bad noise dont know why ???...
-    // arsh[y]   := round((Inbuf[x] + Inbuf[x+1])/ 2) ;
+   // arsh[y]   := round((Inbuf[x] + Inbuf[x+1])/ 2) ;
 
-      arsh[y]   := Inbuf[x+1] ;
+     arsh[y]   := Inbuf[x+1] ;
 
       inc(y);
      x := x + 2 ;
@@ -1259,6 +1298,9 @@ begin
             StreamIn[InputIndex].Data.Wantframes:= (framecount * StreamIn[InputIndex].Data.Channels) ;
 
             3:
+            StreamIn[InputIndex].Data.Wantframes:= (framecount * StreamIn[InputIndex].Data.Channels) ;
+            
+            4:
             StreamIn[InputIndex].Data.Wantframes:= (framecount * StreamIn[InputIndex].Data.Channels) ;
 
 end;
@@ -1747,33 +1789,59 @@ function SoundTouchPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_
   notused1: float; notused2: float; notused3: float;  notused4: float;
   notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
-  numoutbuf, x1, x2: LongInt;
+ numoutbuf, x1, x2: LongInt;
   BufferplugFLTMP: TDArFloat;
   BufferplugFL: TDArFloat;
-begin
-  soundtouch_putSamples(plugHandle, pointer(bufferin),
+ begin
+    
+    if inputData.LibOpen <> 4 then //not working yet for opus files
+    begin
+   soundtouch_putSamples(plugHandle, pointer(bufferin),
     length(bufferin) div round(inputData.Channels * inputData.ratio));
 
   numoutbuf := 1;
   SetLength(BufferplugFL, 0);
 
-   SetLength(BufferplugFLTMP, length(bufferin));
-
+   SetLength(BufferplugFLTMP, Length(Bufferin));
+  
   if inputData.outframes > 0 then
     while numoutbuf > 0 do
     begin
+    
       numoutbuf := soundtouch_receiveSamples(PlugHandle,
         pointer(BufferplugFLTMP), inputData.outframes);
-      SetLength(BufferplugFL, length(BufferplugFL) + round(numoutbuf * inputData.Channels));
-      x2 := Length(BufferplugFL) - round(numoutbuf * inputData.Channels);
+         
+        if numoutbuf > 0 then begin
+      
+        SetLength(BufferplugFL, length(BufferplugFL) + round(numoutbuf * inputData.Channels));
+     
+        x2 := Length(BufferplugFL) - round(numoutbuf * inputData.Channels);
 
-      for x1 := 0 to round(numoutbuf * inputData.Channels) - 1 do
+        for x1 := 0 to round(numoutbuf * inputData.Channels) - 1 do
       begin
         BufferplugFL[x1 + x2] := BufferplugFLTMP[x1];
       end;
+      end;
     end;
-  // inputData.outframes := Length(BufferplugFL); 
+    
+ inputData.outframes := Length(BufferplugFL); 
+//   writeln(inttostr(inputData.outframes));  
   Result := BufferplugFL;
+   end
+  else 
+  begin
+
+   SetLength(BufferplugFL, inputData.outframes);
+  x1 := 0;
+  while x1 < inputData.outframes  do
+          begin
+         BufferplugFL[x1] := (bufferin[x1]);
+        x1 := x1 + 1;
+        end;
+  
+// Result := pf^; 
+   Result := BufferplugFL; 
+end;
 end;
 {$endif}
 
@@ -1786,7 +1854,7 @@ var
   Bufferplug: TDArFloat;
  begin
  
-  if (inputData.libopen = 0) or (inputData.libopen = 2)  or (inputData.libopen = 3) then
+  if (inputData.libopen = 0) or (inputData.libopen = 2)  or (inputData.libopen = 3) or (inputData.libopen = 4) then
   x2 := round(inputData.ratio * (inputData.outframes div round(inputData.channels))) ;
   
   if (inputData.libopen = 1)   then
@@ -1805,8 +1873,8 @@ var
        
      Bufferplug[x] := bufferin[x] ;
      Bufferplug[x+1] := bufferin[x+1] ;
-     bs2b_cross_feed_f(Abs2bd,Bufferplug[x],1); 
-      bs2b_cross_feed_f(Abs2bd,Bufferplug[x+1],2);  
+    bs2b_cross_feed_f(Abs2bd,Bufferplug[x],1); 
+    bs2b_cross_feed_f(Abs2bd,Bufferplug[x+1],2);  
       x := x +2;
           end;
   Result :=  Bufferplug;
@@ -1941,6 +2009,7 @@ begin
         1: ratio := 2; // mpg123
         2: ratio := 1; // aac
         3: ratio := 1; // cdrom
+        4: ratio := 1; // opus
       end;
       
 if Data.SampleFormat = 0 then // TODO for Array of integer.
@@ -1968,12 +2037,14 @@ function uos_DSPVolume(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 var
   x, ratio: LongInt;
   vleft, vright: double;
+  
+ // volumearray : array of double;
 
   ps: PDArShort;     //////// if input is Int16 format
   pl: PDArLong;      //////// if input is Int32 format
   pf: PDArFloat;     //////// if input is Float32 format
 begin
-
+//setlength(volumearray,Data.channels);
   vleft := Data.VLeft;
   vright := Data.VRight;
 
@@ -2024,6 +2095,7 @@ begin
         1: ratio := 2; // mpg123
         2: ratio := 1; // aac
         3: ratio := 1; // cdrom
+        4: ratio := 1; // opus
       end;
 
      pf := @Data.Buffer;
@@ -2140,6 +2212,7 @@ begin
         1: ratio := 2; // mpg123
         2: ratio := 2; // aac
         3: ratio := 2; // cdrom
+        4: ratio := 2; // opus
       end;
 
       minf[0] := 1;
@@ -2203,6 +2276,7 @@ begin
         1: ratio := 2; // mpg123
         2: ratio := 2; // aac
         3: ratio := 2; // cdrom
+        4: ratio := 2; // opus
       end;
       pf := @Data.Buffer;
     end;
@@ -2719,8 +2793,8 @@ procedure Tuos_Player.InputSetSynth(InputIndex: LongInt; Frequency: float; Volum
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
     //////////// Enabled : true or false ;
 
- var
-  x2 : longint;
+// var
+// x2 : longint;
  begin
  if Frequency <> -1 then
  begin
@@ -3097,8 +3171,14 @@ var
   {$IF DEFINED(sndfile)}
    sfInfo: TSF_INFO;
    {$endif}
-
-   {$IF DEFINED(mpg123)}
+   
+   {$IF DEFINED(opus)}
+   //OpusTag: POpusTags;
+   //LComment: PPAnsiChar;
+   //LcommentLength: PInteger;
+   {$endif}
+   
+  {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
   mpid3v1: Tmpg123_id3v1;
   mpid3v2: Tmpg123_id3v2;
@@ -3244,6 +3324,81 @@ begin
        end;
     end;
    {$endif}
+   
+   {$IF DEFINED(opus)}
+    if (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
+    begin
+      Err := -1;
+
+      StreamIn[x].Data.HandleSt := pchar('opus');
+      StreamIn[x].Data.HandleOP := op_test_file(PChar(FileName), Err);
+        
+    if Err=0
+    then begin
+         Err := op_test_open(StreamIn[x].Data.HandleOP);
+        if (Err=0) and (op_link_count(StreamIn[x].Data.HandleOP)=1)
+        then begin
+        
+             
+      if SampleFormat = -1 then
+          StreamIn[x].Data.SampleFormat := 2
+        else
+          StreamIn[x].Data.SampleFormat := SampleFormat;  
+          
+          {
+           
+           OpusTag := op_tags(StreamIn[x].Data.HandleOP, 0);
+       
+        if OpusTag<>nil
+          
+             then begin
+            
+            if OpusTag^.comments>0
+            then begin
+              WriteLn((Format('OpusTag.comments = %d', [OpusTag^.comments])));
+              LComment := OpusTag^.user_comments;
+              LcommentLength := OpusTag^.comment_lengths;
+              for j := 0 to OpusTag^.comments - 1 do
+              begin
+                SetLength(s, LcommentLength^);
+                move(Pointer(LComment^)^, Pointer(s)^, LcommentLength^);
+                WriteLn((Format('Comment %d: "%s"', [j+1, (s)])));
+                inc(LComment);
+                inc(LcommentLength);
+              end;
+            end;
+            WriteLn((Format('OpusTag.vendor = %s', [(OpusTag^.vendor)])));
+          end;
+          
+          WriteLn((Format('Channels = %d', [StreamIn[x].Data.channels])));
+          WriteLn((Format('op_pcm_total = %d', [op_pcm_total(StreamIn[x].Data.HandleOP, 0)])));
+          WriteLn((Format('op_bitrate = %d', [op_bitrate(StreamIn[x].Data.HandleOP, 0)])));    
+          
+          }
+             StreamIn[x].Data.Lengthst := op_pcm_total(StreamIn[x].Data.HandleOP, 0);
+             StreamIn[x].Data.filename := FileName;
+             StreamIn[x].Data.channels := op_channel_count(StreamIn[x].Data.HandleOP, 0);
+             
+             /// opus use constant sample rate 48k
+             StreamIn[x].Data.samplerate :=  48000 ;
+             StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
+             StreamIn[x].Data.Seekable       := true;
+              
+          if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 65536 div StreamIn[x].Data.Channels  else
+       StreamIn[x].Data.Wantframes := FramesCount ;
+       
+       SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
+
+             StreamIn[x].Data.LibOpen := 4;
+                   
+      end
+      else
+      begin
+        StreamIn[x].Data.LibOpen := -1;
+       end;
+    end;
+    end;
+{$endif}
 
    {$IF DEFINED(neaac)}
    if (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.AAloadERROR = 0) then
@@ -3411,8 +3566,11 @@ begin
         {$IF DEFINED(cdrom)}
          3 : StreamIn[x].Data.ratio := streamIn[x].pCD^.Channels;
         {$endif}
-
-      end;
+         {$IF DEFINED(opus)}
+       //  4 : StreamIn[x].Data.ratio := streamIn[x].Data.Channels;
+         4 : StreamIn[x].Data.ratio :=  streamIn[x].Data.Channels;
+         {$endif}
+         end;
     end;
   end;
 end;
@@ -3421,7 +3579,8 @@ procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
   x, x2, x3, x4, statustemp, rat : LongInt;
-  sinevarL, sinevarR : cfloat;
+  // sinevarL, sinevarR : cfloat;
+  
   plugenabled: boolean;
   curpos: cint64;
   BufferplugINFLTMP: TDArFloat;
@@ -3441,7 +3600,7 @@ var
 
 begin
   curpos := 0;
-
+       
    {$IF not DEFINED(Library)}
      if BeginProc <> nil then
     /////  Execute BeginProc procedure
@@ -3500,7 +3659,7 @@ begin
    //////////// Dealing with input
     for x := 0 to high(StreamIn) do
     begin
-
+                    
       RTLeventWaitFor(evPause);  ///// is there a pause waiting ?
       RTLeventSetEvent(evPause);
 
@@ -3520,7 +3679,12 @@ begin
            {$IF DEFINED(neaac)}
             2 : MP4Seek(StreamIn[x].AACI, StreamIn[x].Data.Poseek);
            {$endif} 
-            3 :
+            {$IF DEFINED(cdrom)}
+            3 : ;
+           {$endif}
+           {$IF DEFINED(opus)}
+            4 : op_pcm_seek(StreamIn[x].Data.HandleOP, StreamIn[x].Data.Poseek);
+           {$endif}
            end;
            curpos := StreamIn[x].Data.Poseek;
            StreamIn[x].Data.Poseek := -1;
@@ -3544,7 +3708,10 @@ begin
  
    0:   ///// It is a input from audio file.
           begin
-            case StreamIn[x].Data.LibOpen of
+          if length(StreamIn[x].Data.Buffer) <> StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels then
+           setlength(StreamIn[x].Data.Buffer,StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels);
+             
+                  case StreamIn[x].Data.LibOpen of
               //////////// Here we are, reading the data and store it in buffer
                 {$IF DEFINED(sndfile)}
                0: case StreamIn[x].Data.SampleFormat of
@@ -3562,6 +3729,7 @@ begin
                {$IF DEFINED(mpg123)}
               1:
               begin
+             
                 mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
                   StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
                 StreamIn[x].Data.outframes :=
@@ -3606,7 +3774,33 @@ begin
             StreamIn[x].Data.outframes := 0;
          end;
          {$endif}
-         99: // if nothing was defined
+       
+         {$IF DEFINED(opus)}
+          4: begin
+           
+             //   for x2 := 0 to length(StreamIn[x].Data.Buffer) -1 do
+             //  StreamIn[x].Data.Buffer[x2] := cfloat(0.0);         
+              case StreamIn[x].Data.SampleFormat of
+                    0: StreamIn[x].Data.outframes := op_read_float(StreamIn[x].Data.HandleOP,
+                       StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels, nil);
+                    1: begin 
+                       StreamIn[x].Data.outframes := op_read(StreamIn[x].Data.HandleOP,
+                       StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes  * StreamIn[x].Data.channels, nil);
+              
+                    // no int32 format with opus => need a conversion from float32 to int32 (not working yet).
+                    // StreamIn[x].Data.Buffer := CvFloat32ToInt32fl( StreamIn[x].Data.Buffer,
+                    // StreamIn[x].Data.outframes * StreamIn[x].Data.Channels );
+                       end;
+                    2: StreamIn[x].Data.outframes := op_read(StreamIn[x].Data.HandleOP,
+                       StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes, nil);
+                  end;
+      
+               StreamIn[x].Data.outframes := StreamIn[x].Data.outframes * StreamIn[x].Data.Channels;
+                
+                 end;
+          {$endif}
+         
+           99: // if nothing was defined
              end;
 
           end;
@@ -3871,6 +4065,7 @@ begin
             1:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes div StreamIn[x2].Data.Channels; // mpg123
             2:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes ; // aac
             3:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes ; // CDRom
+            4:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes ; // opus
             end;  
             
             end;   
@@ -4274,7 +4469,14 @@ begin
                CDROM_Close(StreamIn[x].pCD);
               End;
               {$endif}
+              {$IF DEFINED(opus)}
+           4: begin
+                op_free(StreamIn[x].Data.HandleOP);
+               end;
+             {$ENDIF}
+           
            99: // if nothing was defined
+           
             end;
             
         {$IF DEFINED(portaudio)}
@@ -4378,6 +4580,10 @@ begin
    {$IF DEFINED(neaac)}
     Aa_Unload;
     {$endif}
+    {$IF DEFINED(opus)}
+    op_Unload;
+    of_Unload;
+    {$endif}
    {$IF DEFINED(windows)}
     Set8087CW(old8087cw);
     {$endif}
@@ -4429,8 +4635,10 @@ begin
   uosLoadResult.SFloadERROR := -1;
   uosLoadResult.MPloadERROR := -1;
   uosLoadResult.AAloadError := -1;
+  uosLoadResult.OPloadERROR := -1;
   uosLoadResult.STloadERROR := -1;
   uosLoadResult.BSloadERROR := -1;
+  
   
    {$IF DEFINED(portaudio)}
     if (PA_FileName <>  nil) and (PA_FileName <>  '') then
@@ -4519,7 +4727,7 @@ begin
          begin
            uosLoadResult.AAloadERROR := 0;
            if (uosLoadResult.MPloadERROR = -1) and (uosLoadResult.PAloadERROR = -1) and
-             (uosLoadResult.SFloadERROR = -1) And (uosLoadResult.STloadERROR = -1) then
+             (uosLoadResult.SFloadERROR = -1)  then
              Result := 0;
          end
          else
@@ -4531,6 +4739,35 @@ begin
      end
      else
        uosLoadResult.AAloadERROR := -1;
+   {$endif}
+   
+      {$IF DEFINED(opus)}
+     if (OP_FileName <> nil) and (OP_FileName <>  '') and (OF_FileName <> nil) and (OF_FileName <>  '') then
+     begin
+       if (not fileexists(OP_FileName)) or (not fileexists(OF_FileName)) then
+       begin
+         Result := -1;
+         uosLoadResult.OPloadERROR := 1;
+       end
+       else
+       begin
+         if (op_load(AnsiString(OP_FileName))) and (of_load(AnsiString(OF_FileName)))  then
+         begin
+           uosLoadResult.OPloadERROR := 0;
+           if (uosLoadResult.MPloadERROR = -1) and (uosLoadResult.PAloadERROR = -1) and
+             (uosLoadResult.SFloadERROR = -1) And (uosLoadResult.AAloadERROR = -1)
+              And (uosLoadResult.OPloadERROR = -1)  then
+             Result := 0;
+         end
+         else
+         begin
+           uosLoadResult.OPloadERROR := 2;
+           Result := -1;
+         end;
+       end;
+     end
+     else
+       uosLoadResult.OPloadERROR := -1;
    {$endif}
 
      if Result = 0 then
@@ -4593,7 +4830,7 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
   
 end;
  
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusFileName, opusfileFileName: PChar) : LongInt;
   begin
    result := -1 ;
    if not assigned(uosInit) then begin
@@ -4611,6 +4848,8 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
    uosInit.MP_FileName := Mpg123FileName;
    uosInit.AA_FileName:= FaadFileName;
    uosInit.M4_FileName:= Mp4ffFileName;
+   uosInit.OP_FileName:= opusFileName;
+   uosInit.OF_FileName:= opusfileFileName;
    
    result := uosInit.loadlib ;
   end;
@@ -4628,10 +4867,10 @@ begin
  end;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
                     ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
- uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, AAC) ;
+ uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus) ;
 end;
 
 procedure uos_UnloadPlugin(PluginName: PChar);
@@ -4785,8 +5024,10 @@ begin
   uosLoadResult.STloadERROR := -1;
   uosLoadResult.MPloadERROR := -1;
   uosLoadResult.AAloadERROR := -1;
+  uosLoadResult.OPloadERROR := -1;
   uosLoadResult.PAinitError := -1;
   uosLoadResult.MPinitError := -1;
+  
   if ifflat = true then
   begin
   setlength(uosPlayers,0) ;
@@ -4797,6 +5038,8 @@ begin
   MP_FileName := nil; // Mpg123
   AA_FileName := nil; // Faad
   M4_FileName := nil; // Mp4ff
+  OP_FileName := nil; // opus
+  OF_FileName := nil; // opusfile
   Plug_ST_FileName := nil; // Plugin SoundTouch
   Plug_BS_FileName := nil; // Plugin bs2b
 end;
@@ -4906,7 +5149,7 @@ begin
     inherited Destroy;
 end;
 
-procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc: boolean);
+procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc, opus: boolean);
                ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
    {$IF DEFINED(portaudio)}
@@ -4921,11 +5164,18 @@ begin
   {$IF DEFINED(neaac)}
   if AAC = True then aa_Unload();
    {$endif}
+   {$IF DEFINED(opus)}
+  if opus = True then
+  begin
+   of_Unload();
+   op_Unload();
+   end;
+   {$endif}
 end;
 
 procedure uos_Free();
-var
-x : integer;
+// var
+// x : integer;
 begin
 {
 if ifflat = true then

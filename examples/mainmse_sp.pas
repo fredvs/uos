@@ -296,7 +296,7 @@ loadok : boolean = false;
 
 if uos_LoadLib(Pchar(AnsiString(mainfo.padir.value)), Pchar(AnsiString(mainfo.sfdir.value)),
  Pchar(AnsiString(mainfo.mpdir.value)), Pchar(AnsiString(mainfo.m4dir.value)),
- Pchar(AnsiString(mainfo.fadir.value))) = 0 
+ Pchar(AnsiString(mainfo.fadir.value)), nil, nil) = 0 
 
  then
     begin

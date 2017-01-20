@@ -151,14 +151,15 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
 {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusFileName, opusfileFileName: PChar) : LongInt;
          ////// load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...    
      // PortAudio => needed for dealing with audio-device
      // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
      // Mpg123 => needed for dealing with mp* audio-files
      // Mp4ff and Faad => needed for dealing with acc, m4a audio-files
+     // opus and opusfile => needed for dealing with opus audio-files
 
-    // If some libraries are not needed, replace it by "nil", for example : uos_loadlib(PortAudioFileName, SndFileFileName, nil, nil, nil)
+    // If some libraries are not needed, replace it by "nil", for example : uos_loadlib(PortAudioFileName, SndFileFileName, nil, nil, nil, nil, nil)
 
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
@@ -167,7 +168,7 @@ procedure uos_free;
         /// Free uos;
         // To use when program terminate.
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
            ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
@@ -1298,10 +1299,10 @@ begin
  uosPlayers[PlayerIndex].StreamOut[OutIndex].LoopProc := Proc;
 end;
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusFileName, opusfileFileName: PChar) : LongInt;
   begin
    ifflat := true;
-result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName)  ;
+result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusFileName, opusfileFileName)  ;
 //uosLoadResult:= uos.uosLoadResult;
   end;
   
@@ -1341,10 +1342,10 @@ procedure uos_unloadlib() ;
  uos.uos_unloadlib() ;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus : boolean);
                     ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 begin
-uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123, AAC) ;
+uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus) ;
 uosLoadResult:= uos.uosLoadResult;
 end;
 

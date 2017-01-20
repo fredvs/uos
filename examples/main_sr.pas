@@ -145,8 +145,9 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar) : integer;
-  if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), nil, nil, nil) = 0 then
+//function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
+  // Mp4ffFileName, FaadFileName, opusfilename, opusfilefilename: PChar) : LongInt;
+  if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), nil, nil, nil, nil, nil) = 0 then
    begin
     form1.hide;
     button1.Caption := 'PortAudio and SndFile libraries are loaded...';

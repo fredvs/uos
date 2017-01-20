@@ -19,9 +19,11 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
-findinfiledialog=46
+findinfiledialog=50
  [findinfileadialogfo.subdirs]
  value=1
+ [findinfileadialogfo.incurrentfile]
+ value=0
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
@@ -48,8 +50,10 @@ findinfiledialog=46
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=loadlibrary
- history=10
+ value=cfloat
+ history=12
+  cfloat
+  ProcessMessages
   loadlibrary
   Data.OutFrames
   IPAIODataIOInterface
@@ -99,7 +103,7 @@ replacedialog=23
  y=216
  cx=437
  cy=171
-options=108
+options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -178,9 +182,15 @@ options=108
  sortdescend10=0
  width11=479
  sortdescend11=0
+ [projectoptionsfo.comment_1]
+ value=
+ [projectoptionsfo.comment_B]
+ value=
+ [projectoptionsfo.comment_M]
+ value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=4
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -199,9 +209,9 @@ options=108
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=1
- [projectoptionsfo.tabwidget]
+ [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=339
@@ -272,6 +282,17 @@ makeoptions=10
  -vewnbq
  -ghl
  -CX -Cg  -g -gl -Xg -vewnhibq 
+makeoptpurpose=10
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 compilerused=29
  ${COMPILER} (Default)
  Pascal 1
@@ -465,8 +486,8 @@ makeoptionson=10
  511
  499
  255
- 0
- 0
+ 2
+ 2
 compilerusedon=29
  3903
  0
@@ -519,6 +540,25 @@ exeusedon=14
  0
  0
  0
+comment_M=
+comment_B=
+comment_1=
+comment_2=
+comment_3=
+comment_4=
+comment_5=
+comment_6=
+comment_7=
+comment_8=
+comment_9=
+comment_0=
+project_name=
+project_creator=
+project_copyright=
+project_license=
+project_time=
+project_date=02:01:00 20/01/2017
+project_comment=
 aftcommandon=0
 unitdirson=7
  197119
@@ -727,56 +767,49 @@ sigsettings=27
  30,30,T,F
 defaultmake=32
 [breakpoints]
-on=7
+on=6
+ -1
  0
  -1
  0
  0
  -1
- 0
- 0
-path=7
- /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/uos.pas
+path=6
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/paio_channelhelper.pas
  /home/fred/uos_aac_new/examples/uos_aac.pas
  /home/fred/uos/examples/uos_aac.pas
  /home/fred/uos/examples/uos.pas
-line=7
- 1763
- 3392
- 1778
+ /home/fred/uos/examples/uos.pas
+line=6
+ 3546
  33
  913
  764
- 2425
-address=7
- 4880000
- 4906333
- 4880321
+ 2490
+ 1831
+address=6
+ 4963430
  0
  0
- 4977424
- 4889651
-addbkpt=7
- 0
- 0
- 0
- 0
- 0
- 0
- 0
-ignore=7
+ 5042912
+ 4945570
+ 4936828
+addbkpt=6
  0
  0
  0
  0
  0
  0
+ignore=6
  0
-condition=7
- 
+ 0
+ 0
+ 0
+ 0
+ 0
+condition=6
  
  
  
@@ -865,49 +898,109 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=synth
+finddtext=VLeft
 findhistory=20
- synth
- reverse
- fnoise
- FPCSinTable
- FNoise
- TuosNoiseRemoval
- Noise
- TNoise
- TNoiseRemoval
- NoiseRemovalMultiChannel
- .create
- FFFT
- PFFT
- noise
- create
- flat
- destroy
- AddDSPin
+ VLeft
+ dspvol
+ vuLeft
+ Height
+ CvFloat32ToInt32fl
+ soundtouc
+ oops
+ oop
+ cfloat
+ var
  writeln
- unix
+ SamplerateRoot
+ reverse
+ uos_InputGetSampleRate
+ raw
+ _pcm
+ seek
+ ratio
+ position
+ test.
 findoptions=1
-editpos=4
+editpos=16
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 22,557
+ 0,-1073741823
+ 0,1258
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+bookmarks5=0
+bookmarks6=0
+bookmarks7=0
+bookmarks8=0
+bookmarks9=0
+bookmarks10=0
+bookmarks11=0
+bookmarks12=0
+bookmarks13=0
+bookmarks14=0
+bookmarks15=0
+sourcefiles=16
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/uos.pas
-relpaths=4
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ /home/fred/fpgui/src/corelib/fpg_base.pas
+ ${PROJECTDIR}/uos_opus.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/uos_opusfile.pas
+ ${PROJECTDIR}/OpusToWav.pas
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=16
  simpleplayer_fpGUI.pas
  uos_flat.pas
  uos_dsp_noiseremoval.pas
  uos.pas
-ismoduletexts=4
+ simpleplayer_fpGUI.pas
+ fpgui/src/corelib/fpg_base.pas
+ uos_opus.pas
+ uos_portaudio.pas
+ uos_opusfile.pas
+ OpusToWav.pas
+ define.inc
+ uos_flat.pas
+ simpleplayer_fpGUI.pas
+ uos.pas
+ uos_portaudio.pas
+ uos_flat.pas
+ismoduletexts=16
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -918,8 +1011,8 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
-firsttab=0
-index=3
+firsttab=3
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -934,8 +1027,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=954
- cy=585
+ cx=1356
+ cy=779
  rcx=0
  rcy=0
  [mainfo]
@@ -947,16 +1040,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=240
- y=61
- cx=964
+ x=231
+ y=53
+ cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,954,585
+  basedock,0,0,1356,779
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1070,18 +1163,18 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=426
+ cy=570
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
- propcolwidthref=18
- width0=141
+ propcolwidthref=49
+ width0=110
  sortdescend0=0
- width1=12
+ width1=43
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1244,8 +1337,8 @@ windowlayout=530
  [watchfo.grid]
  propcolwidthref=121
  values0=2
-  -1
-  -1
+  0
+  0
  values0_ci=-1
  sortdescend0=0
  values1=2
@@ -1279,9 +1372,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=488
- cx=954
- cy=97
+ y=645
+ cx=1356
+ cy=134
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1380,8 +1473,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=954
- cy=56
+ cx=1356
+ cy=69
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1391,13 +1484,13 @@ windowlayout=530
  visible=1
  mdistate=0
  nx=0
- ny=52
- ncx=954
- ncy=3
+ ny=47
+ ncx=928
+ ncy=2
  x=0
- y=52
- cx=954
- cy=3
+ y=47
+ cx=1356
+ cy=20
  rcx=0
  rcy=0
  [sourcefo]
@@ -1412,8 +1505,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=792
- cy=426
+ cx=1194
+ cy=570
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1447,9 +1540,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=59
- cx=954
- cy=426
+ y=72
+ cx=1356
+ cy=570
  rcx=0
  rcy=0
 [targetconsole]

@@ -877,7 +877,7 @@ sourcefiles=16
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/uos.pas
 relpaths=16
  uos.pas
  uos_flat.pas

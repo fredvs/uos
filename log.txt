@@ -34,7 +34,8 @@
 * 19 th changes: 2016-01-31 (Stereo to BinAural (bs2b) plugin + new LoadLib()  *
 * 20 th changes: 2016-02-21 (Andrew's Noise Removal DSP)                       *
 * 21 th changes: 2016-02-26 (Franklyn A. Harlow : AAC (m4a) and CD audio)      *
-* 22 th changes: 2016-10-24 (First shot of Synthesizer input)                   *
+* 22 th changes: 2016-10-24 (First shot of Synthesizer input)                  *
+* 23 th changes: 2017-01-20 (Opus and OpusFile libraries wrappers included)    *
 *                                                                              *
 ********************************************************************************}
 

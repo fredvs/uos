@@ -226,10 +226,11 @@ procedure TForm1.Button1Click(Sender: TObject);
 
 begin
   // Load the libraries
-  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+  //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
+  // Mp4ffFileName, FaadFileName, opusfilename, opusfilefilename: PChar) : LongInt;
 
   if uos_LoadLib(Pchar(Edit1.text), Pchar(Edit2.text),
-     Pchar(Edit3.text), Pchar(Edit8.text), Pchar(Edit9.text)) = 0 then
+     Pchar(Edit3.text), Pchar(Edit8.text), Pchar(Edit9.text), nil, nil) = 0 then
  begin
     form1.hide;
     form1.Position := podefault;

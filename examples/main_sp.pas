@@ -27,6 +27,7 @@ type
     chkstereo2mono: TCheckBox;
     Chknoise: TCheckBox;
     Edit1: TEdit;
+    Edit10: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
     Edit4: TEdit;
@@ -34,10 +35,13 @@ type
     Edit6: TEdit;
     Edit7: TEdit;
     Edit8: TEdit;
+    Edit9: TEdit;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -189,6 +193,8 @@ begin
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
   Edit7.text := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
+  Edit9.text := ordir + 'lib\Windows\32bit\LibOpus-64.so';
+  Edit10.text := ordir + 'lib\Windows\32bit\LibOpusFile-64.so';
   Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
   Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
   Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
@@ -230,6 +236,8 @@ begin
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   Edit7.text := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
   Edit8.text := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
+  Edit9.text := ordir + 'lib/Linux/64bit/LibOpus-64.so';
+  Edit10.text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
   Edit6.Text := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
 {$else}
@@ -278,10 +286,10 @@ var
 loadok : boolean = false;
 begin
   // Load the libraries
-  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilename, opusfilefilename: PChar) : LongInt;
 
   if uos_LoadLib(Pchar(Edit1.text), Pchar(Edit2.text),
-     Pchar(Edit3.text), Pchar(Edit7.text), Pchar(Edit8.text)) = 0 then
+     Pchar(Edit3.text), Pchar(Edit7.text), Pchar(Edit8.text), Pchar(Edit9.text), Pchar(Edit10.text)) = 0 then
   // You may load one or more libraries . When you want... :
 
  begin
@@ -291,9 +299,12 @@ begin
     edit1.ReadOnly := True;
     edit2.ReadOnly := True;
     edit3.ReadOnly := True;
-    edit5.ReadOnly := True;
+    edit7.ReadOnly := True;
+    edit8.ReadOnly := True;
+    edit9.ReadOnly := True;
+    edit10.ReadOnly := True;
           button1.Caption :=
-        'PortAudio, SndFile and Mpg123 libraries are loaded...'  ;
+        'PortAudio, SndFile, Mpg123, AAC, Opus libraries are loaded...'  ;
              end else  MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
 
 if loadok = true then
@@ -303,7 +314,7 @@ if loadok = true then
        begin
       plugsoundtouch := true;
         button1.Caption :=
-        'PortAudio, SndFile, Mpg123 and Plugin are loaded...';
+        'PortAudio, SndFile, Mpg123, AAC, Opus and Plugin are loaded...';
         end
          else
          begin
@@ -319,7 +330,7 @@ if loadok = true then
       and (uos_LoadPlugin('bs2b', Pchar(edit6.text)) = 0)
       then plugbs2b := true else CheckBox3.enabled := false;
 
-    form1.Height := 556;
+    form1.Height := 659;
     form1.Position := poScreenCenter;
     form1.Caption := 'Simple Player.    uos version ' + inttostr(uos_getversion());
     form1.Show;
@@ -626,8 +637,8 @@ procedure Tform1.ShowLevel;
 begin
   ShapeLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 92);
   ShapeRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 92);
-  ShapeLeft.top := 430- ShapeLeft.Height;
-  ShapeRight.top := 430 - ShapeRight.Height;
+  ShapeLeft.top := 545- ShapeLeft.Height;
+  ShapeRight.top := 545 - ShapeRight.Height;
 end;
 
 procedure Tform1.LoopProcPlayer1;
@@ -635,28 +646,32 @@ begin
  ShowPosition;
  ShowLevel ;
 end;
-//{
 function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
-begin
-  if Data.position > Data.OutFrames div Data.ratio then
-    uos_Seek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div (Data.Ratio)));
-end;
+ begin
 
-function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
-var
-  x: integer;
-  arfl: TDArFloat;
-begin
-  SetLength(arfl, length(Data.Buffer));
+   if (Data.position > Data.OutFrames div Data.channels) then
+    uos_Seek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
+  end;
 
-  for x := 0 to ((Data.OutFrames * Data.Ratio) - 1) do
-    if odd(x) then
-      arfl[x] := Data.Buffer[((Data.OutFrames * Data.Ratio) - 1) - x - 1]
-    else
-      arfl[x] := Data.Buffer[((Data.OutFrames * Data.Ratio) - 1) - x + 1];
-  Result := arfl;
-end;
-//}
+ function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+ var
+   x: integer = 0;
+   arfl: TDArFloat;
+
+ begin
+  if (Data.position > Data.OutFrames div Data.channels) then
+  begin
+    SetLength(arfl, Data.outframes);
+
+       while x < Data.outframes -1  do
+         begin
+     arfl[x] := Data.Buffer[Data.outframes - x - 1] ;
+     arfl[x+1] := Data.Buffer[Data.outframes - x ]  ;
+     x := x +2;
+         end;
+   Result := arfl;
+   end else Result := Data.Buffer;
+ end;
 
 function DSPStereo2Mono(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
 var
@@ -717,7 +732,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Form1.Height := 326;
+  Form1.Height := 428;
   ShapeLeft.Height := 0;
   ShapeRight.Height := 0;
 end;
