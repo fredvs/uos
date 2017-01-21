@@ -175,11 +175,11 @@ var
 
  op_set_gain_offset: function(OpusFile: TOggOpusFile; gain_type: Integer; gain_offset_q8: Integer): Integer;
  op_set_dither_enabled: procedure(OpusFile: TOggOpusFile; enabled: Integer);
- op_read: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer; li: pointer): Integer;
- op_read_float: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer; li: pointer): Integer;
- op_read_stereo: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer): Integer;
+ 
+ op_read: function(OpusFile: TOggOpusFile; pcm : pcint; SampleCount: Integer; li: pcint): Integer;
+ op_read_float: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer; li: pcint): Integer;
+ op_read_stereo: function(OpusFile: TOggOpusFile; pcm : pcint; SampleCount: Integer): Integer;
  op_read_float_stereo: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer): Integer;
-
  of_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
 
  ReferenceCounter : cardinal = 0;  // Reference counter

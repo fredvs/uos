@@ -260,9 +260,9 @@ type
 
     var Pa_GetStreamCpuLoad: function(stream : PPaStream):CDouble ; cdecl;
 
-    var Pa_ReadStream: function(stream : PPaStream; buffer : Pointer;frames : CULong):PaError ; cdecl;
+    var Pa_ReadStream: function(stream : PPaStream; buffer : pcfloat ;frames : CULong):PaError ; cdecl;
 
-    var Pa_WriteStream: function(stream : PPaStream; buffer : Pointer;frames : CULong):PaError ; cdecl;
+    var Pa_WriteStream: function(stream : PPaStream; buffer : pcfloat ;frames : CULong):PaError ; cdecl;
 
     var Pa_GetStreamReadAvailable: function(stream : PPaStream):CSLong ; cdecl;
 
