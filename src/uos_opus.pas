@@ -109,15 +109,18 @@ type
   end;
   
   var
-  opus_get_version_string: function(): PAnsiChar; cdecl;    opus_strerror: function(error: Integer): PAnsiChar; cdecl;  opus_encode: function(st: TOpusEncoder; const pcm; frame_size: Integer; var data; max_data_bytes: Integer): Integer; cdecl;  opus_encode_float: function(st: TOpusEncoder; const pcm; frame_size: Integer; var data; max_data_bytes: Integer): Integer; cdecl;
+  opus_get_version_string: function(): PAnsiChar; cdecl;    opus_strerror: function(error: Integer): PAnsiChar; cdecl;  
+  opus_encode: function(st: TOpusEncoder; pcm : pcfloat; frame_size: Integer;
+   var data; max_data_bytes: Integer): Integer; cdecl; 
+  opus_encode_float: function(st: TOpusEncoder; pcm : pcfloat; frame_size: Integer; var data; max_data_bytes: Integer): Integer; cdecl;
   opus_encoder_create: function(Fs: Integer; channels, application: Integer; out error: Integer): TOpusEncoder; cdecl;
   opus_encoder_ctl: function(st: TOpusEncoder; const req: TOpusCTLRequestRecord): Integer;
   opus_encoder_destroy: procedure(st: TOpusEncoder);
   opus_encoder_get_size: function(channels: Integer): Integer;
   opus_encoder_init: function(st: TOpusEncoder; Fs: Integer; channels, application: Integer): Integer;
 
- opus_decode: function(st: TOpusDecoder; const data; len: Integer; var pcm; frame_size, decode_fec: Integer): Integer;
- opus_decode_float: function(st: TOpusDecoder; const data; len: Integer; var pcm; frame_size, decode_fec: Integer): Integer;
+ opus_decode: function(st: TOpusDecoder; const data; len: Integer; pcm : pcfloat; frame_size, decode_fec: Integer): Integer;
+ opus_decode_float: function(st: TOpusDecoder; const data; len: Integer; pcm : pcfloat; frame_size, decode_fec: Integer): Integer;
  opus_decoder_create: function(fs: Integer; channels: Integer; out error: Integer): TOpusDecoder;
  opus_decoder_ctl: function(st: TOpusDecoder; const req: TOpusCTLRequestRecord): Integer;
  opus_decoder_destroy: procedure(st: TOpusDecoder);
@@ -130,7 +133,7 @@ type
  opus_packet_get_nb_samples: function(const packet; len, fs: Integer): Integer;
  opus_packet_get_samples_per_frame: function(const packet; fs: Integer): Integer;
  opus_packet_parse: function(const packet; var out_toc: Pointer; var frames: TOpusFrames; var size: TOpusFrameSizes; var payload_offset: Integer): Integer;
- opus_pcm_soft_clip: procedure(const pcm; frame_size, channels: Integer; var softclip_mem: Double);
+ opus_pcm_soft_clip: procedure(pcm : pcfloat; frame_size, channels: Integer; var softclip_mem: Double);
  
  opus_multistream_packet_pad: function(var data; len, new_len, nb_streams: Integer): Integer;
  opus_multistream_packet_unpad: function(var data; len, nb_streams: Integer): Integer;
@@ -145,16 +148,16 @@ type
  opus_repacketizer_out: function(rp: TOpusRepacketizer; var data; maxlen: Integer): Integer;
  opus_repacketizer_out_range: function(rp: TOpusRepacketizer; var data; maxlen: Integer): Integer;
 
- opus_multistream_decode: function(st: TOpusMSDecoder; const data; len: Integer; var pcm; frame_size, decode_fec: Integer): Integer;
- opus_multistream_decode_float: function(st: TOpusMSDecoder; const data; len: Integer; var pcm; frame_size, decode_fec: Integer): Integer;
+ opus_multistream_decode: function(st: TOpusMSDecoder; const data; len: Integer; pcm : pcfloat; frame_size, decode_fec: Integer): Integer;
+ opus_multistream_decode_float: function(st: TOpusMSDecoder; const data; len: Integer; pcm : pcfloat; frame_size, decode_fec: Integer): Integer;
  opus_multistream_decoder_create: function(fs: Integer; channels, streams, coupled_streams: Integer; const mapping: array of Byte; out error: Integer): TOpusMSDecoder;
  opus_multistream_decoder_ctl: function(st: TOpusMSDecoder; const req: TOpusCTLRequestRecord): Integer;
  opus_multistream_decoder_destroy: procedure(st: TOpusMSDecoder);
  opus_multistream_decoder_get_size: function(streams, coupled_streams: Integer): Integer;
  opus_multistream_decoder_init: function(st: TOpusMSDecoder; fs: Integer; channels, streams, coupled_streams: Integer; const mapping: array of Byte): Integer;
 
- opus_multistream_encode: function(st: TOpusMSEncoder; const pcm; frame_size: Integer; var data; max_data_bytes: Integer): Integer;
- opus_multistream_encode_float: function(st: TOpusMSEncoder; const pcm; frame_size: Integer; var data; max_data_bytes: Integer): Integer;
+ opus_multistream_encode: function(st: TOpusMSEncoder; pcm : pcfloat; frame_size: Integer; var data; max_data_bytes: Integer): Integer;
+ opus_multistream_encode_float: function(st: TOpusMSEncoder; pcm : pcfloat; frame_size: Integer; var data; max_data_bytes: Integer): Integer;
  opus_multistream_encoder_create: function(Fs: Integer; channels, streams, coupled_streams: Integer; const mapping: array of Byte; application: Integer; out error: Integer): TOpusMSEncoder;
  opus_multistream_encoder_ctl: function(st: TOpusMSEncoder; const req: TOpusCTLRequestRecord): Integer;
  opus_multistream_encoder_destroy: procedure(st: TOpusMSEncoder);

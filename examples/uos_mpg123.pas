@@ -17,7 +17,7 @@ interface
 
 {$LONGSTRINGS ON}
 uses
-  dynlibs;
+ ctypes, dynlibs;
 
 type
   Tmpg123_handle = Pointer;
@@ -331,7 +331,7 @@ type
   Tmpg123_close = function(mh: Tmpg123_handle): integer; cdecl;
 
 type
-  Tmpg123_read = function(mh: Tmpg123_handle; outmemory: Pointer;
+  Tmpg123_read = function(mh: Tmpg123_handle; outmemory: pcfloat;
     outmemsize: size_t; var done: size_t): integer; cdecl;
 
 type

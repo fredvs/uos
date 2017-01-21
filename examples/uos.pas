@@ -1042,23 +1042,18 @@ function CvFloat32ToInt32fl(Inbuf: TDArFloat; nb:integer): TDArFloat;
 var
    i: cint32;
    x : LongInt;
-  arlo: TDArFloat;
+   arlo: TDArLong;
 begin
-  SetLength(arlo, length(inbuf));
-    for x := 0 to length(arlo) -1 do
-             arlo[x] := 0; 
-  
+{ // not working
+SetLength(arlo, nb);
+ arlo:= CvFloat32ToInt32(Inbuf);
+   
   for x := 0 to nb -1 do
   begin
-    i := round(Inbuf[x] * 2147483647);
-    if i > 2147483647 then
-      i := 2147483647
-    else
-    if i < -2147483648 then
-      i := -2147483648;
-    arlo[x] := int32(i);
-  end;
-  Result := arlo;
+  Inbuf[x] :=cint32(arlo[x]);
+   end;
+  }
+  Result := Inbuf;
 end;
 
 
@@ -3193,9 +3188,11 @@ var
 
 begin
   result := -1 ;
+  // WriteLn('avant tout'); 
    if fileexists(filename) then
     begin
     x := 0;
+   //  WriteLn('avant setlength'); 
     SetLength(StreamIn, Length(StreamIn) + 1);
     StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
     x := Length(StreamIn) - 1;
@@ -3204,7 +3201,7 @@ begin
     StreamIn[x].Data.levelEnable := 0;
     StreamIn[x].Data.positionEnable := 0;
     StreamIn[x].Data.levelArrayEnable := 0;
-
+   // WriteLn('apres setlength'); 
     {$IF DEFINED(sndfile)}
        if (uosLoadResult.SFloadERROR = 0) then
     begin
@@ -3336,10 +3333,11 @@ begin
     if (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
     begin
       Err := -1;
-
+       //  WriteLn('avant opus test');    
+      
       StreamIn[x].Data.HandleSt := pchar('opus');
       StreamIn[x].Data.HandleOP := op_test_file(PChar(FileName), Err);
-        
+     // WriteLn('apres opus test');      
     if Err=0
     then begin
          Err := op_test_open(StreamIn[x].Data.HandleOP);
@@ -3789,17 +3787,25 @@ begin
              //  StreamIn[x].Data.Buffer[x2] := cfloat(0.0);         
               case StreamIn[x].Data.SampleFormat of
                     0: StreamIn[x].Data.outframes := op_read_float(StreamIn[x].Data.HandleOP,
-                       StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels, nil);
+                       @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels, nil);
                     1: begin 
-                       StreamIn[x].Data.outframes := op_read(StreamIn[x].Data.HandleOP,
-                       StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes  * StreamIn[x].Data.channels, nil);
+                       StreamIn[x].Data.outframes := op_read_float(StreamIn[x].Data.HandleOP,
+                       @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes  * StreamIn[x].Data.channels, nil);
               
                     // no int32 format with opus => need a conversion from float32 to int32 (not working yet).
-                    // StreamIn[x].Data.Buffer := CvFloat32ToInt32fl( StreamIn[x].Data.Buffer,
-                    // StreamIn[x].Data.outframes * StreamIn[x].Data.Channels );
+                     StreamIn[x].Data.Buffer := Cvfloat32ToInt32fl( StreamIn[x].Data.Buffer,
+                     StreamIn[x].Data.outframes * StreamIn[x].Data.Channels );
                        end;
-                    2: StreamIn[x].Data.outframes := op_read(StreamIn[x].Data.HandleOP,
-                       StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes, nil);
+                    2: begin
+                      // setlength(BufferplugLO, length(StreamIn[x].Data.Buffer));
+                  
+                     StreamIn[x].Data.outframes := op_read(StreamIn[x].Data.HandleOP,
+                     @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes, nil);
+                  // @BufferplugLO[0], StreamIn[x].Data.Wantframes, nil);
+                        
+                  //   for x2 := 0 to (StreamIn[x].Data.outframes) -1 do
+                  //   StreamIn[x].Data.Buffer[x2] := (BufferplugLO[x2]);      ////// clear input   
+                  end;
                   end;
       
                StreamIn[x].Data.outframes := StreamIn[x].Data.outframes * StreamIn[x].Data.Channels;

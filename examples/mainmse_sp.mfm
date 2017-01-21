@@ -1,9 +1,9 @@
 object simple_player: tmainfo
   color = 10734762
-  bounds_x = 366
-  bounds_y = 24
+  bounds_x = 361
+  bounds_y = 77
   bounds_cx = 485
-  bounds_cy = 524
+  bounds_cy = 493
   container.optionswidget1 = []
   container.frame.localprops = []
   container.frame.localprops1 = []
@@ -15,7 +15,7 @@ object simple_player: tmainfo
     0
     0
     485
-    524
+    493
   )
   options = [fo_main, fo_terminateonclose, fo_screencentered, fo_autoreadstat, fo_autowritestat, fo_savepos, fo_savezorder, fo_savestate]
   caption = 'Simple Player'
@@ -48,7 +48,7 @@ object simple_player: tmainfo
   object btnload: tbutton
     color = 15132390
     bounds_x = 8
-    bounds_y = 280
+    bounds_y = 368
     bounds_cx = 466
     bounds_cy = 21
     state = [as_localcaption, as_localcolor, as_localonexecute]
@@ -121,7 +121,7 @@ object simple_player: tmainfo
     )
     taborder = 4
     bounds_x = 48
-    bounds_y = 238
+    bounds_y = 318
     bounds_cx = 388
     bounds_cy = 39
     controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
@@ -169,7 +169,7 @@ object simple_player: tmainfo
     )
     taborder = 6
     bounds_x = 48
-    bounds_y = 198
+    bounds_y = 278
     bounds_cx = 388
     bounds_cy = 39
     controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
@@ -178,7 +178,7 @@ object simple_player: tmainfo
   object tdockpanel1: tdockpanel
     taborder = 7
     bounds_x = 0
-    bounds_y = 304
+    bounds_y = 400
     bounds_cx = 482
     bounds_cy = 210
     object tlabel3: tlabel
@@ -258,6 +258,7 @@ object simple_player: tmainfo
       bounds_y = 3
       bounds_cx = 340
       bounds_cy = 39
+      controller.options = [fdo_sysfilename, fdo_savelastdir]
       reffontheight = 15
     end
     object trackbar1: tslider
@@ -562,6 +563,54 @@ object simple_player: tmainfo
     taborder = 8
     bounds_x = 48
     bounds_y = 158
+    bounds_cx = 388
+    bounds_cy = 39
+    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    reffontheight = 15
+  end
+  object ofdir: tfilenameedit
+    frame.caption = 'Folder + filename of OpusFile library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 9
+    bounds_x = 48
+    bounds_y = 240
+    bounds_cx = 388
+    bounds_cy = 39
+    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    reffontheight = 15
+  end
+  object opdir: tfilenameedit
+    frame.caption = 'Folder + filename of Opus library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 10
+    bounds_x = 48
+    bounds_y = 200
     bounds_cx = 388
     bounds_cy = 39
     controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'

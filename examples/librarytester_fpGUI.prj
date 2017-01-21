@@ -79,7 +79,7 @@ replacedialog=15
  y=302
  cx=437
  cy=171
-options=108
+options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -115,8 +115,8 @@ options=108
  width4=283
  sortdescend4=0
  sorted=0
- col=0
- row=0
+ col=-1073741823
+ row=-1073741823
  rowheight=17
  [projectoptionsfo.newfile]
  firsttab=0
@@ -141,7 +141,7 @@ options=108
  x=0
  y=203
  xprop=1
- yprop=0.46292134831461
+ yprop=0.46396396396396
  [projectoptionsfo.macrogrid]
  propcolwidthref=148
  sortdescend0=0
@@ -158,9 +158,15 @@ options=108
  sortdescend10=0
  width11=132
  sortdescend11=0
+ [projectoptionsfo.comment_1]
+ value=
+ [projectoptionsfo.comment_B]
+ value=
+ [projectoptionsfo.comment_M]
+ value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=0
+ index=3
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -169,7 +175,7 @@ options=108
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo.filefiltergrid]
  propcolwidthref=632
  width0=112
@@ -179,7 +185,7 @@ options=108
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=2
- [projectoptionsfo.tabwidget]
+ [projectoptionsfo.setting_tab]
  firsttab=0
  index=2
  [projectoptionsfo]
@@ -249,6 +255,14 @@ makeoptions=7
  -B
  -O2 -XX -Xs -CX
  -vewnhibq
+makeoptpurpose=7
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 compilerused=21
  ${COMPILER} (Default)
  Pascal 1
@@ -434,10 +448,10 @@ makeoptionson=7
  560
  575
 compilerusedon=21
- 69631
+ 4079
  0
  0
- 0
+ 16
  0
  0
  0
@@ -456,14 +470,14 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 69631
+ 4079
  0
  0
  0
  0
- 0
+ 16
 exeusedon=14
- 69631
+ 4095
  0
  0
  0
@@ -477,13 +491,32 @@ exeusedon=14
  0
  0
  0
+comment_M=
+comment_B=
+comment_1=
+comment_2=
+comment_3=
+comment_4=
+comment_5=
+comment_6=
+comment_7=
+comment_8=
+comment_9=
+comment_0=
+project_name=
+project_creator=
+project_copyright=
+project_license=
+project_time=
+project_date=04:45:11 21/01/2017
+project_comment=
 aftcommandon=0
 unitdirson=7
  197695
  197695
- 0
+ 196624
  197695
- 197695
+ 197679
  197695
  197695
 macroon=5
@@ -739,14 +772,19 @@ findhistory=7
  sort
  uses
 findoptions=1
-editpos=1
+editpos=2
  0,7
+ 0,-1073741823
 bookmarks0=0
-sourcefiles=1
+bookmarks1=0
+sourcefiles=2
  ${PROJECTDIR}/librarytester_fpGUI.pas
-relpaths=1
+ /home/fred/fpgui/src/corelib/fpg_base.pas
+relpaths=2
  librarytester_fpGUI.pas
-ismoduletexts=1
+ fpgui/src/corelib/fpg_base.pas
+ismoduletexts=2
+ 0
  0
 modules=0
 moduleoptions=0
@@ -765,11 +803,11 @@ windowlayout=530
  visible=1
  mdistate=0
  nx=0
- ny=19
+ ny=0
  ncx=956
  ncy=585
  x=0
- y=19
+ y=0
  cx=956
  cy=585
  rcx=0
@@ -790,7 +828,7 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,19,956,585
+  basedock,0,0,956,585
  focusedchild=0
  wsize=0
  active=1
@@ -834,7 +872,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=cpuc86_64fo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -998,7 +1036,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1186,7 +1224,7 @@ windowlayout=530
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1227,11 +1265,11 @@ windowlayout=530
  visible=1
  mdistate=0
  nx=0
- ny=52
- ncx=956
- ncy=6
+ ny=51
+ ncx=953
+ ncy=2
  x=0
- y=51
+ y=48
  cx=953
  cy=2
  rcx=0
@@ -1256,7 +1294,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

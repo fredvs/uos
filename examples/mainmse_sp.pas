@@ -2,13 +2,13 @@ unit mainmse_sp;
 {$ifdef FPC}{$mode objfpc}{$h+}{$endif}
 interface
 uses
- uos_flat, ctypes,msetypes,mseglob,mseguiglob,mseguiintf,mseapplication,
- msestat,msemenus,msegui,msegraphics,msegraphutils,mseevent,mseclasses,
- msewidgets,mseforms,msesimplewidgets,msedataedits,mseedit,mseificomp,
- mseificompglob,mseifiglob,msestatfile,msestream,msestrings,sysutils,
- msegraphedits,msescrollbar,msefileutils,msemenuwidgets,msegrids,msewidgetgrid,
- msebitmap,msedatanodes,msefiledialog,mselistbrowser,msesys,msesignal,
- msebarcode,msedock,msedragglob;
+ uos_flat, ctypes,msetypes,mseglob,mseguiglob,mseguiintf,mseapplication,msestat,
+ msemenus,msegui,msegraphics,msegraphutils,mseevent,mseclasses,msewidgets,
+ mseforms,msesimplewidgets,msedataedits,mseedit,mseificomp,mseificompglob,
+ mseifiglob,msestatfile,msestream,msestrings,sysutils,msegraphedits,
+ msescrollbar,msefileutils,msemenuwidgets,msegrids,msewidgetgrid,msebitmap,
+ msedatanodes,msefiledialog,mselistbrowser,msesys,msesignal,msebarcode,msedock,
+ msedragglob,mseact;
 
 type
  tmainfo = class(tmainform)
@@ -50,6 +50,8 @@ type
    checkbox2: tbooleanedit;
    vuLeft: tdockpanel;
    vuRight: tdockpanel;
+   ofdir: tfilenameedit;
+   opdir: tfilenameedit;
    procedure loadlibr(const sender: TObject);
    procedure playit(const sender: TObject);
     procedure ClosePlayer1;
@@ -140,12 +142,12 @@ uses
   else Result := Data.Buffer; 
   end;
 
- 
  function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
   begin
-    if Data.position > Data.OutFrames div Data.ratio then
-      uos_Seek(PlayerIndex1, InputIndex1, Data.position - 2 - (Data.OutFrames div Data.Ratio));
-  end;
+   
+    if (Data.position > Data.OutFrames div Data.channels) then
+     uos_Seek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
+   end;
 
   function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
   var
@@ -153,15 +155,18 @@ uses
     arfl: TDArFloat;
 
   begin
-    SetLength(arfl, length(Data.Buffer));
-       while x < length(Data.Buffer) + 1 do
+   if (Data.position > Data.OutFrames div Data.channels) then
+   begin
+     SetLength(arfl, Data.outframes);
+ 
+        while x < Data.outframes -1  do
           begin
-      arfl[x] := Data.Buffer[length(Data.Buffer) - x - 1] ;
-      arfl[x+1] := Data.Buffer[length(Data.Buffer) - x ]  ;
-         x := x +2;
+      arfl[x] := Data.Buffer[Data.outframes - x - 1] ;
+      arfl[x+1] := Data.Buffer[Data.outframes - x ]  ;
+      x := x +2;
           end;
-
     Result := arfl;
+    end else Result := Data.Buffer;
   end;
   
  
@@ -296,13 +301,14 @@ loadok : boolean = false;
 
 if uos_LoadLib(Pchar(AnsiString(mainfo.padir.value)), Pchar(AnsiString(mainfo.sfdir.value)),
  Pchar(AnsiString(mainfo.mpdir.value)), Pchar(AnsiString(mainfo.m4dir.value)),
- Pchar(AnsiString(mainfo.fadir.value)), nil, nil) = 0 
+ Pchar(AnsiString(mainfo.fadir.value)),  Pchar(AnsiString(mainfo.opdir.value)),
+   Pchar(AnsiString(mainfo.ofdir.value))) = 0 
 
  then
     begin
       hide;
       loadok := true;
-      Height := 515;
+      Height := 612;
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
       
@@ -313,9 +319,11 @@ if uos_LoadLib(Pchar(AnsiString(mainfo.padir.value)), Pchar(AnsiString(mainfo.sf
       stdir.enabled := false;
       fadir.enabled := false;
       bsdir.enabled := false;
+      opdir.enabled := false;
+      ofdir.enabled := false;
 
       btnLoad.caption :=
-        'PortAudio, SndFile, Mpg123, AAC libraries are loaded...'
+        'PortAudio, SndFile, Mpg123, AAC, Opus libraries are loaded...'
        end else btnLoad.caption :=
         'One or more libraries did not load, check filenames...';
         
@@ -328,7 +336,7 @@ if uos_LoadLib(Pchar(AnsiString(mainfo.padir.value)), Pchar(AnsiString(mainfo.sf
        begin
      plugsoundtouch := true;
           btnLoad.caption :=
-        'PortAudio, SndFile, Mpg123, AAC and Plugin are loaded...';
+        'PortAudio, SndFile, Mpg123, AAC, Opus and Plugin are loaded...';
         end
          else
          begin

@@ -24,8 +24,8 @@ type
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
-    chkstereo2mono: TCheckBox;
     Chknoise: TCheckBox;
+    chkstereo2mono: TCheckBox;
     Edit1: TEdit;
     Edit10: TEdit;
     Edit2: TEdit;
@@ -48,24 +48,25 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    Label8: TLabel;
     Label9: TLabel;
     llength: TLabel;
     lposition: TLabel;
-    Label8: TLabel;
     OpenDialog1: TOpenDialog;
     PaintBox1: TPaintBox;
+    Panel1: TPanel;
     RadioButton1: TRadioButton;
     RadioButton2: TRadioButton;
     RadioButton3: TRadioButton;
     RadioGroup1: TRadioGroup;
     Shape1: TShape;
-    ShapeRight: TShape;
     ShapeLeft: TShape;
+    ShapeRight: TShape;
+    TrackBar1: TTrackBar;
     TrackBar2: TTrackBar;
     TrackBar3: TTrackBar;
     TrackBar4: TTrackBar;
     TrackBar5: TTrackBar;
-    TrackBar1: TTrackBar;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -81,6 +82,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
+    procedure Panel1Click(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure TrackBar2MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
@@ -261,6 +263,11 @@ begin
   PaintBox1.Canvas.Draw(0, 0, BufferBMP);
 end;
 
+procedure TForm1.Panel1Click(Sender: TObject);
+begin
+
+end;
+
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
@@ -330,7 +337,12 @@ if loadok = true then
       and (uos_LoadPlugin('bs2b', Pchar(edit6.text)) = 0)
       then plugbs2b := true else CheckBox3.enabled := false;
 
-    form1.Height := 659;
+    form1.Height := 232;
+     panel1.left := 0;
+      panel1.top := 0;
+    panel1.height :=  form1.Height;
+     panel1.width :=  form1.width;
+      panel1.visible := true;
     form1.Position := poScreenCenter;
     form1.Caption := 'Simple Player.    uos version ' + inttostr(uos_getversion());
     form1.Show;

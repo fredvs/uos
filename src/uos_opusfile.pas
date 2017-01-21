@@ -13,6 +13,11 @@ interface
 
 uses
   ctypes, dynlibs, SysUtils;
+  
+type
+  TOggOpusFile = ^OggOpusFile;
+  OggOpusFile = record
+  end;
 
 // Error Codes
 const
@@ -31,15 +36,12 @@ const
   OP_ENOSEEK = -138;
   OP_EBADTIMESTAMP = -139;
 
-type  
-TDArFloat = array of cfloat;
 
 type
   TOP_PIC_FORMAT = (OP_PIC_FORMAT_UNKNOWN = -1, OP_PIC_FORMAT_URL, OP_PIC_FORMAT_JPEG,
                     OP_PIC_FORMAT_PNG, OP_PIC_FORMAT_GIF);
 type
   TOpusHead = THandle;
-  TOggOpusFile = THandle;
   TOpusStream = THandle;
   {$if not declared(size_t)}
   size_t = NativeUInt;
@@ -69,7 +71,7 @@ const
                                       close: nil);
 type
   TOpusMSDecoder = Pointer;
-  op_decode_cb_func = function(ctx: Pointer; decoder: TOpusMSDecoder; var pcm; op: Pointer;
+  op_decode_cb_func = function(ctx: Pointer; decoder: TOpusMSDecoder; pcm : pcfloat; op: Pointer;
                                nsamples, nchannels, format, li: Integer): Integer; cdecl;
   TOpusTags = record
     user_comments: PPAnsiChar; // The array of comment string vectors
@@ -173,10 +175,10 @@ var
 
  op_set_gain_offset: function(OpusFile: TOggOpusFile; gain_type: Integer; gain_offset_q8: Integer): Integer;
  op_set_dither_enabled: procedure(OpusFile: TOggOpusFile; enabled: Integer);
- op_read: function(OpusFile: TOggOpusFile; var pcm; SampleCount: Integer; li: pointer): Integer;
- op_read_float: function(OpusFile: TOggOpusFile; var pcm; SampleCount: Integer; li: pointer): Integer;
- op_read_stereo: function(OpusFile: TOggOpusFile; var pcm; SampleCount: Integer): Integer;
- op_read_float_stereo: function(OpusFile: TOggOpusFile; var pcm; SampleCount: Integer): Integer;
+ op_read: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer; li: pointer): Integer;
+ op_read_float: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer; li: pointer): Integer;
+ op_read_stereo: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer): Integer;
+ op_read_float_stereo: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer): Integer;
 
  of_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
 

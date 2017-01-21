@@ -13,7 +13,7 @@ unit uos_soundtouch;
 interface
 
 uses
-  DynLibs;
+ ctypes, DynLibs;
 
 {$IF not DEFINED(windows)}
 type
@@ -32,9 +32,9 @@ var
   soundtouch_isEmpty: function(h: THandle): integer; cdecl;
   soundtouch_numSamples: function(h: THandle): cardinal; cdecl;
   soundtouch_numUnprocessedSamples: function(h: THandle): cardinal; cdecl;
-  soundtouch_putSamples: procedure(h: THandle; const samples: PSingle;
+  soundtouch_putSamples: procedure(h: THandle; const samples: pcfloat;
   numSamples: cardinal); cdecl;
-  soundtouch_receiveSamples: function(h: THandle; outBuffer: PSingle;
+  soundtouch_receiveSamples: function(h: THandle; outBuffer: pcfloat;
   maxSamples: cardinal): cardinal; cdecl;
   soundtouch_setChannels: procedure(h: THandle; numChannels: cardinal); cdecl;
   soundtouch_setPitch: procedure(h: THandle; newPitch: single); cdecl;

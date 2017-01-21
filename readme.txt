@@ -21,7 +21,7 @@ With uos you can:
 . Produce sound from built-in synthesizer.
 
 uos can use:
-PortAudio, SndFile, Mpg123, Faad, Mp4ff audio libraries and
+PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile audio libraries and
 SoundTouch, Bs2b audio-effect libraries.
 
 Included in the package:

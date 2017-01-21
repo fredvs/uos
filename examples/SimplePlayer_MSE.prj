@@ -146,7 +146,7 @@ replacedialog=17
  y=299
  cx=421
  cy=163
-options=108
+options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -225,6 +225,12 @@ options=108
  sortdescend10=0
  width11=457
  sortdescend11=0
+ [projectoptionsfo.comment_1]
+ value=
+ [projectoptionsfo.comment_B]
+ value=
+ [projectoptionsfo.comment_M]
+ value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
  index=2
@@ -246,13 +252,13 @@ options=108
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=2
- [projectoptionsfo.tabwidget]
+ [projectoptionsfo.setting_tab]
  firsttab=0
  index=2
  [projectoptionsfo]
  stackedunder=
- x=207
- y=47
+ x=511
+ y=82
  cx=751
  cy=658
 programparameters=18
@@ -299,9 +305,10 @@ targetfile=${PROJECTNAME}${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=3
+unitdirs=4
  ${MSEDIR}lib/addon/*/
  ${MSELIBDIR}kernel/$TARGETOSDIR/
+ ${MSELIBDIR}kernel/windows
  ${MSELIBDIR}*/
 unitpref=-Fu
 incpref=-Fi
@@ -317,6 +324,13 @@ makeoptions=6
  -ghl
  -B
  -O2 -XX -Xs -CX
+makeoptpurpose=6
+ 
+ 
+ 
+ 
+ 
+ 
 compilerused=29
  ${COMPILER} (Default)
  Pascal 1
@@ -542,13 +556,13 @@ makeoptionson=6
  2559
  2559
  2
- 2338
- 2530
+ 2354
+ 2546
 compilerusedon=29
- 4095
+ 4079
  0
  0
- 0
+ 16
  0
  0
  0
@@ -575,14 +589,16 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4095
+ 4079
  0
  0
  0
  0
- 0
+ 16
 exeusedon=14
- 4095
+ 4079
+ 0
+ 16
  0
  0
  0
@@ -594,12 +610,30 @@ exeusedon=14
  0
  0
  0
- 0
- 0
+comment_M=
+comment_B=
+comment_1=
+comment_2=
+comment_3=
+comment_4=
+comment_5=
+comment_6=
+comment_7=
+comment_8=
+comment_9=
+comment_0=
+project_name=
+project_creator=
+project_copyright=
+project_license=
+project_time=
+project_date=04:26:46 21/01/2017
+project_comment=
 aftcommandon=0
-unitdirson=3
+unitdirson=4
  200703
- 69631
+ 69615
+ 983056
  69631
 macroon=0
 macronames=0
@@ -860,26 +894,36 @@ findhistory=12
  ***running***
  ntimerkey
 findoptions=1
-editpos=4
+editpos=6
+ 0,34
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,426
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
- ${PROJECTDIR}/SimplePlayer_MSE.pas
+bookmarks4=0
+bookmarks5=0
+sourcefiles=6
+ /home/fred/uos/examples/SimplePlayer_MSE.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/mainmse_sp.pas
-relpaths=4
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ /home/fred/msegui/lib/common/kernel/mselibc.pas
+relpaths=6
  SimplePlayer_MSE.pas
  uos_flat.pas
  uos.pas
  mainmse_sp.pas
-ismoduletexts=4
+ simpleplayer_fpGUI.pas
+ msegui/lib/common/kernel/mselibc.pas
+ismoduletexts=6
+ 0
+ 0
  0
  0
  0
@@ -893,9 +937,16 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
+order=6
+ 0
+ 5
+ 1
+ 2
+ 3
+ 4
 tabsize=60
 firsttab=0
-index=3
+index=0
 [layout]
 windowlayout=545
  [mainfo.basedock]
@@ -910,7 +961,7 @@ windowlayout=545
  ncy=0
  x=0
  y=0
- cx=954
+ cx=929
  cy=585
  rcx=0
  rcy=0
@@ -923,14 +974,14 @@ windowlayout=545
  ny=0
  ncx=0
  ncy=0
- x=239
- y=57
- cx=964
+ x=259
+ y=88
+ cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,954,585
+  basedock,0,0,929,585
  focusedchild=0
  wsize=0
  active=1
@@ -974,7 +1025,7 @@ windowlayout=545
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=cpuc86_64fo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1046,18 +1097,18 @@ windowlayout=545
  x=0
  y=0
  cx=159
- cy=426
+ cy=429
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
- propcolwidthref=18
- width0=141
+ propcolwidthref=49
+ width0=110
  sortdescend0=0
- width1=12
+ width1=43
  sortdescend1=0
  sorted=0
  col=1
- row=-1073741823
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1142,7 +1193,7 @@ windowlayout=545
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=mainfo
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0
@@ -1151,18 +1202,18 @@ windowlayout=545
  ncy=0
  x=670
  y=179
- cx=316
+ cx=515
  cy=484
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [objectinspectorfo.grid]
- propcolwidthref=306
- width0=73
+ propcolwidthref=505
+ width0=180
  sortdescend0=0
- width1=227
+ width1=319
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1251,9 +1302,9 @@ windowlayout=545
  ncx=0
  ncy=0
  x=0
- y=488
- cx=954
- cy=97
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1322,7 +1373,7 @@ windowlayout=545
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1352,8 +1403,8 @@ windowlayout=545
  ncy=0
  x=0
  y=0
- cx=954
- cy=56
+ cx=929
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1363,13 +1414,13 @@ windowlayout=545
  visible=1
  mdistate=0
  nx=0
- ny=52
- ncx=954
- ncy=3
+ ny=47
+ ncx=929
+ ncy=1
  x=0
- y=52
- cx=954
- cy=3
+ y=47
+ cx=929
+ cy=1
  rcx=0
  rcy=0
  [sourcefo]
@@ -1384,15 +1435,15 @@ windowlayout=545
  ncy=0
  x=162
  y=0
- cx=792
- cy=426
+ cx=767
+ cy=429
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=componentpalettefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1419,25 +1470,25 @@ windowlayout=545
  ncx=0
  ncy=0
  x=0
- y=59
- cx=954
- cy=426
+ y=53
+ cx=929
+ cy=429
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=366
- y=24
+ x=361
+ y=77
  cx=495
- cy=524
+ cy=493
  rcx=0
  rcy=0
  wsize=0

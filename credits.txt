@@ -23,3 +23,6 @@ Here are the open source libraries used by uos:
 => FAAD2 (AAC) audio processing library.
    Copyright (C) M. Bakker, Nero AG. 
    http://www.nero.com/
+
+=> Opus audio processing library.
+   http://opus-codec.org

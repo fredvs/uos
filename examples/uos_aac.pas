@@ -22,8 +22,8 @@ type
   ArSingle        =  array of Single;
   PArSingle       =  ^ArSingle;    
   
-  read_callback_t     = function(user_data : Pointer; buffer : PArSingle; length : LongWord) : LongWord; cdecl;
-  write_callback_t    = function(user_data : Pointer; buffer : PArSingle; length : LongWord) : LongWord; cdecl;
+  read_callback_t     = function(user_data : Pointer; buffer : pcfloat; length : LongWord) : LongWord; cdecl;
+  write_callback_t    = function(user_data : Pointer; buffer : pcfloat; length : LongWord) : LongWord; cdecl;
   seek_callback_t     = function(user_data : Pointer; Position : cInt64) : LongWord; cdecl;
   truncate_callback_t = function(user_data : Pointer) : LongWord; cdecl;
 
@@ -52,11 +52,11 @@ var
   mp4ff_find_sample          : function(f : mp4ff_t; track : int32_t;  offset : int64_t; var toskip : int32_t) : int32_t; cdecl;
   mp4ff_find_sample_use_offsets : function(f : mp4ff_t; track : int32_t; offset : int64_t; var toskip : int32_t) : int32_t; cdecl;
   mp4ff_set_sample_position  : function(f : mp4ff_t; track : int32_t; sample : int64_t) : int32_t; cdecl;
-  mp4ff_read_sample          : function(f : mp4ff_t; track, sample  : int32_t; var audio_buffer : PByte; var bytes : LongWord) : int32_t; cdecl;
-  mp4ff_read_sample_v2       : function(f : mp4ff_t; track, sample : int32_t; buffer : PByte): int32_t; cdecl; //returns 0 on error, number of bytes read on success, use mp4ff_read_sample_getsize_t = function() to check buffer size needed
+  mp4ff_read_sample          : function(f : mp4ff_t; track, sample  : int32_t; var audio_buffer : pcfloat; var bytes : LongWord) : int32_t; cdecl;
+  mp4ff_read_sample_v2       : function(f : mp4ff_t; track, sample : int32_t; buffer : pcfloat): int32_t; cdecl; //returns 0 on error, number of bytes read on success, use mp4ff_read_sample_getsize_t = function() to check buffer size needed
   mp4ff_read_sample_getsize  : function(f : mp4ff_t; track, sample : Integer) : int32_t; cdecl; //returns 0 on error, buffer size needed for mp4ff_read_sample_v2_t = function() on success
-  mp4ff_get_decoder_config   : function(f : mp4ff_t; track : Integer; var ppBuf : PByte; var pBufSize : LongWord) : int32_t; cdecl;
-  mp4ff_free_decoder_config  : procedure(Buf : PByte); cdecl;
+  mp4ff_get_decoder_config   : function(f : mp4ff_t; track : Integer; var ppBuf : pcfloat; var pBufSize : LongWord) : int32_t; cdecl;
+  mp4ff_free_decoder_config  : procedure(Buf : pcfloat); cdecl;
   mp4ff_get_track_type       : function(f : mp4ff_t; const track : Integer) : int32_t; cdecl;
   mp4ff_total_tracks         : function(f : mp4ff_t) : int32_t; cdecl;
   mp4ff_num_samples         : function(f : mp4ff_t; track : Integer) : int32_t; cdecl;
@@ -219,13 +219,13 @@ Type
   NeAACDecOpen                    : function : PNeAACDec; cdecl;
   NeAACDecGetCurrentConfiguration : function( hDecoder : PNeAACDec) : PNeAACDecConfiguration; cdecl;
   NeAACDecSetConfiguration        : function( hDecoder : PNeAACDec; pConfig : PNeAACDecConfiguration) : Byte; cdecl;
-  NeAACDecInit                    : function( hDecoder : PNeAACDec; pBuffer : PByte; lwBufferLength : LongWord; var lwSampleRate : LongWord; var Channels : Byte) : LongInt; cdecl;
-  NeAACDecInit2                   : function( hDecoder : PNeAACDec; pBuffer : PByte; SizeOfDecoderSpecificInfo : LongWord; var lwSampleRate : LongWord; var Channels : Byte) : Byte; cdecl;
+  NeAACDecInit                    : function( hDecoder : PNeAACDec; pBuffer : pcfloat; lwBufferLength : LongWord; var lwSampleRate : LongWord; var Channels : Byte) : LongInt; cdecl;
+  NeAACDecInit2                   : function( hDecoder : PNeAACDec; pBuffer : pcfloat; SizeOfDecoderSpecificInfo : LongWord; var lwSampleRate : LongWord; var Channels : Byte) : Byte; cdecl;
   NeAACDecPostSeekReset           : procedure(hDecoder : PNeAACDec; Frame : LongInt); cdecl;
   NeAACDecClose                   : procedure(hDecoder : PNeAACDec); cdecl;
-  NeAACDecDecode                  : function( hDecoder : PNeAACDec; hInfo : PNeAACDecFrameInfo; pBuffer : PByte; lwBufferLength : LongWord) : Pointer; cdecl;
-  NeAACDecDecode2                 : function( hDecoder : PNeAACDec; hInfo : PNeAACDecFrameInfo; pBuffer : PByte; lwBufferLength : LongWord; var pSampleBuf : Pointer; lwSampleBufSize : LongWord) : Pointer; cdecl;
-  NeAACDecAudioSpecificConfig     : function( pBuffer : PByte; lwBufferLength : LongWord; var mp4ASC : mp4AudioSpecificConfig) : Byte;  cdecl;
+  NeAACDecDecode                  : function( hDecoder : PNeAACDec; hInfo : PNeAACDecFrameInfo; pBuffer : pcfloat; lwBufferLength : LongWord) : Pointer; cdecl;
+  NeAACDecDecode2                 : function( hDecoder : PNeAACDec; hInfo : PNeAACDecFrameInfo; pBuffer : pcfloat; lwBufferLength : LongWord; var pSampleBuf : Pointer; lwSampleBufSize : LongWord) : Pointer; cdecl;
+  NeAACDecAudioSpecificConfig     : function( pBuffer : pcfloat; lwBufferLength : LongWord; var mp4ASC : mp4AudioSpecificConfig) : Byte;  cdecl;
 
   procedure LoadNeAAC(NeAAC : AnsiString);
   Procedure UnLoadNeAAC;
@@ -270,7 +270,7 @@ Type
     {$endif}
    
     // UoS interface
-    pData         : PArSingle;
+    pData         : pcfloat;
     lwDataLen     : longword;
 
     // tag info...
@@ -300,7 +300,7 @@ Type
 
   Function MP4OpenFile(fName : String; OutputFormat : Byte) : TAACInfo;
   Procedure MP4CloseFile(var AACI: TAACInfo);
-  procedure MP4GetData(var AACI: TAACInfo; var Buffer: PArSingle; var Bytes: longword);
+  procedure MP4GetData(var AACI: TAACInfo; var Buffer: pcfloat; var Bytes: longword);
   function MP4Seek(var AACI: TAACInfo; var SampleNum: longint) : Boolean;
 
 implementation
@@ -314,7 +314,7 @@ var
 
 //////////// from mcwNeAACDec.pas By Franklyn A. Harlow
 
-function CBMP4Read(user_data : Pointer; buffer : PArSingle; length : LongWord) : LongWord; cdecl;
+function CBMP4Read(user_data : Pointer; buffer : pcfloat; length : LongWord) : LongWord; cdecl;
 begin
   try
    Result := LongWord(TAACInfo(user_data).fsStream.Read(buffer^, Integer(length)));
@@ -323,7 +323,7 @@ begin
   end;
 end;
 
-function CBMP4Write(user_data : Pointer; buffer : PArSingle; length : LongWord) : LongWord; cdecl;
+function CBMP4Write(user_data : Pointer; buffer : pcfloat; length : LongWord) : LongWord; cdecl;
 begin
   try
     Result := LongWord(TAACInfo(user_data).fsStream.Write(buffer^, Integer(length)));
@@ -381,7 +381,7 @@ Var
   pConfig      : PNeAACDecConfiguration;
   mp4ASC       : mp4AudioSpecificConfig;
 
-  pBuf         : PByte;
+  pBuf         : pcfloat;
   lwBufSize    : longword;
   lwBufSize2   : longword;
   lwSampleRate : longword;
@@ -552,7 +552,7 @@ Begin
    sleep(50);
  end;
 
-procedure MP4GetData(var AACI: TAACInfo; var Buffer: PArSingle; var Bytes: longword);
+procedure MP4GetData(var AACI: TAACInfo; var Buffer: pcfloat; var Bytes: longword);
 var
   ReqBytes          : longword;
   CurBufSize        : longword;
@@ -560,7 +560,7 @@ var
   NewBytesRead      : longword;
   NewBytesDecoded   : longword;
 
-  Function readNextSample(var audioBuf : pByte; var audioSize : longword): longword;
+  Function readNextSample(var audioBuf : pcfloat; var audioSize : longword): longword;
    Begin
     audioSize := 0;
     Result:= 0;
@@ -577,7 +577,7 @@ var
 
   Function getNextChunk(var SampBuf : Pointer; var NBR : longword) : longword;
   Var
-    pAB : pByte;
+    pAB : pcfloat;
     iAB : longword;
     frameInfo: NeAACDecFrameInfo;
   Begin
@@ -724,7 +724,7 @@ end;
 function GetAACTrack(infile : mp4ff_t) : Integer;
 var
   i, rc, numTracks : Integer;
-  buff : PByte;
+  buff : pcfloat;
   buff_size : LongWord;
   mp4ASC : mp4AudioSpecificConfig;
 begin

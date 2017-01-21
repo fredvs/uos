@@ -34,15 +34,26 @@ type
     btnLoad: TfpgButton;
     FilenameEdit1: TfpgFileNameEdit;
     FilenameEdit2: TfpgFileNameEdit;
+    Labelsnf: TfpgLabel;
+    Labelmpg: TfpgLabel;
+    Labelst11: TfpgLabel;
+    FilenameEdit7: TfpgFileNameEdit;
+    Labelst111: TfpgLabel;
+    FilenameEdit8: TfpgFileNameEdit;
+    Labelst1111: TfpgLabel;
+    FilenameEdit81: TfpgFileNameEdit;
+    Labelst11111: TfpgLabel;
+    FilenameEdit31: TfpgFileNameEdit;
+    Labelst: TfpgLabel;
+    FilenameEdit3: TfpgFileNameEdit;
+    FilenameEdit5: TfpgFileNameEdit;
+    Labelst1: TfpgLabel;
+    FilenameEdit6: TfpgFileNameEdit;
+    Panel1: TfpgPanel;
     FilenameEdit4: TfpgFileNameEdit;
     btnStart: TfpgButton;
     btnStop: TfpgButton;
     lposition: TfpgLabel;
-    Labelsnf: TfpgLabel;
-    Labelmpg: TfpgLabel;
-    Labelst: TfpgLabel;
-    FilenameEdit3: TfpgFileNameEdit;
-    FilenameEdit5: TfpgFileNameEdit;
     Label1: TfpgLabel;
     Llength: TfpgLabel;
     btnpause: TfpgButton;
@@ -67,17 +78,7 @@ type
     TrackBar5: TfpgTrackBar;
     Button1: TfpgButton;
     chkst2b: TfpgCheckBox;
-    Labelst1: TfpgLabel;
-    FilenameEdit6: TfpgFileNameEdit;
     chkstereo2mono: TfpgCheckBox;
-    Labelst11: TfpgLabel;
-    FilenameEdit7: TfpgFileNameEdit;
-    Labelst111: TfpgLabel;
-    FilenameEdit8: TfpgFileNameEdit;
-    Labelst1111: TfpgLabel;
-    FilenameEdit81: TfpgFileNameEdit;
-    Labelst11111: TfpgLabel;
-    FilenameEdit31: TfpgFileNameEdit;
     {@VFD_HEAD_END: Simpleplayer}
   public
     procedure AfterCreate; override;
@@ -232,8 +233,8 @@ var
       vuLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 74);
     if round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 74) >= 0 then
       vuRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 74);
-    vuLeft.top := 482 - vuLeft.Height;
-    vuRight.top := 482 - vuRight.Height;
+    vuLeft.top := 96 - vuLeft.Height;
+    vuRight.top := 96 - vuRight.Height;
     vuright.UpdateWindowPosition;
     vuLeft.UpdateWindowPosition;
   end;
@@ -273,7 +274,12 @@ loadok : boolean = false;
     begin
       hide;
       loadok := true;
-      Height := 595;
+      Height := 208; 
+      panel1.height := height;
+      panel1.width := width;
+      panel1.left := 0;
+      panel1.top := 0;
+      panel1.visible := true;
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
       FilenameEdit1.ReadOnly := True;
@@ -287,7 +293,7 @@ loadok : boolean = false;
       FilenameEdit31.ReadOnly := True;
       UpdateWindowPosition;
        btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123, AAC libraries are loaded...'
+        'PortAudio, SndFile, Mpg123, AAC, Opus libraries are loaded...'
        end else btnLoad.Text :=
         'One or more libraries did not load, check filenames...';
         
@@ -298,7 +304,7 @@ loadok : boolean = false;
        begin
       plugsoundtouch := true;
           btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123, AAC and Plugin are loaded...';
+        'PortAudio, SndFile, Mpg123, AAC, Opus and Plugin are loaded...';
         end
          else
          begin
@@ -317,7 +323,7 @@ loadok : boolean = false;
       WindowPosition := wpScreenCenter;
       WindowTitle := 'Simple Player.    uos Version ' + inttostr(uos_getversion());
        fpgapplication.ProcessMessages;
-      sleep(500);
+      sleep(100);
       Show;
     end;
   end;
@@ -613,7 +619,9 @@ loadok : boolean = false;
     btnresume.Enabled := False;
 
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
+    
     end;
+    
   end;
 
   procedure TSimpleplayer.ShowPosition;
@@ -657,7 +665,7 @@ end;
 
     {@VFD_BODY_BEGIN: Simpleplayer}
   Name := 'Simpleplayer';
-  SetPosition(600, 57, 503, 392);
+  SetPosition(593, 132, 513, 208);
   WindowTitle := 'Simple player ';
   IconName := '';
   BackGroundColor := $80000001;
@@ -723,60 +731,6 @@ end;
     TabOrder := 4;
   end;
 
-  FilenameEdit4 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit4 do
-  begin
-    Name := 'FilenameEdit4';
-    SetPosition(132, 400, 360, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 5;
-  end;
-
-  btnStart := TfpgButton.Create(self);
-  with btnStart do
-  begin
-    Name := 'btnStart';
-    SetPosition(144, 564, 66, 23);
-    Text := 'Play';
-    Enabled := False;
-    FontDesc := '#Label1';
-    ImageName := '';
-    ParentShowHint := False;
-    TabOrder := 6;
-    Hint := '';
-    onclick := @btnstartClick;
-  end;
-
-  btnStop := TfpgButton.Create(self);
-  with btnStop do
-  begin
-    Name := 'btnStop';
-    SetPosition(372, 564, 66, 23);
-    Text := 'Stop';
-    Enabled := False;
-    FontDesc := '#Label1';
-    ImageName := '';
-    ParentShowHint := False;
-    TabOrder := 7;
-    Hint := '';
-    onclick := @btnStopClick;
-  end;
-
-  lposition := TfpgLabel.Create(self);
-  with lposition do
-  begin
-    Name := 'lposition';
-    SetPosition(224, 457, 84, 19);
-    Alignment := taCenter;
-    FontDesc := '#Label2';
-    ParentShowHint := False;
-    Text := '00:00:00.000';
-    Hint := '';
-  end;
-
   Labelsnf := TfpgLabel.Create(self);
   with Labelsnf do
   begin
@@ -799,379 +753,6 @@ end;
     ParentShowHint := False;
     Text := 'Folder + filename of Mpg123 Library';
     Hint := '';
-  end;
-
-  Labelst := TfpgLabel.Create(self);
-  with Labelst do
-  begin
-    Name := 'Labelst';
-    SetPosition(152, 276, 316, 15);
-    Alignment := taCenter;
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Folder + filename of SoundTouch plugin Library';
-    Hint := '';
-  end;
-
-  FilenameEdit3 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit3 do
-  begin
-    Name := 'FilenameEdit3';
-    SetPosition(136, 92, 356, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 12;
-  end;
-
-  FilenameEdit5 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit5 do
-  begin
-    Name := 'FilenameEdit5';
-    SetPosition(136, 292, 356, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 12;
-  end;
-
-  Label1 := TfpgLabel.Create(self);
-  with Label1 do
-  begin
-    Name := 'Label1';
-    SetPosition(308, 457, 12, 15);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := '/';
-    Hint := '';
-  end;
-
-  Llength := TfpgLabel.Create(self);
-  with Llength do
-  begin
-    Name := 'Llength';
-    SetPosition(316, 457, 80, 15);
-    FontDesc := '#Label2';
-    ParentShowHint := False;
-    Text := '00:00:00.000';
-    Hint := '';
-  end;
-
-  btnpause := TfpgButton.Create(self);
-  with btnpause do
-  begin
-    Name := 'btnpause';
-    SetPosition(220, 564, 66, 23);
-    Text := 'Pause';
-    Enabled := False;
-    FontDesc := '#Label1';
-    ImageName := '';
-    ParentShowHint := False;
-    TabOrder := 15;
-    Hint := '';
-    onclick := @btnPauseClick;
-  end;
-
-  btnresume := TfpgButton.Create(self);
-  with btnresume do
-  begin
-    Name := 'btnresume';
-    SetPosition(296, 564, 66, 23);
-    Text := 'Resume';
-    Enabled := False;
-    FontDesc := '#Label1';
-    ImageName := '';
-    ParentShowHint := False;
-    TabOrder := 16;
-    Hint := '';
-    onclick := @btnResumeClick;
-  end;
-
-  CheckBox1 := TfpgCheckBox.Create(self);
-  with CheckBox1 do
-  begin
-    Name := 'CheckBox1';
-    SetPosition(136, 536, 104, 19);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    TabOrder := 17;
-    Text := 'Play Reverse';
-    Hint := '';
-  end;
-
-  RadioButton1 := TfpgRadioButton.Create(self);
-  with RadioButton1 do
-  begin
-    Name := 'RadioButton1';
-    SetPosition(16, 528, 96, 19);
-    Checked := True;
-    FontDesc := '#Label1';
-    GroupIndex := 0;
-    ParentShowHint := False;
-    TabOrder := 18;
-    Text := 'Float 32 bit';
-    Hint := '';
-  end;
-
-  RadioButton2 := TfpgRadioButton.Create(self);
-  with RadioButton2 do
-  begin
-    Name := 'RadioButton2';
-    SetPosition(16, 544, 100, 19);
-    FontDesc := '#Label1';
-    GroupIndex := 0;
-    ParentShowHint := False;
-    TabOrder := 19;
-    Text := 'Int 32 bit';
-    Hint := '';
-  end;
-
-  RadioButton3 := TfpgRadioButton.Create(self);
-  with RadioButton3 do
-  begin
-    Name := 'RadioButton3';
-    SetPosition(16, 562, 100, 19);
-    FontDesc := '#Label1';
-    GroupIndex := 0;
-    ParentShowHint := False;
-    TabOrder := 20;
-    Text := 'Int 16 bit';
-    Hint := '';
-  end;
-
-  Label2 := TfpgLabel.Create(self);
-  with Label2 do
-  begin
-    Name := 'Label2';
-    SetPosition(16, 512, 104, 15);
-    FontDesc := '#Label2';
-    ParentShowHint := False;
-    Text := 'Sample format';
-    Hint := '';
-  end;
-
-  TrackBar1 := TfpgTrackBar.Create(self);
-  with TrackBar1 do
-  begin
-    Name := 'TrackBar1';
-    SetPosition(132, 428, 356, 30);
-    ParentShowHint := False;
-    TabOrder := 22;
-    Hint := '';
-    TrackBar1.OnMouseDown := @btntrackonClick;
-    TrackBar1.OnMouseUp := @btntrackoffClick;
-  end;
-
-  TrackBar2 := TfpgTrackBar.Create(self);
-  with TrackBar2 do
-  begin
-    Name := 'TrackBar2';
-    SetPosition(12, 408, 32, 78);
-    Orientation := orVertical;
-    ParentShowHint := False;
-    TabOrder := 23;
-    Hint := '';
-    OnChange := @volumechange;
-  end;
-
-  TrackBar3 := TfpgTrackBar.Create(self);
-  with TrackBar3 do
-  begin
-    Name := 'TrackBar3';
-    SetPosition(80, 408, 28, 78);
-    Orientation := orVertical;
-    ParentShowHint := False;
-    TabOrder := 24;
-    Hint := '';
-    OnChange := @volumechange;
-  end;
-
-  Label3 := TfpgLabel.Create(self);
-  with Label3 do
-  begin
-    Name := 'Label3';
-    SetPosition(20, 392, 84, 15);
-    Alignment := taCenter;
-    FontDesc := '#Label2';
-    ParentShowHint := False;
-    Text := 'Volume';
-    Hint := '';
-  end;
-
-  Label4 := TfpgLabel.Create(self);
-  with Label4 do
-  begin
-    Name := 'Label4';
-    SetPosition(12, 488, 40, 15);
-    Alignment := taCenter;
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Left';
-    Hint := '';
-  end;
-
-  Label5 := TfpgLabel.Create(self);
-  with Label5 do
-  begin
-    Name := 'Label5';
-    SetPosition(76, 488, 36, 19);
-    Alignment := taCenter;
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Right';
-    Hint := '';
-  end;
-
-  vuleft := TfpgPanel.Create(self);
-  with vuleft do
-  begin
-    Name := 'vuleft';
-    SetPosition(48, 412, 8, 74);
-    BackgroundColor := TfpgColor($00D51D);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Style := bsFlat;
-    Text := '';
-    Hint := '';
-  end;
-
-  vuright := TfpgPanel.Create(self);
-  with vuright do
-  begin
-    Name := 'vuright';
-    SetPosition(68, 412, 8, 74);
-    BackgroundColor := TfpgColor($1DD523);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Style := bsFlat;
-    Text := '';
-    Hint := '';
-  end;
-
-  CheckBox2 := TfpgCheckBox.Create(self);
-  with CheckBox2 do
-  begin
-    Name := 'CheckBox2';
-    SetPosition(284, 480, 184, 19);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    TabOrder := 32;
-    Text := 'Enable SoundTouch PlugIn';
-    Hint := 'Change Tempo with same tuning or change Tuning with same tempo';
-    OnChange := @ChangePlugSetSoundTouch;
-  end;
-
-  Label6 := TfpgLabel.Create(self);
-  with Label6 do
-  begin
-    Name := 'Label6';
-    SetPosition(276, 500, 80, 19);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Tempo: 1.0';
-    Hint := '';
-  end;
-
-  Label7 := TfpgLabel.Create(self);
-  with Label7 do
-  begin
-    Name := 'Label7';
-    SetPosition(388, 500, 68, 15);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Pitch: 1.0';
-    Hint := '';
-  end;
-
-  TrackBar4 := TfpgTrackBar.Create(self);
-  with TrackBar4 do
-  begin
-    Name := 'TrackBar4';
-    SetPosition(352, 500, 28, 54);
-    Orientation := orVertical;
-    ParentShowHint := False;
-    Position := 50;
-    TabOrder := 35;
-    Hint := '';
-    OnChange := @TrackChangePlugSetSoundTouch;
-  end;
-
-  TrackBar5 := TfpgTrackBar.Create(self);
-  with TrackBar5 do
-  begin
-    Name := 'TrackBar5';
-    SetPosition(448, 500, 28, 54);
-    Orientation := orVertical;
-    ParentShowHint := False;
-    Position := 50;
-    TabOrder := 36;
-    Hint := '';
-    OnChange := @TrackChangePlugSetSoundTouch;
-  end;
-
-  Button1 := TfpgButton.Create(self);
-  with Button1 do
-  begin
-    Name := 'Button1';
-    SetPosition(280, 528, 60, 23);
-    Text := 'Reset';
-    FontDesc := '#Label1';
-    ImageName := '';
-    ParentShowHint := False;
-    TabOrder := 37;
-    Hint := '';
-    OnClick := @ResetPlugClick;
-  end;
-
-  chkst2b := TfpgCheckBox.Create(self);
-  with chkst2b do
-  begin
-    Name := 'chkst2b';
-    SetPosition(136, 508, 136, 19);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    TabOrder := 38;
-    Text := 'Stereo to BinAural';
-    Hint := 'Stereo to BinAural (for headphones)';
-    OnChange := @ChangePlugSetBs2b;
-  end;
-
-  Labelst1 := TfpgLabel.Create(self);
-  with Labelst1 do
-  begin
-    Name := 'Labelst1';
-    SetPosition(146, 316, 316, 15);
-    Alignment := taCenter;
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Folder + filename of bs2b plugin Library';
-  end;
-
-  FilenameEdit6 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit6 do
-  begin
-    Name := 'FilenameEdit6';
-    SetPosition(136, 332, 356, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 40;
-  end;
-
-  chkstereo2mono := TfpgCheckBox.Create(self);
-  with chkstereo2mono do
-  begin
-    Name := 'chkstereo2mono';
-    SetPosition(136, 476, 120, 19);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    TabOrder := 42;
-    Text := 'Stereo to Mono';
-    Hint := 'Convert Stereo to Mono';
-    OnChange := @Changestereo2mono;
   end;
 
   Labelst11 := TfpgLabel.Create(self);
@@ -1264,6 +845,467 @@ end;
     TabOrder := 49;
   end;
 
+  Labelst := TfpgLabel.Create(self);
+  with Labelst do
+  begin
+    Name := 'Labelst';
+    SetPosition(152, 276, 316, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Folder + filename of SoundTouch plugin Library';
+    Hint := '';
+  end;
+
+  FilenameEdit3 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit3 do
+  begin
+    Name := 'FilenameEdit3';
+    SetPosition(136, 92, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 12;
+  end;
+
+  FilenameEdit5 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit5 do
+  begin
+    Name := 'FilenameEdit5';
+    SetPosition(136, 292, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 12;
+  end;
+
+  Labelst1 := TfpgLabel.Create(self);
+  with Labelst1 do
+  begin
+    Name := 'Labelst1';
+    SetPosition(146, 316, 316, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Folder + filename of bs2b plugin Library';
+  end;
+
+  FilenameEdit6 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit6 do
+  begin
+    Name := 'FilenameEdit6';
+    SetPosition(136, 332, 356, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 40;
+  end;
+
+  Panel1 := TfpgPanel.Create(self);
+  with Panel1 do
+  begin
+    Name := 'Panel1';
+    SetPosition(0, 0, 512, 208);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := '';
+    Visible := False;
+    Hint := '';
+  end;
+
+  FilenameEdit4 := TfpgFileNameEdit.Create(Panel1);
+  with FilenameEdit4 do
+  begin
+    Name := 'FilenameEdit4';
+    SetPosition(140, 12, 360, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 5;
+  end;
+
+  btnStart := TfpgButton.Create(Panel1);
+  with btnStart do
+  begin
+    Name := 'btnStart';
+    SetPosition(152, 176, 66, 23);
+    Text := 'Play';
+    Enabled := False;
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 6;
+    Hint := '';
+    onclick := @btnstartClick;
+  end;
+
+  btnStop := TfpgButton.Create(Panel1);
+  with btnStop do
+  begin
+    Name := 'btnStop';
+    SetPosition(380, 176, 66, 23);
+    Text := 'Stop';
+    Enabled := False;
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 7;
+    Hint := '';
+    onclick := @btnStopClick;
+  end;
+
+  lposition := TfpgLabel.Create(Panel1);
+  with lposition do
+  begin
+    Name := 'lposition';
+    SetPosition(232, 69, 84, 19);
+    Alignment := taCenter;
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label2';
+    ParentShowHint := False;
+    Text := '00:00:00.000';
+    Hint := '';
+  end;
+
+  Label1 := TfpgLabel.Create(Panel1);
+  with Label1 do
+  begin
+    Name := 'Label1';
+    SetPosition(316, 69, 12, 15);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := '/';
+    Hint := '';
+  end;
+
+  Llength := TfpgLabel.Create(Panel1);
+  with Llength do
+  begin
+    Name := 'Llength';
+    SetPosition(324, 69, 80, 15);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label2';
+    ParentShowHint := False;
+    Text := '00:00:00.000';
+    Hint := '';
+  end;
+
+  btnpause := TfpgButton.Create(Panel1);
+  with btnpause do
+  begin
+    Name := 'btnpause';
+    SetPosition(228, 176, 66, 23);
+    Text := 'Pause';
+    Enabled := False;
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 15;
+    Hint := '';
+    onclick := @btnPauseClick;
+  end;
+
+  btnresume := TfpgButton.Create(Panel1);
+  with btnresume do
+  begin
+    Name := 'btnresume';
+    SetPosition(304, 176, 66, 23);
+    Text := 'Resume';
+    Enabled := False;
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 16;
+    Hint := '';
+    onclick := @btnResumeClick;
+  end;
+
+  CheckBox1 := TfpgCheckBox.Create(Panel1);
+  with CheckBox1 do
+  begin
+    Name := 'CheckBox1';
+    SetPosition(144, 148, 104, 19);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    TabOrder := 17;
+    Text := 'Play Reverse';
+    Hint := '';
+  end;
+
+  RadioButton1 := TfpgRadioButton.Create(Panel1);
+  with RadioButton1 do
+  begin
+    Name := 'RadioButton1';
+    SetPosition(24, 140, 96, 19);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    Checked := True;
+    FontDesc := '#Label1';
+    GroupIndex := 0;
+    ParentShowHint := False;
+    TabOrder := 18;
+    Text := 'Float 32 bit';
+    Hint := '';
+  end;
+
+  RadioButton2 := TfpgRadioButton.Create(Panel1);
+  with RadioButton2 do
+  begin
+    Name := 'RadioButton2';
+    SetPosition(24, 156, 100, 19);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    GroupIndex := 0;
+    ParentShowHint := False;
+    TabOrder := 19;
+    Text := 'Int 32 bit';
+    Hint := '';
+  end;
+
+  RadioButton3 := TfpgRadioButton.Create(Panel1);
+  with RadioButton3 do
+  begin
+    Name := 'RadioButton3';
+    SetPosition(24, 174, 100, 19);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    GroupIndex := 0;
+    ParentShowHint := False;
+    TabOrder := 20;
+    Text := 'Int 16 bit';
+    Hint := '';
+  end;
+
+  Label2 := TfpgLabel.Create(Panel1);
+  with Label2 do
+  begin
+    Name := 'Label2';
+    SetPosition(24, 124, 104, 15);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label2';
+    ParentShowHint := False;
+    Text := 'Sample format';
+    Hint := '';
+  end;
+
+  TrackBar1 := TfpgTrackBar.Create(Panel1);
+  with TrackBar1 do
+  begin
+    Name := 'TrackBar1';
+    SetPosition(140, 40, 356, 30);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    ParentShowHint := False;
+    TabOrder := 22;
+    Hint := '';
+    TrackBar1.OnMouseDown := @btntrackonClick;
+    TrackBar1.OnMouseUp := @btntrackoffClick;
+  end;
+
+  TrackBar2 := TfpgTrackBar.Create(Panel1);
+  with TrackBar2 do
+  begin
+    Name := 'TrackBar2';
+    SetPosition(20, 20, 32, 78);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    Orientation := orVertical;
+    ParentShowHint := False;
+    TabOrder := 23;
+    Hint := '';
+    OnChange := @volumechange;
+  end;
+
+  TrackBar3 := TfpgTrackBar.Create(Panel1);
+  with TrackBar3 do
+  begin
+    Name := 'TrackBar3';
+    SetPosition(88, 20, 28, 78);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    Orientation := orVertical;
+    ParentShowHint := False;
+    TabOrder := 24;
+    Hint := '';
+    OnChange := @volumechange;
+  end;
+
+  Label3 := TfpgLabel.Create(Panel1);
+  with Label3 do
+  begin
+    Name := 'Label3';
+    SetPosition(28, 4, 84, 15);
+    Alignment := taCenter;
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label2';
+    ParentShowHint := False;
+    Text := 'Volume';
+    Hint := '';
+  end;
+
+  Label4 := TfpgLabel.Create(Panel1);
+  with Label4 do
+  begin
+    Name := 'Label4';
+    SetPosition(20, 100, 40, 15);
+    Alignment := taCenter;
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Left';
+    Hint := '';
+  end;
+
+  Label5 := TfpgLabel.Create(Panel1);
+  with Label5 do
+  begin
+    Name := 'Label5';
+    SetPosition(84, 100, 36, 19);
+    Alignment := taCenter;
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Right';
+    Hint := '';
+  end;
+
+  vuleft := TfpgPanel.Create(Panel1);
+  with vuleft do
+  begin
+    Name := 'vuleft';
+    SetPosition(56, 24, 8, 74);
+    BackgroundColor := TfpgColor($00D51D);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Style := bsFlat;
+    Text := '';
+    Hint := '';
+  end;
+
+  vuright := TfpgPanel.Create(Panel1);
+  with vuright do
+  begin
+    Name := 'vuright';
+    SetPosition(76, 24, 8, 74);
+    BackgroundColor := TfpgColor($1DD523);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Style := bsFlat;
+    Text := '';
+    Hint := '';
+  end;
+
+  CheckBox2 := TfpgCheckBox.Create(Panel1);
+  with CheckBox2 do
+  begin
+    Name := 'CheckBox2';
+    SetPosition(292, 92, 184, 19);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    TabOrder := 32;
+    Text := 'Enable SoundTouch PlugIn';
+    Hint := 'Change Tempo with same tuning or change Tuning with same tempo';
+    OnChange := @ChangePlugSetSoundTouch;
+  end;
+
+  Label6 := TfpgLabel.Create(Panel1);
+  with Label6 do
+  begin
+    Name := 'Label6';
+    SetPosition(284, 112, 80, 19);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Tempo: 1.0';
+    Hint := '';
+  end;
+
+  Label7 := TfpgLabel.Create(Panel1);
+  with Label7 do
+  begin
+    Name := 'Label7';
+    SetPosition(396, 112, 68, 15);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Pitch: 1.0';
+    Hint := '';
+  end;
+
+  TrackBar4 := TfpgTrackBar.Create(Panel1);
+  with TrackBar4 do
+  begin
+    Name := 'TrackBar4';
+    SetPosition(360, 112, 28, 54);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    Orientation := orVertical;
+    ParentShowHint := False;
+    Position := 50;
+    TabOrder := 35;
+    Hint := '';
+    OnChange := @TrackChangePlugSetSoundTouch;
+  end;
+
+  TrackBar5 := TfpgTrackBar.Create(Panel1);
+  with TrackBar5 do
+  begin
+    Name := 'TrackBar5';
+    SetPosition(456, 112, 28, 54);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    Orientation := orVertical;
+    ParentShowHint := False;
+    Position := 50;
+    TabOrder := 36;
+    Hint := '';
+    OnChange := @TrackChangePlugSetSoundTouch;
+  end;
+
+  Button1 := TfpgButton.Create(Panel1);
+  with Button1 do
+  begin
+    Name := 'Button1';
+    SetPosition(288, 140, 60, 23);
+    Text := 'Reset';
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 37;
+    Hint := '';
+    OnClick := @ResetPlugClick;
+  end;
+
+  chkst2b := TfpgCheckBox.Create(Panel1);
+  with chkst2b do
+  begin
+    Name := 'chkst2b';
+    SetPosition(144, 120, 136, 19);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    TabOrder := 38;
+    Text := 'Stereo to BinAural';
+    Hint := 'Stereo to BinAural (for headphones)';
+    OnChange := @ChangePlugSetBs2b;
+  end;
+
+  chkstereo2mono := TfpgCheckBox.Create(Panel1);
+  with chkstereo2mono do
+  begin
+    Name := 'chkstereo2mono';
+    SetPosition(144, 88, 120, 19);
+    BackgroundColor := TfpgColor($68A7D3A8);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    TabOrder := 42;
+    Text := 'Stereo to Mono';
+    Hint := 'Convert Stereo to Mono';
+    OnChange := @Changestereo2mono;
+  end;
+
   {@VFD_BODY_END: Simpleplayer}
     {%endregion}
 
@@ -1285,8 +1327,8 @@ end;
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
     FilenameEdit7.FileName := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
     FilenameEdit8.FileName := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
-    FilenameEdit81.FileName := ordir + 'lib\Windows\32bit\LibOpus-64.dll';
-    FilenameEdit31.FileName := ordir + 'lib\Windows\32bit\LibOpusFile-64.dll';
+    FilenameEdit81.FileName := ordir + 'lib\Windows\32bit\LibOpus-32.dll';
+    FilenameEdit31.FileName := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
     FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
     FilenameEdit6.FileName := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
     

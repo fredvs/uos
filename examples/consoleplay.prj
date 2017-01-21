@@ -838,7 +838,7 @@ findhistory=8
 findoptions=1
 editpos=8
  0,-1073741823
- 0,0
+ 8,21
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -929,7 +929,7 @@ windowlayout=549
   basedock,0,0,954,811
  focusedchild=0
  wsize=0
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -947,7 +947,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1134,7 +1134,7 @@ windowlayout=549
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=mainfo
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0

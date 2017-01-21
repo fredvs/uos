@@ -1809,7 +1809,7 @@ var
         4: ratio := 1; // opus
       end;
       
-    if inputData.LibOpen <> 4 then //not working yet for opus files
+    if inputData.LibOpen <> 5 then //not working yet for opus files
     begin
    soundtouch_putSamples(plugHandle, pointer(bufferin),
    inputData.outframes div round(inputData.Channels * ratio));
@@ -3789,17 +3789,17 @@ begin
              //  StreamIn[x].Data.Buffer[x2] := cfloat(0.0);         
               case StreamIn[x].Data.SampleFormat of
                     0: StreamIn[x].Data.outframes := op_read_float(StreamIn[x].Data.HandleOP,
-                       StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels, nil);
+                       @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels, nil);
                     1: begin 
                        StreamIn[x].Data.outframes := op_read(StreamIn[x].Data.HandleOP,
-                       StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes  * StreamIn[x].Data.channels, nil);
+                       @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes  * StreamIn[x].Data.channels, nil);
               
                     // no int32 format with opus => need a conversion from float32 to int32 (not working yet).
                     // StreamIn[x].Data.Buffer := CvFloat32ToInt32fl( StreamIn[x].Data.Buffer,
                     // StreamIn[x].Data.outframes * StreamIn[x].Data.Channels );
                        end;
                     2: StreamIn[x].Data.outframes := op_read(StreamIn[x].Data.HandleOP,
-                       StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes, nil);
+                       @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes, nil);
                   end;
       
                StreamIn[x].Data.outframes := StreamIn[x].Data.outframes * StreamIn[x].Data.Channels;
