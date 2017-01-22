@@ -1381,7 +1381,10 @@ end;
     FilenameEdit5.FileName := '';
     FilenameEdit7.FileName := ordir + 'lib/FreeBSD/64bit/libmp4ff-64.so';
     FilenameEdit8.FileName := ordir + 'lib/FreeBSD/64bit/libfaad2-64.so';
+    FilenameEdit81.FileName := ordir + 'lib/FreeBSD/64bit/libopus-64.so';
+    FilenameEdit31.FileName := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
     FilenameEdit6.FileName := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
+    
     {$else}
     FilenameEdit1.FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
@@ -1426,6 +1429,7 @@ end;
     finally
    //   uos_FreePlayer(PlayerIndex1); 
     // uosPlayers[PlayerIndex1].destroy; // do not forget this...
+       uos_unloadlib;
       uos_free; // do not forget this...
       frm.Free;
     end;

@@ -69,6 +69,8 @@ begin
     mainfo.m4dir.value := ordir + 'lib/FreeBSD/64bit/libmp4ff-64.so';
     mainfo.fadir.value := ordir + 'lib/FreeBSD/64bit/libfaad2-64.so';
     mainfo.bsdir.value := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
+    mainfo.opdir.value := ordir + 'lib/FreeBSD/64bit/libopus-64.so';
+    mainfo.ofdir.value := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
     {$else}
     mainfo.padir.value := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     mainfo.sfdir.value := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';

@@ -211,6 +211,8 @@ begin
     Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
     Edit5.Text := '' ;
     Edit6.text := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
+    Edit9.text := ordir + 'lib/FreeBSD/64bit/libopus-64.so';
+    Edit10.text := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
   
     {$else}
    Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
