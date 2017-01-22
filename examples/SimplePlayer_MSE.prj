@@ -894,34 +894,39 @@ findhistory=12
  ***running***
  ntimerkey
 findoptions=1
-editpos=6
- 0,34
+editpos=7
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,343
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-sourcefiles=6
- /home/fred/uos/examples/SimplePlayer_MSE.pas
+bookmarks6=0
+sourcefiles=7
+ ${PROJECTDIR}/SimplePlayer_MSE.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/mainmse_sp.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  /home/fred/msegui/lib/common/kernel/mselibc.pas
-relpaths=6
+ ${PROJECTDIR}/mainmse_sp.pas
+relpaths=7
  SimplePlayer_MSE.pas
  uos_flat.pas
  uos.pas
  mainmse_sp.pas
  simpleplayer_fpGUI.pas
  msegui/lib/common/kernel/mselibc.pas
-ismoduletexts=6
+ mainmse_sp.pas
+ismoduletexts=7
+ 0
  0
  0
  0
@@ -937,8 +942,9 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=6
+order=7
  0
+ 6
  5
  1
  2
@@ -946,7 +952,7 @@ order=6
  4
 tabsize=60
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=545
  [mainfo.basedock]
@@ -974,8 +980,8 @@ windowlayout=545
  ny=0
  ncx=0
  ncy=0
- x=259
- y=88
+ x=136
+ y=34
  cx=939
  cy=621
  rcx=0
@@ -1003,7 +1009,7 @@ windowlayout=545
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1193,15 +1199,15 @@ windowlayout=545
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=_mse_simple_player_mse_
+ stackedunder=
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=670
- y=179
+ x=773
+ y=125
  cx=515
  cy=484
  rcx=0
@@ -1443,7 +1449,7 @@ windowlayout=545
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0
@@ -1478,17 +1484,17 @@ windowlayout=545
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=361
- y=77
+ x=363
+ y=73
  cx=495
- cy=493
+ cy=357
  rcx=0
  rcy=0
  wsize=0

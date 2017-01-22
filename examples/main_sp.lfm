@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 246
-  Height = 232
-  Top = 246
+  Left = 267
+  Height = 373
+  Top = 73
   Width = 499
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'
-  ClientHeight = 232
+  ClientHeight = 373
   ClientWidth = 499
   Color = clMoneyGreen
   Icon.Data = {
@@ -160,9 +160,9 @@ object Form1: TForm1
     OnPaint = PaintBox1Paint
   end
   object Button1: TButton
-    Left = 14
+    Left = 8
     Height = 26
-    Top = 392
+    Top = 344
     Width = 483
     Caption = 'Load that libraries'
     OnClick = Button1Click
@@ -171,7 +171,7 @@ object Form1: TForm1
   object Edit5: TEdit
     Left = 130
     Height = 27
-    Top = 311
+    Top = 270
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -181,7 +181,7 @@ object Form1: TForm1
   object Label6: TLabel
     Left = 130
     Height = 18
-    Top = 296
+    Top = 255
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -194,7 +194,7 @@ object Form1: TForm1
   object Label10: TLabel
     Left = 130
     Height = 18
-    Top = 337
+    Top = 296
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -207,7 +207,7 @@ object Form1: TForm1
   object Edit6: TEdit
     Left = 130
     Height = 27
-    Top = 353
+    Top = 312
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -258,33 +258,10 @@ object Form1: TForm1
     AutoSize = False
     TabOrder = 7
   end
-  object Edit9: TEdit
-    Left = 130
-    Height = 27
-    Top = 220
-    Width = 360
-    Alignment = taCenter
-    AutoSize = False
-    OnChange = Edit5Change
-    TabOrder = 8
-  end
-  object Label13: TLabel
-    Left = 130
-    Height = 18
-    Top = 202
-    Width = 360
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'Folder + filename of Opus Library'
-    Font.Height = -11
-    Font.Name = 'Sans'
-    ParentColor = False
-    ParentFont = False
-  end
   object Label14: TLabel
     Left = 130
     Height = 18
-    Top = 248
+    Top = 208
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -297,11 +274,11 @@ object Form1: TForm1
   object Edit10: TEdit
     Left = 130
     Height = 27
-    Top = 265
+    Top = 224
     Width = 360
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 9
+    TabOrder = 8
   end
   object Panel1: TPanel
     Left = 1
@@ -312,7 +289,7 @@ object Form1: TForm1
     ClientWidth = 498
     Color = clMoneyGreen
     ParentColor = False
-    TabOrder = 10
+    TabOrder = 9
     Visible = False
     OnClick = Panel1Click
     object Edit4: TEdit

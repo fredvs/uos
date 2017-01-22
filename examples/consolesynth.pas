@@ -68,9 +68,9 @@ var
  {$ENDIF}
  
     // Load the libraries (here only portaudio is needed)
-    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilename, opusfilefilename:: PChar) : LongInt;
+    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename:: PChar) : LongInt;
 
-   res := uos_LoadLib(Pchar(PA_FileName), nil, nil, nil, nil, nil, nil) ;
+   res := uos_LoadLib(Pchar(PA_FileName), nil, nil, nil, nil, nil) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 

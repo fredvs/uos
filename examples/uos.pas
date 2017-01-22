@@ -54,7 +54,8 @@ uos_aac,
 {$endif}
 
 {$IF DEFINED(opus)}
-uos_opus, uos_opusfile,
+//uos_opus,
+uos_opusfile,
 {$endif}
 
 {$IF DEFINED(cdrom)}
@@ -193,7 +194,6 @@ type
     MP_FileName: pchar; // Mpg123
     AA_FileName : PChar; // Faad
     M4_FileName : PChar; // Mp4ff
-    OP_FileName : PChar; // opus
     OF_FileName : PChar; // opusfile
 
     Plug_ST_FileName: pchar; // Plugin SoundTouch
@@ -852,13 +852,13 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
    {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusFileName, opusfileFileName : PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName : PChar) : LongInt;
        ////// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
      // PortAudio => needed for dealing with audio-device
      // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
      // Mpg123 => needed for dealing with mp* audio-files
      // Mp4ff and Faad => needed for dealing with acc, m4a audio-files
-     // opus and opusfile => needed for dealing with opus audio-files
+     // opusfile => needed for dealing with opus audio-files
 
      // If some libraries are not needed, replace it by "nil", for example : uos_loadlib(PortAudioFileName, SndFileFileName, nil, nil, nil, nil, nil)
 
@@ -4594,7 +4594,7 @@ begin
     Aa_Unload;
     {$endif}
     {$IF DEFINED(opus)}
-    op_Unload;
+    //op_Unload;
     of_Unload;
     {$endif}
    {$IF DEFINED(windows)}
@@ -4755,16 +4755,17 @@ begin
    {$endif}
    
       {$IF DEFINED(opus)}
-     if (OP_FileName <> nil) and (OP_FileName <>  '') and (OF_FileName <> nil) and (OF_FileName <>  '') then
+     if (OF_FileName <> nil) and (OF_FileName <>  '') then
      begin
-       if (not fileexists(OP_FileName)) or (not fileexists(OF_FileName)) then
+       if (not fileexists(OF_FileName)) then
        begin
          Result := -1;
          uosLoadResult.OPloadERROR := 1;
        end
        else
        begin
-         if (op_load(AnsiString(OP_FileName))) and (of_load(AnsiString(OF_FileName)))  then
+      //   if (op_load(AnsiString(OP_FileName))) and
+         if (of_load(AnsiString(OF_FileName)))  then
          begin
            uosLoadResult.OPloadERROR := 0;
            if (uosLoadResult.MPloadERROR = -1) and (uosLoadResult.PAloadERROR = -1) and
@@ -4843,7 +4844,7 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
   
 end;
  
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusFileName, opusfileFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : LongInt;
   begin
    result := -1 ;
    if not assigned(uosInit) then begin
@@ -4861,7 +4862,6 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
    uosInit.MP_FileName := Mpg123FileName;
    uosInit.AA_FileName:= FaadFileName;
    uosInit.M4_FileName:= Mp4ffFileName;
-   uosInit.OP_FileName:= opusFileName;
    uosInit.OF_FileName:= opusfileFileName;
    
    result := uosInit.loadlib ;
@@ -5051,7 +5051,6 @@ begin
   MP_FileName := nil; // Mpg123
   AA_FileName := nil; // Faad
   M4_FileName := nil; // Mp4ff
-  OP_FileName := nil; // opus
   OF_FileName := nil; // opusfile
   Plug_ST_FileName := nil; // Plugin SoundTouch
   Plug_BS_FileName := nil; // Plugin bs2b
@@ -5181,7 +5180,7 @@ begin
   if opus = True then
   begin
    of_Unload();
-   op_Unload();
+   // op_Unload();
    end;
    {$endif}
 end;

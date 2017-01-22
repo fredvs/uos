@@ -40,8 +40,6 @@ type
     FilenameEdit7: TfpgFileNameEdit;
     Labelst111: TfpgLabel;
     FilenameEdit8: TfpgFileNameEdit;
-    Labelst1111: TfpgLabel;
-    FilenameEdit81: TfpgFileNameEdit;
     Labelst11111: TfpgLabel;
     FilenameEdit31: TfpgFileNameEdit;
     Labelst: TfpgLabel;
@@ -267,10 +265,11 @@ loadok : boolean = false;
   ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
  
     // Load the libraries
-// function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusFileName, opusfileFileName : PChar) : LongInt;
+// function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName : PChar) : LongInt;
  if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
  Pchar(FilenameEdit3.FileName), Pchar(FilenameEdit7.FileName), Pchar(FilenameEdit8.FileName),
- Pchar(FilenameEdit81.FileName), Pchar(FilenameEdit31.FileName)) = 0 then
+  Pchar(FilenameEdit31.FileName)) = 0 then
+ 
     begin
       hide;
       loadok := true;
@@ -289,7 +288,6 @@ loadok : boolean = false;
       FilenameEdit6.ReadOnly := True;
       FilenameEdit7.ReadOnly := True;
       FilenameEdit8.ReadOnly := True;
-      FilenameEdit81.ReadOnly := True;
       FilenameEdit31.ReadOnly := True;
       UpdateWindowPosition;
        btnLoad.Text :=
@@ -665,7 +663,7 @@ end;
 
     {@VFD_BODY_BEGIN: Simpleplayer}
   Name := 'Simpleplayer';
-  SetPosition(593, 132, 513, 208);
+  SetPosition(593, 132, 513, 364);
   WindowTitle := 'Simple player ';
   IconName := '';
   BackGroundColor := $80000001;
@@ -677,7 +675,7 @@ end;
   with Custom1 do
   begin
     Name := 'Custom1';
-    SetPosition(10, 16, 115, 339);
+    SetPosition(10, 16, 115, 307);
     OnPaint := @uos_logo;
   end;
 
@@ -697,7 +695,7 @@ end;
   with btnLoad do
   begin
     Name := 'btnLoad';
-    SetPosition(8, 362, 488, 24);
+    SetPosition(8, 334, 488, 24);
     Text := 'Load that libraries';
     FontDesc := '#Label1';
     ImageName := '';
@@ -801,33 +799,11 @@ end;
     TabOrder := 46;
   end;
 
-  Labelst1111 := TfpgLabel.Create(self);
-  with Labelst1111 do
-  begin
-    Name := 'Labelst1111';
-    SetPosition(188, 196, 236, 15);
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Folder + filename of Opus Library';
-  end;
-
-  FilenameEdit81 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit81 do
-  begin
-    Name := 'FilenameEdit81';
-    SetPosition(136, 212, 356, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 47;
-  end;
-
   Labelst11111 := TfpgLabel.Create(self);
   with Labelst11111 do
   begin
     Name := 'Labelst11111';
-    SetPosition(176, 236, 292, 15);
+    SetPosition(176, 196, 292, 15);
     FontDesc := '#Label1';
     ParentShowHint := False;
     Text := 'Folder + filename of OpusFile Library';
@@ -837,7 +813,7 @@ end;
   with FilenameEdit31 do
   begin
     Name := 'FilenameEdit31';
-    SetPosition(136, 253, 356, 24);
+    SetPosition(136, 213, 356, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -849,7 +825,7 @@ end;
   with Labelst do
   begin
     Name := 'Labelst';
-    SetPosition(152, 276, 316, 15);
+    SetPosition(152, 240, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -873,7 +849,7 @@ end;
   with FilenameEdit5 do
   begin
     Name := 'FilenameEdit5';
-    SetPosition(136, 292, 356, 24);
+    SetPosition(136, 256, 356, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -885,7 +861,7 @@ end;
   with Labelst1 do
   begin
     Name := 'Labelst1';
-    SetPosition(146, 316, 316, 15);
+    SetPosition(142, 284, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -896,7 +872,7 @@ end;
   with FilenameEdit6 do
   begin
     Name := 'FilenameEdit6';
-    SetPosition(136, 332, 356, 24);
+    SetPosition(136, 300, 356, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -908,7 +884,7 @@ end;
   with Panel1 do
   begin
     Name := 'Panel1';
-    SetPosition(0, 0, 512, 208);
+    SetPosition(4, 396, 512, 208);
     BackgroundColor := TfpgColor($68A7D3A8);
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -1314,7 +1290,7 @@ end;
     ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
     checkbox1.OnChange := @changecheck;
     RadioButton1.Checked := True;
-    Height := 392;
+    height := 364;
              {$IFDEF Windows}
      {$if defined(cpu64)}
     FilenameEdit1.FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
@@ -1327,7 +1303,6 @@ end;
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
     FilenameEdit7.FileName := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
     FilenameEdit8.FileName := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
-    FilenameEdit81.FileName := ordir + 'lib\Windows\32bit\LibOpus-32.dll';
     FilenameEdit31.FileName := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
     FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
     FilenameEdit6.FileName := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
@@ -1353,7 +1328,6 @@ end;
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
     FilenameEdit7.FileName := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
     FilenameEdit8.FileName := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
-    FilenameEdit81.FileName := ordir + 'lib/Linux/64bit/LibOpus-64.so';
     FilenameEdit31.FileName := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
     
     FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
@@ -1381,7 +1355,6 @@ end;
     FilenameEdit5.FileName := '';
     FilenameEdit7.FileName := ordir + 'lib/FreeBSD/64bit/libmp4ff-64.so';
     FilenameEdit8.FileName := ordir + 'lib/FreeBSD/64bit/libfaad2-64.so';
-    FilenameEdit81.FileName := ordir + 'lib/FreeBSD/64bit/libopus-64.so';
     FilenameEdit31.FileName := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
     FilenameEdit6.FileName := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
     
@@ -1425,7 +1398,7 @@ end;
     fpgApplication.CreateForm(TSimpleplayer, frm);
     try
      frm.Show;
-      fpgApplication.Run;
+     fpgApplication.Run;
     finally
    //   uos_FreePlayer(PlayerIndex1); 
     // uosPlayers[PlayerIndex1].destroy; // do not forget this...

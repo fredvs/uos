@@ -20,7 +20,7 @@ type
    m4dir: tfilenameedit;
    stdir: tfilenameedit;
 
-   tdockpanel1: tdockpanel;
+   panel1: tdockpanel;
    tlabel3: tlabel;
    tlabel2: tlabel;
    tlabel1: tlabel;
@@ -51,7 +51,6 @@ type
    vuLeft: tdockpanel;
    vuRight: tdockpanel;
    ofdir: tfilenameedit;
-   opdir: tfilenameedit;
    procedure loadlibr(const sender: TObject);
    procedure playit(const sender: TObject);
     procedure ClosePlayer1;
@@ -297,18 +296,23 @@ var
 loadok : boolean = false;
   begin
     // Load the libraries
-// function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName: PChar) : LongInt;
+// function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFilename: PChar) : LongInt;
 
 if uos_LoadLib(Pchar(AnsiString(mainfo.padir.value)), Pchar(AnsiString(mainfo.sfdir.value)),
  Pchar(AnsiString(mainfo.mpdir.value)), Pchar(AnsiString(mainfo.m4dir.value)),
- Pchar(AnsiString(mainfo.fadir.value)),  Pchar(AnsiString(mainfo.opdir.value)),
-   Pchar(AnsiString(mainfo.ofdir.value))) = 0 
+ Pchar(AnsiString(mainfo.fadir.value)), Pchar(AnsiString(mainfo.ofdir.value))) = 0 
 
  then
     begin
       hide;
       loadok := true;
-      Height := 612;
+      Height := 210;
+      panel1.height := height;
+      panel1.width := width;
+      panel1.left := 0;
+      panel1.top := 0;
+      panel1.visible := true;
+      
       btnStart.Enabled := True;
       btnLoad.Enabled := False;
       
@@ -319,7 +323,6 @@ if uos_LoadLib(Pchar(AnsiString(mainfo.padir.value)), Pchar(AnsiString(mainfo.sf
       stdir.enabled := false;
       fadir.enabled := false;
       bsdir.enabled := false;
-      opdir.enabled := false;
       ofdir.enabled := false;
 
       btnLoad.caption :=

@@ -35,12 +35,10 @@ type
     Edit6: TEdit;
     Edit7: TEdit;
     Edit8: TEdit;
-    Edit9: TEdit;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
-    Label13: TLabel;
     Label14: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -195,7 +193,6 @@ begin
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
   Edit7.text := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
-  Edit9.text := ordir + 'lib\Windows\32bit\LibOpus-64.so';
   Edit10.text := ordir + 'lib\Windows\32bit\LibOpusFile-64.so';
   Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
   Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
@@ -211,7 +208,6 @@ begin
     Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
     Edit5.Text := '' ;
     Edit6.text := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
-    Edit9.text := ordir + 'lib/FreeBSD/64bit/libopus-64.so';
     Edit10.text := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
   
     {$else}
@@ -240,7 +236,6 @@ begin
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   Edit7.text := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
   Edit8.text := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
-  Edit9.text := ordir + 'lib/Linux/64bit/LibOpus-64.so';
   Edit10.text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
   Edit6.Text := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
@@ -295,10 +290,10 @@ var
 loadok : boolean = false;
 begin
   // Load the libraries
-  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilename, opusfilefilename: PChar) : LongInt;
+  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
   if uos_LoadLib(Pchar(Edit1.text), Pchar(Edit2.text),
-     Pchar(Edit3.text), Pchar(Edit7.text), Pchar(Edit8.text), Pchar(Edit9.text), Pchar(Edit10.text)) = 0 then
+     Pchar(Edit3.text), Pchar(Edit7.text), Pchar(Edit8.text), Pchar(Edit10.text)) = 0 then
   // You may load one or more libraries . When you want... :
 
  begin
@@ -310,7 +305,6 @@ begin
     edit3.ReadOnly := True;
     edit7.ReadOnly := True;
     edit8.ReadOnly := True;
-    edit9.ReadOnly := True;
     edit10.ReadOnly := True;
           button1.Caption :=
         'PortAudio, SndFile, Mpg123, AAC, Opus libraries are loaded...'  ;
@@ -746,7 +740,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Form1.Height := 428;
+  Form1.Height := 372;
   ShapeLeft.Height := 0;
   ShapeRight.Height := 0;
 end;

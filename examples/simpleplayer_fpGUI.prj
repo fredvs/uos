@@ -785,12 +785,12 @@ path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
 line=7
- 3586
+ 3585
  33
  913
  764
- 2527
- 1858
+ 2526
+ 1857
  550
 address=7
  5002412
@@ -906,8 +906,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=function SoundTouchPlug(
+finddtext=height
 findhistory=20
+ height
+ loadlib
  function SoundTouchPlug(
  CvFloat32ToInt32fl
  writeln
@@ -926,21 +928,15 @@ findhistory=20
  vule
  vupane
  Cvint16ToInt32fl
- op_read
- ratio
 findoptions=1
-editpos=24
+editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 6,1810
+ 0,5053
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,327
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -953,7 +949,13 @@ editpos=24
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,177
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,159
+ 31,1284
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -978,7 +980,9 @@ bookmarks20=0
 bookmarks21=0
 bookmarks22=0
 bookmarks23=0
-sourcefiles=24
+bookmarks24=0
+bookmarks25=0
+sourcefiles=26
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
@@ -1003,7 +1007,9 @@ sourcefiles=24
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/uos_aac.pas
  ${PROJECTDIR}/uos_opusfile.pas
-relpaths=24
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+relpaths=26
  simpleplayer_fpGUI.pas
  uos_flat.pas
  uos_dsp_noiseremoval.pas
@@ -1028,7 +1034,11 @@ relpaths=24
  uos_soundtouch.pas
  uos_aac.pas
  uos_opusfile.pas
-ismoduletexts=24
+ uos_flat.pas
+ simpleplayer_fpGUI.pas
+ismoduletexts=26
+ 0
+ 0
  0
  0
  0
@@ -1058,11 +1068,13 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=24
+order=26
  0
  1
  2
  3
+ 24
+ 25
  20
  22
  4
@@ -1085,7 +1097,7 @@ order=24
  17
 tabsize=60
 firsttab=3
-index=3
+index=5
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1328,7 +1340,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1558,8 +1570,8 @@ windowlayout=530
  mdistate=0
  nx=0
  ny=47
- ncx=928
- ncy=2
+ ncx=1350
+ ncy=11
  x=0
  y=47
  cx=1350
@@ -1586,7 +1598,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0

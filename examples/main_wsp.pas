@@ -204,10 +204,10 @@ var
 loadok : boolean = false;
 begin
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName) : integer;
-  // You may load one or more libraries . When you want... :
+ //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
+  // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
-if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), nil, nil) = 0 then
+if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), nil, nil,nil) = 0 then
   begin
     form1.hide;
       loadok := true;

@@ -227,9 +227,6 @@ function OPUS_MULTISTREAM_GET_ENCODER_STATE(x: Integer; var y: Integer): TOpusCT
   
 implementation
 
-const
-  StrLibName = 'libopus-0.dll';
- 
   function op_IsLoaded: boolean;
 begin
  Result := (op_Handle <> dynlibs.NilHandle);

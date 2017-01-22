@@ -139,10 +139,12 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName: Pchar; Mpg123FileName: Pchar) : integer;
+  //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
+  // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
+
   // You may load one or more libraries . When you want... :
 
-if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text),nil, nil) = 0 then
+if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text),nil, nil,nil) = 0 then
   begin
     form1.hide;
     button1.Caption :=

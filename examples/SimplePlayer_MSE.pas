@@ -25,7 +25,6 @@ begin
      mainfo.mpdir.value := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
     mainfo.m4dir.value := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
     mainfo.fadir.value := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
-    mainfo.opdir.value := ordir + 'lib\Windows\32bit\LibOpus-32.dll';
     mainfo.ofdir.value := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
     
     mainfo.stdir.value := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
@@ -42,7 +41,6 @@ begin
     mainfo.mpdir.value := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
     mainfo.m4dir.value := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
     mainfo.fadir.value := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
-    mainfo.opdir.value := ordir + 'lib/Linux/64bit/LibOpus-64.so';
     mainfo.ofdir.value := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
     mainfo.stdir.value := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
     mainfo.bsdir.value := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
@@ -80,7 +78,7 @@ begin
 {$ENDIF}
    
    mainfo.songdir.controller.lastdir := ordir + 'sound' ;
-mainfo.height := 394 ;
+mainfo.height := 356 ;
  
 mainfo.vuLeft.Visible := False;
      
