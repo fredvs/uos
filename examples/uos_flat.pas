@@ -26,7 +26,6 @@ uses
 
    Classes, ctypes, math, SysUtils, uos;
  
-
   {$IF DEFINED(bs2b)}
    const
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -557,6 +556,15 @@ function uos_InputPositionTime(PlayerIndex: cint32; InputIndex: cint32): TTime;
                      ////////// InputIndex : InputIndex of existing input
                      ///////  result : current postion of Input in time format
 
+function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): pchar;
+function uos_InputGetTagArtist(PlayerIndex: cint32; InputIndex: cint32): pchar;
+function uos_InputGetTagAlbum(PlayerIndex: cint32; InputIndex: cint32): pchar;
+function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32): pchar;
+function uos_InputGetTagComment(PlayerIndex: cint32; InputIndex: cint32): pchar;
+function uos_InputGetTagTag(PlayerIndex: cint32; InputIndex: cint32): pchar;
+                 /// Tag infos
+                     
+
 function uos_InputGetSampleRate(PlayerIndex: cint32; InputIndex: cint32): cint32;
                    ////////// InputIndex : InputIndex of existing input
                   ////// result : default sample rate
@@ -675,6 +683,49 @@ end;
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
                ////////// example  uos_SetDSPVolumeOut(0,InputIndex1,1,0.8,True);
+         
+              
+function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): pchar;
+ begin
+   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+result := uosPlayers[PlayerIndex].InputGetTagTitle(InputIndex) ;
+ end;
+
+function uos_InputGetTagArtist(PlayerIndex: cint32; InputIndex: cint32): pchar;
+ begin
+   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+result := uosPlayers[PlayerIndex].InputGetTagArtist(InputIndex) ;
+ end;
+
+function uos_InputGetTagAlbum(PlayerIndex: cint32; InputIndex: cint32): pchar;
+ begin
+   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+result := uosPlayers[PlayerIndex].InputGetTagAlbum(InputIndex) ;
+ end;
+
+function uos_InputGetTagComment(PlayerIndex: cint32; InputIndex: cint32): pchar;
+ begin
+    if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+result := uosPlayers[PlayerIndex].InputGetTagComment(InputIndex) ;
+ end;
+
+function uos_InputGetTagTag(PlayerIndex: cint32; InputIndex: cint32): pchar;
+ begin
+   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+result := uosPlayers[PlayerIndex].InputGetTagTag(InputIndex) ;
+ end;
+ 
+function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32): pchar;
+ begin
+   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+result := uosPlayers[PlayerIndex].InputGetTagDate(InputIndex) ;
+ end;
 
 function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc : TFunc;
                     AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;

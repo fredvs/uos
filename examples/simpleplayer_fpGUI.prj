@@ -252,6 +252,28 @@ settings=13
  wsize=0
  active=1
  visible=1
+codetemplateselect=21
+ [msetemplateselectfo.grid]
+ propcolwidthref=528
+ width0=60
+ sortdescend0=0
+ width1=252
+ sortdescend1=0
+ width2=51
+ sortdescend2=0
+ width3=51
+ sortdescend3=0
+ width4=51
+ sortdescend4=0
+ width5=51
+ sortdescend5=0
+ sortdescend6=0
+ [msetemplateselectfo]
+ stackedunder=
+ x=398
+ y=233
+ cx=569
+ cy=277
 mainfile=${PROJECTDIR}simpleplayer_fpGUI.pas
 targetfile=${PROJECTDIR}/simpleplayer_fpGUI
 messageoutputfile=
@@ -785,12 +807,12 @@ path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
 line=7
- 3585
+ 3628
  33
  913
  764
- 2526
- 1857
+ 2564
+ 1895
  550
 address=7
  5002412
@@ -906,11 +928,14 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=height
+finddtext=gettag
 findhistory=20
+ gettag
+ InputGetLevelLeft
+ uos_GetInfoDeviceStr
+ function SoundTouchPlug(
  height
  loadlib
- function SoundTouchPlug(
  CvFloat32ToInt32fl
  writeln
  AddFromFile
@@ -925,18 +950,12 @@ findhistory=20
  readst
  read
  buffer
- vule
- vupane
- Cvint16ToInt32fl
 findoptions=1
 editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,5053
- 0,-1073741823
- 0,-1073741823
- 0,327
+ 0,702
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -954,8 +973,11 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,159
- 31,1284
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,726
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1097,7 +1119,7 @@ order=26
  17
 tabsize=60
 firsttab=3
-index=5
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1146,15 +1168,15 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=197
- y=241
+ x=558
+ y=188
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1258,8 +1280,8 @@ windowlayout=530
  width1=43
  sortdescend1=0
  sorted=0
- col=0
- row=10
+ col=1
+ row=12
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1340,7 +1362,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1598,7 +1620,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

@@ -694,6 +694,14 @@ function InputPositionTime(InputIndex: LongInt): TTime;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : current postion of Input in time format
 
+function InputGetTagTitle(InputIndex: LongInt): pchar;
+function InputGetTagArtist(InputIndex: LongInt): pchar;
+function InputGetTagAlbum(InputIndex: LongInt): pchar;
+function InputGetTagDate(InputIndex: LongInt): pchar;
+function InputGetTagComment(InputIndex: LongInt): pchar;
+function InputGetTagTag(InputIndex: LongInt): pchar;
+    /// Tag infos
+
 function AddDSPin(InputIndex: LongInt; BeforeFunc: TFunc;
       AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): LongInt;
     ///// add a DSP procedure for input
@@ -1373,6 +1381,36 @@ begin
     s := trunc(tmp - (h * 3600 + m * 60));
     Result := sysutils.EncodeTime(h, m, s, ms);
 end;
+
+function Tuos_Player.InputGetTagTitle(InputIndex: LongInt): pchar;
+ begin
+  if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.title);
+ end;
+
+function Tuos_Player.InputGetTagArtist(InputIndex: LongInt): pchar;
+ begin
+  if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.Artist);
+ end;
+
+function Tuos_Player.InputGetTagAlbum(InputIndex: LongInt): pchar;
+ begin
+  if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.album);
+ end;
+
+function Tuos_Player.InputGetTagComment(InputIndex: LongInt): pchar;
+ begin
+  if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.comment);
+ end;
+
+function Tuos_Player.InputGetTagTag(InputIndex: LongInt): pchar;
+ begin
+  if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.tag);
+ end;
+ 
+function Tuos_Player.InputGetTagDate(InputIndex: LongInt): pchar;
+ begin
+  if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.date);
+ end;
 
 procedure Tuos_Player.SetDSPin(InputIndex: LongInt; DSPinIndex: LongInt;
   Enable: boolean);
@@ -3168,16 +3206,18 @@ function Tuos_Player.AddFromFile(Filename: PChar; OutputIndex: LongInt;
   //////////// FramesCount : default : -1 (65536 div channels)
   ////////// example : InputIndex := AddFromFile('/usr/home/test.ogg',-1,-1,-1);
 var
-  x, err: LongInt;
+  x,  err: LongInt;
 
   {$IF DEFINED(sndfile)}
    sfInfo: TSF_INFO;
    {$endif}
    
    {$IF DEFINED(opus)}
-   //OpusTag: POpusTags;
-   //LComment: PPAnsiChar;
-   //LcommentLength: PInteger;
+   s: UTF8String;
+   j: Integer;
+   OpusTag: POpusTags;
+   LComment: PPAnsiChar;
+   LcommentLength: PInteger;
    {$endif}
    
   {$IF DEFINED(mpg123)}
@@ -3349,37 +3389,40 @@ begin
           StreamIn[x].Data.SampleFormat := 2
         else
           StreamIn[x].Data.SampleFormat := SampleFormat;  
-          
-          {
-           
-           OpusTag := op_tags(StreamIn[x].Data.HandleOP, 0);
        
-        if OpusTag<>nil
+       //tag   
+     
+       OpusTag := op_tags(StreamIn[x].Data.HandleOP, 0);
+       
+    if OpusTag<>nil
           
-             then begin
+       then begin
             
             if OpusTag^.comments>0
             then begin
-              WriteLn((Format('OpusTag.comments = %d', [OpusTag^.comments])));
+             //  WriteLn((Format('OpusTag.comments = %d', [OpusTag^.comments])));
               LComment := OpusTag^.user_comments;
               LcommentLength := OpusTag^.comment_lengths;
               for j := 0 to OpusTag^.comments - 1 do
               begin
                 SetLength(s, LcommentLength^);
                 move(Pointer(LComment^)^, Pointer(s)^, LcommentLength^);
-                WriteLn((Format('Comment %d: "%s"', [j+1, (s)])));
+              //  WriteLn(s);
+                if j = 1 then StreamIn[x].Data.title := s;
+                if j = 2 then StreamIn[x].Data.artist := s;
+                if j = 3 then StreamIn[x].Data.album := s;
+                if j = 4 then StreamIn[x].Data.date := s;
+                if j = 5 then StreamIn[x].Data.comment := s;
+                if j = 6 then StreamIn[x].Data.tag := s;
+                
                 inc(LComment);
                 inc(LcommentLength);
               end;
             end;
-            WriteLn((Format('OpusTag.vendor = %s', [(OpusTag^.vendor)])));
-          end;
+            end;
+         
+       //   WriteLn((Format('op_bitrate = %d', [op_bitrate(StreamIn[x].Data.HandleOP, 0)])));    
           
-          WriteLn((Format('Channels = %d', [StreamIn[x].Data.channels])));
-          WriteLn((Format('op_pcm_total = %d', [op_pcm_total(StreamIn[x].Data.HandleOP, 0)])));
-          WriteLn((Format('op_bitrate = %d', [op_bitrate(StreamIn[x].Data.HandleOP, 0)])));    
-          
-          }
              StreamIn[x].Data.Lengthst := op_pcm_total(StreamIn[x].Data.HandleOP, 0);
              StreamIn[x].Data.filename := FileName;
              StreamIn[x].Data.channels := op_channel_count(StreamIn[x].Data.HandleOP, 0);
@@ -3584,17 +3627,15 @@ procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
   x, x2, x3, x4, statustemp, rat : LongInt;
-  // sinevarL, sinevarR : cfloat;
   
   plugenabled: boolean;
   curpos: cint64;
   BufferplugINFLTMP: TDArFloat;
   BufferplugFL: TDArFloat;
-
-  Bufferst2mo: TDArFloat;
-
   BufferplugSH: TDArShort;
   BufferplugLO: TDArLong;
+  Bufferst2mo: TDArFloat;
+
   // err: LongInt; // if you want clean buffer
  
   outBytes: longword; /// for AAC
@@ -4270,21 +4311,20 @@ begin
           1:     /////// Give to output device
             begin
            
-            // err := // if you want clean buffer
-
-            if (StreamIn[x2].Data.TypePut <> 1) or
+               if (StreamIn[x2].Data.TypePut <> 1) or
             ((StreamIn[x2].Data.TypePut = 1) and (StreamIn[x2].Data.Channels > 1)) then
               begin
+              // err := // if you want clean buffer
               Pa_WriteStream(StreamOut[x].Data.HandleSt,
                 @StreamOut[x].Data.Buffer[0], StreamIn[x2].Data.outframes div
                 StreamIn[x2].Data.ratio);
               end else
              begin
+              // err := // if you want clean buffer
               Pa_WriteStream(StreamOut[x].Data.HandleSt,
                 @StreamOut[x].Data.Buffer[0], StreamIn[x2].Data.outframes);
               end;
-
-          // if err <> 0 then status := 0;   // if you want clean buffer ...
+             // if err <> 0 then status := 0;   // if you want clean buffer ...
 
              end;
           {$endif}
@@ -4435,7 +4475,7 @@ begin
       end;
     end;
     
-  //  writeln('x := 0 to high(StreamIn EndFunc)');
+    //  writeln('x := 0 to high(StreamIn EndFunc)');
     // EndFunc of DSP In
    
     for x := 0 to high(StreamIn) do
@@ -4446,10 +4486,9 @@ begin
         StreamIn[x].DSP[x2].EndFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
     end;
       
- //    writeln('x := 0 to high(StreamOut endfunc)');          
-    // EndFunc of DSP Out
-   
-   
+     //    writeln('x := 0 to high(StreamOut endfunc)');          
+     // EndFunc of DSP Out
+     
     for x := 0 to high(StreamOut) do
     begin
       if (assigned(StreamOut[x].DSP)) and  (assigned(StreamOut[x]))  then if  (length(StreamOut[x].DSP) > 0) then
@@ -4458,7 +4497,6 @@ begin
               StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
      end;
     
-  
     for x := 0 to high(StreamIn) do
       if assigned(StreamIn[x].Data.HandleSt) then if (StreamIn[x].Data.HandleSt <> nil) then
         case StreamIn[x].Data.TypePut of
@@ -4564,7 +4602,6 @@ if ifflat = true then
 uosPlayersStat[Index] := -1 ;
 end else destroy;
 end;
-
  
 procedure Tuos_Init.unloadPlugin(PluginName: Pchar);
                ////// Unload Plugin... 
@@ -4600,7 +4637,6 @@ begin
    {$IF DEFINED(windows)}
     Set8087CW(old8087cw);
     {$endif}
-   
 end;
 
 function Tuos_Init.InitLib(): LongInt;
@@ -4651,7 +4687,6 @@ begin
   uosLoadResult.OPloadERROR := -1;
   uosLoadResult.STloadERROR := -1;
   uosLoadResult.BSloadERROR := -1;
-  
   
    {$IF DEFINED(portaudio)}
     if (PA_FileName <>  nil) and (PA_FileName <>  '') then
@@ -4830,7 +4865,6 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
        Result := 0;
       uosLoadResult.BSloadERROR := 0;
       uosInit.Plug_BS_FileName := PluginFileName;
-
     end
     else
     begin
@@ -4892,7 +4926,6 @@ begin
  uosInit.unloadplugin(PluginName) ;
 end;
 
-
 {$IF DEFINED(portaudio)}
 procedure uos_GetInfoDevice();
 var
@@ -4908,7 +4941,6 @@ begin
 
    uosDeviceCount := Pa_GetDeviceCount();
 
-//  {
   while x < Pa_GetDeviceCount()  do
   begin
     uosDeviceInfos[x].DeviceNum := x;
@@ -4951,8 +4983,7 @@ begin
     end ;
   Inc(x);
   end;
- // }
-end;
+ end;
 
 function uos_GetInfoDeviceStr() : PansiChar ;
 var
@@ -5151,8 +5182,7 @@ var
 begin
  if assigned(FileBuffer.Data) then 
  freeandnil(FileBuffer.Data);
- 
- 
+  
   if length(DSP) > 0 then
     for x := 0 to high(DSP) do
      // DSP[x].Free;

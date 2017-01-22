@@ -825,8 +825,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=Synth
-findhistory=8
+finddtext=OpusTag
+findhistory=9
+ OpusTag
  Synth
  res=
  30005
@@ -838,7 +839,7 @@ findhistory=8
 findoptions=1
 editpos=8
  0,-1073741823
- 0,5185
+ 28,3179
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -855,7 +856,7 @@ bookmarks6=0
 bookmarks7=0
 sourcefiles=8
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
@@ -902,12 +903,12 @@ windowlayout=549
  mdistate=0
  nx=0
  ny=0
- ncx=687
- ncy=211
+ ncx=668
+ ncy=0
  x=0
  y=0
- cx=954
- cy=811
+ cx=1356
+ cy=682
  rcx=0
  rcy=0
  [mainfo]
@@ -919,16 +920,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=238
- y=24
- cx=964
+ x=231
+ y=53
+ cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,954,811
+  basedock,0,0,1356,682
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -970,7 +971,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1042,18 +1043,18 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=608
+ cy=499
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
- propcolwidthref=18
- width0=141
+ propcolwidthref=49
+ width0=110
  sortdescend0=0
- width1=12
+ width1=43
  sortdescend1=0
  sorted=0
- col=-1073741823
- row=-1073741823
+ col=0
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1092,14 +1093,14 @@ windowlayout=549
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1108,7 +1109,7 @@ windowlayout=549
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1143,7 +1144,7 @@ windowlayout=549
  ncy=0
  x=670
  y=179
- cx=693
+ cx=316
  cy=484
  rcx=0
  rcy=0
@@ -1151,10 +1152,10 @@ windowlayout=549
  active=0
  visible=0
  [objectinspectorfo.grid]
- propcolwidthref=683
- width0=163
+ propcolwidthref=306
+ width0=73
  sortdescend0=0
- width1=514
+ width1=227
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1251,9 +1252,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=676
- cx=954
- cy=135
+ y=565
+ cx=1356
+ cy=117
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1352,8 +1353,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=954
- cy=62
+ cx=1356
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1363,13 +1364,13 @@ windowlayout=549
  visible=1
  mdistate=0
  nx=0
- ny=53
- ncx=954
- ncy=12
+ ny=47
+ ncx=929
+ ncy=2
  x=0
- y=53
- cx=954
- cy=12
+ y=47
+ cx=1356
+ cy=11
  rcx=0
  rcy=0
  [sourcefo]
@@ -1384,15 +1385,15 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=792
- cy=608
+ cx=1194
+ cy=499
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1408,22 +1409,6 @@ windowlayout=549
  wsize=0
  active=0
  visible=0
- [mainfo.panel1]
- splitdir=1
- useroptions=838958571
- parent=mainfo.basedock
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=0
- y=65
- cx=954
- cy=608
- rcx=0
- rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
@@ -1443,6 +1428,22 @@ windowlayout=549
  wsize=0
  active=0
  visible=1
+ [mainfo.panel1]
+ splitdir=1
+ useroptions=838958571
+ parent=mainfo.basedock
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=63
+ cx=1356
+ cy=499
+ rcx=0
+ rcy=0
 [targetconsole]
 finddtext=
 findhistory=0
