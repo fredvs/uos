@@ -10,6 +10,8 @@ unit uos_soundtouch;
 
 {$mode objfpc}{$H+}
 
+{$PACKRECORDS C}
+
 interface
 
 uses

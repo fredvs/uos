@@ -9,6 +9,7 @@
 unit uos_portaudio;
 
 {$mode objfpc}{$H+}
+{$PACKRECORDS C}
 
 interface
 
@@ -73,7 +74,7 @@ type
   PaHostApiInfo = record
     structVersion : CInt32;
     _type : PaHostApiTypeId ;
-    _name : PChar;
+    _name : Pchar;
     deviceCount : CInt32;
     defaultInputDevice : PaDeviceIndex;
     defaultOutputDevice : PaDeviceIndex;

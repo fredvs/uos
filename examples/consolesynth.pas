@@ -1,6 +1,6 @@
 program consolesynth;
 
-///WARNING : if FPC version < 2.7.1 => Do not forget to uncoment {$DEFINE ConsoleApp} in define.inc !
+///WARNING : if FPC version < 2.7.1 => Do not forget to uncoment {$DEFINE consoleapp} in define.inc !
 
 {$mode objfpc}{$H+}
    {$DEFINE UseCThreads}

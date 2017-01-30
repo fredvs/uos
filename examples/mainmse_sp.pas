@@ -332,8 +332,7 @@ if uos_LoadLib(Pchar(AnsiString(mainfo.padir.value)), Pchar(AnsiString(mainfo.sf
         
         if loadok = true then
         begin
-           if ((trim(Pchar(AnsiString(mainfo.stdir.value))) <> '') and fileexists(AnsiString(mainfo.stdir.value)))
-           
+           if ((trim(Pchar(AnsiString(mainfo.stdir.value))) <> '') and fileexists(AnsiString(mainfo.stdir.value)))        
            
        then if (uos_LoadPlugin('soundtouch', Pchar(AnsiString(mainfo.stdir.value))) = 0) then
        begin

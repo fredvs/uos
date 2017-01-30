@@ -807,13 +807,13 @@ path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
 line=7
- 3628
+ 3749
  33
  913
  764
- 2564
- 1895
- 550
+ 2605
+ 1936
+ 552
 address=7
  5002412
  0
@@ -928,55 +928,36 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=gettag
+finddtext=reverse
 findhistory=20
- gettag
- InputGetLevelLeft
- uos_GetInfoDeviceStr
+ reverse
+ OUTPUT DATA op_read_ 
  function SoundTouchPlug(
- height
- loadlib
- CvFloat32ToInt32fl
- writeln
- AddFromFile
- pcm
- pbyte
- pbuf
- mp4ff_free_decoder
- NeAACDecDecode
- audioBuf
- PArSingle
- MP4GetData
- readst
- read
- buffer
+ op_
+ Cvfloat32ToInt32fl
+ 2-PlugFunc:
+ SetLength(BufferplugINFLTMP
+ url
+ PlugFunc: Length(BufferplugINFLTMP,BufferplugFL)
+ Length(BufferplugFL) =
+ Before Pa_WriteStream: Length(BufferplugFL)
+ inputdata.out
+ inputdata out
+ input data out
+ before pa_write
+ before pa_ write
+ beforepa_ write
+ before write
+ is stopped
+ is stoped
 findoptions=1
-editpos=26
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,702
+editpos=7
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,726
+ 6,4162
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -985,99 +966,23 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-bookmarks23=0
-bookmarks24=0
-bookmarks25=0
-sourcefiles=26
+sourcefiles=7
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_dsp_noiseremoval.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- /home/fred/fpgui/src/corelib/fpg_base.pas
- ${PROJECTDIR}/uos_opus.pas
  ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_opusfile.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/uos_aac.pas
  ${PROJECTDIR}/uos_opusfile.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=26
+ /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/uosnew.pas
+relpaths=7
  simpleplayer_fpGUI.pas
- uos_flat.pas
- uos_dsp_noiseremoval.pas
- uos.pas
- simpleplayer_fpGUI.pas
- fpgui/src/corelib/fpg_base.pas
- uos_opus.pas
  uos_portaudio.pas
- uos_opusfile.pas
+ simpleplayer_fpGUI.pas
  define.inc
- uos_flat.pas
- simpleplayer_fpGUI.pas
- uos.pas
- uos_portaudio.pas
- uos_flat.pas
- uos_soundtouch.pas
- uos_portaudio.pas
- uos_mpg123.pas
- uos_portaudio.pas
- uos_mpg123.pas
- uos_libsndfile.pas
- uos_soundtouch.pas
- uos_aac.pas
  uos_opusfile.pas
- uos_flat.pas
- simpleplayer_fpGUI.pas
-ismoduletexts=26
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ uos.pas
+ uosnew.pas
+ismoduletexts=7
  0
  0
  0
@@ -1090,36 +995,17 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=26
+order=7
  0
  1
- 2
- 3
- 24
- 25
- 20
- 22
- 4
- 18
- 21
- 19
  5
  6
- 23
- 7
- 8
- 9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
+ 2
+ 3
+ 4
 tabsize=60
-firsttab=3
-index=4
+firsttab=0
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1134,8 +1020,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1350
- cy=680
+ cx=1356
+ cy=779
  rcx=0
  rcy=0
  [mainfo]
@@ -1147,16 +1033,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=3
- y=24
- cx=1360
- cy=716
+ x=231
+ y=52
+ cx=939
+ cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1350,680
+  basedock,0,0,1356,779
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1168,15 +1054,15 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=558
- y=188
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1270,7 +1156,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=497
+ cy=570
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1281,7 +1167,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=1
- row=12
+ row=7
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1479,9 +1365,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=563
- cx=1350
- cy=117
+ y=645
+ cx=1356
+ cy=134
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1580,8 +1466,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1350
- cy=60
+ cx=1356
+ cy=69
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1592,12 +1478,12 @@ windowlayout=530
  mdistate=0
  nx=0
  ny=47
- ncx=1350
- ncy=11
+ ncx=928
+ ncy=2
  x=0
  y=47
- cx=1350
- cy=11
+ cx=1356
+ cy=20
  rcx=0
  rcy=0
  [sourcefo]
@@ -1612,15 +1498,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1188
- cy=497
+ cx=1194
+ cy=570
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1647,14 +1533,15 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=63
- cx=1350
- cy=497
+ y=72
+ cx=1356
+ cy=570
  rcx=0
  rcy=0
 [targetconsole]
-finddtext=MP4OpenFile
-findhistory=3
+finddtext=Length(BufferplugFL) =
+findhistory=4
+ Length(BufferplugFL) =
  MP4OpenFile
  dsp_vol
  dspvol

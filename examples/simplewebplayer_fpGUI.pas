@@ -23,6 +23,7 @@ uses
   fpg_Panel,
   fpg_base,
   fpg_main,
+   uos_Opusurl,
   fpg_form ;
 
 type
@@ -61,6 +62,7 @@ type
     Button1: TfpgButton;
     Edit1: TfpgEdit;
     Label8: TfpgLabel;
+    Butquit: TfpgButton;
     {@VFD_HEAD_END: Simpleplayer}
   public
     procedure AfterCreate; override;
@@ -86,10 +88,10 @@ type
 
 var
   PlayerIndex1: integer;
-  ordir, opath: string;
+  OU_FileName, ordir, opath: string;
   In1Index, Plugin1Index: integer;
   plugsoundtouch : boolean = false;
-
+   
 
   procedure TSimpleplayer.ChangePlugSet(Sender: TObject);
   var
@@ -181,6 +183,9 @@ var
 
   procedure TSimpleplayer.btnCloseClick(Sender: TObject);
   begin
+   fpgapplication.ProcessMessages;
+   writeln('avant close');
+    uos_stop(PlayerIndex1);
     if (btnstart.Enabled = False) then
     begin
       uos_stop(PlayerIndex1);
@@ -193,7 +198,14 @@ var
       sleep(100);
     end;
     if btnLoad.Enabled = False then
+    begin
+     writeln('avant unload');
+    ou_unload;
+    writeln('ou_unload');
       uos_UnloadLib();
+      sleep(100);
+      fpgapplication.terminate; 
+    end;
   end;
 
   procedure TSimpleplayer.btnLoadClick(Sender: TObject);
@@ -202,7 +214,7 @@ loadok : boolean = false;
    begin
     // Load the libraries
 //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
-  // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
+  // Mp4ffFileName, FaadFileName, opusfilename, opusfilefilename: PChar) : LongInt;
 
 
 if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName),nil, nil, nil) = 0 then
@@ -239,6 +251,11 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
        label6.enabled := false;
        label7.enabled := false;
            end;    
+       
+         if ou_load(OU_FileName) = true then
+       writeln('===> opusurl is loaded.') else
+       writeln('===> opusurl is NOT loaded.') ;
+     
        
        WindowPosition := wpScreenCenter;
       WindowTitle := 'Simple Web Player    uos version ' + inttostr(uos_getversion());
@@ -295,11 +312,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     if radiobutton3.Checked = True then
       samformat := 2;
 
-    radiobutton1.Enabled := False;
-    radiobutton2.Enabled := False;
-    radiobutton3.Enabled := False;
-
-    PlayerIndex1 := 0;
+       PlayerIndex1 := 0;
     // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
     // If PlayerIndex exists already, it will be overwritten...
 
@@ -312,7 +325,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    In1Index :=  uos_AddFromURL(PlayerIndex1,pchar(edit1.text),-1,samformat,-1) ;
+    In1Index :=  uos_AddFromURL(PlayerIndex1,pchar(edit1.text),-1,samformat,-1, -1) ;
     /////// Add a Input from Audio URL with custom parameters
               ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
               ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
@@ -320,6 +333,8 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
               //////////// FramesCount : default : -1 (1024)
               ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
          //  result : -1 nothing created, otherwise Input Index in array
+   if In1Index > -1 then
+   begin
 
     uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, samformat, 1024);
     //// add a Output into device with custom parameters
@@ -376,14 +391,24 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     ///// Assign the procedure of object to execute at end
     //////////// PlayerIndex : Index of a existing Player
     //////////// ClosePlayer1 : procedure of object to execute inside the general loop
-
+     radiobutton1.Enabled := False;
+    radiobutton2.Enabled := False;
+    radiobutton3.Enabled := False;
     btnStart.Enabled := False;
     btnStop.Enabled := True;
     btnpause.Enabled := True;
     btnresume.Enabled := False;
 
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
- end;
+    end else
+    begin
+    uos_Play(PlayerIndex1); 
+    sleep(300);
+    uos_stop(PlayerIndex1); 
+    // btnCloseClick(sender);
+    //fpgapplication.terminate;
+    end;
+  end;
 
 
    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
@@ -409,8 +434,8 @@ end;
   SetPosition(467, 0, 502, 403);
   WindowTitle := 'Simple Web Player ';
   IconName := '';
-  Hint := '';
   BackGroundColor := $80000001;
+  Hint := '';
   WindowPosition := wpScreenCenter;
   Ondestroy := @btnCloseClick;
 
@@ -429,8 +454,9 @@ end;
     SetPosition(136, 0, 320, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of PortAudio Library';
+    Hint := '';
   end;
 
   btnLoad := TfpgButton.Create(self);
@@ -438,11 +464,12 @@ end;
   begin
     Name := 'btnLoad';
     SetPosition(12, 168, 480, 23);
-    FontDesc := '#Label1';
-    Hint := '';
-    ImageName := '';
-    TabOrder := 0;
     Text := 'Load that libraries';
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 0;
+    Hint := '';
     onclick := @btnLoadClick;
   end;
 
@@ -463,12 +490,13 @@ end;
   begin
     Name := 'btnStart';
     SetPosition(116, 372, 44, 23);
+    Text := 'Play';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 6;
-    Text := 'Play';
+    Hint := '';
     onclick := @btnstartClick;
   end;
 
@@ -477,12 +505,13 @@ end;
   begin
     Name := 'btnStop';
     SetPosition(360, 372, 64, 23);
+    Text := 'Stop';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 7;
-    Text := 'Stop';
+    Hint := '';
     onclick := @btnStopClick;
   end;
 
@@ -493,8 +522,9 @@ end;
     SetPosition(148, 60, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of Mpg123 Library';
+    Hint := '';
   end;
 
   Labelst := TfpgLabel.Create(self);
@@ -504,8 +534,9 @@ end;
     SetPosition(136, 120, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of SoundTouch Library';
+    Hint := '';
   end;
 
   FilenameEdit3 := TfpgFileNameEdit.Create(self);
@@ -537,12 +568,13 @@ end;
   begin
     Name := 'btnpause';
     SetPosition(192, 372, 52, 23);
+    Text := 'Pause';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 15;
-    Text := 'Pause';
+    Hint := '';
     onclick := @btnPauseClick;
   end;
 
@@ -551,12 +583,13 @@ end;
   begin
     Name := 'btnresume';
     SetPosition(272, 372, 64, 23);
+    Text := 'Resume';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 16;
-    Text := 'Resume';
+    Hint := '';
     onclick := @btnResumeClick;
   end;
 
@@ -567,9 +600,10 @@ end;
     SetPosition(128, 300, 96, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 18;
     Text := 'Float 32 bit';
+    Hint := '';
   end;
 
   RadioButton2 := TfpgRadioButton.Create(self);
@@ -579,9 +613,10 @@ end;
     SetPosition(128, 316, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 19;
     Text := 'Int 32 bit';
+    Hint := '';
   end;
 
   RadioButton3 := TfpgRadioButton.Create(self);
@@ -592,9 +627,10 @@ end;
     Checked := True;
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 20;
     Text := 'Int 16 bit';
+    Hint := '';
   end;
 
   Label2 := TfpgLabel.Create(self);
@@ -603,8 +639,9 @@ end;
     Name := 'Label2';
     SetPosition(116, 284, 104, 15);
     FontDesc := '#Label2';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Sample format';
+    Hint := '';
   end;
 
   TrackBar2 := TfpgTrackBar.Create(self);
@@ -612,9 +649,10 @@ end;
   begin
     Name := 'TrackBar2';
     SetPosition(4, 216, 32, 134);
-    Hint := '';
     Orientation := orVertical;
+    ParentShowHint := False;
     TabOrder := 23;
+    Hint := '';
     OnChange := @volumechange;
   end;
 
@@ -623,9 +661,10 @@ end;
   begin
     Name := 'TrackBar3';
     SetPosition(72, 216, 28, 134);
-    Hint := '';
     Orientation := orVertical;
+    ParentShowHint := False;
     TabOrder := 24;
+    Hint := '';
     OnChange := @volumechange;
   end;
 
@@ -636,8 +675,9 @@ end;
     SetPosition(12, 196, 84, 15);
     Alignment := taCenter;
     FontDesc := '#Label2';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Volume';
+    Hint := '';
   end;
 
   Label4 := TfpgLabel.Create(self);
@@ -647,8 +687,9 @@ end;
     SetPosition(0, 348, 40, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Left';
+    Hint := '';
   end;
 
   Label5 := TfpgLabel.Create(self);
@@ -658,8 +699,9 @@ end;
     SetPosition(72, 348, 36, 19);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Right';
+    Hint := '';
   end;
 
   vuleft := TfpgPanel.Create(self);
@@ -669,9 +711,10 @@ end;
     SetPosition(40, 220, 8, 128);
     BackgroundColor := TfpgColor($00D51D);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Style := bsFlat;
     Text := '';
+    Hint := '';
   end;
 
   vuright := TfpgPanel.Create(self);
@@ -681,9 +724,10 @@ end;
     SetPosition(60, 220, 8, 128);
     BackgroundColor := TfpgColor($1DD523);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Style := bsFlat;
     Text := '';
+    Hint := '';
   end;
 
   CheckBox2 := TfpgCheckBox.Create(self);
@@ -692,9 +736,10 @@ end;
     Name := 'CheckBox2';
     SetPosition(268, 284, 184, 19);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 32;
     Text := 'Enable SoundTouch PlugIn';
+    Hint := '';
     OnChange := @ChangePlugSet;
   end;
 
@@ -704,8 +749,9 @@ end;
     Name := 'Label6';
     SetPosition(272, 312, 80, 19);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Tempo: 1.0';
+    Hint := '';
   end;
 
   Label7 := TfpgLabel.Create(self);
@@ -714,8 +760,9 @@ end;
     Name := 'Label7';
     SetPosition(380, 312, 80, 15);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Pitch: 1.0';
+    Hint := '';
   end;
 
   TrackBar4 := TfpgTrackBar.Create(self);
@@ -723,11 +770,11 @@ end;
   begin
     Name := 'TrackBar4';
     SetPosition(344, 308, 28, 54);
-    Hint := '';
     Orientation := orVertical;
-    Position := 50;
+    ParentShowHint := False;
     Position := 50;
     TabOrder := 35;
+    Hint := '';
     OnChange := @TrackChangePlugSet;
   end;
 
@@ -736,11 +783,11 @@ end;
   begin
     Name := 'TrackBar5';
     SetPosition(440, 308, 28, 54);
-    Hint := '';
     Orientation := orVertical;
-    Position := 50;
+    ParentShowHint := False;
     Position := 50;
     TabOrder := 36;
+    Hint := '';
     OnChange := @TrackChangePlugSet;
   end;
 
@@ -749,11 +796,12 @@ end;
   begin
     Name := 'Button1';
     SetPosition(260, 336, 60, 23);
-    FontDesc := '#Label1';
-    Hint := '';
-    ImageName := '';
-    TabOrder := 37;
     Text := 'Reset';
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 37;
+    Hint := '';
     OnClick := @ResetPlugClick;
   end;
 
@@ -764,9 +812,10 @@ end;
     SetPosition(120, 232, 360, 24);
     ExtraHint := '';
     FontDesc := '#Edit1';
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 33;
     Text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
+    Hint := '';
   end;
 
   Label8 := TfpgLabel.Create(self);
@@ -775,8 +824,22 @@ end;
     Name := 'Label8';
     SetPosition(236, 216, 100, 15);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'HTTP location';
+    Hint := '';
+  end;
+
+  Butquit := TfpgButton.Create(self);
+  with Butquit do
+  begin
+    Name := 'Butquit';
+    SetPosition(444, 372, 44, 23);
+    Text := 'Quit';
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 32;
+    Onclick := @btnCloseClick;
   end;
 
   {@VFD_BODY_END: Simpleplayer}
@@ -809,6 +872,7 @@ end;
 
    {$IFDEF linux}
     {$if defined(cpu64)}
+    OU_FileName := ordir + 'lib/Linux/64bit/LibOpusURL-64.so';
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
     FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';

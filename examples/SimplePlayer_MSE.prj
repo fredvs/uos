@@ -894,14 +894,15 @@ findhistory=12
  ***running***
  ntimerkey
 findoptions=1
-editpos=7
+editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,343
+ 0,-1073741823
+ 52,58
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -909,7 +910,8 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
+bookmarks7=0
+sourcefiles=8
  ${PROJECTDIR}/SimplePlayer_MSE.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
@@ -917,7 +919,8 @@ sourcefiles=7
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  /home/fred/msegui/lib/common/kernel/mselibc.pas
  ${PROJECTDIR}/mainmse_sp.pas
-relpaths=7
+ ${PROJECTDIR}/SimplePlayer_MSE.pas
+relpaths=8
  SimplePlayer_MSE.pas
  uos_flat.pas
  uos.pas
@@ -925,7 +928,9 @@ relpaths=7
  simpleplayer_fpGUI.pas
  msegui/lib/common/kernel/mselibc.pas
  mainmse_sp.pas
-ismoduletexts=7
+ SimplePlayer_MSE.pas
+ismoduletexts=8
+ 0
  0
  0
  0
@@ -938,13 +943,14 @@ modules=1
 moduleoptions=1
  0
 visiblemodules=1
- -1
+ 0
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=7
+order=8
  0
  6
+ 7
  5
  1
  2
@@ -952,7 +958,7 @@ order=7
  4
 tabsize=60
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=545
  [mainfo.basedock]
@@ -1009,7 +1015,7 @@ windowlayout=545
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1484,7 +1490,7 @@ windowlayout=545
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1499,7 +1505,7 @@ windowlayout=545
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
 [targetconsole]
 finddtext=
 findhistory=0

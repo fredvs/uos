@@ -141,7 +141,6 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="25"/>
         <CursorPos X="41" Y="48"/>
@@ -272,6 +271,7 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <TopLine Value="4663"/>
         <CursorPos X="2" Y="4673"/>

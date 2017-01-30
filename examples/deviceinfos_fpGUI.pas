@@ -307,15 +307,8 @@ var
      end;
 
   procedure TDevicesInfos.UOS_logo(Sender: TObject);
-  var
-    xpos, ypos, pbwidth, pbheight: integer;
-    ratio: double;
   begin
-    xpos := 0;
-    ypos := 0;
-    ratio := 1;
-    pbwidth := 115;
-    pbheight := 115;
+
     with Custom1 do
     begin
       Canvas.GradientFill(GetClientRect, clgreen, clBlack, gdVertical);

@@ -8,6 +8,7 @@
 unit uos_OpusFile;
 
 {$mode objfpc}{$H+}
+{$PACKRECORDS C}
 
 interface
 
@@ -15,8 +16,8 @@ uses
   ctypes, dynlibs, SysUtils;
   
 type
-  TOggOpusFile = ^OggOpusFile;
-  OggOpusFile = record
+  TOpusFile = ^OpusFile;
+  OpusFile = record
   end;
 
 // Error Codes
@@ -35,7 +36,52 @@ const
   OP_EBADLINK = -137;
   OP_ENOSEEK = -138;
   OP_EBADTIMESTAMP = -139;
-
+  
+{
+/**A request did not succeed.*/
+#define OP_FALSE         (-1)
+/*Currently not used externally.*/
+#define OP_EOF           (-2)
+/**There was a hole in the page sequence numbers (e.g., a page was corrupt or
+    missing).*/
+#define OP_HOLE          (-3)
+/**An underlying read, seek, or tell operation failed when it should have
+    succeeded.*/
+#define OP_EREAD         (-128)
+/**A <code>NULL</code> pointer was passed where one was unexpected, or an
+    internal memory allocation failed, or an internal library error was
+    encountered.*/
+#define OP_EFAULT        (-129)
+/**The stream used a feature that is not implemented, such as an unsupported
+    channel family.*/
+#define OP_EIMPL         (-130)
+/**One or more parameters to a function were invalid.*/
+#define OP_EINVAL        (-131)
+/**A purported Ogg Opus stream did not begin with an Ogg page, a purported
+    header packet did not start with one of the required strings, "OpusHead" or
+    "OpusTags", or a link in a chained file was encountered that did not
+    contain any logical Opus streams.*/
+#define OP_ENOTFORMAT    (-132)
+/**A required header packet was not properly formatted, contained illegal
+    values, or was missing altogether.*/
+#define OP_EBADHEADER    (-133)
+/**The ID header contained an unrecognized version number.*/
+#define OP_EVERSION      (-134)
+/*Currently not used at all.*/
+#define OP_ENOTAUDIO     (-135)
+/**An audio packet failed to decode properly.
+   This is usually caused by a multistream Ogg packet where the durations of
+    the individual Opus packets contained in it are not all the same.*/
+#define OP_EBADPACKET    (-136)
+/**We failed to find data we had seen before, or the bitstream structure was
+    sufficiently malformed that seeking to the target destination was
+    impossible.*/
+#define OP_EBADLINK      (-137)
+/**An operation that requires seeking was requested on an unseekable stream.*/
+#define OP_ENOSEEK       (-138)
+/**The first or last granule position of a link failed basic validity checks.*/
+#define OP_EBADTIMESTAMP (-139)
+}
 
 type
   TOP_PIC_FORMAT = (OP_PIC_FORMAT_UNKNOWN = -1, OP_PIC_FORMAT_URL, OP_PIC_FORMAT_JPEG,
@@ -43,14 +89,15 @@ type
 type
   TOpusHead = THandle;
   TOpusStream = THandle;
-  {$if not declared(size_t)}
-  size_t = NativeUInt;
-  {$endif}
+ 
+ // {$if not declared(size_t)}
+  
+ //{$endif}
 
-  op_read_func = function (stream: Pointer; var buffer; nbytes: Integer): Integer; cdecl;
-  op_seek_func = function (stream: Pointer; offset: Int64; whence: Integer): Integer; cdecl;
+  op_read_func = function (stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
+  op_seek_func = function (stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
   op_tell_func = function (stream: Pointer): Int64; cdecl;
-  op_close_func = function (stream: Pointer): Integer; cdecl;
+  op_close_func = function (stream: Pointer): cint; cdecl;
 
   TOpusFileCallbacks = record
     read: op_read_func;
@@ -59,30 +106,40 @@ type
     close: op_close_func;
   end;
 
-function OpusReadCB(stream: Pointer; var buffer; nbytes: Integer): Integer; cdecl;
-function OpusSeekCB(stream: Pointer; offset: Int64; whence: Integer): Integer; cdecl;
+function OpusReadCB(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
+function OpusReadCBuosURL(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
+function OpusSeekCB(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
 function OpusTellCB(stream: Pointer): Int64; cdecl;
-function OpusCloseCB(stream: Pointer): Integer; cdecl;
+function OpusSeekCBuosURL(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
+function OpusTellCBuosURL(stream: Pointer): Int64; cdecl;
+function OpusCloseCB(stream: Pointer): cint; cdecl;
 
 const
   op_callbacks: TOpusFileCallbacks = (read: @OpusReadCB;
                                       seek: @OpusSeekCB;
                                       tell: @OpusTellCB;
                                       close: nil);
+
+  url_callbacks: TOpusFileCallbacks = (read: @OpusReadCBuosURL;
+                                      seek: @OpusSeekCBuosURL;
+                                      tell: @OpusTellCBuosURL;
+                                      close: nil);
+                                    
+                                      
 type
   TOpusMSDecoder = Pointer;
   op_decode_cb_func = function(ctx: Pointer; decoder: TOpusMSDecoder; pcm : pcfloat; op: Pointer;
-                               nsamples, nchannels, format, li: Integer): Integer; cdecl;
+                               nsamples, nchannels, format, li: pcint): cint; cdecl;
   TOpusTags = record
     user_comments: PPAnsiChar; // The array of comment string vectors
-    comment_lengths: PInteger; // An array of the corresponding length of each vector, in bytes
-    comments: Integer;         // The total number of comment streams
+    comment_lengths: Pcint; // An array of the corresponding length of each vector, in bytes
+    comments: cint;         // The total number of comment streams
     vendor: PAnsiChar;         // The null-terminated vendor string. This identifies the software used to encode the stream.
   end;
   POpusTags = ^TOpusTags;
 
   TOpusPictureTag = record
-    Pic_Type: Integer; { The picture type according to the ID3v2 APIC frame:
+    Pic_Type: cint; { The picture type according to the ID3v2 APIC frame:
                          <ol start="0">
                          <li>Other</li>
                          <li>32x32 pixels 'file icon' (PNG only)</li>
@@ -122,67 +179,69 @@ var
  op_fopen: function(out cb: TOpusFileCallbacks; path: PAnsiChar; mode: PAnsiChar): TOpusStream;
 
  op_freopen: function(out cb: TOpusFileCallbacks; path: PAnsiChar; mode: PAnsiChar; stream: TOpusStream): TOpusStream;
- op_mem_stream_create: function(out cb: TOpusFileCallbacks; const data; size: size_t): TOpusStream;
+ op_mem_stream_create: function(out cb: TOpusFileCallbacks; const data; size: cuint): TOpusStream;
 
- opus_head_parse: function(head: TOpusHead; const data; len: size_t): Integer;
+ opus_head_parse: function(head: TOpusHead; const data; len: cuint): cint;
  opus_granule_sample: function(head: TOpusHead; gp: Int64): Int64;
- opus_tags_parse: function(out tags: TOpusTags; const data; len: size_t): Integer;
- opus_tags_copy: function(var dst: TOpusTags; const src: TOpusTags): Integer;
+ opus_tags_parse: function(out tags: TOpusTags; const data; len: cuint): cint;
+ opus_tags_copy: function(var dst: TOpusTags; const src: TOpusTags): cint;
  opus_tags_init: procedure(var tags: TOpusTags);
- opus_tags_add: function(var dst: TOpusTags; tag, value: PAnsiChar): Integer;
- opus_tags_add_comment: function(var dst: TOpusTags; comment: PAnsiChar): Integer;
- opus_tags_set_binary_suffix: function(var tags: TOpusTags; const data; len: Integer): Integer;
- opus_tags_query: function(const tags: TOpusTags; tag: PAnsiChar; count: Integer): Integer;
- opus_tags_query_count: function(const tags: TOpusTags; tag: PAnsiChar): Integer;
- opus_tags_get_binary_suffix: function(const tags: TOpusTags; out len: Integer): Integer;
- opus_tags_get_album_gain: function(const tags: TOpusTags; out gain_q8: Integer): Integer;
- opus_tags_get_track_gain: function(const tags: TOpusTags; out gain_q8: Integer): Integer;
+ opus_tags_add: function(var dst: TOpusTags; tag, value: PAnsiChar): cint;
+ opus_tags_add_comment: function(var dst: TOpusTags; comment: PAnsiChar): cint;
+ opus_tags_set_binary_suffix: function(var tags: TOpusTags; const data; len: cint): cint;
+ opus_tags_query: function(const tags: TOpusTags; tag: PAnsiChar; count: cint): cint;
+ opus_tags_query_count: function(const tags: TOpusTags; tag: PAnsiChar): cint;
+ opus_tags_get_binary_suffix: function(const tags: TOpusTags; out len: cint): cint;
+ opus_tags_get_album_gain: function(const tags: TOpusTags; out gain_q8: cint): cint;
+ opus_tags_get_track_gain: function(const tags: TOpusTags; out gain_q8: cint): cint;
  opus_tags_clear: procedure(var tags: TOpusTags);
- opus_tagcompare: function(tag_name, comment: PAnsiChar): Integer;
- opus_tagncompare: function(tag_name: PAnsiChar; tag_len: Integer; comment: PAnsiChar): Integer;
- opus_picture_tag_parse: function(out pic: TOpusPictureTag; tag: PAnsiChar): Integer;
+ opus_tagcompare: function(tag_name, comment: PAnsiChar): cint;
+ opus_tagncompare: function(tag_name: PAnsiChar; tag_len: cint; comment: PAnsiChar): cint;
+ opus_picture_tag_parse: function(out pic: TOpusPictureTag; tag: PAnsiChar): cint;
  opus_picture_tag_init: procedure(var pic: TOpusPictureTag);
  opus_picture_tag_clear: procedure(var pic: TOpusPictureTag);
 
- op_test: function(head: TOpusHead; const initial_data; initial_bytes: size_t): Integer;
- op_open_file: function(path: PAnsiChar; out error: Integer): TOggOpusFile;
- op_open_memory: function(const data; const _size: size_t; out error: Integer): TOggOpusFile;
+ op_test: function(head: TOpusHead; const initial_data; initial_bytes: cuint): cint;
+ op_open_file: function(path: PAnsiChar; out error: cint): TOpusFile;
+ op_open_memory: function(const data; const _size: cuint; out error: cint): TOpusFile;
  op_open_callbacks: function(const source; const cb: TOpusFileCallbacks;
-  const initial_data; initial_bytes: size_t; out error: Integer): TOggOpusFile;
- op_test_file: function(path: PAnsiChar; out error: Integer): TOggOpusFile;
- op_test_memory: function(const _data; const size: size_t; out error: Integer): TOggOpusFile;
- op_test_callbacks: function(const source; const cb: TOpusFileCallbacks; const initial_data; initial_bytes: size_t;
-  out error: Integer): TOggOpusFile;
- op_test_open: function(OpusFile: TOggOpusFile): Integer;
- op_free: function(OpusFile: TOggOpusFile): Integer;
+  const initial_data; initial_bytes: cuint; out error: cint): TOpusFile;
+ op_test_file: function(path: PAnsiChar; out error: cint): TOpusFile;
+ // op_test_url: function(path: PAnsiChar; out error: cint): TOpusFile;
+ op_test_memory: function(const data; const size: cuint; out error: cint): TOpusFile;
+ op_test_callbacks: function(const source; const cb: TOpusFileCallbacks; const initial_data; initial_bytes: cuint;
+  out error: cint): TOpusFile;
+ op_test_open: function(OpusFile: TOpusFile): cint;
+ op_free: function(OpusFile: TOpusFile): cint;
 
- op_seekable: function(OpusFile: TOggOpusFile): Integer;
- op_link_count: function(OpusFile: TOggOpusFile): Integer;
- op_serialno: function(OpusFile: TOggOpusFile; li: Integer): Cardinal;
- op_channel_count: function(OpusFile: TOggOpusFile; li: Integer): Integer;
- op_raw_total: function(OpusFile: TOggOpusFile; li: Integer): Int64;
- op_pcm_total: function(OpusFile: TOggOpusFile; li: Integer): Int64;
- op_head: function(OpusFile: TOggOpusFile; li: Integer): TOpusHead;
- op_tags: function(OpusFile: TOggOpusFile; li: Integer): POpusTags;
- op_current_link: function(OpusFile: TOggOpusFile): Integer;
- op_bitrate: function(OpusFile: TOggOpusFile; li: Integer): Integer;
- op_bitrate_instant: function(OpusFile: TOggOpusFile): Integer;
- op_raw_tell: function(OpusFile: TOggOpusFile): Int64;
- op_pcm_tell: function(OpusFile: TOggOpusFile): Int64;
+ op_seekable: function(OpusFile: TOpusFile): cint;
+ op_link_count: function(OpusFile: TOpusFile): cint;
+ op_serialno: function(OpusFile: TOpusFile; li: pcint): Cardinal;
+ op_channel_count: function(OpusFile: TOpusFile; li: pcint): cint;
+ op_raw_total: function(OpusFile: TOpusFile; li: pcint): Int64;
+ op_pcm_total: function(OpusFile: TOpusFile; li: pcint): Int64;
+ op_head: function(OpusFile: TOpusFile; li: pcint): TOpusHead;
+ op_tags: function(OpusFile: TOpusFile; li: pcint): POpusTags;
+ op_current_link: function(OpusFile: TOpusFile): cint;
+ op_bitrate: function(OpusFile: TOpusFile; li: pcint): cint;
+ op_bitrate_instant: function(OpusFile: TOpusFile): cint;
+ op_raw_tell: function(OpusFile: TOpusFile): Int64;
+ op_pcm_tell: function(OpusFile: TOpusFile): Int64;
 
- op_raw_seek: function(OpusFile: TOggOpusFile; byte_offset: Int64): Integer;
- op_pcm_seek: function(OpusFile: TOggOpusFile; pcm_offset: Int64): Integer;
+ op_raw_seek: function(OpusFile: TOpusFile; byte_offset: cInt64): cint;
+ op_pcm_seek: function(OpusFile: TOpusFile; pcm_offset: cInt64): cint;
 
- op_set_gain_offset: function(OpusFile: TOggOpusFile; gain_type: Integer; gain_offset_q8: Integer): Integer;
- op_set_dither_enabled: procedure(OpusFile: TOggOpusFile; enabled: Integer);
+ op_set_gain_offset: function(OpusFile: TOpusFile; gain_type: cint; gain_offset_q8: cint): cint;
+ op_set_dither_enabled: procedure(OpusFile: TOpusFile; enabled: cint);
  
- op_read: function(OpusFile: TOggOpusFile; pcm : pcint; SampleCount: Integer; li: pcint): Integer;
- op_read_float: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer; li: pcint): Integer;
- op_read_stereo: function(OpusFile: TOggOpusFile; pcm : pcint; SampleCount: Integer): Integer;
- op_read_float_stereo: function(OpusFile: TOggOpusFile; pcm : pcfloat; SampleCount: Integer): Integer;
- of_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
-
- ReferenceCounter : cardinal = 0;  // Reference counter
+ op_read: function(OpusFile: TOpusFile; pcm : pcint; SampleCount: cint; li: pcint): cint;
+ op_read_float: function(OpusFile: TOpusFile; pcm : pcfloat; SampleCount: cint; li: pcint): cint;
+ op_read_stereo: function(OpusFile: TOpusFile; pcm : pcint; SampleCount: cint): cint;
+ op_read_float_stereo: function(OpusFile: TOpusFile; pcm : pcfloat; SampleCount: cint): cint;
+ 
+ of_Handle:TLibHandle=dynlibs.NilHandle; 
+ 
+ ReferenceCounter : cardinal = 0;  
          
  function of_IsLoaded : boolean; inline; 
 
@@ -253,6 +312,7 @@ Pointer(op_open_file):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_open_file
 Pointer(op_open_memory):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_open_memory'));
 Pointer(op_open_callbacks):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_open_callbacks'));
 Pointer(op_test_file):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_file'));
+//Pointer(op_test_url):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_url'));
 Pointer(op_test_memory):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_memory'));
 Pointer(op_test_callbacks):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_callbacks'));
 Pointer(op_test_open):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_open'));
@@ -284,16 +344,35 @@ end;
 
 end;
 
-function OpusReadCB(stream: Pointer; var buffer; nbytes: Integer): Integer; cdecl;
+function OpusReadCB(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
 begin
   if nbytes<>0
   then
-    result := FileRead(THandle(stream^), Buffer, nbytes)
+  result := FileRead(THandle(stream^), Buffer, nbytes)
+   else
+    result := 0;
+end;
+
+function OpusReadCBuosURL(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
+begin
+// read was done by uos: nothing to do...
+  if nbytes<>0 then
+     result := nbytes
   else
     result := 0;
 end;
 
-function OpusSeekCB(stream: Pointer; offset: Int64; whence: Integer): Integer; cdecl;
+function OpusSeekCBuosURL(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
+begin
+// dummy
+end;
+
+function OpusTellCBuosURL(stream: Pointer): Int64; cdecl;
+begin
+// dummy
+end;
+
+function OpusSeekCB(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
 var
   Seek_Result: Int64;
 begin
@@ -310,7 +389,7 @@ begin
   Result := FileSeek(THandle(stream^), 0, 1);
 end;
 
-function OpusCloseCB(stream: Pointer): Integer; cdecl;
+function OpusCloseCB(stream: Pointer): cint; cdecl;
 begin
   FileClose(THandle(stream^));
   Result := 0;

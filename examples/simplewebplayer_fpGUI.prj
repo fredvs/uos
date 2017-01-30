@@ -84,7 +84,7 @@ replacedialog=20
  y=216
  cx=437
  cy=171
-options=108
+options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -163,6 +163,12 @@ options=108
  sortdescend10=0
  width11=479
  sortdescend11=0
+ [projectoptionsfo.comment_1]
+ value=
+ [projectoptionsfo.comment_B]
+ value=
+ [projectoptionsfo.comment_M]
+ value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
  index=2
@@ -184,7 +190,7 @@ options=108
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=1
- [projectoptionsfo.tabwidget]
+ [projectoptionsfo.setting_tab]
  firsttab=0
  index=2
  [projectoptionsfo]
@@ -254,6 +260,7 @@ makeoptions=7
  -B
  -O2 -XX -Xs -CX
  -vewnhibq
+makeoptpurpose=0
 compilerused=21
  ${COMPILER} (Default)
  Pascal 1
@@ -482,6 +489,25 @@ exeusedon=14
  0
  0
  0
+comment_M=
+comment_B=
+comment_1=
+comment_2=
+comment_3=
+comment_4=
+comment_5=
+comment_6=
+comment_7=
+comment_8=
+comment_9=
+comment_0=
+project_name=
+project_creator=
+project_copyright=
+project_license=
+project_time=
+project_date=
+project_comment=
 aftcommandon=0
 unitdirson=7
  196671
@@ -769,8 +795,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=In1Index
-findhistory=10
+finddtext=btnCloseClick
+findhistory=12
+ btnCloseClick
+ close
  In1Index
  Plugin1Index
  DSP1Index
@@ -782,8 +810,7 @@ findhistory=10
  Sort
  sort
 findoptions=1
-editpos=10
- 20,864
+editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -793,6 +820,8 @@ editpos=10
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,57
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -803,7 +832,8 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 bookmarks9=0
-sourcefiles=10
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
@@ -814,7 +844,8 @@ sourcefiles=10
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/uos_httpgetthread.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=10
+ ${PROJECTDIR}/conswebstream.pas
+relpaths=11
  simplewebplayer_fpGUI.pas
  uos.pas
  uos_portaudio.pas
@@ -825,7 +856,9 @@ relpaths=10
  uos_soundtouch.pas
  uos_httpgetthread.pas
  simpleplayer_fpGUI.pas
-ismoduletexts=10
+ conswebstream.pas
+ismoduletexts=11
+ 0
  0
  0
  0
@@ -841,8 +874,9 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=10
+order=11
  0
+ 10
  9
  1
  2
@@ -854,7 +888,7 @@ order=10
  8
 tabsize=60
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -865,11 +899,11 @@ windowlayout=530
  mdistate=0
  nx=0
  ny=0
- ncx=954
- ncy=585
+ ncx=668
+ ncy=0
  x=0
  y=0
- cx=954
+ cx=1066
  cy=585
  rcx=0
  rcy=0
@@ -882,17 +916,17 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=240
- y=61
- cx=964
+ x=231
+ y=53
+ cx=1076
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,954,585
+  basedock,0,0,1066,585
  focusedchild=0
  wsize=0
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -903,15 +937,15 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=784
+ y=124
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
- active=0
- visible=0
+ active=1
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1005,18 +1039,18 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=426
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
- propcolwidthref=18
- width0=141
+ propcolwidthref=49
+ width0=110
  sortdescend0=0
- width1=12
+ width1=43
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1055,14 +1089,14 @@ windowlayout=530
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1071,7 +1105,7 @@ windowlayout=530
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1214,9 +1248,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=488
- cx=954
- cy=97
+ y=485
+ cx=1066
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1315,8 +1349,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=954
- cy=56
+ cx=1066
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1326,13 +1360,13 @@ windowlayout=530
  visible=1
  mdistate=0
  nx=0
- ny=52
- ncx=954
- ncy=3
+ ny=47
+ ncx=928
+ ncy=2
  x=0
- y=52
- cx=954
- cy=3
+ y=47
+ cx=1066
+ cy=2
  rcx=0
  rcy=0
  [sourcefo]
@@ -1347,8 +1381,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=792
- cy=426
+ cx=904
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1382,9 +1416,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=59
- cx=954
- cy=426
+ y=54
+ cx=1066
+ cy=428
  rcx=0
  rcy=0
 [targetconsole]

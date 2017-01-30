@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 252
   Height = 419
-  Top = 182
+  Top = 181
   Width = 505
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Web Player U0S PortAudio + SndFile + Mpg123'
@@ -85,11 +85,11 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '5.7'
+  LCLVersion = '5.9'
   object Shape1: TShape
-    Left = 10
+    Left = 8
     Height = 216
-    Top = 196
+    Top = 192
     Width = 489
     Brush.Color = clSilver
   end
@@ -253,9 +253,9 @@ object Form1: TForm1
     ParentFont = False
   end
   object RadioGroup1: TRadioGroup
-    Left = 124
+    Left = 128
     Height = 86
-    Top = 282
+    Top = 272
     Width = 120
     AutoFill = True
     Caption = 'Sample Format'
@@ -402,5 +402,14 @@ object Form1: TForm1
     Reversed = True
     TickStyle = tsNone
     TabOrder = 15
+  end
+  object lerror: TLabel
+    Left = 132
+    Height = 1
+    Top = 360
+    Width = 1
+    Color = clRed
+    ParentColor = False
+    Transparent = False
   end
 end

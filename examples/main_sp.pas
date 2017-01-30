@@ -159,18 +159,18 @@ end;
 
 procedure TForm1.ClosePlayer1;
 begin
-  Form1.button3.Enabled := True;
-  Form1.button4.Enabled := False;
-  Form1.button5.Enabled := False;
-  Form1.button6.Enabled := False;
-  Form1.trackbar2.Enabled := False;
-  Form1.radiogroup1.Enabled := True;
-  Form1.TrackBar2.Position := 0;
-  Form1.ShapeLeft.Height := 0;
-  Form1.ShapeRight.Height := 0;
-  Form1.ShapeLeft.top := 342;
-  Form1.ShapeRight.top := 342;
-  form1.lposition.Caption := '00:00:00.000';
+  button3.Enabled := True;
+  button4.Enabled := False;
+  button5.Enabled := False;
+  button6.Enabled := False;
+  trackbar2.Enabled := False;
+  radiogroup1.Enabled := True;
+  TrackBar2.Position := 0;
+  ShapeLeft.Height := 0;
+  ShapeRight.Height := 0;
+  ShapeLeft.top := 118-ShapeLeft.Height;
+  ShapeRight.top := 118-ShapeRight.Height;
+  lposition.Caption := '00:00:00.000';
 end;
 
 procedure TForm1.FormActivate(Sender: TObject);
@@ -333,15 +333,15 @@ if loadok = true then
       and (uos_LoadPlugin('bs2b', Pchar(edit6.text)) = 0)
       then plugbs2b := true else CheckBox3.enabled := false;
 
-    form1.Height := 232;
+    Height := 232;
      panel1.left := 0;
       panel1.top := 0;
     panel1.height :=  form1.Height;
      panel1.width :=  form1.width;
       panel1.visible := true;
-    form1.Position := poScreenCenter;
-    form1.Caption := 'Simple Player.    uos version ' + inttostr(uos_getversion());
-    form1.Show;
+    Position := poScreenCenter;
+    Caption := 'Simple Player.    uos version ' + inttostr(uos_getversion());
+    Show;
   end;
 
 
@@ -352,10 +352,10 @@ begin
   uos_Pause(PlayerIndex1);
   Button4.Enabled := True;
   Button5.Enabled := False;
-  Form1.ShapeLeft.Height := 0;
-  Form1.ShapeRight.Height := 0;
-  Form1.ShapeLeft.top := 342;
-  Form1.ShapeRight.top := 342;
+  ShapeLeft.Height := 0;
+  ShapeRight.Height := 0;
+  ShapeLeft.top := 118-ShapeLeft.Height;
+  ShapeRight.top := 118-ShapeRight.Height;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -631,13 +631,13 @@ var
   temptime: ttime;
   ho, mi, se, ms: word;
 begin
-  if form1.TrackBar2.Tag = 0 then
+  if TrackBar2.Tag = 0 then
   begin
-    form1.TrackBar2.Position := uos_InputPosition(PlayerIndex1, InputIndex1);
+    TrackBar2.Position := uos_InputPosition(PlayerIndex1, InputIndex1);
     temptime := uos_InputPositionTime(PlayerIndex1, InputIndex1);
     ////// Length of input in time
     DecodeTime(temptime, ho, mi, se, ms);
-    form1.lposition.Caption := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
+    lposition.Caption := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
   end;
  end;
 
@@ -645,8 +645,8 @@ procedure Tform1.ShowLevel;
 begin
   ShapeLeft.Height := round(uos_InputGetLevelLeft(PlayerIndex1, InputIndex1) * 92);
   ShapeRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, InputIndex1) * 92);
-  ShapeLeft.top := 545- ShapeLeft.Height;
-  ShapeRight.top := 545 - ShapeRight.Height;
+  ShapeLeft.top := 118-ShapeLeft.Height;
+  ShapeRight.top := 118-ShapeRight.Height;
 end;
 
 procedure Tform1.LoopProcPlayer1;
@@ -740,7 +740,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Form1.Height := 372;
+  Height := 372;
   ShapeLeft.Height := 0;
   ShapeRight.Height := 0;
 end;

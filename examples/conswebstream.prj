@@ -19,23 +19,28 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/conswebstream.prj
-findinfiledialog=34
+findinfiledialog=47
  [findinfileadialogfo.subdirs]
+ value=0
+ [findinfileadialogfo.incurrentfile]
  value=0
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
  value=0
+ [findinfileadialogfo.inprojectdir]
+ value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=1
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
- filenames=0
+ filenames=1
+  /home/fred/uos/examples/
  filecolwidth=0
  x=0
  y=0
@@ -45,8 +50,16 @@ findinfiledialog=34
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=
- history=1
+ value=cardinal
+ history=9
+  cardinal
+  _name
+  HostAPIName
+  SizeOf
+  PACKRECORDS
+  size_t
+  consoleapp
+  TInputPipeStream
   
  [findinfileadialogfo]
  stackedunder=
@@ -63,14 +76,17 @@ finddialog=8
  y=205
  cx=331
  cy=116
-replacedialog=15
+replacedialog=18
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=DocView
- history=2
+ value=HandleOP, nil)
+ history=5
+  HandleOP, nil)
+  li: pcint
+  cint
   DocView
   
  [replacedialogfo]
@@ -79,7 +95,7 @@ replacedialog=15
  y=302
  cx=437
  cy=171
-options=108
+options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -115,8 +131,8 @@ options=108
  width4=283
  sortdescend4=0
  sorted=0
- col=0
- row=0
+ col=-1073741823
+ row=-1073741823
  rowheight=17
  [projectoptionsfo.newfile]
  firsttab=0
@@ -158,6 +174,12 @@ options=108
  sortdescend10=0
  width11=479
  sortdescend11=0
+ [projectoptionsfo.comment_1]
+ value=
+ [projectoptionsfo.comment_B]
+ value=
+ [projectoptionsfo.comment_M]
+ value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
  index=2
@@ -179,9 +201,9 @@ options=108
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=1
- [projectoptionsfo.tabwidget]
+ [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -207,17 +229,12 @@ programparameters=18
  y=243
  cx=328
  cy=348
-settings=13
- [settingsfo.tsplitter2]
- x=192
- y=16
- xprop=0.5906432748538
- yprop=0.97297297297297
- [settingsfo]
- x=410
- y=41
- cx=344
- cy=651
+settings=8
+ [settings_form]
+ x=447
+ y=148
+ cx=471
+ cy=446
  wsize=0
  active=1
  visible=1
@@ -226,14 +243,7 @@ targetfile=${PROJECTDIR}/conswebstream
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=7
- ${FPGUIDIR}/lib/${TargetCPU}-${TargetOS}
- ${FPGUIDIR}
- ${FPGUIDIR}/src/corelib/gdi
- ${FPGUIDIR}/src
- ${FPGUIDIR}/src/corelib/x11
- ${FPGUIDIR}/src/gui
- ${FPGUIDIR}/src/corelib
+unitdirs=0
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -249,6 +259,14 @@ makeoptions=7
  -B
  -O2 -XX -Xs -CX
  -vewnhibq
+makeoptpurpose=7
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 compilerused=21
  ${COMPILER} (Default)
  Pascal 1
@@ -347,8 +365,8 @@ stripmessageesc=0
 copymessages=0
 closemessages=0
 checkmethods=1
-colorerror=-1610612712
-colorwarning=-1610612717
+colorerror=-1610612717
+colorwarning=-1610612712
 colornote=-1610612716
 usercolors=30
  0
@@ -430,8 +448,8 @@ makeoptionson=7
  63
  63
  63
- 32
- 48
+ 34
+ 51
  63
 compilerusedon=21
  4095
@@ -477,15 +495,27 @@ exeusedon=14
  0
  0
  0
+comment_M=
+comment_B=
+comment_1=
+comment_2=
+comment_3=
+comment_4=
+comment_5=
+comment_6=
+comment_7=
+comment_8=
+comment_9=
+comment_0=
+project_name=
+project_creator=
+project_copyright=
+project_license=
+project_time=
+project_date=22:18:46 22/01/2017
+project_comment=
 aftcommandon=0
-unitdirson=7
- 196671
- 196671
- 0
- 196671
- 196671
- 196671
- 196671
+unitdirson=0
 macroon=5
  1
  3
@@ -632,7 +662,7 @@ progworkingdirectory=
 envvarnames=0
 envvarvalues=0
 defineson=0
-stoponexception=0
+stoponexception=1
 valuehints=1
 activateonbreak=1
 raiseonbreak=1
@@ -685,19 +715,40 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=0
-path=0
-line=0
-address=0
-addbkpt=0
-ignore=0
-condition=0
+on=3
+ -1
+ 0
+ 0
+path=3
+ /home/fred/uos/examples/uos_opusfile.pas
+ /home/fred/uos/examples/uos.pas
+ /home/fred/uos/examples/uos.pas
+line=3
+ 152
+ 4218
+ 3185
+address=3
+ 0
+ 0
+ 0
+addbkpt=3
+ 0
+ 0
+ 0
+ignore=3
+ 0
+ 0
+ 0
+condition=3
+ 
+ 
+ 
 panels=1
  panel1
 units=
  (
  a=0,4149,6,Pascal Units
- c=5
+ c=6
   (
   file=define.inc
   kind=1
@@ -712,6 +763,11 @@ units=
   file=uos_flat.pas
   kind=1
   a=0,4100,0,uos_flat.pas
+  )
+  (
+  file=uos_opusfile.pas
+  kind=1
+  a=0,4100,0,uos_opusfile.pas
   )
   (
   file=uos_portaudio.pas
@@ -749,24 +805,51 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=res=
-findhistory=7
- res=
- 30005
- NewView
- images
- Sort
- sort
- uses
+finddtext=op_test_callbacks
+findhistory=20
+ op_test_callbacks
+ AddFromURL
+ BufferURL
+ op_read
+ Read(
+ AddFromfile
+ soundto
+ writeln('outst =
+ StreamIn[x].Data.outframes :=
+ debug 
+ x := 0 to high(StreamIn EndFuncof DSP In)
+ positionen
+ OpusReadCB2
+ TOpusStream
+ outpipe
+ pcbyte
+ pbyte
+ .destroy
+ mpg_read_stream
+ result :=
 findoptions=1
-editpos=7
+editpos=21
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,137
+ 0,-1073741823
+ 0,47
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,127
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -774,23 +857,79 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
- ${PROJECTDIR}/deviceinfos_fpGUI.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/deviceinfos_fpGUI.pas
+bookmarks7=0
+bookmarks8=0
+bookmarks9=0
+bookmarks10=0
+bookmarks11=0
+bookmarks12=0
+bookmarks13=0
+bookmarks14=0
+bookmarks15=0
+bookmarks16=0
+bookmarks17=0
+bookmarks18=0
+bookmarks19=0
+bookmarks20=0
+sourcefiles=21
+ ${PROJECTDIR}/uos_opusurl.pas
+ ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/conswebstream.pas
-relpaths=7
- deviceinfos_fpGUI.pas
- uos.pas
- uos_flat.pas
- define.inc
- uos_portaudio.pas
- deviceinfos_fpGUI.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/conswebstream.pas
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/uos_opusfile.pas
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_aac.pas
+ ${PROJECTDIR}/uos_bs2b.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/uos_soundtouch.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+ ${PROJECTDIR}/uos_cdrom.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos.pas
+ /home/fred/opus_bin/opus_trivial_example.pas
+ ${PROJECTDIR}/uos_aac.pas
+ ${PROJECTDIR}/define.inc
+relpaths=21
+ uos_opusurl.pas
+ simplewebplayer_fpGUI.pas
  conswebstream.pas
-ismoduletexts=7
+ uos.pas
+ conswebstream.pas
+ define.inc
+ uos_opusfile.pas
+ define.inc
+ uos_libsndfile.pas
+ uos_libsndfile.pas
+ uos_aac.pas
+ uos_bs2b.pas
+ uos_portaudio.pas
+ uos_soundtouch.pas
+ uos_mpg123.pas
+ uos_cdrom.pas
+ uos_flat.pas
+ uos.pas
+ opus_bin/opus_trivial_example.pas
+ uos_aac.pas
+ define.inc
+ismoduletexts=21
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -803,17 +942,31 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=7
+order=21
+ 12
  0
- 5
  1
- 6
  2
  3
+ 10
+ 11
+ 8
+ 13
+ 14
+ 15
+ 16
  4
+ 5
+ 6
+ 20
+ 19
+ 9
+ 17
+ 18
+ 7
 tabsize=60
-firsttab=0
-index=3
+firsttab=12
+index=12
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -824,11 +977,11 @@ windowlayout=530
  mdistate=0
  nx=0
  ny=0
- ncx=954
- ncy=585
+ ncx=668
+ ncy=0
  x=0
  y=0
- cx=954
+ cx=929
  cy=585
  rcx=0
  rcy=0
@@ -841,14 +994,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=240
- y=61
- cx=964
+ x=231
+ y=53
+ cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,954,585
+  basedock,0,0,929,585
  focusedchild=0
  wsize=0
  active=1
@@ -892,7 +1045,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=cpuc86_64fo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -964,18 +1117,18 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=426
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
- propcolwidthref=18
- width0=141
+ propcolwidthref=13
+ width0=146
  sortdescend0=0
- width1=12
+ width1=7
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=4
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1014,14 +1167,14 @@ windowlayout=530
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1030,7 +1183,7 @@ windowlayout=530
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1056,7 +1209,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1173,9 +1326,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=488
- cx=954
- cy=97
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1244,7 +1397,7 @@ windowlayout=530
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1274,8 +1427,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=954
- cy=56
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1285,13 +1438,13 @@ windowlayout=530
  visible=1
  mdistate=0
  nx=0
- ny=52
- ncx=956
- ncy=6
+ ny=47
+ ncx=928
+ ncy=2
  x=0
- y=52
- cx=954
- cy=3
+ y=47
+ cx=929
+ cy=2
  rcx=0
  rcy=0
  [sourcefo]
@@ -1306,15 +1459,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=792
- cy=426
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1341,9 +1494,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=59
- cx=954
- cy=426
+ y=54
+ cx=929
+ cy=428
  rcx=0
  rcy=0
 [targetconsole]

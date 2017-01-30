@@ -57,7 +57,7 @@ procedure uos_logo();
 var
   Form1: TForm1;
   BufferBMP, waveformBMP: TBitmap;
-  PlayerIndex1, In1index: cardinal;
+  PlayerIndex1, In1index: integer;
 
 implementation
 

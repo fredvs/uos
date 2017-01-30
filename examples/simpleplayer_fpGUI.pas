@@ -317,9 +317,11 @@ loadok : boolean = false;
       if ((trim(Pchar(filenameedit6.FileName)) <> '') and fileexists(filenameedit6.FileName)) 
       then if (uos_LoadPlugin('bs2b', Pchar(FilenameEdit6.FileName)) = 0)
       then plugbs2b := true else chkst2b.enabled := false; 
-          
+      
+                
       WindowPosition := wpScreenCenter;
       WindowTitle := 'Simple Player.    uos Version ' + inttostr(uos_getversion());
+      
        fpgapplication.ProcessMessages;
       sleep(100);
       Show;
@@ -667,6 +669,7 @@ end;
   WindowTitle := 'Simple player ';
   IconName := '';
   BackGroundColor := $80000001;
+  Sizeable := False;
   Hint := '';
   WindowPosition := wpScreenCenter;
   Ondestroy := @btnCloseClick;

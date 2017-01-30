@@ -32,6 +32,7 @@ type
     Label7: TLabel;
     Label9: TLabel;
     lposition: TLabel;
+    lerror: TLabel;
     PaintBox1: TPaintBox;
     RadioButton1: TRadioButton;
     RadioButton2: TRadioButton;
@@ -71,7 +72,7 @@ var
   Form1: TForm1;
   BufferBMP: TBitmap;
   PlayerIndex1: cardinal;
-  Out1Index, In1Index, DSP1Index, Plugin1Index: cardinal;
+  Out1Index, In1Index, DSP1Index, Plugin1Index: integer;
   plugsoundtouch : boolean = false;
 
 implementation
@@ -280,7 +281,7 @@ procedure TForm1.Button3Click(Sender: TObject);
 var
   samformat: shortint;
   begin
-
+      lerror.caption :=   '';
     PlayerIndex1 := 0;
     // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
     // If PlayerIndex exists already, it will be overwritten...
@@ -292,14 +293,16 @@ var
     if radiobutton3.Checked = True then
       samformat := 2;
 
-    radiogroup1.Enabled := False;
-
-    uos_CreatePlayer(PlayerIndex1);
+  uos_CreatePlayer(PlayerIndex1);
     //// Create the player.
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    In1Index :=  uos_AddFromURL(PlayerIndex1, pchar(edit4.text),-1,samformat,-1) ;
+    In1Index :=  uos_AddFromURL(PlayerIndex1, pchar(edit4.text),-1,samformat,-1, 0) ;
+
+    if  In1Index <> - 1 then begin
+
+     radiogroup1.Enabled := False;
 
     /////// Add a Input from Audio URL with custom parameters
               ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
@@ -371,7 +374,7 @@ var
     application.ProcessMessages;
 
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
-
+    end else lerror.caption := 'URL did not accessed';
 
 end;
 

@@ -8,7 +8,8 @@
 
 unit uos_aac;
 
- {$mode objfpc}{$H+}
+{$mode objfpc}{$H+}
+{$PACKRECORDS C}
 
 interface
 

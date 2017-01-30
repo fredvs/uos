@@ -9,6 +9,8 @@
 
 {$mode objfpc}
 unit uos_bs2b;
+
+{$PACKRECORDS C}
 interface
 
 uses

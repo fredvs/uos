@@ -4,7 +4,9 @@
 
 // Compiler definition
 
-{.$DEFINE ConsoleApp} // if FPC version < 2.7.1 uncomment for console application
+{.$DEFINE debug} // uncomment for debugging. For console applications. (Could not work with LCL).
+
+{.$DEFINE consoleapp} // if FPC version < 2.7.1 uncomment for console application
 {.$DEFINE library}   // uncomment for building uos library (native and java)
 {.$DEFINE java}   // uncomment for building uos java library
 {.$DEFINE fpgui}   // uncomment if FPC version < 2.7.1 and using fpGUI widget
