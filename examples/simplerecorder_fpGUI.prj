@@ -810,8 +810,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=FileBuffer
-findhistory=15
+finddtext=mono2
+findhistory=17
+ mono2
+ AftFunc
  FileBuffer
  Tuos_FileBuffer
  TFileStream
@@ -836,7 +838,8 @@ editpos=17
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,256
+ 0,-1073741823
+ 0,1081
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -845,7 +848,6 @@ editpos=17
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,4
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -941,8 +943,8 @@ order=17
  12
  9
 tabsize=60
-firsttab=6
-index=7
+firsttab=7
+index=12
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -958,7 +960,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=779
+ cy=682
  rcx=0
  rcy=0
  [mainfo]
@@ -971,13 +973,13 @@ windowlayout=530
  ncx=0
  ncy=0
  x=231
- y=53
+ y=54
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,779
+  basedock,0,0,1356,682
  focusedchild=0
  wsize=6
  active=1
@@ -999,7 +1001,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1021,7 +1023,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1093,7 +1095,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=570
+ cy=499
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1143,14 +1145,14 @@ windowlayout=530
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1159,7 +1161,7 @@ windowlayout=530
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1302,9 +1304,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=645
+ y=565
  cx=1356
- cy=134
+ cy=117
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1404,7 +1406,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=69
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1420,7 +1422,7 @@ windowlayout=530
  x=0
  y=47
  cx=1356
- cy=20
+ cy=11
  rcx=0
  rcy=0
  [sourcefo]
@@ -1436,7 +1438,7 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=570
+ cy=499
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1470,9 +1472,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=72
+ y=63
  cx=1356
- cy=570
+ cy=499
  rcx=0
  rcy=0
 [targetconsole]

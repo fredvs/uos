@@ -8,7 +8,7 @@ With uos you can:
 
 . Listen to mp3, ogg, wav, flac, m4a, opus, cda ... audio files.
 
-. Deal with 16, 32 or float 32 bit resolution.
+. Deal with 16, 32 integer or float 32 bit resolution.
 
 . Do internet audio streaming.
 

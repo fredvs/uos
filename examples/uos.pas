@@ -1069,14 +1069,21 @@ function CvFloat32ToInt32fl(Inbuf: TDArFloat; nb:integer): TDArFloat;
 var
    i: cint32;
    x : LongInt;
+   pl, pl2: PDArLong;      //////// if input is Int32 format
+   pf: PDArfloat;
+   buffer2 : TDArFloat;
    
 begin
+ pf := @Inbuf;
+ pl2 := @Buffer2;
+ 
+ setlength(buffer2,nb);
+  
    for x := 0 to nb -1 do
   begin
-  Inbuf[x] :=cint32(Inbuf[x] * 2147483647);
+  pl2^[x] := round((pf^[x]) * 2147483647);
    end;
- // }
-  Result := Inbuf;
+   Result := buffer2;
 end;
 
 
@@ -2606,10 +2613,9 @@ var
            end;
          end;
      end;
-    
+  data.outframes := length(buffer2); 
   Result := Buffer2;; 
- 
-  end 
+   end 
   else 
   begin
    Result := data.Buffer; 

@@ -807,12 +807,12 @@ path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
 line=7
- 3766
+ 3768
  33
  913
  764
- 2622
- 1936
+ 2624
+ 1938
  552
 address=7
  5002412
@@ -957,9 +957,9 @@ editpos=8
  0,539
  0,-1073741823
  0,-1073741823
- 0,2615
- 0,338
- 0,8
+ 0,1083
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1011,7 +1011,7 @@ order=8
  4
 tabsize=60
 firsttab=0
-index=3
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1026,8 +1026,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=682
+ cx=929
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -1039,16 +1039,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=232
+ x=231
  y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,682
+  basedock,0,0,929,585
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1090,7 +1090,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1162,7 +1162,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=499
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1371,9 +1371,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=565
- cx=1356
- cy=117
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1442,7 +1442,7 @@ windowlayout=530
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1472,8 +1472,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=60
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1488,8 +1488,8 @@ windowlayout=530
  ncy=2
  x=0
  y=47
- cx=1356
- cy=11
+ cx=929
+ cy=2
  rcx=0
  rcy=0
  [sourcefo]
@@ -1504,15 +1504,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=499
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1539,9 +1539,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=63
- cx=1356
- cy=499
+ y=54
+ cx=929
+ cy=428
  rcx=0
  rcy=0
 [targetconsole]
