@@ -247,16 +247,23 @@ var
     //////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
+    
+    uos_AddDSPmono2stereo(PlayerIndex1, In1Index);
+   /////  Convert mono channel to stereo channels.
+    //// If the input is stereo, original buffer is keeped.
+    ////////// InputIndex : InputIndex of a existing Input       
+    //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := uos_AddDSPMono2Stereo(PlayerIndex1, InputIndex1);
 
- //   uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+    uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
     ///// DSP Volume changer
     //////////// PlayerIndex : Index of a existing Player
     ////////// In1Index : InputIndex of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-   // uos_SetDSPVolumeIn(PlayerIndex1,  In1Index, (100 - TrackBar2.position) / 100,
-   //  (100 - TrackBar3.position) / 100, True);  /// Set volume
+    uos_SetDSPVolumeIn(PlayerIndex1,  In1Index, (100 - TrackBar2.position) / 100,
+     (100 - TrackBar3.position) / 100, True);  /// Set volume
 
    /////// procedure to execute when stream is terminated
      uos_EndProc(PlayerIndex1, @ClosePlayer1);

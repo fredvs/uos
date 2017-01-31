@@ -330,7 +330,13 @@ procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; Ena
 procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt);
       
 procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt; Enable: boolean);
-{$endif}  
+{$endif} 
+
+function uos_AddDSPMono2Stereo(PlayerIndex: cint32; InputIndex: LongInt): LongInt;
+ /////  Convert mono channel to stereo channels.
+    //// If the input is stereo, original buffer is keeped.
+    ////////// InputIndex : InputIndex of a existing Input       //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := uos_AddDSPMono2Stereo(PlayerIndex1, InputIndex1);
 
 procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                  VolRight: double) ;
@@ -368,7 +374,7 @@ procedure uos_SetDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32;
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
                ////////// example  uos_SetDSPVolumeOut(0,outputIndex1,DSPIndex1,1,0.8,True);
-
+               
 function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc: TFunc;
                     AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
                   ///// add a DSP procedure for input
@@ -1271,6 +1277,17 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
  result := uosPlayers[PlayerIndex].InputPositionTime(InputIndex) ;
+end;
+
+function uos_AddDSPMono2Stereo(PlayerIndex: cint32; InputIndex: LongInt): LongInt;
+ /////  Convert mono channel to stereo channels.
+    //// Works only if the input is mono othewise stereo is keeped.
+    ////////// InputIndex : InputIndex of a existing Input       //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSPMono2Stereo(InputIndex1);
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+ result := uosPlayers[PlayerIndex].AddDSPMono2Stereo(InputIndex) ;
 end;
 
 Procedure uos_Play(PlayerIndex: cint32) ;        ///// Start playing

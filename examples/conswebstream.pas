@@ -75,13 +75,13 @@ var
      uos_CreatePlayer(PlayerIndex1); //// Create the player
      writeln('===> uos_CreatePlayer => ok');
 
-   theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
+ //  theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
  // theurl := 'http://www.alouette.fr/alouette.m3u' ;
  // theurl := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
  // theurl := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
  // theurl := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
  // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
- //  theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+   theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
  {
  with TfpHttpClient.Create(nil) do
@@ -92,7 +92,7 @@ var
    
 writeln('Try to connect to ' + theurl);
 // res := uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
-  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,0) ;
+  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,0,-1,1) ;
   
  ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
@@ -105,7 +105,7 @@ writeln('Try to connect to ' + theurl);
        writeln('===> uos_AddFromURL => OK :' + inttostr(res)) ;
      
      //// add a Output  => change framecount => 1024
-   res2 := uos_AddIntoDevOut(PlayerIndex1, -1, -1,48000, -1, -1, 1024);
+   res2 := uos_AddIntoDevOut(PlayerIndex1, -1, -1,48000, -1, 0, 1024);
    
     ////// Add a Output into Device Output
     //////////// Device ( -1 is default device )

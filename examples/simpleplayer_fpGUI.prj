@@ -807,11 +807,11 @@ path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
 line=7
- 3749
+ 3766
  33
  913
  764
- 2605
+ 2622
  1936
  552
 address=7
@@ -928,8 +928,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=reverse
+finddtext=mono2stereo
 findhistory=20
+ mono2stereo
+ mono2stero
  reverse
  OUTPUT DATA op_read_ 
  function SoundTouchPlug(
@@ -948,17 +950,16 @@ findhistory=20
  before pa_ write
  beforepa_ write
  before write
- is stopped
- is stoped
 findoptions=1
-editpos=7
+editpos=8
  0,-1073741823
  0,-1073741823
+ 0,539
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 6,4162
- 0,-1073741823
+ 0,2615
+ 0,338
+ 0,8
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -966,23 +967,27 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
+bookmarks7=0
+sourcefiles=8
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_opusfile.pas
- /home/fred/uos/examples/uos.pas
- ${PROJECTDIR}/uosnew.pas
-relpaths=7
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/define.inc
+relpaths=8
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
  define.inc
  uos_opusfile.pas
  uos.pas
- uosnew.pas
-ismoduletexts=7
+ uos_flat.pas
+ define.inc
+ismoduletexts=8
+ 0
  0
  0
  0
@@ -995,17 +1000,18 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=7
+order=8
  0
  1
  5
- 6
  2
+ 6
+ 7
  3
  4
 tabsize=60
 firsttab=0
-index=2
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1021,7 +1027,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=779
+ cy=682
  rcx=0
  rcy=0
  [mainfo]
@@ -1033,14 +1039,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=231
- y=52
+ x=232
+ y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,779
+  basedock,0,0,1356,682
  focusedchild=0
  wsize=6
  active=1
@@ -1156,7 +1162,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=570
+ cy=499
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1166,8 +1172,8 @@ windowlayout=530
  width1=43
  sortdescend1=0
  sorted=0
- col=1
- row=7
+ col=0
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1365,9 +1371,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=645
+ y=565
  cx=1356
- cy=134
+ cy=117
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1467,7 +1473,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=69
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1483,7 +1489,7 @@ windowlayout=530
  x=0
  y=47
  cx=1356
- cy=20
+ cy=11
  rcx=0
  rcy=0
  [sourcefo]
@@ -1499,7 +1505,7 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=570
+ cy=499
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1533,9 +1539,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=72
+ y=63
  cx=1356
- cy=570
+ cy=499
  rcx=0
  rcy=0
 [targetconsole]

@@ -806,6 +806,13 @@ procedure SetFilterOut(OutputIndex: LongInt; FilterIndex: LongInt;
 
 function DSPLevel(Data: Tuos_Data): Tuos_Data;
     //////////// to get level of buffer (volume)
+    
+function AddDSPMono2Stereo(InputIndex: LongInt): LongInt;
+    /////  Convert mono channel to stereo channels.
+    //// Works only if the input is mono othewise stereo is keeped.
+    ////////// InputIndex : InputIndex of a existing Input
+       //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSPMono2Stereo(InputIndex1);
 
 function AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
       VolRight: double): LongInt;
@@ -823,7 +830,7 @@ function AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     //  result :  otherwise index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
+    ////////// example  DSPIndex1 := AddDSPVolumeOut(InputIndex1,1,1);
     
 {$IF DEFINED(noiseremoval)}
 function AddDSPNoiseRemovalIn(InputIndex: LongInt): LongInt;
@@ -2534,6 +2541,82 @@ begin
 
 end;
 
+function uos_DSPMono2Stereo(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+   /////  Convert mono channel to stereo channels.
+    //// Works only if the input is mono othewise stereo is keeped.
+    ////////// InputIndex : InputIndex of a existing Input       //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSPMono2Stereo(InputIndex1);
+var
+    x, x2: integer ;
+    
+    ps, ps2: PDArShort;     //////// if input is Int16 format
+    pl, pl2: PDArLong;      //////// if input is Int32 format
+    pf, pf2: PDArFloat;     //////// if input is Float32 format
+    
+    
+    samplef : cFloat;
+    samplei : integer;
+   
+    buffer2 : TDArFloat;
+    
+  begin
+  if (Data.channels = 1) then  
+  begin
+  setlength(Buffer2, Data.OutFrames);
+  x:= 0 ;
+  x2:= 0 ;
+  
+   case Data.SampleFormat of
+    2:
+    begin
+     ps := @Data.Buffer;
+     ps2 := @Buffer2;
+     while x < Data.OutFrames  do
+          begin  
+         ps2^[x2] := (ps^[x]);
+         ps2^[x2+1] := (ps^[x]);
+         x := x + 1;
+         x2 := x2 + 2;
+           end;
+         end;
+     
+    1:
+     begin
+     pl := @Data.Buffer;
+     pl2 := @Buffer2;
+     while x < Data.OutFrames  do
+          begin  
+         pl2^[x2] := (ps^[x]);
+         pl2^[x2+1] := (ps^[x]);
+         x := x + 1;
+         x2 := x2 + 2;
+           end;
+         end;
+     
+    0:
+    begin
+     pf := @Data.Buffer;
+     pf2 := @Buffer2;
+     while x < Data.OutFrames  do
+          begin  
+         pf2^[x2] := (ps^[x]);
+         pf2^[x2+1] := (ps^[x]);
+         x := x + 1;
+         x2 := x2 + 2;
+           end;
+         end;
+     end;
+    
+  Result := Buffer2;; 
+ 
+  end 
+  else 
+  begin
+   Result := data.Buffer; 
+  end;
+  
+  end;
+
   {$IF DEFINED(noiseremoval)}
     function Tuos_Player.AddDSPNoiseRemovalIn(InputIndex: LongInt): LongInt;
     ///// DSP Noise Removal
@@ -2617,6 +2700,15 @@ begin
   StreamIn[InputIndex].Data.VLeft := VolLeft;
   StreamIn[InputIndex].Data.VRight := VolRight;
 end;
+
+function Tuos_Player.AddDSPMono2Stereo(InputIndex: LongInt): LongInt;
+ /////  Convert mono channel to stereo channels.
+    //// If the input is stereo, original buffer is keeped.
+    ////////// InputIndex : InputIndex of a existing Input       //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSPMono2Stereo(InputIndex1);
+begin
+  Result := AddDSPin(InputIndex, nil, @uos_DSPMono2Stereo, nil, nil);
+ end;
 
 function Tuos_Player.AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;
   VolRight: double): LongInt;  ///// DSP Volume changer
@@ -3136,7 +3228,9 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
         if FramesCount= -1 then
      totsamples := 1024  else
      totsamples := FramesCount;
-   PipeBufferSize := totsamples * SizeOf(Single) ;
+     
+    totsamples := totsamples * 5 ;
+   PipeBufferSize := totsamples * sizeOf(Single);
        
     {$IF DEFINED(debug)}
      WriteLn('totsamples: ' + inttostr(totsamples));
@@ -3176,9 +3270,9 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
    
     
   StreamIn[x].Data.HandleOP :=
-  op_test_callbacks(StreamIn[x].data.BufferURL,url_callbacks, StreamIn[x].data.BufferURL[0], PipeBufferSize div 2, err);  
+//  op_test_callbacks(StreamIn[x].data.BufferURL,url_callbacks, StreamIn[x].data.BufferURL[0], PipeBufferSize div 2, err);  
   
- // op_test_memory(StreamIn[x].data.BufferURL[0],PipeBufferSize div SizeOf(Single) , Err);
+  op_test_memory(StreamIn[x].data.BufferURL[0],PipeBufferSize div SizeOf(Single) , Err);
  
  {$IF DEFINED(debug)}
    WriteLn('error: op_test_*: ' + inttostr(err));
@@ -3268,6 +3362,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
        StreamIn[x].Data.OutFrames := 0;
        StreamIn[x].Data.Poseek := -1;
        StreamIn[x].Data.TypePut := 2;
+       StreamIn[x].Data.ratio := 1;
        StreamIn[x].Data.seekable := false;
        StreamIn[x].LoopProc := nil;
 
@@ -4256,8 +4351,8 @@ begin
  {$IF DEFINED(debug)}
   writeln('===> Before op_read_x.') ;
  {$endif}                
-                for x2 := 0 to length(StreamIn[x].Data.Buffer) -1 do
-              StreamIn[x].Data.Buffer[x2] := cfloat(0.5);
+        //        for x2 := 0 to length(StreamIn[x].Data.Buffer) -1 do
+        //      StreamIn[x].Data.Buffer[x2] := cfloat(0.0);
 
          //    StreamIn[x].InPipe.Read(abuffer,StreamIn[x].Data.Wantframes);
          //  StreamIn[x].InPipe.Read(StreamIn[x].data.BufferURL,StreamIn[x].Data.Wantframes);
@@ -4276,7 +4371,7 @@ begin
          while (outst2 < StreamIn[x].Data.Wantframes) 
          and (outst > 0) do
   begin
- outst := StreamIn[x].InPipe.Read(buffadd[0],StreamIn[x].Data.Wantframes-outst2);
+ outst := StreamIn[x].InPipe.Read(buffadd[0],(StreamIn[x].Data.Wantframes)-outst2);
    if outst > 0 then  for i := 0 to outst -1 do
    StreamIn[x].data.BufferURL[i+outst2] := buffadd[i] ;
     // BufferURLtest[i+outst2] := buffadd[i] ;
@@ -4289,32 +4384,16 @@ begin
     end;
          
     {$IF DEFINED(debug)}
-         
     WriteLn('InPipe.Read total= ' + inttostr(outst2));
-    WriteLn('INPUT DATA-------------------------------');
-    writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferURL));
-   //   writeln(tencoding.utf8.getstring(BufferURLtest));
-  
-    st := '';
-    for i := 0 to length(StreamIn[x].data.Buffer) -1 do
-     st := st + '|' + floattostr(StreamIn[x].data.Buffer[i]); 
-     WriteLn('OUTPUT DATA ROOT-----------------------------');
-     WriteLn(st);
-  
-   //  for i := 0 to length(StreamIn[x].data.Buffer) -1 do
-   //  StreamIn[x].data.Buffer[i] := 0.0;   
-     st := '';
-     for i := 0 to length(StreamIn[x].data.Buffer) -1 do
-     st := st + '|' + floattostr(StreamIn[x].data.Buffer[i]); 
-     WriteLn('OUTPUT DATA AFTER FORMAT---------------------------');
-      WriteLn(st);
+   // WriteLn('INPUT DATA-------------------------------');
+   // writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferURL));
     {$endif}
    
    StreamIn[x].Data.urlinit := false;
         
               case StreamIn[x].Data.SampleFormat of
                     0: StreamIn[x].Data.outframes := cint(op_read_float(StreamIn[x].Data.HandleOP,
-                    @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes div StreamIn[x].Data.channels) , nil));
+                    @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes div 2) , nil));
                           
                     1: begin 
                        StreamIn[x].Data.outframes := cint(op_read_float(StreamIn[x].Data.HandleOP,
@@ -4336,16 +4415,23 @@ begin
                   end;
                   end;
    
-   StreamIn[x].Data.outframes :=  StreamIn[x].Data.outframes * StreamIn[x].Data.Channels ;
+ //  StreamIn[x].Data.outframes :=  StreamIn[x].Data.outframes * StreamIn[x].Data.Channels ;
+ 
+ // setlength(StreamIn[x].data.Buffer,length(StreamIn[x].data.Buffer) div 4);
+ 
+ setlength(StreamIn[x].data.Buffer, StreamIn[x].Data.outframes * StreamIn[x].Data.Channels);
    
          {$IF DEFINED(debug)}
+    writeln('Seek outframes = '+inttostr(StreamIn[x].Data.outframes)) ;
           st := '';
     for i := 0 to length(StreamIn[x].data.Buffer) -1 do
-     st := st + '|' + floattostr(StreamIn[x].data.Buffer[i]);   
+     st := st + '|' + inttostr(i) + '|' + floattostr(StreamIn[x].data.Buffer[i]);   
        WriteLn('OUTPUT DATA AFTER ------------------------------');
        WriteLn(st); 
-       writeln('Seek outframes = '+inttostr(StreamIn[x].Data.outframes div 2)) ;
+       writeln(' StreamIn[x].Data.outframes = '+inttostr(StreamIn[x].Data.outframes * StreamIn[x].Data.Channels)) ;
           {$endif} 
+          
+          StreamIn[x].Data.outframes := StreamIn[x].Data.outframes * StreamIn[x].Data.Channels;
       
       if StreamIn[x].Data.outframes < 0 then StreamIn[x].Data.outframes := 0 ;
       
@@ -4538,6 +4624,10 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
    synchronize(@Streamin[x].LoopProcjava);
    {$endif}
    {$endif}
+   
+   {$IF DEFINED(debug)}
+ writeln('Getting the level after DSP procedure');
+ {$endif}
 
     //// Getting the level after DSP procedure
   if ((StreamIn[x].Data.levelEnable = 2) or (StreamIn[x].Data.levelEnable = 3)) then StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
@@ -4554,6 +4644,11 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
        setlength(uosLevelArray[index][x],length(uosLevelArray[index][x]) +1);
        uosLevelArray[index][x][length(uosLevelArray[index][x]) -1 ] := StreamIn[x].Data.LevelRight;
        end;
+       
+    {$IF DEFINED(debug)}
+ writeln('End level after DSP procedure');
+ {$endif}
+     
 
       end;
 
@@ -4808,7 +4903,9 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
 
         begin
           //////// Convert Input format into Output format if needed:
-
+ {$IF DEFINED(debug)}
+ writeln('Convert Input format into Output');
+ {$endif}
           case StreamOut[x].Data.SampleFormat of
             0: case StreamIn[x2].Data.SampleFormat of
                 1: StreamOut[x].Data.Buffer :=
@@ -4818,19 +4915,24 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
               end;
           end;
           /////// End convert.
-
+ {$IF DEFINED(debug)}
+ writeln('Finally give buffer to output');
+ {$endif}
           ///////// Finally give buffer to output
           case StreamOut[x].Data.TypePut of
          {$IF DEFINED(portaudio)}
           1:     /////// Give to output device
             begin
-           
+
+{$IF DEFINED(debug)}
+ writeln('Give to output device');
+ {$endif}
                if (StreamIn[x2].Data.TypePut <> 1) or
             ((StreamIn[x2].Data.TypePut = 1) and (StreamIn[x2].Data.Channels > 1)) then
               begin
               // err := // if you want clean buffer
               Pa_WriteStream(StreamOut[x].Data.HandleSt,
-                @StreamOut[x].Data.Buffer[0], StreamIn[x2].Data.outframes div
+                @StreamOut[x].Data.Buffer[0], StreamIn[x2].Data.outframes div 
                 StreamIn[x2].Data.ratio);
               end else
              begin
@@ -4839,7 +4941,9 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
                 @StreamOut[x].Data.Buffer[0], StreamIn[x2].Data.outframes);
               end;
              // if err <> 0 then status := 0;   // if you want clean buffer ...
-
+{$IF DEFINED(debug)}
+ writeln('End give to output device');
+ {$endif}
              end;
           {$endif}
 

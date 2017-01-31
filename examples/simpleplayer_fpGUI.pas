@@ -540,8 +540,8 @@ loadok : boolean = false;
     //////////// PlayerIndex : Index of a existing Player
     //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
- 
-     uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
+    
+    uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : Index of a existing input
