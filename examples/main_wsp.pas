@@ -24,19 +24,23 @@ type
     Edit3: TEdit;
     Edit4: TEdit;
     Edit5: TEdit;
+    Edit6: TEdit;
     Label1: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    Label8: TLabel;
     Label9: TLabel;
     lposition: TLabel;
     lerror: TLabel;
+    opusformat: TRadioButton;
     PaintBox1: TPaintBox;
     RadioButton1: TRadioButton;
     RadioButton2: TRadioButton;
     RadioButton3: TRadioButton;
+    mp3format: TRadioButton;
     RadioGroup1: TRadioGroup;
     Shape1: TShape;
     ShapeRight: TShape;
@@ -53,6 +57,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure Label8Click(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure ClosePlayer1;
@@ -165,6 +170,7 @@ begin
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
+  Edit6.Text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
 {$else}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
@@ -208,12 +214,12 @@ begin
  //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
   // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
-if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), nil, nil,nil) = 0 then
+if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), nil, nil, pchar(edit6.Text)) = 0 then
   begin
     form1.hide;
       loadok := true;
        button1.Caption :=
-      'PortAudio and Mpg123 libraries are loaded...'
+      'PortAudio, Mpg123 and OpusFile libraries are loaded...'
       end   else
       MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
 
@@ -223,7 +229,7 @@ if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), nil, nil,nil) = 0 then
          and (uos_LoadPlugin('soundtouch', Pchar(edit5.text)) = 0) then
            begin
           button1.Caption :=
-        'PortAudio, Mpg123 and Plugin SoundTouch libraries are loaded...'   ;
+        'PortAudio, Mpg123, OpusFile and Plugin SoundTouch libraries are loaded...'   ;
         plugsoundtouch := true;
         end
         else
@@ -250,11 +256,10 @@ if uos_LoadLib(Pchar(edit1.Text), nil, pchar(edit3.Text), nil, nil,nil) = 0 then
  //  edit4.text := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
  //  edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
  //  edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
+  //   edit4.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
 
     form1.Show;
   end ;
-
-
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
@@ -279,12 +284,15 @@ end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 var
-  samformat: shortint;
+  samformat, audioformat: shortint;
   begin
       lerror.caption :=   '';
     PlayerIndex1 := 0;
     // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
     // If PlayerIndex exists already, it will be overwritten...
+    
+     if  mp3format.checked = true then
+   audioformat := 0 else audioformat := 1;
 
     if radiobutton1.Checked = True then
       samformat := 0;
@@ -298,21 +306,23 @@ var
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    In1Index :=  uos_AddFromURL(PlayerIndex1, pchar(edit4.text),-1,samformat,-1, 0) ;
-
-    if  In1Index <> - 1 then begin
-
-     radiogroup1.Enabled := False;
-
-    /////// Add a Input from Audio URL with custom parameters
+    In1Index :=  uos_AddFromURL(PlayerIndex1, pchar(edit4.text),-1,samformat,-1, audioformat) ;
+              /////// Add a Input from Audio URL with custom parameters
               ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
               ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
               //////////// FramesCount : default : -1 (1024)
+              //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+  
               ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
               //  result : -1 nothing created, otherwise Input Index in array
+   
+    if  In1Index <> - 1 then begin
 
-   Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, samformat, -1);
+     radiogroup1.Enabled := False;
+
+     Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+    uos_InputGetChannels(PlayerIndex1, In1Index),samformat, -1);
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -468,6 +478,11 @@ begin
   end;
   if button1.Enabled = False then
    uos_free;
+end;
+
+procedure TForm1.Label8Click(Sender: TObject);
+begin
+
 end;
 
 end.

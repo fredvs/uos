@@ -795,8 +795,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=btnCloseClick
-findhistory=12
+finddtext=ChangePlugSet
+findhistory=15
+ ChangePlugSet
+ urlinit
+ addfromur
  btnCloseClick
  close
  In1Index
@@ -810,7 +813,8 @@ findhistory=12
  Sort
  sort
 findoptions=1
-editpos=11
+editpos=13
+ 0,313
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -821,7 +825,8 @@ editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,57
+ 0,-1073741823
+ 43,338
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -833,7 +838,9 @@ bookmarks7=0
 bookmarks8=0
 bookmarks9=0
 bookmarks10=0
-sourcefiles=11
+bookmarks11=0
+bookmarks12=0
+sourcefiles=13
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
@@ -845,7 +852,9 @@ sourcefiles=11
  ${PROJECTDIR}/uos_httpgetthread.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/conswebstream.pas
-relpaths=11
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/main_wsp.pas
+relpaths=13
  simplewebplayer_fpGUI.pas
  uos.pas
  uos_portaudio.pas
@@ -857,7 +866,11 @@ relpaths=11
  uos_httpgetthread.pas
  simpleplayer_fpGUI.pas
  conswebstream.pas
-ismoduletexts=11
+ define.inc
+ main_wsp.pas
+ismoduletexts=13
+ 0
+ 0
  0
  0
  0
@@ -874,8 +887,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=11
+order=13
  0
+ 12
+ 11
  10
  9
  1
@@ -903,8 +918,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1066
- cy=585
+ cx=1356
+ cy=682
  rcx=0
  rcy=0
  [mainfo]
@@ -917,16 +932,16 @@ windowlayout=530
  ncx=0
  ncy=0
  x=231
- y=53
- cx=1076
+ y=55
+ cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1066,585
+  basedock,0,0,1356,682
  focusedchild=0
- wsize=0
- active=0
+ wsize=6
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -937,14 +952,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=784
- y=124
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -967,7 +982,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1039,7 +1054,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=428
+ cy=499
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1248,9 +1263,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=485
- cx=1066
- cy=100
+ y=565
+ cx=1356
+ cy=117
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1349,8 +1364,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1066
- cy=51
+ cx=1356
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1365,8 +1380,8 @@ windowlayout=530
  ncy=2
  x=0
  y=47
- cx=1066
- cy=2
+ cx=1356
+ cy=11
  rcx=0
  rcy=0
  [sourcefo]
@@ -1381,15 +1396,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=904
- cy=428
+ cx=1194
+ cy=499
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1416,9 +1431,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1066
- cy=428
+ y=63
+ cx=1356
+ cy=499
  rcx=0
  rcy=0
 [targetconsole]

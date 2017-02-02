@@ -954,10 +954,10 @@ findoptions=1
 editpos=8
  0,-1073741823
  0,-1073741823
- 0,539
+ 67,505
  0,-1073741823
  0,-1073741823
- 0,1083
+ 22,1081
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -1011,7 +1011,7 @@ order=8
  4
 tabsize=60
 firsttab=0
-index=2
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1442,7 +1442,7 @@ windowlayout=530
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1512,7 +1512,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=componentpalettefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

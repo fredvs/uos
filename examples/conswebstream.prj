@@ -191,7 +191,7 @@ options=114
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=0
+ index=5
  [projectoptionsfo.filefiltergrid]
  propcolwidthref=632
  width0=112
@@ -200,10 +200,10 @@ options=114
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
- index=1
+ index=0
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -360,7 +360,7 @@ newfosources=2
 newfoforms=2
  
  
-forcezorder=-1
+forcezorder=0
 stripmessageesc=0
 copymessages=0
 closemessages=0
@@ -715,38 +715,31 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=4
+on=3
  -1
  0
  0
- 0
-path=4
+path=3
  /home/fred/uos/examples/uos_opusfile.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/uos.pas
-line=4
- 152
- 4296
- 3262
- 4403
-address=4
+line=3
+ 146
+ 4272
+ 3244
+address=3
  0
  0
  0
- 0
-addbkpt=4
- 0
+addbkpt=3
  0
  0
  0
-ignore=4
+ignore=3
  0
  0
  0
- 0
-condition=4
- 
+condition=3
  
  
  
@@ -812,9 +805,14 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromURL
+finddtext=samplereate
 findhistory=20
+ samplereate
+ getsam
  AddFromURL
+ InPipe
+ writeln('===> Before op_read_x.')
+ AddFromfile
  ono2Stereo
  stereo2m
  dsp
@@ -827,25 +825,21 @@ findhistory=20
  op_test_callbacks
  op_read
  Read(
- AddFromfile
  soundto
  writeln('outst =
- StreamIn[x].Data.outframes :=
- debug 
- x := 0 to high(StreamIn EndFuncof DSP In)
- positionen
 findoptions=1
-editpos=10
+editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
+ 0,-1073741823
+ 0,3
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 0,94
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -856,7 +850,8 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 bookmarks9=0
-sourcefiles=10
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/uos_opusurl.pas
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/conswebstream.pas
@@ -864,10 +859,11 @@ sourcefiles=10
  ${PROJECTDIR}/conswebstream.pas
  ${PROJECTDIR}/uos_opusfile.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_portaudio.pas
- /home/fred/opus_bin/opus_trivial_example.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
-relpaths=10
+ ${PROJECTDIR}/uos_httpgetthread.pas
+ ${PROJECTDIR}/conswebstream.pas
+relpaths=11
  uos_opusurl.pas
  simplewebplayer_fpGUI.pas
  conswebstream.pas
@@ -875,10 +871,12 @@ relpaths=10
  conswebstream.pas
  uos_opusfile.pas
  define.inc
- uos_portaudio.pas
- opus_bin/opus_trivial_example.pas
+ uos.pas
  define.inc
-ismoduletexts=10
+ uos_httpgetthread.pas
+ conswebstream.pas
+ismoduletexts=11
+ 0
  0
  0
  0
@@ -895,8 +893,8 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
-firsttab=4
-index=5
+firsttab=5
+index=6
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -911,8 +909,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1333
- cy=651
+ cx=929
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -924,14 +922,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=11
- y=40
- cx=1343
- cy=687
+ x=231
+ y=53
+ cx=939
+ cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1333,651
+  basedock,0,0,929,585
  focusedchild=0
  wsize=0
  active=1
@@ -945,10 +943,10 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=360
- y=103
- cx=667
- cy=496
+ x=493
+ y=171
+ cx=497
+ cy=314
  rcx=0
  rcy=0
  wsize=0
@@ -975,7 +973,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1047,7 +1045,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=486
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1256,9 +1254,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=544
- cx=1333
- cy=107
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1357,8 +1355,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1333
- cy=52
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1373,8 +1371,8 @@ windowlayout=530
  ncy=2
  x=0
  y=47
- cx=1333
- cy=3
+ cx=929
+ cy=2
  rcx=0
  rcy=0
  [sourcefo]
@@ -1389,8 +1387,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1171
- cy=486
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1424,9 +1422,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=55
- cx=1333
- cy=486
+ y=54
+ cx=929
+ cy=428
  rcx=0
  rcy=0
 [targetconsole]

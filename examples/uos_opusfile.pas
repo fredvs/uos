@@ -13,7 +13,7 @@ unit uos_OpusFile;
 interface
 
 uses
-  ctypes, dynlibs, SysUtils;
+  ctypes, dynlibs, pipes, SysUtils;
   
 type
   TOpusFile = ^OpusFile;
@@ -89,10 +89,6 @@ type
 type
   TOpusHead = THandle;
   TOpusStream = THandle;
- 
- // {$if not declared(size_t)}
-  
- //{$endif}
 
   op_read_func = function (stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
   op_seek_func = function (stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
@@ -110,8 +106,6 @@ function OpusReadCB(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
 function OpusReadCBuosURL(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
 function OpusSeekCB(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
 function OpusTellCB(stream: Pointer): Int64; cdecl;
-function OpusSeekCBuosURL(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
-function OpusTellCBuosURL(stream: Pointer): Int64; cdecl;
 function OpusCloseCB(stream: Pointer): cint; cdecl;
 
 const
@@ -120,9 +114,9 @@ const
                                       tell: @OpusTellCB;
                                       close: nil);
 
-  url_callbacks: TOpusFileCallbacks = (read: @OpusReadCBuosURL;
-                                      seek: @OpusSeekCBuosURL;
-                                      tell: @OpusTellCBuosURL;
+  uos_callbacks: TOpusFileCallbacks = (read: @OpusReadCBuosURL;
+                                      seek: @OpusSeekCB;
+                                      tell: @OpusTellCB;
                                       close: nil);
                                     
                                       
@@ -348,28 +342,18 @@ function OpusReadCB(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
 begin
   if nbytes<>0
   then
-  result := FileRead(THandle(stream^), Buffer, nbytes)
-   else
+ result := FileRead(THandle(stream^), Buffer, nbytes)
+  else
     result := 0;
 end;
 
 function OpusReadCBuosURL(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
 begin
-// read was done by uos: nothing to do...
-  if nbytes<>0 then
-     result := nbytes
-  else
+ if nbytes<>0
+  then
+  result := TInputPipeStream(stream^).read(Buffer, nbytes)
+   else
     result := 0;
-end;
-
-function OpusSeekCBuosURL(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
-begin
-// dummy
-end;
-
-function OpusTellCBuosURL(stream: Pointer): Int64; cdecl;
-begin
-// dummy
 end;
 
 function OpusSeekCB(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;

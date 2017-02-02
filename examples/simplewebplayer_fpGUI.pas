@@ -10,7 +10,6 @@ uses
   SysUtils,
   uos_flat,
   ctypes,
-  Math,
   Classes,
   fpg_button,
   fpg_widget,
@@ -63,6 +62,10 @@ type
     Edit1: TfpgEdit;
     Label8: TfpgLabel;
     Butquit: TfpgButton;
+    FilenameEdit2: TfpgFileNameEdit;
+    Label1: TfpgLabel;
+    mp3format: TfpgRadioButton;
+    opusformat: TfpgRadioButton;
     {@VFD_HEAD_END: Simpleplayer}
   public
     procedure AfterCreate; override;
@@ -214,10 +217,9 @@ loadok : boolean = false;
    begin
     // Load the libraries
 //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
-  // Mp4ffFileName, FaadFileName, opusfilename, opusfilefilename: PChar) : LongInt;
+  // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
-
-if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName),nil, nil, nil) = 0 then
+if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName),nil, nil, Pchar(FilenameEdit2.FileName)) = 0 then
     begin
       hide;
        loadok := true;
@@ -227,9 +229,10 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
       FilenameEdit1.ReadOnly := True;
       FilenameEdit3.ReadOnly := True;
       FilenameEdit5.ReadOnly := True;
+      FilenameEdit2.ReadOnly := True;
       UpdateWindowPosition;
         btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123 libraries are loaded...'
+        'PortAudio, SndFile, Mpg123, Opus libraries are loaded...'
         end else btnLoad.Text :=
         'One or more libraries did not load, check filenames...';
        
@@ -240,7 +243,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
        begin
       plugsoundtouch := true;
           btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123 and Plugin SoundTouch are loaded...';
+        'PortAudio, SndFile, Mpg123, Opus and Plugin SoundTouch are loaded...';
         end
          else
          begin
@@ -262,14 +265,15 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
 
       // Some audio web streaming
      edit1.text := 'http://streaming304.radionomy.com:80/GENERATIONSOULDISCOFUNK-MP3';
- //  edit1.text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
+   edit1.text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
  //  edit1.text := 'http://arvorig-fm.online.stalig.net/live.mp3'
  //  edit1.text := 'http://str1.sad.ukrd.com:80/2br';
  //  edit1.text := 'http://streaming304.radionomy.com:80/GENERATIONSOULDISCOFUNK-MP3';
  //  edit1.text := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
  //  edit1.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
  //  edit1.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
-
+ //   edit1.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+  
        fpgapplication.ProcessMessages;
       sleep(250);
       Show;
@@ -302,8 +306,11 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
 
    procedure TSimpleplayer.btnStartClick(Sender: TObject);
   var
-    samformat: shortint;
+    samformat, audioformat : shortint;
   begin
+  
+   if  mp3format.checked = true then
+   audioformat := 0 else audioformat := 1;
 
     if radiobutton1.Checked = True then
       samformat := 0;
@@ -325,18 +332,20 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    In1Index :=  uos_AddFromURL(PlayerIndex1,pchar(edit1.text),-1,samformat,-1, -1) ;
+    In1Index :=  uos_AddFromURL(PlayerIndex1,pchar(edit1.text),-1,samformat,-1, audioformat) ;
     /////// Add a Input from Audio URL with custom parameters
               ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
               ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
-              //////////// FramesCount : default : -1 (1024)
+              //////////// FramesCount : default : -1 (4096)
+              //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+  
               ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
          //  result : -1 nothing created, otherwise Input Index in array
    if In1Index > -1 then
    begin
-
-    uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, samformat, 1024);
+    uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+    uos_InputGetChannels(PlayerIndex1, In1Index), samformat, 1024);
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -380,11 +389,11 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
 
        if  plugsoundtouch = true then
   begin
-    Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
-    ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
-
+    Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', uos_InputGetSampleRate(PlayerIndex1, In1Index), -1);
+    
     ChangePlugSet(self); //// custom procedure to Change plugin settings
-   end;
+    uos_SetPluginSoundTouch(PlayerIndex1, Plugin1Index, 1, 1, false);
+  end;
 
      /////// procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex1, @ClosePlayer1);
@@ -431,7 +440,7 @@ end;
 
     {@VFD_BODY_BEGIN: Simpleplayer}
   Name := 'Simpleplayer';
-  SetPosition(467, 0, 502, 403);
+  SetPosition(483, 204, 502, 403);
   WindowTitle := 'Simple Web Player ';
   IconName := '';
   BackGroundColor := $80000001;
@@ -519,7 +528,7 @@ end;
   with Labelmpg do
   begin
     Name := 'Labelmpg';
-    SetPosition(148, 60, 316, 15);
+    SetPosition(144, 40, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -543,7 +552,7 @@ end;
   with FilenameEdit3 do
   begin
     Name := 'FilenameEdit3';
-    SetPosition(136, 76, 356, 24);
+    SetPosition(136, 56, 356, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -842,6 +851,54 @@ end;
     Onclick := @btnCloseClick;
   end;
 
+  FilenameEdit2 := TfpgFileNameEdit.Create(self);
+  with FilenameEdit2 do
+  begin
+    Name := 'FilenameEdit2';
+    SetPosition(140, 96, 352, 24);
+    ExtraHint := '';
+    FileName := '';
+    Filter := '';
+    InitialDir := '';
+    TabOrder := 33;
+  end;
+
+  Label1 := TfpgLabel.Create(self);
+  with Label1 do
+  begin
+    Name := 'Label1';
+    SetPosition(140, 80, 328, 15);
+    Alignment := taCenter;
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := 'Folder + filename of OpusFile Library';
+  end;
+
+  mp3format := TfpgRadioButton.Create(self);
+  with mp3format do
+  begin
+    Name := 'mp3format';
+    SetPosition(188, 260, 96, 19);
+    Checked := True;
+    FontDesc := '#Label1';
+    GroupIndex := 1;
+    ParentShowHint := False;
+    TabOrder := 35;
+    Text := 'mp3 format';
+  end;
+
+  opusformat := TfpgRadioButton.Create(self);
+  with opusformat do
+  begin
+    Name := 'opusformat';
+    SetPosition(296, 260, 96, 19);
+    FontDesc := '#Label1';
+    GroupIndex := 1;
+    ParentShowHint := False;
+    TabOrder := 36;
+    Text := 'opus format';
+  end;
+
   {@VFD_BODY_END: Simpleplayer}
     {%endregion}
 
@@ -875,8 +932,9 @@ end;
     OU_FileName := ordir + 'lib/Linux/64bit/LibOpusURL-64.so';
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+    FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
     FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
-{$else}
+  {$else}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';

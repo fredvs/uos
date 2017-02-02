@@ -87,9 +87,9 @@ object Form1: TForm1
   Position = poDesktopCenter
   LCLVersion = '5.9'
   object Shape1: TShape
-    Left = 8
+    Left = 10
     Height = 216
-    Top = 192
+    Top = 196
     Width = 489
     Brush.Color = clSilver
   end
@@ -107,9 +107,9 @@ object Form1: TForm1
     TabOrder = 5
   end
   object Edit1: TEdit
-    Left = 132
+    Left = 133
     Height = 27
-    Top = 14
+    Top = 12
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -118,7 +118,7 @@ object Form1: TForm1
   object Edit3: TEdit
     Left = 132
     Height = 27
-    Top = 70
+    Top = 50
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -138,9 +138,9 @@ object Form1: TForm1
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 132
+    Left = 126
     Height = 18
-    Top = 56
+    Top = 38
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -255,7 +255,7 @@ object Form1: TForm1
   object RadioGroup1: TRadioGroup
     Left = 128
     Height = 86
-    Top = 272
+    Top = 284
     Width = 120
     AutoFill = True
     Caption = 'Sample Format'
@@ -300,11 +300,11 @@ object Form1: TForm1
     end
   end
   object lposition: TLabel
-    Left = 250
+    Left = 206
     Height = 15
-    Top = 220
-    Width = 81
-    Caption = 'HTTP location'
+    Top = 218
+    Width = 203
+    Caption = 'HTTP location of mp3 or opus file.'
     ParentColor = False
   end
   object ShapeRight: TShape
@@ -346,7 +346,7 @@ object Form1: TForm1
   object CheckBox2: TCheckBox
     Left = 274
     Height = 22
-    Top = 278
+    Top = 282
     Width = 184
     Caption = 'Enable SoundTouch Plugin'
     OnChange = ChangePlugSet
@@ -411,5 +411,46 @@ object Form1: TForm1
     Color = clRed
     ParentColor = False
     Transparent = False
+  end
+  object Label8: TLabel
+    Left = 132
+    Height = 18
+    Top = 76
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Folder + filename of Opusfile Library'
+    Font.Height = -11
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+    OnClick = Label8Click
+  end
+  object Edit6: TEdit
+    Left = 132
+    Height = 27
+    Top = 88
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    TabOrder = 16
+  end
+  object mp3format: TRadioButton
+    Left = 160
+    Height = 22
+    Top = 260
+    Width = 96
+    Caption = 'mp3 format'
+    Checked = True
+    TabOrder = 18
+    TabStop = True
+  end
+  object opusformat: TRadioButton
+    Left = 306
+    Height = 22
+    Top = 260
+    Width = 97
+    Caption = 'opus format'
+    TabOrder = 17
   end
 end

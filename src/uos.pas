@@ -266,7 +266,6 @@ type
     
    {$IF DEFINED(opus) and DEFINED(webstream) }
     BufferURL: tbytes;
-    urlinit: boolean;
    {$endif}
       
     DSPVolumeIndex : LongInt;
@@ -1067,9 +1066,8 @@ end;
 
 function CvFloat32ToInt32fl(Inbuf: TDArFloat; nb:integer): TDArFloat;
 var
-   i: cint32;
    x : LongInt;
-   pl, pl2: PDArLong;      //////// if input is Int32 format
+   pl2: PDArLong;      //////// if input is Int32 format
    pf: PDArfloat;
    buffer2 : TDArFloat;
    
@@ -2559,11 +2557,7 @@ var
     ps, ps2: PDArShort;     //////// if input is Int16 format
     pl, pl2: PDArLong;      //////// if input is Int32 format
     pf, pf2: PDArFloat;     //////// if input is Float32 format
-    
-    
-    samplef : cFloat;
-    samplei : integer;
-   
+
     buffer2 : TDArFloat;
     
   begin
@@ -2593,8 +2587,8 @@ var
      pl2 := @Buffer2;
      while x < Data.OutFrames  do
           begin  
-         pl2^[x2] := (ps^[x]);
-         pl2^[x2+1] := (ps^[x]);
+         pl2^[x2] := (pl^[x]);
+         pl2^[x2+1] := (pl^[x]);
          x := x + 1;
          x2 := x2 + 2;
            end;
@@ -2606,8 +2600,8 @@ var
      pf2 := @Buffer2;
      while x < Data.OutFrames  do
           begin  
-         pf2^[x2] := (ps^[x]);
-         pf2^[x2+1] := (ps^[x]);
+         pf2^[x2] := (pf^[x]);
+         pf2^[x2+1] := (pf^[x]);
          x := x + 1;
          x2 := x2 + 2;
            end;
@@ -3178,8 +3172,8 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
   ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
-  //////////// FramesCount : default : -1 (1024)
-  //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+  //////////// FramesCount : default : -1 (4096)
+  //////////// AudioFormat : default : -1 (all) (0: mp3, 1: opus)
   ////////// example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1,-1);
  
  var
@@ -3219,24 +3213,22 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
     StreamIn[x].Data.levelEnable := 0;
     StreamIn[x].Data.positionEnable := 0;
     StreamIn[x].Data.levelArrayEnable := 0;
-
+    
      {$IF DEFINED(opus)}
-      if  (AudioFormat = 1) then
+      if  (AudioFormat = 1)
+      // or (AudioFormat = -1)
+      then
      begin
-         Err := -1;
-  
+       
    {$IF DEFINED(debug)}
     WriteLn('Begin opus test');
     {$endif}
      
-     StreamIn[x].Data.urlinit := true;
-     
-        if FramesCount= -1 then
-     totsamples := 1024  else
+     if FramesCount= -1 then
+     totsamples := 4096  else
      totsamples := FramesCount;
-     
-    totsamples := totsamples * 5 ;
-   PipeBufferSize := totsamples * sizeOf(Single);
+  
+   PipeBufferSize := totsamples * sizeOf(Single); // * 2
        
     {$IF DEFINED(debug)}
      WriteLn('totsamples: ' + inttostr(totsamples));
@@ -3248,21 +3240,19 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
   StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
 
   StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
-  
+ 
   len := 1 ;
   len2 := 0 ;
   
    setlength(buffadd, PipeBufferSize);
    setlength(StreamIn[x].data.BufferURL, PipeBufferSize);
-   //  setlength(BufferURLtest, PipeBufferSize);
-    
+ 
   while (len2 < PipeBufferSize) and (len > 0) do
   begin
  len := StreamIn[x].InPipe.Read(buffadd[0],PipeBufferSize-len2);
   if len > 0 then  for i := 0 to len -1 do
     StreamIn[x].data.BufferURL[i+len2] := buffadd[i] ;
-   //  BufferURLtest[i+err2] := buffadd[i] ;
-     len2 := len2 + len;
+      len2 := len2 + len;
    end;
         
   {$IF DEFINED(debug)}
@@ -3271,21 +3261,18 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
    WriteLn('----------------------------------');
    writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferURL));
    {$endif}
-  
+
    StreamIn[x].Data.HandleSt := pchar('opusurl');
-   
     
   StreamIn[x].Data.HandleOP :=
-//  op_test_callbacks(StreamIn[x].data.BufferURL,url_callbacks, StreamIn[x].data.BufferURL[0], PipeBufferSize div 2, err);  
-  
-  op_test_memory(StreamIn[x].data.BufferURL[0],PipeBufferSize div SizeOf(Single) , Err);
+ op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferURL[0], PipeBufferSize, err);  
+ // op_test_memory(StreamIn[x].data.BufferURL[0],PipeBufferSize, Err);
  
  {$IF DEFINED(debug)}
    WriteLn('error: op_test_*: ' + inttostr(err));
  {$endif}
-           StreamIn[x].Data.LibOpen := -1 ;
-
-    if Err=0
+  
+     if Err=0
     then begin
          Err := op_test_open(StreamIn[x].Data.HandleOP);
          
@@ -3343,7 +3330,6 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
               end;
             end;
             end;
-         
            
              StreamIn[x].Data.Lengthst := op_pcm_total(StreamIn[x].Data.HandleOP, nil);
              StreamIn[x].Data.filename := url;
@@ -3355,12 +3341,12 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
    WriteLn('Data.Channels ' + inttostr(StreamIn[x].Data.channels));     
    {$endif}
        
-             StreamIn[x].Data.samplerate :=  48000 ;
-             StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
-                
-         StreamIn[x].Data.Wantframes := totsamples ;
+        StreamIn[x].Data.samplerate :=  48000 ;
+        StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
+        StreamIn[x].Data.Wantframes := totsamples ;
          
        SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes);
+     
         StreamIn[x].Data.LibOpen := 4;
         StreamIn[x].Data.Status := 1;
        StreamIn[x].Data.Enabled := True;
@@ -3387,9 +3373,12 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
      {$IF DEFINED(debug)}
    WriteLn('Begin mpg123');     
  {$endif} 
+   
      if FramesCount= -1 then
-     PipeBufferSize := $4000 else
-     PipeBufferSize := FramesCount;
+     totsamples := $4000  else
+     totsamples := FramesCount;
+     
+     PipeBufferSize := totsamples ;
 
   CreatePipeHandles(StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
 
@@ -3448,7 +3437,9 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
          StreamIn[x].Data.filename := URL ;
         
          if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=   1024  else
-         StreamIn[x].Data.Wantframes := FramesCount ;
+        StreamIn[x].Data.Wantframes := FramesCount ;
+       
+      // StreamIn[x].Data.Wantframes := totsamples;
 
        StreamIn[x].Data.Output := OutputIndex;
        StreamIn[x].Data.Status := 1;
@@ -3537,6 +3528,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
      WriteLn('StreamIn[x].Data.LibOpen ' + inttostr(StreamIn[x].Data.LibOpen));
      WriteLn('Before Length(StreamIn) ' + inttostr(Length(StreamIn)));
        {$endif}
+     sleep(10);  
     if StreamIn[x].Data.LibOpen = -1 then
     begin
     if err <> -133 then 
@@ -3548,6 +3540,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
    WriteLn('Result: ' + inttostr(result));
    {$endif}
     end;
+     
      result := -1
     end else result := x ;
        end;
@@ -4007,13 +4000,11 @@ end;
 procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
-  x, x2, x3, x4, statustemp, rat, err, i, outst, outst2: LongInt;
-//  abuffer : tmemorystream; 
+  x, x2, x3, x4, statustemp, rat, err, i : LongInt;
+ 
  {$IF DEFINED(debug)}
   st : string;
   {$endif}
-  
-  buffadd : tbytes;
   
   plugenabled: boolean;
   curpos: cint64;
@@ -4261,11 +4252,7 @@ begin
        
          {$IF DEFINED(opus)}
           4: begin
-   
-     {$IF DEFINED(debug)}
-     // for i := 0 to length(StreamIn[x].data.Buffer) -1 do StreamIn[x].data.Buffer[i] := 0.0;   
-     {$endif}
-              
+                 
               case StreamIn[x].Data.SampleFormat of
                     0: StreamIn[x].Data.outframes := op_read_float(StreamIn[x].Data.HandleOP,
                        @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes div StreamIn[x].Data.channels), nil);
@@ -4273,13 +4260,11 @@ begin
                        StreamIn[x].Data.outframes := op_read_float(StreamIn[x].Data.HandleOP,
                        @StreamIn[x].Data.Buffer[0],cint(StreamIn[x].Data.Wantframes  div StreamIn[x].Data.channels), nil);
               
-                    // no int32 format with opus => need a conversion from float32 to int32 (not working yet).
+                    // no int32 format with opus => needs a conversion from float32 to int32.
                      StreamIn[x].Data.Buffer := Cvfloat32ToInt32fl( StreamIn[x].Data.Buffer,
                      StreamIn[x].Data.outframes * StreamIn[x].Data.Channels );
                        end;
                     2: begin
-                      // setlength(BufferplugLO, length(StreamIn[x].Data.Buffer));
-                  
                      StreamIn[x].Data.outframes := op_read(StreamIn[x].Data.HandleOP,
                      @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes), nil);
                        end;
@@ -4357,74 +4342,30 @@ begin
  {$IF DEFINED(debug)}
   writeln('===> Before op_read_x.') ;
  {$endif}                
-        //        for x2 := 0 to length(StreamIn[x].Data.Buffer) -1 do
-        //      StreamIn[x].Data.Buffer[x2] := cfloat(0.0);
-
-         //    StreamIn[x].InPipe.Read(abuffer,StreamIn[x].Data.Wantframes);
-         //  StreamIn[x].InPipe.Read(StreamIn[x].data.BufferURL,StreamIn[x].Data.Wantframes);
-           
-           outst := 1;
-           outst2 := 0;
-           
- {$IF DEFINED(debug)}
-  writeln('StreamIn[x].Data.Wantframes = '+inttostr(StreamIn[x].Data.Wantframes)) ;
- {$endif}          
- 
-       setlength(buffadd,StreamIn[x].Data.Wantframes);
-           
-        if StreamIn[x].Data.urlinit = false then 
-         
-         while (outst2 < StreamIn[x].Data.Wantframes) 
-         and (outst > 0) do
-  begin
- outst := StreamIn[x].InPipe.Read(buffadd[0],(StreamIn[x].Data.Wantframes)-outst2);
-   if outst > 0 then  for i := 0 to outst -1 do
-   StreamIn[x].data.BufferURL[i+outst2] := buffadd[i] ;
-    // BufferURLtest[i+outst2] := buffadd[i] ;
-     outst2 := outst2 + outst;
- 
- {$IF DEFINED(debug)}
-  writeln('outst = InPipe.Read = '+inttostr(outst)) ;
- {$endif} 
-  
-    end;
-         
-    {$IF DEFINED(debug)}
-    WriteLn('InPipe.Read total= ' + inttostr(outst2));
-   // WriteLn('INPUT DATA-------------------------------');
-   // writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferURL));
-    {$endif}
-   
-   StreamIn[x].Data.urlinit := false;
-        
-              case StreamIn[x].Data.SampleFormat of
-                    0: StreamIn[x].Data.outframes := cint(op_read_float(StreamIn[x].Data.HandleOP,
-                    @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes div 2) , nil));
-                          
+          case StreamIn[x].Data.SampleFormat of
+                    0: begin
+                       StreamIn[x].Data.outframes := cint(op_read_float(StreamIn[x].Data.HandleOP,
+                      @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes 
+                      div StreamIn[x].Data.channels) , nil));
+                       end;    
                     1: begin 
                        StreamIn[x].Data.outframes := cint(op_read_float(StreamIn[x].Data.HandleOP,
-                       @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes), nil));
+                       @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes 
+                       div StreamIn[x].Data.channels), nil));
               
-                    // no int32 format with opus => need a conversion from float32 to int32 (not working yet).
+                    // no int32 format with opus => need a conversion from float32 to int32.
                      StreamIn[x].Data.Buffer := Cvfloat32ToInt32fl( StreamIn[x].Data.Buffer,
                      StreamIn[x].Data.outframes * StreamIn[x].Data.Channels );
                        end;
                     2: begin
-                      // setlength(BufferplugLO, length(StreamIn[x].Data.Buffer));
-                  
+                     
                      StreamIn[x].Data.outframes :=cint( op_read(StreamIn[x].Data.HandleOP,
-                     @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes), nil));
-                  // @BufferplugLO[0], StreamIn[x].Data.Wantframes, nil);
-                        
-                  //   for x2 := 0 to (StreamIn[x].Data.outframes) -1 do
-                  //   StreamIn[x].Data.Buffer[x2] := (BufferplugLO[x2]);      ////// clear input   
+                     @StreamIn[x].Data.Buffer[0], cint(StreamIn[x].Data.Wantframes
+                      div StreamIn[x].Data.channels), nil));
+                                 
                   end;
                   end;
-   
- //  StreamIn[x].Data.outframes :=  StreamIn[x].Data.outframes * StreamIn[x].Data.Channels ;
- 
- // setlength(StreamIn[x].data.Buffer,length(StreamIn[x].data.Buffer) div 4);
- 
+  
  setlength(StreamIn[x].data.Buffer, StreamIn[x].Data.outframes * StreamIn[x].Data.Channels);
    
          {$IF DEFINED(debug)}
@@ -4437,8 +4378,8 @@ begin
        writeln(' StreamIn[x].Data.outframes = '+inttostr(StreamIn[x].Data.outframes * StreamIn[x].Data.Channels)) ;
           {$endif} 
           
-          StreamIn[x].Data.outframes := StreamIn[x].Data.outframes * StreamIn[x].Data.Channels;
-      
+       //   StreamIn[x].Data.outframes := StreamIn[x].Data.outframes * StreamIn[x].Data.Channels ;
+        
       if StreamIn[x].Data.outframes < 0 then StreamIn[x].Data.outframes := 0 ;
       
    {$ENDIF}
@@ -4487,7 +4428,7 @@ begin
          
             StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames ;
           end;
-{$endif}  
+  {$endif}  
           
         end;
 

@@ -36,6 +36,7 @@
 * 21 th changes: 2016-02-26 (Franklyn A. Harlow : AAC (m4a) and CD audio)      *
 * 22 th changes: 2016-10-24 (First shot of Synthesizer input)                  *
 * 23 th changes: 2017-01-20 (Opus and OpusFile libraries wrappers included)    *
+* 24 th changes: 2017-02-02 (Opus web streaming)                               *
 *                                                                              *
 ********************************************************************************}
 
