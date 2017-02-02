@@ -81,7 +81,9 @@ var
  // theurl := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
  // theurl := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
  // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
-  theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+
+    // for opus file, set AudioFormat = 1 in AddFromURL()
+ // theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
  {
  with TfpHttpClient.Create(nil) do
@@ -92,13 +94,13 @@ var
    
 writeln('Try to connect to ' + theurl);
 // res := uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
-  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,1) ;
+  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,0) ;
   
  ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (1024)
-    //////////// AudioFormat : default : -1 (all) (0: mp3, 1: opus)
+    //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
   
  if res < 0 then  writeln('===> uos_AddFromURL => NOT OK:' +  inttostr(res)) else
  begin

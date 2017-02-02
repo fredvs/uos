@@ -3175,7 +3175,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (4096)
-  //////////// AudioFormat : default : -1 (all) (0: mp3, 1: opus)
+  //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
   ////////// example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1,-1);
  
  var

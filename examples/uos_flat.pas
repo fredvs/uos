@@ -228,7 +228,7 @@ function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
               ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
               //////////// FramesCount : default : -1 (4096)
-              //////////// AudioFormat : default : -1 (All) (0: mp3, 1: opus)
+              //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
               ////////// example : InputIndex := AddFromURL(0,'http://someserver/somesound.mp3',-1,-1,-1,-1);
 {$ENDIF}
 
@@ -1041,7 +1041,7 @@ function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
               ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
               //////////// FramesCount : default : -1 (65536)
-             //////////// AudioFormat : default : -1 (All) (0: mp3, 1: opus)
+             //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
                ////////// example : InputIndex := uos_AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1);
 begin
    result := -1 ;
