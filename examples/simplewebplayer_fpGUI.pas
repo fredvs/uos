@@ -66,6 +66,7 @@ type
     Label1: TfpgLabel;
     mp3format: TfpgRadioButton;
     opusformat: TfpgRadioButton;
+    lresult: TfpgLabel;
     {@VFD_HEAD_END: Simpleplayer}
   public
     procedure AfterCreate; override;
@@ -309,6 +310,8 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     samformat, audioformat : shortint;
   begin
   
+   lresult.text := '';
+  
    if  mp3format.checked = true then
    audioformat := 0 else audioformat := 1;
 
@@ -342,7 +345,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
   
               ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
          //  result : -1 nothing created, otherwise Input Index in array
-   if In1Index > -1 then
+   if In1Index > -1 then 
    begin
     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
     uos_InputGetChannels(PlayerIndex1, In1Index), samformat, 1024);
@@ -411,6 +414,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
     end else
     begin
+     lresult.text := 'URL did not load...';
     uos_Play(PlayerIndex1); 
     sleep(300);
     uos_stop(PlayerIndex1); 
@@ -633,7 +637,6 @@ end;
   begin
     Name := 'RadioButton3';
     SetPosition(128, 334, 100, 19);
-    Checked := True;
     FontDesc := '#Label1';
     GroupIndex := 0;
     ParentShowHint := False;
@@ -899,13 +902,24 @@ end;
     Text := 'opus format';
   end;
 
+  lresult := TfpgLabel.Create(self);
+  with lresult do
+  begin
+    Name := 'lresult';
+    SetPosition(116, 352, 124, 15);
+    FontDesc := '#Label1';
+    ParentShowHint := False;
+    Text := '';
+    TextColor := TfpgColor($FFFF0000);
+  end;
+
   {@VFD_BODY_END: Simpleplayer}
     {%endregion}
 
     //////////////////////
 
     ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
-    RadioButton3.Checked := True;
+    RadioButton1.Checked := True;
     Height := 197;
              {$IFDEF Windows}
      {$if defined(cpu64)}

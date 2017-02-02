@@ -89,7 +89,7 @@ object Form1: TForm1
   object Shape1: TShape
     Left = 10
     Height = 216
-    Top = 196
+    Top = 194
     Width = 489
     Brush.Color = clSilver
   end
@@ -151,9 +151,9 @@ object Form1: TForm1
     ParentFont = False
   end
   object Edit4: TEdit
-    Left = 126
+    Left = 124
     Height = 27
-    Top = 234
+    Top = 224
     Width = 358
     Alignment = taCenter
     AutoSize = False
@@ -253,9 +253,9 @@ object Form1: TForm1
     ParentFont = False
   end
   object RadioGroup1: TRadioGroup
-    Left = 128
+    Left = 126
     Height = 86
-    Top = 284
+    Top = 272
     Width = 120
     AutoFill = True
     Caption = 'Sample Format'
@@ -278,7 +278,9 @@ object Form1: TForm1
       Top = 6
       Width = 106
       Caption = 'Float 32 bit'
+      Checked = True
       TabOrder = 0
+      TabStop = True
     end
     object RadioButton2: TRadioButton
       Left = 6
@@ -294,15 +296,13 @@ object Form1: TForm1
       Top = 44
       Width = 106
       Caption = 'Int 16 bit'
-      Checked = True
       TabOrder = 2
-      TabStop = True
     end
   end
   object lposition: TLabel
-    Left = 206
+    Left = 204
     Height = 15
-    Top = 218
+    Top = 208
     Width = 203
     Caption = 'HTTP location of mp3 or opus file.'
     ParentColor = False
@@ -406,10 +406,12 @@ object Form1: TForm1
   object lerror: TLabel
     Left = 132
     Height = 1
-    Top = 360
+    Top = 362
     Width = 1
     Color = clRed
+    Font.Color = clWhite
     ParentColor = False
+    ParentFont = False
     Transparent = False
   end
   object Label8: TLabel
@@ -438,7 +440,7 @@ object Form1: TForm1
   object mp3format: TRadioButton
     Left = 160
     Height = 22
-    Top = 260
+    Top = 250
     Width = 96
     Caption = 'mp3 format'
     Checked = True
@@ -446,9 +448,9 @@ object Form1: TForm1
     TabStop = True
   end
   object opusformat: TRadioButton
-    Left = 306
+    Left = 308
     Height = 22
-    Top = 260
+    Top = 250
     Width = 97
     Caption = 'opus format'
     TabOrder = 17

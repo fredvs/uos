@@ -1862,6 +1862,7 @@ var
         4: ratio := 1; // opus
       end;
       
+
     if inputData.LibOpen <> 4 then //not working yet for opus files
     begin
     {$IF DEFINED(debug)}
@@ -1871,12 +1872,12 @@ var
     writeln('outframes  = ' + inttostr(inputData.outframes)+
     ' ratio  = ' + inttostr(ratio)+' channels  = ' + inttostr(inputData.Channels)); 
     {$endif}
-    
+   
     if inputData.outframes > 0 then
   begin 
    soundtouch_putSamples(plugHandle, pcfloat(bufferin),
    inputData.outframes div cint(inputData.Channels * ratio));
-    
+      
    {$IF DEFINED(debug)}
      writeln('inputData.outframes div round(inputData.Channels * ratio) = '
       + inttostr(inputData.outframes div inputData.Channels * ratio)); 
@@ -1924,7 +1925,8 @@ var
      writeln('SetLength(BufferplugFL) = '   + inttostr(length(BufferplugFL) + round(numoutbuf * inputData.Channels))); 
      {$endif}
       
-       SetLength(BufferplugFL, length(BufferplugFL) + round(numoutbuf * inputData.Channels));
+    //   SetLength(BufferplugFL, length(BufferplugFL) + round(numoutbuf * inputData.Channels));
+         SetLength(BufferplugFL, length(BufferplugFL) + round(numoutbuf * 2));
      
         x2 := Length(BufferplugFL) - (numoutbuf * inputData.Channels);
 
@@ -1941,7 +1943,7 @@ var
      writeln('_____End Sound touch_____'); 
     {$endif}
  
-   inputData.outframes := Length(BufferplugFL) div 2;
+   inputData.outframes := Length(BufferplugFL) div inputData.Channels;
  
   Result := BufferplugFL;
    end
@@ -3807,7 +3809,7 @@ begin
              StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
              StreamIn[x].Data.Seekable       := true;
               
-          if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 4096 * StreamIn[x].Data.Channels  else
+          if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 4096 * StreamIn[x].Data.Channels else
        StreamIn[x].Data.Wantframes := FramesCount ;
        
        SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);

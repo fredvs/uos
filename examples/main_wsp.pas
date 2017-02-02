@@ -286,7 +286,7 @@ procedure TForm1.Button3Click(Sender: TObject);
 var
   samformat, audioformat: shortint;
   begin
-      lerror.caption :=   '';
+     lerror.caption :=   '';
     PlayerIndex1 := 0;
     // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
     // If PlayerIndex exists already, it will be overwritten...
@@ -364,7 +364,8 @@ var
 
      if  plugsoundtouch = true  then
     begin
-    Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', -1, -1);
+    Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch',  uos_InputGetSampleRate(PlayerIndex1, In1Index),
+    uos_InputGetChannels(PlayerIndex1, In1Index)) ;
     ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
 
     ChangePlugSet(self); //// Change plugin settings
