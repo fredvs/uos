@@ -4,7 +4,7 @@
 
 // Compiler definition
 
-{.$DEFINE debug} // uncomment for debugging. For console applications. (Could not work with LCL).
+{.$DEFINE debug} // uncomment for debugging. For console applications. (Could not work with LCL nor GUI Windows).
 
 {.$DEFINE consoleapp} // if FPC version < 2.7.1 uncomment for console application
 {.$DEFINE library}   // uncomment for building uos library (native and java)
