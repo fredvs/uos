@@ -96,7 +96,7 @@ type
 
   TOpusFrames = array [0..47] of Pointer;
 //  POpusFrames = ^TOpusFrames;
-  TOpusFrameSizes = array [0..47] of Integer;
+  TOpusFrameSizes = array [0..47] of cint;
 
 type
   TRequestValueType = (orPointer, orInteger, orXY, orNoValue);
@@ -104,117 +104,117 @@ type
     Request: Word;
     case ReqType: TRequestValueType of
       orPointer: (PtrValue: Pointer);
-      orInteger: (IntValue: Integer);
-      orXY: (XValue: Integer; YValue: Pointer);
+      orInteger: (IntValue: cint);
+      orXY: (XValue: cint; YValue: pointer);
   end;
   
   var
-  opus_get_version_string: function(): PAnsiChar; cdecl;    opus_strerror: function(error: Integer): PAnsiChar; cdecl;  
-  opus_encode: function(st: TOpusEncoder; pcm : pcfloat; frame_size: Integer;
-   var data; max_data_bytes: Integer): Integer; cdecl; 
-  opus_encode_float: function(st: TOpusEncoder; pcm : pcfloat; frame_size: Integer; var data; max_data_bytes: Integer): Integer; cdecl;
-  opus_encoder_create: function(Fs: Integer; channels, application: Integer; out error: Integer): TOpusEncoder; cdecl;
-  opus_encoder_ctl: function(st: TOpusEncoder; const req: TOpusCTLRequestRecord): Integer; cdecl;
+  opus_get_version_string: function(): PAnsiChar; cdecl;  opus_strerror: function(error: cint): PAnsiChar; cdecl;  
+  opus_encode: function(st: TOpusEncoder; pcm : pcfloat; frame_size: cint;
+   var data; max_data_bytes: cint): cint; cdecl; 
+  opus_encode_float: function(st: TOpusEncoder; pcm : pcfloat; frame_size: cint; var data; max_data_bytes: cint): cint; cdecl;
+  opus_encoder_create: function(Fs: cint; channels, application: cint; out error: cint): TOpusEncoder; cdecl;
+  opus_encoder_ctl: function(st: TOpusEncoder; const req: TOpusCTLRequestRecord): cint; cdecl;
   opus_encoder_destroy: procedure(st: TOpusEncoder); cdecl;
-  opus_encoder_get_size: function(channels: Integer): Integer; cdecl;
-  opus_encoder_init: function(st: TOpusEncoder; Fs: Integer; channels, application: Integer): Integer; cdecl;
+  opus_encoder_get_size: function(channels: cint): cint; cdecl;
+  opus_encoder_init: function(st: TOpusEncoder; Fs: cint; channels, application: cint): cint; cdecl;
 
- opus_decode: function(st: TOpusDecoder; const data; len: Integer; pcm : pcfloat; frame_size, decode_fec: Integer): Integer; cdecl;
- opus_decode_float: function(st: TOpusDecoder; const data; len: Integer; pcm : pcfloat; frame_size, decode_fec: Integer): Integer; cdecl;
- opus_decoder_create: function(fs: Integer; channels: Integer; out error: Integer): TOpusDecoder; cdecl;
- opus_decoder_ctl: function(st: TOpusDecoder; const req: TOpusCTLRequestRecord): Integer; cdecl;
+ opus_decode: function(st: TOpusDecoder; const data; len: cint; pcm : pcfloat; frame_size, decode_fec: cint): cint; cdecl;
+ opus_decode_float: function(st: TOpusDecoder; const data; len: cint; pcm : pcfloat; frame_size, decode_fec: cint): cint; cdecl;
+ opus_decoder_create: function(fs: cint; channels: cint; out error: cint): TOpusDecoder; cdecl;
+ opus_decoder_ctl: function(st: TOpusDecoder; const req: TOpusCTLRequestRecord): cint; cdecl;
  opus_decoder_destroy: procedure(st: TOpusDecoder); cdecl;
- opus_decoder_get_nb_samples: function(st: TOpusDecoder; const packet; len: Integer): Integer; cdecl;
- opus_decoder_get_size: function(channels: Integer): Integer; cdecl;
- opus_decoder_init: function(st: TOpusDecoder; Fs: Integer; channels: Integer): Integer; cdecl;
- opus_packet_get_bandwidth: function(const packet): Integer; cdecl;
- opus_packet_get_nb_channels: function(const packet): Integer; cdecl;
- opus_packet_get_nb_frames: function(const packet; len: Integer): Integer; cdecl;
- opus_packet_get_nb_samples: function(const packet; len, fs: Integer): Integer; cdecl;
- opus_packet_get_samples_per_frame: function(const packet; fs: Integer): Integer; cdecl;
- opus_packet_parse: function(const packet; var out_toc: Pointer; var frames: TOpusFrames; var size: TOpusFrameSizes; var payload_offset: Integer): Integer; cdecl;
- opus_pcm_soft_clip: procedure(pcm : pcfloat; frame_size, channels: Integer; var softclip_mem: Double); cdecl;
+ opus_decoder_get_nb_samples: function(st: TOpusDecoder; const packet; len: cint): cint; cdecl;
+ opus_decoder_get_size: function(channels: cint): cint; cdecl;
+ opus_decoder_init: function(st: TOpusDecoder; Fs: cint; channels: cint): cint; cdecl;
+ opus_packet_get_bandwidth: function(const packet): cint; cdecl;
+ opus_packet_get_nb_channels: function(const packet): cint; cdecl;
+ opus_packet_get_nb_frames: function(const packet; len: cint): cint; cdecl;
+ opus_packet_get_nb_samples: function(const packet; len, fs: cint): cint; cdecl;
+ opus_packet_get_samples_per_frame: function(const packet; fs: cint): cint; cdecl;
+ opus_packet_parse: function(const packet; var out_toc: Pointer; var frames: TOpusFrames; var size: TOpusFrameSizes; var payload_offset: cint): cint; cdecl;
+ opus_pcm_soft_clip: procedure(pcm : pcfloat; frame_size, channels: cint; var softclip_mem: Double); cdecl;
  
- opus_multistream_packet_pad: function(var data; len, new_len, nb_streams: Integer): Integer; cdecl;
- opus_multistream_packet_unpad: function(var data; len, nb_streams: Integer): Integer; cdecl;
- opus_packet_pad: function(var data; len, new_len: Integer): Integer; cdecl;
- opus_packet_unpad: function(var data; len: Integer): Integer; cdecl;
- opus_repacketizer_cat: function(rp: TOpusRepacketizer; const data; len: Integer): Integer; cdecl;
+ opus_multistream_packet_pad: function(var data; len, new_len, nb_streams: cint): cint; cdecl;
+ opus_multistream_packet_unpad: function(var data; len, nb_streams: cint): cint; cdecl;
+ opus_packet_pad: function(var data; len, new_len: cint): cint; cdecl;
+ opus_packet_unpad: function(var data; len: cint): cint; cdecl;
+ opus_repacketizer_cat: function(rp: TOpusRepacketizer; const data; len: cint): cint; cdecl;
  opus_repacketizer_create: function: TOpusRepacketizer; cdecl;
  opus_repacketizer_destroy: procedure(rp: TOpusRepacketizer); cdecl;
- opus_repacketizer_get_nb_frames: function(rp: TOpusRepacketizer): Integer; cdecl;
- opus_repacketizer_get_size: function: Integer; cdecl;
+ opus_repacketizer_get_nb_frames: function(rp: TOpusRepacketizer): cint; cdecl;
+ opus_repacketizer_get_size: function: cint; cdecl;
  opus_repacketizer_init: function(rp: TOpusRepacketizer): TOpusRepacketizer; cdecl;
- opus_repacketizer_out: function(rp: TOpusRepacketizer; var data; maxlen: Integer): Integer; cdecl;
- opus_repacketizer_out_range: function(rp: TOpusRepacketizer; var data; maxlen: Integer): Integer; cdecl;
+ opus_repacketizer_out: function(rp: TOpusRepacketizer; var data; maxlen: cint): cint; cdecl;
+ opus_repacketizer_out_range: function(rp: TOpusRepacketizer; var data; maxlen: cint): cint; cdecl;
 
- opus_multistream_decode: function(st: TOpusMSDecoder; const data; len: Integer; pcm : pcfloat; frame_size, decode_fec: Integer): Integer; cdecl;
- opus_multistream_decode_float: function(st: TOpusMSDecoder; const data; len: Integer; pcm : pcfloat; frame_size, decode_fec: Integer): Integer; cdecl;
- opus_multistream_decoder_create: function(fs: Integer; channels, streams, coupled_streams: Integer; const mapping: array of Byte; out error: Integer): TOpusMSDecoder; cdecl;
- opus_multistream_decoder_ctl: function(st: TOpusMSDecoder; const req: TOpusCTLRequestRecord): Integer; cdecl;
+ opus_multistream_decode: function(st: TOpusMSDecoder; const data; len: cint; pcm : pcfloat; frame_size, decode_fec: cint): cint; cdecl;
+ opus_multistream_decode_float: function(st: TOpusMSDecoder; const data; len: cint; pcm : pcfloat; frame_size, decode_fec: cint): cint; cdecl;
+ opus_multistream_decoder_create: function(fs: cint; channels, streams, coupled_streams: cint; const mapping: array of Byte; out error: cint): TOpusMSDecoder; cdecl;
+ opus_multistream_decoder_ctl: function(st: TOpusMSDecoder; const req: TOpusCTLRequestRecord): cint; cdecl;
  opus_multistream_decoder_destroy: procedure(st: TOpusMSDecoder); cdecl;
- opus_multistream_decoder_get_size: function(streams, coupled_streams: Integer): Integer; cdecl;
- opus_multistream_decoder_init: function(st: TOpusMSDecoder; fs: Integer; channels, streams, coupled_streams: Integer; const mapping: array of Byte): Integer; cdecl;
+ opus_multistream_decoder_get_size: function(streams, coupled_streams: cint): cint; cdecl;
+ opus_multistream_decoder_init: function(st: TOpusMSDecoder; fs: cint; channels, streams, coupled_streams: cint; const mapping: array of Byte): cint; cdecl;
 
- opus_multistream_encode: function(st: TOpusMSEncoder; pcm : pcfloat; frame_size: Integer; var data; max_data_bytes: Integer): Integer; cdecl;
- opus_multistream_encode_float: function(st: TOpusMSEncoder; pcm : pcfloat; frame_size: Integer; var data; max_data_bytes: Integer): Integer; cdecl;
- opus_multistream_encoder_create: function(Fs: Integer; channels, streams, coupled_streams: Integer; const mapping: array of Byte; application: Integer; out error: Integer): TOpusMSEncoder; cdecl;
- opus_multistream_encoder_ctl: function(st: TOpusMSEncoder; const req: TOpusCTLRequestRecord): Integer; cdecl;
+ opus_multistream_encode: function(st: TOpusMSEncoder; pcm : pcfloat; frame_size: cint; var data; max_data_bytes: cint): cint; cdecl;
+ opus_multistream_encode_float: function(st: TOpusMSEncoder; pcm : pcfloat; frame_size: cint; var data; max_data_bytes: cint): cint; cdecl;
+ opus_multistream_encoder_create: function(Fs: cint; channels, streams, coupled_streams: cint; const mapping: array of Byte; application: cint; out error: cint): TOpusMSEncoder; cdecl;
+ opus_multistream_encoder_ctl: function(st: TOpusMSEncoder; const req: TOpusCTLRequestRecord): cint; cdecl;
  opus_multistream_encoder_destroy: procedure(st: TOpusMSEncoder); cdecl;
- opus_multistream_encoder_get_size: function(streams, coupled_streams: Integer): Integer; cdecl;
- opus_multistream_encoder_init: function(st: TOpusMSEncoder; fs: Integer; channels, streams, coupled_streams: Integer; const mapping: array of Byte; application: Integer): Integer; cdecl;
+ opus_multistream_encoder_get_size: function(streams, coupled_streams: cint): cint; cdecl;
+ opus_multistream_encoder_init: function(st: TOpusMSEncoder; fs: cint; channels, streams, coupled_streams: cint; const mapping: array of Byte; application: cint): cint; cdecl;
 
- opus_multistream_surround_encoder_create: function(Fs: Integer; channels, mapping_family, streams, coupled_streams: Integer; const mapping: array of Byte; application: Integer; out error: Integer): TOpusMSEncoder; cdecl;
- opus_multistream_surround_encoder_get_size: function(channels, mapping_family: Integer): Integer; cdecl;
- opus_multistream_surround_encoder_init: function(st: TOpusMSEncoder; fs: Integer; channels, mapping_family, streams, coupled_streams: Integer; const mapping: array of Byte; application: Integer): Integer; cdecl; 
+ opus_multistream_surround_encoder_create: function(Fs: cint; channels, mapping_family, streams, coupled_streams: cint; const mapping: array of Byte; application: cint; out error: cint): TOpusMSEncoder; cdecl;
+ opus_multistream_surround_encoder_get_size: function(channels, mapping_family: cint): cint; cdecl;
+ opus_multistream_surround_encoder_init: function(st: TOpusMSEncoder; fs: cint; channels, mapping_family, streams, coupled_streams: cint; const mapping: array of Byte; application: cint): cint; cdecl; 
 
 
 // These are convenience macros for use with the opus_encode_ctl interface.
-function OPUS_GET_APPLICATION(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_BITRATE(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_COMPLEXITY(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_DTX(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_EXPERT_FRAME_DURATION(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_FORCE_CHANNELS(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_LOOKAHEAD(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_LSB_DEPTH(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_MAX_BANDWIDTH(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_PACKET_LOSS_PERC(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_PREDICTION_DISABLED(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_SIGNAL(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_VBR(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_VBR_CONSTRAINT(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_APPLICATION(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_BITRATE(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_COMPLEXITY(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_DTX(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_EXPERT_FRAME_DURATION(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_FORCE_CHANNELS(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_LOOKAHEAD(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_LSB_DEPTH(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_MAX_BANDWIDTH(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_PACKET_LOSS_PERC(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_PREDICTION_DISABLED(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_SIGNAL(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_VBR(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_VBR_CONSTRAINT(var x: cint): TOpusCTLRequestRecord; inline;
 
-function OPUS_SET_APPLICATION(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_BANDWIDTH(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_BITRATE(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_COMPLEXITY(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_DTX(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_EXPERT_FRAME_DURATION(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_FORCE_CHANNELS(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_INBAND_FEC(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_LSB_DEPTH(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_MAX_BANDWIDTH(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_PACKET_LOSS_PERC(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_PREDICTION_DISABLED(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_SIGNAL(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_VBR(x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_VBR_CONSTRAINT(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_APPLICATION(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_BANDWIDTH(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_BITRATE(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_COMPLEXITY(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_DTX(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_EXPERT_FRAME_DURATION(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_FORCE_CHANNELS(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_INBAND_FEC(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_LSB_DEPTH(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_MAX_BANDWIDTH(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_PACKET_LOSS_PERC(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_PREDICTION_DISABLED(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_SIGNAL(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_VBR(x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_VBR_CONSTRAINT(x: cint): TOpusCTLRequestRecord; inline;
 
 // These macros are used with the opus_decoder_ctl and opus_encoder_ctl calls to generate a particular request.
-function OPUS_GET_BANDWIDTH(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_BANDWIDTH(var x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_GET_FINAL_RANGE(var x: Cardinal): TOpusCTLRequestRecord; inline;
-function OPUS_GET_SAMPLE_RATE(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_SAMPLE_RATE(var x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_RESET_STATE: TOpusCTLRequestRecord; inline;
 
 // These are convenience macros for use with the opus_decode_ctl interface.
-function OPUS_GET_GAIN(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_LAST_PACKET_DURATION(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_GET_PITCH(var x: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_SET_GAIN(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_GAIN(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_LAST_PACKET_DURATION(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_GET_PITCH(var x: cint): TOpusCTLRequestRecord; inline;
+function OPUS_SET_GAIN(x: cint): TOpusCTLRequestRecord; inline;
 
-function OPUS_MULTISTREAM_GET_DECODER_STATE(x: Integer; var y: Integer): TOpusCTLRequestRecord; inline;
-function OPUS_MULTISTREAM_GET_ENCODER_STATE(x: Integer; var y: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_MULTISTREAM_GET_DECODER_STATE(x: cint; var y: cint): TOpusCTLRequestRecord; inline;
+function OPUS_MULTISTREAM_GET_ENCODER_STATE(x: cint; var y: cint): TOpusCTLRequestRecord; inline;
 
  var op_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
 
@@ -323,210 +323,210 @@ end;
 end;
 
 
-function OPUS_GET_APPLICATION(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_APPLICATION(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_APPLICATION_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_BITRATE(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_BITRATE(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_BITRATE_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_COMPLEXITY(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_COMPLEXITY(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_COMPLEXITY_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_DTX(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_DTX(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_DTX_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_EXPERT_FRAME_DURATION(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_EXPERT_FRAME_DURATION(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_EXPERT_FRAME_DURATION_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_FORCE_CHANNELS(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_FORCE_CHANNELS(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_FORCE_CHANNELS_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_LOOKAHEAD(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_LOOKAHEAD(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_LOOKAHEAD_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_LSB_DEPTH(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_LSB_DEPTH(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_LSB_DEPTH_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_MAX_BANDWIDTH(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_MAX_BANDWIDTH(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_MAX_BANDWIDTH_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_PACKET_LOSS_PERC(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_PACKET_LOSS_PERC(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_PACKET_LOSS_PERC_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_PREDICTION_DISABLED(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_PREDICTION_DISABLED(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_PREDICTION_DISABLED_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_SIGNAL(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_SIGNAL(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_SIGNAL_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_VBR(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_VBR(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_VBR_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_VBR_CONSTRAINT(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_VBR_CONSTRAINT(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_VBR_CONSTRAINT_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_SET_APPLICATION(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_APPLICATION(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_APPLICATION_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_BANDWIDTH(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_BANDWIDTH(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_BANDWIDTH_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_BITRATE(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_BITRATE(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_BITRATE_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_COMPLEXITY(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_COMPLEXITY(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_COMPLEXITY_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_DTX(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_DTX(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_DTX_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_EXPERT_FRAME_DURATION(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_EXPERT_FRAME_DURATION(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_EXPERT_FRAME_DURATION_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_FORCE_CHANNELS(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_FORCE_CHANNELS(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_FORCE_CHANNELS_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_INBAND_FEC(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_INBAND_FEC(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_INBAND_FEC_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_LSB_DEPTH(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_LSB_DEPTH(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_LSB_DEPTH_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_MAX_BANDWIDTH(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_MAX_BANDWIDTH(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_MAX_BANDWIDTH_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_PACKET_LOSS_PERC(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_PACKET_LOSS_PERC(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_PACKET_LOSS_PERC_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_PREDICTION_DISABLED(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_PREDICTION_DISABLED(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_PREDICTION_DISABLED_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_SIGNAL(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_SIGNAL(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_SIGNAL_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_VBR(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_VBR(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_VBR_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_SET_VBR_CONSTRAINT(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_VBR_CONSTRAINT(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_VBR_CONSTRAINT_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_GET_BANDWIDTH(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_BANDWIDTH(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_BANDWIDTH_REQUEST;
   Result.ReqType := orPointer;
@@ -540,7 +540,7 @@ begin
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_SAMPLE_RATE(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_SAMPLE_RATE(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_BANDWIDTH_REQUEST;
   Result.ReqType := orPointer;
@@ -553,35 +553,35 @@ begin
   Result.ReqType := orNoValue;
 end;
 
-function OPUS_GET_GAIN(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_GAIN(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_GAIN_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_LAST_PACKET_DURATION(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_LAST_PACKET_DURATION(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_LAST_PACKET_DURATION_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_GET_PITCH(var x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_GET_PITCH(var x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_GET_PITCH_REQUEST;
   Result.ReqType := orPointer;
   Result.PtrValue := @x;
 end;
 
-function OPUS_SET_GAIN(x: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_SET_GAIN(x: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_SET_GAIN_REQUEST;
   Result.ReqType := orInteger;
   Result.IntValue := x;
 end;
 
-function OPUS_MULTISTREAM_GET_DECODER_STATE(x: Integer; var y: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_MULTISTREAM_GET_DECODER_STATE(x: cint; var y: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_MULTISTREAM_GET_DECODER_STATE_REQUEST;
   Result.ReqType := orXY;
@@ -589,7 +589,7 @@ begin
   Result.YValue := @y;
 end;
 
-function OPUS_MULTISTREAM_GET_ENCODER_STATE(x: Integer; var y: Integer): TOpusCTLRequestRecord; inline;
+function OPUS_MULTISTREAM_GET_ENCODER_STATE(x: cint; var y: cint): TOpusCTLRequestRecord; inline;
 begin
   Result.Request := OPUS_MULTISTREAM_GET_ENCODER_STATE_REQUEST;
   Result.ReqType := orXY;
