@@ -8,7 +8,7 @@ unit uos;
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}
 
-// for custom config =>  edit define.inc
+// for custom config of compiler =>  edit define.inc
 {$I define.inc}
 
 interface
@@ -806,12 +806,12 @@ procedure SetFilterOut(OutputIndex: LongInt; FilterIndex: LongInt;
 function DSPLevel(Data: Tuos_Data): Tuos_Data;
     //////////// to get level of buffer (volume)
     
-function AddDSPMono2Stereo(InputIndex: LongInt): LongInt;
-    /////  Convert mono channel to stereo channels.
-    //// Works only if the input is mono othewise stereo is keeped.
+function AddDSP2ChanTo1ChanIn(InputIndex: LongInt): LongInt;
+    /////  Convert mono 1 channel input to stereo 2 channels input.
+    //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
        //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSPMono2Stereo(InputIndex1);
+    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
 
 function AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
       VolRight: double): LongInt;
@@ -2548,11 +2548,12 @@ begin
 
 end;
 
-function uos_DSPMono2Stereo(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
-   /////  Convert mono channel to stereo channels.
-    //// Works only if the input is mono othewise stereo is keeped.
-    ////////// InputIndex : InputIndex of a existing Input       //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSPMono2Stereo(InputIndex1);
+function uos_AddDSP2ChanTo1ChanIn(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+/////  Convert mono 1 channel input to stereo 2 channels input.
+    //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
+    ////////// InputIndex : InputIndex of a existing Input
+       //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
 var
     x, x2: integer ;
     
@@ -2691,7 +2692,8 @@ StreamOut[OutputIndex].DSP[StreamOut[OutputIndex].data.DSPNoiseIndex].enabled :=
   {$endif}  
 
 function Tuos_Player.AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
-  VolRight: double): LongInt;  ///// DSP Volume changer
+  VolRight: double): LongInt;  
+    ///// DSP Volume changer
   ////////// InputIndex : InputIndex of a existing Input
   ////////// VolLeft : Left volume
   ////////// VolRight : Right volume
@@ -2703,13 +2705,14 @@ begin
   StreamIn[InputIndex].Data.VRight := VolRight;
 end;
 
-function Tuos_Player.AddDSPMono2Stereo(InputIndex: LongInt): LongInt;
- /////  Convert mono channel to stereo channels.
-    //// If the input is stereo, original buffer is keeped.
-    ////////// InputIndex : InputIndex of a existing Input       //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSPMono2Stereo(InputIndex1);
-begin
-  Result := AddDSPin(InputIndex, nil, @uos_DSPMono2Stereo, nil, nil);
+function Tuos_Player.AddDSP2ChanTo1ChanIn(InputIndex: LongInt): LongInt;
+/////  Convert mono 1 channel input to stereo 2 channels input.
+    //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
+    ////////// InputIndex : InputIndex of a existing Input
+       //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
+ begin
+  Result := AddDSPin(InputIndex, nil, @uos_AddDSP2ChanTo1ChanIn, nil, nil);
  end;
 
 function Tuos_Player.AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;

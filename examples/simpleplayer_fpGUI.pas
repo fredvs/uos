@@ -306,7 +306,7 @@ loadok : boolean = false;
         end
          else
          begin
-        TrackBar4.enabled := false;
+         TrackBar4.enabled := false;
        TrackBar5.enabled := false;
        CheckBox2.enabled := false;
        Button1.enabled := false;

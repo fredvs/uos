@@ -8,10 +8,9 @@
 unit uos_flat;
 
 {$mode objfpc}{$H+}
-
 {$PACKRECORDS C}
 
-// for custom config =>  edit define.inc ( also if using fpGUI and fpc < 2.7 )
+// for custom config of compiler =>  edit define.inc
 {$I define.inc}
 
 interface
@@ -332,12 +331,13 @@ procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt);
 procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt; Enable: boolean);
 {$endif} 
 
-function uos_AddDSPMono2Stereo(PlayerIndex: cint32; InputIndex: LongInt): LongInt;
- /////  Convert mono channel to stereo channels.
-    //// If the input is stereo, original buffer is keeped.
-    ////////// InputIndex : InputIndex of a existing Input       //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := uos_AddDSPMono2Stereo(PlayerIndex1, InputIndex1);
-
+function uos_AddDSP2ChanTo1ChanIn(PlayerIndex: cint32; InputIndex: LongInt): LongInt;
+     ////  Convert mono 1 channel input to stereo 2 channels input.
+    //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
+    ////////// InputIndex : InputIndex of a existing Input
+       //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
+    
 procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                  VolRight: double) ;
                ///// DSP Volume changer
@@ -1279,15 +1279,16 @@ begin
  result := uosPlayers[PlayerIndex].InputPositionTime(InputIndex) ;
 end;
 
-function uos_AddDSPMono2Stereo(PlayerIndex: cint32; InputIndex: LongInt): LongInt;
- /////  Convert mono channel to stereo channels.
-    //// Works only if the input is mono othewise stereo is keeped.
-    ////////// InputIndex : InputIndex of a existing Input       //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSPMono2Stereo(InputIndex1);
+function uos_AddDSP2ChanTo1ChanIn(PlayerIndex: cint32; InputIndex: LongInt): LongInt;
+/////  Convert mono 1 channel input to stereo 2 channels input.
+    //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
+    ////////// InputIndex : InputIndex of a existing Input
+       //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
- result := uosPlayers[PlayerIndex].AddDSPMono2Stereo(InputIndex) ;
+ result := uosPlayers[PlayerIndex].AddDSP2ChanTo1ChanIn(InputIndex) ;
 end;
 
 Procedure uos_Play(PlayerIndex: cint32) ;        ///// Start playing
