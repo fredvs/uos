@@ -839,7 +839,7 @@ editpos=17
  0,-1073741823
  0,-1073741823
  37,248
- 0,1081
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -873,7 +873,7 @@ sourcefiles=17
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ /home/fred/uos/examples/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_aac.pas
  ${PROJECTDIR}/uos_flat.pas
