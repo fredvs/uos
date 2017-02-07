@@ -8,6 +8,7 @@
 unit uos_opus;
 
 {$mode objfpc}{$H+}
+{$PACKRECORDS C}
 
 interface
 
@@ -95,7 +96,6 @@ type
   TOpusMSEncoder = pointer;
 
   TOpusFrames = array [0..47] of Pointer;
-//  POpusFrames = ^TOpusFrames;
   TOpusFrameSizes = array [0..47] of cint;
 
 type
@@ -118,7 +118,8 @@ type
   opus_encoder_ctli: function(st: TOpusEncoder; const reqrequest: word ; reqval : cint ): cint; cdecl;
   opus_encoder_ctlp: function(st: TOpusEncoder; const reqrequest: word ; reqval : pointer ): cint; cdecl;
   opus_encoder_ctlxy: function(st: TOpusEncoder; const reqrequest: word ; reqx : cint ; reqy : pointer ): cint; cdecl;
- 
+  opus_encoder_ctln: function(st: TOpusEncoder; const reqrequest: word): cint; cdecl;
+  
  opus_encoder_destroy: procedure(st: TOpusEncoder); cdecl;
   opus_encoder_get_size: function(channels: cint): cint; cdecl;
   opus_encoder_init: function(st: TOpusEncoder; Fs: cint; channels, application: cint): cint; cdecl;
@@ -130,7 +131,8 @@ type
  opus_decoder_ctli: function(st: TOpusDecoder; const reqrequest: word ; reqval : cint ): cint; cdecl;
  opus_decoder_ctlp: function(st: TOpusDecoder; const reqrequest: word ; reqval : pointer ): cint; cdecl;
  opus_decoder_ctlxy: function(st: TOpusDecoder; const reqrequest: word ; reqx : cint ; reqy : pointer ): cint; cdecl;
- 
+ opus_decoder_ctln: function(st: TOpusDecoder; const reqrequest: word): cint; cdecl;
+
  opus_decoder_destroy: procedure(st: TOpusDecoder); cdecl;
  opus_decoder_get_nb_samples: function(st: TOpusDecoder; const packet; len: cint): cint; cdecl;
  opus_decoder_get_size: function(channels: cint): cint; cdecl;
@@ -163,7 +165,8 @@ type
  opus_multistream_decoder_ctli: function(st: TOpusMSDecoder; const reqrequest: word ; reqval : cint ): cint; cdecl;
  opus_multistream_decoder_ctlp: function(st: TOpusMSDecoder; const reqrequest: word ; reqval : pointer ): cint; cdecl;
  opus_multistream_decoder_ctlxy: function(st: TOpusMSDecoder; const reqrequest: word ; reqx : cint ; reqy : pointer ): cint; cdecl;
- 
+ opus_multistream_decoder_ctln: function(st: TOpusMSDecoder; const reqrequest: word): cint; cdecl;
+
  opus_multistream_decoder_destroy: procedure(st: TOpusMSDecoder); cdecl;
  opus_multistream_decoder_get_size: function(streams, coupled_streams: cint): cint; cdecl;
  opus_multistream_decoder_init: function(st: TOpusMSDecoder; fs: cint; channels, streams, coupled_streams: cint; const mapping: array of Byte): cint; cdecl;
@@ -175,7 +178,8 @@ type
  opus_multistream_encoder_ctli: function(st: TOpusMSEncoder; const reqrequest: word ; reqval : cint ): cint; cdecl;
  opus_multistream_encoder_ctlp: function(st: TOpusMSEncoder; const reqrequest: word ; reqval : pointer ): cint; cdecl;
  opus_multistream_encoder_ctlxy: function(st: TOpusMSEncoder; const reqrequest: word ; reqx : cint ; reqy : pointer ): cint; cdecl;
- 
+ opus_multistream_encoder_ctln: function(st: TOpusMSEncoder; const reqrequest: word ): cint; cdecl;
+
  opus_multistream_encoder_destroy: procedure(st: TOpusMSEncoder); cdecl;
  opus_multistream_encoder_get_size: function(streams, coupled_streams: cint): cint; cdecl;
  opus_multistream_encoder_init: function(st: TOpusMSEncoder; fs: cint; channels, streams, coupled_streams: cint; const mapping: array of Byte; application: cint): cint; cdecl;
@@ -189,9 +193,8 @@ function opus_decoder_ctl(st: TOpusdecoder; const req: TOpusCTLRequestRecord): I
 
 function opus_multistream_encoder_ctl(st: TOpusMSEncoder; const req: TOpusCTLRequestRecord): cint; inline;
 function opus_multistream_decoder_ctl(st: TOpusMSdecoder; const req: TOpusCTLRequestRecord): cint; inline;
- 
 
-// These are convenience macros for use with the opus_encode_ctl interface.
+// Macros for opus_encode_ctl.
 function OPUS_GET_APPLICATION(var x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_GET_BITRATE(var x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_GET_COMPLEXITY(var x: cint): TOpusCTLRequestRecord; inline;
@@ -223,13 +226,13 @@ function OPUS_SET_SIGNAL(x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_SET_VBR(x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_SET_VBR_CONSTRAINT(x: cint): TOpusCTLRequestRecord; inline;
 
-// These macros are used with the opus_decoder_ctl and opus_encoder_ctl calls to generate a particular request.
+// For opus_decoder_ctl and opus_encoder_ctl.
 function OPUS_GET_BANDWIDTH(var x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_GET_FINAL_RANGE(var x: Cardinal): TOpusCTLRequestRecord; inline;
 function OPUS_GET_SAMPLE_RATE(var x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_RESET_STATE: TOpusCTLRequestRecord; inline;
 
-// These are convenience macros for use with the opus_decode_ctl interface.
+// For the opus_decode_ctl.
 function OPUS_GET_GAIN(var x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_GET_LAST_PACKET_DURATION(var x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_GET_PITCH(var x: cint): TOpusCTLRequestRecord; inline;
@@ -238,18 +241,19 @@ function OPUS_SET_GAIN(x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_MULTISTREAM_GET_DECODER_STATE(x: cint; var y: cint): TOpusCTLRequestRecord; inline;
 function OPUS_MULTISTREAM_GET_ENCODER_STATE(x: cint; var y: cint): TOpusCTLRequestRecord; inline;
 
- var op_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
-
-    var ReferenceCounter : cardinal = 0;  // Reference counter
+ var op_Handle:TLibHandle=dynlibs.NilHandle; 
+ 
+ var ReferenceCounter : cardinal = 0;  
          
-    function op_IsLoaded : boolean; inline; 
+function op_IsLoaded : boolean; inline; 
 
-    Function op_Load(const libfilename:string) :boolean; // load the lib
-    Procedure op_Unload;
+Function op_Load(const libfilename:string) :boolean; 
+    
+Procedure op_Unload;
   
 implementation
 
-  function op_IsLoaded: boolean;
+function op_IsLoaded: boolean;
 begin
  Result := (op_Handle <> dynlibs.NilHandle);
 end;
@@ -291,6 +295,7 @@ Pointer(opus_encoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_
 Pointer(opus_encoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
 Pointer(opus_encoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
 Pointer(opus_encoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
+Pointer(opus_encoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
 
 Pointer(opus_encoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_destroy'));
 Pointer(opus_encoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_get_size'));
@@ -302,6 +307,7 @@ Pointer(opus_decoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_
 Pointer(opus_decoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
 Pointer(opus_decoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
 Pointer(opus_decoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
+Pointer(opus_decoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
 
 Pointer(opus_decoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_destroy'));
 Pointer(opus_decoder_get_nb_samples):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_get_nb_samples'));
@@ -333,6 +339,7 @@ Pointer(opus_multistream_decoder_create):=DynLibs.GetProcedureAddress(OP_Handle,
 Pointer(opus_multistream_decoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
 Pointer(opus_multistream_decoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
 Pointer(opus_multistream_decoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
+Pointer(opus_multistream_decoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
 
 Pointer(opus_multistream_decoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_destroy'));
 Pointer(opus_multistream_decoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_get_size'));
@@ -344,6 +351,7 @@ Pointer(opus_multistream_encoder_create):=DynLibs.GetProcedureAddress(OP_Handle,
 Pointer(opus_multistream_encoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
 Pointer(opus_multistream_encoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
 Pointer(opus_multistream_encoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
+Pointer(opus_multistream_encoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
 
 Pointer(opus_multistream_encoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_destroy'));
 Pointer(opus_multistream_encoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_get_size'));
@@ -640,7 +648,7 @@ begin
     orPointer: Result := opus_encoder_ctlp(st, req.Request, req.PtrValue);
     orInteger: Result := opus_encoder_ctli(st, req.Request, req.IntValue);
     orXY: Result := opus_encoder_ctlxy(st, req.Request, req.XValue, req.YValue);
-    orNoValue: Result := opus_encoder_ctlp(st, req.Request, nil);
+    orNoValue: Result := opus_encoder_ctln(st, req.Request);
   else
     Result := OPUS_BAD_ARG;
   end;
@@ -652,7 +660,7 @@ begin
     orPointer: Result := opus_decoder_ctlp(st, req.Request, req.PtrValue);
     orInteger: Result := opus_decoder_ctli(st, req.Request, req.IntValue);
     orXY: Result := opus_decoder_ctlxy(st, req.Request, req.XValue, req.YValue);
-    orNoValue: Result := opus_decoder_ctlp(st, req.Request, nil);
+    orNoValue: Result := opus_decoder_ctln(st, req.Request);
   else
     Result := OPUS_BAD_ARG;
   end;
@@ -664,7 +672,7 @@ begin
     orPointer: Result := opus_multistream_encoder_ctlp(st, req.Request, req.PtrValue);
     orInteger: Result := opus_multistream_encoder_ctli(st, req.Request, req.IntValue);
     orXY: Result := opus_multistream_encoder_ctlxy(st, req.Request, req.XValue, req.YValue);
-    orNoValue: Result := opus_multistream_encoder_ctlp(st, req.Request, nil);
+    orNoValue: Result := opus_multistream_encoder_ctln(st, req.Request);
   else
     Result := OPUS_BAD_ARG;
   end;
@@ -673,14 +681,13 @@ end;
 function opus_multistream_decoder_ctl(st: TOpusMSDecoder; const req: TOpusCTLRequestRecord): Integer; inline;
 begin
    case req.ReqType of
-    orPointer: Result := opus_multistream_encoder_ctlp(st, req.Request, req.PtrValue);
-    orInteger: Result := opus_multistream_encoder_ctli(st, req.Request, req.IntValue);
-    orXY: Result := opus_multistream_encoder_ctlxy(st, req.Request, req.XValue, req.YValue);
-    orNoValue: Result := opus_multistream_encoder_ctlp(st, req.Request, nil);
+    orPointer: Result := opus_multistream_decoder_ctlp(st, req.Request, req.PtrValue);
+    orInteger: Result := opus_multistream_decoder_ctli(st, req.Request, req.IntValue);
+    orXY: Result := opus_multistream_decoder_ctlxy(st, req.Request, req.XValue, req.YValue);
+    orNoValue: Result := opus_multistream_decoder_ctln(st, req.Request);
   else
     Result := OPUS_BAD_ARG;
   end;
 end;
-
 
 end.
