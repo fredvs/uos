@@ -959,10 +959,7 @@ findhistory=20
  inputdata.out
  inputdata out
 findoptions=1
-editpos=16
- 0,-1073741823
- 0,-1073741823
- 0,23
+editpos=17
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -971,11 +968,15 @@ editpos=16
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,60
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,25
- 0,186
- 0,0
- 0,258
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,225
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -992,7 +993,8 @@ bookmarks12=0
 bookmarks13=0
 bookmarks14=0
 bookmarks15=0
-sourcefiles=16
+bookmarks16=0
+sourcefiles=17
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1009,7 +1011,8 @@ sourcefiles=16
  ${PROJECTDIR}/uos_shout.pas
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/uos_mpg123.pas
-relpaths=16
+ ${PROJECTDIR}/uos_shout.pas
+relpaths=17
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1026,7 +1029,9 @@ relpaths=16
  uos_shout.pas
  uos_soundtouch.pas
  uos_mpg123.pas
-ismoduletexts=16
+ uos_shout.pas
+ismoduletexts=17
+ 0
  0
  0
  0
@@ -1048,12 +1053,13 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=16
+order=17
  0
  1
  2
  11
  12
+ 16
  13
  14
  15
@@ -1067,7 +1073,7 @@ order=16
  6
 tabsize=60
 firsttab=2
-index=4
+index=5
 [layout]
 windowlayout=530
  [mainfo.basedock]
