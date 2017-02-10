@@ -10,7 +10,6 @@ uses
   SysUtils,
   uos_flat,
   ctypes, 
-  //Math,
   Classes,
   fpg_button,
   fpg_widget,
@@ -22,7 +21,7 @@ uses
   fpg_Panel,
   fpg_base,
   fpg_main,
-  fpg_form { you can add units after this };
+  fpg_form;
 
 type
   TSimpleplayer = class(TfpgForm)

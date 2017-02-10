@@ -58,6 +58,10 @@ uos_aac,
 uos_opusfile,
 {$endif}
 
+{$IF DEFINED(shout)}
+uos_shout,
+{$endif}
+
 {$IF DEFINED(cdrom)}
 uos_cdrom,
 {$endif}
