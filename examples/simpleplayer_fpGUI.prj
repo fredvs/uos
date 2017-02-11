@@ -972,7 +972,7 @@ editpos=17
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,25
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1005,13 +1005,13 @@ sourcefiles=17
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/main_sr.pas
  ${PROJECTDIR}/uos_opusfile.pas
- /home/fred/opus_demo/opus_trivial_example.pas
+ ${PROJECTDIR}/opus_trivial_example.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_shout.pas
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_shout.pas
+ /home/fred/uos/examples/uos_shout.pas
 relpaths=17
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
