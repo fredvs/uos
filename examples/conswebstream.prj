@@ -203,7 +203,7 @@ options=114
  index=0
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -834,12 +834,12 @@ editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,3
- 0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
- 0,94
+ 0,0
+ 0,-1073741823
+ 0,55
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -894,7 +894,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=5
-index=6
+index=10
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -910,7 +910,7 @@ windowlayout=530
  x=0
  y=0
  cx=929
- cy=585
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -923,13 +923,13 @@ windowlayout=530
  ncx=0
  ncy=0
  x=231
- y=53
+ y=52
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,929,604
  focusedchild=0
  wsize=0
  active=1
@@ -973,7 +973,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1045,7 +1045,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=428
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1254,9 +1254,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=485
+ y=501
  cx=929
- cy=100
+ cy=103
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1356,7 +1356,7 @@ windowlayout=530
  x=0
  y=0
  cx=929
- cy=51
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1366,13 +1366,13 @@ windowlayout=530
  visible=1
  mdistate=0
  nx=0
- ny=47
- ncx=928
+ ny=0
+ ncx=929
  ncy=2
  x=0
- y=47
+ y=0
  cx=929
- cy=2
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1388,7 +1388,7 @@ windowlayout=530
  x=162
  y=0
  cx=767
- cy=428
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1422,9 +1422,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=54
+ y=56
  cx=929
- cy=428
+ cy=442
  rcx=0
  rcy=0
 [targetconsole]

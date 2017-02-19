@@ -78,20 +78,13 @@ var
    theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
  // theurl := 'http://www.alouette.fr/alouette.m3u' ;
  // theurl := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
- // theurl := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
- // theurl := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
- // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
+  theurl := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
+  theurl := 'https://p.scdn.co/mp3-preview/ad672a346d38cdcdb7ea6c246282d43522473968?cid=null';
+//  theurl := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
 
     // for opus file, set AudioFormat = 1 in AddFromURL()
- // theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+  // theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
- {
- with TfpHttpClient.Create(nil) do
-   try   WriteLn(Get(theurl));
-    finally  Free;
-   end;
-   }
-   
 writeln('Try to connect to ' + theurl);
 // res := uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
   res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,0) ;

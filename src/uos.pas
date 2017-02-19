@@ -982,9 +982,9 @@ var
   Stream: TStream absolute ahandle;
 begin
   // pipe streams are not seekable but memory and filestreams are
-  Result := aoffset;
+  Result := 0;
   try
-    if aoffset <> 0 then
+    if aoffset > 0 then
       Result := Stream.Seek(soFromCurrent, aoffset);
 
   except
@@ -992,7 +992,7 @@ begin
   end;
 end;
 
-procedure mpg_close_stream(ahandle: Pointer);
+procedure mpg_close_stream(ahandle: Pointer); // not used, uos does it...
 begin
   TObject(ahandle).Free;
 end;
@@ -3268,14 +3268,20 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
    WriteLn('PipeBufferSize = ' + inttostr(PipeBufferSize));
    WriteLn('InPipe.Read = ' + inttostr(len2));
    WriteLn('----------------------------------');
-   writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferURL));
+ // writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferURL));
    {$endif}
 
    StreamIn[x].Data.HandleSt := pchar('opusurl');
-    
+ {$IF DEFINED(debug)}
+     WriteLn('StreamIn[x].Data.HandleSt assisgned');
+    {$endif}
+
+ 
   StreamIn[x].Data.HandleOP :=
- op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferURL[0], PipeBufferSize, err);  
- // op_test_memory(StreamIn[x].data.BufferURL[0],PipeBufferSize, Err);
+
+ op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferURL[0], PipeBufferSize, err); 
+ 
+//  op_test_memory(StreamIn[x].data.BufferURL[0],PipeBufferSize, Err);
  
  {$IF DEFINED(debug)}
    WriteLn('error: op_test_*: ' + inttostr(err));
@@ -3419,7 +3425,9 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
                MPG123_ENC_SIGNED_16);
          end;
 
-      mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt, @mpg_read_stream, @mpg_seek_stream, @mpg_close_stream);
+// mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt, @mpg_read_stream, @mpg_seek_stream, @mpg_close_stream);
+  mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
+   @mpg_read_stream, @mpg_seek_stream, nil);
 
      {$IF DEFINED(debug)}
     if err = 0 then writeln('===> mpg123_replace_reader_handle => ok.') ;

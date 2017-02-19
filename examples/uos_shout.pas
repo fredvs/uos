@@ -13,7 +13,7 @@ unit uos_shout;
 interface
 
 uses
-  dynlibs, CTypes;
+  dynlibs, CTypes, sysutils;
 
     const
     SHOUT_THREADSAFE = 1;
@@ -131,7 +131,8 @@ var
   shout_get_nonblocking: function(shhandle :Pshout_t):cuint;cdecl;
   shout_open: function(shhandle :Pshout_t):cint;cdecl;
   shout_close: function(shhandle :Pshout_t):cint;cdecl;
-  shout_send: function(shhandle :Pshout_t; data:pcuchar; len:size_t):cint;cdecl;
+  //shout_send: function(shhandle :Pshout_t; data:pcuchar; len:size_t):cint;cdecl;
+  shout_send: function(shhandle :Pshout_t; data:pbyte; len:size_t):cint;cdecl;
   shout_send_raw: function(shhandle :Pshout_t; data:pcuchar; len:size_t):size_t;cdecl;
   shout_queuelen: function(shhandle :Pshout_t):size_t;cdecl;
   shout_sync: procedure(shhandle :Pshout_t);cdecl;
