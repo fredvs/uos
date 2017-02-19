@@ -268,9 +268,9 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
  //  edit1.text := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
  //  edit1.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
  //  edit1.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
-   edit1.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+ /// edit1.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
 
- //  edit1.text := 'https://p.scdn.co/mp3-preview/ad672a346d38cdcdb7ea6c246282d43522473968?cid=null';
+  edit1.text := 'https://p.scdn.co/mp3-preview/ad672a346d38cdcdb7ea6c246282d43522473968?cid=null';
     
        fpgapplication.ProcessMessages;
       sleep(250);

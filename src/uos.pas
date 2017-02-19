@@ -5124,14 +5124,25 @@ writeln('Status = 0');
           end;
         {$endif}
            
-        {$IF DEFINED(webstream)}
+         {$IF DEFINED(webstream)}
         2: begin
             StreamIn[x].httpget.Terminate;
             sleep(100);
             StreamIn[x].httpget.Free;
-            mpg123_close(StreamIn[x].Data.HandleSt);
-            mpg123_delete(StreamIn[x].Data.HandleSt);
-            op_free(StreamIn[x].Data.HandleOP);
+
+             case StreamIn[x].Data.LibOpen of
+             {$IF DEFINED(mpg123)}
+           1: begin
+                mpg123_close(StreamIn[x].Data.HandleSt);
+                mpg123_delete(StreamIn[x].Data.HandleSt);
+              end;
+             {$ENDIF}
+              {$IF DEFINED(opus)}
+           4: begin
+                op_free(StreamIn[x].Data.HandleOP);
+               end;
+             {$ENDIF}
+            end;
            end;
         {$ENDIF}
        

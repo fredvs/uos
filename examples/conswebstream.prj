@@ -834,12 +834,12 @@ editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
  0,-1073741823
  0,-1073741823
- 0,0
  0,-1073741823
- 0,55
+ 0,-1073741823
+ 0,-1073741823
+ 11,41
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -862,7 +862,7 @@ sourcefiles=11
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_httpgetthread.pas
- ${PROJECTDIR}/conswebstream.pas
+ /home/fred/uos/examples/conswebstream.pas
 relpaths=11
  uos_opusurl.pas
  simplewebplayer_fpGUI.pas

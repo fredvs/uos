@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simplewebplayer_fpGUI.prj
-findinfiledialog=43
+findinfiledialog=44
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,9 @@ findinfiledialog=43
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=soFromCurrent
- history=5
+ value=ou_unload
+ history=6
+  ou_unload
   soFromCurrent
   mpg_seek_stream
   url
@@ -841,13 +842,15 @@ findhistory=20
  30005
  NewView
 findoptions=1
-editpos=16
+editpos=18
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,10
  0,-1073741823
  0,0
  0,-1073741823
@@ -856,8 +859,8 @@ editpos=16
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 22,207
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -874,7 +877,9 @@ bookmarks12=0
 bookmarks13=0
 bookmarks14=0
 bookmarks15=0
-sourcefiles=16
+bookmarks16=0
+bookmarks17=0
+sourcefiles=18
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
@@ -891,7 +896,9 @@ sourcefiles=16
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_opusfile.pas
  ${PROJECTDIR}/define.inc
-relpaths=16
+ ${PROJECTDIR}/simplewebplayer_fpGUI.pas
+ ${PROJECTDIR}/define.inc
+relpaths=18
  simplewebplayer_fpGUI.pas
  uos.pas
  uos_portaudio.pas
@@ -908,7 +915,11 @@ relpaths=16
  uos_mpg123.pas
  uos_opusfile.pas
  define.inc
-ismoduletexts=16
+ simplewebplayer_fpGUI.pas
+ define.inc
+ismoduletexts=18
+ 0
+ 0
  0
  0
  0
@@ -930,9 +941,28 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=18
+ 0
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+ 16
+ 17
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
 tabsize=60
-firsttab=4
-index=7
+firsttab=7
+index=10
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -947,8 +977,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=779
+ cx=929
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -960,17 +990,17 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=230
- y=50
+ x=227
+ y=228
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,779
+  basedock,0,0,929,604
  focusedchild=0
- wsize=6
- active=0
+ wsize=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1083,7 +1113,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=570
+ cy=441
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1292,9 +1322,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=645
- cx=1356
- cy=134
+ y=500
+ cx=929
+ cy=104
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1393,8 +1423,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=69
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1409,8 +1439,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
- cy=69
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1425,8 +1455,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=570
+ cx=767
+ cy=441
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1460,9 +1490,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=72
- cx=1356
- cy=570
+ y=56
+ cx=929
+ cy=441
  rcx=0
  rcy=0
 [targetconsole]
