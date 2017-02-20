@@ -10,7 +10,7 @@ With uos you can:
 
 . Deal with 16, 32 integer or float 32 bit resolution.
 
-. Do internet audio streaming.
+. Do internet audio streaming of mp3 and opus files.
 
 . Record all types of input into wav file with 16 or 32 bit resolution.
 

@@ -173,6 +173,15 @@ procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
         ////// load plugin...
+
+{$IF DEFINED(shout)}
+function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : LongInt; 
+     // Shout => needed for dealing with IceCast server
+     // Opus => needed for dealing with encoding opus stream
+  
+procedure uos_unloadServerLib();
+        ////// Unload server libraries... Do not forget to call it before close application...
+{$endif}        
         
 procedure uos_UnloadPlugin(PluginName: PChar);
 
@@ -215,6 +224,21 @@ function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar; OutputIndex: Lon
             //////////// FramesCount : default : -1 (65536)
             //  result : Input Index in array  -1 = error
             //////////// example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);
+
+ {$IF DEFINED(shout)}
+function uos_AddIntoIceServer(PlayerIndex: LongInt; SampleRate : cint; Channels: cint; SampleFormat: cint;
+ EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): LongInt;
+     ////// Add a Output into a IceCast server for audio-web-streaming     //////////// SampleRate : delault : -1 (48100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// EncodeType : default : -1 (0:Music) (0: Music, 1:Voice)
+    //////////// SampleFormat : -1 default : float32 : (0:float32, 1:Int16)
+    //////////// Port : default : -1 (= 8000)
+    //////////// Host : default : 'def' (= '127.0.0.1')
+    //////////// User : default : 'def' (= 'source')
+    //////////// Password : default : 'def' (= 'hackme')
+     //////////// MountFile : default : 'def' (= '/example.opus')
+    //  result :  Output Index in array    -1 = error
+   {$endif}
 
 {$IF DEFINED(webstream)}
 function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar): LongInt;
@@ -977,6 +1001,27 @@ function uos_AddIntoFile(PlayerIndex: cint32;  Filename: PChar): cint32;
  Result :=  uosPlayers[PlayerIndex].AddIntoFile(Filename, -1, -1, -1, -1);
 end;
 
+ {$IF DEFINED(shout)}
+function uos_AddIntoIceServer(PlayerIndex: LongInt; SampleRate : cint; Channels: cint; SampleFormat: cint;
+ EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): LongInt;
+     ////// Add a Output into a IceCast server for audio-web-streaming     //////////// SampleRate : delault : -1 (48100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// EncodeType : default : -1 (0:Music) (0: Music, 1:Voice)
+    //////////// SampleFormat : -1 default : float32 : (0:float32, 1:Int16)
+    //////////// Port : default : -1 (= 8000)
+    //////////// Host : default : 'def' (= '127.0.0.1')
+    //////////// User : default : 'def' (= 'source')
+    //////////// Password : default : 'def' (= 'hackme')
+     //////////// MountFile : default : 'def' (= '/example.opus')
+    //  result :  Output Index in array    -1 = error
+ begin
+      if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+     if  uosPlayersStat[PlayerIndex] = 1 then
+ Result :=  uosPlayers[PlayerIndex].AddIntoIceServer(SampleRate, Channels, SampleFormat, EncodeType, Port, 
+ Host, User, Password, MountFile  );
+end;
+   {$endif}
+
 {$IF DEFINED(portaudio)}
  function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
             SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ): cint32;
@@ -1385,6 +1430,23 @@ begin
    ifflat := true;
 result := uos.uos_loadPlugin(PluginName, PluginFilename)  ;
 end;
+
+{$IF DEFINED(shout)}
+function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : LongInt; 
+     // Shout => needed for dealing with IceCast server
+     // Opus => needed for dealing with encoding opus stream
+begin
+  ifflat := true;
+result := uos.uos_LoadServerLib(ShoutFileName, OpusFileName)  ;
+ end;
+  
+procedure uos_unloadServerLib();
+        ////// Unload server libraries... Do not forget to call it before close application...
+ begin
+ ifflat := true;
+ uos.uos_unloadServerLib()  ;
+ end;   
+{$endif}
 
 function uos_GetVersion() : cint32 ;
 begin

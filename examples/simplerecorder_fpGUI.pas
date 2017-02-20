@@ -282,7 +282,6 @@ var
 
   end;
 
-
   procedure TSimplerecorder.AfterCreate;
   begin
     {%region 'Auto-generated GUI code' -fold}

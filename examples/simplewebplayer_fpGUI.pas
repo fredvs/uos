@@ -188,7 +188,7 @@ var
   procedure TSimpleplayer.btnCloseClick(Sender: TObject);
   begin
    fpgapplication.ProcessMessages;
-   writeln('before close');
+   writeln('avant close');
     uos_stop(PlayerIndex1);
     if (btnstart.Enabled = False) then
     begin
@@ -203,7 +203,7 @@ var
     end;
     if btnLoad.Enabled = False then
     begin
-     writeln('before unload');
+     writeln('avant unload');
     ou_unload;
     writeln('ou_unload');
       uos_UnloadLib();
@@ -256,22 +256,27 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
        label7.enabled := false;
            end;    
        
-      WindowPosition := wpScreenCenter;
+         if ou_load(OU_FileName) = true then
+       writeln('===> opusurl is loaded.') else
+       writeln('===> opusurl is NOT loaded.') ;
+     
+       
+       WindowPosition := wpScreenCenter;
       WindowTitle := 'Simple Web Player    uos version ' + inttostr(uos_getversion());
 
       // Some audio web streaming
-     edit1.text := 'http://streaming304.radionomy.com:80/GENERATIONSOULDISCOFUNK-MP3';
-   edit1.text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
- //  edit1.text := 'http://arvorig-fm.online.stalig.net/live.mp3'
+      
+ //    edit1.text := 'http://streaming304.radionomy.com:80/GENERATIONSOULDISCOFUNK-MP3';
+ //  edit1.text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
+   edit1.text := 'https://p.scdn.co/mp3-preview/ad672a346d38cdcdb7ea6c246282d43522473968?cid=null';
  //  edit1.text := 'http://str1.sad.ukrd.com:80/2br';
  //  edit1.text := 'http://streaming304.radionomy.com:80/GENERATIONSOULDISCOFUNK-MP3';
  //  edit1.text := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
  //  edit1.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
  //  edit1.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
- /// edit1.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+ //  edit1.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+ //   edit1.text := 'http://localhost:8000/example.opus';
 
-  edit1.text := 'https://p.scdn.co/mp3-preview/ad672a346d38cdcdb7ea6c246282d43522473968?cid=null';
-    
        fpgapplication.ProcessMessages;
       sleep(250);
       Show;

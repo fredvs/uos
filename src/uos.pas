@@ -59,7 +59,7 @@ uos_opusfile,
 {$endif}
 
 {$IF DEFINED(shout)}
-uos_shout,
+uos_shout, uos_opus,
 {$endif}
 
 {$IF DEFINED(cdrom)}
@@ -69,7 +69,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 17170120 ;
+  uos_version : LongInt = 17170220 ;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -148,6 +148,17 @@ sol4 = 1568.0;
 sol4_d = 1661.2;
 la5 = 1760.0;
 {$endif}
+
+{$IF DEFINED(shout)}
+  cFRAME_SIZE = 960;
+  cSAMPLE_RATE = 48000;
+  cAPPLICATION = OPUS_APPLICATION_AUDIO;
+  cBITRATE = 64000;
+ cMAX_FRAME_SIZE = 6 * 960;
+  cMAX_PACKET_SIZE = 3 * 1276;
+ //  cMAX_FRAME_SIZE = 1024;
+ // cMAX_PACKET_SIZE = 4 * 1024;
+ {$endif}
   
 type
   TDArFloat = array of cfloat;
@@ -446,6 +457,13 @@ type
    {$IF DEFINED(portaudio)}
     PAParam: PaStreamParameters;
    {$endif}
+
+   {$IF DEFINED(shout)}
+   encoder: TOpusEncoder;
+   cbits: array [0..cMAX_PACKET_SIZE - 1] of Byte;
+   // cbits: tbytes;
+   {$endif}
+
     FileBuffer: Tuos_FileBuffer;
     LoopProc: TProc;    //// external procedure of object to synchronize in loop
        {$IF DEFINED(Java)}
@@ -559,6 +577,23 @@ type
     //////////// FramesCount : default : -1 (= 4096)
     //  result : Output Index in array     -1 = error
     //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1);
+
+ {$IF DEFINED(shout)}
+  function AddIntoIceServer(SampleRate : cint; Channels: cint; SampleFormat: cint;
+ EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): LongInt;
+     ////// Add a Output into a IceCast server for audio-web-streaming 
+    //////////// SampleRate : delault : -1 (48000)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : -1 default : float32 : (0:float32, 1:Int16)
+    //////////// EncodeType : default : -1 (0:Music) (0: Music, 1:Voice)
+    //////////// Port : default : -1 (= 8000)
+    //////////// Host : default : 'def' (= '127.0.0.1')
+    //////////// User : default : 'def' (= 'source')
+    //////////// Password : default : 'def' (= 'hackme')
+     //////////// MountFile : default : 'def' (= '/example.opus')
+    //  result :  Output Index in array    -1 = error
+   {$endif}
+
 
     {$IF DEFINED(portaudio)}
     function AddFromDevIn(Device: LongInt; Latency: CDouble;
@@ -894,6 +929,15 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
 procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
 
+{$IF DEFINED(shout)}
+function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : LongInt;
+      // Shout => needed for dealing with IceCast server
+     // Opus => needed for dealing with encoding opus stream
+  
+procedure uos_unloadServerLib();
+        ////// Unload server libraries... Do not forget to call it before close application...
+{$endif}
+
 procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
            ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
@@ -944,6 +988,7 @@ const
     {$endif}
 
 var
+tempload : boolean = false;
   //BufferURLtest: tbytes; 
   uosPlayers: array of Tuos_Player;
   uosPlayersStat : array of LongInt;
@@ -1865,8 +1910,7 @@ var
         3: ratio := 1; // cdrom
         4: ratio := 1; // opus
       end;
-      
-
+    
     if inputData.LibOpen <> 4 then //not working yet for opus files
     begin
     {$IF DEFINED(debug)}
@@ -3006,6 +3050,157 @@ procedure Tuos_Player.InputSetSynth(InputIndex: LongInt; Frequency: float; Volum
 end;
 {$endif}
 
+{$IF DEFINED(shout)}
+function Tuos_Player.AddIntoIceServer(SampleRate : cint; Channels: cint; SampleFormat: cint;
+ EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): LongInt;
+     ////// Add a Output into a IceCast server for audio-web-streaming 
+    //////////// SampleRate : delault : -1 (48100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : -1 default : float32 : (0:float32, 1:Int16)
+    //////////// EncodeType : default : -1 (0:Music) (0: Music, 1:Voice)
+    //////////// Port : default : -1 (= 8000)
+    //////////// Host : default : 'def' (= '127.0.0.1')
+    //////////// User : default : 'def' (= 'source')
+    //////////// Password : default : 'def' (= 'hackme')
+     //////////// MountFile : default : 'def' (= '/example.opus')
+    //  result :  Output Index in array    -1 = error
+
+var
+  x, typeenc : LongInt;
+  ordir : string;
+  err : integer = -1;
+ 
+ begin
+ 
+ result := -1 ;
+  x := 0;
+   err := -1;
+  SetLength(StreamOut, Length(StreamOut) + 1);
+  StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
+  x := Length(StreamOut) - 1;
+  
+  if (EncodeType = -1) or (EncodeType = 0)  then typeenc := OPUS_APPLICATION_AUDIO else
+  typeenc := OPUS_APPLICATION_VOIP ;
+  
+  if SampleRate = -1 then StreamOut[x].Data.SampleRate := 48000 else
+  StreamOut[x].Data.SampleRate := SampleRate;
+  
+  if Channels = -1 then StreamOut[x].Data.Channels := 2 else
+  StreamOut[x].Data.Channels := Channels;
+  
+   if SampleFormat = -1 then StreamOut[x].Data.SampleFormat := 0 else
+  StreamOut[x].Data.SampleFormat := SampleFormat;
+ 
+  StreamOut[x].Data.TypePut := 2 ;
+   StreamOut[x].Data.Enabled := True;
+  setlength(StreamOut[x].Data.Buffer,1024 *2); 
+   
+  //   setlength(StreamOut[x].Data.Buffer,960); 
+  
+   {$IF DEFINED(debug)}
+   WriteLn('before opus_encoder_create ' );
+   {$endif}
+
+// opus encoder
+  StreamOut[x].encoder := opus_encoder_create(StreamOut[x].Data.SampleRate,
+   StreamOut[x].Data.Channels, typeenc, err);
+
+ {$IF DEFINED(debug)}
+  if (err<0)
+      then begin
+        WriteLn(Format('failed to create an encoder: %s', [opus_strerror(err)]));
+       end; 
+   {$endif}    
+// if (err=0) then
+//  err := opus_encoder_ctl(StreamOut[x].encoder , OPUS_SET_BITRATE(cBITRATE));
+  {$IF DEFINED(debug)}
+  if (err<0)
+      then begin
+  //      WriteLn(Format('failed opus_encoder_ctl: %s', [opus_strerror(err)]));
+       end; 
+   {$endif}
+
+
+if err =0 then begin
+
+ StreamOut[x].Data.HandleSt := nil; 
+ 
+  shout_init();
+
+  StreamOut[x].Data.HandleSt := shout_new();
+
+  if assigned(StreamOut[x].Data.HandleSt) then
+  begin
+   {$IF DEFINED(debug)}
+  WriteLn('shhandle assigned');
+   {$endif}
+  err := shout_set_host( StreamOut[x].Data.HandleSt, pchar(Host));
+  
+   {$IF DEFINED(debug)}
+  if err = SHOUTERR_SUCCESS then
+  WriteLn('shout_set_host ok ' + inttostr(err)) else
+  WriteLn('shout_set_host error: ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+   {$endif}
+  err := shout_set_protocol(StreamOut[x].Data.HandleSt, SHOUT_PROTOCOL_HTTP);
+  {$IF DEFINED(debug)}
+  if err = SHOUTERR_SUCCESS then
+  WriteLn('shout_set_protocol ' + inttostr(err)) else
+  WriteLn('shout_set_protocol error: ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+   {$endif}
+  err := shout_set_port(StreamOut[x].Data.HandleSt, Port);
+  {$IF DEFINED(debug)}
+  if err = SHOUTERR_SUCCESS then
+  WriteLn('shout_set_port ok ' + inttostr(err)) else
+  WriteLn('shout_set_port error: ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+   {$endif}
+  err := shout_set_password(StreamOut[x].Data.HandleSt, pchar(Password));
+  {$IF DEFINED(debug)}
+  if err = SHOUTERR_SUCCESS then
+  WriteLn('set_password ok ' + inttostr(err)) else
+  WriteLn('set_password error: ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+   {$endif}
+  err := shout_set_mount(StreamOut[x].Data.HandleSt, pchar(MountFile));
+  {$IF DEFINED(debug)}
+  if err = SHOUTERR_SUCCESS then
+  WriteLn('shout_set_mount ok ' + inttostr(err)) else
+  WriteLn('shout_set_mount error: ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+   {$endif}
+  err := shout_set_user(StreamOut[x].Data.HandleSt, pchar(user));
+  {$IF DEFINED(debug)}
+  if err = SHOUTERR_SUCCESS then
+  WriteLn('shout_set_user ok ' + inttostr(err)) else
+  WriteLn('shout_set_user error: ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+   {$endif}
+  err := shout_set_format(StreamOut[x].Data.HandleSt,  SHOUT_FORMAT_OGG);
+  {$IF DEFINED(debug)}
+  if err = SHOUTERR_SUCCESS then
+  WriteLn('shout_set_format ok ' + inttostr(err)) else
+  WriteLn('shout_set_format error: ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+   {$endif}
+  err := shout_open(StreamOut[x].Data.HandleSt);
+  {$IF DEFINED(debug)}
+  if err = SHOUTERR_SUCCESS then
+  WriteLn('shout_open ok ' + inttostr(err)) else
+  WriteLn('shout_open error: ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+   {$endif}
+   
+    if err = SHOUTERR_SUCCESS then result := x else
+    begin
+   shout_free(StreamOut[x].Data.HandleSt);
+   StreamOut[Length(StreamOut) - 1].Destroy;
+    setlength(StreamOut, Length(StreamOut) - 1);
+   end;
+  end else
+  begin
+    StreamOut[Length(StreamOut) - 1].Destroy;
+    setlength(StreamOut, Length(StreamOut) - 1);
+   {$IF DEFINED(debug)}
+  WriteLn('shhandle not assigned')  {$endif} ;
+ end;
+ end;
+ end; 
+ {$endif}
+
 function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
   Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt): LongInt;
   /////// Add a Output into audio wav file with Custom parameters
@@ -3617,7 +3812,7 @@ begin
     StreamIn[x].Data.levelArrayEnable := 0;
 
  {$IF DEFINED(debug)}
-   WriteLn('Length(StreamIn = '+ inttostr(x));     
+   WriteLn('Length(StreamIn) = '+ inttostr(x));     
  {$endif}    
  
     {$IF DEFINED(sndfile)}
@@ -3625,13 +3820,20 @@ begin
     begin
 
       StreamIn[x].Data.HandleSt := sf_open(FileName, SFM_READ, sfInfo);
+           
       (* try to open the file *)
       if StreamIn[x].Data.HandleSt = nil then
       begin
         StreamIn[x].Data.LibOpen := -1;
+          {$IF DEFINED(debug)}
+      WriteLn('sf_open NOT OK');     
+     {$endif}  
       end
       else
       begin
+       {$IF DEFINED(debug)}
+      WriteLn('sf_open OK');     
+     {$endif}   
         StreamIn[x].Data.LibOpen := 0;
         StreamIn[x].Data.filename := FileName;
         StreamIn[x].Data.channels := SFinfo.channels;
@@ -3655,6 +3857,9 @@ begin
         StreamIn[x].Data.Lengthst := sfInfo.frames;
         StreamIn[x].Data.Enabled := False;
         err := 0;
+         {$IF DEFINED(debug)}
+      WriteLn('sf_open END OK');     
+     {$endif} 
       end;
     end;
 
@@ -3670,6 +3875,11 @@ begin
 
       if Err = 0 then
       begin
+      
+     {$IF DEFINED(debug)}
+      WriteLn('mpg123_new OK');     
+     {$endif} 
+     
         if SampleFormat = -1 then
           StreamIn[x].Data.SampleFormat := 2
         else
@@ -3960,15 +4170,22 @@ begin
      End;
    end;
    {$endif}
+   
+   
 
    if err <> 0 then
     begin
-    result := -1 ;
+    
+     result := -1 ;
     StreamIn[Length(StreamIn) - 1].Destroy;
     setlength(StreamIn, Length(StreamIn) - 1);
     end
     else
     begin
+    
+      {$IF DEFINED(debug)}
+      WriteLn('addfromfile OK');     
+     {$endif} 
       Result := x;
       StreamIn[x].Data.Output := OutputIndex;
       StreamIn[x].Data.Status := 1;
@@ -4612,9 +4829,8 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
     {$IF DEFINED(debug)}
  writeln('End level after DSP procedure');
  {$endif}
-     
-
-      end;
+ 
+       end;
 
    end;
 
@@ -4644,7 +4860,7 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
 
   for x := 0 to high(StreamOut) do
 
-      if ((StreamOut[x].Data.TypePut = 1) and (StreamOut[x].Data.HandleSt <> nil) and
+      if (((StreamOut[x].Data.TypePut = 1) or (StreamOut[x].Data.TypePut = 2)) and (StreamOut[x].Data.HandleSt <> nil) and
         (StreamOut[x].Data.Enabled = True)) or
         ( (StreamOut[x].Data.TypePut = 0)  and (StreamOut[x].Data.Enabled = True))
       then
@@ -4738,9 +4954,7 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
           // transfer buffer out to temp
         SetLength(BufferplugINFLTMP, (StreamIn[x2].Data.outframes) *
           StreamIn[x2].Data.Channels);
-            
-         //  SetLength(BufferplugINFLTMP, (StreamIn[x2].Data.WantFrames) );
-
+     
        if length(BufferplugINFLTMP) > 2 then
           for x3 := 0 to (length(BufferplugINFLTMP) div 2) - 1 do
             BufferplugINFLTMP[x3] := cfloat(StreamOut[x].Data.Buffer[x3]);
@@ -4845,6 +5059,53 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
                 end;
                 {$endif}
 
+      {$IF DEFINED(shout)}
+          2:     /////// Give to IceCast server
+            begin
+
+{$IF DEFINED(debug)}
+ writeln('Give to output IceCast server');
+ {$endif}
+ 
+ case StreamOut[x].Data.SampleFormat of
+       0:
+       begin
+       err := opus_encode_float(StreamOut[x].encoder, @BufferplugFL[0], cFRAME_SIZE, StreamOut[x].cbits, cMAX_PACKET_SIZE);
+       end;
+       1:
+       begin
+       err := opus_encode(StreamOut[x].encoder, @BufferplugLO[0], cFRAME_SIZE, StreamOut[x].cbits, cMAX_PACKET_SIZE);
+       end;
+       2:
+       begin
+       err := opus_encode(StreamOut[x].encoder, @BufferplugSH[0], cFRAME_SIZE, StreamOut[x].cbits, cMAX_PACKET_SIZE);
+       end;
+ end; 
+  
+  StreamOut[x].data.outframes  := err ;
+    
+{$IF DEFINED(debug)}	
+  WriteLn('opus_encode outframes =' + inttostr(err)); 
+  WriteLn('----------------------------------');
+   writeln(tencoding.utf8.getstring(StreamOut[x].cbits));
+  {$endif}  
+ 
+if err > 0 then
+
+ err := shout_send(StreamOut[x].Data.HandleSt, StreamOut[x].cbits, StreamOut[x].data.outframes);
+
+{$IF DEFINED(debug)}
+		 if err = SHOUTERR_SUCCESS then
+  WriteLn('shout_send ok ' + inttostr(err)) else
+  WriteLn('shout_send error: '+ inttostr(err) + ' ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+  writeln('End give output to IceCast server');
+ {$endif}
+
+  shout_sync(StreamOut[x].Data.HandleSt); // ?
+       
+             end;
+          {$endif}
+
                 0:
                 begin  /////// Give to wav file
 
@@ -4908,6 +5169,52 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
 {$IF DEFINED(debug)}
  writeln('End give to output device');
  {$endif}
+             end;
+          {$endif}
+
+  {$IF DEFINED(shout)}
+          2:     /////// Give to IceCast server
+            begin
+
+{$IF DEFINED(debug)}
+ writeln('Give to output IceCast server');
+ {$endif}
+
+ case StreamOut[x].Data.SampleFormat of
+       0:
+       begin
+       err := opus_encode_float(StreamOut[x].encoder,  @StreamOut[x].Data.Buffer[0], cFRAME_SIZE*3, StreamOut[x].cbits, cMAX_PACKET_SIZE);
+       end;
+       1:
+       begin
+       err := opus_encode(StreamOut[x].encoder,  @StreamOut[x].Data.Buffer[0], cFRAME_SIZE*3, StreamOut[x].cbits, cMAX_PACKET_SIZE);
+       end;
+       2:
+       begin
+       err := opus_encode(StreamOut[x].encoder, @StreamOut[x].Data.Buffer[0], cFRAME_SIZE*3, StreamOut[x].cbits, cMAX_PACKET_SIZE);
+       end;
+ end;
+ 
+    StreamOut[x].data.outframes := err;
+
+{$IF DEFINED(debug)}	
+  WriteLn('opus_encode outframes =' + inttostr(err));
+   WriteLn('----------------------------------');
+   writeln(tencoding.utf8.getstring(StreamOut[x].cbits));
+  {$endif}  
+
+if err > 0 then
+
+ err := shout_send_raw(StreamOut[x].Data.HandleSt, StreamOut[x].cbits, StreamOut[x].data.outframes);
+
+{$IF DEFINED(debug)}
+		 if err = SHOUTERR_SUCCESS then
+  WriteLn('shout_send ok ' + inttostr(err)) else
+  WriteLn('shout_send error: '+ inttostr(err) + ' ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
+  writeln('End give output to IceCast server');
+ {$endif}
+ 
+  shout_sync(StreamOut[x].Data.HandleSt);
              end;
           {$endif}
 
@@ -5124,7 +5431,7 @@ writeln('Status = 0');
           end;
         {$endif}
            
-         {$IF DEFINED(webstream)}
+        {$IF DEFINED(webstream)}
         2: begin
             StreamIn[x].httpget.Terminate;
             sleep(100);
@@ -5155,6 +5462,15 @@ writeln('Status = 0');
       begin
        Pa_StopStream(StreamOut[x].Data.HandleSt);
        Pa_CloseStream(StreamOut[x].Data.HandleSt);
+      end;
+       {$endif}
+
+         {$IF DEFINED(shout)}
+       if  (StreamOut[x].Data.TypePut = 2) then
+      begin
+      //  freeandnil(StreamOut[x].encoder) ;
+      shout_free(StreamOut[x].Data.HandleSt);
+      
       end;
        {$endif}
 
@@ -5431,6 +5747,7 @@ begin
     Result := InitLib();
 end;
 
+
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
   begin
  Result := -1; 
@@ -5485,6 +5802,33 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
    {$endif}
   
 end;
+
+{$IF DEFINED(shout)}
+function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : LongInt; 
+     // Shout => needed for dealing with IceCast server
+     // Opus => needed for dealing with encoding opus stream
+begin
+Result := -1;
+ if not fileexists(ShoutFileName) then
+             else
+    if sh_Load(UTF8String(ShoutFileName)) then
+         Result := 0;
+         
+  if result = 0 then
+   if not fileexists(OpusFileName) then
+        Result := -2       else
+    if op_Load(UTF8String(OpusFileName)) then
+         Result := 0 else Result := -1 ;
+ end;
+  
+procedure uos_unloadServerLib();
+        ////// Unload server libraries... Do not forget to call it before close application...
+ begin
+shout_shutdown;
+sh_unload;
+op_unload;
+ end;   
+{$endif}
  
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : LongInt;
   begin

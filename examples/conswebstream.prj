@@ -17,8 +17,8 @@ order14=0
 order15=0
 order16=0
 [projectoptions]
-projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/conswebstream.prj
+projectdir=/home/fred/uos_shout/examples
+projectfilename=/home/fred/uos_shout/examples/conswebstream.prj
 findinfiledialog=47
  [findinfileadialogfo.subdirs]
  value=0
@@ -203,7 +203,7 @@ options=114
  index=0
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -805,11 +805,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=samplereate
+finddtext=AddFromURL
 findhistory=20
+ AddFromURL
  samplereate
  getsam
- AddFromURL
  InPipe
  writeln('===> Before op_read_x.')
  AddFromfile
@@ -836,10 +836,10 @@ editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 31,3080
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 11,41
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -862,7 +862,7 @@ sourcefiles=11
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_httpgetthread.pas
- /home/fred/uos/examples/conswebstream.pas
+ ${PROJECTDIR}/conswebstream.pas
 relpaths=11
  uos_opusurl.pas
  simplewebplayer_fpGUI.pas
@@ -894,7 +894,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=5
-index=10
+index=7
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -923,7 +923,7 @@ windowlayout=530
  ncx=0
  ncy=0
  x=231
- y=52
+ y=53
  cx=939
  cy=621
  rcx=0
