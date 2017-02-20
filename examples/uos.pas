@@ -546,6 +546,8 @@ type
     Procedure Play() ;        ///// Start playing
 
     Procedure PlayNoFree() ;        ///// Start playing but do not free the player after stop
+  
+    Procedure FreePlayer() ;        ///// Works only when PlayNoFree() was used: free the player
 
     procedure RePlay();                ///// Resume playing after pause
 
@@ -1265,6 +1267,17 @@ var
   RTLeventSetEvent(evPause);
  end;
 
+end;
+
+Procedure Tuos_Player.FreePlayer() ;   ///// Works only when PlayNoFree() was used: free the player
+begin
+ if (isAssigned = True) then
+ if NoFree = true then
+ begin
+   NoFree := false;
+   RTLeventSetEvent(evPause);
+    Status := 0;
+ end;; 
 end;
 
 

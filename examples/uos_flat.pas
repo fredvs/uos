@@ -610,6 +610,8 @@ procedure uos_Play(PlayerIndex: cint32) ;        ///// Start playing
 
 Procedure uos_PlayNoFree(PlayerIndex: cint32) ;  ///// Start playing but do not free the player after stop
 
+Procedure uos_FreePlayer(PlayerIndex: cint32) ;   ///// Works only when PlayNoFree() was used: free the player
+
 procedure uos_RePlay(PlayerIndex: cint32);                ///// Resume playing after pause
 
 procedure uos_Stop(PlayerIndex: cint32);                  ///// Stop playing and free thread
@@ -1348,6 +1350,13 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 uosPlayers[PlayerIndex].PlayNoFree() ;
+end;
+
+Procedure uos_FreePlayer(PlayerIndex: cint32) ;   ///// Works only when PlayNoFree() was used: free the player
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+uosPlayers[PlayerIndex].FreePlayer() ;
 end;
 
 procedure uos_RePlay(PlayerIndex: cint32);                ///// Resume playing after pause
