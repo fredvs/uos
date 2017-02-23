@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
-findinfiledialog=51
+findinfiledialog=53
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,10 @@ findinfiledialog=51
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=file not open
- history=13
+ value=timer
+ history=15
+  timer
+  uos_free
   file not open
   cfloat
   ProcessMessages
@@ -423,8 +425,8 @@ stripmessageesc=0
 copymessages=0
 closemessages=0
 checkmethods=1
-colorerror=-1610612712
-colorwarning=-1610612717
+colorerror=-1610612729
+colorwarning=-1610612712
 colornote=-1610612716
 usercolors=30
  0
@@ -510,7 +512,7 @@ makeoptionson=10
  511
  369
  255
- 2
+ 0
  130
 compilerusedon=29
  3903
@@ -543,12 +545,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3903
+ 3900
  0
  0
  0
  0
- 192
+ 195
 exeusedon=14
  3903
  0
@@ -810,13 +812,13 @@ path=8
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=8
- 3790
+ 3784
  33
  913
  764
- 2644
- 1957
- 551
+ 2638
+ 1951
+ 553
  247
 address=8
  5002412
@@ -936,8 +938,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=nofree
+finddtext=timer
 findhistory=20
+ timer
+ btnStartClick
+ FramesCount
+ tempload
  nofree
  mpg_close_stream
  mpg_seek_stream
@@ -954,30 +960,31 @@ findhistory=20
  op_
  Cvfloat32ToInt32fl
  2-PlugFunc:
- SetLength(BufferplugINFLTMP
- url
- PlugFunc: Length(BufferplugINFLTMP,BufferplugFL)
- Length(BufferplugFL) =
 findoptions=1
-editpos=18
+editpos=23
  0,-1073741823
  0,-1073741823
- 0,3
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,623
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1271
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1358
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,202
+ 0,327
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -996,7 +1003,12 @@ bookmarks14=0
 bookmarks15=0
 bookmarks16=0
 bookmarks17=0
-sourcefiles=18
+bookmarks18=0
+bookmarks19=0
+bookmarks20=0
+bookmarks21=0
+bookmarks22=0
+sourcefiles=23
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1015,7 +1027,12 @@ sourcefiles=18
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_shout.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=18
+ ${PROJECTDIR}/consoleplay.pas
+ /home/fred/fpgui/src/corelib/fpg_base.pas
+ ${PROJECTDIR}/morseTL_fpGUI.pas
+ ${PROJECTDIR}/uos_opusfile.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+relpaths=23
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1034,7 +1051,17 @@ relpaths=18
  uos_mpg123.pas
  uos_shout.pas
  uos_flat.pas
-ismoduletexts=18
+ consoleplay.pas
+ fpgui/src/corelib/fpg_base.pas
+ morseTL_fpGUI.pas
+ uos_opusfile.pas
+ uos_mpg123.pas
+ismoduletexts=23
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1058,10 +1085,15 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=18
+order=23
  0
  1
  2
+ 21
+ 22
+ 20
+ 19
+ 18
  11
  17
  12
@@ -1079,7 +1111,7 @@ order=18
  6
 tabsize=60
 firsttab=2
-index=4
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1107,8 +1139,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=179
- y=62
+ x=124
+ y=39
  cx=939
  cy=621
  rcx=0
@@ -1128,15 +1160,15 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=571
+ y=175
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1241,7 +1273,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=5
+ row=7
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1580,7 +1612,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

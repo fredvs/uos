@@ -1359,20 +1359,21 @@ begin
 uosPlayers[PlayerIndex].FreePlayer() ;
 end;
 
-procedure uos_RePlay(PlayerIndex: cint32);                ///// Resume playing after pause
+procedure uos_RePlay(PlayerIndex: cint32);      ///// Resume playing after pause
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 uosPlayers[PlayerIndex].RePlay() ;
 end;
 
-procedure uos_Stop(PlayerIndex: cint32);                  ///// Stop playing and free thread
+procedure uos_Stop(PlayerIndex: cint32);      ///// Stop playing and if uos_Play() was used: free the player
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+   if  uosPlayersStat[PlayerIndex] = 1 then
 uosPlayers[PlayerIndex].Stop() ;
 end;
 
-procedure uos_Pause(PlayerIndex: cint32);                 ///// Pause playing
+procedure uos_Pause(PlayerIndex: cint32);     ///// Pause playing
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
@@ -1430,7 +1431,6 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
   begin
    ifflat := true;
 result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName)  ;
-//uosLoadResult:= uos.uosLoadResult;
   end;
   
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
@@ -1474,6 +1474,7 @@ procedure uos_unloadlib() ;
        begin
         if  uosPlayers[x].Status > 0 then
       begin
+      uosPlayers[x].nofree := false;
       uosPlayers[x].Stop();
       sleep(300) ;
       end;

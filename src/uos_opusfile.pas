@@ -170,68 +170,68 @@ type
 
 var
 
- op_fopen: function(out cb: TOpusFileCallbacks; path: PAnsiChar; mode: PAnsiChar): TOpusStream;
+ op_fopen: function(out cb: TOpusFileCallbacks; path: PAnsiChar; mode: PAnsiChar): TOpusStream; cdecl;
 
- op_freopen: function(out cb: TOpusFileCallbacks; path: PAnsiChar; mode: PAnsiChar; stream: TOpusStream): TOpusStream;
- op_mem_stream_create: function(out cb: TOpusFileCallbacks; const data; size: cuint): TOpusStream;
+ op_freopen: function(out cb: TOpusFileCallbacks; path: PAnsiChar; mode: PAnsiChar; stream: TOpusStream): TOpusStream;cdecl;
+ op_mem_stream_create: function(out cb: TOpusFileCallbacks; const data; size: cuint): TOpusStream; cdecl;
 
- opus_head_parse: function(head: TOpusHead; const data; len: cuint): cint;
- opus_granule_sample: function(head: TOpusHead; gp: Int64): Int64;
- opus_tags_parse: function(out tags: TOpusTags; const data; len: cuint): cint;
- opus_tags_copy: function(var dst: TOpusTags; const src: TOpusTags): cint;
- opus_tags_init: procedure(var tags: TOpusTags);
- opus_tags_add: function(var dst: TOpusTags; tag, value: PAnsiChar): cint;
- opus_tags_add_comment: function(var dst: TOpusTags; comment: PAnsiChar): cint;
- opus_tags_set_binary_suffix: function(var tags: TOpusTags; const data; len: cint): cint;
- opus_tags_query: function(const tags: TOpusTags; tag: PAnsiChar; count: cint): cint;
- opus_tags_query_count: function(const tags: TOpusTags; tag: PAnsiChar): cint;
- opus_tags_get_binary_suffix: function(const tags: TOpusTags; out len: cint): cint;
- opus_tags_get_album_gain: function(const tags: TOpusTags; out gain_q8: cint): cint;
- opus_tags_get_track_gain: function(const tags: TOpusTags; out gain_q8: cint): cint;
- opus_tags_clear: procedure(var tags: TOpusTags);
- opus_tagcompare: function(tag_name, comment: PAnsiChar): cint;
- opus_tagncompare: function(tag_name: PAnsiChar; tag_len: cint; comment: PAnsiChar): cint;
- opus_picture_tag_parse: function(out pic: TOpusPictureTag; tag: PAnsiChar): cint;
- opus_picture_tag_init: procedure(var pic: TOpusPictureTag);
- opus_picture_tag_clear: procedure(var pic: TOpusPictureTag);
+ opus_head_parse: function(head: TOpusHead; const data; len: cuint): cint;cdecl;
+ opus_granule_sample: function(head: TOpusHead; gp: Int64): Int64;cdecl;
+ opus_tags_parse: function(out tags: TOpusTags; const data; len: cuint): cint;cdecl;
+ opus_tags_copy: function(var dst: TOpusTags; const src: TOpusTags): cint;cdecl;
+ opus_tags_init: procedure(var tags: TOpusTags);cdecl;
+ opus_tags_add: function(var dst: TOpusTags; tag, value: PAnsiChar): cint;cdecl;
+ opus_tags_add_comment: function(var dst: TOpusTags; comment: PAnsiChar): cint;cdecl;
+ opus_tags_set_binary_suffix: function(var tags: TOpusTags; const data; len: cint): cint;cdecl;
+ opus_tags_query: function(const tags: TOpusTags; tag: PAnsiChar; count: cint): cint;cdecl;
+ opus_tags_query_count: function(const tags: TOpusTags; tag: PAnsiChar): cint;cdecl;
+ opus_tags_get_binary_suffix: function(const tags: TOpusTags; out len: cint): cint;cdecl;
+ opus_tags_get_album_gain: function(const tags: TOpusTags; out gain_q8: cint): cint;cdecl;
+ opus_tags_get_track_gain: function(const tags: TOpusTags; out gain_q8: cint): cint;cdecl;
+ opus_tags_clear: procedure(var tags: TOpusTags);cdecl;
+ opus_tagcompare: function(tag_name, comment: PAnsiChar): cint;cdecl;
+ opus_tagncompare: function(tag_name: PAnsiChar; tag_len: cint; comment: PAnsiChar): cint;cdecl;
+ opus_picture_tag_parse: function(out pic: TOpusPictureTag; tag: PAnsiChar): cint;cdecl;
+ opus_picture_tag_init: procedure(var pic: TOpusPictureTag);cdecl;
+ opus_picture_tag_clear: procedure(var pic: TOpusPictureTag);cdecl;
 
- op_test: function(head: TOpusHead; const initial_data; initial_bytes: cuint): cint;
- op_open_file: function(path: PAnsiChar; out error: cint): TOpusFile;
- op_open_memory: function(const data; const _size: cuint; out error: cint): TOpusFile;
+ op_test: function(head: TOpusHead; const initial_data; initial_bytes: cuint): cint;cdecl;
+ op_open_file: function(path: PAnsiChar; out error: cint): TOpusFile;cdecl;
+ op_open_memory: function(const data; const _size: cuint; out error: cint): TOpusFile;cdecl;
  op_open_callbacks: function(const source; const cb: TOpusFileCallbacks;
-  const initial_data; initial_bytes: cuint; out error: cint): TOpusFile;
- op_test_file: function(path: PAnsiChar; out error: cint): TOpusFile;
+  const initial_data; initial_bytes: cuint; out error: cint): TOpusFile;cdecl;
+ op_test_file: function(path: PAnsiChar; out error: cint): TOpusFile;cdecl;
  // op_test_url: function(path: PAnsiChar; out error: cint): TOpusFile;
- op_test_memory: function(const data; const size: cuint; out error: cint): TOpusFile;
+ op_test_memory: function(const data; const size: cuint; out error: cint): TOpusFile;cdecl;
  op_test_callbacks: function(const source; const cb: TOpusFileCallbacks; const initial_data; initial_bytes: cuint;
-  out error: cint): TOpusFile;
- op_test_open: function(OpusFile: TOpusFile): cint;
- op_free: function(OpusFile: TOpusFile): cint;
+  out error: cint): TOpusFile;cdecl;
+ op_test_open: function(OpusFile: TOpusFile): cint;cdecl;
+ op_free: function(OpusFile: TOpusFile): cint;cdecl;
 
- op_seekable: function(OpusFile: TOpusFile): cint;
- op_link_count: function(OpusFile: TOpusFile): cint;
- op_serialno: function(OpusFile: TOpusFile; li: pcint): Cardinal;
- op_channel_count: function(OpusFile: TOpusFile; li: pcint): cint;
- op_raw_total: function(OpusFile: TOpusFile; li: pcint): Int64;
- op_pcm_total: function(OpusFile: TOpusFile; li: pcint): Int64;
- op_head: function(OpusFile: TOpusFile; li: pcint): TOpusHead;
- op_tags: function(OpusFile: TOpusFile; li: pcint): POpusTags;
- op_current_link: function(OpusFile: TOpusFile): cint;
- op_bitrate: function(OpusFile: TOpusFile; li: pcint): cint;
- op_bitrate_instant: function(OpusFile: TOpusFile): cint;
- op_raw_tell: function(OpusFile: TOpusFile): Int64;
- op_pcm_tell: function(OpusFile: TOpusFile): Int64;
+ op_seekable: function(OpusFile: TOpusFile): cint;cdecl;
+ op_link_count: function(OpusFile: TOpusFile): cint;cdecl;
+ op_serialno: function(OpusFile: TOpusFile; li: pcint): Cardinal;cdecl;
+ op_channel_count: function(OpusFile: TOpusFile; li: pcint): cint;cdecl;
+ op_raw_total: function(OpusFile: TOpusFile; li: pcint): Int64;cdecl;
+ op_pcm_total: function(OpusFile: TOpusFile; li: pcint): Int64;cdecl;
+ op_head: function(OpusFile: TOpusFile; li: pcint): TOpusHead;cdecl;
+ op_tags: function(OpusFile: TOpusFile; li: pcint): POpusTags;cdecl;
+ op_current_link: function(OpusFile: TOpusFile): cint;cdecl;
+ op_bitrate: function(OpusFile: TOpusFile; li: pcint): cint;cdecl;
+ op_bitrate_instant: function(OpusFile: TOpusFile): cint;cdecl;
+ op_raw_tell: function(OpusFile: TOpusFile): Int64;cdecl;
+ op_pcm_tell: function(OpusFile: TOpusFile): Int64;cdecl;
 
- op_raw_seek: function(OpusFile: TOpusFile; byte_offset: cInt64): cint;
- op_pcm_seek: function(OpusFile: TOpusFile; pcm_offset: cInt64): cint;
+ op_raw_seek: function(OpusFile: TOpusFile; byte_offset: cInt64): cint;cdecl;
+ op_pcm_seek: function(OpusFile: TOpusFile; pcm_offset: cInt64): cint;cdecl;
 
- op_set_gain_offset: function(OpusFile: TOpusFile; gain_type: cint; gain_offset_q8: cint): cint;
- op_set_dither_enabled: procedure(OpusFile: TOpusFile; enabled: cint);
+ op_set_gain_offset: function(OpusFile: TOpusFile; gain_type: cint; gain_offset_q8: cint): cint;cdecl;
+ op_set_dither_enabled: procedure(OpusFile: TOpusFile; enabled: cint);cdecl;
  
- op_read: function(OpusFile: TOpusFile; pcm : pcint; SampleCount: cint; li: pcint): cint;
- op_read_float: function(OpusFile: TOpusFile; pcm : pcfloat; SampleCount: cint; li: pcint): cint;
- op_read_stereo: function(OpusFile: TOpusFile; pcm : pcint; SampleCount: cint): cint;
- op_read_float_stereo: function(OpusFile: TOpusFile; pcm : pcfloat; SampleCount: cint): cint;
+ op_read: function(OpusFile: TOpusFile; pcm : pcint; SampleCount: cint; li: pcint): cint;cdecl;
+ op_read_float: function(OpusFile: TOpusFile; pcm : pcfloat; SampleCount: cint; li: pcint): cint;cdecl;
+ op_read_stereo: function(OpusFile: TOpusFile; pcm : pcint; SampleCount: cint): cint;cdecl;
+ op_read_float_stereo: function(OpusFile: TOpusFile; pcm : pcfloat; SampleCount: cint): cint;cdecl;
  
  of_Handle:TLibHandle=dynlibs.NilHandle; 
  

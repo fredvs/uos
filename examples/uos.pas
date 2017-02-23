@@ -545,16 +545,16 @@ type
     /////////////////////Audio procedure
     Procedure Play() ;        ///// Start playing
 
-    Procedure PlayNoFree() ;        ///// Start playing but do not free the player after stop
+    Procedure PlayNoFree() ;  //// Start playing but do not free the player after stop
   
-    Procedure FreePlayer() ;        ///// Works only when PlayNoFree() was used: free the player
+    procedure Pause();        ///// Pause playing
+    
+    procedure RePlay();       ///// Resume playing after pause
 
-    procedure RePlay();                ///// Resume playing after pause
-
-    procedure Stop();                  ///// Stop playing and free thread
-
-    procedure Pause();                 ///// Pause playing
-
+    procedure Stop();         //// Stop playing and if uos_Play() was used: free the player
+    
+    Procedure FreePlayer() ;  ///// Works only if PlayNoFree() was used: free the player
+    
    {$IF DEFINED(portaudio)}
      function AddIntoDevOut(Device: LongInt; Latency: CDouble;
       SampleRate: LongInt; Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
@@ -990,8 +990,6 @@ const
     {$endif}
 
 var
-tempload : boolean = false;
-  //BufferURLtest: tbytes; 
   uosPlayers: array of Tuos_Player;
   uosPlayersStat : array of LongInt;
   uosLevelArray : TDArIARFloat ;
@@ -1012,9 +1010,6 @@ tempload : boolean = false;
     {$endif}
 
 implementation
-
-//uses
-//uos_flat;
 
 {$IF DEFINED(webstream)}
 function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; cdecl;
@@ -1226,8 +1221,7 @@ var
     if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
     begin
      Pa_StartStream(StreamIn[x].Data.HandleSt);
-    // if x > 0 then sleep(200);
-     end;
+    end;
 {$endif}
 
   start;   // resume;  { if fpc version <= 2.4.4}
