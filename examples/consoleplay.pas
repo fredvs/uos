@@ -120,8 +120,8 @@ var
     ConsolePlay;
     writeln('Press a key to exit...');
     readln;
-    uos_free;
     Terminate;
+    uos_free();
   end;
 
 constructor TuosConsole.Create(TheOwner: TComponent);

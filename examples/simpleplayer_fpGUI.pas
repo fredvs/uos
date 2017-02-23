@@ -105,7 +105,6 @@ type
     procedure ChangePlugSetbs2b(Sender: TObject);
     procedure TrackChangePlugSetSoundTouch(Sender: TObject; pos: integer);
     procedure ResetPlugClick(Sender: TObject);
-    
   end;
 
   {@VFD_NEWFORM_DECL}
@@ -113,14 +112,12 @@ type
   {@VFD_NEWFORM_IMPL}
 
 var
- 
   PlayerIndex1: integer;
   ordir, opath: string;
   OutputIndex1, InputIndex1, DSPIndex1, DSPIndex2, PluginIndex1, PluginIndex2: integer;
   plugsoundtouch : boolean = false;
   plugbs2b : boolean = false;
-  
-  
+ 
   procedure TSimpleplayer.btnTrackOnClick(Sender: TObject; Button: TMouseButton;
     Shift: TShiftState; const pos: TPoint);
   begin
@@ -266,12 +263,13 @@ loadok : boolean = false;
   begin
   ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
  
-     // Load the libraries
+    // Load the libraries
 // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName : PChar) : LongInt;
  if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
  Pchar(FilenameEdit3.FileName), Pchar(FilenameEdit7.FileName), Pchar(FilenameEdit8.FileName),
   Pchar(FilenameEdit31.FileName)) = 0 then
-     begin
+ 
+    begin
       hide;
       loadok := true;
       Height := 208; 
@@ -358,7 +356,7 @@ loadok : boolean = false;
   
   function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
   begin
-   result := nil;
+   
     if (Data.position > Data.OutFrames div Data.channels) then
      uos_Seek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
    end;
@@ -497,7 +495,7 @@ loadok : boolean = false;
     //// If PlayerIndex exists already, it will be overwriten...
 
      InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(filenameEdit4.filename), -1, 
-     samformat, 512);
+     samformat, -1);
     //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     //////////// PlayerIndex : Index of a existing Player
@@ -511,7 +509,7 @@ loadok : boolean = false;
       // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
     OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, 512);
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -618,7 +616,7 @@ loadok : boolean = false;
     btnStop.Enabled := True;
     btnpause.Enabled := True;
     btnresume.Enabled := False;
-    
+
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
     
     end;
@@ -1406,6 +1404,7 @@ end;
     finally
    //   uos_FreePlayer(PlayerIndex1); 
     // uosPlayers[PlayerIndex1].destroy; // do not forget this...
+       uos_unloadlib;
       uos_free; // do not forget this...
       frm.Free;
     end;

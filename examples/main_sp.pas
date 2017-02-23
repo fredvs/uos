@@ -60,7 +60,6 @@ type
     Shape1: TShape;
     ShapeLeft: TShape;
     ShapeRight: TShape;
-    Timer1: TTimer;
     TrackBar1: TTrackBar;
     TrackBar2: TTrackBar;
     TrackBar3: TTrackBar;
@@ -82,8 +81,6 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure Panel1Click(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
-    procedure Timer2Timer(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure TrackBar2MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: integer);
@@ -268,20 +265,6 @@ begin
 
 end;
 
-procedure TForm1.Timer1Timer(Sender: TObject);
-begin
-  timer1.enabled := false;
-  if uos_GetStatus(PlayerIndex1) = 0 then
-  uos_playnofree(PlayerIndex1) // if player has stopped
-  else
-  uos_seek(PlayerIndex1, PlayerIndex1, InputIndex1); // if player is still playing
-  timer1.enabled := true;
- end;
-
-procedure TForm1.Timer2Timer(Sender: TObject);
-begin
-  end;
-
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
@@ -415,7 +398,7 @@ begin
      // InputIndex1 := uos_AddFromFile(PlayerIndex1, Edit4.Text);
     //// add input from audio file with default parameters
 
-    InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text), -1, samformat,512);
+    InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text), -1, samformat, -1);
     //// add input from audio file with custom parameters
     ////////// FileName : filename of audio file
     //////////// PlayerIndex : Index of a existing Player
@@ -430,7 +413,7 @@ begin
     //// add a Output into device with default parameters
 
      OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, 512);
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -536,9 +519,9 @@ begin
     Button5.Enabled := True;
     CheckBox1.Enabled := True;
 
+   // application.ProcessMessages;
 
-   uos_Playnofree(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
-      timer1.Enabled:=true;
+    uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
     end;
   end
   else
@@ -747,7 +730,9 @@ begin
       x := x + 2;
       end;
    end;
- end;
+
+
+end;
 Result := Data.Buffer;
 end
 else Result := Data.Buffer;
@@ -767,8 +752,7 @@ begin
     button6.Click;
     sleep(500);
   end;
-    uos_unloadlib();
-    uos_free();
+    uos_free;
     BufferBMP.free;
   end;
 

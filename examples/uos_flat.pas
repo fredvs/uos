@@ -1561,11 +1561,14 @@ procedure uos_Free();
 var
 x : integer;
 begin
+{
+if assigned(uosPlayers) then
 if length(uosPlayers) > 0 then
  for x := 0 to length(uosPlayers) -1 do
   begin
-  uosPlayers[x].destroy;
+  if assigned(uosPlayers[x]) then uosPlayers[x].destroy;
   end;
+}
 uos.uos_free();
 end;
 

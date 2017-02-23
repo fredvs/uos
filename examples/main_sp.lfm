@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 500
+  Left = 267
   Height = 373
-  Top = 193
+  Top = 73
   Width = 499
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'
@@ -336,9 +336,9 @@ object Form1: TForm1
       ParentFont = False
     end
     object Button3: TButton
-      Left = 130
+      Left = 128
       Height = 23
-      Top = 188
+      Top = 187
       Width = 75
       Caption = 'Play'
       OnClick = Button3Click
@@ -604,12 +604,5 @@ object Form1: TForm1
   object OpenDialog1: TOpenDialog
     left = 76
     top = 36
-  end
-  object Timer1: TTimer
-    Enabled = False
-    Interval = 50
-    OnTimer = Timer1Timer
-    left = 48
-    top = 274
   end
 end

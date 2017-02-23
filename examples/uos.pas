@@ -545,16 +545,16 @@ type
     /////////////////////Audio procedure
     Procedure Play() ;        ///// Start playing
 
-    Procedure PlayNoFree() ;  //// Start playing but do not free the player after stop
+    Procedure PlayNoFree() ;        ///// Start playing but do not free the player after stop
   
-    procedure Pause();        ///// Pause playing
-    
-    procedure RePlay();       ///// Resume playing after pause
+    Procedure FreePlayer() ;        ///// Works only when PlayNoFree() was used: free the player
 
-    procedure Stop();         //// Stop playing and if uos_Play() was used: free the player
-    
-    Procedure FreePlayer() ;  ///// Works only if PlayNoFree() was used: free the player
-    
+    procedure RePlay();                ///// Resume playing after pause
+
+    procedure Stop();                  ///// Stop playing and free thread
+
+    procedure Pause();                 ///// Pause playing
+
    {$IF DEFINED(portaudio)}
      function AddIntoDevOut(Device: LongInt; Latency: CDouble;
       SampleRate: LongInt; Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
@@ -990,6 +990,8 @@ const
     {$endif}
 
 var
+tempload : boolean = false;
+  //BufferURLtest: tbytes; 
   uosPlayers: array of Tuos_Player;
   uosPlayersStat : array of LongInt;
   uosLevelArray : TDArIARFloat ;
@@ -1010,6 +1012,9 @@ var
     {$endif}
 
 implementation
+
+//uses
+//uos_flat;
 
 {$IF DEFINED(webstream)}
 function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; cdecl;
@@ -1221,7 +1226,8 @@ var
     if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
     begin
      Pa_StartStream(StreamIn[x].Data.HandleSt);
-    end;
+    // if x > 0 then sleep(200);
+     end;
 {$endif}
 
   start;   // resume;  { if fpc version <= 2.4.4}
@@ -6055,7 +6061,7 @@ end;
     {$endif}
 begin
   inherited Create(CreateSuspended, StackSize);
-  FreeOnTerminate := false;
+  FreeOnTerminate := true;
   Priority :=  tpTimeCritical;
   evPause := RTLEventCreate;
     {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
@@ -6175,21 +6181,11 @@ begin
 end;
 
 procedure uos_Free();
-// var
-// x : integer;
 begin
-{
-if ifflat = true then
-begin
-if length(uosPlayers) > 0 then
- for x := 0 to length(uosPlayers) -1 do
-  begin
-  uosPlayers[x].destroy;
-  end;
-end;
-}
-if assigned(uosInit) then freeandnil(uosInit);
+
  uos_unloadlib() ;
+
+ if assigned(uosInit) then freeandnil(uosInit);
 end;
 
 end.

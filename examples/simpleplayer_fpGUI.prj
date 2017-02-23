@@ -818,7 +818,7 @@ line=8
  764
  2638
  1951
- 553
+ 552
  247
 address=8
  5002412
@@ -938,8 +938,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=timer
+finddtext=AddFromFile
 findhistory=20
+ AddFromFile
+ destroy
+ create
+ uos_AddFromFile
  timer
  btnStartClick
  FramesCount
@@ -956,18 +960,11 @@ findhistory=20
  mono2stereo
  mono2stero
  reverse
- OUTPUT DATA op_read_ 
- op_
- Cvfloat32ToInt32fl
- 2-PlugFunc:
 findoptions=1
-editpos=23
+editpos=25
  0,-1073741823
  0,-1073741823
- 0,623
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,628
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -983,8 +980,13 @@ editpos=23
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,202
- 0,327
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1008,7 +1010,9 @@ bookmarks19=0
 bookmarks20=0
 bookmarks21=0
 bookmarks22=0
-sourcefiles=23
+bookmarks23=0
+bookmarks24=0
+sourcefiles=25
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1032,7 +1036,9 @@ sourcefiles=23
  ${PROJECTDIR}/morseTL_fpGUI.pas
  ${PROJECTDIR}/uos_opusfile.pas
  ${PROJECTDIR}/uos_mpg123.pas
-relpaths=23
+ ${PROJECTDIR}/uos_opus.pas
+ ${PROJECTDIR}/uos.pas
+relpaths=25
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1056,7 +1062,11 @@ relpaths=23
  morseTL_fpGUI.pas
  uos_opusfile.pas
  uos_mpg123.pas
-ismoduletexts=23
+ uos_opus.pas
+ uos.pas
+ismoduletexts=25
+ 0
+ 0
  0
  0
  0
@@ -1085,11 +1095,13 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=23
+order=25
  0
  1
  2
+ 24
  21
+ 23
  22
  20
  19
@@ -1111,7 +1123,7 @@ order=23
  6
 tabsize=60
 firsttab=2
-index=3
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1273,7 +1285,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=7
+ row=10
  rowheight=17
  [stackfo]
  splitdir=0
