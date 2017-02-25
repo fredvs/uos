@@ -151,7 +151,7 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
 {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
          ////// load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...    
      // PortAudio => needed for dealing with audio-device
      // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
@@ -171,11 +171,11 @@ procedure uos_free;
 procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
            ////// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 
-function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
+function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
         ////// load plugin...
 
 {$IF DEFINED(shout)}
-function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : LongInt; 
+function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : cint32; 
      // Shout => needed for dealing with IceCast server
      // Opus => needed for dealing with encoding opus stream
   
@@ -186,19 +186,19 @@ procedure uos_unloadServerLib();
 procedure uos_UnloadPlugin(PluginName: PChar);
 
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-procedure uos_CreatePlayer(PlayerIndex: LongInt; AParent: TObject);
+procedure uos_CreatePlayer(PlayerIndex: cint32; AParent: TObject);
 {$else}
-procedure uos_CreatePlayer(PlayerIndex: LongInt);
+procedure uos_CreatePlayer(PlayerIndex: cint32);
 {$endif}
 
 {$IF DEFINED(portaudio)}
-function uos_AddIntoDevOut(PlayerIndex: LongInt): LongInt;
+function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
         //// PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, soundcard, ...)
         //// If PlayerIndex already exists, it will be overwriten...
 
          ////// Add a Output into Device Output with custom parameters
-function uos_AddIntoDevOut(PlayerIndex: LongInt; Device: LongInt; Latency: CDouble;
-            SampleRate: LongInt; Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
+function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
+            SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ): cint32;
           ////// Add a Output into Device Output with default parameters
           //////////// PlayerIndex : Index of a existing Player
           //////////// Device ( -1 is default device )
@@ -211,11 +211,11 @@ function uos_AddIntoDevOut(PlayerIndex: LongInt; Device: LongInt; Latency: CDoub
           /// example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1,0,-1);
  {$endif}
 
-function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar): LongInt;
+function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar): cint32;
             /////// Add a input from audio file with default parameters
 
-function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar; OutputIndex: LongInt;
-              SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
+function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint32;
+              SampleFormat: cint32 ; FramesCount: cint32): cint32;
             /////// Add a input from audio file with default parameters
             //////////// PlayerIndex : Index of a existing Player
             ////////// FileName : filename of audio file
@@ -226,8 +226,8 @@ function uos_AddFromFile(PlayerIndex: LongInt; Filename: PChar; OutputIndex: Lon
             //////////// example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);
 
  {$IF DEFINED(shout)}
-function uos_AddIntoIceServer(PlayerIndex: LongInt; SampleRate : cint; Channels: cint; SampleFormat: cint;
- EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): LongInt;
+function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: cint; SampleFormat: cint;
+ EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
      ////// Add a Output into a IceCast server for audio-web-streaming     //////////// SampleRate : delault : -1 (48100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// EncodeType : default : -1 (0:Music) (0: Music, 1:Voice)
@@ -241,14 +241,14 @@ function uos_AddIntoIceServer(PlayerIndex: LongInt; SampleRate : cint; Channels:
    {$endif}
 
 {$IF DEFINED(webstream)}
-function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar): LongInt;
+function uos_AddFromURL(PlayerIndex: cint32; URL: PChar): cint32;
           /////// Add a Input from Audio URL with default parameters
 
-function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
-                       SampleFormat: LongInt ; FramesCount: LongInt; AudioFormat: LongInt): LongInt;
+function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
+                       SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32): cint32;
              /////// Add a Input from Audio URL with custom parameters
               ////////// URL : URL of audio file 
-              ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
+              ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
               //////////// FramesCount : default : -1 (4096)
               //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
@@ -295,20 +295,20 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
 
 
 {$IF DEFINED(synthesizer)}
-function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
-      SampleFormat: LongInt ; SampleRate: LongInt ; FramesCount : LongInt): LongInt;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
+      SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
      ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
      ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
-       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
     //////////// FramesCount : -1 default : 1024
      //  result :   Input Index in array    -1 = error
     //////////// example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
     
-procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
      ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
@@ -346,16 +346,16 @@ procedure uos_LoopProcOut(PlayerIndex: cint32; OutIndex: cint32; Proc: TProc);
             //////////// OutIndex : Index of a existing Output
 
 {$IF DEFINED(noiseremoval)}
-procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt);
+procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: cint32);
       
-procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; Enable: boolean);
+procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: cint32; Enable: boolean);
 
-procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt);
+procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: cint32);
       
-procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt; Enable: boolean);
+procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: cint32; Enable: boolean);
 {$endif} 
 
-function uos_AddDSP2ChanTo1ChanIn(PlayerIndex: cint32; InputIndex: LongInt): LongInt;
+function uos_AddDSP2ChanTo1ChanIn(PlayerIndex: cint32; InputIndex: cint32): cint32;
      ////  Convert mono 1 channel input to stereo 2 channels input.
     //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
@@ -514,7 +514,7 @@ procedure uos_SetPluginSoundTouch(PlayerIndex: cint32; PluginIndex: cint32; Temp
 {$endif}
 
 {$IF DEFINED(bs2b)}
-procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: LongInt;
+procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: cint32;
  level: CInt32; fcut: CInt32; feed: CInt32; Enable: boolean);
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
     //////////                
@@ -531,6 +531,9 @@ procedure uos_SeekSeconds(PlayerIndex: cint32; InputIndex: cint32; pos: cfloat);
 
 procedure uos_SeekTime(PlayerIndex: cint32; InputIndex: cint32; pos: TTime);
                      //// change position in time format
+
+procedure uos_InputSetEnable(PlayerIndex: cint32; InputIndex: cint32; enabled: boolean);
+        //// set enable true or false (usefull for multi input)
 
 function uos_InputLength(PlayerIndex: cint32; InputIndex: cint32): cint32;
                      ////////// InputIndex : InputIndex of existing input
@@ -571,7 +574,7 @@ procedure uos_InputSetArrayLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ;
                          // 1 => calcul before all DSP procedures.
                          // 2 => calcul after all DSP procedures.
 
-function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: LongInt) : TDArFloat;
+function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: cint32) : TDArFloat;
 
 function uos_InputGetLevelLeft(PlayerIndex: cint32; InputIndex: cint32): double;
                      ////////// InputIndex : InputIndex of existing input
@@ -630,7 +633,7 @@ var
 implementation
 
 {$IF DEFINED(noiseremoval)}
-procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt);
+procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: cint32);
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
@@ -638,14 +641,14 @@ begin
     uosPlayers[PlayerIndex].AddDSPNoiseRemovalIn(InputIndex);
 end;
       
-procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: LongInt; Enable: boolean);
+procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: cint32; Enable: boolean);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
 uosPlayers[PlayerIndex].SetDSPNoiseRemovalIn(InputIndex, Enable);
 end;
 
-procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt);
+procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: cint32);
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
@@ -653,7 +656,7 @@ begin
     uosPlayers[PlayerIndex].AddDSPNoiseRemovalOut(OutputIndex);
 end;
       
-procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: LongInt; Enable: boolean);
+procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: cint32; Enable: boolean);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
@@ -943,13 +946,13 @@ end;
 {$endif}
 
 {$IF DEFINED(synthesizer)}
-function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
-      SampleFormat: LongInt ; SampleRate: LongInt; FramesCount : LongInt): LongInt;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
+      SampleFormat: cint32 ; SampleRate: cint32; FramesCount : cint32): cint32;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
      ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
      ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
-       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
     //////////// FramesCount : -1 default : 1024
@@ -963,7 +966,7 @@ function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float;
              SampleFormat, SampleRate,  FramesCount) ;
 end;
 
-procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
      ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
@@ -1004,8 +1007,8 @@ function uos_AddIntoFile(PlayerIndex: cint32;  Filename: PChar): cint32;
 end;
 
  {$IF DEFINED(shout)}
-function uos_AddIntoIceServer(PlayerIndex: LongInt; SampleRate : cint; Channels: cint; SampleFormat: cint;
- EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): LongInt;
+function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: cint; SampleFormat: cint;
+ EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
      ////// Add a Output into a IceCast server for audio-web-streaming     //////////// SampleRate : delault : -1 (48100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// EncodeType : default : -1 (0:Music) (0: Music, 1:Voice)
@@ -1081,11 +1084,11 @@ begin
 end;
 
 {$IF DEFINED(webstream)}
-function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar; OutputIndex: LongInt;
-               SampleFormat: LongInt ; FramesCount: LongInt; AudioFormat: Longint): LongInt;
+function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
+               SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32): cint32;
             /////// Add a Input from Audio URL
               ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
-              ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
+              ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
               //////////// FramesCount : default : -1 (65536)
              //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
@@ -1097,7 +1100,7 @@ begin
     Result := uosPlayers[PlayerIndex].AddFromURL(URL, OutputIndex, SampleFormat, FramesCount, AudioFormat);
 end;
 
-function uos_AddFromURL(PlayerIndex: LongInt; URL: PChar): LongInt;
+function uos_AddFromURL(PlayerIndex: cint32; URL: PChar): cint32;
 begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
@@ -1133,7 +1136,7 @@ end;
 {$endif}
 
 {$IF DEFINED(bs2b)}
-    procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: LongInt; level: CInt32; fcut: CInt32; 
+    procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: cint32; level: CInt32; fcut: CInt32; 
    feed: CInt32; Enable: boolean);
                      ////////// PluginIndex : PluginIndex Index of a existing Plugin.
                      //////////// PlayerIndex : Index of a existing Player
@@ -1237,6 +1240,14 @@ begin
   uosPlayers[PlayerIndex].InputSetLevelEnable(InputIndex, enable) ;
 end;
 
+procedure uos_InputSetEnable(PlayerIndex: cint32; InputIndex: cint32; enabled: boolean);
+                   //// set enable true or false
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+    if  uosPlayersStat[PlayerIndex] = 1 then
+  uosPlayers[PlayerIndex].InputSetEnable(InputIndex, enabled) ;
+end;
+
 procedure uos_InputSetPositionEnable(PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);
                    ///////// set position calculation (default is 0)
                           // 0 => no calcul
@@ -1258,7 +1269,7 @@ begin
   uosPlayers[PlayerIndex].InputSetArrayLevelEnable(InputIndex, levelcalc) ;
 end;
 
-function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: LongInt) : TDArFloat;
+function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: cint32) : TDArFloat;
 begin
    result :=  uosLevelArray[PlayerIndex][InputIndex] ;
  end;
@@ -1326,7 +1337,7 @@ begin
  result := uosPlayers[PlayerIndex].InputPositionTime(InputIndex) ;
 end;
 
-function uos_AddDSP2ChanTo1ChanIn(PlayerIndex: cint32; InputIndex: LongInt): LongInt;
+function uos_AddDSP2ChanTo1ChanIn(PlayerIndex: cint32; InputIndex: cint32): cint32;
 /////  Convert mono 1 channel input to stereo 2 channels input.
     //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
@@ -1427,13 +1438,13 @@ begin
  uosPlayers[PlayerIndex].StreamOut[OutIndex].LoopProc := Proc;
 end;
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   begin
    ifflat := true;
 result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName)  ;
   end;
   
-function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
+function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
         ////// load plugin...
 begin
    ifflat := true;
@@ -1441,7 +1452,7 @@ result := uos.uos_loadPlugin(PluginName, PluginFilename)  ;
 end;
 
 {$IF DEFINED(shout)}
-function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : LongInt; 
+function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : cint32; 
      // Shout => needed for dealing with IceCast server
      // Opus => needed for dealing with encoding opus stream
 begin

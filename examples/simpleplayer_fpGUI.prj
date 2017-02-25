@@ -82,14 +82,15 @@ finddialog=8
  y=215
  cx=298
  cy=116
-replacedialog=24
+replacedialog=25
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=shhandle
- history=11
+ value=cint32
+ history=12
+  cint32
   shhandle
   unix
   BeginFunc
@@ -215,7 +216,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=339
@@ -545,12 +546,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3900
+ 3901
  0
  0
  0
  0
- 195
+ 194
 exeusedon=14
  3903
  0
@@ -812,12 +813,12 @@ path=8
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=8
- 3784
+ 3793
  33
  913
  764
- 2638
- 1951
+ 2647
+ 1960
  552
  247
 address=8
@@ -938,8 +939,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=AddFromFile
+finddtext=longint
 findhistory=20
+ longint
+ playnofree
+ op_test_file error =
  AddFromFile
  destroy
  create
@@ -957,134 +961,31 @@ findhistory=20
  function SoundTouchPlug(
  2-PlugFunc
  fromfile
- mono2stereo
- mono2stero
- reverse
 findoptions=1
-editpos=25
- 0,-1073741823
- 0,-1073741823
- 0,628
+editpos=5
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 21,10
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-bookmarks23=0
-bookmarks24=0
-sourcefiles=25
+sourcefiles=5
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_opusfile.pas
- ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
- ${PROJECTDIR}/main_sr.pas
- ${PROJECTDIR}/uos_opusfile.pas
- ${PROJECTDIR}/opus_trivial_example.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_shout.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_shout.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/consoleplay.pas
- /home/fred/fpgui/src/corelib/fpg_base.pas
- ${PROJECTDIR}/morseTL_fpGUI.pas
- ${PROJECTDIR}/uos_opusfile.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_opus.pas
- ${PROJECTDIR}/uos.pas
-relpaths=25
+relpaths=5
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
- uos_opusfile.pas
- uos.pas
  uos_flat.pas
  define.inc
- simplerecorder_fpGUI.pas
- main_sr.pas
- uos_opusfile.pas
- opus_demo/opus_trivial_example.pas
- uos.pas
- define.inc
- uos_shout.pas
- uos_soundtouch.pas
- uos_mpg123.pas
- uos_shout.pas
- uos_flat.pas
- consoleplay.pas
- fpgui/src/corelib/fpg_base.pas
- morseTL_fpGUI.pas
- uos_opusfile.pas
- uos_mpg123.pas
- uos_opus.pas
- uos.pas
-ismoduletexts=25
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=5
  0
  0
  0
@@ -1095,35 +996,9 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=25
- 0
- 1
- 2
- 24
- 21
- 23
- 22
- 20
- 19
- 18
- 11
- 17
- 12
- 16
- 13
- 14
- 15
- 3
- 4
- 9
- 10
- 5
- 7
- 8
- 6
 tabsize=60
 firsttab=2
-index=2
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1151,8 +1026,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=124
- y=39
+ x=177
+ y=56
  cx=939
  cy=621
  rcx=0
@@ -1174,13 +1049,13 @@ windowlayout=530
  ncy=0
  x=571
  y=175
- cx=497
+ cx=743
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1285,7 +1160,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=10
+ row=3
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1624,7 +1499,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

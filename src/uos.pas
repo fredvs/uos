@@ -69,7 +69,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : LongInt = 17170220 ;
+  uos_version : cint32 = 17170225 ;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -182,7 +182,7 @@ type
 {$if not defined(fs32bit)}
   Tcount_t    = cint64;          { used for file sizes }
 {$else}
-  Tcount_t    = longint;
+  Tcount_t    = cint32;
 {$endif}
 
 type
@@ -223,22 +223,22 @@ type
     DefDevInAPIInfo: PPaHostApiInfo;
 {$endif}
 
-    function loadlib: LongInt;
+    function loadlib: cint32;
     procedure unloadlib;
     procedure unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
-    function InitLib: LongInt;
+    function InitLib: cint32;
     procedure unloadPlugin(PluginName: Pchar);
   end;
 
 type
   Tuos_DeviceInfos = record
-    DeviceNum: LongInt;
+    DeviceNum: cint32;
     DeviceName: UTF8String;
     DeviceType: UTF8String;
     DefaultDevIn: boolean;
     DefaultDevOut: boolean;
-    ChannelsIn: LongInt;
-    ChannelsOut: LongInt;
+    ChannelsIn: cint32;
+    ChannelsOut: cint32;
     SampleRate: CDouble;
     LatencyHighIn: CDouble;
     LatencyLowIn: CDouble;
@@ -251,8 +251,8 @@ type
   Tuos_WaveHeaderChunk = packed record
     wFormatTag: smallint;
     wChannels: word;
-    wSamplesPerSec: LongInt;
-    wAvgBytesPerSec: LongInt;
+    wSamplesPerSec: cint32;
+    wAvgBytesPerSec: cint32;
     wBlockAlign: word;
     wBitsPerSample: word;
     wcbSize: word;
@@ -261,7 +261,7 @@ type
 type
   Tuos_FileBuffer = record
     ERROR: word;
-    wSamplesPerSec: LongInt;
+    wSamplesPerSec: cint32;
     wBitsPerSample: word;
     wChannels: word;
     Data: TFileStream;
@@ -283,9 +283,9 @@ type
     BufferURL: tbytes;
    {$endif}
       
-    DSPVolumeIndex : LongInt;
+    DSPVolumeIndex : cint32;
     
-    DSPNoiseIndex : LongInt;
+    DSPNoiseIndex : cint32;
         
     VLeft, VRight: double;
 
@@ -295,21 +295,21 @@ type
     levelArrayEnable : integer;
     
     freqsine: cfloat;
-    lensine: longint;
-    posLsine, posRsine: longint;
+    lensine: cint32;
+    posLsine, posRsine: cint32;
    
 {$if defined(cpu64)}
     Wantframes: Tcount_t;
     OutFrames: Tcount_t;
 {$else}
-    Wantframes: longint;
-    OutFrames: longint;
+    Wantframes: cint32;
+    OutFrames: cint32;
 {$endif}
     
     SamplerateRoot: longword;
     SampleRate: longword;
-    SampleFormat: LongInt;
-    Channels: LongInt;
+    SampleFormat: cint32;
+    Channels: cint32;
     
         /////////// audio file data
     HandleSt: pointer;
@@ -328,27 +328,27 @@ type
     Tag: array[0..2] of char;
     Album: UTF8String;
     Genre: byte;
-    HDFormat: LongInt;
+    HDFormat: cint32;
 {$IF DEFINED(sndfile)}
    Frames: Tcount_t;
 {$else}
-   Frames: longint;
+   Frames: cint32;
 {$endif}
 
-    Sections: LongInt;
-    Encoding: LongInt;
-    Lengthst: LongInt;     ///////  in sample ;
+    Sections: cint32;
+    Encoding: cint32;
+    Lengthst: cint32;     ///////  in sample ;
     LibOpen: integer;    //// -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom, 4: opus
     Ratio: integer;     ////  if mpg123 or aac then ratio := 2
    
-    Output: LongInt;
+    Output: cint32;
 
 {$if defined(cpu64)}   /// TO CHECK
-    Position: LongInt;
-    Poseek:  LongInt;
+    Position: cint32;
+    Poseek:  cint32;
 {$else}
-    Position: LongInt;
-    Poseek:  LongInt;
+    Position: cint32;
+    Poseek:  cint32;
 {$endif}
 
    end;
@@ -357,7 +357,7 @@ type
   Tuos_FFT = class(TObject)
   public
     TypeFilter: integer;
-    LowFrequency, HighFrequency: LongInt;
+    LowFrequency, HighFrequency: cint32;
     AlsoBuf: boolean;
     a3, a32: array[0..2] of cfloat;
     b2, x0, x1, y0, y1, b22, x02, x12, y02, y12: array[0..1] of cfloat;
@@ -430,8 +430,8 @@ type
      OutHandle: longword;
          {$ENDIF}
     {$else}
-    InHandle : LongInt;
-    OutHandle: LongInt;
+    InHandle : cint32;
+    OutHandle: cint32;
       {$endif}
 
     InPipe: TInputPipeStream;
@@ -500,8 +500,8 @@ type
     procedure onTerminate;
   public
     isAssigned: boolean ;
-    Status: LongInt;
-    Index: LongInt;
+    Status: cint32;
+    Index: cint32;
 
     NoFree : boolean;
 
@@ -556,8 +556,8 @@ type
     procedure Pause();                 ///// Pause playing
 
    {$IF DEFINED(portaudio)}
-     function AddIntoDevOut(Device: LongInt; Latency: CDouble;
-      SampleRate: LongInt; Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
+     function AddIntoDevOut(Device: cint32; Latency: CDouble;
+      SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ): cint32;
      ////// Add a Output into Device Output
     //////////// Device ( -1 is default device )
     //////////// Latency  ( -1 is latency suggested )
@@ -569,8 +569,8 @@ type
     /// example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0);
    {$endif}
 
-    function AddIntoFile(Filename: PChar; SampleRate: LongInt;
-      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
+    function AddIntoFile(Filename: PChar; SampleRate: cint32;
+      Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
     /////// Add a Output into audio wav file with custom parameters
      ////////// FileName : filename of saved audio wav file
     //////////// SampleRate : delault : -1 (44100)
@@ -582,7 +582,7 @@ type
 
  {$IF DEFINED(shout)}
   function AddIntoIceServer(SampleRate : cint; Channels: cint; SampleFormat: cint;
- EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): LongInt;
+ EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
      ////// Add a Output into a IceCast server for audio-web-streaming 
     //////////// SampleRate : delault : -1 (48000)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
@@ -598,14 +598,14 @@ type
 
 
     {$IF DEFINED(portaudio)}
-    function AddFromDevIn(Device: LongInt; Latency: CDouble;
-  SampleRate: LongInt; OutputIndex: LongInt;
-  SampleFormat: LongInt; FramesCount : LongInt): LongInt;
+    function AddFromDevIn(Device: cint32; Latency: CDouble;
+  SampleRate: cint32; OutputIndex: cint32;
+  SampleFormat: cint32; FramesCount : cint32): cint32;
    ////// Add a Input from Device Input with custom parameters
     //////////// Device ( -1 is default Input device )
     //////////// Latency  ( -1 is latency suggested ) )
     //////////// SampleRate : delault : -1 (44100)
-    //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+    //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (4096)
     //  result :  otherwise Output Index in array   -1 = error
@@ -613,42 +613,42 @@ type
 {$endif}
 
 {$IF DEFINED(synthesizer)}
-function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
-      SampleFormat: LongInt ; SampleRate: LongInt ; FramesCount : LongInt): LongInt;
+function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
+      SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
      ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
      ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
-       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
     //////////// FramesCount : -1 default : 1024
      //  result :   Input Index in array    -1 = error
     //////////// example : InputIndex1 := AddFromSynth(880,-1,-1,-1,-1,-1,-1);
     
-procedure InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
+procedure InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
      ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
     //////////// Enable : true or false ;
 {$endif}
 
-function AddFromFile(Filename: Pchar; OutputIndex: LongInt;
-      SampleFormat: LongInt ; FramesCount: LongInt): LongInt;
+function AddFromFile(Filename: Pchar; OutputIndex: cint32;
+      SampleFormat: cint32 ; FramesCount: cint32): cint32;
     /////// Add a input from audio file with custom parameters
     ////////// FileName : filename of audio file
-    ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+    ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (4096)
     //  result :   Input Index in array    -1 = error
     //////////// example : InputIndex1 := AddFromFile(edit5.Text,-1,0,-1);
 
 {$IF DEFINED(webstream)}
-function AddFromURL(URL: PChar; OutputIndex: LongInt;
-   SampleFormat: LongInt ; FramesCount: LongInt ; AudioFormat: Longint): LongInt;
+function AddFromURL(URL: PChar; OutputIndex: cint32;
+   SampleFormat: cint32 ; FramesCount: cint32 ; AudioFormat: cint32): cint32;
   /////// Add a Input from Audio URL
   ////////// URL : URL of audio file
-  ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
+  ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (4096)
   //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
@@ -659,102 +659,105 @@ function AddFromURL(URL: PChar; OutputIndex: LongInt;
 
 {$ENDIF}
 
-function AddPlugin(PlugName: Pchar; SampleRate: LongInt;
-      Channels: LongInt): LongInt;
+function AddPlugin(PlugName: Pchar; SampleRate: cint32;
+      Channels: cint32): cint32;
     /////// Add a plugin , result is PluginIndex
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
     ////// 'soundtouch' and 'bs2b' PlugName are registred.
 
 {$IF DEFINED(soundtouch)}
-procedure SetPluginSoundTouch(PluginIndex: LongInt; Tempo: cfloat;
+procedure SetPluginSoundTouch(PluginIndex: cint32; Tempo: cfloat;
       Pitch: cfloat; Enable: boolean);
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
     //////////               
 {$endif}
     
 {$IF DEFINED(bs2b)}
-procedure SetPluginBs2b(PluginIndex: LongInt; level: CInt32; fcut: CInt32; 
+procedure SetPluginBs2b(PluginIndex: cint32; level: CInt32; fcut: CInt32; 
    feed: CInt32; Enable: boolean);
     ////////// PluginIndex : PluginIndex Index of a existing Plugin.
     //////////                
 {$endif}
 
-function GetStatus() : LongInt ;
+function GetStatus() : cint32 ;
     /////// Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, -1 => error.
 
-procedure Seek(InputIndex: LongInt; pos: Tcount_t);
+procedure Seek(InputIndex: cint32; pos: Tcount_t);
     //// change position in sample
 
-procedure SeekSeconds(InputIndex: LongInt; pos: cfloat);
+procedure SeekSeconds(InputIndex: cint32; pos: cfloat);
     //// change position in seconds
 
-procedure SeekTime(InputIndex: LongInt; pos: TTime);
+procedure SeekTime(InputIndex: cint32; pos: TTime);
     //// change position in time format
 
-function InputLength(InputIndex: LongInt): longint;
+procedure InputSetEnable(InputIndex: cint32; enabled: boolean);
+        //// set enable true or false
+
+function InputLength(InputIndex: cint32): cint32;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : Length of Input in samples
 
-function InputLengthSeconds(InputIndex: LongInt): cfloat;
+function InputLengthSeconds(InputIndex: cint32): cfloat;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : Length of Input in seconds
     
-function InputLengthTime(InputIndex: LongInt): TTime;
+function InputLengthTime(InputIndex: cint32): TTime;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : Length of Input in time format
 
-function InputPosition(InputIndex: LongInt): longint;
+function InputPosition(InputIndex: cint32): cint32;
     ////////// InputIndex : InputIndex of existing input
     ////// result : current postion in sample
 
-procedure InputSetFrameCount(InputIndex: LongInt ; framecount : longint);
+procedure InputSetFrameCount(InputIndex: cint32 ; framecount : cint32);
                    ///////// set number of frames to be done. (usefull for recording and level precision)
 
-procedure InputSetLevelEnable(InputIndex: LongInt ; levelcalc : longint);
+procedure InputSetLevelEnable(InputIndex: cint32 ; levelcalc : cint32);
                    ///////// set level calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul before all DSP procedures.
                           // 2 => calcul after all DSP procedures.
                           // 3 => calcul before and after all DSP procedures.
 
-procedure InputSetPositionEnable(InputIndex: LongInt ; poscalc : longint);
+procedure InputSetPositionEnable(InputIndex: cint32 ; poscalc : cint32);
                    ///////// set position calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul of position.
 
-procedure InputSetArrayLevelEnable(InputIndex: LongInt ; levelcalc : longint);
+procedure InputSetArrayLevelEnable(InputIndex: cint32 ; levelcalc : cint32);
                    ///////// set add level calculation in level-array (default is 0)
                           // 0 => no calcul
                           // 1 => calcul before all DSP procedures.
                           // 2 => calcul after all DSP procedures.
 
-function InputGetLevelLeft(InputIndex: LongInt): double;
+function InputGetLevelLeft(InputIndex: cint32): double;
     ////////// InputIndex : InputIndex of existing input
     ////// result : left level from 0 to 1
 
-function InputGetLevelRight(InputIndex: LongInt): double;
+function InputGetLevelRight(InputIndex: cint32): double;
     ////////// InputIndex : InputIndex of existing input
     ////// result : right level from 0 to 1
 
-function InputPositionSeconds(InputIndex: LongInt): float;
+function InputPositionSeconds(InputIndex: cint32): float;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : current postion of Input in seconds
 
-function InputPositionTime(InputIndex: LongInt): TTime;
+function InputPositionTime(InputIndex: cint32): TTime;
     ////////// InputIndex : InputIndex of existing input
     ///////  result : current postion of Input in time format
 
-function InputGetTagTitle(InputIndex: LongInt): pchar;
-function InputGetTagArtist(InputIndex: LongInt): pchar;
-function InputGetTagAlbum(InputIndex: LongInt): pchar;
-function InputGetTagDate(InputIndex: LongInt): pchar;
-function InputGetTagComment(InputIndex: LongInt): pchar;
-function InputGetTagTag(InputIndex: LongInt): pchar;
+function InputGetTagTitle(InputIndex: cint32): pchar;
+function InputGetTagArtist(InputIndex: cint32): pchar;
+function InputGetTagAlbum(InputIndex: cint32): pchar;
+function InputGetTagDate(InputIndex: cint32): pchar;
+function InputGetTagComment(InputIndex: cint32): pchar;
+function InputGetTagTag(InputIndex: cint32): pchar;
     /// Tag infos
 
-function AddDSPin(InputIndex: LongInt; BeforeFunc: TFunc;
-      AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): LongInt;
+function AddDSPin(InputIndex: cint32; BeforeFunc: TFunc;
+      AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
     ///// add a DSP procedure for input
     ////////// InputIndex d: Input Index of a existing input
     ////////// BeforeFunc : function to do before the buffer is filled
@@ -764,14 +767,14 @@ function AddDSPin(InputIndex: LongInt; BeforeFunc: TFunc;
     //  result :  index of DSPin in array  (DSPinIndex)
     ////////// example : DSPinIndex1 := AddDSPIn(InputIndex1,@beforereverse,@afterreverse,nil);
 
-procedure SetDSPin(InputIndex: LongInt; DSPinIndex: LongInt; Enable: boolean);
+procedure SetDSPin(InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
     ////////// InputIndex : Input Index of a existing input
     ////////// DSPIndexIn : DSP Index of a existing DSP In
     ////////// Enable :  DSP enabled
     ////////// example : SetDSPIn(InputIndex1,DSPinIndex1,True);
 
-function AddDSPout(OutputIndex: LongInt; BeforeFunc: TFunc;
-      AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): LongInt;    //// usefull if multi output
+function AddDSPout(OutputIndex: cint32; BeforeFunc: TFunc;
+      AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;    //// usefull if multi output
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// BeforeFunc : function to do before the buffer is filled
     ////////// AfterFunc : function to do after the buffer is filled just before to give to output
@@ -780,15 +783,15 @@ function AddDSPout(OutputIndex: LongInt; BeforeFunc: TFunc;
     //  result : index of DSPout in array
     ////////// example :DSPoutIndex1 := AddDSPout(OutputIndex1,@volumeproc,nil,nil);
 
-procedure SetDSPout(OutputIndex: LongInt; DSPoutIndex: LongInt; Enable: boolean);
+procedure SetDSPout(OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// DSPoutIndex : DSPoutIndex of existing DSPout
     ////////// Enable :  DSP enabled
     ////////// example : SetDSPIn(OutputIndex1,DSPoutIndex1,True);
 
-function AddFilterIn(InputIndex: LongInt; LowFrequency: LongInt;
-      HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
-      AlsoBuf: boolean; LoopProc: TProc): LongInt;
+function AddFilterIn(InputIndex: cint32; LowFrequency: cint32;
+      HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
+      AlsoBuf: boolean; LoopProc: TProc): cint32;
     ////////// InputIndex : InputIndex of a existing Input
     ////////// LowFrequency : Lowest frequency of filter
     ////////// HighFrequency : Highest frequency of filter
@@ -800,9 +803,9 @@ function AddFilterIn(InputIndex: LongInt; LowFrequency: LongInt;
     //  result :  otherwise index of DSPIn in array
     ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1,2,true,nil);
 
-procedure SetFilterIn(InputIndex: LongInt; FilterIndex: LongInt;
-      LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
-      TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+procedure SetFilterIn(InputIndex: cint32; FilterIndex: cint32;
+      LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
+      TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
     ////////// InputIndex : InputIndex of a existing Input
     ////////// DSPInIndex : DSPInIndex of existing DSPIn
     ////////// LowFrequency : Lowest frequency of filter ( -1 : current LowFrequency )
@@ -815,9 +818,9 @@ procedure SetFilterIn(InputIndex: LongInt; FilterIndex: LongInt;
     ////////// Enable :  Filter enabled
     ////////// example : SetFilterIn(InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 
-function AddFilterOut(OutputIndex: LongInt; LowFrequency: LongInt;
-      HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt;
-      AlsoBuf: boolean; LoopProc: TProc): LongInt;
+function AddFilterOut(OutputIndex: cint32; LowFrequency: cint32;
+      HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
+      AlsoBuf: boolean; LoopProc: TProc): cint32;
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// LowFrequency : Lowest frequency of filter
     ////////// HighFrequency : Highest frequency of filter
@@ -829,9 +832,9 @@ function AddFilterOut(OutputIndex: LongInt; LowFrequency: LongInt;
     //  result : index of DSPOut in array
     ////////// example :FilterOutIndex1 := AddFilterOut(OutputIndex1,6000,16000,1,true,nil);
 
-procedure SetFilterOut(OutputIndex: LongInt; FilterIndex: LongInt;
-      LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
-      TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+procedure SetFilterOut(OutputIndex: cint32; FilterIndex: cint32;
+      LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
+      TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// FilterIndex : DSPOutIndex of existing DSPOut
     ////////// LowFrequency : Lowest frequency of filter ( -1 : current LowFrequency )
@@ -847,15 +850,15 @@ procedure SetFilterOut(OutputIndex: LongInt; FilterIndex: LongInt;
 function DSPLevel(Data: Tuos_Data): Tuos_Data;
     //////////// to get level of buffer (volume)
     
-function AddDSP2ChanTo1ChanIn(InputIndex: LongInt): LongInt;
+function AddDSP2ChanTo1ChanIn(InputIndex: cint32): cint32;
     /////  Convert mono 1 channel input to stereo 2 channels input.
     //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
        //  result :  index of DSPIn in array
     ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
 
-function AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
-      VolRight: double): LongInt;
+function AddDSPVolumeIn(InputIndex: cint32; VolLeft: double;
+      VolRight: double): cint32;
     ///// DSP Volume changer
     ////////// InputIndex : InputIndex of a existing Input
     ////////// VolLeft : Left volume
@@ -863,8 +866,8 @@ function AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
     //  result :  index of DSPIn in array
     ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
 
-function AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;
-      VolRight: double): LongInt;
+function AddDSPVolumeOut(OutputIndex: cint32; VolLeft: double;
+      VolRight: double): cint32;
     ///// DSP Volume changer
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// VolLeft : Left volume
@@ -873,24 +876,24 @@ function AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;
     ////////// example  DSPIndex1 := AddDSPVolumeOut(InputIndex1,1,1);
     
 {$IF DEFINED(noiseremoval)}
-function AddDSPNoiseRemovalIn(InputIndex: LongInt): LongInt;
+function AddDSPNoiseRemovalIn(InputIndex: cint32): cint32;
     ///// DSP Noise Removal
     ////////// InputIndex : InputIndex of a existing Input
     //  result :  otherwise index of DSPIn in array
     ////////// example  DSPIndex1 := AddDSPNoiseRemovalIn(InputIndex1);
     
-procedure SetDSPNoiseRemovalIn(InputIndex: LongInt; Enable: boolean);
+procedure SetDSPNoiseRemovalIn(InputIndex: cint32; Enable: boolean);
     
-function AddDSPNoiseRemovalOut(OutputIndex: LongInt): LongInt;
+function AddDSPNoiseRemovalOut(OutputIndex: cint32): cint32;
     ///// DSP Noise Removal
     ////////// InputIndex : OutputIndex of a existing Output
     //  result :  otherwise index of DSPOut in array
     ////////// example  DSPIndex1 := AddDSPNoiseRemovalOut(OutputIndex1);
     
-procedure SetDSPNoiseRemovalOUT(OutputIndex: LongInt; Enable: boolean);
+procedure SetDSPNoiseRemovalOUT(OutputIndex: cint32; Enable: boolean);
 {$endif}  
     
-procedure SetDSPVolumeIn(InputIndex: LongInt; DSPVolIndex: LongInt;
+procedure SetDSPVolumeIn(InputIndex: cint32; DSPVolIndex: cint32;
       VolLeft: double; VolRight: double; Enable: boolean);
     ////////// InputIndex : InputIndex of a existing Input
     ////////// DSPIndex : DSPIndex of a existing DSP
@@ -899,7 +902,7 @@ procedure SetDSPVolumeIn(InputIndex: LongInt; DSPVolIndex: LongInt;
     ////////// Enable : Enabled
     ////////// example  SetDSPVolumeIn(InputIndex1,DSPIndex1,1,0.8,True);
 
-procedure SetDSPVolumeOut(OutputIndex: LongInt; DSPVolIndex: LongInt;
+procedure SetDSPVolumeOut(OutputIndex: cint32; DSPVolIndex: cint32;
       VolLeft: double; VolRight: double; Enable: boolean);
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// DSPIndex : DSPIndex of a existing DSP
@@ -918,7 +921,7 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
    {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName : PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName : PChar) : cint32;
        ////// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
      // PortAudio => needed for dealing with audio-device
      // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
@@ -932,7 +935,7 @@ procedure uos_unloadlib();
         ////// Unload all libraries... Do not forget to call it before close application...
 
 {$IF DEFINED(shout)}
-function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : LongInt;
+function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : cint32;
       // Shout => needed for dealing with IceCast server
      // Opus => needed for dealing with encoding opus stream
   
@@ -943,7 +946,7 @@ procedure uos_unloadServerLib();
 procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
            ////// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
-function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
+function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
         ////// load plugin...
         
 procedure uos_unloadPlugin(PluginName: PChar);
@@ -953,7 +956,7 @@ procedure uos_Free();
      /// To call at end of application.
      //// If uos_flat.pas was used, it will free all the uos_player created.
            
-function uos_GetVersion() : LongInt ;             //// version of uos
+function uos_GetVersion() : cint32 ;             //// version of uos
 
 const
   ///// error
@@ -993,14 +996,14 @@ var
 tempload : boolean = false;
   //BufferURLtest: tbytes; 
   uosPlayers: array of Tuos_Player;
-  uosPlayersStat : array of LongInt;
+  uosPlayersStat : array of cint32;
   uosLevelArray : TDArIARFloat ;
   ifflat : boolean = false;
   uosDeviceInfos: array of Tuos_DeviceInfos;
   uosLoadResult: Tuos_LoadResult;
-  uosDeviceCount: LongInt;
-  uosDefaultDeviceIn: LongInt;
-  uosDefaultDeviceOut: LongInt;
+  uosDeviceCount: cint32;
+  uosDefaultDeviceIn: cint32;
+  uosDefaultDeviceOut: cint32;
   uosInit: Tuos_Init;
 
  {$IF DEFINED(windows)}
@@ -1045,9 +1048,9 @@ begin
 end;
 {$endif}
 
-function FormatBuf(Inbuf: TDArFloat; format: LongInt): TDArFloat;
+function FormatBuf(Inbuf: TDArFloat; format: cint32): TDArFloat;
 var
-  x: LongInt;
+  x: cint32;
   ps: PDArShort;     //////// if input is Int16 format
   pl: PDArLong;      //////// if input is Int32 format
   pf: PDArFloat;     //////// if input is Float32 format
@@ -1078,7 +1081,7 @@ end;
 
 function CvFloat32ToInt16(Inbuf: TDArFloat): TDArShort;
 var
-  x, i: LongInt;
+  x, i: cint32;
   arsh: TDArShort;
 begin
   SetLength(arsh, length(inbuf));
@@ -1098,7 +1101,7 @@ end;
 function CvFloat32ToInt32(Inbuf: TDArFloat): TDArLong;
 var
    i: int64;
-   x : LongInt;
+   x : cint32;
   arlo: TDArLong;
 begin
   SetLength(arlo, length(inbuf));
@@ -1117,7 +1120,7 @@ end;
 
 function CvFloat32ToInt32fl(Inbuf: TDArFloat; nb:integer): TDArFloat;
 var
-   x : LongInt;
+   x : cint32;
    pl2: PDArLong;      //////// if input is Int32 format
    pf: PDArfloat;
    buffer2 : TDArFloat;
@@ -1138,7 +1141,7 @@ end;
 
 function CvInt16ToFloat32(Inbuf: TDArFloat): TDArFloat;
 var
-  x: LongInt;
+  x: cint32;
   arfl: TDArFloat;
   ps: PDArShort;
 begin
@@ -1149,9 +1152,9 @@ begin
   Result := arfl;
 end;
 
-function CvSteroToMono(Inbuf: TDArFloat; len : longint): TDArFloat;
+function CvSteroToMono(Inbuf: TDArFloat; len : cint32): TDArFloat;
 var
-  x, y: LongInt;
+  x, y: cint32;
   arsh: TDArFloat;
  begin
 
@@ -1178,7 +1181,7 @@ end;
 
 function CvInt32ToFloat32(Inbuf: TDArFloat): TDArFloat;
 var
-  x: LongInt;
+  x: cint32;
   arfl: TDArFloat;
   pl: PDArLong;
 begin
@@ -1191,7 +1194,7 @@ end;
 
 procedure WriteWave(FileName: UTF8String; Data: Tuos_FileBuffer);
 var
-  wFileSize: LongInt;
+  wFileSize: cint32;
   ID: array[0..3] of char;
 begin
   ID := 'data';
@@ -1202,7 +1205,7 @@ begin
   Data.data.Free;
 end;
 
-function Tuos_Player.GetStatus() : LongInt ;
+function Tuos_Player.GetStatus() : cint32 ;
     /////// Get the status of the player : -1 => error, 0 => has stopped, 1 => is running, 2 => is paused.
 begin
    if (isAssigned = True) then  result := Status else result := -1 ;
@@ -1210,7 +1213,7 @@ end;
 
 procedure Tuos_Player.Play() ;
 var
-  x: LongInt;
+  x: cint32;
  begin
   if (isAssigned = True) then
   begin
@@ -1239,7 +1242,7 @@ end;
 
 procedure Tuos_Player.PlayNoFree() ;
 var
-  x: LongInt;
+  x: cint32;
  begin
   if (isAssigned = True) then
   begin
@@ -1309,20 +1312,20 @@ begin
   end;
 end;
 
-procedure Tuos_Player.Seek(InputIndex:LongInt; pos: Tcount_t);
+procedure Tuos_Player.Seek(InputIndex:cint32; pos: Tcount_t);
 //// change position in samples
 begin
    if (isAssigned = True) then StreamIn[InputIndex].Data.Poseek := pos;
 end;
 
-procedure Tuos_Player.SeekSeconds(InputIndex: LongInt; pos: cfloat);
+procedure Tuos_Player.SeekSeconds(InputIndex: cint32; pos: cfloat);
 //// change position in seconds
 begin
     if  (isAssigned = True) then  StreamIn[InputIndex].Data.Poseek :=
       trunc(pos * StreamIn[InputIndex].Data.SampleRate);
 end;
 
-procedure Tuos_Player.SeekTime(InputIndex: LongInt; pos: TTime);
+procedure Tuos_Player.SeekTime(InputIndex: cint32; pos: TTime);
 //// change position in time format
 var
   ho, mi, se, ms, possample: word;
@@ -1337,18 +1340,24 @@ begin
      end;
 end;
 
-function Tuos_Player.InputLength(InputIndex: LongInt): longint;
+procedure Tuos_Player.InputSetEnable(InputIndex: cint32; enabled: boolean);
+        //// set enable true or false
+begin
+StreamIn[InputIndex].data.Enabled := enabled;
+end;
+
+function Tuos_Player.InputLength(InputIndex: cint32): cint32;
   //// gives length in samples
 begin
    if (isAssigned = True) then Result := StreamIn[InputIndex].Data.Lengthst;
 end;
 
-function Tuos_Player.InputLengthSeconds(InputIndex: LongInt): cfloat;
+function Tuos_Player.InputLengthSeconds(InputIndex: cint32): cfloat;
 begin
     if  (isAssigned = True) then Result := StreamIn[InputIndex].Data.Lengthst / StreamIn[InputIndex].Data.SampleRate;
 end;
 
-function Tuos_Player.InputLengthTime(InputIndex: LongInt): TTime;
+function Tuos_Player.InputLengthTime(InputIndex: cint32): TTime;
 var
   tmp: cfloat;
   h, m, s, ms: word;
@@ -1362,13 +1371,13 @@ begin
     Result := sysutils.EncodeTime(h, m, s, ms);
 end;
 
-function Tuos_Player.InputPosition(InputIndex: LongInt): longint;
+function Tuos_Player.InputPosition(InputIndex: cint32): cint32;
   //// gives current position
 begin
    if (isAssigned = True) then Result := StreamIn[InputIndex].Data.Position;
 end;
 
-procedure Tuos_Player.InputSetFrameCount(InputIndex: LongInt ; framecount : longint);
+procedure Tuos_Player.InputSetFrameCount(InputIndex: cint32 ; framecount : cint32);
 begin
     if (Status > 0) and (isAssigned = True) then
 
@@ -1392,7 +1401,7 @@ end;
 
 end;
 
-procedure Tuos_Player.InputSetArrayLevelEnable(InputIndex: LongInt ; levelcalc : longint);
+procedure Tuos_Player.InputSetArrayLevelEnable(InputIndex: cint32 ; levelcalc : cint32);
                   ///////// set add level calculation in level-array (default is 0)
                          // 0 => no calcul
                          // 1 => calcul before all DSP procedures.
@@ -1411,7 +1420,7 @@ if index + 1 > length(uosLevelArray) then
 end;
 end;
 
-procedure Tuos_Player.InputSetLevelEnable(InputIndex: LongInt ; levelcalc : longint);
+procedure Tuos_Player.InputSetLevelEnable(InputIndex: cint32 ; levelcalc : cint32);
                    ///////// set level calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul before all DSP procedures.
@@ -1423,7 +1432,7 @@ begin
 StreamIn[InputIndex].Data.levelEnable:= levelcalc;
 end;
 
-procedure Tuos_Player.InputSetPositionEnable(InputIndex: LongInt ; poscalc : longint);
+procedure Tuos_Player.InputSetPositionEnable(InputIndex: cint32 ; poscalc : cint32);
                    ///////// set position calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul position procedures.
@@ -1432,26 +1441,26 @@ begin
 StreamIn[InputIndex].Data.PositionEnable:= poscalc;
 end;
 
-function Tuos_Player.InputGetLevelLeft(InputIndex: LongInt): double;
+function Tuos_Player.InputGetLevelLeft(InputIndex: cint32): double;
   ////////// InputIndex : InputIndex of existing input
   ////// result : left level(volume) from 0 to 1
 begin
    if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelLeft;
 end;
 
-function Tuos_Player.InputGetLevelRight(InputIndex: LongInt): double;
+function Tuos_Player.InputGetLevelRight(InputIndex: cint32): double;
   ////////// InputIndex : InputIndex of existing input
   ////// result : right level(volume) from 0 to 1
 begin
    if (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelRight;
 end;
 
-function Tuos_Player.InputPositionSeconds(InputIndex: LongInt): float;
+function Tuos_Player.InputPositionSeconds(InputIndex: cint32): float;
 begin
    if (isAssigned = True) then Result := StreamIn[InputIndex].Data.Position / StreamIn[InputIndex].Data.SampleRate;
 end;
 
-function Tuos_Player.InputPositionTime(InputIndex: LongInt): TTime;
+function Tuos_Player.InputPositionTime(InputIndex: cint32): TTime;
 var
   tmp: float;
   h, m, s, ms: word;
@@ -1464,50 +1473,50 @@ begin
     Result := sysutils.EncodeTime(h, m, s, ms);
 end;
 
-function Tuos_Player.InputGetTagTitle(InputIndex: LongInt): pchar;
+function Tuos_Player.InputGetTagTitle(InputIndex: cint32): pchar;
  begin
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.title);
  end;
 
-function Tuos_Player.InputGetTagArtist(InputIndex: LongInt): pchar;
+function Tuos_Player.InputGetTagArtist(InputIndex: cint32): pchar;
  begin
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.Artist);
  end;
 
-function Tuos_Player.InputGetTagAlbum(InputIndex: LongInt): pchar;
+function Tuos_Player.InputGetTagAlbum(InputIndex: cint32): pchar;
  begin
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.album);
  end;
 
-function Tuos_Player.InputGetTagComment(InputIndex: LongInt): pchar;
+function Tuos_Player.InputGetTagComment(InputIndex: cint32): pchar;
  begin
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.comment);
  end;
 
-function Tuos_Player.InputGetTagTag(InputIndex: LongInt): pchar;
+function Tuos_Player.InputGetTagTag(InputIndex: cint32): pchar;
  begin
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.tag);
  end;
  
-function Tuos_Player.InputGetTagDate(InputIndex: LongInt): pchar;
+function Tuos_Player.InputGetTagDate(InputIndex: cint32): pchar;
  begin
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.date);
  end;
 
-procedure Tuos_Player.SetDSPin(InputIndex: LongInt; DSPinIndex: LongInt;
+procedure Tuos_Player.SetDSPin(InputIndex: cint32; DSPinIndex: cint32;
   Enable: boolean);
 begin
  StreamIn[InputIndex].DSP[DSPinIndex].Enabled := Enable;
 end;
 
-procedure Tuos_Player.SetDSPOut(OutputIndex: LongInt; DSPoutIndex: LongInt;
+procedure Tuos_Player.SetDSPOut(OutputIndex: cint32; DSPoutIndex: cint32;
   Enable: boolean);
 begin
  StreamOut[OutputIndex].DSP[DSPoutIndex].Enabled := Enable;
 end;
 
-function Tuos_Player.AddDSPin(InputIndex: LongInt; BeforeFunc: TFunc;
-  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): LongInt;
+function Tuos_Player.AddDSPin(InputIndex: cint32; BeforeFunc: TFunc;
+  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): cint32;
 begin
     SetLength(StreamIn[InputIndex].DSP, Length(StreamIn[InputIndex].DSP) + 1);
     StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1] := Tuos_DSP.Create();
@@ -1520,8 +1529,8 @@ begin
     Result := Length(StreamIn[InputIndex].DSP) - 1;
  end;
 
-function Tuos_Player.AddDSPout(OutputIndex: LongInt; BeforeFunc: TFunc;
-  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): LongInt;
+function Tuos_Player.AddDSPout(OutputIndex: cint32; BeforeFunc: TFunc;
+  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): cint32;
 begin
     SetLength(StreamOut[OutputIndex].DSP, Length(StreamOut[OutputIndex].DSP) + 1);
     StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1] :=
@@ -1538,9 +1547,9 @@ begin
     Result := Length(StreamOut[OutputIndex].DSP) - 1;
  end;
 
-procedure Tuos_Player.SetFilterIn(InputIndex: LongInt; FilterIndex: LongInt;
-  LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
-  TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+procedure Tuos_Player.SetFilterIn(InputIndex: cint32; FilterIndex: cint32;
+  LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
+  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
 ////////// InputIndex : InputIndex of a existing Input
 ////////// DSPInIndex : DSPInIndex of existing DSPIn
 ////////// LowFrequency : Lowest frequency of filter ( default = -1 : current LowFrequency )
@@ -1724,9 +1733,9 @@ end;
 
 end;
 
-procedure Tuos_Player.SetFilterOut(OutputIndex: LongInt; FilterIndex: LongInt;
-  LowFrequency: LongInt; HighFrequency: LongInt; Gain: cfloat;
-  TypeFilter: LongInt; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+procedure Tuos_Player.SetFilterOut(OutputIndex: cint32; FilterIndex: cint32;
+  LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
+  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
 ////////// OutputIndex : OutputIndex of a existing Output
 ////////// FilterIndex : DSPOutIndex of existing DSPOut
 ////////// LowFrequency : Lowest frequency of filter
@@ -1905,7 +1914,7 @@ function SoundTouchPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_
   notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
  ratio : integer;
- numoutbuf, x1, x2: LongInt;
+ numoutbuf, x1, x2: cint32;
   BufferplugFLTMP: TDArFloat;
   BufferplugFL: TDArFloat;
  begin
@@ -2021,7 +2030,7 @@ function bs2bPlug(bufferin: TDArFloat; notneeded: THandle; Abs2bd : Tt_bs2bdp; i
  notused1: float; notused2: float; notused3: float;  notused4: float;
   notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
-  x, x2: LongInt;
+  x, x2: cint32;
   Bufferplug: TDArFloat;
  begin
  
@@ -2052,13 +2061,13 @@ var
 end;
 {$endif}
 
-function Tuos_Player.AddPlugin(PlugName: PChar; SampleRate: LongInt;
-  Channels: LongInt): LongInt;
+function Tuos_Player.AddPlugin(PlugName: PChar; SampleRate: cint32;
+  Channels: cint32): cint32;
   //////////// SampleRate : delault : -1 (44100)
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// Result is PluginIndex
 var
-  x: LongInt;
+  x: cint32;
 begin
 x := -1 ;
  {$IF DEFINED(soundtouch)}
@@ -2124,7 +2133,7 @@ x := -1 ;
  end;
 
 {$IF DEFINED(soundtouch)}
-procedure Tuos_Player.SetPluginSoundTouch(PluginIndex: LongInt;
+procedure Tuos_Player.SetPluginSoundTouch(PluginIndex: cint32;
   Tempo: cfloat; Pitch: cfloat; Enable: boolean);
 begin
   soundtouch_setRate(Plugin[PluginIndex].PlugHandle, Pitch);
@@ -2136,7 +2145,7 @@ end;
 {$endif}
 
 {$IF DEFINED(bs2b)}
-procedure Tuos_Player.SetPluginBs2b(PluginIndex: LongInt;
+procedure Tuos_Player.SetPluginBs2b(PluginIndex: cint32;
   level: CInt32; fcut: CInt32; feed: CInt32; Enable: boolean);
 begin
  
@@ -2160,7 +2169,7 @@ begin
 end;
 {$endif}
 
-function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: LongInt) : TDArFloat;
+function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: cint32) : TDArFloat;
 begin
    result :=  uosLevelArray[PlayerIndex][InputIndex] ;
   end;
@@ -2169,8 +2178,8 @@ begin
  
 function uos_NoiseRemoval(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 var
- ratio, x: LongInt;
- Outfr : LongInt;
+ ratio, x: cint32;
+ Outfr : cint32;
  tempr : PSingle;
  pf: TDArFloat;      
 begin
@@ -2206,7 +2215,7 @@ end;
 
 function uos_DSPVolume(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 var
-  x, ratio: LongInt;
+  x, ratio: cint32;
   vleft, vright: double;
   
  // volumearray : array of double;
@@ -2293,7 +2302,7 @@ end;
 
 function Tuos_Player.DSPLevel(Data: Tuos_Data): Tuos_Data;
 var
-  x, ratio: LongInt;
+  x, ratio: cint32;
   ps: PDArShort;     //////// if input is Int16 format
   pl: PDArLong;      //////// if input is Int32 format
   pf: PDArFloat;     //////// if input is Float32 format
@@ -2426,7 +2435,7 @@ end;
 
 function uos_BandFilter(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 var
-  i, ratio: LongInt;
+  i, ratio: cint32;
   ifbuf: boolean;
   arg, res, res2: cfloat;
   ps: PDArShort;     //////// if input is Int16 format
@@ -2682,7 +2691,7 @@ var
   end;
 
   {$IF DEFINED(noiseremoval)}
-    function Tuos_Player.AddDSPNoiseRemovalIn(InputIndex: LongInt): LongInt;
+    function Tuos_Player.AddDSPNoiseRemovalIn(InputIndex: cint32): cint32;
     ///// DSP Noise Removal
     ////////// InputIndex : InputIndex of a existing Input
     //  result :  otherwise index of DSPIn in array
@@ -2708,7 +2717,7 @@ StreamIn[InputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
  
 end;
     
-procedure Tuos_Player.SetDSPNoiseRemovalIn(InputIndex: LongInt; Enable: boolean);
+procedure Tuos_Player.SetDSPNoiseRemovalIn(InputIndex: cint32; Enable: boolean);
       
  begin
 
@@ -2716,7 +2725,7 @@ StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseIndex].enabled := Ena
 
  end;     
  
-function Tuos_Player.AddDSPNoiseRemovalOut(OutputIndex: LongInt): LongInt;
+function Tuos_Player.AddDSPNoiseRemovalOut(OutputIndex: cint32): cint32;
     ///// DSP Noise Removal
     ////////// OutputIndex : OutputIndex of a existing Output
     //  result :  otherwise index of DSPInOut in array
@@ -2742,7 +2751,7 @@ StreamOut[OutputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
  
 end;
     
-procedure Tuos_Player.SetDSPNoiseRemovalOut(OutputIndex: LongInt; Enable: boolean);
+procedure Tuos_Player.SetDSPNoiseRemovalOut(OutputIndex: cint32; Enable: boolean);
       
  begin
 
@@ -2752,8 +2761,8 @@ StreamOut[OutputIndex].DSP[StreamOut[OutputIndex].data.DSPNoiseIndex].enabled :=
   
   {$endif}  
 
-function Tuos_Player.AddDSPVolumeIn(InputIndex: LongInt; VolLeft: double;
-  VolRight: double): LongInt;  
+function Tuos_Player.AddDSPVolumeIn(InputIndex: cint32; VolLeft: double;
+  VolRight: double): cint32;  
     ///// DSP Volume changer
   ////////// InputIndex : InputIndex of a existing Input
   ////////// VolLeft : Left volume
@@ -2766,7 +2775,7 @@ begin
   StreamIn[InputIndex].Data.VRight := VolRight;
 end;
 
-function Tuos_Player.AddDSP2ChanTo1ChanIn(InputIndex: LongInt): LongInt;
+function Tuos_Player.AddDSP2ChanTo1ChanIn(InputIndex: cint32): cint32;
 /////  Convert mono 1 channel input to stereo 2 channels input.
     //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
@@ -2776,8 +2785,8 @@ function Tuos_Player.AddDSP2ChanTo1ChanIn(InputIndex: LongInt): LongInt;
   Result := AddDSPin(InputIndex, nil, @uos_AddDSP2ChanTo1ChanIn, nil, nil);
  end;
 
-function Tuos_Player.AddDSPVolumeOut(OutputIndex: LongInt; VolLeft: double;
-  VolRight: double): LongInt;  ///// DSP Volume changer
+function Tuos_Player.AddDSPVolumeOut(OutputIndex: cint32; VolLeft: double;
+  VolRight: double): cint32;  ///// DSP Volume changer
   ////////// OutputIndex : OutputIndex of a existing Output
   ////////// VolLeft : Left volume ( 1 = max)
   ////////// VolRight : Right volume ( 1 = max)
@@ -2789,7 +2798,7 @@ begin
   StreamOut[OutputIndex].Data.VRight := VolRight;
 end;
 
-procedure Tuos_Player.SetDSPVolumeIn(InputIndex: LongInt; DSPVolIndex: LongInt;
+procedure Tuos_Player.SetDSPVolumeIn(InputIndex: cint32; DSPVolIndex: cint32;
   VolLeft: double; VolRight: double; Enable: boolean);
 ////////// InputIndex : InputIndex of a existing Input
 ////////// DSPIndex : DSPVolIndex of a existing DSPVolume
@@ -2805,8 +2814,8 @@ begin
   StreamIn[InputIndex].DSP[DSPVolIndex].Enabled := Enable;
 end;
 
-procedure Tuos_Player.SetDSPVolumeOut(OutputIndex: LongInt;
-  DSPVolIndex: LongInt; VolLeft: double; VolRight: double; Enable: boolean);
+procedure Tuos_Player.SetDSPVolumeOut(OutputIndex: cint32;
+  DSPVolIndex: cint32; VolLeft: double; VolRight: double; Enable: boolean);
 ////////// OutputIndex : OutputIndex of a existing Output
 ////////// DSPIndex : DSPIndex of a existing DSP
 ////////// VolLeft : Left volume
@@ -2821,9 +2830,9 @@ begin
   StreamOut[OutputIndex].DSP[DSPVolIndex].Enabled := Enable;
 end;
 
-function Tuos_Player.AddFilterIn(InputIndex: LongInt; LowFrequency: LongInt;
-  HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt; AlsoBuf: boolean;
-  LoopProc: TProc): LongInt;
+function Tuos_Player.AddFilterIn(InputIndex: cint32; LowFrequency: cint32;
+  HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32; AlsoBuf: boolean;
+  LoopProc: TProc): cint32;
   ////////// InputIndex : InputIndex of a existing Input
   ////////// LowFrequency : Lowest frequency of filter
   ////////// HighFrequency : Highest frequency of filter
@@ -2835,7 +2844,7 @@ function Tuos_Player.AddFilterIn(InputIndex: LongInt; LowFrequency: LongInt;
   //  result : index of DSPIn in array
   ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1,1,True);
 var
-  FilterIndex: LongInt;
+  FilterIndex: cint32;
 begin
   FilterIndex := AddDSPin(InputIndex, nil, @uos_BandFilter, nil, LoopProc);
 
@@ -2850,9 +2859,9 @@ begin
   Result := FilterIndex;
 end;
 
-function Tuos_Player.AddFilterOut(OutputIndex: LongInt; LowFrequency: LongInt;
-  HighFrequency: LongInt; Gain: cfloat; TypeFilter: LongInt; AlsoBuf: boolean;
-  LoopProc: TProc): LongInt;
+function Tuos_Player.AddFilterOut(OutputIndex: cint32; LowFrequency: cint32;
+  HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32; AlsoBuf: boolean;
+  LoopProc: TProc): cint32;
   ////////// OutputIndex : OutputIndex of a existing Output
   ////////// LowFrequency : Lowest frequency of filter
   ////////// HighFrequency : Highest frequency of filter
@@ -2863,7 +2872,7 @@ function Tuos_Player.AddFilterOut(OutputIndex: LongInt; LowFrequency: LongInt;
   //  result :  index of DSPOut in array
   ////////// example :FilterOutIndex1 := AddFilterOut(OutputIndex1,6000,16000,1,true);
 var
-  FilterIndex: LongInt;
+  FilterIndex: cint32;
 begin
   FilterIndex := AddDSPOut(OutputIndex, nil, @uos_BandFilter, nil, LoopProc);
   
@@ -2880,20 +2889,20 @@ begin
 end;
 
 {$IF DEFINED(portaudio)}
-function Tuos_Player.AddFromDevIn(Device: LongInt; Latency: CDouble;
-  SampleRate: LongInt; OutputIndex: LongInt;
-  SampleFormat: LongInt; FramesCount : LongInt): LongInt;
+function Tuos_Player.AddFromDevIn(Device: cint32; Latency: CDouble;
+  SampleRate: cint32; OutputIndex: cint32;
+  SampleFormat: cint32; FramesCount : cint32): cint32;
   /// Add Input from IN device with custom parameters
   //////////// Device ( -1 is default Input device )
   //////////// Latency  ( -1 is latency suggested ) )
   //////////// SampleRate : delault : -1 (44100)
-  //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex
+  //////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex
                            // (if multi-output then OutName = name of each output separeted by ';')
   //////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : -1 default : 4096
   //////////// example : AddFromDevIn(-1,-1,-1,-1);
 var
-  x, err: LongInt;
+  x, err: cint32;
 begin
  result := -1 ;
   x := 0;
@@ -2965,13 +2974,13 @@ end;
 {$endif}
 
 {$IF DEFINED(synthesizer)}
-function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: LongInt;
-      SampleFormat: LongInt ; SampleRate: LongInt ; FramesCount : LongInt): LongInt;
+function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
+      SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
     /////// Add a input from Synthesizer with custom parameters
     ////////// Frequency : default : -1 (440 htz)
      ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
      ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
-       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
     //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
     //////////// SampleRate : delault : -1 (44100)
     //////////// FramesCount : -1 default : 1024
@@ -2979,7 +2988,7 @@ function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: flo
     //////////// example : InputIndex1 := AddFromSynth(880,-1,-1,-1,-1,-1,-1);
  
 var
-  x : LongInt;
+  x : cint32;
 begin
  result := -1 ;
   x := 0;
@@ -3042,14 +3051,14 @@ begin
     Result := x;
 end;
 
-procedure Tuos_Player.InputSetSynth(InputIndex: LongInt; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
+procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
      ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
     //////////// Enabled : true or false ;
 
 // var
-// x2 : longint;
+// x2 : cint32;
  begin
  if Frequency <> -1 then
  begin
@@ -3065,7 +3074,7 @@ end;
 
 {$IF DEFINED(shout)}
 function Tuos_Player.AddIntoIceServer(SampleRate : cint; Channels: cint; SampleFormat: cint;
- EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): LongInt;
+ EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
      ////// Add a Output into a IceCast server for audio-web-streaming 
     //////////// SampleRate : delault : -1 (48100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
@@ -3079,7 +3088,7 @@ function Tuos_Player.AddIntoIceServer(SampleRate : cint; Channels: cint; SampleF
     //  result :  Output Index in array    -1 = error
 
 var
-  x, typeenc : LongInt;
+  x, typeenc : cint32;
   ordir : string;
   err : integer = -1;
  
@@ -3214,8 +3223,8 @@ if err =0 then begin
  end; 
  {$endif}
 
-function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
-  Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt): LongInt;
+function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: cint32;
+  Channels: cint32; SampleFormat: cint32; FramesCount: cint32): cint32;
   /////// Add a Output into audio wav file with Custom parameters
   ////////// FileName : filename of saved audio wav file
   //////////// SampleRate : delault : -1 (44100)
@@ -3225,9 +3234,9 @@ function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: LongInt;
   //  result :  Output Index in array    -1 = error
   //////////// example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1,0, -1);
 var
-  x: LongInt;
-  wChunkSize: LongInt;
-  wFileSize: LongInt;
+  x: cint32;
+  wChunkSize: cint32;
+  wFileSize: cint32;
   ID: array[0..3] of char;
   Header: Tuos_WaveHeaderChunk;
 
@@ -3310,8 +3319,8 @@ begin
  end;
 
 {$IF DEFINED(portaudio)}
- function Tuos_Player.AddIntoDevOut(Device: LongInt; Latency: CDouble;
-  SampleRate: LongInt; Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt): LongInt;
+ function Tuos_Player.AddIntoDevOut(Device: cint32; Latency: CDouble;
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32; FramesCount: cint32): cint32;
   /////// Add a Output into OUT device with Custom parameters
   //////////// Device ( -1 is default device )
   //////////// Latency  ( -1 is latency suggested ) )
@@ -3321,7 +3330,7 @@ begin
   //////////// FramesCount : default : -1 (65536 div channels)
   //////////// example : AddInoDevOut(-1,-1,-1,-1,-1,-1);
 var
-  x, err: LongInt;
+  x, err: cint32;
 begin
   result := -1 ;
   x := 0;
@@ -3383,18 +3392,18 @@ end;
 
 {$IF DEFINED(webstream)}
 
-function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
-   SampleFormat: LongInt ; FramesCount: LongInt ; AudioFormat: Longint): LongInt;
+function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
+   SampleFormat: cint32 ; FramesCount: cint32 ; AudioFormat: cint32): cint32;
   /////// Add a Input from Audio URL
   ////////// URL : URL of audio file
-  ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
+  ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (4096)
   //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
   ////////// example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1,-1);
  
  var
-  x, err, len, len2, i : LongInt;
+  x, err, len, len2, i : cint32;
   PipeBufferSize, totsamples : integer;
   buffadd : tbytes;
   
@@ -3771,16 +3780,16 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: LongInt;
        end;
     {$ENDIF}
 
-function Tuos_Player.AddFromFile(Filename: PChar; OutputIndex: LongInt;
-   SampleFormat: LongInt ; FramesCount: LongInt ): LongInt;
+function Tuos_Player.AddFromFile(Filename: PChar; OutputIndex: cint32;
+   SampleFormat: cint32 ; FramesCount: cint32 ): cint32;
 /////// Add a Input from Audio file with Custom parameters
   ////////// FileName : filename of audio file
-  ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
+  ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536 div channels)
   ////////// example : InputIndex := AddFromFile('/usr/home/test.ogg',-1,-1,-1);
 var
-  x,  err: LongInt;
+  x,  err: cint32;
 
   {$IF DEFINED(sndfile)}
    sfInfo: TSF_INFO;
@@ -4069,15 +4078,24 @@ begin
      Err:= -1;
 
      StreamIn[x].AACI:= TAACInfo.Create();
+     
+  {$IF DEFINED(debug)}
+   WriteLn('TAACInfo.Create() = ok');     
+  {$endif} 
 
      Case SampleFormat of
        0 : StreamIn[x].AACI:= MP4OpenFile(FileName, FAAD_FMT_FLOAT);
        1 : StreamIn[x].AACI:= MP4OpenFile(FileName, FAAD_FMT_32BIT);
        2 : StreamIn[x].AACI:= MP4OpenFile(FileName, FAAD_FMT_16BIT);
      End;
-
+     
+  
      if StreamIn[x].AACI <> nil then
      Begin
+   {$IF DEFINED(debug)}
+   WriteLn('MP4OpenFile() = ok');     
+   {$endif}     
+
        Case StreamIn[x].AACI.outputFormat of
           FAAD_FMT_16BIT : StreamIn[x].Data.SampleFormat := 2;
           //FAAD_FMT_24BIT : ;
@@ -4085,8 +4103,8 @@ begin
           FAAD_FMT_FLOAT : StreamIn[x].Data.SampleFormat := 0;
           //FAAD_FMT_DOUBLE: ;
         end;
-
-       StreamIn[x].Data.filename     := FileName;
+      
+          StreamIn[x].Data.filename     := FileName;
 
        StreamIn[x].Data.HandleSt     := StreamIn[x].AACI.hMP4;
 
@@ -4126,7 +4144,13 @@ begin
 
         StreamIn[x].Data.LibOpen :=2 ;
        Err:= 0;
-     End;
+     End else
+     begin
+   {$IF DEFINED(debug)}
+   WriteLn('MP4OpenFile() NOT ok');     
+  {$endif} 
+  end;    
+
    end;
    {$endif}
 
@@ -4247,7 +4271,7 @@ end;
 procedure Tuos_Player.Execute;
 /////////////////////// The Loop Procedure ///////////////////////////////
 var
-  x, x2, x3, x4, statustemp, rat, err, i : LongInt;
+  x, x2, x3, x4, statustemp, rat, err, i : cint32;
  
  {$IF DEFINED(debug)}
   st : string;
@@ -5576,7 +5600,7 @@ begin
     {$endif}
 end;
 
-function Tuos_Init.InitLib(): LongInt;
+function Tuos_Init.InitLib(): cint32;
 begin
   Result := -1;
   {$IF DEFINED(mpg123)}
@@ -5614,7 +5638,7 @@ begin
     Result := 0;
 end;
 
-function Tuos_Init.loadlib(): LongInt;
+function Tuos_Init.loadlib(): cint32;
 begin
   Result := 0;
   uosLoadResult.PAloadERROR := -1;
@@ -5761,7 +5785,7 @@ begin
 end;
 
 
-function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
+function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
   begin
  Result := -1; 
    {$IF DEFINED(soundtouch)}
@@ -5817,7 +5841,7 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : LongInt;
 end;
 
 {$IF DEFINED(shout)}
-function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : LongInt; 
+function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : cint32; 
      // Shout => needed for dealing with IceCast server
      // Opus => needed for dealing with encoding opus stream
 begin
@@ -5843,7 +5867,7 @@ op_unload;
  end;   
 {$endif}
  
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : LongInt;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   begin
    result := -1 ;
    if not assigned(uosInit) then begin
@@ -5866,7 +5890,7 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
    result := uosInit.loadlib ;
   end;
 
-function uos_GetVersion() : LongInt ;
+function uos_GetVersion() : cint32 ;
 begin
 result := uos_version ;
 end;
@@ -5894,7 +5918,7 @@ end;
 {$IF DEFINED(portaudio)}
 procedure uos_GetInfoDevice();
 var
-  x: LongInt;
+  x: cint32;
   devinf: PPaDeviceInfo;
   apiinf: PPaHostApiInfo;
 begin
@@ -5952,7 +5976,7 @@ begin
 
 function uos_GetInfoDeviceStr() : PansiChar ;
 var
-  x : LongInt ;
+  x : cint32 ;
 devtmp , bool1, bool2 : UTF8String;
 begin
  uos_GetInfoDevice() ;
@@ -6077,7 +6101,7 @@ end;
 
 destructor Tuos_Player.Destroy;
 var
-  x: LongInt;
+  x: cint32;
 begin
   RTLeventdestroy(evPause);
  
@@ -6116,7 +6140,7 @@ destructor Tuos_DSP.Destroy;
 
 destructor Tuos_InStream.Destroy;
 var
-  x: LongInt;
+  x: cint32;
 begin
    {$IF DEFINED(neaac)}
    if assigned(AACI) then
@@ -6143,7 +6167,7 @@ end;
 
 destructor Tuos_OutStream.Destroy;
 var
-  x: LongInt;
+  x: cint32;
 begin
  if assigned(FileBuffer.Data) then 
  freeandnil(FileBuffer.Data);
