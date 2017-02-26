@@ -593,7 +593,8 @@ loadok : boolean = false;
    end;    
          
    trackbar1.Max := uos_InputLength(PlayerIndex1, InputIndex1);
-    ////// Length of Input in samples
+   
+   ////// Length of Input in samples
 
    temptime := uos_InputLengthTime(PlayerIndex1, InputIndex1);
     ////// Length of input in time
@@ -616,9 +617,9 @@ loadok : boolean = false;
     btnStop.Enabled := True;
     btnpause.Enabled := True;
     btnresume.Enabled := False;
-
-    uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
     
+    uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
+  
     end;
     
   end;
