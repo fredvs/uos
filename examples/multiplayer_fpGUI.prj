@@ -714,8 +714,8 @@ path=2
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
 line=2
- 4328
- 4392
+ 4338
+ 4402
 address=2
  4615765
  4616949
@@ -795,8 +795,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=uos_free
+finddtext=InputPositionTime
 findhistory=20
+ InputPositionTime
+ SeekTime
+ uos_SeekTime
  uos_free
  execute
  EndProc
@@ -814,11 +817,11 @@ findhistory=20
  .play
  play
  In1Index
- Plugin1Index
- DSP1Index
- Out1Index
 findoptions=1
 editpos=12
+ 0,1483
+ 0,1175
+ 0,5
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -827,10 +830,7 @@ editpos=12
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,1
+ 0,645
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -901,8 +901,8 @@ order=12
  4
  3
 tabsize=60
-firsttab=0
-index=6
+firsttab=2
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -917,8 +917,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=954
- cy=585
+ cx=1356
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -930,16 +930,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=240
- y=61
+ x=82
+ y=55
  cx=964
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,954,585
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1053,7 +1053,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=426
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1145,7 +1145,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1262,9 +1262,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=488
- cx=954
- cy=97
+ y=585
+ cx=1356
+ cy=116
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1363,8 +1363,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=954
- cy=56
+ cx=1356
+ cy=66
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1374,13 +1374,13 @@ windowlayout=530
  visible=1
  mdistate=0
  nx=0
- ny=52
- ncx=956
- ncy=6
+ ny=0
+ ncx=954
+ ncy=3
  x=0
- y=52
- cx=954
- cy=3
+ y=0
+ cx=1356
+ cy=66
  rcx=0
  rcy=0
  [sourcefo]
@@ -1395,15 +1395,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=792
- cy=426
+ cx=1194
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1430,9 +1430,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=59
- cx=954
- cy=426
+ y=69
+ cx=1356
+ cy=513
  rcx=0
  rcy=0
 [targetconsole]

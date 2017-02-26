@@ -9,7 +9,8 @@ unit main_mi;
 interface
 
 uses
-  uos_flat, Forms, Dialogs, Graphics, StdCtrls, ExtCtrls, ComCtrls, Classes;
+  uos_flat, Forms, Dialogs, SysUtils, fileutil, Graphics, ctypes,
+  StdCtrls, ComCtrls, ExtCtrls, Classes, Controls;
 
 type
 
@@ -24,6 +25,7 @@ type
     Button15: TButton;
     Button16: TButton;
     Button17: TButton;
+    Button2: TButton;
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
@@ -76,6 +78,7 @@ type
     procedure Button14Click(Sender: TObject);
     procedure Button15Click(Sender: TObject);
     procedure Button16Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
@@ -244,7 +247,7 @@ begin
   Edit5.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
   Edit6.Text := application.Location + 'sound' + directoryseparator + 'test.wav';
   Edit7.Text := application.Location + 'sound' + directoryseparator + 'test.flac';
-   Edit8.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
+  Edit8.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
   Edit9.Text := application.Location + 'sound' + directoryseparator + 'test.flac';
   Edit10.Text := application.Location + 'sound' + directoryseparator + 'test.wav';
   Edit11.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
@@ -278,7 +281,8 @@ begin
     edit2.ReadOnly := True;
     form1.Height := 478;
     form1.Position := poScreenCenter;
-    form1.Show;
+    button2.click;
+     form1.Show;
   end
   else
   begin
@@ -320,59 +324,8 @@ end;
 
 procedure TForm1.Button14Click(Sender: TObject);
 begin
-  PlayerIndex0 := 0;
 
-  uos_CreatePlayer(PlayerIndex0);
-
- inindex1 := uos_AddFromFile(PlayerIndex0, pchar(Edit4.Text), -1, 0, -1);
- inindex2 := uos_AddFromFile(PlayerIndex0, pchar(Edit5.Text), -1, 0, -1);
- inindex3 := uos_AddFromFile(PlayerIndex0, pchar(Edit6.Text), -1, 0, -1);
- inindex4 := uos_AddFromFile(PlayerIndex0, pchar(Edit7.Text), -1, 0, -1);
- inindex5 := uos_AddFromFile(PlayerIndex0, pchar(Edit8.Text), -1, 0, -1);
- inindex6 := uos_AddFromFile(PlayerIndex0, pchar(Edit9.Text), -1, 0, -1);
- inindex7 := uos_AddFromFile(PlayerIndex0, pchar(Edit10.Text), -1, 0, -1);
- inindex8 := uos_AddFromFile(PlayerIndex0, pchar(Edit11.Text), -1, 0, -1);
-  //// add input from audio file with custom parameters
-  ////////// FileName : filename of audio file
-  //////////// PlayerIndex : Index of a existing Player
-  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-  //////////// FramesCount : default : -1 (65536)
-  //  result : -1 nothing created, otherwise Input Index in array
-
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex1, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex2, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex3, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex4, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex5, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex6, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex7, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex8, 1, 1);
-    ///// DSP Volume changer
-    ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing input
-    ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
-    ////////// VolRight : Right volume
-
-  uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, -1);
-  //// add a Output with custom parameters
-  //// add a Output into device with custom parameters
-  //////////// PlayerIndex : Index of a existing Player
-  //////////// Device ( -1 is default Output device )
-  //////////// Latency  ( -1 is latency suggested ) )
-  //////////// SampleRate : delault : -1 (44100)
-  //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-  //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-  //////////// FramesCount : default : -1 (65536)
-  //  result : -1 nothing created, otherwise Output Index in array
-
-  /////// procedure to execute when stream is terminated
-    uos_EndProc(PlayerIndex0, @ClosePlayer0);
-  ///// Assign the procedure of object to execute at end
-  //////////// PlayerIndex : Index of a existing Player
-  //////////// ClosePlayer1 : procedure of object to execute inside the loop
-
-  button15.Enabled := True;
+   button15.Enabled := True;
   button3.Enabled := True;
   button14.Enabled := false;
   button16.Enabled := false;
@@ -387,7 +340,7 @@ begin
        TrackBar7Change(self);
         TrackBar8Change(self);
 
-  uos_Play(PlayerIndex0);
+  uos_PlayNoFree(PlayerIndex0);
   ////// Ok let start it
 
 end;
@@ -406,6 +359,69 @@ begin
   uos_RePlay(PlayerIndex0);
   button16.Enabled := False;
   button15.Enabled := True;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+   PlayerIndex0 := 0;
+
+ uos_Stop(PlayerIndex0);
+ sleep(100);
+ uos_FreePlayer(PlayerIndex0);
+  sleep(100);
+
+ uos_CreatePlayer(PlayerIndex0);
+
+ inindex1 := uos_AddFromFile(PlayerIndex0, pchar(Edit4.Text), -1, 0, 1024);
+ inindex2 := uos_AddFromFile(PlayerIndex0, pchar(Edit5.Text), -1, 0, 1024);
+ inindex3 := uos_AddFromFile(PlayerIndex0, pchar(Edit6.Text), -1, 0, 1024);
+ inindex4 := uos_AddFromFile(PlayerIndex0, pchar(Edit7.Text), -1, 0, 1024);
+ inindex5 := uos_AddFromFile(PlayerIndex0, pchar(Edit8.Text), -1, 0, 1024);
+ inindex6 := uos_AddFromFile(PlayerIndex0, pchar(Edit9.Text), -1, 0, 1024);
+ inindex7 := uos_AddFromFile(PlayerIndex0, pchar(Edit10.Text), -1, 0, 1024);
+ inindex8 := uos_AddFromFile(PlayerIndex0, pchar(Edit11.Text), -1, 0, 1024);
+  //// add input from audio file with custom parameters
+  ////////// FileName : filename of audio file
+  //////////// PlayerIndex : Index of a existing Player
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+  //////////// FramesCount : default : -1 (65536)
+  //  result : -1 nothing created, otherwise Input Index in array
+
+ uos_AddFromSynth(PlayerIndex0,1,0,0, -1,-1, -1, 1024 );
+ // this for a dummy endless input, must be last input
+
+  uos_AddDSPVolumeIn(PlayerIndex0, InIndex1, 1, 1);
+  uos_AddDSPVolumeIn(PlayerIndex0, InIndex2, 1, 1);
+  uos_AddDSPVolumeIn(PlayerIndex0, InIndex3, 1, 1);
+  uos_AddDSPVolumeIn(PlayerIndex0, InIndex4, 1, 1);
+  uos_AddDSPVolumeIn(PlayerIndex0, InIndex5, 1, 1);
+  uos_AddDSPVolumeIn(PlayerIndex0, InIndex6, 1, 1);
+  uos_AddDSPVolumeIn(PlayerIndex0, InIndex7, 1, 1);
+  uos_AddDSPVolumeIn(PlayerIndex0, InIndex8, 1, 1);
+    ///// DSP Volume changer
+    ////////// PlayerIndex1 : Index of a existing Player
+    ////////// In1Index : InputIndex of a existing input
+    ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
+    ////////// VolRight : Right volume
+
+  uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, 1024);
+  //// add a Output with custom parameters
+  //// add a Output into device with custom parameters
+  //////////// PlayerIndex : Index of a existing Player
+  //////////// Device ( -1 is default Output device )
+  //////////// Latency  ( -1 is latency suggested ) )
+  //////////// SampleRate : delault : -1 (44100)
+  //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+  //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+  //////////// FramesCount : default : -1 (65536)
+  //  result : -1 nothing created, otherwise Output Index in array
+
+  /////// procedure to execute when stream is terminated
+    uos_EndProc(PlayerIndex0, @ClosePlayer0);
+  ///// Assign the procedure of object to execute at end
+  //////////// PlayerIndex : Index of a existing Player
+  //////////// ClosePlayer1 : procedure of object to execute inside the loop
 end;
 
 
@@ -503,6 +519,8 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
+  uos_FreePlayer(PlayerIndex0);
+
    uos_free;
 end;
 

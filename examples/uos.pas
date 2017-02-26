@@ -1337,6 +1337,10 @@ begin
     StreamIn[InputIndex].Data.SampleRate);
 
    StreamIn[InputIndex].Data.Poseek := possample;
+   
+ {$IF DEFINED(debug)}
+	WriteLn('SeekTime() : Data.Poseek: '+ inttostr(possample));
+ {$endif}
      end;
 end;
 
@@ -1466,11 +1470,17 @@ var
   h, m, s, ms: word;
 begin
    if (Status > 0) and (isAssigned = True) then tmp := InputPositionSeconds(InputIndex);
+  {$IF DEFINED(debug)}
+	WriteLn('InputPositionTime(): InputPositionSeconds: '+ floattostr(tmp));
+  {$endif}
     ms := trunc(frac(tmp) * 1000);
     h := trunc(tmp / 3600);
     m := trunc(tmp / 60 - h * 60);
     s := trunc(tmp - (h * 3600 + m * 60));
     Result := sysutils.EncodeTime(h, m, s, ms);
+ {$IF DEFINED(debug)}
+	WriteLn('EncodeTime(): '+ timetostr(Result));
+  {$endif}   
 end;
 
 function Tuos_Player.InputGetTagTitle(InputIndex: cint32): pchar;
@@ -4029,7 +4039,7 @@ begin
                 move(Pointer(LComment^)^, Pointer(s)^, LcommentLength^);
 
  {$IF DEFINED(debug)}
- WriteLn(s);
+// WriteLn(s);
  {$endif}               
  
                 if j = 1 then StreamIn[x].Data.title := s;
@@ -4431,7 +4441,7 @@ begin
                     2: st := st + '|' + inttostr(cint16(cint32(StreamIn[x].data.Buffer[i]))); 
      end; 
      WriteLn('OUTPUT DATA sf_read_() ---------------------------');
-     WriteLn(st);
+  //   WriteLn(st);
      {$endif} 
                end;
                  {$endif}
@@ -4456,7 +4466,7 @@ begin
                     2: st := st + '|' + inttostr(cint16(cint32(StreamIn[x].data.Buffer[i])));  
        end;
      WriteLn('OUTPUT DATA mpg123_read_() ---------------------------');
-     WriteLn(st);
+    // WriteLn(st);
     {$endif}
      
                   StreamIn[x].Data.outframes :=
@@ -4494,7 +4504,7 @@ begin
                     2: st := st + '|' + inttostr(cint16(cint32(StreamIn[x].data.Buffer[i]))); 
        end;
      WriteLn('OUTPUT DATA MP4GetData() ---------------------------');
-     WriteLn(st);
+    // WriteLn(st);
      {$endif} 
              
               end;
@@ -4553,7 +4563,7 @@ begin
                     2: st := st + '|' + inttostr(cint16(cint32(StreamIn[x].data.Buffer[i])));
        end;             
      WriteLn('OUTPUT DATA op_read_ ---------------------------');
-     WriteLn(st);
+    // WriteLn(st);
     {$endif}          
                    
     
@@ -4645,7 +4655,7 @@ begin
     for i := 0 to length(StreamIn[x].data.Buffer) -1 do
      st := st + '|' + inttostr(i) + '|' + floattostr(StreamIn[x].data.Buffer[i]);   
        WriteLn('OUTPUT DATA AFTER ------------------------------');
-       WriteLn(st); 
+    //   WriteLn(st); 
        writeln(' StreamIn[x].Data.outframes = '+inttostr(StreamIn[x].Data.outframes * StreamIn[x].Data.Channels)) ;
           {$endif} 
           
@@ -4881,8 +4891,15 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
     statustemp := 0 ;
     for x := 0 to high(StreamIn) do
     begin
-    if (StreamIn[x].Data.TypePut <> 1) and (StreamIn[x].Data.Status <> 0)
-    then statustemp := StreamIn[x].Data.Status else if
+    if (StreamIn[x].Data.TypePut <> 1)
+    then
+    begin
+    if StreamIn[x].Data.Status = 1 then 
+     statustemp := StreamIn[x].Data.Status;
+    if (StreamIn[x].Data.Status = 2) and (statustemp = 0) then 
+     statustemp := StreamIn[x].Data.Status;
+     end else
+     if
     (StreamIn[x].Data.TypePut = 1) then statustemp := status ;
     end ;
     if statustemp <> status then status := statustemp;
@@ -4892,7 +4909,7 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
     RTLeventSetEvent(evPause);
 
     //////////////////////// Give Buffer to Output
-    if status <> 0 then
+    if status = 1 then
     begin
 
   for x := 0 to high(StreamOut) do
@@ -5124,7 +5141,7 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
 {$IF DEFINED(debug)}	
   WriteLn('opus_encode outframes =' + inttostr(err)); 
   WriteLn('----------------------------------');
-   writeln(tencoding.utf8.getstring(StreamOut[x].cbits));
+ //  writeln(tencoding.utf8.getstring(StreamOut[x].cbits));
   {$endif}  
  
 if err > 0 then
@@ -5237,7 +5254,7 @@ if err > 0 then
 {$IF DEFINED(debug)}	
   WriteLn('opus_encode outframes =' + inttostr(err));
    WriteLn('----------------------------------');
-   writeln(tencoding.utf8.getstring(StreamOut[x].cbits));
+//   writeln(tencoding.utf8.getstring(StreamOut[x].cbits));
   {$endif}  
 
 if err > 0 then

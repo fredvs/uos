@@ -28,6 +28,10 @@ Included in the package:
 . Examples fpGUI, MSEgui, LCL and console.
 . Binaries of libraries for Linux, arm-Rapsberry Pi, Windows, Mac osX, FreeBSD.
  
+See you at uos forum:
+http://uos.2369694.n4.nabble.com
+
+
 There are pre-compiled libraries also here:
 => https://github.com/fredvs/uos/releases/
 

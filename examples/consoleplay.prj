@@ -839,8 +839,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=uos_free
-findhistory=14
+finddtext=WriteLn(st)
+findhistory=17
+ WriteLn(st)
+ debug
+ InputPositionTime
  uos_free
  exit
  buffer
@@ -856,20 +859,14 @@ findhistory=14
  sort
  uses
 findoptions=1
-editpos=13
+editpos=7
+ 0,-1073741823
+ 20,4926
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 22,1555
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -877,47 +874,23 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-sourcefiles=13
+sourcefiles=7
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=13
+relpaths=7
  deviceinfos_fpGUI.pas
  uos.pas
- uos_flat.pas
- define.inc
- uos_portaudio.pas
- deviceinfos_fpGUI.pas
  consoleplay.pas
  define.inc
- uos_mpg123.pas
  uos_libsndfile.pas
- define.inc
  simpleplayer_fpGUI.pas
  uos_flat.pas
-ismoduletexts=13
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=7
  0
  0
  0
@@ -934,23 +907,9 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=13
- 0
- 1
- 12
- 11
- 9
- 6
- 8
- 2
- 3
- 4
- 5
- 10
- 7
 tabsize=60
-firsttab=0
-index=2
+firsttab=1
+index=1
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -978,8 +937,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=235
- y=32
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
@@ -1007,7 +966,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1101,7 +1060,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1112,7 +1071,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=3
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1310,9 +1269,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=580
+ y=581
  cx=1356
- cy=121
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1423,8 +1382,8 @@ windowlayout=549
  mdistate=0
  nx=0
  ny=0
- ncx=1356
- ncy=11
+ ncx=929
+ ncy=2
  x=0
  y=0
  cx=1356
@@ -1444,7 +1403,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1480,13 +1439,13 @@ windowlayout=549
  x=0
  y=65
  cx=1356
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

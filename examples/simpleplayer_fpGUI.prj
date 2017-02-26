@@ -813,12 +813,12 @@ path=8
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=8
- 3793
+ 3804
  33
  913
  764
- 2647
- 1960
+ 2658
+ 1971
  552
  247
 address=8
@@ -939,8 +939,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=longint
+finddtext=dspvol
 findhistory=20
+ dspvol
  longint
  playnofree
  op_test_file error =
@@ -960,32 +961,36 @@ findhistory=20
  mono2st
  function SoundTouchPlug(
  2-PlugFunc
- fromfile
 findoptions=1
-editpos=5
+editpos=6
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 21,10
+ 0,0
+ 0,2283
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+sourcefiles=6
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
-relpaths=5
+ ${PROJECTDIR}/uos.pas
+relpaths=6
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
  uos_flat.pas
  define.inc
-ismoduletexts=5
+ uos.pas
+ismoduletexts=6
+ 0
  0
  0
  0
@@ -1013,8 +1018,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=929
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -1026,16 +1031,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=177
- y=56
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,929,585
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1047,15 +1052,15 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=571
- y=175
- cx=743
+ x=493
+ y=171
+ cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1077,7 +1082,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1149,7 +1154,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=512
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1160,7 +1165,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=3
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1199,14 +1204,14 @@ windowlayout=530
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1215,7 +1220,7 @@ windowlayout=530
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1358,9 +1363,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=580
- cx=1356
- cy=121
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1459,8 +1464,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1475,8 +1480,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [sourcefo]
@@ -1491,8 +1496,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=512
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1526,9 +1531,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=65
- cx=1356
- cy=512
+ y=54
+ cx=929
+ cy=428
  rcx=0
  rcy=0
 [targetconsole]

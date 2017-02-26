@@ -85,12 +85,12 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '5.7'
+  LCLVersion = '5.9'
   object Shape5: TShape
-    Left = 230
+    Left = 122
     Height = 44
     Top = 429
-    Width = 483
+    Width = 591
     Brush.Color = clRed
   end
   object Shape4: TShape
@@ -575,6 +575,15 @@ object Form1: TForm1
     Font.Name = 'Sans'
     ParentColor = False
     ParentFont = False
+  end
+  object Button2: TButton
+    Left = 148
+    Height = 25
+    Top = 438
+    Width = 55
+    Caption = 'Load'
+    OnClick = Button2Click
+    TabOrder = 31
   end
   object OpenDialog1: TOpenDialog
     left = 331
