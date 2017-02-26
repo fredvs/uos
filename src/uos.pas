@@ -1328,7 +1328,8 @@ end;
 procedure Tuos_Player.SeekTime(InputIndex: cint32; pos: TTime);
 //// change position in time format
 var
-  ho, mi, se, ms, possample: word;
+  ho, mi, se, ms: word;
+  possample : cint32;
 begin
     if (isAssigned = True) then begin
  sysutils.DecodeTime(pos, ho, mi, se, ms);
@@ -1339,6 +1340,7 @@ begin
    StreamIn[InputIndex].Data.Poseek := possample;
    
  {$IF DEFINED(debug)}
+ WriteLn('TTime: '+ timetostr(pos));
 	WriteLn('SeekTime() : Data.Poseek: '+ inttostr(possample));
  {$endif}
      end;
@@ -1469,7 +1471,7 @@ var
   tmp: float;
   h, m, s, ms: word;
 begin
-   if (Status > 0) and (isAssigned = True) then tmp := InputPositionSeconds(InputIndex);
+   if (isAssigned = True) then tmp := InputPositionSeconds(InputIndex);
   {$IF DEFINED(debug)}
 	WriteLn('InputPositionTime(): InputPositionSeconds: '+ floattostr(tmp));
   {$endif}

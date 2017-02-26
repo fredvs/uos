@@ -973,9 +973,9 @@ findoptions=1
 editpos=6
  0,-1073741823
  0,-1073741823
- 0,614
- 0,1174
- 0,6
+ 7,611
+ 0,-1073741823
+ 0,-1073741823
  0,1338
 bookmarks0=0
 bookmarks1=0
@@ -1011,7 +1011,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=2
-index=5
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1136,7 +1136,7 @@ windowlayout=530
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1512,7 +1512,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
