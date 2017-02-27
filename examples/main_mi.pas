@@ -31,6 +31,14 @@ type
     Button5: TButton;
     Button7: TButton;
     Button8: TButton;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
+    CheckBox4: TCheckBox;
+    CheckBox5: TCheckBox;
+    CheckBox6: TCheckBox;
+    CheckBox7: TCheckBox;
+    CheckBox8: TCheckBox;
     Edit1: TEdit;
     Edit10: TEdit;
     Edit11: TEdit;
@@ -84,6 +92,14 @@ type
     procedure Button5Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
     procedure Button8Click(Sender: TObject);
+    procedure CheckBox1Change(Sender: TObject);
+    procedure CheckBox2Change(Sender: TObject);
+    procedure CheckBox3Change(Sender: TObject);
+    procedure CheckBox4Change(Sender: TObject);
+    procedure CheckBox5Change(Sender: TObject);
+    procedure CheckBox6Change(Sender: TObject);
+    procedure CheckBox7Change(Sender: TObject);
+    procedure CheckBox8Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -455,6 +471,45 @@ begin
     edit9.Text := opendialog1.FileName;
 end;
 
+procedure TForm1.CheckBox1Change(Sender: TObject);
+begin
+    uos_InputSetEnable(PlayerIndex0, InIndex1, checkbox1.checked);
+end;
+
+procedure TForm1.CheckBox2Change(Sender: TObject);
+begin
+   uos_InputSetEnable(PlayerIndex0, InIndex2, checkbox2.checked);
+end;
+
+procedure TForm1.CheckBox3Change(Sender: TObject);
+begin
+   uos_InputSetEnable(PlayerIndex0, InIndex5, checkbox3.checked);
+end;
+
+procedure TForm1.CheckBox4Change(Sender: TObject);
+begin
+   uos_InputSetEnable(PlayerIndex0, InIndex6, checkbox4.checked);
+end;
+
+procedure TForm1.CheckBox5Change(Sender: TObject);
+begin
+   uos_InputSetEnable(PlayerIndex0, InIndex3, checkbox5.checked);
+end;
+
+procedure TForm1.CheckBox6Change(Sender: TObject);
+begin
+    uos_InputSetEnable(PlayerIndex0, InIndex4, checkbox6.checked);
+end;
+
+procedure TForm1.CheckBox7Change(Sender: TObject);
+begin
+   uos_InputSetEnable(PlayerIndex0, InIndex7, checkbox7.checked);
+end;
+
+procedure TForm1.CheckBox8Change(Sender: TObject);
+begin
+   uos_InputSetEnable(PlayerIndex0, InIndex8, checkbox8.checked);
+end;
 
 
 procedure uos_logo();

@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 236
   Height = 476
-  Top = 167
+  Top = 103
   Width = 993
   BorderIcons = [biSystemMenu]
   Caption = 'Multi Input into one Player'
@@ -86,15 +86,22 @@ object Form1: TForm1
   OnDestroy = FormDestroy
   Position = poDesktopCenter
   LCLVersion = '5.9'
+  object Shape6: TShape
+    Left = 502
+    Height = 65
+    Top = 360
+    Width = 481
+    Brush.Color = clYellow
+  end
   object Shape5: TShape
-    Left = 122
+    Left = 11
     Height = 44
-    Top = 429
-    Width = 591
+    Top = 428
+    Width = 972
     Brush.Color = clRed
   end
   object Shape4: TShape
-    Left = 11
+    Left = 12
     Height = 65
     Top = 360
     Width = 483
@@ -108,7 +115,7 @@ object Form1: TForm1
     Brush.Color = clLime
   end
   object Shape2: TShape
-    Left = 11
+    Left = 10
     Height = 68
     Top = 220
     Width = 483
@@ -175,7 +182,7 @@ object Form1: TForm1
     TabOrder = 3
   end
   object Button3: TButton
-    Left = 613
+    Left = 708
     Height = 25
     Top = 438
     Width = 54
@@ -239,7 +246,7 @@ object Form1: TForm1
     TabOrder = 10
   end
   object Button14: TButton
-    Left = 243
+    Left = 368
     Height = 25
     Top = 438
     Width = 132
@@ -248,7 +255,7 @@ object Form1: TForm1
     TabOrder = 11
   end
   object Button15: TButton
-    Left = 423
+    Left = 540
     Height = 25
     Top = 438
     Width = 62
@@ -258,7 +265,7 @@ object Form1: TForm1
     TabOrder = 12
   end
   object Button16: TButton
-    Left = 511
+    Left = 618
     Height = 25
     Top = 438
     Width = 73
@@ -293,10 +300,10 @@ object Form1: TForm1
     TabOrder = 14
   end
   object TrackBar1: TTrackBar
-    Left = 158
+    Left = 150
     Height = 41
-    Top = 175
-    Width = 312
+    Top = 178
+    Width = 230
     Max = 100
     OnChange = TrackBar1Change
     Position = 100
@@ -304,10 +311,10 @@ object Form1: TForm1
     TabOrder = 15
   end
   object TrackBar2: TTrackBar
-    Left = 158
+    Left = 156
     Height = 41
-    Top = 248
-    Width = 312
+    Top = 250
+    Width = 230
     Max = 100
     OnChange = TrackBar2Change
     Position = 100
@@ -318,7 +325,7 @@ object Form1: TForm1
     Left = 158
     Height = 41
     Top = 320
-    Width = 312
+    Width = 230
     Max = 100
     OnChange = TrackBar3Change
     Position = 100
@@ -329,7 +336,7 @@ object Form1: TForm1
     Left = 158
     Height = 41
     Top = 384
-    Width = 312
+    Width = 230
     Max = 100
     OnChange = TrackBar4Change
     Position = 100
@@ -388,19 +395,12 @@ object Form1: TForm1
     Left = 647
     Height = 41
     Top = 384
-    Width = 312
+    Width = 230
     Max = 100
     OnChange = TrackBar5Change
     Position = 100
     TickStyle = tsNone
     TabOrder = 19
-  end
-  object Shape6: TShape
-    Left = 500
-    Height = 65
-    Top = 360
-    Width = 483
-    Brush.Color = clYellow
   end
   object Shape7: TShape
     Left = 500
@@ -499,7 +499,7 @@ object Form1: TForm1
     Left = 647
     Height = 41
     Top = 175
-    Width = 312
+    Width = 230
     Max = 100
     OnChange = TrackBar6Change
     Position = 100
@@ -510,7 +510,7 @@ object Form1: TForm1
     Left = 647
     Height = 41
     Top = 248
-    Width = 312
+    Width = 230
     Max = 100
     OnChange = TrackBar7Change
     Position = 100
@@ -518,10 +518,10 @@ object Form1: TForm1
     TabOrder = 29
   end
   object TrackBar8: TTrackBar
-    Left = 647
+    Left = 648
     Height = 41
     Top = 320
-    Width = 312
+    Width = 230
     Max = 100
     OnChange = TrackBar8Change
     Position = 100
@@ -577,13 +577,101 @@ object Form1: TForm1
     ParentFont = False
   end
   object Button2: TButton
-    Left = 148
+    Left = 238
     Height = 25
     Top = 438
     Width = 55
     Caption = 'Load'
     OnClick = Button2Click
     TabOrder = 31
+  end
+  object CheckBox1: TCheckBox
+    Left = 396
+    Height = 22
+    Top = 188
+    Width = 73
+    Caption = 'Enabled'
+    Checked = True
+    OnChange = CheckBox1Change
+    State = cbChecked
+    TabOrder = 32
+  end
+  object CheckBox2: TCheckBox
+    Left = 396
+    Height = 22
+    Top = 258
+    Width = 73
+    Caption = 'Enabled'
+    Checked = True
+    OnChange = CheckBox2Change
+    State = cbChecked
+    TabOrder = 33
+  end
+  object CheckBox3: TCheckBox
+    Left = 890
+    Height = 22
+    Top = 186
+    Width = 73
+    Caption = 'Enabled'
+    Checked = True
+    OnChange = CheckBox3Change
+    State = cbChecked
+    TabOrder = 34
+  end
+  object CheckBox4: TCheckBox
+    Left = 890
+    Height = 22
+    Top = 258
+    Width = 73
+    Caption = 'Enabled'
+    Checked = True
+    OnChange = CheckBox4Change
+    State = cbChecked
+    TabOrder = 35
+  end
+  object CheckBox5: TCheckBox
+    Left = 396
+    Height = 22
+    Top = 328
+    Width = 73
+    Caption = 'Enabled'
+    Checked = True
+    OnChange = CheckBox5Change
+    State = cbChecked
+    TabOrder = 36
+  end
+  object CheckBox6: TCheckBox
+    Left = 396
+    Height = 22
+    Top = 394
+    Width = 73
+    Caption = 'Enabled'
+    Checked = True
+    OnChange = CheckBox6Change
+    State = cbChecked
+    TabOrder = 37
+  end
+  object CheckBox7: TCheckBox
+    Left = 892
+    Height = 22
+    Top = 328
+    Width = 73
+    Caption = 'Enabled'
+    Checked = True
+    OnChange = CheckBox7Change
+    State = cbChecked
+    TabOrder = 38
+  end
+  object CheckBox8: TCheckBox
+    Left = 892
+    Height = 22
+    Top = 394
+    Width = 73
+    Caption = 'Enabled'
+    Checked = True
+    OnChange = CheckBox8Change
+    State = cbChecked
+    TabOrder = 39
   end
   object OpenDialog1: TOpenDialog
     left = 331
