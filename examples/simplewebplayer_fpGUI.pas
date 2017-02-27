@@ -166,7 +166,7 @@ var
   procedure TSimpleplayer.VolumeChange(Sender: TObject; pos: integer);
   begin
     if (btnstart.Enabled = False) then
-      uos_SetDSPVolumeIn(PlayerIndex1, In1Index,
+      uos_InputSetDSPVolume(PlayerIndex1, In1Index,
         (100 - TrackBar2.position) / 100,
         (100 - TrackBar3.position) / 100, True);
   end;
@@ -375,14 +375,14 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     //////////// InIndex : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
-    uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+    uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// In1Index : InputIndex of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-    uos_SetDSPVolumeIn(PlayerIndex1, In1Index,
+    uos_InputSetDSPVolume(PlayerIndex1, In1Index,
       (100 - TrackBar2.position) / 100,
       (100 - TrackBar3.position) / 100, True);
     /// Set volume

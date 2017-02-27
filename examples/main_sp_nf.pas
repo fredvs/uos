@@ -258,7 +258,7 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
-    PlayerIndex1.SetDSPVolumeIn(InputIndex1, DSPVolume, TrackBar1.position / 100,
+    PlayerIndex1.InputSetDSPVolume(InputIndex1, DSPVolume, TrackBar1.position / 100,
       TrackBar3.position / 100, True);
 end;
 
@@ -271,7 +271,7 @@ end;
 procedure TForm1.TrackBar2MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
-  PlayerIndex1.Seek( InputIndex1, TrackBar2.position);
+  PlayerIndex1.InputSeek( InputIndex1, TrackBar2.position);
   TrackBar2.Tag := 0;
 end;
 
@@ -430,14 +430,14 @@ begin
     //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
-    DSPVolume := PlayerIndex1.AddDSPVolumeIn(InputIndex1, 1, 1);
+    DSPVolume := PlayerIndex1.InputAddDSPVolume(InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : Index of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-    PlayerIndex1.SetDSPVolumeIn(InputIndex1, DSPVolume, TrackBar1.position / 100,
+    PlayerIndex1.InputSetDSPVolume(InputIndex1, DSPVolume, TrackBar1.position / 100,
       TrackBar3.position / 100, True);    /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// DSPVolume : Index of a existing dsp
@@ -446,7 +446,7 @@ begin
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
 
-   DSPIndex1 := PlayerIndex1.AddDSPIn(InputIndex1, @DSPReverseBefore,
+   DSPIndex1 := PlayerIndex1.InputAddDSP(InputIndex1, @DSPReverseBefore,
      @DSPReverseAfter, nil, nil);
       ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
@@ -457,11 +457,11 @@ begin
     ////////// LoopProc : external procedure to do after the buffer is filled
 
    //// set the parameters of custom DSP
-   PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex1, checkbox1.Checked);
+   PlayerIndex1.InputSetDSP(InputIndex1, DSPIndex1, checkbox1.Checked);
 
    // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)
-    DSPIndex2 := PlayerIndex1.AddDSPIn(InputIndex1, nil, @DSPStereo2Mono, nil, nil);
-    PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex2, chkstereo2mono.checked);
+    DSPIndex2 := PlayerIndex1.InputAddDSP(InputIndex1, nil, @DSPStereo2Mono, nil, nil);
+    PlayerIndex1.InputSetDSP(InputIndex1, DSPIndex2, chkstereo2mono.checked);
 
    ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
   if plugbs2b = true then
@@ -529,7 +529,7 @@ end;
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
-    PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex1, checkbox1.Checked);
+    PlayerIndex1.InputSetDSP(InputIndex1, DSPIndex1, checkbox1.Checked);
 end;
 
 procedure TForm1.CheckBox3Change(Sender: TObject);
@@ -543,7 +543,7 @@ end;
 procedure TForm1.chkstereo2monoChange(Sender: TObject);
 begin
    if radiogroup1.Enabled = False then
-    PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex2, chkstereo2mono.checked);
+    PlayerIndex1.InputSetDSP(InputIndex1, DSPIndex2, chkstereo2mono.checked);
  end;
 
 procedure TForm1.Edit5Change(Sender: TObject);
@@ -638,7 +638,7 @@ end;
 function DSPReverseBefore(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 begin
   if Data.position > Data.OutFrames div Data.ratio then
-    PlayerIndex1.Seek(InputIndex1, Data.position - (Data.OutFrames div (Data.Ratio)));
+    PlayerIndex1.InputSeek(InputIndex1, Data.position - (Data.OutFrames div (Data.Ratio)));
 end;
 
 function DSPReverseAfter(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;

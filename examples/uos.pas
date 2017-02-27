@@ -69,7 +69,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 17170225 ;
+  uos_version : cint32 = 17170227 ;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -545,15 +545,15 @@ type
     /////////////////////Audio procedure
     Procedure Play() ;        ///// Start playing
 
-    Procedure PlayNoFree() ;        ///// Start playing but do not free the player after stop
-  
-    Procedure FreePlayer() ;        ///// Works only when PlayNoFree() was used: free the player
-
     procedure RePlay();                ///// Resume playing after pause
 
     procedure Stop();                  ///// Stop playing and free thread
 
     procedure Pause();                 ///// Pause playing
+    
+    Procedure PlayNoFree() ;        ///// Start playing but do not free the player after stop
+  
+    Procedure FreePlayer() ;        ///// Works only when PlayNoFree() was used: free the player
 
    {$IF DEFINED(portaudio)}
      function AddIntoDevOut(Device: cint32; Latency: CDouble;
@@ -683,13 +683,13 @@ procedure SetPluginBs2b(PluginIndex: cint32; level: CInt32; fcut: CInt32;
 function GetStatus() : cint32 ;
     /////// Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, -1 => error.
 
-procedure Seek(InputIndex: cint32; pos: Tcount_t);
+procedure InputSeek(InputIndex: cint32; pos: Tcount_t);
     //// change position in sample
 
-procedure SeekSeconds(InputIndex: cint32; pos: cfloat);
+procedure InputSeekSeconds(InputIndex: cint32; pos: cfloat);
     //// change position in seconds
 
-procedure SeekTime(InputIndex: cint32; pos: TTime);
+procedure InputSeekTime(InputIndex: cint32; pos: TTime);
     //// change position in time format
 
 procedure InputSetEnable(InputIndex: cint32; enabled: boolean);
@@ -756,7 +756,7 @@ function InputGetTagComment(InputIndex: cint32): pchar;
 function InputGetTagTag(InputIndex: cint32): pchar;
     /// Tag infos
 
-function AddDSPin(InputIndex: cint32; BeforeFunc: TFunc;
+function InputAddDSP(InputIndex: cint32; BeforeFunc: TFunc;
       AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
     ///// add a DSP procedure for input
     ////////// InputIndex d: Input Index of a existing input
@@ -765,15 +765,15 @@ function AddDSPin(InputIndex: cint32; BeforeFunc: TFunc;
     ////////// EndedFunc : function to do after thread is finish
     ////////// LoopProc : external procedure of object to synchronize after the buffer is filled
     //  result :  index of DSPin in array  (DSPinIndex)
-    ////////// example : DSPinIndex1 := AddDSPIn(InputIndex1,@beforereverse,@afterreverse,nil);
+    ////////// example : DSPinIndex1 := InputAddDSP(InputIndex1,@beforereverse,@afterreverse,nil);
 
-procedure SetDSPin(InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
+procedure InputSetDSP(InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
     ////////// InputIndex : Input Index of a existing input
     ////////// DSPIndexIn : DSP Index of a existing DSP In
     ////////// Enable :  DSP enabled
-    ////////// example : SetDSPIn(InputIndex1,DSPinIndex1,True);
+    ////////// example : InputSetDSP(InputIndex1,DSPinIndex1,True);
 
-function AddDSPout(OutputIndex: cint32; BeforeFunc: TFunc;
+function OutputAddDSP(OutputIndex: cint32; BeforeFunc: TFunc;
       AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;    //// usefull if multi output
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// BeforeFunc : function to do before the buffer is filled
@@ -781,15 +781,15 @@ function AddDSPout(OutputIndex: cint32; BeforeFunc: TFunc;
     ////////// EndedFunc : function to do after thread is finish
     ////////// LoopProc : external procedure of object to synchronize after the buffer is filled
     //  result : index of DSPout in array
-    ////////// example :DSPoutIndex1 := AddDSPout(OutputIndex1,@volumeproc,nil,nil);
+    ////////// example :DSPoutIndex1 := OutputAddDSP(OutputIndex1,@volumeproc,nil,nil);
 
-procedure SetDSPout(OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
+procedure OutPutSetDSP(OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// DSPoutIndex : DSPoutIndex of existing DSPout
     ////////// Enable :  DSP enabled
-    ////////// example : SetDSPIn(OutputIndex1,DSPoutIndex1,True);
+    ////////// example : OutPutSetDSP(OutputIndex1,DSPoutIndex1,True);
 
-function AddFilterIn(InputIndex: cint32; LowFrequency: cint32;
+function InputAddFilter(InputIndex: cint32; LowFrequency: cint32;
       HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
       AlsoBuf: boolean; LoopProc: TProc): cint32;
     ////////// InputIndex : InputIndex of a existing Input
@@ -801,9 +801,9 @@ function AddFilterIn(InputIndex: cint32; LowFrequency: cint32;
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
     ////////// LoopProc : external procedure of object to synchronize after DSP done
     //  result :  otherwise index of DSPIn in array
-    ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1,2,true,nil);
+    ////////// example :FilterInIndex1 := InputAddFilter(InputIndex1,6000,16000,1,2,true,nil);
 
-procedure SetFilterIn(InputIndex: cint32; FilterIndex: cint32;
+procedure InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
       LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
       TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
     ////////// InputIndex : InputIndex of a existing Input
@@ -816,9 +816,9 @@ procedure SetFilterIn(InputIndex: cint32; FilterIndex: cint32;
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
     ////////// LoopProc : external procedure of object to synchronize after DSP done
     ////////// Enable :  Filter enabled
-    ////////// example : SetFilterIn(InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
+    ////////// example : InputSetFilter(InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 
-function AddFilterOut(OutputIndex: cint32; LowFrequency: cint32;
+function OutputAddFilter(OutputIndex: cint32; LowFrequency: cint32;
       HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
       AlsoBuf: boolean; LoopProc: TProc): cint32;
     ////////// OutputIndex : OutputIndex of a existing Output
@@ -830,9 +830,9 @@ function AddFilterOut(OutputIndex: cint32; LowFrequency: cint32;
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
     ////////// LoopProc : external procedure of object to synchronize after DSP done
     //  result : index of DSPOut in array
-    ////////// example :FilterOutIndex1 := AddFilterOut(OutputIndex1,6000,16000,1,true,nil);
+    ////////// example :FilterOutIndex1 := OutputAddFilter(OutputIndex1,6000,16000,1,true,nil);
 
-procedure SetFilterOut(OutputIndex: cint32; FilterIndex: cint32;
+procedure OutputSetFilter(OutputIndex: cint32; FilterIndex: cint32;
       LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
       TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
     ////////// OutputIndex : OutputIndex of a existing Output
@@ -845,71 +845,71 @@ procedure SetFilterOut(OutputIndex: cint32; FilterIndex: cint32;
     ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
     ////////// Enable :  Filter enabled
     ////////// LoopProc : external procedure of object to synchronize after DSP done
-    ////////// example : SetFilterOut(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
+    ////////// example : OutputSetFilter(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
 
 function DSPLevel(Data: Tuos_Data): Tuos_Data;
     //////////// to get level of buffer (volume)
     
-function AddDSP2ChanTo1ChanIn(InputIndex: cint32): cint32;
+function InputAddDSP2ChanTo1Chan(InputIndex: cint32): cint32;
     /////  Convert mono 1 channel input to stereo 2 channels input.
     //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
        //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
+    ////////// example  DSPIndex1 := InputAddDSP2ChanTo1Chan(InputIndex1);
 
-function AddDSPVolumeIn(InputIndex: cint32; VolLeft: double;
+function InputAddDSPVolume(InputIndex: cint32; VolLeft: double;
       VolRight: double): cint32;
     ///// DSP Volume changer
     ////////// InputIndex : InputIndex of a existing Input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
+    ////////// example  DSPIndex1 := InputAddDSPVolume(InputIndex1,1,1);
 
-function AddDSPVolumeOut(OutputIndex: cint32; VolLeft: double;
+function OutputAddDSPVolume(OutputIndex: cint32; VolLeft: double;
       VolRight: double): cint32;
     ///// DSP Volume changer
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     //  result :  otherwise index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSPVolumeOut(InputIndex1,1,1);
+    ////////// example  DSPIndex1 := OutputAddDSPVolume(InputIndex1,1,1);
     
 {$IF DEFINED(noiseremoval)}
-function AddDSPNoiseRemovalIn(InputIndex: cint32): cint32;
+function InputAddDSPNoiseRemoval(InputIndex: cint32): cint32;
     ///// DSP Noise Removal
     ////////// InputIndex : InputIndex of a existing Input
     //  result :  otherwise index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSPNoiseRemovalIn(InputIndex1);
+    ////////// example  DSPIndex1 := InputAddDSPNoiseRemoval(InputIndex1);
     
-procedure SetDSPNoiseRemovalIn(InputIndex: cint32; Enable: boolean);
+procedure InputSetDSPNoiseRemoval(InputIndex: cint32; Enable: boolean);
     
-function AddDSPNoiseRemovalOut(OutputIndex: cint32): cint32;
+function OutputAddDSPNoiseRemoval(OutputIndex: cint32): cint32;
     ///// DSP Noise Removal
     ////////// InputIndex : OutputIndex of a existing Output
     //  result :  otherwise index of DSPOut in array
-    ////////// example  DSPIndex1 := AddDSPNoiseRemovalOut(OutputIndex1);
+    ////////// example  DSPIndex1 := OutputAddDSPNoiseRemoval(OutputIndex1);
     
-procedure SetDSPNoiseRemovalOUT(OutputIndex: cint32; Enable: boolean);
+procedure OutputSetDSPNoiseRemoval(OutputIndex: cint32; Enable: boolean);
 {$endif}  
     
-procedure SetDSPVolumeIn(InputIndex: cint32; DSPVolIndex: cint32;
+procedure InputSetDSPVolume(InputIndex: cint32; DSPVolIndex: cint32;
       VolLeft: double; VolRight: double; Enable: boolean);
     ////////// InputIndex : InputIndex of a existing Input
     ////////// DSPIndex : DSPIndex of a existing DSP
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
-    ////////// example  SetDSPVolumeIn(InputIndex1,DSPIndex1,1,0.8,True);
+    ////////// example  InputSetDSPVolume(InputIndex1,DSPIndex1,1,0.8,True);
 
-procedure SetDSPVolumeOut(OutputIndex: cint32; DSPVolIndex: cint32;
+procedure OutputSetDSPVolume(OutputIndex: cint32; DSPVolIndex: cint32;
       VolLeft: double; VolRight: double; Enable: boolean);
     ////////// OutputIndex : OutputIndex of a existing Output
     ////////// DSPIndex : DSPIndex of a existing DSP
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
-    ////////// example  SetDSPVolumeOut(InputIndex1,DSPIndex1,1,0.8,True);
+    ////////// example  OutputSetDSPVolume(InputIndex1,DSPIndex1,1,0.8,True);
 
 end;
 
@@ -1257,7 +1257,7 @@ var
 
   for x := 0 to high(StreamIn) do
   begin
-    Seek(x, 0);
+    InputSeek(x, 0);
     StreamIn[x].Data.status  := 1 ;
     if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
     begin
@@ -1312,20 +1312,20 @@ begin
   end;
 end;
 
-procedure Tuos_Player.Seek(InputIndex:cint32; pos: Tcount_t);
+procedure Tuos_Player.InputSeek(InputIndex:cint32; pos: Tcount_t);
 //// change position in samples
 begin
    if (isAssigned = True) then StreamIn[InputIndex].Data.Poseek := pos;
 end;
 
-procedure Tuos_Player.SeekSeconds(InputIndex: cint32; pos: cfloat);
+procedure Tuos_Player.InputSeekSeconds(InputIndex: cint32; pos: cfloat);
 //// change position in seconds
 begin
     if  (isAssigned = True) then  StreamIn[InputIndex].Data.Poseek :=
       trunc(pos * StreamIn[InputIndex].Data.SampleRate);
 end;
 
-procedure Tuos_Player.SeekTime(InputIndex: cint32; pos: TTime);
+procedure Tuos_Player.InputSeekTime(InputIndex: cint32; pos: TTime);
 //// change position in time format
 var
   ho, mi, se, ms: word;
@@ -1515,19 +1515,19 @@ function Tuos_Player.InputGetTagDate(InputIndex: cint32): pchar;
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.date);
  end;
 
-procedure Tuos_Player.SetDSPin(InputIndex: cint32; DSPinIndex: cint32;
+procedure Tuos_Player.InputSetDSP(InputIndex: cint32; DSPinIndex: cint32;
   Enable: boolean);
 begin
  StreamIn[InputIndex].DSP[DSPinIndex].Enabled := Enable;
 end;
 
-procedure Tuos_Player.SetDSPOut(OutputIndex: cint32; DSPoutIndex: cint32;
+procedure Tuos_Player.OutputSetDSP(OutputIndex: cint32; DSPoutIndex: cint32;
   Enable: boolean);
 begin
  StreamOut[OutputIndex].DSP[DSPoutIndex].Enabled := Enable;
 end;
 
-function Tuos_Player.AddDSPin(InputIndex: cint32; BeforeFunc: TFunc;
+function Tuos_Player.InputAddDSP(InputIndex: cint32; BeforeFunc: TFunc;
   AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): cint32;
 begin
     SetLength(StreamIn[InputIndex].DSP, Length(StreamIn[InputIndex].DSP) + 1);
@@ -1541,7 +1541,7 @@ begin
     Result := Length(StreamIn[InputIndex].DSP) - 1;
  end;
 
-function Tuos_Player.AddDSPout(OutputIndex: cint32; BeforeFunc: TFunc;
+function Tuos_Player.OutputAddDSP(OutputIndex: cint32; BeforeFunc: TFunc;
   AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): cint32;
 begin
     SetLength(StreamOut[OutputIndex].DSP, Length(StreamOut[OutputIndex].DSP) + 1);
@@ -1559,7 +1559,7 @@ begin
     Result := Length(StreamOut[OutputIndex].DSP) - 1;
  end;
 
-procedure Tuos_Player.SetFilterIn(InputIndex: cint32; FilterIndex: cint32;
+procedure Tuos_Player.InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
   LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
   TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
 ////////// InputIndex : InputIndex of a existing Input
@@ -1572,7 +1572,7 @@ procedure Tuos_Player.SetFilterIn(InputIndex: cint32; FilterIndex: cint32;
 ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 ////////// LoopProc : external procedure of object to synchronize after DSP done
 ////////// Enable :  Filter enabled
-////////// example : SetFilterIn(InputIndex1,FilterInIndex1,1000,1500,-1,True,nil);
+////////// example : InputSetFilter(InputIndex1,FilterInIndex1,1000,1500,-1,True,nil);
 begin
 if isAssigned = true then
 begin
@@ -1745,7 +1745,7 @@ end;
 
 end;
 
-procedure Tuos_Player.SetFilterOut(OutputIndex: cint32; FilterIndex: cint32;
+procedure Tuos_Player.OutputSetFilter(OutputIndex: cint32; FilterIndex: cint32;
   LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
   TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
 ////////// OutputIndex : OutputIndex of a existing Output
@@ -1757,7 +1757,7 @@ procedure Tuos_Player.SetFilterOut(OutputIndex: cint32; FilterIndex: cint32;
 ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 ////////// Enable :  Filter enabled
 ////////// LoopProc : external procedure of object to synchronize after DSP done
-////////// example : SetFilterOut(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,nil);
+////////// example : OutputSetFilter(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,nil);
 begin
 if isAssigned = true then
 begin
@@ -2630,12 +2630,12 @@ begin
 
 end;
 
-function uos_AddDSP2ChanTo1ChanIn(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+function uos_InputAddDSP2ChanTo1Chan(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 /////  Convert mono 1 channel input to stereo 2 channels input.
     //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
        //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
+    ////////// example  DSPIndex1 := InputAddDSP2ChanTo1Chan(InputIndex1);
 var
     x, x2: integer ;
     
@@ -2703,14 +2703,14 @@ var
   end;
 
   {$IF DEFINED(noiseremoval)}
-    function Tuos_Player.AddDSPNoiseRemovalIn(InputIndex: cint32): cint32;
+    function Tuos_Player.InputAddDSPNoiseRemoval(InputIndex: cint32): cint32;
     ///// DSP Noise Removal
     ////////// InputIndex : InputIndex of a existing Input
     //  result :  otherwise index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSPNoiseRemovalIn(InputIndex1);
+    ////////// example  DSPIndex1 := InputAddDSPNoiseRemoval(InputIndex1);
     begin
     
- Result := AddDSPin(InputIndex, nil, @uos_NoiseRemoval, nil, nil);   
+ Result := InputAddDSP(InputIndex, nil, @uos_NoiseRemoval, nil, nil);   
  
  StreamIn[InputIndex].data.DSPNoiseIndex := Result ;
  
@@ -2729,22 +2729,20 @@ StreamIn[InputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
  
 end;
     
-procedure Tuos_Player.SetDSPNoiseRemovalIn(InputIndex: cint32; Enable: boolean);
+procedure Tuos_Player.InputSetDSPNoiseRemoval(InputIndex: cint32; Enable: boolean);
       
- begin
-
+begin
 StreamIn[InputIndex].DSP[StreamIn[InputIndex].data.DSPNoiseIndex].enabled := Enable ; 
-
  end;     
  
-function Tuos_Player.AddDSPNoiseRemovalOut(OutputIndex: cint32): cint32;
+function Tuos_Player.OutputAddDSPNoiseRemoval(OutputIndex: cint32): cint32;
     ///// DSP Noise Removal
     ////////// OutputIndex : OutputIndex of a existing Output
     //  result :  otherwise index of DSPInOut in array
-    ////////// example  DSPIndex1 := AddDSPNoiseRemovalOut(OutputIndex1);
+    ////////// example  DSPIndex1 := OutputAddDSPNoiseRemoval(OutputIndex1);
  begin
     
- Result := AddDSPOut(OutputIndex, nil, @uos_NoiseRemoval, nil, nil);   
+ Result := OutputAddDSP(OutputIndex, nil, @uos_NoiseRemoval, nil, nil);   
  
  StreamOut[OutputIndex].data.DSPNoiseIndex := Result ;
  
@@ -2763,7 +2761,7 @@ StreamOut[OutputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
  
 end;
     
-procedure Tuos_Player.SetDSPNoiseRemovalOut(OutputIndex: cint32; Enable: boolean);
+procedure Tuos_Player.OutputSetDSPNoiseRemoval(OutputIndex: cint32; Enable: boolean);
       
  begin
 
@@ -2773,51 +2771,51 @@ StreamOut[OutputIndex].DSP[StreamOut[OutputIndex].data.DSPNoiseIndex].enabled :=
   
   {$endif}  
 
-function Tuos_Player.AddDSPVolumeIn(InputIndex: cint32; VolLeft: double;
+function Tuos_Player.InputAddDSPVolume(InputIndex: cint32; VolLeft: double;
   VolRight: double): cint32;  
     ///// DSP Volume changer
   ////////// InputIndex : InputIndex of a existing Input
   ////////// VolLeft : Left volume
   ////////// VolRight : Right volume
   //  result : index of DSPIn in array
-  ////////// example  DSPIndex1 := AddDSPVolumeIn(InputIndex1,1,1);
+  ////////// example  DSPIndex1 := InputAddDSPVolume(InputIndex1,1,1);
 begin
-  Result := AddDSPin(InputIndex, nil, @uos_DSPVolume, nil, nil);
+  Result := InputAddDSP(InputIndex, nil, @uos_DSPVolume, nil, nil);
   StreamIn[InputIndex].Data.VLeft := VolLeft;
   StreamIn[InputIndex].Data.VRight := VolRight;
 end;
 
-function Tuos_Player.AddDSP2ChanTo1ChanIn(InputIndex: cint32): cint32;
+function Tuos_Player.InputAddDSP2ChanTo1Chan(InputIndex: cint32): cint32;
 /////  Convert mono 1 channel input to stereo 2 channels input.
     //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
        //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
+    ////////// example  DSPIndex1 := InputAddDSP2ChanTo1Chan(InputIndex1);
  begin
-  Result := AddDSPin(InputIndex, nil, @uos_AddDSP2ChanTo1ChanIn, nil, nil);
+  Result := InputAddDSP(InputIndex, nil, @uos_InputAddDSP2ChanTo1Chan, nil, nil);
  end;
 
-function Tuos_Player.AddDSPVolumeOut(OutputIndex: cint32; VolLeft: double;
+function Tuos_Player.OutputAddDSPVolume(OutputIndex: cint32; VolLeft: double;
   VolRight: double): cint32;  ///// DSP Volume changer
   ////////// OutputIndex : OutputIndex of a existing Output
   ////////// VolLeft : Left volume ( 1 = max)
   ////////// VolRight : Right volume ( 1 = max)
   //  result :  index of DSPIn in array
-  ////////// example  DSPIndex1 := AddDSPVolumeOut(OutputIndex1,1,1);
+  ////////// example  DSPIndex1 := OutputAddDSPVolume(OutputIndex1,1,1);
 begin
-  Result := AddDSPin(OutputIndex, nil, @uos_DSPVolume, nil, nil);
+  Result := InputAddDSP(OutputIndex, nil, @uos_DSPVolume, nil, nil);
   StreamOut[OutputIndex].Data.VLeft := VolLeft;
   StreamOut[OutputIndex].Data.VRight := VolRight;
 end;
 
-procedure Tuos_Player.SetDSPVolumeIn(InputIndex: cint32; DSPVolIndex: cint32;
+procedure Tuos_Player.InputSetDSPVolume(InputIndex: cint32; DSPVolIndex: cint32;
   VolLeft: double; VolRight: double; Enable: boolean);
 ////////// InputIndex : InputIndex of a existing Input
 ////////// DSPIndex : DSPVolIndex of a existing DSPVolume
 ////////// VolLeft : Left volume ( -1 = do not change)
 ////////// VolRight : Right volume ( -1 = do not change)
 ////////// Enable : Enabled
-////////// example  SetDSPVolumeIn(InputIndex1,DSPVolIndex1,1,0.8,True);
+////////// example  InputSetDSPVolume(InputIndex1,DSPVolIndex1,1,0.8,True);
 begin
   if VolLeft <> -1 then
     StreamIn[InputIndex].Data.VLeft := VolLeft;
@@ -2826,14 +2824,14 @@ begin
   StreamIn[InputIndex].DSP[DSPVolIndex].Enabled := Enable;
 end;
 
-procedure Tuos_Player.SetDSPVolumeOut(OutputIndex: cint32;
+procedure Tuos_Player.OutputSetDSPVolume(OutputIndex: cint32;
   DSPVolIndex: cint32; VolLeft: double; VolRight: double; Enable: boolean);
 ////////// OutputIndex : OutputIndex of a existing Output
 ////////// DSPIndex : DSPIndex of a existing DSP
 ////////// VolLeft : Left volume
 ////////// VolRight : Right volume
 ////////// Enable : Enabled
-////////// example  SetDSPVolumeOut(InputIndex1,DSPIndex1,1,0.8,True);
+////////// example  OutputSetDSPVolume(InputIndex1,DSPIndex1,1,0.8,True);
 begin
   if VolLeft <> -1 then
     StreamOut[OutputIndex].Data.VLeft := VolLeft;
@@ -2842,7 +2840,7 @@ begin
   StreamOut[OutputIndex].DSP[DSPVolIndex].Enabled := Enable;
 end;
 
-function Tuos_Player.AddFilterIn(InputIndex: cint32; LowFrequency: cint32;
+function Tuos_Player.InputAddFilter(InputIndex: cint32; LowFrequency: cint32;
   HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32; AlsoBuf: boolean;
   LoopProc: TProc): cint32;
   ////////// InputIndex : InputIndex of a existing Input
@@ -2854,24 +2852,24 @@ function Tuos_Player.AddFilterIn(InputIndex: cint32; LowFrequency: cint32;
   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
   ////////// LoopProc : external procedure of object to synchronize after DSP done
   //  result : index of DSPIn in array
-  ////////// example :FilterInIndex1 := AddFilterIn(InputIndex1,6000,16000,1,1,True);
+  ////////// example :FilterInIndex1 := InputAddFilter(InputIndex1,6000,16000,1,1,True);
 var
   FilterIndex: cint32;
 begin
-  FilterIndex := AddDSPin(InputIndex, nil, @uos_BandFilter, nil, LoopProc);
+  FilterIndex := InputAddDSP(InputIndex, nil, @uos_BandFilter, nil, LoopProc);
 
    StreamIn[InputIndex].DSP[FilterIndex].fftdata :=
       Tuos_FFT.Create();
       
   if TypeFilter = -1 then
     TypeFilter := 1;
-  SetFilterIn(InputIndex, FilterIndex, LowFrequency, HighFrequency,
+  InputSetFilter(InputIndex, FilterIndex, LowFrequency, HighFrequency,
     Gain, TypeFilter, AlsoBuf, True, LoopProc);
 
   Result := FilterIndex;
 end;
 
-function Tuos_Player.AddFilterOut(OutputIndex: cint32; LowFrequency: cint32;
+function Tuos_Player.OutputAddFilter(OutputIndex: cint32; LowFrequency: cint32;
   HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32; AlsoBuf: boolean;
   LoopProc: TProc): cint32;
   ////////// OutputIndex : OutputIndex of a existing Output
@@ -2882,18 +2880,18 @@ function Tuos_Player.AddFilterOut(OutputIndex: cint32; LowFrequency: cint32;
   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
   ////////// LoopProc : external procedure of object to synchronize after DSP done
   //  result :  index of DSPOut in array
-  ////////// example :FilterOutIndex1 := AddFilterOut(OutputIndex1,6000,16000,1,true);
+  ////////// example :FilterOutIndex1 := OutputAddFilter(OutputIndex1,6000,16000,1,true);
 var
   FilterIndex: cint32;
 begin
-  FilterIndex := AddDSPOut(OutputIndex, nil, @uos_BandFilter, nil, LoopProc);
+  FilterIndex := OutputAddDSP(OutputIndex, nil, @uos_BandFilter, nil, LoopProc);
   
     StreamOut[OutputIndex].DSP[FilterIndex].fftdata :=
       Tuos_FFT.Create();
       
   if TypeFilter = -1 then
     TypeFilter := 1;
-  SetFilterOut(OutputIndex, FilterIndex, LowFrequency, HighFrequency,
+  OutputSetFilter(OutputIndex, FilterIndex, LowFrequency, HighFrequency,
     Gain, TypeFilter, AlsoBuf, True, LoopProc);
 
   Result := FilterIndex;
@@ -6127,19 +6125,14 @@ begin
   if length(StreamOut) > 0 then
     for x := 0 to high(StreamOut) do
      freeandnil(StreamOut[x]);
- //     StreamOut[x].Free;
-
-//  { 
+ 
   if length(StreamIn) > 0 then
     for x := 0 to high(StreamIn) do
      freeandnil(StreamIn[x]);
-  //    StreamIn[x].Free;
-     
-// }
+ 
   if length(Plugin) > 0 then
     for x := 0 to high(Plugin) do
       freeandnil(Plugin[x]);
-    //  Plugin[x].Free;
    
   inherited Destroy;
 end;
@@ -6166,11 +6159,9 @@ begin
 begin
  if assigned(AACI.fsStream) then
    begin
-  // AACI.fsStream.Free;
    freeandnil(AACI.fsStream);
    sleep(100);
    end;
-  // AACI.free;
    freeandnil(AACI);
    sleep(100);
 end;
@@ -6188,13 +6179,9 @@ destructor Tuos_OutStream.Destroy;
 var
   x: cint32;
 begin
- if assigned(FileBuffer.Data) then 
- freeandnil(FileBuffer.Data);
-  
-  if length(DSP) > 0 then
+ if length(DSP) > 0 then
     for x := 0 to high(DSP) do
-     // DSP[x].Free;
-      freeandnil(DSP[x]);
+     freeandnil(DSP[x]);
  
     inherited Destroy;
 end;

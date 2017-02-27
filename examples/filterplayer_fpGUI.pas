@@ -230,7 +230,7 @@ var
     FTIndex1 := uos_AddFilterIn(PlayerIndex1, In1Index, StrToInt(edit2.Text), StrToInt(edit1.Text),
     1, typfilt, True, nil);
 
-    uos_SetFilterIn(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1, True, checkbox2.Checked, nil);
+    uos_InputSetFilterIn(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1, True, checkbox2.Checked, nil);
   //////////// PlayerIndex : Index of a existing Player
   ////////// InputIndex : InputIndex of a existing Input
   ////////// DSPInIndex : DSPInIndex of existing DSPIn
@@ -264,9 +264,9 @@ var
   begin
     if (btnstart.Enabled = False) then
     begin
-      uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex1, -1, -1, -1, -1, True, checkbox1.Checked, nil);
-      uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex2, -1, -1, -1, -1, True, checkbox1.Checked, nil);
-      uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex3, -1, -1, -1, -1, True, checkbox1.Checked, nil);
+      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, -1, -1, True, checkbox1.Checked, nil);
+      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, -1, -1, True, checkbox1.Checked, nil);
+      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, -1, -1, True, checkbox1.Checked, nil);
     end;
   end;
 
@@ -283,7 +283,7 @@ var
     if radiobutton4.Checked = True then
       typfilt := 5;
     if (btnstart.Enabled = False) then
-      uos_SetFilterIn(PlayerIndex1, In1Index, FTIndex1, StrToInt(edit2.Text), StrToInt(edit1.Text),
+      uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, StrToInt(edit2.Text), StrToInt(edit1.Text),
         1, typfilt, True, checkbox2.Checked, nil);
 
   end;
@@ -300,7 +300,7 @@ var
     else
       gain := (TrackBar3.Position) / 100;
     if  (btnStart.Enabled = False) then
-    uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex3, -1, -1, Gain, -1, True,
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, Gain, -1, True,
         checkbox1.Checked, nil);
   end;
 
@@ -316,7 +316,7 @@ var
     else
       gain := (TrackBar2.Position) / 100;
     if (btnStart.Enabled = False) then
-     uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex2, -1, -1, Gain, -1, True,
+     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, Gain, -1, True,
         checkbox1.Checked, nil);
   end;
 
@@ -332,7 +332,7 @@ var
     else
       gain := (TrackBar1.Position) / 100;
     if (btnStart.Enabled = False) then
-     uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex1, -1, -1, Gain, -1, True,
+     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, Gain, -1, True,
         checkbox1.Checked, nil);
   end;
 

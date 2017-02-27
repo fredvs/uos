@@ -74,7 +74,7 @@ var
   procedure TSimpleplayer.ChangeNoise(Sender: TObject);
   begin
    if btnStart.Enabled = False then   /// player1 was created
-  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);   
+  uos_InputSetDSPNoiseRemoval(PlayerIndex1, InputIndex1, chknoise.Checked);   
   end;
   
   procedure TSimpleplayer.btnResumeClick(Sender: TObject);
@@ -206,8 +206,8 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     //  result : -1 nothing created, otherwise Output Index in array
 
  
-  uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
-  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
+  uos_InputAddDSPNoiseRemoval(PlayerIndex1, InputIndex1);
+  uos_InputSetDSPNoiseRemoval(PlayerIndex1, InputIndex1, chknoise.Checked);
      /// Add DSP Noise removal. First chunck will be the noise sample.
  
     /////// procedure to execute when stream is terminated

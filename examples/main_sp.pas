@@ -268,7 +268,7 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1, TrackBar1.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex1, InputIndex1, TrackBar1.position / 100,
       TrackBar3.position / 100, True);
 end;
 
@@ -281,7 +281,7 @@ end;
 procedure TForm1.TrackBar2MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
-  uos_Seek(PlayerIndex1, InputIndex1, TrackBar2.position);
+  uos_InputSeek(PlayerIndex1, InputIndex1, TrackBar2.position);
   TrackBar2.Tag := 0;
 end;
 
@@ -444,18 +444,14 @@ begin
     //////////// InIndex : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
-  //  uos_AddDSPNoiseRemovalIn(PlayerIndex1, InputIndex1);
-  //  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
-     /// Add DSP Noise removal. First chunck will be the noise sample.
-
-    uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
+     uos_InputAddDSPVolume(PlayerIndex1, InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : InputIndex of a existing input
     ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
     ////////// VolRight : Right volume
 
-    uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1, TrackBar1.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex1, InputIndex1, TrackBar1.position / 100,
      TrackBar3.position / 100, True); /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : InputIndex of a existing Input
@@ -463,7 +459,7 @@ begin
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
 
-    DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
+    DSPIndex1 := uos_InputAddDSP(PlayerIndex1, InputIndex1, @DSPReverseBefore,
       @DSPReverseAfter, nil, nil);
     ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
@@ -474,12 +470,12 @@ begin
     ////////// LoopProc : external procedure to do after the buffer is filled
     //////// result = DSPIndex of the custom  DSP
 
-    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
     //// set the parameters of custom DSP;
 
     // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)
-    DSPIndex2 := uos_AddDSPIn(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
-    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked);
+    DSPIndex2 := uos_InputAddDSP(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
+    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked);
 
     ///// add bs2b plugin with samplerate_of_input1  / channels(2 = stereo)
     if plugbs2b = true then
@@ -543,7 +539,7 @@ end;
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
-    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
 end;
 
 procedure TForm1.CheckBox3Change(Sender: TObject);
@@ -557,13 +553,13 @@ end;
 procedure TForm1.ChknoiseChange(Sender: TObject);
 begin
    if radiogroup1.Enabled = False then
-  uos_SetDSPNoiseRemovalIn(PlayerIndex1, InputIndex1, chknoise.Checked);
+  uos_InputSetDSPNoiseRemoval(PlayerIndex1, InputIndex1, chknoise.Checked);
 end;
 
 procedure TForm1.chkstereo2monoChange(Sender: TObject);
 begin
    if radiogroup1.Enabled = False then
-    uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked);
+    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked);
  end;
 
 procedure TForm1.Edit5Change(Sender: TObject);
@@ -658,7 +654,7 @@ function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
  begin
 
    if (Data.position > Data.OutFrames div Data.channels) then
-    uos_Seek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
+    uos_InputSeek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
   end;
 
  function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;

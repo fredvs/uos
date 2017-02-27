@@ -132,7 +132,7 @@ var
   procedure TSimpleplayer.Changestereo2mono(Sender: TObject);
   begin
    if radiobutton1.Enabled = False then   /// player1 was created
-  PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex2, chkstereo2mono.Checked);
+  PlayerIndex1.InputSetDSP(InputIndex1, DSPIndex2, chkstereo2mono.Checked);
   end;
 
   procedure TSimpleplayer.ChangePlugSetSoundTouch(Sender: TObject);
@@ -210,14 +210,14 @@ var
   procedure TSimpleplayer.changecheck(Sender: TObject);
   begin
     if (btnstart.Enabled = False) then
-      PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex1, checkbox1.Checked);
+      PlayerIndex1.InputSetDSP(InputIndex1, DSPIndex1, checkbox1.Checked);
   end;
 
   procedure TSimpleplayer.VolumeChange(Sender: TObject; pos: integer);
   begin
     if (btnstart.Enabled = False) then
 
-     PlayerIndex1.SetDSPVolumeIn(InputIndex1, DSPVolume,
+     PlayerIndex1.InputSetDSPVolume(InputIndex1, DSPVolume,
         (100 - TrackBar2.position) / 100,
         (100 - TrackBar3.position) / 100, True);
   end;
@@ -521,14 +521,14 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
    
     
-   DSPVolume := PlayerIndex1.AddDSPVolumeIn(InputIndex1, 1, 1);
+   DSPVolume := PlayerIndex1.InputAddDSPVolume(InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : Index of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 // {
-     PlayerIndex1.SetDSPVolumeIn(InputIndex1,  DSPVolume,
+     PlayerIndex1.InputSetDSPVolume(InputIndex1,  DSPVolume,
       (100 - TrackBar2.position) / 100,
       (100 - TrackBar3.position) / 100, True);
 // }   /// Set volume
@@ -539,7 +539,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
   
-   DSPIndex1 := PlayerIndex1.AddDSPIn(InputIndex1, @DSPReverseBefore,
+   DSPIndex1 := PlayerIndex1.InputAddDSP(InputIndex1, @DSPReverseBefore,
      @DSPReverseAfter, nil, nil);
       ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
@@ -550,11 +550,11 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     ////////// LoopProc : external procedure to do after the buffer is filled
    
    //// set the parameters of custom DSP
-   PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex1, checkbox1.Checked);
+   PlayerIndex1.InputSetDSP(InputIndex1, DSPIndex1, checkbox1.Checked);
     
    // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)  
-    DSPIndex2 := PlayerIndex1.AddDSPIn(InputIndex1, nil, @DSPStereo2Mono, nil, nil);
-    PlayerIndex1.SetDSPIn(InputIndex1, DSPIndex2, chkstereo2mono.checked); 
+    DSPIndex2 := PlayerIndex1.InputAddDSP(InputIndex1, nil, @DSPStereo2Mono, nil, nil);
+    PlayerIndex1.InputSetDSP(InputIndex1, DSPIndex2, chkstereo2mono.checked); 
    
    ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
   if plugbs2b = true then

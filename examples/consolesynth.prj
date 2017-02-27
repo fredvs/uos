@@ -943,7 +943,7 @@ windowlayout=530
   basedock,0,0,954,585
  focusedchild=0
  wsize=0
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -961,8 +961,8 @@ windowlayout=530
  rcx=0
  rcy=0
  wsize=0
- active=0
- visible=0
+ active=1
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -984,7 +984,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1377,13 +1377,13 @@ windowlayout=530
  visible=1
  mdistate=0
  nx=0
- ny=52
+ ny=0
  ncx=954
  ncy=3
  x=0
- y=52
+ y=0
  cx=954
- cy=3
+ cy=56
  rcx=0
  rcy=0
  [sourcefo]

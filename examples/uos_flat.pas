@@ -346,32 +346,32 @@ procedure uos_LoopProcOut(PlayerIndex: cint32; OutIndex: cint32; Proc: TProc);
             //////////// OutIndex : Index of a existing Output
 
 {$IF DEFINED(noiseremoval)}
-procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: cint32);
+procedure uos_InputAddDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32);
       
-procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: cint32; Enable: boolean);
+procedure uos_InputSetDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32; Enable: boolean);
 
-procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: cint32);
+procedure uos_OutputAddDSPNoiseRemoval(PlayerIndex: cint32; OutputIndex: cint32);
       
-procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: cint32; Enable: boolean);
+procedure uos_OutputSetDSPNoiseRemoval(PlayerIndex: cint32; OutputIndex: cint32; Enable: boolean);
 {$endif} 
 
-function uos_AddDSP2ChanTo1ChanIn(PlayerIndex: cint32; InputIndex: cint32): cint32;
+function uos_InputAddDSP2ChanTo1Chan(PlayerIndex: cint32; InputIndex: cint32): cint32;
      ////  Convert mono 1 channel input to stereo 2 channels input.
     //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
        //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
+    ////////// example  DSPIndex1 := InputAddDSP2ChanTo1Chan(InputIndex1);
     
-procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
+procedure uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                  VolRight: double) ;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
                ////////// InputIndex : InputIndex of a existing Input
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
-               ////////// example  uos_AddDSPVolumeIn(0,InputIndex1,1,1);
+               ////////// example  uos_InputAddDSPVolume(0,InputIndex1,1,1);
 
-procedure uos_AddDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
+procedure uos_OutputAddDSPVolume(PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
                  VolRight: double) ;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
@@ -379,27 +379,27 @@ procedure uos_AddDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32; VolLeft:
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                //  result : -1 nothing created, otherwise index of DSPIn in array
-               ////////// example  DSPIndex1 := uos_AddDSPVolumeOut(o,oututIndex1,1,1);
+               ////////// example  DSPIndex1 := uos_OutputAddDSPVolume(o,oututIndex1,1,1);
 
-procedure uos_SetDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32;
+procedure uos_InputSetDSPVolume(PlayerIndex: cint32; InputIndex: cint32;
                  VolLeft: double; VolRight: double; Enable: boolean);
                ////////// InputIndex : InputIndex of a existing Input
                //////////// PlayerIndex : Index of a existing Player
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
-               ////////// example  uos_SetDSPVolumeIn(0,InputIndex1,DSPIndex1,1,0.8,True);
+               ////////// example  uos_InputSetDSPVolume(0,InputIndex1,DSPIndex1,1,0.8,True);
                
-procedure uos_SetDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32;
+procedure uos_OutputSetDSPVolume(PlayerIndex: cint32; OutputIndex: cint32;
                  VolLeft: double; VolRight: double; Enable: boolean);
                ////////// OutputIndex : OutputIndex of a existing Output
                //////////// PlayerIndex : Index of a existing Player
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
-               ////////// example  uos_SetDSPVolumeOut(0,outputIndex1,DSPIndex1,1,0.8,True);
+               ////////// example  uos_OutputSetDSPVolume(0,outputIndex1,DSPIndex1,1,0.8,True);
                
-function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc: TFunc;
+function uos_InputAddDSP(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc: TFunc;
                     AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
                   ///// add a DSP procedure for input
                   //////////// PlayerIndex : Index of a existing Player
@@ -409,16 +409,16 @@ function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc: TFunc
                   ////////// EndedFunc : Function to do at end of thread
                   ////////// LoopProc : external procedure of object to synchronize after DSP done
                   //  result : -1 nothing created, otherwise index of DSPin in array  (DSPinIndex)
-                  ////////// example : DSPinIndex1 := uos_AddDSPin(0,InputIndex1,@beforereverse,@afterreverse,nil);
+                  ////////// example : DSPinIndex1 := uos_InputAddDSP(0,InputIndex1,@beforereverse,@afterreverse,nil);
 
-procedure uos_SetDSPin(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
+procedure uos_InputSetDSP(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// InputIndex : Input Index of a existing input
                   ////////// DSPIndexIn : DSP Index of a existing DSP In
                   ////////// Enable :  DSP enabled
-                  ////////// example : uos_SetDSPin(0,InputIndex1,DSPinIndex1,True);
+                  ////////// example : uos_InputSetDSP(0,InputIndex1,DSPinIndex1,True);
 
-function uos_AddDSPout(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFunc;
+function uos_OutputAddDSP(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFunc;
                     AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;   
                      //// usefull if multi output
                   //////////// PlayerIndex : Index of a existing Player
@@ -428,16 +428,16 @@ function uos_AddDSPout(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFu
                   ////////// EndedFunc : Function to do at end of thread
                   ////////// LoopProc : external procedure of object to synchronize after DSP done
                   //  result : index of DSPout in array
-                  ////////// example :DSPoutIndex1 := uos_AddDSPout(0,OutputIndex1,nil,@volumeproc,nil,nil);
+                  ////////// example :DSPoutIndex1 := uos_OutputAddDSP(0,OutputIndex1,nil,@volumeproc,nil,nil);
 
-procedure uos_SetDSPout(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
+procedure uos_OutputSetDSP(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// OutputIndex : OutputIndex of a existing Output
                   ////////// DSPoutIndex : DSPoutIndex of existing DSPout
                   ////////// Enable :  DSP enabled
-                  ////////// example : uos_SetDSPout(0,OutputIndex1,DSPoutIndex1,True);
+                  ////////// example : uos_OutputSetDSP(0,OutputIndex1,DSPoutIndex1,True);
 
-function uos_AddFilterIn(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
+function uos_InputAddFilter(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
                     HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
                     AlsoBuf: boolean; LoopProc: TProc): cint32 ;
                   //////////// PlayerIndex : Index of a existing Player
@@ -450,9 +450,9 @@ function uos_AddFilterIn(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: 
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// LoopProc : External procedure to execute after DSP done
                   //  result : index of DSPIn in array   -1 = error
-                  ////////// example :FilterInIndex1 := uos_AddFilterIn(0,InputIndex1,6000,16000,1,2,true,nil);
+                  ////////// example :FilterInIndex1 := uos_InputAddFilter(0,InputIndex1,6000,16000,1,2,true,nil);
 
-procedure uos_SetFilterIn(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
+procedure uos_InputSetFilter(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
                     LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
                     TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
                   //////////// PlayerIndex : Index of a existing Player
@@ -466,9 +466,9 @@ procedure uos_SetFilterIn(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: 
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// LoopProc : External procedure to execute after DSP done
                   ////////// Enable :  Filter enabled
-                  ////////// example : uos_SetFilterIn(0,InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
+                  ////////// example : uos_InputSetFilter(0,InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 
-function uos_AddFilterOut(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
+function uos_OutputAddFilter(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
                     HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
                     AlsoBuf: boolean; LoopProc: TProc): cint32;
                   //////////// PlayerIndex : Index of a existing Player
@@ -481,9 +481,9 @@ function uos_AddFilterOut(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// LoopProc : External procedure to execute after DSP done
                   //  result : index of DSPOut in array  -1 = error
-                  ////////// example :FilterOutIndex1 := uos_AddFilterOut(0,OutputIndex1,6000,16000,1,true,nil);
+                  ////////// example :FilterOutIndex1 := uos_OutputAddFilter(0,OutputIndex1,6000,16000,1,true,nil);
 
-procedure uos_SetFilterOut(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
+procedure uos_OutputSetFilter(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
                     LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
                     TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
                   //////////// PlayerIndex : Index of a existing Player
@@ -497,7 +497,7 @@ procedure uos_SetFilterOut(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// Enable :  Filter enabled
                   ////////// LoopProc : External procedure to execute after DSP done
-                  ////////// example : uos_SetFilterOut(0,OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
+                  ////////// example : uos_OutputSetFilter(0,OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
 
 function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: cint32;
                        Channels: cint32): cint32 ;
@@ -523,13 +523,13 @@ procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: cint32;
 function uos_GetStatus(PlayerIndex: cint32) : cint32 ;
              /////// Get the status of the player : -1 => error,  0 => has stopped, 1 => is running, 2 => is paused.
 
-procedure uos_Seek(PlayerIndex: cint32; InputIndex: cint32; pos: Tcount_t);
+procedure uos_InputSeek(PlayerIndex: cint32; InputIndex: cint32; pos: Tcount_t);
                      //// change position in sample
 
-procedure uos_SeekSeconds(PlayerIndex: cint32; InputIndex: cint32; pos: cfloat);
+procedure uos_InputSeekSeconds(PlayerIndex: cint32; InputIndex: cint32; pos: cfloat);
                      //// change position in seconds
 
-procedure uos_SeekTime(PlayerIndex: cint32; InputIndex: cint32; pos: TTime);
+procedure uos_InputSeekTime(PlayerIndex: cint32; InputIndex: cint32; pos: TTime);
                      //// change position in time format
 
 procedure uos_InputSetEnable(PlayerIndex: cint32; InputIndex: cint32; enabled: boolean);
@@ -633,43 +633,43 @@ var
 implementation
 
 {$IF DEFINED(noiseremoval)}
-procedure uos_AddDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: cint32);
+procedure uos_InputAddDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32);
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
     uosPlayers[PlayerIndex].StreamIn[InputIndex].data.DSPNoiseIndex :=
-    uosPlayers[PlayerIndex].AddDSPNoiseRemovalIn(InputIndex);
+    uosPlayers[PlayerIndex].InputAddDSPNoiseRemoval(InputIndex);
 end;
       
-procedure uos_SetDSPNoiseRemovalIn(PlayerIndex: cint32; InputIndex: cint32; Enable: boolean);
+procedure uos_InputSetDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32; Enable: boolean);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].SetDSPNoiseRemovalIn(InputIndex, Enable);
+uosPlayers[PlayerIndex].InputSetDSPNoiseRemoval(InputIndex, Enable);
 end;
 
-procedure uos_AddDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: cint32);
+procedure uos_OutputAddDSPNoiseRemoval(PlayerIndex: cint32; OutputIndex: cint32);
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
     uosPlayers[PlayerIndex].StreamOut[OutputIndex].data.DSPNoiseIndex :=
-    uosPlayers[PlayerIndex].AddDSPNoiseRemovalOut(OutputIndex);
+    uosPlayers[PlayerIndex].OutputAddDSPNoiseRemoval(OutputIndex);
 end;
       
-procedure uos_SetDSPNoiseRemovalOut(PlayerIndex: cint32; OutputIndex: cint32; Enable: boolean);
+procedure uos_OutputSetDSPNoiseRemoval(PlayerIndex: cint32; OutputIndex: cint32; Enable: boolean);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].SetDSPNoiseRemovalOut(OutputIndex, Enable);
+uosPlayers[PlayerIndex].OutputSetDSPNoiseRemoval(OutputIndex, Enable);
 end;
 {$endif} 
 
-procedure uos_AddDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
+procedure uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
                  VolRight: double);
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].AddDSPVolumeIn(InputIndex, VolLeft, VolRight);
+  uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].InputAddDSPVolume(InputIndex, VolLeft, VolRight);
 end;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
@@ -677,14 +677,14 @@ end;
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                //  result : -1 nothing created, otherwise index of DSPIn in array
-               ////////// example  DSPIndex1 := uos_AddDSPVolumeIn(0,InputIndex1,1,1);
+               ////////// example  DSPIndex1 := uos_InputAddDSPVolume(0,InputIndex1,1,1);
 
-procedure uos_AddDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
+procedure uos_OutputAddDSPVolume(PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
                  VolRight: double);
 begin
     if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].AddDSPVolumeOut(OutputIndex, VolLeft, VolRight);
+uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].OutputAddDSPVolume(OutputIndex, VolLeft, VolRight);
 end;
                ///// DSP Volume changer
                //////////// PlayerIndex : Index of a existing Player
@@ -692,35 +692,35 @@ end;
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                //  result : -1 nothing created, otherwise index of DSPIn in array
-               ////////// example  DSPIndex1 := uos_AddDSPVolumeOut(0,InputIndex1,1,1);
+               ////////// example  DSPIndex1 := uos_OutputAddDSPVolume(0,InputIndex1,1,1);
 
-procedure uos_SetDSPVolumeIn(PlayerIndex: cint32; InputIndex: cint32;
+procedure uos_InputSetDSPVolume(PlayerIndex: cint32; InputIndex: cint32;
                  VolLeft: double; VolRight: double; Enable: boolean);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].SetDSPVolumeIn(InputIndex,  uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex, VolLeft, VolRight, Enable);
+uosPlayers[PlayerIndex].InputSetDSPVolume(InputIndex,  uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex, VolLeft, VolRight, Enable);
 end;
                ////////// InputIndex : InputIndex of a existing Input
                //////////// PlayerIndex : Index of a existing Player
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
-               ////////// example  uos_SetDSPVolumeIn(0,InputIndex1,1,0.8,True);
+               ////////// example  uos_InputSetDSPVolume(0,InputIndex1,1,0.8,True);
 
-procedure uos_SetDSPVolumeOut(PlayerIndex: cint32; OutputIndex: cint32;
+procedure uos_OutputSetDSPVolume(PlayerIndex: cint32; OutputIndex: cint32;
                  VolLeft: double; VolRight: double; Enable: boolean);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].SetDSPVolumeOut(OutputIndex, uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex, VolLeft, VolRight, Enable);
+uosPlayers[PlayerIndex].OutputSetDSPVolume(OutputIndex, uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex, VolLeft, VolRight, Enable);
 end;
                ////////// OutputIndex : OutputIndex of a existing Output
                //////////// PlayerIndex : Index of a existing Player
                ////////// VolLeft : Left volume
                ////////// VolRight : Right volume
                ////////// Enable : Enabled
-               ////////// example  uos_SetDSPVolumeOut(0,InputIndex1,1,0.8,True);
+               ////////// example  uos_OutputSetDSPVolume(0,InputIndex1,1,0.8,True);
          
               
 function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): pchar;
@@ -765,7 +765,7 @@ function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32): pchar;
 result := uosPlayers[PlayerIndex].InputGetTagDate(InputIndex) ;
  end;
 
-function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc : TFunc;
+function uos_InputAddDSP(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc : TFunc;
                     AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
                   ///// add a DSP procedure for input
                   //////////// PlayerIndex : Index of a existing Player
@@ -775,27 +775,27 @@ function uos_AddDSPin(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc : TFun
                   ////////// EndedFunc : Function to do at end of thread
                   ////////// LoopProc : external procedure to do after the buffer is filled
                   //  result : index of DSPin in array  (DSPinIndex)
-                 ////////// example : DSPinIndex1 := uos_AddDSPIn(0,InputIndex1,@beforereverse,@afterreverse,nil);
+                 ////////// example : DSPinIndex1 := uos_InputAddDSP(0,InputIndex1,@beforereverse,@afterreverse,nil);
 begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-result := uosPlayers[PlayerIndex].AddDSPin(InputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
+result := uosPlayers[PlayerIndex].InputAddDSP(InputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
 end;
 
-procedure uos_SetDSPin(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
+procedure uos_InputSetDSP(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// InputIndex : Input Index of a existing input
                   ////////// DSPIndexIn : DSP Index of a existing DSP In
                   ////////// Enable :  DSP enabled
-                  ////////// example : uos_SetDSPIn(0,InputIndex1,DSPinIndex1,True);
+                  ////////// example : uos_InputSetDSP(0,InputIndex1,DSPinIndex1,True);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].SetDSPin(InputIndex, DSPinIndex, Enable) ;
+uosPlayers[PlayerIndex].InputSetDSP(InputIndex, DSPinIndex, Enable) ;
 end;
 
-function uos_AddDSPout(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFunc;
+function uos_OutputAddDSP(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFunc;
                     AfterFunc: TFunc; EndedFunc : TFunc; LoopProc: TProc): cint32;    //// usefull if multi output
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// OutputIndex : OutputIndex of a existing Output
@@ -804,27 +804,27 @@ function uos_AddDSPout(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFu
                   ////////// EndedFunc : Function to do at end of thread
                   ////////// LoopProc : external procedure to do after the buffer is filled
                   //  result :index of DSPout in array
-                  ////////// example :DSPoutIndex1 := uos_AddDSPout(0,OutputIndex1,@volumeproc,nil,nil);
+                  ////////// example :DSPoutIndex1 := uos_OutputAddDSP(0,OutputIndex1,@volumeproc,nil,nil);
 begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-result := uosPlayers[PlayerIndex].AddDSPout(OutputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
+result := uosPlayers[PlayerIndex].OutputAddDSP(OutputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
 end;
 
-procedure uos_SetDSPout(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
+procedure uos_OutputSetDSP(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
                   //////////// PlayerIndex : Index of a existing Player
                   ////////// OutputIndex : OutputIndex of a existing Output
                   ////////// DSPoutIndex : DSPoutIndex of existing DSPout
                   ////////// Enable :  DSP enabled
-                  ////////// example : uos_SetDSPIn(0,OutputIndex1,DSPoutIndex1,True);
+                  ////////// example : uos_OutputSetDSP(0,OutputIndex1,DSPoutIndex1,True);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].SetDSPout(OutputIndex, DSPoutIndex, Enable) ;
+uosPlayers[PlayerIndex].OutputSetDSP(OutputIndex, DSPoutIndex, Enable) ;
 end;
 
-function uos_AddFilterIn(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
+function uos_InputAddFilter(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
                     HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
                     AlsoBuf: boolean; LoopProc: TProc): cint32;
                   //////////// PlayerIndex : Index of a existing Player
@@ -837,16 +837,16 @@ function uos_AddFilterIn(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: 
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// LoopProc : External procedure to execute after DSP done
                   //  result :  index of DSPIn in array    -1 = error
-                  ////////// example :FilterInIndex1 := uos_AddFilterIn(0,InputIndex1,6000,16000,1,2,true,nil);
+                  ////////// example :FilterInIndex1 := uos_InputAddFilter(0,InputIndex1,6000,16000,1,2,true,nil);
 begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-result := uosPlayers[PlayerIndex].AddFilterIn(InputIndex, LowFrequency, HighFrequency, Gain, TypeFilter,
+result := uosPlayers[PlayerIndex].InputAddFilter(InputIndex, LowFrequency, HighFrequency, Gain, TypeFilter,
                     AlsoBuf, LoopProc) ;
 end;
 
-procedure uos_SetFilterIn(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
+procedure uos_InputSetFilter(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
                     LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
                     TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
                   //////////// PlayerIndex : Index of a existing Player
@@ -860,15 +860,15 @@ procedure uos_SetFilterIn(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: 
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// LoopProc : External procedure to execute after DSP done
                   ////////// Enable :  Filter enabled
-                  ////////// example : uos_SetFilterIn(0,InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
+                  ////////// example : uos_InputSetFilter(0,InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 begin
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-  uosPlayers[PlayerIndex].SetFilterIn(InputIndex, FilterIndex, LowFrequency, HighFrequency, Gain,
+  uosPlayers[PlayerIndex].InputSetFilter(InputIndex, FilterIndex, LowFrequency, HighFrequency, Gain,
                     TypeFilter, AlsoBuf, Enable, LoopProc);
 end;
 
-function uos_AddFilterOut(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
+function uos_OutputAddFilter(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
                     HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
                     AlsoBuf: boolean; LoopProc: TProc): cint32;
                   //////////// PlayerIndex : Index of a existing Player
@@ -881,16 +881,16 @@ function uos_AddFilterOut(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// LoopProc : External procedure to execute after DSP done
                   //  result : index of DSPOut in array
-                  ////////// example :FilterOutIndex1 := uos_AddFilterOut(0,OutputIndex1,6000,16000,1,true,nil);
+                  ////////// example :FilterOutIndex1 := uos_OutputAddFilter(0,OutputIndex1,6000,16000,1,true,nil);
 begin
  result := -1 ;
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-result := uosPlayers[PlayerIndex].AddFilterout(OutputIndex, LowFrequency, HighFrequency, Gain, TypeFilter,
+result := uosPlayers[PlayerIndex].OutputAddFilter(OutputIndex, LowFrequency, HighFrequency, Gain, TypeFilter,
                     AlsoBuf, LoopProc) ;
 end;
 
-procedure uos_SetFilterOut(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
+procedure uos_OutputSetFilter(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
                     LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
                     TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
                   //////////// PlayerIndex : Index of a existing Player
@@ -904,11 +904,11 @@ procedure uos_SetFilterOut(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex
                   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
                   ////////// Enable :  Filter enabled
                   ////////// LoopProc : External procedure to execute after DSP done
-                  ////////// example : uos_SetFilterOut(0,OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
+                  ////////// example : uos_OutputSetFilter(0,OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
 begin
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-  uosPlayers[PlayerIndex].SetFilterOut(OutputIndex, FilterIndex, LowFrequency, HighFrequency, Gain,
+  uosPlayers[PlayerIndex].OutputSetFilter(OutputIndex, FilterIndex, LowFrequency, HighFrequency, Gain,
                     TypeFilter, AlsoBuf, Enable, LoopProc);
 end;
 
@@ -1147,12 +1147,12 @@ begin
 end;
 {$endif}
 
-procedure uos_Seek(PlayerIndex: cint32; InputIndex: cint32; pos: Tcount_t);
+procedure uos_InputSeek(PlayerIndex: cint32; InputIndex: cint32; pos: Tcount_t);
                      //// change position in sample
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  uosPlayers[PlayerIndex].Seek(InputIndex, pos);
+  uosPlayers[PlayerIndex].InputSeek(InputIndex, pos);
 end;
 
 function uos_GetStatus(PlayerIndex: cint32) : cint32 ;
@@ -1165,20 +1165,20 @@ begin
  end else  result := -1 ;
 end;
 
-procedure uos_SeekSeconds(PlayerIndex: cint32; InputIndex: cint32; pos: cfloat);
+procedure uos_InputSeekSeconds(PlayerIndex: cint32; InputIndex: cint32; pos: cfloat);
                      //// change position in seconds
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  uosPlayers[PlayerIndex].SeekSeconds(InputIndex, pos);
+  uosPlayers[PlayerIndex].InputSeekSeconds(InputIndex, pos);
 end;
 
-procedure uos_SeekTime(PlayerIndex: cint32; InputIndex: cint32; pos: TTime);
+procedure uos_InputSeekTime(PlayerIndex: cint32; InputIndex: cint32; pos: TTime);
                      //// change position in time format
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
-  uosPlayers[PlayerIndex].SeekTime(InputIndex, pos);
+  uosPlayers[PlayerIndex].InputSeekTime(InputIndex, pos);
 end;
 
 function uos_InputLength(PlayerIndex: cint32; InputIndex: cint32): cint32;
@@ -1337,16 +1337,16 @@ begin
  result := uosPlayers[PlayerIndex].InputPositionTime(InputIndex) ;
 end;
 
-function uos_AddDSP2ChanTo1ChanIn(PlayerIndex: cint32; InputIndex: cint32): cint32;
+function uos_InputAddDSP2ChanTo1Chan(PlayerIndex: cint32; InputIndex: cint32): cint32;
 /////  Convert mono 1 channel input to stereo 2 channels input.
     //// Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
     ////////// InputIndex : InputIndex of a existing Input
        //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := AddDSP2ChanTo1ChanIn(InputIndex1);
+    ////////// example  DSPIndex1 := InputAddDSP2ChanTo1Chan(InputIndex1);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
     if  uosPlayersStat[PlayerIndex] = 1 then
- result := uosPlayers[PlayerIndex].AddDSP2ChanTo1ChanIn(InputIndex) ;
+ result := uosPlayers[PlayerIndex].InputAddDSP2ChanTo1Chan(InputIndex) ;
 end;
 
 Procedure uos_Play(PlayerIndex: cint32) ;        ///// Start playing

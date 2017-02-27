@@ -559,10 +559,10 @@ makeoptionson=6
  2354
  2546
 compilerusedon=29
- 4079
+ 69631
  0
  0
- 16
+ 0
  0
  0
  0
@@ -589,16 +589,16 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4079
+ 69631
  0
  0
  0
  0
- 16
+ 0
 exeusedon=14
- 4079
+ 69631
  0
- 16
+ 0
  0
  0
  0
@@ -627,7 +627,7 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=04:26:46 21/01/2017
+project_date=
 project_comment=
 aftcommandon=0
 unitdirson=4
@@ -895,6 +895,7 @@ findhistory=12
  ntimerkey
 findoptions=1
 editpos=8
+ 0,11
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -902,7 +903,6 @@ editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 52,58
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -947,18 +947,9 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=8
- 0
- 6
- 7
- 5
- 1
- 2
- 3
- 4
 tabsize=60
 firsttab=0
-index=2
+index=0
 [layout]
 windowlayout=545
  [mainfo.basedock]
@@ -969,12 +960,12 @@ windowlayout=545
  mdistate=0
  nx=0
  ny=0
- ncx=668
- ncy=0
+ ncx=687
+ ncy=211
  x=0
  y=0
  cx=929
- cy=585
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -993,10 +984,10 @@ windowlayout=545
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,929,604
  focusedchild=0
  wsize=0
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1014,8 +1005,8 @@ windowlayout=545
  rcx=0
  rcy=0
  wsize=0
- active=0
- visible=0
+ active=1
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1109,18 +1100,18 @@ windowlayout=545
  x=0
  y=0
  cx=159
- cy=429
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
- propcolwidthref=49
- width0=110
+ propcolwidthref=18
+ width0=141
  sortdescend0=0
- width1=43
+ width1=12
  sortdescend1=0
  sorted=0
- col=1
- row=1
+ col=-1073741823
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1314,9 +1305,9 @@ windowlayout=545
  ncx=0
  ncy=0
  x=0
- y=485
+ y=500
  cx=929
- cy=100
+ cy=104
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1416,7 +1407,7 @@ windowlayout=545
  x=0
  y=0
  cx=929
- cy=50
+ cy=52
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1426,13 +1417,13 @@ windowlayout=545
  visible=1
  mdistate=0
  nx=0
- ny=47
- ncx=929
- ncy=1
+ ny=0
+ ncx=928
+ ncy=2
  x=0
- y=47
+ y=0
  cx=929
- cy=1
+ cy=52
  rcx=0
  rcy=0
  [sourcefo]
@@ -1448,7 +1439,7 @@ windowlayout=545
  x=162
  y=0
  cx=767
- cy=429
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1482,9 +1473,9 @@ windowlayout=545
  ncx=0
  ncy=0
  x=0
- y=53
+ y=55
  cx=929
- cy=429
+ cy=442
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
@@ -1499,7 +1490,7 @@ windowlayout=545
  ncy=0
  x=363
  y=73
- cx=495
+ cx=526
  cy=357
  rcx=0
  rcy=0

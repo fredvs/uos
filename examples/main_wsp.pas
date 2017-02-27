@@ -201,7 +201,7 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex1, In1Index, TrackBar1.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
       TrackBar3.position / 100, True);
 end;
 
@@ -347,14 +347,14 @@ var
     //////////// InIndex : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
 
-    uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+    uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// In1Index : InputIndex of a existing input
     ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
     ////////// VolRight : Right volume
 
-    uos_SetDSPVolumeIn(PlayerIndex1, In1Index, TrackBar1.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
       TrackBar3.position / 100, True); /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// In1Index : InputIndex of a existing Input

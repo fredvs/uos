@@ -108,7 +108,7 @@ begin
     gain := TrackBar3.Position / 100;
 
   if (button3.Enabled = False) then
-    uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex3, -1, -1, Gain, -1, True,
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, Gain, -1, True,
       checkbox1.Checked, nil);
 end;
 
@@ -190,7 +190,7 @@ begin
   if radiobutton4.Checked = True then
     typfilt := 5;
   if (button3.Enabled = False) then
-    uos_SetFilterIn(PlayerIndex1, In1Index, FTIndex1, StrToInt(edit6.Text),
+    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, StrToInt(edit6.Text),
       StrToInt(edit5.Text),
       1, typfilt, True, checkbox2.Checked, nil);
 
@@ -210,7 +210,7 @@ begin
   else
     gain := TrackBar1.Position / 100;
   if (button3.Enabled = False) then
-    uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex1, -1, -1, Gain, -1, True,
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, Gain, -1, True,
       checkbox1.Checked, nil);
 end;
 
@@ -227,7 +227,7 @@ begin
   else
     gain := TrackBar2.Position / 100;
   if (button3.Enabled = False) then
-    uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex2, -1, -1, Gain, -1, True,
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, Gain, -1, True,
       checkbox1.Checked, nil);
 end;
 
@@ -316,7 +316,7 @@ begin
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (= 65536)
 
-  EQIndex1 := uos_AddFilterIn(PlayerIndex1, In1Index, 1, 1000, 1, 1, True, nil);
+  EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 1000, 1, 1, True, nil);
   //////////// PlayerIndex : Index of a existing Player
   ////////// In1Index : InputIndex of a existing Input
   ////////// LowFrequency : Lowest frequency of filter
@@ -328,8 +328,8 @@ begin
   ////////// LoopProc : External procedure to execute after filter
   //  result : -1 nothing created, otherwise index of DSPIn in array
 
-  EQIndex2 := uos_AddFilterIn(PlayerIndex1, In1Index, 1000, 8000, 1, 1, True, nil);
-  EQIndex3 := uos_AddFilterIn(PlayerIndex1, In1Index, 8000, 22000, 1, 1, True, nil);
+  EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1000, 8000, 1, 1, True, nil);
+  EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 8000, 22000, 1, 1, True, nil);
 
   if radiobutton1.Checked = True then
     typfilt := 2;
@@ -340,10 +340,10 @@ begin
   if radiobutton4.Checked = True then
     typfilt := 5;
 
-  FTIndex1 := uos_AddFilterIn(PlayerIndex1, In1Index, StrToInt(edit6.Text),
+  FTIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, StrToInt(edit6.Text),
     StrToInt(edit5.Text), 1, typfilt, True, nil);
 
-  uos_SetFilterIn(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1,
+  uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1,
     True, checkbox2.Checked, nil);
   //////////// PlayerIndex : Index of a existing Player
   ////////// InputIndex : InputIndex of a existing Input
@@ -365,7 +365,7 @@ begin
   else
     EqGain := TrackBar1.Position div 100;
 
-  uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex1, -1, -1, EqGain, -1, True,
+  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, EqGain, -1, True,
     checkbox1.Checked, nil);
 
   if TrackBar2.Position = 100 then
@@ -375,7 +375,7 @@ begin
     EqGain := 1 + ((100 - TrackBar2.Position) div 25)
   else
     EqGain := TrackBar2.Position div 100;
-  uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex2, -1, -1, EqGain, -1, True,
+  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, EqGain, -1, True,
     checkbox1.Checked, nil);
 
   if TrackBar3.Position = 100 then
@@ -385,7 +385,7 @@ begin
     EqGain := 1 + ((100 - TrackBar3.Position) div 25)
   else
     EqGain := TrackBar3.Position div 100;
-  uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex3, -1, -1, EqGain, -1, True,
+  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, EqGain, -1, True,
     checkbox1.Checked, nil);
 
   uos_EndProc(PlayerIndex1, @ClosePlayer1);
@@ -421,11 +421,11 @@ procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
   begin
-    uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex1, -1, -1, -1, -1, True,
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, -1, -1, True,
       checkbox1.Checked, nil);
-    uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex2, -1, -1, -1, -1, True,
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, -1, -1, True,
       checkbox1.Checked, nil);
-    uos_SetFilterIn(PlayerIndex1, In1Index, EQIndex3, -1, -1, -1, -1, True,
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, -1, -1, True,
       checkbox1.Checked, nil);
   end;
 end;

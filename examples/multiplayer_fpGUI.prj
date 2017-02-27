@@ -819,8 +819,8 @@ findhistory=20
  In1Index
 findoptions=1
 editpos=12
- 0,1483
- 0,1175
+ 0,-1073741823
+ 0,-1073741823
  0,5
  0,-1073741823
  0,-1073741823
@@ -830,7 +830,7 @@ editpos=12
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,645
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -917,8 +917,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=929
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -930,17 +930,17 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=82
- y=55
- cx=964
+ x=231
+ y=53
+ cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,929,585
  focusedchild=0
- wsize=6
- active=1
+ wsize=0
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -951,14 +951,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=541
- y=233
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -981,7 +981,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1053,18 +1053,18 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=513
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
- propcolwidthref=18
- width0=141
+ propcolwidthref=49
+ width0=110
  sortdescend0=0
- width1=12
+ width1=43
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1145,7 +1145,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1262,9 +1262,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=585
- cx=1356
- cy=116
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1363,8 +1363,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=66
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1375,12 +1375,12 @@ windowlayout=530
  mdistate=0
  nx=0
  ny=0
- ncx=954
- ncy=3
+ ncx=929
+ ncy=2
  x=0
  y=0
- cx=1356
- cy=66
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [sourcefo]
@@ -1395,15 +1395,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=513
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1430,9 +1430,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=69
- cx=1356
- cy=513
+ y=54
+ cx=929
+ cy=428
  rcx=0
  rcy=0
 [targetconsole]

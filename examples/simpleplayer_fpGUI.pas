@@ -133,7 +133,7 @@ var
   procedure TSimpleplayer.Changestereo2mono(Sender: TObject);
   begin
    if radiobutton1.Enabled = False then   /// player1 was created
-   uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.Checked); 
+   uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.Checked); 
   end;
 
   procedure TSimpleplayer.ChangePlugSetSoundTouch(Sender: TObject);
@@ -180,7 +180,7 @@ var
   procedure TSimpleplayer.btnTrackoffClick(Sender: TObject;
     Button: TMouseButton; Shift: TShiftState; const pos: TPoint);
   begin
-    uos_Seek(PlayerIndex1, InputIndex1, TrackBar1.position);
+    uos_InputSeek(PlayerIndex1, InputIndex1, TrackBar1.position);
     TrackBar1.Tag := 0;
   end;
 
@@ -211,13 +211,13 @@ var
   procedure TSimpleplayer.changecheck(Sender: TObject);
   begin
     if (btnstart.Enabled = False) then
-      uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+      uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
   end;
 
   procedure TSimpleplayer.VolumeChange(Sender: TObject; pos: integer);
   begin
     if (btnstart.Enabled = False) then
-      uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1,
+      uos_InputSetDSPVolume(PlayerIndex1, InputIndex1,
         (100 - TrackBar2.position) / 100,
         (100 - TrackBar3.position) / 100, True);
   end;
@@ -358,7 +358,7 @@ loadok : boolean = false;
   begin
    
     if (Data.position > Data.OutFrames div Data.channels) then
-     uos_Seek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
+     uos_InputSeek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
    end;
 
   function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
@@ -540,14 +540,14 @@ loadok : boolean = false;
     //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
     
-    uos_AddDSPVolumeIn(PlayerIndex1, InputIndex1, 1, 1);
+    uos_InputAddDSPVolume(PlayerIndex1, InputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : Index of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
  //{
-     uos_SetDSPVolumeIn(PlayerIndex1, InputIndex1,
+     uos_InputSetDSPVolume(PlayerIndex1, InputIndex1,
       (100 - TrackBar2.position) / 100,
       (100 - TrackBar3.position) / 100, True);
  //}   /// Set volume
@@ -557,7 +557,7 @@ loadok : boolean = false;
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
   
-  DSPIndex1 := uos_AddDSPIn(PlayerIndex1, InputIndex1, @DSPReverseBefore,
+  DSPIndex1 := uos_InputAddDSP(PlayerIndex1, InputIndex1, @DSPReverseBefore,
     @DSPReverseAfter, nil, nil);
       ///// add a custom DSP procedure for input
     ////////// PlayerIndex1 : Index of a existing Player
@@ -568,12 +568,12 @@ loadok : boolean = false;
     ////////// LoopProc : external procedure to do after the buffer is filled
    
    //// set the parameters of custom DSP
-   uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+   uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
     
     
    // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)  
- DSPIndex2 := uos_AddDSPIn(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
- uos_SetDSPIn(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked); 
+ DSPIndex2 := uos_InputAddDSP(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
+ uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked); 
    
    ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
   if plugbs2b = true then

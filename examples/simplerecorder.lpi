@@ -146,7 +146,7 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="294"/>
+        <TopLine Value="292"/>
         <CursorPos X="5" Y="292"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -454,7 +454,6 @@ install:
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <GenerateDebugInfo Value="False"/>
         <UseLineInfoUnit Value="False"/>
         <StripSymbols Value="True"/>
       </Debugging>

@@ -79,7 +79,7 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (Button2.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex1, In1Index, TrackBar1.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
       TrackBar3.position / 100, True);
 end;
 
@@ -219,14 +219,14 @@ begin
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
 
-    uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+    uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
     ///// DSP Volume changer
     //////////// PlayerIndex : Index of a existing Player
     ////////// In1Index : InputIndex of a existing input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-    uos_SetDSPVolumeIn(PlayerIndex1, In1Index, TrackBar1.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
       TrackBar3.position / 100, True); /// Set volume
 
     /////// procedure to execute when stream is terminated
@@ -283,14 +283,14 @@ begin
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : -1 default : 65536
 
-   uos_AddDSP2ChanTo1ChanIn(PlayerIndex1, In1Index);
+   uos_InputAddDSP2ChanTo1Chan(PlayerIndex1, In1Index);
    /////  Convert mono channel to stereo channels.
     //// If the input is stereo, original buffer is keeped.
     ////////// InputIndex : InputIndex of a existing Input
     //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := uos_AddDSP2ChanTo1ChanIn(PlayerIndex1, InputIndex1);
+    ////////// example  DSPIndex1 := uos_InputAddDSP2ChanTo1Chan(PlayerIndex1, InputIndex1);
 
-   uos_AddDSPVolumeIn(PlayerIndex1, In1Index, 1, 1);
+   uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
   ///// DSP Volume changer
   //////////// PlayerIndex : Index of a existing Player
   ////////// In1Index : InputIndex of a existing input
@@ -298,7 +298,7 @@ begin
   ////////// VolRight : Right volume
   //  result : -1 nothing created, otherwise index of DSPIn in array
 
-  uos_SetDSPVolumeIn(PlayerIndex1, In1Index, TrackBar1.position / 100,
+  uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
     TrackBar3.position / 100, True); /// Set volume
 
   /////// procedure to execute when stream is terminated

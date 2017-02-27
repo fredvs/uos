@@ -57,7 +57,7 @@ procedure uos_logo();
 var
   Form1: TForm1;
   BufferBMP, waveformBMP: TBitmap;
-  PlayerIndex1, In1index: integer;
+  PlayerIndex1, In1index, chan: integer;
 
 implementation
 
@@ -201,6 +201,7 @@ begin
     //// add input from audio file with default parameters
    In1Index := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text));
 
+    chan := uos_InputGetChannels(PlayerIndex1, In1Index) ;
    //// no output because only decode the steam for wave form
 
     /// get the length of the audio file
@@ -243,8 +244,7 @@ begin
     //// add input from audio file with default parameters
     In1Index := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text));
 
-
-      //// add a Output into device
+         //// add a Output into device
      uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, -1, -1);
 
 
@@ -359,7 +359,7 @@ end;
 
 procedure Tform1.DrawWaveForm;
 var
-  poswav, chan : integer;
+  poswav : integer;
   waveformdata : array of cfloat;
 
 begin
@@ -368,9 +368,7 @@ begin
 
   waveformdata:= uos_InputGetArrayLevel(PlayerIndex1, In1Index) ;
 
-  chan := uos_InputGetChannels(PlayerIndex1, In1Index) ;
-
-  while poswav < length(waveformdata) div chan
+   while poswav < length(waveformdata) div chan
       do begin
     if chan = 2 then begin
     waveformBMP.Canvas.Pen.Color := clyellow;

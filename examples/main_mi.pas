@@ -150,14 +150,14 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
    if (button14.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex0, InIndex1, TrackBar1.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex0, InIndex1, TrackBar1.position / 100,
       TrackBar1.position / 100, True);
 end;
 
 procedure TForm1.TrackBar2Change(Sender: TObject);
 begin
     if (button14.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex0, InIndex2, TrackBar2.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex0, InIndex2, TrackBar2.position / 100,
       TrackBar2.position / 100, True);
 
 end;
@@ -165,7 +165,7 @@ end;
 procedure TForm1.TrackBar3Change(Sender: TObject);
 begin
     if (button14.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex0, InIndex3, TrackBar3.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex0, InIndex3, TrackBar3.position / 100,
       TrackBar3.position / 100, True);
 
 end;
@@ -173,14 +173,14 @@ end;
 procedure TForm1.TrackBar4Change(Sender: TObject);
 begin
     if (button14.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex0, InIndex4, TrackBar4.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex0, InIndex4, TrackBar4.position / 100,
       TrackBar4.position / 100, True);
 end;
 
 procedure TForm1.TrackBar5Change(Sender: TObject);
 begin
    if (button14.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex0, InIndex8, TrackBar5.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex0, InIndex8, TrackBar5.position / 100,
       TrackBar5.position / 100, True);
 
 end;
@@ -188,7 +188,7 @@ end;
 procedure TForm1.TrackBar6Change(Sender: TObject);
 begin
    if (button14.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex0, InIndex5, TrackBar6.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex0, InIndex5, TrackBar6.position / 100,
       TrackBar6.position / 100, True);
 
 end;
@@ -196,7 +196,7 @@ end;
 procedure TForm1.TrackBar7Change(Sender: TObject);
 begin
    if (button14.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex0, InIndex6, TrackBar7.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex0, InIndex6, TrackBar7.position / 100,
       TrackBar7.position / 100, True);
 
 end;
@@ -204,7 +204,7 @@ end;
 procedure TForm1.TrackBar8Change(Sender: TObject);
 begin
    if (button14.Enabled = False) then
-    uos_SetDSPVolumeIn(PlayerIndex0, InIndex7, TrackBar8.position / 100,
+    uos_InputSetDSPVolume(PlayerIndex0, InIndex7, TrackBar8.position / 100,
       TrackBar8.position / 100, True);
 
 end;
@@ -407,14 +407,14 @@ begin
  uos_AddFromSynth(PlayerIndex0,1,0,0, -1,-1, -1, 1024 );
  // this for a dummy endless input, must be last input
 
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex1, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex2, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex3, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex4, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex5, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex6, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex7, 1, 1);
-  uos_AddDSPVolumeIn(PlayerIndex0, InIndex8, 1, 1);
+  uos_InputAddDSPVolume(PlayerIndex0, InIndex1, 1, 1);
+  uos_InputAddDSPVolume(PlayerIndex0, InIndex2, 1, 1);
+  uos_InputAddDSPVolume(PlayerIndex0, InIndex3, 1, 1);
+  uos_InputAddDSPVolume(PlayerIndex0, InIndex4, 1, 1);
+  uos_InputAddDSPVolume(PlayerIndex0, InIndex5, 1, 1);
+  uos_InputAddDSPVolume(PlayerIndex0, InIndex6, 1, 1);
+  uos_InputAddDSPVolume(PlayerIndex0, InIndex7, 1, 1);
+  uos_InputAddDSPVolume(PlayerIndex0, InIndex8, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// In1Index : InputIndex of a existing input

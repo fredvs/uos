@@ -50,6 +50,8 @@ var
   begin
      waveformdata := uos_InputGetArrayLevel(PlayerIndex1, In1Index);
 
+    chan := uos_InputGetChannels(PlayerIndex1, In1Index);
+  
     fpgapplication.ProcessMessages;
     button1.tag := 1;
     custom1.Visible := True;
@@ -76,12 +78,6 @@ var
 
     /// get the length of the audio file
     filelength := uos_InputLength(PlayerIndex1, In1Index);
-    
-    
-    chan := uos_InputGetChannels(PlayerIndex1, In1Index);
-    
-    writeln('chan = ' + inttostr(chan));
-     writeln('filelength = ' + inttostr(filelength));
 
     ///// set calculation of level/volume into array (usefull for wave form procedure)
     uos_InputSetArrayLevelEnable(PlayerIndex1, In1Index, 2);

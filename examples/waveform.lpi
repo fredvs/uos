@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <General>
       <MainUnit Value="0"/>
       <Title Value="WaveForm"/>
@@ -15,9 +15,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <CustomData Count="15">
       <Item0 Name="lazpackager/copyright" Value="2014 Fred van Stappen"/>
       <Item1 Name="lazpackager/deb/ppa" Value="ppa:fiens/uos"/>
@@ -146,8 +143,8 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="361"/>
-        <CursorPos X="15" Y="397"/>
+        <TopLine Value="189"/>
+        <CursorPos X="64" Y="204"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -155,16 +152,16 @@ install:
       <Unit2>
         <Filename Value="uos.pas"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="59"/>
-        <CursorPos X="2" Y="71"/>
+        <TopLine Value="6075"/>
+        <CursorPos X="26" Y="6105"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="uos_flat.pas"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="36"/>
-        <CursorPos X="6" Y="50"/>
+        <TopLine Value="380"/>
+        <CursorPos X="137" Y="565"/>
         <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit3>
@@ -188,124 +185,124 @@ install:
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="uos.pas"/>
-        <Caret Line="62" Column="59" TopLine="48"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="89" Column="62" TopLine="65"/>
       </Position1>
       <Position2>
-        <Filename Value="uos.pas"/>
-        <Caret Line="941" Column="33" TopLine="935"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="901" Column="32" TopLine="894"/>
       </Position2>
       <Position3>
-        <Filename Value="uos.pas"/>
-        <Caret Line="1478" Column="41" TopLine="1472"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="100" Column="32" TopLine="96"/>
       </Position3>
       <Position4>
         <Filename Value="uos.pas"/>
-        <Caret Line="2515" Column="59" TopLine="2504"/>
+        <Caret Line="67" Column="50" TopLine="63"/>
       </Position4>
       <Position5>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="89" Column="62" TopLine="65"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="756" Column="28" TopLine="745"/>
       </Position5>
       <Position6>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="901" Column="32" TopLine="894"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="1023" Column="86" TopLine="1012"/>
       </Position6>
       <Position7>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="100" Column="32" TopLine="96"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="1030" Column="22" TopLine="1019"/>
       </Position7>
       <Position8>
         <Filename Value="uos.pas"/>
-        <Caret Line="67" Column="50" TopLine="63"/>
+        <Caret Line="1040" Column="22" TopLine="1029"/>
       </Position8>
       <Position9>
         <Filename Value="uos.pas"/>
-        <Caret Line="756" Column="28" TopLine="745"/>
+        <Caret Line="1454" Column="53" TopLine="1443"/>
       </Position9>
       <Position10>
         <Filename Value="uos.pas"/>
-        <Caret Line="1023" Column="86" TopLine="1012"/>
+        <Caret Line="1984" Column="57" TopLine="1974"/>
       </Position10>
       <Position11>
         <Filename Value="uos.pas"/>
-        <Caret Line="1030" Column="22" TopLine="1019"/>
+        <Caret Line="2060" Column="60" TopLine="2050"/>
       </Position11>
       <Position12>
         <Filename Value="uos.pas"/>
-        <Caret Line="1040" Column="22" TopLine="1029"/>
+        <Caret Line="2067" Column="60" TopLine="2057"/>
       </Position12>
       <Position13>
         <Filename Value="uos.pas"/>
-        <Caret Line="1454" Column="53" TopLine="1443"/>
+        <Caret Line="2125" Column="60" TopLine="2115"/>
       </Position13>
       <Position14>
         <Filename Value="uos.pas"/>
-        <Caret Line="1984" Column="57" TopLine="1974"/>
+        <Caret Line="2200" Column="59" TopLine="2190"/>
       </Position14>
       <Position15>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2060" Column="60" TopLine="2050"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="1112" Column="45" TopLine="1107"/>
       </Position15>
       <Position16>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2067" Column="60" TopLine="2057"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="1110" Column="2" TopLine="1100"/>
       </Position16>
       <Position17>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2125" Column="60" TopLine="2115"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="397" Column="32" TopLine="391"/>
       </Position17>
       <Position18>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2200" Column="59" TopLine="2190"/>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="355" Column="94" TopLine="173"/>
       </Position18>
       <Position19>
         <Filename Value="uos_flat.pas"/>
-        <Caret Line="1112" Column="45" TopLine="1107"/>
+        <Caret Line="79" Column="27" TopLine="68"/>
       </Position19>
       <Position20>
         <Filename Value="uos_flat.pas"/>
-        <Caret Line="1110" Column="2" TopLine="1100"/>
+        <Caret Line="81" Column="27" TopLine="68"/>
       </Position20>
       <Position21>
         <Filename Value="uos_flat.pas"/>
-        <Caret Line="397" Column="32" TopLine="391"/>
+        <Caret Line="1090" Column="10" TopLine="1086"/>
       </Position21>
       <Position22>
-        <Filename Value="main_wf.pas"/>
-        <Caret Line="355" Column="94" TopLine="173"/>
-      </Position22>
-      <Position23>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="79" Column="27" TopLine="68"/>
-      </Position23>
-      <Position24>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="81" Column="27" TopLine="68"/>
-      </Position24>
-      <Position25>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="1090" Column="10" TopLine="1086"/>
-      </Position25>
-      <Position26>
         <Filename Value="uos_flat.pas"/>
         <Caret Line="51" Column="6" TopLine="36"/>
-      </Position26>
-      <Position27>
+      </Position22>
+      <Position23>
         <Filename Value="uos.pas"/>
         <Caret Line="3174" Column="62" TopLine="97"/>
-      </Position27>
-      <Position28>
+      </Position23>
+      <Position24>
         <Filename Value="main_wf.pas"/>
         <Caret Line="376" Column="30" TopLine="355"/>
+      </Position24>
+      <Position25>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="112" Column="32" TopLine="108"/>
+      </Position25>
+      <Position26>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="175" Column="27" TopLine="167"/>
+      </Position26>
+      <Position27>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="397" Column="15" TopLine="361"/>
+      </Position27>
+      <Position28>
+        <Filename Value="uos.pas"/>
+        <Caret Line="71" Column="2" TopLine="59"/>
       </Position28>
       <Position29>
         <Filename Value="main_wf.pas"/>
-        <Caret Line="112" Column="32" TopLine="108"/>
+        <Caret Line="246" Column="5" TopLine="227"/>
       </Position29>
       <Position30>
         <Filename Value="main_wf.pas"/>
-        <Caret Line="175" Column="27" TopLine="167"/>
+        <Caret Line="60" Column="31" TopLine="103"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -324,7 +321,6 @@ install:
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <GenerateDebugInfo Value="False"/>
         <StripSymbols Value="True"/>
         <UseExternalDbgSyms Value="True"/>
       </Debugging>
