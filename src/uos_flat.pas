@@ -25,7 +25,7 @@ uses
   fpg_base,
   {$ENDIF}
 
-  Classes, ctypes, math, SysUtils, uos;
+  ctypes, math, SysUtils, uos;
  
   {$IF DEFINED(bs2b)}
   const
@@ -208,7 +208,7 @@ function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (= 65536)
   //  result : Output Index in array  , -1 = error
-  // example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1,0,-1);
+  // example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1, -1, 0,-1);
  {$endif}
 
 function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar): cint32;
@@ -224,6 +224,20 @@ function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint
   // FramesCount : default : -1 (65536)
   //  result : Input Index in array  -1 = error
   // example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);
+
+function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar): cint32;
+  // Add a input from audio file with default parameters
+  
+function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint32;
+  SampleFormat: cint32 ; FramesCount: cint32): cint32;
+  // Add a input from audio file and store it into memory with custom parameters
+  // PlayerIndex : Index of a existing Player
+  // FileName : filename of audio file
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // FramesCount : default : -1 (65536)
+  //  result : Input Index in array  -1 = error
+  // example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);  
 
  {$IF DEFINED(shout)}
 function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: cint; SampleFormat: cint;
@@ -1078,6 +1092,32 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   Result := uosPlayers[PlayerIndex].AddFromFile(Filename, -1, -1, -1);
+end;
+
+function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint32;
+  SampleFormat: cint32 ; FramesCount: cint32): cint32;
+  // Add a input from audio file and store it into memory with custom parameters
+  // PlayerIndex : Index of a existing Player
+  // FileName : filename of audio file
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // FramesCount : default : -1 (65536)
+  //  result : Input Index in array  -1 = error
+  // example : InputIndex1 := uos_AddFromFileIntoMemory(0, edit5.Text, -1, 0, -1);
+begin
+  result := -1 ;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  Result := uosPlayers[PlayerIndex].AddFromFileIntoMemory(Filename, OutputIndex, SampleFormat, FramesCount);
+end;
+
+function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar): cint32;
+  // Add a input from audio file and store it into memory with default parameters
+begin
+  result := -1 ;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  Result := uosPlayers[PlayerIndex].AddFromFileIntoMemory(Filename, -1, -1, -1);
 end;
 
 {$IF DEFINED(webstream)}

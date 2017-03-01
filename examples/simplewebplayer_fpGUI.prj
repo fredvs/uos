@@ -795,25 +795,30 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=ChangePlugSet
-findhistory=15
+finddtext=addintomemory
+findhistory=20
+ addintomemory
+ Filetobuffer
+ addfromfilein
+ addfromfile
+ addintofile
+ InputGetChannels
+ channel
+ getch
+ memory
+ InputLength
+ uos_InputLength
+ AddIntoMemory
+ addintome
+ filetobu
+ writewa
  ChangePlugSet
  urlinit
  addfromur
  btnCloseClick
  close
- In1Index
- Plugin1Index
- DSP1Index
- Out1Index
- res=
- 30005
- NewView
- images
- Sort
- sort
 findoptions=1
-editpos=15
+editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -827,8 +832,12 @@ editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,2482
+ 29,3381
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,6
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -844,7 +853,11 @@ bookmarks11=0
 bookmarks12=0
 bookmarks13=0
 bookmarks14=0
-sourcefiles=15
+bookmarks15=0
+bookmarks16=0
+bookmarks17=0
+bookmarks18=0
+sourcefiles=19
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
@@ -860,7 +873,11 @@ sourcefiles=15
  ${PROJECTDIR}/main_wsp.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
-relpaths=15
+ ${PROJECTDIR}/waveform_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/define.inc
+relpaths=19
  simplewebplayer_fpGUI.pas
  uos.pas
  uos_portaudio.pas
@@ -876,7 +893,15 @@ relpaths=15
  main_wsp.pas
  uos.pas
  define.inc
-ismoduletexts=15
+ waveform_fpGUI.pas
+ simpleplayer_fpGUI_noflat.pas
+ uos_flat.pas
+ define.inc
+ismoduletexts=19
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -897,14 +922,18 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=15
+order=19
  0
  13
+ 18
+ 16
+ 15
  14
  12
  11
  10
  9
+ 17
  1
  2
  3
@@ -930,8 +959,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=604
+ cx=1356
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -950,10 +979,10 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,604
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=0
- active=0
+ wsize=6
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -971,7 +1000,7 @@ windowlayout=530
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1066,7 +1095,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=442
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1275,9 +1304,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=501
- cx=929
- cy=103
+ y=581
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1376,8 +1405,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1392,8 +1421,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1408,15 +1437,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=767
- cy=442
+ cx=1194
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1443,9 +1472,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=56
- cx=929
- cy=442
+ y=65
+ cx=1356
+ cy=513
  rcx=0
  rcy=0
 [targetconsole]

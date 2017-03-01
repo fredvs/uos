@@ -94,24 +94,24 @@ var
    PlayerIndex1 := 0;
    uos_CreatePlayer(PlayerIndex1); 
 
+    uos_AddFromFile(PlayerIndex1,pchar(SoundFilename));
     //// add a Input from audio-file with default parameters
     //////////// PlayerIndex : Index of a existing Player
     ////////// FileName : filename of audio file
     //  result : -1 nothing created, otherwise Input Index in array
     
-    uos_AddFromFile(PlayerIndex1,(pchar(SoundFilename)));
-
+    
+    uos_AddIntoDevOut(PlayerIndex1);
     //// add a Output into device with default parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
 
-    uos_AddIntoDevOut(PlayerIndex1);
-
+ 
     /////// everything is ready, here we are, lets play it...
     
     uos_Play(PlayerIndex1);
     sleep(2000);
-   end;
+    end;
 
  end;
 
