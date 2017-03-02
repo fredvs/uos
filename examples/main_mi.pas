@@ -302,6 +302,7 @@ begin
   end
   else
   begin
+
     if uosLoadResult.PAloaderror = 1 then
       MessageDlg(edit1.Text + ' do not exist...', mtWarning, [mbYes], 0);
     if uosLoadResult.PAloaderror = 2 then
@@ -310,6 +311,7 @@ begin
       MessageDlg(edit2.Text + ' do not exist...', mtWarning, [mbYes], 0);
     if uosLoadResult.SFloaderror = 2 then
       MessageDlg(edit2.Text + ' do not load...', mtWarning, [mbYes], 0);
+
     end;
 
 end;

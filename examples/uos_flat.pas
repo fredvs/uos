@@ -224,6 +224,18 @@ function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint
   // FramesCount : default : -1 (65536)
   //  result : Input Index in array  -1 = error
   // example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);
+  
+function uos_AddFromMemory(PlayerIndex: cint32; MemoryBuffer: PDArFloat; OutputIndex: cint32;
+  SampleFormat: cint32 ; SampleRate: cint32 ; Channels: cint32 ; FramesCount: cint32): cint32;
+  // Add a input from memory buffer with custom parameters
+  // MemoryBuffer : filename of audio file
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // SampleRate : delault :  -1 (44100)
+  // Channels : delault :  (0: no channels, 1:mono, 2:stereo, ...)  // FramesCount : default : -1 (4096)
+   // FramesCount : default : -1 (1024)
+  //  result :  Input Index in array  -1 = error
+  // example : InputIndex1 := AddFromMemory(0, mybuffer,-1,0,-1,-1);
 
 function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar): cint32;
   // Add a input from audio file with default parameters
@@ -1092,6 +1104,25 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   Result := uosPlayers[PlayerIndex].AddFromFile(Filename, -1, -1, -1);
+end;
+
+function uos_AddFromMemory(PlayerIndex: cint32; MemoryBuffer: PDArFloat; OutputIndex: cint32;
+  SampleFormat: cint32 ; SampleRate: cint32 ; Channels: cint32 ; FramesCount: cint32): cint32;
+  // Add a input from memory buffer with custom parameters
+  // MemoryBuffer : filename of audio file
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // SampleRate : delault :  -1 (44100)
+  // Channels : delault :  (0: no channels, 1:mono, 2:stereo, ...)  // FramesCount : default : -1 (4096)
+   // FramesCount : default : -1 (1024)
+  //  result :  Input Index in array  -1 = error
+  // example : InputIndex1 := AddFromMemory(0, mybuffer,-1,0,-1,-1);
+begin
+  result := -1 ;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  Result := uosPlayers[PlayerIndex].AddFromMemory(MemoryBuffer, OutputIndex, SampleFormat,
+   SampleRate, Channels, FramesCount);
 end;
 
 function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint32;

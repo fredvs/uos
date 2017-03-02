@@ -312,7 +312,7 @@ type
   SampleFormat: cint32;
   Channels: cint32;
   
-  // audio file data
+    // audio file data
   HandleSt: pointer;
   {$IF DEFINED(opus)}
   HandleOP: TOpusFile;
@@ -448,6 +448,7 @@ type
   Tuos_OutStream = class(TObject)
   public
   Data: Tuos_Data;
+  BufferOut: PDArFloat;
   DSP: array of Tuos_DSP;
   {$IF DEFINED(portaudio)}
   PAParam: PaStreamParameters;
@@ -574,14 +575,14 @@ type
   //  result : Output Index in array  -1 = error
   // example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1);
   
-  function AddIntoMemory(outmemory: TDArFloat) : cint32;
+  function AddIntoMemory(outmemory: PDArFloat) : cint32;
   // Add a Output into memory buffer
-  // outmemory : buffer to use to store memory buffer
+  // outmemory : pointer of buffer to use to store memory.
   // example : OutputIndex1 := AddIntoMemory(bufmemory);
 
  {$IF DEFINED(shout)}
   function AddIntoIceServer(SampleRate : cint; Channels: cint; SampleFormat: cint;
- EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
+  EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
   // Add a Output into a IceCast server for audio-web-streaming 
   // SampleRate : delault : -1 (48000)
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
@@ -650,6 +651,19 @@ function AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := AddFromFileIntoMemory(edit5.Text,-1,0,-1);
+  
+function AddFromMemory(MemoryBuffer: PDArFloat; OutputIndex: cint32;
+  SampleFormat: cint32 ; SampleRate: cint32 ; Channels: cint32 ; FramesCount: cint32): cint32;
+  // Add a input from memory buffer with custom parameters
+  // FileName : filename of audio file
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // SampleRate : delault : -1 (44100)
+  // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+  // FramesCount : default : -1 (4096)
+  //  result :  Input Index in array  -1 = error
+  // example : InputIndex1 := AddFromMemory(mybuffer,-1,0,-1);
+
 
 {$IF DEFINED(webstream)}
 function AddFromURL(URL: PChar; OutputIndex: cint32;
@@ -1000,7 +1014,7 @@ const
 
 var
   tempload : boolean = false;
-  tempSamplerate, tempSampleFormat, tempchan, tempratio, tempLibOpen : cint32; 
+  tempSamplerate, tempSampleFormat, tempchan, tempratio, tempLibOpen, tempLength : cint32; 
   tempoutmemory: TDArFloat;
   uosPlayers: array of Tuos_Player;
   uosPlayersStat : array of cint32;
@@ -1249,8 +1263,9 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   tempratio := theplayer.StreamIn[in1].Data.ratio;
   tempSampleFormat := theplayer.StreamIn[in1].Data.SampleFormat; 
   tempSamplerate := theplayer.StreamIn[in1].Data.Samplerate; 
+  templength := theplayer.StreamIn[in1].Data.lengthst;
   
-  theplayer.AddIntoMemory(outmemory);
+  theplayer.AddIntoMemory(pointer(outmemory));
   theplayer.Play(); 
   end;
   
@@ -3429,7 +3444,7 @@ begin
   end;
  end;
  
- function  Tuos_Player.AddIntoMemory(outmemory: TDArFloat): cint32;
+ function  Tuos_Player.AddIntoMemory(outmemory: PDArFloat): cint32;
   // Add a Output into memory-bufffer
   // outmemory : buffer to use to store memory buffer
   // example : OutputIndex1 := AddIntoMemory(bufmemory);
@@ -3444,6 +3459,7 @@ begin
   StreamOut[x].Data.Enabled := True;
   StreamOut[x].Data.TypePut := 3;
   Streamout[x].Data.posmem := 0;
+  Streamout[x].BufferOut := outmemory;
   StreamOut[x].Data.Wantframes := 1024 ;
   SetLength(StreamOut[x].Data.Buffer,1024*2);
 
@@ -3911,6 +3927,60 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   end;
   {$ENDIF}
   
+function Tuos_Player.AddFromMemory(MemoryBuffer: PDArFloat; OutputIndex: cint32;
+  SampleFormat: cint32 ; SampleRate: cint32 ; Channels: cint32 ; FramesCount: cint32): cint32;
+  // Add a input from memory buffer with custom parameters
+  // FileName : filename of audio file
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // SampleRate : delault :  -1 (44100)
+  // Channels : delault :  (0: no channels, 1:mono, 2:stereo, ...)  // FramesCount : default : -1 (4096)
+  //  result :  Input Index in array  -1 = error
+  // example : InputIndex1 := AddFromMemory(mybuffer,-1,0,-1);
+var
+  x,i : cint32; 
+  st: string;
+ 
+  begin
+  result := -1 ;
+ 
+ {$IF DEFINED(debug)}
+  WriteLn('AddFromMemory Before all.');  
+  writeln('length(MemoryBuffer) =' +inttostr(length(MemoryBuffer^)));
+  st := '';
+  for i := 0 to length(MemoryBuffer^) -1 do
+  st := st + '|' + inttostr(i) + '=' + floattostr(MemoryBuffer^[i]);  
+  WriteLn(st);
+  {$endif} 
+  
+  SetLength(StreamIn, Length(StreamIn) + 1);
+  StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
+  x := Length(StreamIn) - 1;
+  StreamIn[x].Data.levelEnable := 0;
+  StreamIn[x].Data.typeput := 4;
+  StreamIn[x].Data.enabled := true;
+  StreamIn[x].Data.positionEnable := 0;
+  StreamIn[x].Data.levelArrayEnable := 0;
+  StreamIn[x].Data.wantframes := FramesCount;
+  StreamIn[x].Data.memorybuffer := @MemoryBuffer;
+  StreamIn[x].Data.lengthst := length(MemoryBuffer^);
+  StreamIn[x].Data.Samplerate := 44100;
+  StreamIn[x].Data.SampleFormat := SampleFormat;
+  StreamIn[x].Data.LibOpen := 1;
+  StreamIn[x].Data.Channels := Channels;
+  StreamIn[x].Data.ratio := 1;
+  StreamIn[x].Data.posmem := 0;
+  StreamIn[x].Data.Output := OutputIndex;
+  StreamIn[x].Data.Status := 1;
+  StreamIn[x].Data.Position := 0;
+  StreamIn[x].Data.OutFrames := 0;
+  StreamIn[x].Data.Poseek := -1;
+  StreamIn[x].Data.seekable := true;
+  StreamIn[x].LoopProc := nil;
+  setlength(StreamIn[x].Data.buffer,StreamIn[x].Data.wantframes*StreamIn[x].Data.Channels);
+  result := x; 
+  end;      
+  
 function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // Add a input from audio file and store it into memory with custom parameters
@@ -3972,6 +4042,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   WriteLn('OUTPUT DATA into portaudio------------------------------');
   // WriteLn(st);
   {$endif}
+  StreamIn[x].Data.lengthst := tempLength;
   StreamIn[x].Data.Samplerate := tempSamplerate;
   StreamIn[x].Data.SampleFormat := tempSampleFormat;
   StreamIn[x].Data.LibOpen := tempLibOpen;

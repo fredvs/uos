@@ -241,21 +241,10 @@ var
     if (btnstart.Enabled = False) then
     begin
       uos_stop(PlayerIndex1);
-      vuLeft.Visible := False;
-      vuRight.Visible := False;
-      vuright.Height := 0;
-      vuleft.Height := 0;
-      vuright.UpdateWindowPosition;
-      vuLeft.UpdateWindowPosition;
       sleep(100);
     end;
-    if btnLoad.Enabled = False then
-    begin
-      uos_UnloadPlugin('soundtouch');
-      uos_UnloadPlugin('bs2b');
-      uos_UnloadLib();
-    end;  
-  end;
+     uos_free();
+   end;
 
   procedure TSimpleplayer.btnLoadClick(Sender: TObject);
 var
@@ -1405,9 +1394,9 @@ end;
     finally
    //   uos_FreePlayer(PlayerIndex1); 
     // uosPlayers[PlayerIndex1].destroy; // do not forget this...
-       uos_unloadlib;
-      uos_free; // do not forget this...
-      frm.Free;
+    //   uos_unloadlib;
+       // do not forget this...
+    //  frm.Free;
     end;
   end;
 
