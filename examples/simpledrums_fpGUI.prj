@@ -999,7 +999,7 @@ editpos=24
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,828
+ 0,-1073741823
  20,241
  0,-1073741823
  0,-1073741823
@@ -1073,7 +1073,7 @@ relpaths=24
  main_sr.pas
  noiseremover_fpGUI.pas
  simpleplayer_fpGUI.pas
- ../sak/sak/sak_fpg/examples/sak_fpg.pas
+ sak/sak/sak_fpg/examples/sak_fpg.pas
  simpledrums_fpGUI.pas
  mainmse_sp.pas
  fpgui/src/corelib/fpg_base.pas
@@ -1154,7 +1154,7 @@ windowlayout=549
  x=0
  y=0
  cx=1122
- cy=585
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1166,17 +1166,17 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=157
+ y=50
  cx=1132
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1122,585
+  basedock,0,0,1122,604
  focusedchild=0
  wsize=0
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1194,7 +1194,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1289,7 +1289,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=428
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1498,9 +1498,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=485
+ y=501
  cx=1122
- cy=100
+ cy=103
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1600,7 +1600,7 @@ windowlayout=549
  x=0
  y=0
  cx=1122
- cy=51
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1616,7 +1616,7 @@ windowlayout=549
  x=0
  y=0
  cx=1122
- cy=51
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1632,14 +1632,14 @@ windowlayout=549
  x=162
  y=0
  cx=960
- cy=428
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1666,9 +1666,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=54
+ y=56
  cx=1122
- cy=428
+ cy=442
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

@@ -1,4 +1,4 @@
-program consoleplay;
+program consoleplaymemory;
 
 ///WARNING : if FPC version < 2.7.1 => Do not forget to uncoment {$DEFINE consoleapp} in define.inc !
 
@@ -6,9 +6,10 @@ program consoleplay;
    {$DEFINE UseCThreads}
 uses
 {$IFDEF UNIX}
-  cthreads, 
+  cthreads,
   cwstring, {$ENDIF}
   Classes,
+  ctypes,
   SysUtils,
   CustApp,
   uos_flat;
@@ -27,16 +28,17 @@ type
   end;
 
 var
-  res: integer;
-  ordir, opath, SoundFilename, PA_FileName, SF_FileName: string;
+  res, i: integer;
+  ordir, opath, st, SoundFilename, PA_FileName, SF_FileName: string;
   PlayerIndex1 : integer;
-  
+  thebuffer : array of cfloat;
+
   { TuosConsole }
 
   procedure TuosConsole.ConsolePlay;
   begin
     ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
- 
+
  {$IFDEF Windows}
      {$if defined(cpu64)}
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
@@ -77,41 +79,36 @@ var
     SF_FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
     SoundFilename := opath + '/sound/test.flac';
  {$ENDIF}
- 
-    // Load the libraries
-   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
 
+   // Load the libraries
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
    res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil, nil) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 
    if res = 0 then begin
 
-    //// Create the player.
-    //// PlayerIndex : from 0 to what your computer can do !
-    //// If PlayerIndex exists already, it will be overwriten...
-  
-   PlayerIndex1 := 0;
-   uos_CreatePlayer(PlayerIndex1); 
+       PlayerIndex1 := 0;
 
-    //// add a Input from audio-file with default parameters
-    //////////// PlayerIndex : Index of a existing Player
-    ////////// FileName : filename of audio file
-    //  result : -1 nothing created, otherwise Input Index in array
-    
-    uos_AddFromFile(PlayerIndex1,(pchar(SoundFilename)));
+    // Create a memory buffer from a audio file
+    thebuffer := uos_File2buffer(pchar(SoundFilename), 0, thebuffer);
 
-    //// add a Output into device with default parameters
-    //////////// PlayerIndex : Index of a existing Player
-    //  result : -1 nothing created, otherwise Output Index in array
+    // You may store that buffer into ressource...
+    // ... and when you get the buffer from bressource....
 
-    uos_AddIntoDevOut(PlayerIndex1);
+   uos_CreatePlayer(PlayerIndex1);
+
+   // Add a input from memory buffer with custom parameters
+   uos_AddFromMemory(PlayerIndex1,thebuffer,-1,-1,-1,0,1024);
+
+   // add a Output into device with default parameters
+   uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0, 1024);
 
     /////// everything is ready, here we are, lets play it...
-    
-    uos_Play(PlayerIndex1);
+
+   uos_Play(PlayerIndex1);
     sleep(2000);
-   end;
+    end;
 
  end;
 
@@ -134,7 +131,20 @@ var
   Application: TUOSConsole;
 begin
   Application := TUOSConsole.Create(nil);
-  Application.Title := 'Console Player';
+  Application.Title := 'Console Player from Memory';
   Application.Run;
   Application.Free;
 end.
+
+{$mode objfpc}{$H+}
+
+uses
+  {$IFDEF UNIX}{$IFDEF UseCThreads}
+  cthreads,
+  {$ENDIF}{$ENDIF}
+  Classes
+  { you can add units after this };
+
+begin
+end.
+
