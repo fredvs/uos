@@ -59,7 +59,7 @@ var
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     {$endif}
     SoundFilename := ordir + 'sound/test.flac';
- {$ENDIF}
+   {$ENDIF}
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
@@ -91,15 +91,15 @@ var
        PlayerIndex1 := 0;
 
     // Create a memory buffer from a audio file
-    thebuffer := uos_File2buffer(pchar(SoundFilename), 0, thebuffer);
+   thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebuffer);
 
     // You may store that buffer into ressource...
     // ... and when you get the buffer from bressource....
-
-   uos_CreatePlayer(PlayerIndex1);
+    
+    uos_CreatePlayer(PlayerIndex1);
 
    // Add a input from memory buffer with custom parameters
-   uos_AddFromMemory(PlayerIndex1,thebuffer,-1,-1,-1,0,1024);
+   uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,-1,-1,-1,0,1024);
 
    // add a Output into device with default parameters
    uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0, 1024);

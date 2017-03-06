@@ -50,8 +50,14 @@ findinfiledialog=58
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=outputinput
+ value=AddIntoMemory
  history=20
+  AddIntoMemory
+  intome
+  addfrommemory
+  addds
+  addds1
+  P2ChanTo1Chan
   outputinput
   inputoutput
   AddDSP2ChanTo1Chanout
@@ -66,12 +72,6 @@ findinfiledialog=58
   AddDSPVolumein
   AddDSPVolume
   dspvolume
-  adddspin
-  adddspout
-  setdspout
-  setdspin
-  dspin
-  adddsp
  [findinfileadialogfo]
  stackedunder=
  x=615
@@ -93,8 +93,13 @@ replacedialog=33
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=InputAddDSP2ChanTo1Chan
+ value=AddIntoMemoryBuffer
  history=20
+  AddIntoMemoryBuffer
+  Length
+  LengthST
+  Lengthst
+  AddFromMemoryBuffer
   InputAddDSP2ChanTo1Chan
   InputAddDSPNoiseRemoval
   OutputSetDSPNoiseRemoval
@@ -110,11 +115,6 @@ replacedialog=33
   OutputAddDSP
   cint32
   shhandle
-  unix
-  BeginFunc
-  FreeBSD
-   
-  stdcall
  [replacedialogfo]
  stackedunder=
  x=260
@@ -829,12 +829,12 @@ path=8
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=8
- 3820
+ 3826
  33
  913
  764
- 2675
- 1988
+ 2681
+ 2001
  541
  247
 address=8
@@ -912,7 +912,7 @@ units=
   (
   file=uos_mpg123.pas
   kind=1
-  a=0,4100,0,uos_mpg123.pas
+  a=0,4101,0,uos_mpg123.pas
   )
   (
   file=uos_portaudio.pas
@@ -955,30 +955,36 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=timerr
+finddtext=AddIntoMemoryBuffer
 findhistory=20
+ AddIntoMemoryBuffer
+ AddInto
+ AddIntoMemory
+ Lengthst
+ AddFromMemory
+ uos_InputAdd
+ InputAddDS
+ soundt
  timerr
  fromm
  create
  timer
  fromfilein
  tempsam
- AddIntoMemory
  addintomem
  TDArFloat
  btnCloseClick
  destroy
  close
  noiser
- AddDSP2ChanTo1ChanIn
- SetDSPNoiseRemovalout
- SetDSPNoiseRemoval
- AddDSPNoiseRemovalOut
- AddDSPNoiseRemovalIn
- SetDSPNoiseRemovalIn
- SetDSPVolumeout
 findoptions=1
-editpos=22
+editpos=27
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,570
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -997,10 +1003,9 @@ editpos=22
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,220
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 4,8
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1023,7 +1028,12 @@ bookmarks18=0
 bookmarks19=0
 bookmarks20=0
 bookmarks21=0
-sourcefiles=22
+bookmarks22=0
+bookmarks23=0
+bookmarks24=0
+bookmarks25=0
+bookmarks26=0
+sourcefiles=27
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1046,7 +1056,12 @@ sourcefiles=22
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  /home/fred/sak/sak/sak_fpg/examples/sak_fpg.pas
  ${PROJECTDIR}/simpledrums_fpGUI.pas
-relpaths=22
+ ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ ${PROJECTDIR}/main_sr.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/consoleplaymemory.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+relpaths=27
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1069,7 +1084,17 @@ relpaths=22
  simpleplayer_fpGUI.pas
  sak/sak/sak_fpg/examples/sak_fpg.pas
  simpledrums_fpGUI.pas
-ismoduletexts=22
+ simplerecorder_fpGUI.pas
+ main_sr.pas
+ uos_flat.pas
+ consoleplaymemory.pas
+ simpleplayer_fpGUI.pas
+ismoduletexts=27
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1101,7 +1126,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=22
+order=27
  0
  1
  2
@@ -1120,13 +1145,18 @@ order=22
  20
  4
  5
+ 22
+ 24
+ 26
+ 25
+ 23
  19
  13
  9
  10
 tabsize=60
-firsttab=10
-index=14
+firsttab=17
+index=19
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1154,8 +1184,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=129
- y=64
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
@@ -1163,8 +1193,8 @@ windowlayout=549
  children=1
   basedock,0,0,1356,701
  focusedchild=0
- wsize=0
- active=1
+ wsize=6
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1182,7 +1212,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1205,7 +1235,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1258,9 +1288,9 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=239
- y=115
- cx=678
+ x=3
+ y=88
+ cx=1051
  cy=414
  rcx=0
  rcy=0
@@ -1627,7 +1657,7 @@ windowlayout=549
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

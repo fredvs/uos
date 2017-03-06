@@ -93,8 +93,10 @@ replacedialog=33
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=InputAddDSP2ChanTo1Chan
+ value=AddIntoFile
  history=20
+  AddIntoFile
+  AddIntoFileWAV
   InputAddDSP2ChanTo1Chan
   InputAddDSPNoiseRemoval
   OutputSetDSPNoiseRemoval
@@ -113,8 +115,6 @@ replacedialog=33
   unix
   BeginFunc
   FreeBSD
-   
-  stdcall
  [replacedialogfo]
  stackedunder=
  x=260
@@ -829,12 +829,12 @@ path=8
  /home/fred/uos/examples/simpledrums_fpGUI.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
 line=8
- 3820
+ 3838
  33
  913
  764
- 2675
- 1988
+ 2678
+ 1991
  535
  241
 address=8
@@ -955,8 +955,16 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=timerr
+finddtext=AddIntoFile
 findhistory=20
+ AddIntoFile
+ audioformat
+ HDFormat
+ typeput
+ AddIntoFileWAV
+ addoutputtofile
+ inputp
+ endproc
  timerr
  ordir
  fromm
@@ -969,16 +977,12 @@ findhistory=20
  TDArFloat
  btnCloseClick
  destroy
- close
- noiser
- AddDSP2ChanTo1ChanIn
- SetDSPNoiseRemovalout
- SetDSPNoiseRemoval
- AddDSPNoiseRemovalOut
- AddDSPNoiseRemovalIn
- SetDSPNoiseRemovalIn
 findoptions=1
-editpos=24
+editpos=25
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,1048
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -999,10 +1003,7 @@ editpos=24
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 20,241
- 0,-1073741823
- 0,-1073741823
+ 24,6210
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1027,7 +1028,8 @@ bookmarks20=0
 bookmarks21=0
 bookmarks22=0
 bookmarks23=0
-sourcefiles=24
+bookmarks24=0
+sourcefiles=25
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1052,7 +1054,8 @@ sourcefiles=24
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/mainmse_sp.pas
  /home/fred/fpgui/src/corelib/fpg_base.pas
-relpaths=24
+ ${PROJECTDIR}/uos.pas
+relpaths=25
  simpledrums_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1077,7 +1080,9 @@ relpaths=24
  simpledrums_fpGUI.pas
  mainmse_sp.pas
  fpgui/src/corelib/fpg_base.pas
-ismoduletexts=24
+ uos.pas
+ismoduletexts=25
+ 0
  0
  0
  0
@@ -1111,7 +1116,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=24
+order=25
  0
  1
  2
@@ -1127,6 +1132,7 @@ order=24
  8
  23
  3
+ 24
  21
  22
  20
@@ -1153,8 +1159,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1122
- cy=604
+ cx=1356
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -1166,17 +1172,17 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=157
- y=50
+ x=156
+ y=54
  cx=1132
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1122,604
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=0
- active=0
+ wsize=6
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1194,7 +1200,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1289,7 +1295,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=442
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1300,7 +1306,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=1
+ row=10
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1498,9 +1504,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=501
- cx=1122
- cy=103
+ y=581
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1599,8 +1605,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1122
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1615,8 +1621,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1122
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1631,15 +1637,15 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=960
- cy=442
+ cx=1194
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0
@@ -1666,9 +1672,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=56
- cx=1122
- cy=442
+ y=65
+ cx=1356
+ cy=513
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

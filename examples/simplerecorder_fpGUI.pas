@@ -98,7 +98,8 @@ var
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
 
-  In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); //// add input from audio file with default parameters
+  In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
+  //// add input from audio file with default parameters
   // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   ////////// FileName : filename of audio file
@@ -211,23 +212,24 @@ var
   //// If PlayerIndex exists already, it will be overwriten...
 
   uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
-
-      // uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
-  //               Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
-    //// add Output into wav file (save record)  with default parameters
-    // uos_AddIntoDevOut(0, 'test.wav', -1, -1, -1);   //// add a Output into wav file (save record) with custom parameters
+  //// add Output into wav file (save record)  with default parameters
+  
+   // uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename), -1, -1, 1, -1, 1);
+   //// add a Output into wav file (save record) with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Filename : name of new file for recording
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) ( 1:mono, 2:stereo, ...)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
+    //////////// FileFormat : -1 default : wav (0:wav, 1:pcm, 2:uos, 3:custom)
 
     if checkbox1.Checked = True then
     uos_AddIntoDevOut(PlayerIndex1);
-  
-     //// add a Output into OUT device with default parameters
-    // Out2Index := uos_AddIntoDevOut(0, -1, -1, -1, -1, 0,-1);   //// add a Output into device with custom parameters
+    //// add a Output into OUT device with default parameters
+    
+    //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 1,-1); 
+     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -236,10 +238,11 @@ var
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
 
-    In1Index :=uos_AddFromDevIn(PlayerIndex1);
+   In1Index :=uos_AddFromDevIn(PlayerIndex1);
+   /// add Input from mic/aux into IN device with default parameters
     
-     /// add Input from mic into IN device with default parameters
-    //   In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, -1, 0, -1);   //// add input from mic with custom parameters
+    //  In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, 0, -1);   
+    /// add Input from mic/aux into IN device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Input device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -248,12 +251,12 @@ var
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
     
-    uos_InputAddDSP2ChanTo1Chan(PlayerIndex1, In1Index);
+    uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, In1Index);
    /////  Convert mono one channel channel to stereo two channels.
     //// If the input is stereo, original buffer is keeped.
     ////////// InputIndex : InputIndex of a existing Input       
     //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := uos_InputAddDSP2ChanTo1Chan(PlayerIndex1, InputIndex1);
+    ////////// example  DSPIndex1 := uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, InputIndex1);
 
     uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
     ///// DSP Volume changer

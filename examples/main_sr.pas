@@ -283,12 +283,12 @@ begin
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : -1 default : 65536
 
-   uos_InputAddDSP2ChanTo1Chan(PlayerIndex1, In1Index);
+   uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, In1Index);
    /////  Convert mono channel to stereo channels.
     //// If the input is stereo, original buffer is keeped.
     ////////// InputIndex : InputIndex of a existing Input
     //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := uos_InputAddDSP2ChanTo1Chan(PlayerIndex1, InputIndex1);
+    ////////// example  DSPIndex1 := uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, InputIndex1);
 
    uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
   ///// DSP Volume changer
