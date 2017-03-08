@@ -1,4 +1,3 @@
-
 {This unit is part of United Openlibraries of Sound (uos)}
 
 {  License : modified LGPL.
@@ -152,7 +151,7 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
 {$endif}
 
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
+function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   // load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...  
   // PortAudio => needed for dealing with audio-device
   // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
@@ -211,7 +210,7 @@ function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble
   //  result : Output Index in array  , -1 = error
   // example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1, -1, 0,-1);
  {$endif}
-
+ 
 function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar): cint32;
   // Add a input from audio file with default parameters
 
@@ -222,7 +221,7 @@ function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : ci
 
 function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint32;
   SampleFormat: cint32 ; FramesCount: cint32): cint32;
-  // Add a input from audio file with default parameters
+  // Add a input from audio file with custom parameters
   // PlayerIndex : Index of a existing Player
   // FileName : filename of audio file
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
@@ -243,7 +242,7 @@ function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; O
   
 function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; OutputIndex: cint32; Channels: cint32 ;
     SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
-  // Add a input from memory buffer with custom parameters
+  // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of decoded audio.
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
@@ -547,6 +546,7 @@ function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: cint32;
   // SampleRate : delault : -1 (44100)
   // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
   // 'soundtouch' and 'bs2b' PlugName is registred.
+
 {$IF DEFINED(soundtouch)}
 procedure uos_SetPluginSoundTouch(PlayerIndex: cint32; PluginIndex: cint32; Tempo: cfloat;
   Pitch: cfloat; Enable: boolean);
@@ -558,7 +558,6 @@ procedure uos_SetPluginSoundTouch(PlayerIndex: cint32; PluginIndex: cint32; Temp
 procedure uos_SetPluginBs2b(PlayerIndex: cint32; PluginIndex: cint32;
  level: CInt32; fcut: CInt32; feed: CInt32; Enable: boolean);
   // PluginIndex : PluginIndex Index of a existing Plugin.
-  //  
 {$endif}
 
 function uos_GetStatus(PlayerIndex: cint32) : cint32 ;
@@ -640,7 +639,6 @@ function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32): pchar;
 function uos_InputGetTagComment(PlayerIndex: cint32; InputIndex: cint32): pchar;
 function uos_InputGetTagTag(PlayerIndex: cint32; InputIndex: cint32): pchar;
   // Tag infos
-  
 
 function uos_InputGetSampleRate(PlayerIndex: cint32; InputIndex: cint32): cint32;
   // InputIndex : InputIndex of existing input

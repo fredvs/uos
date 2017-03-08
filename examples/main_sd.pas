@@ -49,12 +49,7 @@ begin
 
 if stopit = false then
  begin
-
-  inc(x);
-  if x > 2 then x := 0 ;
-   x := 0 ;
-
-  for i := 0 to 2 do
+   for i := 0 to 2 do
   begin
     if(Copy(drum_beats[i], posi, 1) = 'x') then
    uos_InputSetEnable(x,i,true)
@@ -70,7 +65,13 @@ if stopit = false then
   begin
     posi := 1;
   end;
-  end else Timer1.Enabled := false;
+
+    inc(x);
+  if x > 2 then x := 0 ;
+  //  x := 0 ;   // to try with only one player
+  end
+  else Timer1.Enabled := false;
+
 
 end;
 
@@ -79,6 +80,7 @@ begin
  Timer1.interval := strtoint(edit1.Text);
  stopit := false;
  posi := 1;
+ x := 0 ;
 Timer1.Enabled := true;
  end;
 
@@ -150,10 +152,13 @@ for j := 0 to 2 do
  begin
  uos_AddFromFileIntoMemory(i, pchar(sound[j]), -1, 0, 512) ;
  uos_InputSetEnable(i,j,false);
+ // uos_InputSetPositionEnable(i, j, 1) ;  // if you need to change position
+
 end;
 uos_AddFromSynth(i,1,0,0, -1,-1, -1, 512 );  // this for a dummy endless input, must be last input
 end;
 uos_PlayNoFree(i)  ;
+
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -164,6 +169,7 @@ for i := 0 to 2 do   // free player (not done with playnofree)
  begin
   uos_FreePlayer(i);
  end;
+sleep(10);
   uos_free();
 end;
 

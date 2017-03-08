@@ -211,10 +211,10 @@ var
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
-  uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
+   uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
   //// add Output into wav file (save record)  with default parameters
   
-   // uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename), -1, -1, 1, -1, 1);
+   // uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename), -1, -1, 1, -1, -1);
    //// add a Output into wav file (save record) with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Filename : name of new file for recording
@@ -241,7 +241,7 @@ var
    In1Index :=uos_AddFromDevIn(PlayerIndex1);
    /// add Input from mic/aux into IN device with default parameters
     
-    //  In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, 0, -1);   
+   //    In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, 1, -1);   
     /// add Input from mic/aux into IN device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Input device )

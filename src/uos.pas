@@ -5842,6 +5842,7 @@ if err > 0 then
   begin
 
   case StreamOut[x].Data.SampleFormat of
+  0: rat := 2 ;
   1: rat := 2 ;
   2: rat := 1 ;
   end;

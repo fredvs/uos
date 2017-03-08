@@ -826,8 +826,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=file2buffer
+finddtext=writebu
 findhistory=20
+ writebu
+ read
+ readb
+ AddIntoFile
  file2buffer
  getsa
  addintofile
@@ -843,15 +847,9 @@ findhistory=20
  AddDSPin
  .create
  WriteWave
- AddIntoFile
  sleep(
- stop
- .Create
- destroy
 findoptions=1
 editpos=20
- 0,1348
- 0,1588
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -868,8 +866,10 @@ editpos=20
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,205
- 0,90
+ 0,-1073741823
+ 0,-1073741823
+ 0,243
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -981,7 +981,7 @@ order=20
  17
 tabsize=60
 firsttab=0
-index=3
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1038,7 +1038,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1142,8 +1142,8 @@ windowlayout=530
  width1=43
  sortdescend1=0
  sorted=0
- col=1
- row=10
+ col=0
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1482,7 +1482,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

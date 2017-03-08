@@ -810,7 +810,7 @@ sigsettings=27
  30,30,T,F
 defaultmake=32
 [breakpoints]
-on=8
+on=7
  -1
  0
  -1
@@ -818,8 +818,7 @@ on=8
  0
  -1
  0
- 0
-path=8
+path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/paio_channelhelper.pas
  /home/fred/uos_aac_new/examples/uos_aac.pas
@@ -827,17 +826,15 @@ path=8
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
- /home/fred/uos/examples/simpledrums_fpGUI.pas
-line=8
+line=7
  3838
  33
  913
  764
  2678
  1991
- 535
- 241
-address=8
+ 536
+address=7
  5002412
  0
  0
@@ -845,9 +842,7 @@ address=8
  4984300
  4973483
  0
- 0
-addbkpt=8
- 0
+addbkpt=7
  0
  0
  0
@@ -855,7 +850,7 @@ addbkpt=8
  0
  0
  0
-ignore=8
+ignore=7
  0
  0
  0
@@ -863,9 +858,7 @@ ignore=8
  0
  0
  0
- 0
-condition=8
- 
+condition=7
  
  
  
@@ -982,7 +975,6 @@ editpos=25
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1048
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1001,9 +993,10 @@ editpos=25
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 6,236
  0,-1073741823
  0,-1073741823
- 24,6210
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1143,8 +1136,8 @@ order=25
  9
  10
 tabsize=60
-firsttab=10
-index=15
+firsttab=11
+index=16
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1295,7 +1288,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1606,7 +1599,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1622,7 +1615,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [sourcefo]
@@ -1638,7 +1631,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1672,9 +1665,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=65
+ y=66
  cx=1356
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
