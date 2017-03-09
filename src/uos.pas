@@ -4300,7 +4300,7 @@ begin
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
-  StreamIn[x].Data.MemoryStream := TMemoryStream.Create; 
+  //StreamIn[x].Data.MemoryStream := TMemoryStream.Create; 
   StreamIn[x].Data.MemoryStream := MemoryStream;
   StreamIn[x].Data.MemoryStream.Position:= 0;
 

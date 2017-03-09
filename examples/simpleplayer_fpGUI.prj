@@ -955,8 +955,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=AddIntoMemoryBuffer
+finddtext=TMemoryStream.Creat
 findhistory=20
+ TMemoryStream.Creat
+ Streamin [x] .Data.MemoryStream: = TMemoryStream.Creat
  AddIntoMemoryBuffer
  AddInto
  AddIntoMemory
@@ -975,8 +977,6 @@ findhistory=20
  TDArFloat
  btnCloseClick
  destroy
- close
- noiser
 findoptions=1
 editpos=27
  0,-1073741823
@@ -984,7 +984,7 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
+ 0,4302
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1194,7 +1194,7 @@ windowlayout=549
   basedock,0,0,1356,604
  focusedchild=0
  wsize=0
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1212,7 +1212,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1235,7 +1235,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1692,7 +1692,7 @@ windowlayout=549
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
