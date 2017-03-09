@@ -18,6 +18,8 @@ Sandro Cumerlato : He gives the DSPLevel procedure and lot of others, did SounTo
 
 José Mejuto : He gives the right way to record and save the data to file.
 
+Phoenix : He decrypts sf_open_virtual to enable TMemoryStream as input.
+
 And many other in fpc, fpGUI, MSE, Lazarus, CodeTyphon forum.
 
 Fred van Stappen : fiens@hotmail.com 

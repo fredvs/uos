@@ -1,4 +1,4 @@
-program consoleplaymemory;
+program consoleplaymemorybuffer;
 
 ///WARNING : if FPC version < 2.7.1 => Do not forget to uncoment {$DEFINE consoleapp} in define.inc !
 

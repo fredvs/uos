@@ -18,8 +18,8 @@ order15=0
 order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/simpledrums_fpGUI.prj
-findinfiledialog=58
+projectfilename=/home/fred/uos/examples/consoleplaymemorybuffer.prj
+findinfiledialog=41
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -50,75 +50,53 @@ findinfiledialog=58
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=outputinput
- history=20
-  outputinput
-  inputoutput
-  AddDSP2ChanTo1Chanout
-  AddDSP2ChanTo1ChanIn
-  Removalin
-  Removalout
-  DSPNoiseRemovalout
-  DSPNoiseRemovalin
-  DSPNoiseRemoval
-  setDSPVolumeout
-  setDSPVolumein
-  AddDSPVolumein
-  AddDSPVolume
-  dspvolume
-  adddspin
-  adddspout
-  setdspout
-  setdspin
-  dspin
-  adddsp
+ value=TMemoryStream
+ history=3
+  TMemoryStream
+  samplerate
+  
  [findinfileadialogfo]
  stackedunder=
- x=615
- y=295
+ x=386
+ y=189
  cx=339
- cy=315
+ cy=251
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
  [finddialogfo]
  stackedunder=
- x=520
- y=215
- cx=298
+ x=775
+ y=209
+ cx=331
  cy=116
-replacedialog=33
+replacedialog=28
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=AddIntoFile
- history=20
-  AddIntoFile
-  AddIntoFileWAV
-  InputAddDSP2ChanTo1Chan
-  InputAddDSPNoiseRemoval
-  OutputSetDSPNoiseRemoval
-  OutputAddDSPNoiseRemoval
-  InputSetDSPNoiseRemoval
-  OutputSetDSPVolume
-  InputSetDSPVolume
-  InputAddDSPVolume
-  OutputAddDSPVolume
-  InputAddDSP
-  InputSetDSP
-  OutputSetDSP
-  OutputAddDSP
-  cint32
-  shhandle
-  unix
-  BeginFunc
-  FreeBSD
+ value=uosPlayers
+ history=15
+  uosPlayers
+  uosInit.uosDeviceCount
+  uosInit.uosDefaultDevice
+  uosInit.uosDeviceInfos
+  uosInit.uosLoadResult
+  uosInit.uosLevelArray
+  uosInit.uosPlayers
+  uosInit.tempchan
+  uosInit.tempLibOpen
+  uosInit.tempSampleFormat
+  uosInit.tempSamplerate
+  uosInit.tempoutmemory
+  uosInit.
+  DocView
+  
  [replacedialogfo]
  stackedunder=
- x=260
- y=216
+ x=765
+ y=294
  cx=437
  cy=171
 options=114
@@ -229,11 +207,11 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
- x=339
- y=127
+ x=292
+ y=97
  cx=773
  cy=497
 programparameters=18
@@ -257,9 +235,9 @@ programparameters=18
  cy=348
 settings=13
  [settingsfo.tsplitter2]
- x=193
+ x=192
  y=16
- xprop=0.59763313609468
+ xprop=0.5906432748538
  yprop=0.97297297297297
  [settingsfo]
  x=410
@@ -269,30 +247,43 @@ settings=13
  wsize=0
  active=1
  visible=1
-codetemplateselect=21
- [msetemplateselectfo.grid]
- propcolwidthref=528
- width0=60
+sysenvmanagereditor=34
+ [msesysenvmanagereditorfo.grid]
+ propcolwidthref=582
+ width0=70
  sortdescend0=0
- width1=252
+ width1=66
  sortdescend1=0
- width2=51
+ width2=114
  sortdescend2=0
- width3=51
  sortdescend3=0
- width4=51
  sortdescend4=0
- width5=51
  sortdescend5=0
  sortdescend6=0
- [msetemplateselectfo]
+ sortdescend7=0
+ sortdescend8=0
+ sortdescend9=0
+ width10=121
+ sortdescend10=0
+ width11=70
+ sortdescend11=0
+ width12=99
+ sortdescend12=0
+ width13=71
+ sortdescend13=0
+ width14=71
+ sortdescend14=0
+ [msesysenvmanagereditorfo]
  stackedunder=
- x=398
- y=233
- cx=569
- cy=277
-mainfile=${PROJECTDIR}simpledrums_fpGUI.pas
-targetfile=${PROJECTDIR}/simpledrums_fpGUI
+ x=51
+ y=266
+ cx=861
+ cy=229
+ wsize=0
+ active=1
+ visible=1
+mainfile=${PROJECTDIR}consoleplaymemorybuffer.pas
+targetfile=${PROJECTDIR}/consoleplaymemorybuffer
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
@@ -311,20 +302,16 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=10
+makeoptions=8
  -fPIC
- -l -Mobjfpc -Scghi
+ -l -Mobjfpc -Schi
  -FE.
  -FUunits
- -WG
+ ghl
  -B
- -O3 -XX -Xs -CX
- -vewnbq
- -ghl
- -CX -Cg  -g -gl -Xg -vewnhibq 
-makeoptpurpose=10
- 
- 
+ -O2 -XX -Xs -CX
+ -vewnhibq
+makeoptpurpose=8
  
  
  
@@ -439,8 +426,8 @@ stripmessageesc=0
 copymessages=0
 closemessages=0
 checkmethods=1
-colorerror=-1610612729
-colorwarning=-1610612712
+colorerror=-1610612712
+colorwarning=-1610612717
 colornote=-1610612716
 usercolors=30
  0
@@ -514,29 +501,27 @@ settingsprojecttree=0
 settingsautoload=0
 settingsautosave=0
 modulenames=1
- SIMPLE_PLAYER
+ GUITEMPLATESMO
 moduletypes=1
- TMAINFO
+ TGUITEMPLATESMO
 modulefiles=1
- /home/fred/uos/examples/mainmse_sp.mfm
+ /home/fred/ideu/src/guitemplates.mfm
 befcommandon=0
-makeoptionson=10
+makeoptionson=8
  0
- 511
- 511
- 511
- 192
- 511
- 369
- 255
- 0
- 130
+ 63
+ 63
+ 63
+ 2
+ 32
+ 48
+ 63
 compilerusedon=29
- 3903
+ 4095
  0
  0
- 128
- 64
+ 0
+ 0
  0
  0
  0
@@ -562,16 +547,16 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3901
+ 4093
  0
  0
  0
  0
- 194
+ 2
 exeusedon=14
- 3903
+ 4095
  0
- 192
+ 0
  0
  0
  0
@@ -600,17 +585,17 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=02:01:00 20/01/2017
+project_date=19:28:22 23/02/2017
 project_comment=
 aftcommandon=0
 unitdirson=7
- 197119
- 197119
- 196800
- 197119
- 196927
- 197119
- 197119
+ 196671
+ 196671
+ 0
+ 196671
+ 196671
+ 196671
+ 196671
 macroon=5
  1
  3
@@ -719,7 +704,7 @@ editfontextraspace=0
 editfontcolor=-1879048183
 editbkcolor=-1879048186
 statementcolor=14745599
-pairmarkcolor=-1610612713
+pairmarkcolor=-1610612712
 editfontantialiased=1
 editmarkbrackets=1
 editmarkpairwords=1
@@ -757,7 +742,7 @@ progworkingdirectory=
 envvarnames=0
 envvarvalues=0
 defineson=0
-stoponexception=1
+stoponexception=0
 valuehints=1
 activateonbreak=1
 raiseonbreak=1
@@ -808,59 +793,45 @@ sigsettings=27
  28,28,T,F
  29,29,T,F
  30,30,T,F
-defaultmake=32
+defaultmake=4
 [breakpoints]
-on=7
- -1
- 0
- -1
+on=5
  0
  0
- -1
  0
-path=7
- /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/paio_channelhelper.pas
- /home/fred/uos_aac_new/examples/uos_aac.pas
- /home/fred/uos/examples/uos_aac.pas
+ 0
+ 0
+path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/simpledrums_fpGUI.pas
-line=7
- 3839
- 33
- 913
- 764
- 2679
- 1992
- 536
-address=7
- 5002412
- 0
- 0
- 5092489
- 4984300
- 4973483
- 0
-addbkpt=7
+ /home/fred/uos/examples/consoleplaymemorybuffer.pas
+ /home/fred/uos/examples/uos.pas
+ /home/fred/uos/examples/uos_libsndfile.pas
+line=5
+ 5703
+ 5019
+ 101
+ 406
+ 41
+address=5
  0
  0
  0
  0
  0
- 0
- 0
-ignore=7
- 0
+addbkpt=5
  0
  0
  0
  0
  0
+ignore=5
  0
-condition=7
- 
- 
+ 0
+ 0
+ 0
+ 0
+condition=5
  
  
  
@@ -871,26 +842,16 @@ panels=1
 units=
  (
  a=0,4149,6,Pascal Units
- c=10
+ c=5
   (
   file=define.inc
   kind=1
   a=0,4100,0,define.inc
   )
   (
-  file=simpledrums_fpGUI.pas
+  file=sak_fpGUI_test.lpr
   kind=1
-  a=0,4100,0,simpledrums_fpGUI.pas
-  )
-  (
-  file=st2bi.pas
-  kind=1
-  a=0,4100,0,st2bi.pas
-  )
-  (
-  file=uos_bs2b.pas
-  kind=1
-  a=0,4100,0,uos_bs2b.pas
+  a=0,4100,0,simpleplayer_fpGUI.pas
   )
   (
   file=uos_flat.pas
@@ -898,24 +859,9 @@ units=
   a=0,4100,0,uos_flat.pas
   )
   (
-  file=uos_libsndfile.pas
-  kind=1
-  a=0,4100,0,uos_libsndfile.pas
-  )
-  (
-  file=uos_mpg123.pas
-  kind=1
-  a=0,4100,0,uos_mpg123.pas
-  )
-  (
   file=uos_portaudio.pas
   kind=1
   a=0,4100,0,uos_portaudio.pas
-  )
-  (
-  file=uos_soundtouch.pas
-  kind=1
-  a=0,4100,0,uos_soundtouch.pas
   )
   (
   file=uos.pas
@@ -947,35 +893,31 @@ workdirparamhistory=0
 envvarons=0
 [edit]
 hintwidth=462
-hintheight=95
-finddtext=AddFromMemoryStream
+hintheight=19
+finddtext=WriteBuffer
 findhistory=20
+ WriteBuffer
+ uos_File2File
+ rat :=
+ addintofile
+ file2f
  AddFromMemoryStream
- AddIntoFile
- audioformat
- HDFormat
- typeput
- AddIntoFileWAV
- addoutputtofile
- inputp
- endproc
- timerr
- ordir
- fromm
- create
- timer
- fromfilein
- tempsam
- AddIntoMemory
- addintomem
- TDArFloat
- btnCloseClick
+ soundt
+ samplerate
+ Filetobuffer
+ AddFromMemory
+ file2
+ fileto
+ file2b
+ addfrommem
+ FramesCount
+ filetobuff
+ tempoutmemory
+ addfromme
+ uosInit.uosPlayers
+ uosDeviceCount
 findoptions=1
-editpos=26
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 32,242
+editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -983,14 +925,7 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,5
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1013,83 +948,39 @@ bookmarks11=0
 bookmarks12=0
 bookmarks13=0
 bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-bookmarks23=0
-bookmarks24=0
-bookmarks25=0
-sourcefiles=26
- ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/uos_portaudio.pas
+sourcefiles=15
+ ${PROJECTDIR}/deviceinfos_fpGUI.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/mainmse_sp.pas
- ${PROJECTDIR}/simplewebserver_fpGUI.pas
- ${PROJECTDIR}/filterplayer_fpGUI.pas
- ${PROJECTDIR}/main_fp.pas
- ${PROJECTDIR}/main_sp_nf.pas
- ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
- ${PROJECTDIR}/main_mi.pas
- ${PROJECTDIR}/main_wsp.pas
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
- ${PROJECTDIR}/simplewebplayer_fpGUI.pas
- ${PROJECTDIR}/main_sr.pas
- ${PROJECTDIR}/noiseremover_fpGUI.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- /home/fred/sak/sak/sak_fpg/examples/sak_fpg.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/mainmse_sp.pas
- /home/fred/fpgui/src/corelib/fpg_base.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos.pas
-relpaths=26
- simpledrums_fpGUI.pas
- uos_portaudio.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/consoleplaymemorybufferstream.pas
+ ${PROJECTDIR}/tfloatbuf.pas
+ ${PROJECTDIR}/uos_dsp_noiseremoval.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+relpaths=15
+ deviceinfos_fpGUI.pas
+ uos.pas
+ define.inc
+ uos_libsndfile.pas
  simpleplayer_fpGUI.pas
+ uos_flat.pas
  uos_flat.pas
  define.inc
  uos.pas
- main_sp.pas
- mainmse_sp.pas
- simplewebserver_fpGUI.pas
- filterplayer_fpGUI.pas
- main_fp.pas
- main_sp_nf.pas
- simpleplayer_fpGUI_noflat.pas
- main_mi.pas
- main_wsp.pas
- simplerecorder_fpGUI.pas
- simplewebplayer_fpGUI.pas
- main_sr.pas
- noiseremover_fpGUI.pas
- simpleplayer_fpGUI.pas
- sak/sak/sak_fpg/examples/sak_fpg.pas
- simpledrums_fpGUI.pas
- mainmse_sp.pas
- fpgui/src/corelib/fpg_base.pas
- uos.pas
- uos.pas
-ismoduletexts=26
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ uos_flat.pas
+ consoleplaymemorybufferstream.pas
+ tfloatbuf.pas
+ uos_dsp_noiseremoval.pas
+ uos_flat.pas
+ uos_libsndfile.pas
+ismoduletexts=15
  0
  0
  0
@@ -1106,7 +997,7 @@ ismoduletexts=26
  0
  0
 modules=1
- /home/fred/uos/examples/mainmse_sp.mfm
+ /home/fred/ideu/src/guitemplates.mfm
 moduleoptions=1
  0
 visiblemodules=1
@@ -1114,36 +1005,25 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=26
+order=15
  0
  1
  2
- 11
- 6
- 18
- 14
- 12
- 15
- 16
- 17
- 7
- 8
- 23
  3
- 24
- 21
- 25
- 22
- 20
  4
  5
- 19
- 13
+ 6
+ 7
+ 8
+ 14
+ 11
  9
+ 12
  10
+ 13
 tabsize=60
-firsttab=13
-index=14
+firsttab=7
+index=7
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1159,7 +1039,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=701
+ cy=682
  rcx=0
  rcy=0
  [mainfo]
@@ -1171,16 +1051,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=156
- y=54
- cx=1132
+ x=173
+ y=51
+ cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,1356,682
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1241,7 +1121,7 @@ windowlayout=549
  [memoryfo.add]
  value=0
  [memoryfo.memon]
- value=1
+ value=0
  [memoryfo.bitwidth]
  value=0
  [memoryfo.cnt]
@@ -1294,7 +1174,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=499
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1305,7 +1185,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=10
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1322,7 +1202,7 @@ windowlayout=549
  cy=155
  rcx=0
  rcy=0
- wsize=0
+ wsize=5
  active=0
  visible=0
  [watchpointsfo]
@@ -1468,8 +1348,8 @@ windowlayout=549
  [watchfo.grid]
  propcolwidthref=121
  values0=2
-  0
-  0
+  -1
+  -1
  values0_ci=-1
  sortdescend0=0
  values1=2
@@ -1491,7 +1371,7 @@ windowlayout=549
  [watchfo.watchon]
  [watchfo.expression]
  [watchfo.watcheson]
- value=0
+ value=1
  [messagefo]
  splitdir=0
  useroptions=82027
@@ -1503,9 +1383,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=581
+ y=565
  cx=1356
- cy=120
+ cy=117
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1605,7 +1485,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=63
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1621,7 +1501,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=63
+ cy=60
  rcx=0
  rcy=0
  [sourcefo]
@@ -1637,14 +1517,14 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=512
+ cy=499
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1671,12 +1551,12 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=66
+ y=63
  cx=1356
- cy=512
+ cy=499
  rcx=0
  rcy=0
- [_mse_simple_player_mse_]
+ [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
  stackedunder=targetconsolefo
@@ -1686,20 +1566,17 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=363
- y=73
- cx=526
- cy=357
+ x=99
+ y=135
+ cx=493
+ cy=132
  rcx=0
  rcy=0
  wsize=0
  active=0
  visible=1
 [targetconsole]
-finddtext=Length(BufferplugFL) =
-findhistory=4
- Length(BufferplugFL) =
- MP4OpenFile
- dsp_vol
- dspvol
+finddtext=Input from memory
+findhistory=1
+ Input from memory
 findoptions=1

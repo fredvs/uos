@@ -2,6 +2,7 @@
 
 {This is the Dynamic loading version with reference counting of LibSndFile.pas.
  Load the library with sf_load() and release with sf_unload().
+ Thanks to Phoenix for sf_open_virtual (TMemoryStream as input)
  License : modified LGPL.
  Fred van Stappen / fiens@hotmail.com }
 
@@ -23,7 +24,7 @@ unit uos_libsndfile;
 interface
 
 uses
-  dynlibs,
+  dynlibs, classes,
   {$IFDEF UNIX}
     {$IFDEF UseCThreads}
   cthreads,
@@ -34,9 +35,12 @@ uses
   ctypes;
 
   {$ENDIF}
+  
+type   
+PMemoryStream = ^TMemoryStream;
+ sf_count_t = Int64;  
 
   {$IF Defined(MSWINDOWS)}
-type
   off_t = int64;
    {$IFEND}
 
@@ -393,30 +397,34 @@ type
     coding_history: array[0..255] of char;//ctypes.cchar;
   end;
 
-type
-  Tsf_vio_get_filelen = function(user_date: pointer): Tsf_count_t; cdecl;
-
-  Tsf_vio_seek = function(offest: Tsf_count_t; whence: ctypes.cint;
-    user_date: pointer): Tsf_count_t; cdecl;
-
-  Tsf_vio_read = function(ptr: Pointer; Count: Tsf_count_t;
-    user_date: pointer): Tsf_count_t; cdecl;
-
-  Tsf_vio_write = function(ptr: Pointer; Count: Tsf_count_t;
-    user_date: pointer): Tsf_count_t; cdecl;
-
-  Tsf_vio_tell = function(user_data: Pointer): Tsf_count_t; cdecl;
-
-  PSF_VIRTUAL_IO = ^TSF_VIRTUAL_IO;
-
-  TSF_VIRTUAL_IO = record
-    get_filelen: Tsf_vio_get_filelen;
-    seek: Tsf_vio_seek;
-    Read: Tsf_vio_read;
-    Write: Tsf_vio_write;
-    tell: Tsf_vio_tell;
-  end;
-
+ // Thanks to Phoenix
+ type
+ //pm_get_filelen = ^tm_get_filelen;
+ tm_get_filelen =
+  function (pms: PMemoryStream): Tsf_count_t;
+ //pm_seek = ^tm_seek;
+ tm_seek =
+  function (offset: sf_count_t; whence: cint32; pms: PMemoryStream): Tsf_count_t;
+ //pm_read = ^tm_read;
+ tm_read =
+  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t;
+ //pm_write = ^tm_write;
+ tm_write =
+  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t;
+ //pm_tell = ^tm_tell;
+ tm_tell =
+  function (pms: PMemoryStream): Tsf_count_t;
+ 
+ TSF_VIRTUAL = packed record
+  sf_vio_get_filelen  : tm_get_filelen;
+  seek         : tm_seek;
+  read         : tm_read;
+  write        : tm_write;
+  tell         : tm_tell;
+ end;
+ 
+ PSF_VIRTUAL = ^TSF_VIRTUAL;  
+ 
 {
 ** Open the specified file for read, write or both. On error, this will
 ** return a NULL pointer. To find the error number, pass a NULL SNDFILE
@@ -438,7 +446,7 @@ var
   close_desc: ctypes.cint): TSNDFILE_HANDLE; cdecl;
 
 var
-  sf_open_virtual: function(sfvirtual: PSF_VIRTUAL_IO; mode: ctypes.cint;
+  sf_open_virtual: function(sfvirtual: PSF_VIRTUAL; mode: ctypes.cint;
   sfinfo: PSF_INFO; user_data: Pointer): TSNDFILE_HANDLE; cdecl;
 
 var

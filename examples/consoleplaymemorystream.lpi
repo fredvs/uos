@@ -9,7 +9,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="consoleplaymemory"/>
+      <Title Value="consoleplaymemorystream"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -26,7 +26,7 @@
     </RunParams>
     <Units Count="1">
       <Unit0>
-        <Filename Value="consoleplaymemory.pas"/>
+        <Filename Value="consoleplaymemorystream.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
     </Units>
@@ -34,7 +34,7 @@
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="consoleplaymemory"/>
+      <Filename Value="consoleplaymemorystream"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
@@ -44,14 +44,7 @@
       <Optimizations>
         <OptimizationLevel Value="3"/>
       </Optimizations>
-      <SmallerCode Value="True"/>
     </CodeGeneration>
-    <Linking>
-      <Debugging>
-        <GenerateDebugInfo Value="False"/>
-      </Debugging>
-      <LinkSmart Value="True"/>
-    </Linking>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

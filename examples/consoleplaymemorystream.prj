@@ -18,7 +18,7 @@ order15=0
 order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/consoleplaymemory.prj
+projectfilename=/home/fred/uos/examples/consoleplaymemorystream.prj
 findinfiledialog=41
  [findinfileadialogfo.subdirs]
  value=1
@@ -207,7 +207,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -282,8 +282,8 @@ sysenvmanagereditor=34
  wsize=0
  active=1
  visible=1
-mainfile=${PROJECTDIR}consoleplaymemory.pas
-targetfile=${PROJECTDIR}/consoleplaymemory
+mainfile=${PROJECTDIR}consoleplaymemorystream.pas
+targetfile=${PROJECTDIR}/consoleplaymemorystream
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
@@ -547,12 +547,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4093
+ 4095
  0
  0
  0
  0
- 2
+ 0
 exeusedon=14
  4095
  0
@@ -795,31 +795,52 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=3
+on=6
  0
  0
  0
-path=3
+ 0
+ 0
+ 0
+path=6
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/consoleplaymemory.pas
-line=3
- 5734
- 5050
- 101
-address=3
+ /home/fred/uos/examples/consoleplaymemorystream.pas
+ /home/fred/uos/examples/uos.pas
+ /home/fred/uos/examples/uos_libsndfile.pas
+ /home/fred/uos/examples/uos.pas
+line=6
+ 5728
+ 5029
+ 104
+ 407
+ 45
+ 4221
+address=6
  0
  0
  0
-addbkpt=3
  0
  0
  0
-ignore=3
+addbkpt=6
  0
  0
  0
-condition=3
+ 0
+ 0
+ 0
+ignore=6
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+condition=6
+ 
+ 
+ 
  
  
  
@@ -880,30 +901,30 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=WriteBuffer
+finddtext=AddFromMemoryStream
 findhistory=20
+ AddFromMemoryStream
+ m_read
+ sf_vio_read
+ Before sf_read
+ m_get_filelen
+ PSF_VIRTUAL
+ uos_inputgetlength
+ TSF_VIRTUAL
+ tm_seek
+ End give to output device
  WriteBuffer
  uos_File2File
  rat :=
  addintofile
  file2f
- AddFromMemoryStream
  soundt
  samplerate
  Filetobuffer
  AddFromMemory
  file2
- fileto
- file2b
- addfrommem
- FramesCount
- filetobuff
- tempoutmemory
- addfromme
- uosInit.uosPlayers
- uosDeviceCount
 findoptions=1
-editpos=14
+editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -912,9 +933,10 @@ editpos=14
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,5657
  0,-1073741823
- 0,93
+ 0,-1073741823
+ 0,-1073741823
+ 0,9
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -932,7 +954,8 @@ bookmarks10=0
 bookmarks11=0
 bookmarks12=0
 bookmarks13=0
-sourcefiles=14
+bookmarks14=0
+sourcefiles=15
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
@@ -942,12 +965,13 @@ sourcefiles=14
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/consoleplaymemorystream.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/consoleplaymemory.pas
- ${PROJECTDIR}/tfloatbuf.pas
- ${PROJECTDIR}/uos_dsp_noiseremoval.pas
- ${PROJECTDIR}/uos_flat.pas
-relpaths=14
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_shout.pas
+relpaths=15
  deviceinfos_fpGUI.pas
  uos.pas
  define.inc
@@ -957,12 +981,14 @@ relpaths=14
  uos_flat.pas
  define.inc
  uos.pas
+ consoleplaymemorystream.pas
+ uos_libsndfile.pas
+ uos_libsndfile.pas
  uos_flat.pas
- consoleplaymemory.pas
- tfloatbuf.pas
- uos_dsp_noiseremoval.pas
- uos_flat.pas
-ismoduletexts=14
+ uos.pas
+ uos_shout.pas
+ismoduletexts=15
+ 0
  0
  0
  0
@@ -986,7 +1012,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=14
+order=15
  0
  1
  2
@@ -997,13 +1023,14 @@ order=14
  7
  8
  11
- 9
- 12
  10
  13
+ 14
+ 9
+ 12
 tabsize=60
 firsttab=7
-index=12
+index=9
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1031,8 +1058,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=205
- y=60
+ x=194
+ y=56
  cx=939
  cy=621
  rcx=0
@@ -1078,7 +1105,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [memoryfo]
  splitdir=0
  useroptions=805322875
@@ -1154,7 +1181,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=513
+ cy=511
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1165,7 +1192,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=5
+ row=3
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1363,9 +1390,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=581
+ y=580
  cx=1356
- cy=120
+ cy=121
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1465,7 +1492,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1481,7 +1508,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [sourcefo]
@@ -1497,7 +1524,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=513
+ cy=511
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1531,15 +1558,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=65
+ y=66
  cx=1356
- cy=513
+ cy=511
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
