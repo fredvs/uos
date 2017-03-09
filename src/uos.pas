@@ -4287,9 +4287,7 @@ begin
   begin
   x := 0;
   MemoryStream.Position:= 0; 
-  
-  
-  
+   
  {$IF DEFINED(debug)}
   WriteLn('Before setlength.');  
  {$endif}  
@@ -4314,7 +4312,6 @@ begin
   if (uosLoadResult.SFloadERROR = 0) then
   begin
 
-//{
    with sfVirtual do 
   begin 
   sf_vio_get_filelen  := @m_get_filelen; 
@@ -4323,9 +4320,7 @@ begin
   write        := @m_write; 
   tell         := @m_tell; 
   end; 
-// } 
-   
-  // StreamIn[x].Data.HandleSt := sf_open(FileName, SFM_READ, sfInfo);
+
   Streamin [x] .Data.HandleSt := sf_open_virtual(@sfVirtual, SFM_READ, @sfInfo, @StreamIn[x].Data.MemoryStream); 
   
   (* try to open the file *)
@@ -4342,7 +4337,6 @@ begin
   WriteLn('sf_open_virtual OK');  
   {$endif}  
   StreamIn[x].Data.LibOpen := 0;
-  //StreamIn[x].Data.filename := FileName;
   StreamIn[x].Data.channels := SFinfo.channels;
   if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 65536 div StreamIn[x].Data.Channels  else
   StreamIn[x].Data.Wantframes := FramesCount ;
@@ -4374,10 +4368,9 @@ begin
   
   if ((StreamIn[x].Data.LibOpen = -1)) then
   
-
   {$IF DEFINED(mpg123)}
   // mpg123
-  if (1 =2) and ((StreamIn[x].Data.LibOpen = -1)) and (uosLoadResult.MPloadERROR = 0) then
+  if ((StreamIn[x].Data.LibOpen = -1)) and (uosLoadResult.MPloadERROR = 0) then
   begin
   Err := -1;
 
@@ -4404,7 +4397,22 @@ begin
   MPG123_ENC_SIGNED_16);
   end;
 
- // Err := mpg123_open(StreamIn[x].Data.HandleSt, PChar(FileName));
+err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
+  @mpg_read_stream, @mpg_seek_stream, nil);
+
+  {$IF DEFINED(debug)}
+  if err = 0 then writeln('===> mpg123_replace_reader_handle => ok.') 
+  else writeln('===> mpg123_replace_reader_handle => NOT OK.');
+  {$endif}
+ 
+  Err :=  mpg123_open_handle(StreamIn[x].Data.HandleSt, pointer(StreamIn[x].Data.MemoryStream));
+  
+  {$IF DEFINED(debug)}
+  if err = 0 then writeln('===> mpg123_open_handle => ok.') else
+  writeln('===> mpg123_open_handle => NOT ok.') ;
+  {$endif}
+ 
+  sleep(10);
   end
   else
   begin
@@ -4416,10 +4424,23 @@ begin
   StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
   StreamIn[x].Data.encoding);
   
+  {$IF DEFINED(debug)}
+  if err = 0 then writeln('===> mpg123_getformat => ok.') else
+  writeln('===> mpg123_getformat => NOT ok.') ;
+  {$endif}
+  
   if Err = 0 then
   begin
-  mpg123_close(StreamIn[x].Data.HandleSt);
+
+
+ mpg123_close(StreamIn[x].Data.HandleSt);
   // Close handle and reload with forced resolution
+ StreamIn[x].Data.HandleSt := mpg123_new(nil, Err);
+  
+  {$IF DEFINED(debug)}
+  if err = 0 then writeln('===> mpg123_open_handle => ok.') else
+  writeln('===> mpg123_open_handle => NOT ok.') ;
+  {$endif}
   StreamIn[x].Data.HandleSt := nil;
   StreamIn[x].Data.HandleSt := mpg123_new(nil, Err);
 
@@ -4432,11 +4453,20 @@ begin
   2: mpg123_format(StreamIn[x].Data.HandleSt, StreamIn[x].Data.samplerate,
   StreamIn[x].Data.channels, StreamIn[x].Data.encoding);
   end;
- // mpg123_open(StreamIn[x].Data.HandleSt, (PChar(FileName)));
+ 
+err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
+  @mpg_read_stream, @mpg_seek_stream, nil);
+
+  {$IF DEFINED(debug)}
+  if err = 0 then writeln('===> mpg123_replace_reader_handle => ok.') 
+  else writeln('===> mpg123_replace_reader_handle => NOT OK.');
+  {$endif}
+ 
+  Err :=  mpg123_open_handle(StreamIn[x].Data.HandleSt, pointer(StreamIn[x].Data.MemoryStream));
+
   mpg123_getformat(StreamIn[x].Data.HandleSt,
   StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
   StreamIn[x].Data.encoding);
- // StreamIn[x].Data.filename := filename;
 
   if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=
   65536 div StreamIn[x].Data.Channels  else
@@ -4457,8 +4487,23 @@ begin
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
   StreamIn[x].Data.hdformat := MPinfo.layer;
   StreamIn[x].Data.frames := MPinfo.framesize;
-  StreamIn[x].Data.Length := mpg123_length(StreamIn[x].Data.HandleSt);
+ 
+if StreamIn[x].Data.SampleFormat = 0 then
+  mpg123_param(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Channels,
+  MPG123_FORCE_FLOAT, 0);
+
   StreamIn[x].Data.LibOpen := 1;
+  
+    //// This does not work, I do not know why...
+  StreamIn[x].Data.Length := mpg123_length(StreamIn[x].Data.HandleSt);
+if StreamIn[x].Data.Length < 2 then  StreamIn[x].Data.Length := 2;
+ 
+ {$IF DEFINED(debug)}
+   writeln('StreamIn[x].Data.Length = ' + inttostr(mpg123_length(StreamIn[x].Data.HandleSt)));
+  writeln('StreamIn[x].Data.frames = ' + inttostr(StreamIn[x].Data.frames));
+  writeln('END StreamIn[x].Data.samplerate = ' + inttostr(StreamIn[x].Data.samplerate));
+  writeln('END StreamIn[x].Data.channels = ' + inttostr(StreamIn[x].Data.channels));
+  {$endif}
   end
   else
   begin
@@ -4468,7 +4513,7 @@ begin
   {$endif}
   
   {$IF DEFINED(opus)}
-  if  (1 =2) and (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
+  if  (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
   begin
   Err := -1;
   
@@ -4656,8 +4701,6 @@ begin
   Case StreamIn[x].pCD^.BitsPerSample of
   16 : StreamIn[x].Data.SampleFormat := 2;
   end;
-
- // StreamIn[x].Data.filename  := FileName;
 
   StreamIn[x].Data.HandleSt  := @StreamIn[x].pCD; // Uos requires an assigned pointer....
 
@@ -4861,8 +4904,7 @@ begin
   {$endif}
 
   {$IF DEFINED(mpg123)}
-  // mpg123 TODO
-  if (1=2) and ((StreamIn[x].Data.LibOpen = -1)) and (uosLoadResult.MPloadERROR = 0) then
+   if ((StreamIn[x].Data.LibOpen = -1)) and (uosLoadResult.MPloadERROR = 0) then
   begin
   Err := -1;
 
@@ -4953,7 +4995,7 @@ begin
   {$endif}
   
   {$IF DEFINED(opus)}
-  if (1=2) and (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
+  if (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
   begin
   Err := -1;
   
@@ -5045,7 +5087,7 @@ begin
 {$endif}
 
   {$IF DEFINED(neaac)}
-  if (1=2) and (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.AAloadERROR = 0) then
+  if (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.AAloadERROR = 0) then
   begin
   Err:= -1;
 
@@ -5126,7 +5168,7 @@ begin
   {$endif}
 
   {$IF DEFINED(cdrom)}
-  if (1=2) and (StreamIn[x].Data.LibOpen = -1) then
+  if (StreamIn[x].Data.LibOpen = -1) then
   begin
   Err:= -1;
   StreamIn[x].pCD := nil;
@@ -6278,7 +6320,7 @@ if err > 0 then
   for i := 0 to length(StreamOut[x].Data.Buffer) -1 do
   st := st + '|' + inttostr(i) + '=' + floattostr(StreamOut[x].Data.Buffer[i]);  
   WriteLn('OUTPUT DATA into portaudio------------------------------');
-  WriteLn(st);
+  //WriteLn(st);
   {$endif} 
   
  //  err := // if you want clean buffer
@@ -6359,7 +6401,7 @@ if err > 0 then
    st := '';
   for i := 0 to wantframestemp -1 do
   st := st + '|' + inttostr(i) + '=' + floattostr(StreamOut[x].Data.Buffer[i]); 
-  WriteLn(st); 
+  //WriteLn(st); 
   WriteLn('OUTPUT DATA AFTER5 ------------------------------');
   writeln('Streamout[x].Data.posmem before = '+inttostr( Streamout[x].Data.posmem)) ;
   

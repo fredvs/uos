@@ -29,7 +29,7 @@ type
 
 var
   res, i: integer;
-  ordir, opath, st, SoundFilename, PA_FileName, SF_FileName: string;
+  ordir, opath, st, SoundFilename, PA_FileName, SF_FileName, MP_FileName: string;
   PlayerIndex1 : integer;
   thememorystream : Tmemorystream;
   { TuosConsole }
@@ -42,9 +42,11 @@ var
      {$if defined(cpu64)}
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     SF_FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
+    MP_FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
      {$else}
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     SF_FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
+    MP_FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
      {$endif}
     SoundFilename := ordir + 'sound\test.flac';
  {$ENDIF}
@@ -53,9 +55,11 @@ var
     {$if defined(cpu64)}
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
+    MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
     {$else}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
+    MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     {$endif}
     SoundFilename := ordir + 'sound/test.flac';
    {$ENDIF}
@@ -64,9 +68,11 @@ var
     {$if defined(cpu64)}
     PA_FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
     SF_FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    MP_FileName := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
     {$else}
     PA_FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     SF_FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
+    MP_FileName := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
     {$endif}
     SoundFilename := ordir + 'sound/test.flac';
  {$ENDIF}
@@ -81,7 +87,7 @@ var
 
    // Load the libraries
    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
-   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil, nil) ;
+   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), Pchar(MP_FileName), nil, nil, nil) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 
@@ -99,7 +105,8 @@ var
 
    // Add a input from memory stream with custom parameters
    uos_AddFromMemoryStream(PlayerIndex1,thememorystream,-1,-1,-1,0,512);
-  writeln('uos_inputlength(0,0) = ' + inttostr(uos_inputlength(0,0))); 
+ 
+   writeln('uos_inputlength(0,0) = ' + inttostr(uos_inputlength(0,0))); 
 
    // add a Output into device with default parameters
    uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0,512);

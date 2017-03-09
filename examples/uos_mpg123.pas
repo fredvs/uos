@@ -259,7 +259,7 @@ type
   psize_t = ^size_t;
 
 type
-  coff_t = integer;  //Int64;
+  coff_t = size_t;  //Int64;
 
 type
 

@@ -984,6 +984,7 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1003,7 +1004,6 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,710
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -1156,7 +1156,7 @@ order=27
  10
 tabsize=60
 firsttab=17
-index=19
+index=17
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1184,8 +1184,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=94
- y=24
+ x=168
+ y=63
  cx=939
  cy=621
  rcx=0
@@ -1194,7 +1194,7 @@ windowlayout=549
   basedock,0,0,1356,604
  focusedchild=0
  wsize=0
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1212,7 +1212,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1235,7 +1235,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1692,7 +1692,7 @@ windowlayout=549
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
