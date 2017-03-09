@@ -22,5 +22,5 @@ Phoenix : He decrypts sf_open_virtual to enable TMemoryStream as input.
 
 And many other in fpc, fpGUI, MSE, Lazarus, CodeTyphon forum.
 
-Fred van Stappen : fiens@hotmail.com 
+Fred van Stappen : fiens@hotmail.com
 
