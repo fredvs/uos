@@ -13,7 +13,7 @@ unit uos_OpusFile;
 interface
 
 uses
-  ctypes, dynlibs, pipes, SysUtils;
+  ctypes, dynlibs, classes, pipes, SysUtils;
   
 type
   TOpusFile = ^OpusFile;
@@ -104,9 +104,12 @@ type
 
 function OpusReadCB(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
 function OpusReadCBuosURL(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
+function OpusReadCBuosMS(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
 function OpusSeekCB(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
 function OpusTellCB(stream: Pointer): Int64; cdecl;
 function OpusCloseCB(stream: Pointer): cint; cdecl;
+function OpusSeekCBMS(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
+function OpusTellCBMS(stream: Pointer): Int64; cdecl;
 
 const
   op_callbacks: TOpusFileCallbacks = (read: @OpusReadCB;
@@ -117,6 +120,11 @@ const
   uos_callbacks: TOpusFileCallbacks = (read: @OpusReadCBuosURL;
                                       seek: @OpusSeekCB;
                                       tell: @OpusTellCB;
+                                      close: nil);
+
+  uos_callbacksms: TOpusFileCallbacks = (read: @OpusReadCBuosms;
+                                      seek: @OpusSeekCBms;
+                                      tell: @OpusTellCBms;
                                       close: nil);
                                     
                                       
@@ -356,6 +364,15 @@ begin
     result := 0;
 end;
 
+function OpusReadCBuosMS(stream: Pointer; var buffer; nbytes: cint): cint; cdecl;
+begin
+ if nbytes<>0
+  then
+  result := TMemoryStream(stream^).read(Buffer, nbytes)
+   else
+    result := 0;
+end;
+
 function OpusSeekCB(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
 var
   Seek_Result: Int64;
@@ -372,6 +389,23 @@ function OpusTellCB(stream: Pointer): Int64; cdecl;
 begin
   Result := FileSeek(THandle(stream^), 0, 1);
 end;
+
+function OpusSeekCBms(stream: Pointer; offset: Int64; whence: cint): cint; cdecl;
+var
+  Seek_Result: Int64;
+begin
+  Seek_Result := TMemoryStream(stream^).seek(offset, whence);
+  if Seek_Result=-1
+  then
+    Result := -1
+  else
+    Result := 0;
+end;
+
+function OpusTellCBms(stream: Pointer): Int64; cdecl;
+begin
+Result := TMemoryStream(stream^).seek(0, 1);
+ end;
 
 function OpusCloseCB(stream: Pointer): cint; cdecl;
 begin

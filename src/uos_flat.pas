@@ -240,17 +240,18 @@ function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; O
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := uos_AddFromMemoryBuffer(0, mybuffer,-1,2,44100,0,1024);
   
-function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; OutputIndex: cint32; Channels: cint32 ;
+function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; TypeAudio: cint32; OutputIndex: cint32; Channels: cint32 ;
     SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // Add a input from memory stream with custom parameters
-  // MemoryStream : Memory stream of decoded audio.
+  // MemoryStream : Memory stream of encoded audio.
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := uos_AddFromMemoryStream(0, mymemorystream,-1,2,44100,0,1024);
+  // example : InputIndex1 := AddFromMemoryStream(0, mymemorystream,-1,-1,2,44100,0,1024);
 
 function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar): cint32;
   // Add a input from audio file with default parameters
@@ -1166,22 +1167,22 @@ begin
    SampleRate, SampleFormat, FramesCount);
 end;
 
-function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; OutputIndex: cint32; Channels: cint32 ;
+function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; TypeAudio: cint32; OutputIndex: cint32; Channels: cint32 ;
     SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
-  // Add a input from memory buffer with custom parameters
-  // MemoryStream : Memory stream of decoded audio.
+  // MemoryStream : Memory stream of encoded audio.
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := uos_AddFromMemoryStream(0,mymemorystream,-1,2,44100,0,1024);
+  // example : InputIndex1 := uos_AddFromMemoryStream(0, mymemorystream,-1,-1,2,44100,0,1024);
 begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-  Result := uosPlayers[PlayerIndex].AddFromMemoryStream(MemoryStream, OutputIndex, Channels,
+  Result := uosPlayers[PlayerIndex].AddFromMemoryStream(MemoryStream, TypeAudio, OutputIndex, Channels,
    SampleRate, SampleFormat, FramesCount);
 end;
 

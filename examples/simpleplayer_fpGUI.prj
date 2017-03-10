@@ -50,8 +50,10 @@ findinfiledialog=58
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=AddIntoMemory
+ value=tm_get_filele
  history=20
+  tm_get_filele
+  sf_count_t
   AddIntoMemory
   intome
   addfrommemory
@@ -70,8 +72,6 @@ findinfiledialog=58
   setDSPVolumeout
   setDSPVolumein
   AddDSPVolumein
-  AddDSPVolume
-  dspvolume
  [findinfileadialogfo]
  stackedunder=
  x=615
@@ -829,12 +829,12 @@ path=8
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=8
- 3826
+ 3824
  33
  913
  764
- 2681
- 2001
+ 2679
+ 1999
  541
  247
 address=8
@@ -955,8 +955,13 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=TMemoryStream.Creat
+finddtext=$IF DEFINED(webstream
 findhistory=20
+ $IF DEFINED(webstream
+ mpg_read_strea
+ m_get_filelen
+ tm_get_filele
+ sf_count_t
  TMemoryStream.Creat
  Streamin [x] .Data.MemoryStream: = TMemoryStream.Creat
  AddIntoMemoryBuffer
@@ -972,25 +977,14 @@ findhistory=20
  create
  timer
  fromfilein
- tempsam
- addintomem
- TDArFloat
- btnCloseClick
- destroy
 findoptions=1
-editpos=27
+editpos=28
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,4302
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 15,1086
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1006,6 +1000,13 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,414
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1033,7 +1034,8 @@ bookmarks23=0
 bookmarks24=0
 bookmarks25=0
 bookmarks26=0
-sourcefiles=27
+bookmarks27=0
+sourcefiles=28
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1061,7 +1063,8 @@ sourcefiles=27
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/consoleplaymemory.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=27
+ ${PROJECTDIR}/uos_libsndfile.pas
+relpaths=28
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1089,7 +1092,9 @@ relpaths=27
  uos_flat.pas
  consoleplaymemory.pas
  simpleplayer_fpGUI.pas
-ismoduletexts=27
+ uos_libsndfile.pas
+ismoduletexts=28
+ 0
  0
  0
  0
@@ -1126,7 +1131,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=27
+order=28
  0
  1
  2
@@ -1145,6 +1150,7 @@ order=27
  20
  4
  5
+ 27
  22
  24
  26
@@ -1172,7 +1178,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=604
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -1184,16 +1190,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=168
- y=63
+ x=49
+ y=75
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,604
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1281,7 +1287,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1307,7 +1313,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=441
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1516,9 +1522,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=500
+ y=581
  cx=1356
- cy=104
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1618,7 +1624,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=53
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1634,7 +1640,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=53
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1650,7 +1656,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=441
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1684,15 +1690,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=56
+ y=65
  cx=1356
- cy=441
+ cy=513
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

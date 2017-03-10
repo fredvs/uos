@@ -38,8 +38,7 @@ uses
   
 type   
 PMemoryStream = ^TMemoryStream;
- sf_count_t = Int64;  
-
+ 
   {$IF Defined(MSWINDOWS)}
   off_t = int64;
    {$IFEND}
@@ -401,19 +400,19 @@ type
  type
  //pm_get_filelen = ^tm_get_filelen;
  tm_get_filelen =
-  function (pms: PMemoryStream): Tsf_count_t;
+  function (pms: PMemoryStream): Tsf_count_t; cdecl; 
  //pm_seek = ^tm_seek;
  tm_seek =
-  function (offset: sf_count_t; whence: cint32; pms: PMemoryStream): Tsf_count_t;
+  function (offset: Tsf_count_t; whence: cint32; pms: PMemoryStream): Tsf_count_t; cdecl; 
  //pm_read = ^tm_read;
  tm_read =
-  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t;
+  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
  //pm_write = ^tm_write;
  tm_write =
-  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t;
+  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
  //pm_tell = ^tm_tell;
  tm_tell =
-  function (pms: PMemoryStream): Tsf_count_t;
+  function (pms: PMemoryStream): Tsf_count_t; cdecl; 
  
  TSF_VIRTUAL = packed record
   sf_vio_get_filelen  : tm_get_filelen;

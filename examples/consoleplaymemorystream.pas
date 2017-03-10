@@ -29,8 +29,8 @@ type
 
 var
   res, i: integer;
-  ordir, opath, st, SoundFilename, PA_FileName, SF_FileName, MP_FileName: string;
-  PlayerIndex1 : integer;
+  ordir, opath, st, SoundFilename, PA_FileName, SF_FileName, MP_FileName, OF_FileName: string;
+  PlayerIndex1, InputIndex1 : integer;
   thememorystream : Tmemorystream;
   { TuosConsole }
 
@@ -39,15 +39,16 @@ var
     ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
 
  {$IFDEF Windows}
-     {$if defined(cpu64)}
+  {$if defined(cpu64)}
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     SF_FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
     MP_FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
-     {$else}
+    {$else}
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     SF_FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
     MP_FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
-     {$endif}
+    OF_FileName := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
+  {$endif}
     SoundFilename := ordir + 'sound\test.flac';
  {$ENDIF}
 
@@ -56,10 +57,12 @@ var
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+    OF_FileName := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
     {$else}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+    OF_FileName := ordir + 'lib/Linux/32bit/LibOpusFile-32.so';
     {$endif}
     SoundFilename := ordir + 'sound/test.flac';
    {$ENDIF}
@@ -69,6 +72,7 @@ var
     PA_FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
     SF_FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
     MP_FileName := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
+    OF_FileName := ordir + 'lib/Linux/64bit/libopusfile-64.so';
     {$else}
     PA_FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     SF_FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
@@ -93,48 +97,62 @@ var
 
    if res = 0 then begin
    
-       PlayerIndex1 := 0;
-       
-       // Create a memory stream from a audio file
-       thememorystream:= TMemoryStream.Create; 
-       thememorystream.LoadFromFile(pchar(SoundFilename)); 
-       thememorystream.Position:= 0; 
-       
-      
-       uos_CreatePlayer(PlayerIndex1);
-
-   // Add a input from memory stream with custom parameters
-   uos_AddFromMemoryStream(PlayerIndex1,thememorystream,-1,-1,-1,0,512);
+    PlayerIndex1 := 0;
+    
+    // Create a memory stream from a audio file
+    thememorystream:= TMemoryStream.Create; 
+    thememorystream.LoadFromFile(pchar(SoundFilename)); 
+    thememorystream.Position:= 0; 
+    
+    uos_CreatePlayer(PlayerIndex1);
+   
+    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,-1,-1,-1,-1,0,-1);
+  // Add a input from memory stream with custom parameters
+  // MemoryStream : Memory stream of encoded audio.
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
+  // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+  // SampleRate : delault : -1 (44100)
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // FramesCount : default : -1 (4096)
+  //  result :  Input Index in array  -1 = error
+  // example : InputIndex1 := AddFromMemoryStream(mymemorystream,-1,-1,2,44100,0,1024);
+   
+  if InputIndex1 > -1 then
+  begin
  
    writeln('uos_inputlength(0,0) = ' + inttostr(uos_inputlength(0,0))); 
 
-   // add a Output into device with default parameters
-   uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0,512);
+   // add a Output into device with custom parameters
+   uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0,-1);
 
-    /////// everything is ready, here we are, lets play it...
+  /////// everything is ready, here we are, lets play it...
 
    uos_Play(PlayerIndex1);
    
-    sleep(2000);
-    end;
+  sleep(2000);
+  
+  end else  writeln('uos_AddFromMemoryStream(...) did not work... '); 
+
+  end;
 
  end;
 
   procedure TuosConsole.doRun;
   begin
-    ConsolePlay;
-    writeln('Press a key to exit...');
-    readln;
-    Terminate;
+  ConsolePlay;
+  writeln('Press a key to exit...');
+  readln;
+  Terminate;
   //  thememorystream.free;
-    sleep(50);
-    uos_free();
+  sleep(50);
+  uos_free();
   end;
 
 constructor TuosConsole.Create(TheOwner: TComponent);
   begin
-    inherited Create(TheOwner);
-    StopOnException := True;
+  inherited Create(TheOwner);
+  StopOnException := True;
   end;
 
 var

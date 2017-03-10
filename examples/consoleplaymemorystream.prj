@@ -70,14 +70,15 @@ finddialog=8
  y=209
  cx=331
  cy=116
-replacedialog=28
+replacedialog=29
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=uosPlayers
- history=15
+ value=  
+ history=16
+    
   uosPlayers
   uosInit.uosDeviceCount
   uosInit.uosDefaultDevice
@@ -812,9 +813,9 @@ path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
 line=7
- 5728
- 5029
- 111
+ 5729
+ 5030
+ 126
  407
  45
  4221
@@ -908,8 +909,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromMemoryStream
+finddtext=    
 findhistory=20
+     
+      
+ op_test_callbacks
  AddFromMemoryStream
  addfromfil
  mpg123_length
@@ -927,11 +931,8 @@ findhistory=20
  tm_seek
  End give to output device
  WriteBuffer
- uos_File2File
- rat :=
- addintofile
 findoptions=1
-editpos=16
+editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -939,7 +940,10 @@ editpos=16
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 7,9
+ 0,-1073741823
+ 0,-1073741823
+ 11,12
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -964,7 +968,10 @@ bookmarks12=0
 bookmarks13=0
 bookmarks14=0
 bookmarks15=0
-sourcefiles=16
+bookmarks16=0
+bookmarks17=0
+bookmarks18=0
+sourcefiles=19
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
@@ -981,7 +988,10 @@ sourcefiles=16
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_shout.pas
  ${PROJECTDIR}/uos_mpg123.pas
-relpaths=16
+ ${PROJECTDIR}/uos_opusfile.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/define.inc
+relpaths=19
  deviceinfos_fpGUI.pas
  uos.pas
  define.inc
@@ -998,7 +1008,13 @@ relpaths=16
  uos.pas
  uos_shout.pas
  uos_mpg123.pas
-ismoduletexts=16
+ uos_opusfile.pas
+ uos.pas
+ define.inc
+ismoduletexts=19
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1020,11 +1036,11 @@ modules=1
 moduleoptions=1
  0
 visiblemodules=1
- -1
+ 0
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=16
+order=19
  0
  1
  2
@@ -1040,10 +1056,13 @@ order=16
  13
  14
  9
+ 18
+ 16
+ 17
  12
 tabsize=60
-firsttab=7
-index=7
+firsttab=10
+index=14
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1059,7 +1078,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=779
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -1071,16 +1090,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=149
+ y=36
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,779
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1168,7 +1187,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1194,7 +1213,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=570
+ cy=512
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1204,8 +1223,8 @@ windowlayout=549
  width1=43
  sortdescend1=0
  sorted=0
- col=0
- row=1
+ col=1
+ row=7
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1403,9 +1422,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=645
+ y=580
  cx=1356
- cy=134
+ cy=121
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1505,7 +1524,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=69
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1521,7 +1540,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=69
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1537,7 +1556,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=570
+ cy=512
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1571,15 +1590,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=72
+ y=65
  cx=1356
- cy=570
+ cy=512
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1594,7 +1613,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
 [targetconsole]
 finddtext=Input from memory
 findhistory=1

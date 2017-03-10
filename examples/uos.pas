@@ -668,17 +668,18 @@ function AddFromMemoryBuffer(MemoryBuffer: TDArFloat; OutputIndex: cint32; Chann
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := AddFromMemoryBuffer(mybuffer,-1,2,44100,0,1024);
   
-function AddFromMemoryStream(MemoryStream: TMemoryStream; OutputIndex: cint32; Channels: cint32 ;
+function AddFromMemoryStream(MemoryStream: TMemoryStream; TypeAudio: cint32; OutputIndex: cint32; Channels: cint32 ;
     SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
-  // Add a input from memory buffer with custom parameters
-  // MemoryStream : Memory stream of decoded audio.
+  // Add a input from memory stream with custom parameters
+  // MemoryStream : Memory stream of encoded audio.
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := AddFromMemoryStream(mymemorystream,-1,2,44100,0,1024);
+  // example : InputIndex1 := uos_AddFromMemoryStream(0, mymemorystream,-1,-1,2,44100,0,1024);
 
 
 {$IF DEFINED(webstream)}
@@ -1069,10 +1070,6 @@ var
 
 implementation
 
-//uses
-//uos_flat;
-
-{$IF DEFINED(webstream)}
 function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; cdecl;
 var
   Stream: TStream absolute ahandle;
@@ -1099,7 +1096,6 @@ procedure mpg_close_stream(ahandle: Pointer); // not used, uos does it...
 begin
   TObject(ahandle).Free;
 end;
-{$endif}
 
 function FormatBuf(Inbuf: TDArFloat; format: cint32): TDArFloat;
 var
@@ -4207,12 +4203,12 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
    
   end; 
   
-  function m_get_filelen(pms: PMemoryStream): sf_count_t;
+  function m_get_filelen(pms: PMemoryStream): tsf_count_t; cdecl; 
 begin
  Result:= pms^.Size;
 end;
  
-function m_seek(offset: sf_count_t; whence: cint32; pms: PMemoryStream): sf_count_t;
+function m_seek(offset: tsf_count_t; whence: cint32; pms: PMemoryStream): tsf_count_t; cdecl; 
 Const
  SEEK_SET = 0;
  SEEK_CUR = 1;
@@ -4227,35 +4223,37 @@ begin
 
 end;
  
-function m_read(const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t;
+function m_read(const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
 
 begin
 Result := pms^.Read(buf^,count);
 end;
  
-function m_write(const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t;
+function m_write(const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
 begin
  Result:= pms^.Write(buf^,count);
 end;
  
-function m_tell(pms: PMemoryStream): Tsf_count_t;
+function m_tell(pms: PMemoryStream): Tsf_count_t; cdecl; 
 begin
  Result:= pms^.Position;
 end;
   
-function Tuos_Player.AddFromMemoryStream(MemoryStream: TMemoryStream; OutputIndex: cint32; Channels: cint32 ;
+function Tuos_Player.AddFromMemoryStream(MemoryStream: TMemoryStream; TypeAudio: cint32; OutputIndex: cint32; Channels: cint32 ;
     SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
-  // Add a input from memory buffer with custom parameters
-  // MemoryStream : Memory stream of decoded audio.
+  // MemoryStream : Memory stream of encoded audio.
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := AddFromMemoryStream(mymemorystream,-1,2,44100,0,1024);
+  // example : InputIndex1 := AddFromMemoryStream(mymemorystream,-1,-1,2,44100,0,1024);
 var
-  x,  err: cint32;
+  x, err, len, len2, i : cint32;
+  PipeBufferSize, totsamples : integer;
+  buffadd : tbytes;
 
   {$IF DEFINED(sndfile)}
   sfInfo: TSF_INFO;
@@ -4309,7 +4307,7 @@ begin
  {$endif}  
  
   {$IF DEFINED(sndfile)}
-  if (uosLoadResult.SFloadERROR = 0) then
+  if ((TypeAudio = -1) or (TypeAudio = 0)) and (uosLoadResult.SFloadERROR = 0) then
   begin
 
    with sfVirtual do 
@@ -4370,7 +4368,7 @@ begin
   
   {$IF DEFINED(mpg123)}
   // mpg123
-  if ((StreamIn[x].Data.LibOpen = -1)) and (uosLoadResult.MPloadERROR = 0) then
+  if (TypeAudio = 1) and  (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.MPloadERROR = 0) then
   begin
   Err := -1;
 
@@ -4431,7 +4429,6 @@ err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
   
   if Err = 0 then
   begin
-
 
  mpg123_close(StreamIn[x].Data.HandleSt);
   // Close handle and reload with forced resolution
@@ -4496,7 +4493,7 @@ if StreamIn[x].Data.SampleFormat = 0 then
   
     //// This does not work, I do not know why...
   StreamIn[x].Data.Length := mpg123_length(StreamIn[x].Data.HandleSt);
-if StreamIn[x].Data.Length < 2 then  StreamIn[x].Data.Length := 2;
+// if StreamIn[x].Data.Length < 0 then  StreamIn[x].Data.Length := 0;
  
  {$IF DEFINED(debug)}
    writeln('StreamIn[x].Data.Length = ' + inttostr(mpg123_length(StreamIn[x].Data.HandleSt)));
@@ -4512,8 +4509,8 @@ if StreamIn[x].Data.Length < 2 then  StreamIn[x].Data.Length := 2;
   end;
   {$endif}
   
-  {$IF DEFINED(opus)}
-  if  (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
+  {$IF DEFINED(opus)} // Not working yet...
+  if (TypeAudio = 2) and (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
   begin
   Err := -1;
   
@@ -4523,6 +4520,48 @@ if StreamIn[x].Data.Length < 2 then  StreamIn[x].Data.Length := 2;
   
   StreamIn[x].Data.HandleSt := pchar('opus');
  // StreamIn[x].Data.HandleOP := op_test_file(PChar(FileName), Err);
+
+ if FramesCount= -1 then
+  totsamples := 4096  else
+  totsamples := FramesCount;
+  
+  PipeBufferSize := totsamples * sizeOf(Single); // * 2
+  
+  {$IF DEFINED(debug)}
+  WriteLn('totsamples: ' + inttostr(totsamples));
+  WriteLn('PipeBufferSize: ' + inttostr(PipeBufferSize));
+  {$endif}
+
+len := 1 ;
+  len2 := 0 ;
+  
+  setlength(buffadd, PipeBufferSize);
+  setlength(StreamIn[x].data.BufferURL, PipeBufferSize);
+ 
+  while (len2 < PipeBufferSize) and (len > 0) do
+  begin
+ len := StreamIn[x].Data.MemoryStream.Read(buffadd[0],PipeBufferSize-len2);
+  if len > 0 then  for i := 0 to len -1 do
+  StreamIn[x].data.BufferURL[i+len2] := buffadd[i] ;
+  len2 := len2 + len;
+  end;
+  
+  {$IF DEFINED(debug)}
+  WriteLn('PipeBufferSize = ' + inttostr(PipeBufferSize));
+  WriteLn('Data.MemoryStream.Read = ' + inttostr(len2));
+  WriteLn('----------------------------------');
+  //writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferURL));
+  {$endif}
+
+  StreamIn[x].Data.HandleSt := pchar('opusstream');
+
+ {$IF DEFINED(debug)}
+  WriteLn('StreamIn[x].Data.HandleSt assisgned');
+  {$endif}
+ 
+ StreamIn[x].Data.HandleOP :=
+
+ op_test_callbacks(StreamIn[x].Data.MemoryStream, uos_callbacksms, StreamIn[x].data.BufferURL[0], PipeBufferSize, err); 
  
  {$IF DEFINED(debug)}
   WriteLn('op_test_file error = '+ inttostr(Err));  
