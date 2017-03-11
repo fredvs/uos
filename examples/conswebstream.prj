@@ -836,10 +836,10 @@ editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 31,3080
+ 0,3070
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -894,7 +894,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=5
-index=7
+index=10
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1137,7 +1137,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1395,7 +1395,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

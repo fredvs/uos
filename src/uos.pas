@@ -1067,36 +1067,6 @@ var
 
 implementation
 
-function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; cdecl;
-var
-  Stream: TStream absolute ahandle;
-begin
-  Result := Stream.Read(AData^, ACount);
-end;
-
-function mpg_seek_stream(ahandle: Pointer; offset: Integer; 
- whence: Integer): Integer; cdecl; 
-var 
- Stream: TStream absolute ahandle; 
-begin 
- try 
-  case whence of 
-   SEEK_SET  : Result:= Stream.Seek(offset, soFromBeginning); 
-   SEEK_CUR  : Result:= Stream.Seek(offset, soFromCurrent); 
-   SEEK_END  : Result:= Stream.Seek(offset, soFromEnd); 
-   else 
-    Result:= 0; 
-  end; 
- except 
-  Result := 0; 
- end; 
-end; 
-
-procedure mpg_close_stream(ahandle: Pointer); // not used, uos does it...
-begin
-  TObject(ahandle).Free;
-end;
-
 function FormatBuf(Inbuf: TDArFloat; format: cint32): TDArFloat;
 var
   x: cint32;
@@ -1251,6 +1221,51 @@ begin
   wFileSize := Data.data.Size - SizeOf(ID) - SizeOf(wFileSize);
   Data.data.Write(wFileSize, 4);
   Data.data.Free;
+end;
+
+function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; cdecl;
+var
+  Stream: TStream absolute ahandle;
+begin
+  Result := Stream.Read(AData^, ACount);
+end;
+
+function mpg_seek_stream(ahandle: Pointer; offset: Integer; 
+ whence: Integer): Integer; cdecl; 
+var 
+ Stream: TStream absolute ahandle; 
+begin 
+ try 
+  case whence of 
+   SEEK_SET  : Result:= Stream.Seek(offset, soFromBeginning); 
+   SEEK_CUR  : Result:= Stream.Seek(offset, soFromCurrent); 
+   SEEK_END  : Result:= Stream.Seek(offset, soFromEnd); 
+   else 
+    Result:= 0; 
+  end; 
+ except 
+  Result := 0; 
+ end; 
+end; 
+
+// should use this for pipes vs memorystream ?
+function mpg_seek_url(ahandle: Pointer; aoffset: Integer): Integer;
+var
+  Stream: TStream absolute ahandle;
+begin
+  // pipe streams are not seekable but memory and filestreams are
+  Result := 0;
+  try
+    if aoffset > 0 then
+      Result := Stream.Seek(soFromCurrent, aoffset);
+  except
+    Result := 0;
+  end;
+end;
+
+procedure mpg_close_stream(ahandle: Pointer); // not used, uos does it...
+begin
+  TObject(ahandle).Free;
 end;
 
 function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
@@ -3896,9 +3911,9 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   MPG123_ENC_SIGNED_16);
   end;
 
-// mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt, @mpg_read_stream, @mpg_seek_stream, @mpg_close_stream);
+// mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt, @mpg_read_stream, @mpg_seek_url, @mpg_close_stream);
   mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
-  @mpg_read_stream, @mpg_seek_stream, nil);
+  @mpg_read_stream, @mpg_seek_url, nil);
 
   {$IF DEFINED(debug)}
   if err = 0 then writeln('===> mpg123_replace_reader_handle => ok.') ;

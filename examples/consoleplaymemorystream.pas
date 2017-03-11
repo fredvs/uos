@@ -28,8 +28,8 @@ type
   end;
 
 var
-  res, i: integer;
-  ordir, opath, st, SoundFilename, PA_FileName, SF_FileName, MP_FileName, OF_FileName: string;
+  res: integer;
+  ordir, opath, SoundFilename, PA_FileName, SF_FileName, MP_FileName, OF_FileName: string;
   PlayerIndex1, InputIndex1 : integer;
   thememorystream : Tmemorystream;
   { TuosConsole }
@@ -64,7 +64,7 @@ var
     MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     OF_FileName := ordir + 'lib/Linux/32bit/LibOpusFile-32.so';
     {$endif}
-     SoundFilename := ordir + 'sound/test.flac';
+     SoundFilename := ordir + 'sound/test.mp3';
     {$ENDIF}
 
  {$IFDEF freebsd}
@@ -106,7 +106,7 @@ var
     
     uos_CreatePlayer(PlayerIndex1);
    
-    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,-1,-1,0,-1);
+    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,1,-1,0,-1);
   // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of encoded audio.
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
@@ -119,7 +119,7 @@ var
   if InputIndex1 > -1 then
   begin
  
-   writeln('uos_inputlength(0,0) = ' + inttostr(uos_inputlength(0,0))); 
+   writeln('uos_inputlength = ' + inttostr(uos_inputlength(0,0))); 
 
    // add a Output into device with custom parameters
      uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
@@ -158,19 +158,10 @@ var
   Application: TUOSConsole;
 begin
   Application := TUOSConsole.Create(nil);
-  Application.Title := 'Console Player from Memory';
+  Application.Title := 'Console Player from MemoryStream';
   Application.Run;
   Application.Free;
 end.
-
-{$mode objfpc}{$H+}
-
-uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
-  cthreads,
-  {$ENDIF}{$ENDIF}
-  Classes
-  { you can add units after this };
 
 begin
 end.

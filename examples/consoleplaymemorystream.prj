@@ -814,12 +814,12 @@ path=6
  /home/fred/uos/examples/uos_libsndfile.pas
  /home/fred/uos/examples/uos.pas
 line=6
- 5787
- 5084
+ 5788
+ 5085
  124
  409
  45
- 4260
+ 4261
 address=6
  0
  0
@@ -905,8 +905,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromMemoryStream
+finddtext=mpg_seek_stream
 findhistory=20
+ mpg_seek_stream
  AddFromMemoryStream
  nofree
  setlength
@@ -914,7 +915,6 @@ findhistory=20
  BufferURL
  BufferTMP
  ddFromMemoryStream
- mpg_seek_stream
      
       
  op_test_callbacks
@@ -942,7 +942,6 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,4508
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -954,8 +953,9 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,66
- 0,1109
+ 0,-1073741823
+ 0,165
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1121,8 +1121,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=929
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -1141,10 +1141,10 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,929,585
  focusedchild=0
- wsize=6
- active=0
+ wsize=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1162,8 +1162,8 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=1
- visible=1
+ active=0
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1185,7 +1185,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1231,7 +1231,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1257,7 +1257,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=513
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1307,14 +1307,14 @@ windowlayout=549
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1323,7 +1323,7 @@ windowlayout=549
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1466,9 +1466,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=581
- cx=1356
- cy=120
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1567,8 +1567,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1583,8 +1583,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [sourcefo]
@@ -1599,15 +1599,15 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
- cy=513
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1634,15 +1634,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=65
- cx=1356
- cy=513
+ y=54
+ cx=929
+ cy=428
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=findinfilefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

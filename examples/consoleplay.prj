@@ -901,91 +901,26 @@ findhistory=20
  tempSampleFormat
  tempSamplerate
 findoptions=1
-editpos=17
+editpos=4
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,4074
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,0
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-sourcefiles=17
+sourcefiles=4
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/consoleplaymemory.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/consoleplay.pas
-relpaths=17
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=4
  deviceinfos_fpGUI.pas
  uos.pas
- consoleplaymemory.pas
- define.inc
- uos_libsndfile.pas
- simpleplayer_fpGUI.pas
- uos_flat.pas
- uos_flat.pas
- define.inc
- define.inc
- uos_flat.pas
- uos.pas
- define.inc
- uos_flat.pas
- simpledrums_fpGUI.pas
- uos_flat.pas
  consoleplay.pas
-ismoduletexts=17
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ uos_flat.pas
+ismoduletexts=4
  0
  0
  0
@@ -999,24 +934,11 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=17
+order=4
  0
  1
  10
- 11
  2
- 16
- 15
- 13
- 12
- 9
- 14
- 8
- 7
- 3
- 4
- 5
- 6
 tabsize=60
 firsttab=2
 index=3
@@ -1035,7 +957,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=701
+ cy=798
  rcx=0
  rcy=0
  [mainfo]
@@ -1054,7 +976,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,1356,798
  focusedchild=0
  wsize=6
  active=1
@@ -1076,7 +998,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1098,7 +1020,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1170,7 +1092,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=583
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1379,9 +1301,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=581
+ y=661
  cx=1356
- cy=120
+ cy=137
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1481,7 +1403,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=63
+ cy=72
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1497,7 +1419,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=63
+ cy=72
  rcx=0
  rcy=0
  [sourcefo]
@@ -1513,7 +1435,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=512
+ cy=583
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1547,15 +1469,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=66
+ y=75
  cx=1356
- cy=512
+ cy=583
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

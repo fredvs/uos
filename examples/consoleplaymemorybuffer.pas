@@ -131,19 +131,10 @@ var
   Application: TUOSConsole;
 begin
   Application := TUOSConsole.Create(nil);
-  Application.Title := 'Console Player from Memory';
+  Application.Title := 'Console Player from Buffer-Memory';
   Application.Run;
   Application.Free;
 end.
-
-{$mode objfpc}{$H+}
-
-uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
-  cthreads,
-  {$ENDIF}{$ENDIF}
-  Classes
-  { you can add units after this };
 
 begin
 end.
