@@ -827,12 +827,12 @@ path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
 line=7
- 3839
+ 3835
  33
  913
  764
- 2679
- 1992
+ 2675
+ 1988
  539
 address=7
  5002412
@@ -948,9 +948,15 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=AddFromMemoryStream
+finddtext=nofree
 findhistory=20
+ nofree
  AddFromMemoryStream
+ length(tempoutmemory
+ Before Filetobuffer
+ Before Give to memory ------------------------------
+ setlength(tempoutm
+ Streamout[x].Data.posmem afte
  AddIntoFile
  audioformat
  HDFormat
@@ -964,14 +970,8 @@ findhistory=20
  fromm
  create
  timer
- fromfilein
- tempsam
- AddIntoMemory
- addintomem
- TDArFloat
- btnCloseClick
 findoptions=1
-editpos=26
+editpos=30
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -993,7 +993,11 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 7,214
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,6596
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1024,7 +1028,11 @@ bookmarks22=0
 bookmarks23=0
 bookmarks24=0
 bookmarks25=0
-sourcefiles=26
+bookmarks26=0
+bookmarks27=0
+bookmarks28=0
+bookmarks29=0
+sourcefiles=30
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1051,7 +1059,11 @@ sourcefiles=26
  /home/fred/fpgui/src/corelib/fpg_base.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos.pas
-relpaths=26
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/define.inc
+ /home/fred/uos/src/uos.pas
+ ${PROJECTDIR}/define.inc
+relpaths=30
  simpledrums_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1078,7 +1090,15 @@ relpaths=26
  fpgui/src/corelib/fpg_base.pas
  uos.pas
  uos.pas
-ismoduletexts=26
+ uos_flat.pas
+ define.inc
+ src/uos.pas
+ define.inc
+ismoduletexts=30
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1114,7 +1134,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=26
+order=30
  0
  1
  2
@@ -1131,6 +1151,10 @@ order=26
  23
  3
  24
+ 29
+ 28
+ 26
+ 27
  21
  25
  22
@@ -1143,7 +1167,7 @@ order=26
  10
 tabsize=60
 firsttab=13
-index=16
+index=15
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1294,7 +1318,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1503,9 +1527,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=581
+ y=580
  cx=1356
- cy=120
+ cy=121
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1637,7 +1661,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1673,7 +1697,7 @@ windowlayout=549
  x=0
  y=65
  cx=1356
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

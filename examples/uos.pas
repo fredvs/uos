@@ -154,7 +154,7 @@ la5 = 1760.0;
   cSAMPLE_RATE = 48000;
   cAPPLICATION = OPUS_APPLICATION_AUDIO;
   cBITRATE = 64000;
- cMAX_FRAME_SIZE = 6 * 960;
+  cMAX_FRAME_SIZE = 6 * 960;
   cMAX_PACKET_SIZE = 3 * 1276;
 {$endif}
   
@@ -337,6 +337,7 @@ type
   {$endif}
   Sections: cint32;
   Encoding: cint32;
+  bitrate: cint32;
   Length: cint32;  //  length samples total ;
   LibOpen: integer;  // -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom, 4: opus
   Ratio: integer;  //  if mpg123 or aac then ratio := 2
@@ -668,19 +669,15 @@ function AddFromMemoryBuffer(MemoryBuffer: TDArFloat; OutputIndex: cint32; Chann
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := AddFromMemoryBuffer(mybuffer,-1,2,44100,0,1024);
   
-function AddFromMemoryStream(MemoryStream: TMemoryStream; TypeAudio: cint32; OutputIndex: cint32; Channels: cint32 ;
-    SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
-  // Add a input from memory stream with custom parameters
+function AddFromMemoryStream(MemoryStream: TMemoryStream; 
+         TypeAudio: cint32; OutputIndex: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // MemoryStream : Memory stream of encoded audio.
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-  // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-  // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := uos_AddFromMemoryStream(0, mymemorystream,-1,-1,2,44100,0,1024);
-
+  // example : InputIndex1 := AddFromMemoryStream(mymemorystream,-1,-1,0,1024);
 
 {$IF DEFINED(webstream)}
 function AddFromURL(URL: PChar; OutputIndex: cint32;
@@ -4239,17 +4236,15 @@ begin
  Result:= pms^.Position;
 end;
   
-function Tuos_Player.AddFromMemoryStream(MemoryStream: TMemoryStream; TypeAudio: cint32; OutputIndex: cint32; Channels: cint32 ;
-    SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
+function Tuos_Player.AddFromMemoryStream(MemoryStream: TMemoryStream; 
+         TypeAudio: cint32; OutputIndex: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // MemoryStream : Memory stream of encoded audio.
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-  // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-  // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := AddFromMemoryStream(mymemorystream,-1,-1,2,44100,0,1024);
+  // example : InputIndex1 := AddFromMemoryStream(mymemorystream,-1,-1,0,1024);
 var
   x, err, len, len2, i : cint32;
   PipeBufferSize, totsamples : integer;
@@ -4394,7 +4389,7 @@ begin
   MPG123_ENC_SIGNED_16);
   end;
 
-err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
+  err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
   @mpg_read_stream, @mpg_seek_stream, nil);
 
   {$IF DEFINED(debug)}
@@ -4429,9 +4424,9 @@ err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
   if Err = 0 then
   begin
 
- mpg123_close(StreamIn[x].Data.HandleSt);
+  mpg123_close(StreamIn[x].Data.HandleSt);
   // Close handle and reload with forced resolution
- StreamIn[x].Data.HandleSt := mpg123_new(nil, Err);
+  StreamIn[x].Data.HandleSt := mpg123_new(nil, Err);
   
   {$IF DEFINED(debug)}
   if err = 0 then writeln('===> mpg123_open_handle => ok.') else
@@ -4450,7 +4445,7 @@ err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
   StreamIn[x].Data.channels, StreamIn[x].Data.encoding);
   end;
  
-err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
+  err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
   @mpg_read_stream, @mpg_seek_stream, nil);
 
   {$IF DEFINED(debug)}
@@ -4484,7 +4479,7 @@ err := mpg123_replace_reader_handle(StreamIn[x].Data.HandleSt,
   StreamIn[x].Data.hdformat := MPinfo.layer;
   StreamIn[x].Data.frames := MPinfo.framesize;
  
-if StreamIn[x].Data.SampleFormat = 0 then
+  if StreamIn[x].Data.SampleFormat = 0 then
   mpg123_param(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Channels,
   MPG123_FORCE_FLOAT, 0);
 
@@ -4492,9 +4487,9 @@ if StreamIn[x].Data.SampleFormat = 0 then
   
     //// This does not work, I do not know why...
   StreamIn[x].Data.Length := mpg123_length(StreamIn[x].Data.HandleSt);
-// if StreamIn[x].Data.Length < 0 then  StreamIn[x].Data.Length := 0;
+  // if StreamIn[x].Data.Length < 0 then  StreamIn[x].Data.Length := 0;
  
- {$IF DEFINED(debug)}
+  {$IF DEFINED(debug)}
    writeln('StreamIn[x].Data.Length = ' + inttostr(mpg123_length(StreamIn[x].Data.HandleSt)));
   writeln('StreamIn[x].Data.frames = ' + inttostr(StreamIn[x].Data.frames));
   writeln('END StreamIn[x].Data.samplerate = ' + inttostr(StreamIn[x].Data.samplerate));
@@ -4627,8 +4622,8 @@ if StreamIn[x].Data.SampleFormat = 0 then
   //  WriteLn((Format('op_bitrate = %d', [op_bitrate(StreamIn[x].Data.HandleOP, nil)])));  
   
   StreamIn[x].Data.Length := op_pcm_total(StreamIn[x].Data.HandleOP, nil);
- // StreamIn[x].Data.filename := FileName;
   StreamIn[x].Data.channels := op_channel_count(StreamIn[x].Data.HandleOP, nil);
+  StreamIn[x].Data.bitrate := op_bitrate(StreamIn[x].Data.HandleOP, nil);
   
   // opus use constant sample rate 48k
   StreamIn[x].Data.samplerate :=  48000 ;
@@ -6600,6 +6595,7 @@ if err > 0 then
   {$endif}
 
   {$endif}
+  sleep(1);
   RTLeventResetEvent(evPause);
   Status := 2;
   end;

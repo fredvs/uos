@@ -64,8 +64,8 @@ var
     MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     OF_FileName := ordir + 'lib/Linux/32bit/LibOpusFile-32.so';
     {$endif}
-    SoundFilename := ordir + 'sound/test.flac';
-   {$ENDIF}
+     SoundFilename := ordir + 'sound/test.opus';
+    {$ENDIF}
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
@@ -106,17 +106,15 @@ var
     
     uos_CreatePlayer(PlayerIndex1);
    
-    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,-1,-1,-1,-1,0,-1);
+    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,2,-1,0,-1);
   // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of encoded audio.
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-  // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-  // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := AddFromMemoryStream(mymemorystream,-1,-1,2,44100,0,1024);
+  // example : InputIndex1 := uos_AddFromMemoryStream(mymemorystream,-1,-1,2,44100,0,1024);
    
   if InputIndex1 > -1 then
   begin
