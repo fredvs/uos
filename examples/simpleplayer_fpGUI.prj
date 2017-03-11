@@ -1006,7 +1006,7 @@ editpos=28
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,414
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1190,8 +1190,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=49
- y=75
+ x=246
+ y=38
  cx=939
  cy=621
  rcx=0
@@ -1199,7 +1199,7 @@ windowlayout=549
  children=1
   basedock,0,0,1356,701
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1287,7 +1287,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1698,7 +1698,7 @@ windowlayout=549
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
