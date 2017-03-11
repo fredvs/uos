@@ -8,7 +8,7 @@ unit uos;
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}
 
-// For custom configuration of compiler --->  define.inc
+// For custom configuration of directive to compiler --->  define.inc
 {$I define.inc}
 
 interface
@@ -282,8 +282,8 @@ type
   MemoryStream : Tmemorystream;
   posmem : longint;
  
-   {$IF DEFINED(opus) and DEFINED(webstream) }
-  BufferURL: tbytes;
+  {$IF DEFINED(opus)}
+  BufferTMP: tbytes;
   {$endif}
   
   DSPVolumeIndex : cint32;
@@ -409,7 +409,7 @@ type
   public
   Data: Tuos_Data;
   DSP: array of Tuos_DSP;
-
+  
   {$IF DEFINED(neaac)}
   AACI: TAACInfo;
   {$endif}
@@ -672,8 +672,8 @@ function AddFromMemoryStream(MemoryStream: TMemoryStream; TypeAudio: cint32; Out
     SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of encoded audio.
-  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
@@ -3726,13 +3726,13 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   len2 := 0 ;
   
   setlength(buffadd, PipeBufferSize);
-  setlength(StreamIn[x].data.BufferURL, PipeBufferSize);
+  setlength(StreamIn[x].data.BufferTMP, PipeBufferSize);
  
   while (len2 < PipeBufferSize) and (len > 0) do
   begin
  len := StreamIn[x].InPipe.Read(buffadd[0],PipeBufferSize-len2);
   if len > 0 then  for i := 0 to len -1 do
-  StreamIn[x].data.BufferURL[i+len2] := buffadd[i] ;
+  StreamIn[x].data.BufferTMP[i+len2] := buffadd[i] ;
   len2 := len2 + len;
   end;
   
@@ -3740,7 +3740,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   WriteLn('PipeBufferSize = ' + inttostr(PipeBufferSize));
   WriteLn('InPipe.Read = ' + inttostr(len2));
   WriteLn('----------------------------------');
- // writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferURL));
+ // writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferTMP));
   {$endif}
 
   StreamIn[x].Data.HandleSt := pchar('opusurl');
@@ -3750,9 +3750,9 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
  
   StreamIn[x].Data.HandleOP :=
 
- op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferURL[0], PipeBufferSize, err); 
+ op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
  
-//  op_test_memory(StreamIn[x].data.BufferURL[0],PipeBufferSize, Err);
+//  op_test_memory(StreamIn[x].data.BufferTMP[0],PipeBufferSize, Err);
  
  {$IF DEFINED(debug)}
   WriteLn('error: op_test_*: ' + inttostr(err));
@@ -4242,8 +4242,8 @@ end;
 function Tuos_Player.AddFromMemoryStream(MemoryStream: TMemoryStream; TypeAudio: cint32; OutputIndex: cint32; Channels: cint32 ;
     SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // MemoryStream : Memory stream of encoded audio.
-  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
@@ -4298,9 +4298,8 @@ begin
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
-  //StreamIn[x].Data.MemoryStream := TMemoryStream.Create; 
-  StreamIn[x].Data.MemoryStream := MemoryStream;
-  StreamIn[x].Data.MemoryStream.Position:= 0;
+  StreamIn[x].data.MemoryStream := MemoryStream;
+  StreamIn[x].data.MemoryStream.Position:= 0;
 
  {$IF DEFINED(debug)}
   WriteLn('Length(StreamIn) = '+ inttostr(x));  
@@ -4509,7 +4508,7 @@ if StreamIn[x].Data.SampleFormat = 0 then
   end;
   {$endif}
   
-  {$IF DEFINED(opus)} // Not working yet...
+  {$IF DEFINED(opus)} 
   if (TypeAudio = 2) and (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
   begin
   Err := -1;
@@ -4519,38 +4518,43 @@ if StreamIn[x].Data.SampleFormat = 0 then
  {$endif}  
   
   StreamIn[x].Data.HandleSt := pchar('opus');
- // StreamIn[x].Data.HandleOP := op_test_file(PChar(FileName), Err);
-
+ 
  if FramesCount= -1 then
   totsamples := 4096  else
   totsamples := FramesCount;
   
-  PipeBufferSize := totsamples * sizeOf(Single); // * 2
-  
+// PipeBufferSize := totsamples * sizeOf(Single);   // * 2
+ 
+  PipeBufferSize := StreamIn[x].Data.MemoryStream.size;
+ 
   {$IF DEFINED(debug)}
   WriteLn('totsamples: ' + inttostr(totsamples));
   WriteLn('PipeBufferSize: ' + inttostr(PipeBufferSize));
   {$endif}
 
-len := 1 ;
+  len := 1 ;
   len2 := 0 ;
   
   setlength(buffadd, PipeBufferSize);
-  setlength(StreamIn[x].data.BufferURL, PipeBufferSize);
+  setlength(StreamIn[x].data.BufferTMP, PipeBufferSize);
  
   while (len2 < PipeBufferSize) and (len > 0) do
   begin
  len := StreamIn[x].Data.MemoryStream.Read(buffadd[0],PipeBufferSize-len2);
+
   if len > 0 then  for i := 0 to len -1 do
-  StreamIn[x].data.BufferURL[i+len2] := buffadd[i] ;
+  StreamIn[x].data.BufferTMP[i+len2] := buffadd[i] ;
   len2 := len2 + len;
   end;
+  
+  // memory stream not needed anymore ---> converted into buffer
+  freeandnil(StreamIn[x].Data.MemoryStream);
   
   {$IF DEFINED(debug)}
   WriteLn('PipeBufferSize = ' + inttostr(PipeBufferSize));
   WriteLn('Data.MemoryStream.Read = ' + inttostr(len2));
   WriteLn('----------------------------------');
-  //writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferURL));
+  //writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferTMP));
   {$endif}
 
   StreamIn[x].Data.HandleSt := pchar('opusstream');
@@ -4560,9 +4564,13 @@ len := 1 ;
   {$endif}
  
  StreamIn[x].Data.HandleOP :=
-
- op_test_callbacks(StreamIn[x].Data.MemoryStream, uos_callbacksms, StreamIn[x].data.BufferURL[0], PipeBufferSize, err); 
+    
+    // Can not make work...
+// op_test_callbacks(StreamIn[x].data.MemoryStream, uos_callbacksms, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
  
+   // this is a memorystream converted into a buffer, it works...
+  op_test_memory(StreamIn[x].data.BufferTMP[0],PipeBufferSize, Err);
+
  {$IF DEFINED(debug)}
   WriteLn('op_test_file error = '+ inttostr(Err));  
  {$endif} 

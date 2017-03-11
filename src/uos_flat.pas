@@ -10,7 +10,7 @@ unit uos_flat;
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}
 
-// For custom configuration of compiler --->  define.inc
+// For custom configuration of directive to compiler --->  define.inc
 {$I define.inc}
 
 interface
@@ -244,8 +244,8 @@ function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStrea
     SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of encoded audio.
-  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
@@ -1170,8 +1170,8 @@ end;
 function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; TypeAudio: cint32; OutputIndex: cint32; Channels: cint32 ;
     SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // MemoryStream : Memory stream of encoded audio.
-  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
@@ -1722,14 +1722,18 @@ procedure uos_Free();
 var
 x : integer;
 begin
-{
+
 if assigned(uosPlayers) then
 if length(uosPlayers) > 0 then
  for x := 0 to length(uosPlayers) -1 do
   begin
-  if assigned(uosPlayers[x]) then uosPlayers[x].destroy;
+  if assigned(uosPlayers[x]) then
+  begin
+   uosPlayers[x].NoFree := false;
+   uosPlayers[x].Stop;
   end;
-}
+  end;
+sleep(80);  
 uos.uos_free();
 end;
 

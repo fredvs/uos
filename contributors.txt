@@ -2,7 +2,7 @@ Here are the great contributors of uos:
 
 Andrew Haines : All audio web streaming of uos => he did it.
 
-BigChimp : He is the one who converts me to oop. He never stops to help.
+BigChimp : He is the one who converts me to oop. He never stops to help people.
 
 Blaazen : He knows digital audio and explains how it works. He is the Professor Audio.
 
@@ -20,7 +20,7 @@ José Mejuto : He gives the right way to record and save the data to file.
 
 Phoenix : He decrypts sf_open_virtual to enable TMemoryStream as input.
 
-And many other in fpc, fpGUI, MSE, Lazarus, CodeTyphon forum.
+And many others from fpc, fpGUI, MSE, Lazarus, CodeTyphon forum.
 
 Fred van Stappen : fiens@hotmail.com
 

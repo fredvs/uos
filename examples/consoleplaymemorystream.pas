@@ -91,7 +91,7 @@ var
 
    // Load the libraries
    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
-   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), Pchar(MP_FileName), nil, nil, nil) ;
+   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), Pchar(MP_FileName), nil, nil, Pchar(OF_FileName)) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 
@@ -109,8 +109,8 @@ var
     InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,-1,-1,-1,-1,0,-1);
   // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of encoded audio.
-  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   // SampleRate : delault : -1 (44100)
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
@@ -124,7 +124,8 @@ var
    writeln('uos_inputlength(0,0) = ' + inttostr(uos_inputlength(0,0))); 
 
    // add a Output into device with custom parameters
-   uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0,-1);
+     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), 0, -1);
 
   /////// everything is ready, here we are, lets play it...
 

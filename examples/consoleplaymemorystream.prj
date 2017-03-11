@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplaymemorystream.prj
-findinfiledialog=41
+findinfiledialog=42
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,9 @@ findinfiledialog=41
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=TMemoryStream
- history=3
+ value=ProcessMessages
+ history=4
+  ProcessMessages
   TMemoryStream
   samplerate
   
@@ -70,14 +71,15 @@ finddialog=8
  y=209
  cx=331
  cy=116
-replacedialog=29
+replacedialog=30
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=  
- history=16
+ value=BufferTMP
+ history=17
+  BufferTMP
     
   uosPlayers
   uosInit.uosDeviceCount
@@ -187,7 +189,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -208,7 +210,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -510,19 +512,19 @@ modulefiles=1
 befcommandon=0
 makeoptionson=8
  0
- 63
- 63
- 63
+ 255
+ 255
+ 255
  2
- 32
- 48
- 63
+ 224
+ 240
+ 255
 compilerusedon=29
- 4095
+ 3903
  0
  0
- 0
- 0
+ 64
+ 128
  0
  0
  0
@@ -548,16 +550,16 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4095
+ 3903
  0
  0
  0
  0
- 0
+ 192
 exeusedon=14
- 4095
+ 3903
  0
- 0
+ 192
  0
  0
  0
@@ -813,13 +815,13 @@ path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
 line=7
- 5729
- 5030
+ 5737
+ 5038
  126
  407
  45
  4221
- 4458
+ 4457
 address=7
  0
  0
@@ -909,12 +911,17 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=    
+finddtext=BufferTMP
 findhistory=20
+ BufferTMP
+ BufferURL
+ ddFromMemoryStream
+ ddFromurl
+ mpg_seek_stream
+ AddFromMemoryStream
      
       
  op_test_callbacks
- AddFromMemoryStream
  addfromfil
  mpg123_length
  coff_t
@@ -926,13 +933,8 @@ findhistory=20
  Before sf_read
  m_get_filelen
  PSF_VIRTUAL
- uos_inputgetlength
- TSF_VIRTUAL
- tm_seek
- End give to output device
- WriteBuffer
 findoptions=1
-editpos=19
+editpos=22
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -942,7 +944,10 @@ editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 11,12
+ 3,98
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -971,7 +976,10 @@ bookmarks15=0
 bookmarks16=0
 bookmarks17=0
 bookmarks18=0
-sourcefiles=19
+bookmarks19=0
+bookmarks20=0
+bookmarks21=0
+sourcefiles=22
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
@@ -991,7 +999,10 @@ sourcefiles=19
  ${PROJECTDIR}/uos_opusfile.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
-relpaths=19
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_opusfile.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+relpaths=22
  deviceinfos_fpGUI.pas
  uos.pas
  define.inc
@@ -1011,7 +1022,13 @@ relpaths=19
  uos_opusfile.pas
  uos.pas
  define.inc
-ismoduletexts=19
+ uos.pas
+ uos_opusfile.pas
+ simpleplayer_fpGUI.pas
+ismoduletexts=22
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1040,7 +1057,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=19
+order=22
  0
  1
  2
@@ -1053,16 +1070,19 @@ order=19
  15
  11
  10
+ 20
  13
+ 21
  14
  9
+ 19
  18
  16
  17
  12
 tabsize=60
-firsttab=10
-index=14
+firsttab=11
+index=16
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1077,8 +1097,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=929
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1090,14 +1110,14 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=149
- y=36
+ x=332
+ y=119
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,929,604
  focusedchild=0
  wsize=0
  active=1
@@ -1111,8 +1131,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=674
+ y=235
  cx=497
  cy=314
  rcx=0
@@ -1187,7 +1207,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1213,7 +1233,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=441
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1223,8 +1243,8 @@ windowlayout=549
  width1=43
  sortdescend1=0
  sorted=0
- col=1
- row=7
+ col=0
+ row=2
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1422,9 +1442,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=580
- cx=1356
- cy=121
+ y=500
+ cx=929
+ cy=104
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1523,8 +1543,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1539,8 +1559,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1555,8 +1575,8 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
- cy=512
+ cx=767
+ cy=441
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1590,15 +1610,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=65
- cx=1356
- cy=512
+ y=56
+ cx=929
+ cy=441
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

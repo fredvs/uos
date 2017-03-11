@@ -833,7 +833,7 @@ line=7
  764
  2679
  1992
- 536
+ 539
 address=7
  5002412
  0
@@ -975,7 +975,6 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 32,242
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -994,6 +993,7 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 7,214
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1110,7 +1110,7 @@ modules=1
 moduleoptions=1
  0
 visiblemodules=1
- -1
+ 0
 nomenumodules=1
  0
 [sourcefo.files_tab]
@@ -1143,7 +1143,7 @@ order=26
  10
 tabsize=60
 firsttab=13
-index=14
+index=16
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1171,9 +1171,9 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=156
- y=54
- cx=1132
+ x=231
+ y=53
+ cx=939
  cy=621
  rcx=0
  rcy=0
@@ -1294,7 +1294,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1305,7 +1305,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=10
+ row=1
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1605,7 +1605,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=63
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1621,7 +1621,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=63
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1637,7 +1637,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1671,9 +1671,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=66
+ y=65
  cx=1356
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
@@ -1694,7 +1694,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
 [targetconsole]
 finddtext=Length(BufferplugFL) =
 findhistory=4
