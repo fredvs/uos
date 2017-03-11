@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplaymemorystream.prj
-findinfiledialog=42
+findinfiledialog=43
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,9 @@ findinfiledialog=42
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=ProcessMessages
- history=4
+ value=mpg_seek_stream
+ history=5
+  mpg_seek_stream
   ProcessMessages
   TMemoryStream
   samplerate
@@ -813,12 +814,12 @@ path=6
  /home/fred/uos/examples/uos_libsndfile.pas
  /home/fred/uos/examples/uos.pas
 line=6
- 5769
- 5066
+ 5787
+ 5084
  124
  409
  45
- 4240
+ 4260
 address=6
  0
  0
@@ -904,11 +905,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=nofree
+finddtext=AddFromMemoryStream
 findhistory=20
+ AddFromMemoryStream
  nofree
  setlength
- AddFromMemoryStream
  ddFromurl
  BufferURL
  BufferTMP
@@ -927,7 +928,7 @@ findhistory=20
  sf_vio_read
  Before sf_read
 findoptions=1
-editpos=26
+editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -941,7 +942,7 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,334
+ 0,4508
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -953,7 +954,8 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,130
+ 0,66
+ 0,1109
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -980,7 +982,8 @@ bookmarks22=0
 bookmarks23=0
 bookmarks24=0
 bookmarks25=0
-sourcefiles=26
+bookmarks26=0
+sourcefiles=27
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
@@ -1007,7 +1010,8 @@ sourcefiles=26
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/consoleplaymemorystream.pas
-relpaths=26
+ ${PROJECTDIR}/uos.pas
+relpaths=27
  deviceinfos_fpGUI.pas
  uos.pas
  define.inc
@@ -1034,7 +1038,9 @@ relpaths=26
  uos_flat.pas
  uos_mpg123.pas
  consoleplaymemorystream.pas
-ismoduletexts=26
+ uos.pas
+ismoduletexts=27
+ 0
  0
  0
  0
@@ -1070,7 +1076,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=26
+order=27
  0
  1
  2
@@ -1087,6 +1093,7 @@ order=26
  23
  13
  25
+ 26
  24
  22
  21
@@ -1224,7 +1231,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1635,7 +1642,7 @@ windowlayout=549
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

@@ -1074,20 +1074,23 @@ begin
   Result := Stream.Read(AData^, ACount);
 end;
 
-function mpg_seek_stream(ahandle: Pointer; aoffset: Integer): Integer;
-var
-  Stream: TStream absolute ahandle;
-begin
-  // pipe streams are not seekable but memory and filestreams are
-  Result := 0;
-  try
-  if aoffset > 0 then
-  Result := Stream.Seek(soFromCurrent, aoffset);
-
-  except
-  Result := 0;
-  end;
-end;
+function mpg_seek_stream(ahandle: Pointer; offset: Integer; 
+ whence: Integer): Integer; cdecl; 
+var 
+ Stream: TStream absolute ahandle; 
+begin 
+ try 
+  case whence of 
+   SEEK_SET  : Result:= Stream.Seek(offset, soFromBeginning); 
+   SEEK_CUR  : Result:= Stream.Seek(offset, soFromCurrent); 
+   SEEK_END  : Result:= Stream.Seek(offset, soFromEnd); 
+   else 
+    Result:= 0; 
+  end; 
+ except 
+  Result := 0; 
+ end; 
+end; 
 
 procedure mpg_close_stream(ahandle: Pointer); // not used, uos does it...
 begin
@@ -4485,10 +4488,8 @@ begin
 
   StreamIn[x].Data.LibOpen := 1;
   
-    //// This does not work, I do not know why...
   StreamIn[x].Data.Length := mpg123_length(StreamIn[x].Data.HandleSt);
-  // if StreamIn[x].Data.Length < 0 then  StreamIn[x].Data.Length := 0;
- 
+   
   {$IF DEFINED(debug)}
    writeln('StreamIn[x].Data.Length = ' + inttostr(mpg123_length(StreamIn[x].Data.HandleSt)));
   writeln('StreamIn[x].Data.frames = ' + inttostr(StreamIn[x].Data.frames));
