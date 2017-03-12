@@ -7,11 +7,15 @@ All methods have a "universal procedurial" syntax.
 If you prefer to use uos directly, SimplePlayer_noflat shows how to do.
 This way all methods can be used as oop. (java flavour).
 
-Warning: For Windows, to read Opus files, you should copy:
+Warning: to play Opus files, you should:
 
-/uos/examples/lib/Windows/32bit/libopus-0.dll
+For Windows:
+copy /uos/examples/lib/Windows/32bit/libopus-0.dll
+and paste into your windows/system directory.
 
-into your windows/system directory.
+For Linux/FreeBSD:
+copy /uos/examples/lib/Linux-or-FreeBSD/64it/libopus.so
+and paste into /usr/local/lib directory
 
 Fre;D
 

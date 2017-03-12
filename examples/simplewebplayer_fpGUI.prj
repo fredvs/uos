@@ -19,23 +19,28 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simplewebplayer_fpGUI.prj
-findinfiledialog=34
+findinfiledialog=40
  [findinfileadialogfo.subdirs]
+ value=0
+ [findinfileadialogfo.incurrentfile]
  value=0
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
  value=0
+ [findinfileadialogfo.inprojectdir]
+ value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=1
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
- filenames=0
+ filenames=1
+  /home/fred/uos/examples/
  filecolwidth=0
  x=0
  y=0
@@ -45,8 +50,9 @@ findinfiledialog=34
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=
- history=1
+ value=libopus-
+ history=2
+  libopus-
   
  [findinfileadialogfo]
  stackedunder=
@@ -818,7 +824,7 @@ findhistory=20
  btnCloseClick
  close
 findoptions=1
-editpos=19
+editpos=23
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -832,12 +838,16 @@ editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1251
+ 15,1246
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 55,1188
+ 0,1359
+ 0,246
+ 0,76
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -857,7 +867,11 @@ bookmarks15=0
 bookmarks16=0
 bookmarks17=0
 bookmarks18=0
-sourcefiles=19
+bookmarks19=0
+bookmarks20=0
+bookmarks21=0
+bookmarks22=0
+sourcefiles=23
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
@@ -877,7 +891,11 @@ sourcefiles=19
  ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
-relpaths=19
+ ${PROJECTDIR}/simplewebserver_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/main_sp.pas
+ ${PROJECTDIR}/SimplePlayer_MSE.pas
+relpaths=23
  simplewebplayer_fpGUI.pas
  uos.pas
  uos_portaudio.pas
@@ -897,7 +915,15 @@ relpaths=19
  simpleplayer_fpGUI_noflat.pas
  uos_flat.pas
  define.inc
-ismoduletexts=19
+ simplewebserver_fpGUI.pas
+ simpleplayer_fpGUI.pas
+ main_sp.pas
+ SimplePlayer_MSE.pas
+ismoduletexts=23
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -922,9 +948,13 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=19
+order=23
  0
  13
+ 19
+ 20
+ 21
+ 22
  18
  16
  15
@@ -944,7 +974,7 @@ order=19
  8
 tabsize=60
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1069,7 +1099,7 @@ windowlayout=530
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

@@ -1130,7 +1130,8 @@ end;
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
     FilenameEdit7.FileName := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
     FilenameEdit8.FileName := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
-    FilenameEdit31.FileName := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
+    
+    // FilenameEdit31.FileName := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
     FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
     FilenameEdit6.FileName := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
     
@@ -1160,7 +1161,7 @@ end;
     FilenameEdit6.FileName := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
    
     ShoutFileName :=  ordir + 'lib/Linux/64bit/LibShout-64.so';
-    OpusFileName :=  ordir + 'lib/Linux/64bit/LibOpus-64.so';
+    OpusFileName :=  ordir + 'lib/Linux/64bit/libopus.so';
 {$else}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
@@ -1185,7 +1186,7 @@ end;
     FilenameEdit31.FileName := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
     FilenameEdit6.FileName := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
     ShoutFileName :=  ordir + 'lib/FreeBSD/64bit/libshout-64.so';
-    OpusFileName :=  ordir + 'lib/FreeBSD/64bit/libopus-64.so';
+    OpusFileName :=  ordir + 'lib/FreeBSD/64bit/libopus.so';
     {$else}
     FilenameEdit1.FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';

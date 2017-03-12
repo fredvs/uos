@@ -69,7 +69,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 17170303 ;
+  uos_version : cint32 = 17170312 ;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -82,7 +82,7 @@ const
   BS2B_DEFAULT_CLEVEL = (CInt32(700)) or ((CInt32(45)) shl 16);
   BS2B_CMOY_CLEVEL =(CInt32(700)) or ((CInt32(60)) shl 16);
   BS2B_JMEIER_CLEVEL = (CInt32(650)) or ((CInt32(95)) shl 16);
-  {$endif}
+{$endif}
   
 {$IF DEFINED(synthesizer)}
 const // musical note ==> frequency in hertz
@@ -689,10 +689,6 @@ function AddFromURL(URL: PChar; OutputIndex: cint32;
   // FramesCount : default : -1 (4096)
   // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
   // example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1);
-
-{$IF DEFINED(opus)}
-{$ENDIF}
-
 {$ENDIF}
 
 function AddPlugin(PlugName: Pchar; SampleRate: cint32;
@@ -1467,7 +1463,6 @@ begin
   Status := 0;
  end;; 
 end;
-
 
 procedure Tuos_Player.RePlay();  // Resume Playing after Pause
 begin

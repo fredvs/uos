@@ -1296,7 +1296,7 @@ end;
     FilenameEdit7.FileName := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
     FilenameEdit8.FileName := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
     
-   // To read opus file you should copy /uos/examples/lib/Windows/32bit/libopus-0.dll into your windows/system directory. 
+   // To play opus file you should copy \uos\examples\lib\Windows\32bit\libopus-0.dll into your windows/system directory. 
    // FilenameEdit31.FileName := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
     
     FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
@@ -1352,9 +1352,11 @@ end;
     FilenameEdit5.FileName := '';
     FilenameEdit7.FileName := ordir + 'lib/FreeBSD/64bit/libmp4ff-64.so';
     FilenameEdit8.FileName := ordir + 'lib/FreeBSD/64bit/libfaad2-64.so';
-    FilenameEdit31.FileName := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
-    FilenameEdit6.FileName := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
     
+    // To play opus file you should copy uos/examples/lib/FreeBSD/64bit/libopus.so and paste into /usr/local/lib.    
+    FilenameEdit31.FileName := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
+    
+    FilenameEdit6.FileName := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
     {$else}
     FilenameEdit1.FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
