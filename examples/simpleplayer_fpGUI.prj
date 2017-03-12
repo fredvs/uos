@@ -1178,7 +1178,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=701
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1197,7 +1197,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,1356,604
  focusedchild=0
  wsize=0
  active=1
@@ -1313,7 +1313,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=513
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1522,9 +1522,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=581
+ y=501
  cx=1356
- cy=120
+ cy=103
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1624,7 +1624,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1640,7 +1640,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1656,7 +1656,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=513
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1690,9 +1690,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=65
+ y=56
  cx=1356
- cy=513
+ cy=442
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

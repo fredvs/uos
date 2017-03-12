@@ -1249,7 +1249,7 @@ begin
 end; 
 
 // should use this for pipes vs memorystream ?
-function mpg_seek_url(ahandle: Pointer; aoffset: Integer): Integer;
+function mpg_seek_url(ahandle: Pointer; aoffset: Integer): Integer; cdecl; 
 var
   Stream: TStream absolute ahandle;
 begin
@@ -1257,7 +1257,7 @@ begin
   Result := 0;
   try
     if aoffset > 0 then
-      Result := Stream.Seek(soFromCurrent, aoffset);
+      Result := Stream.Seek(aoffset, soFromCurrent);
   except
     Result := 0;
   end;
