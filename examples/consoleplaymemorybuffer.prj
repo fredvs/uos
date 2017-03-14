@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplaymemorybuffer.prj
-findinfiledialog=41
+findinfiledialog=42
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,9 @@ findinfiledialog=41
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=TMemoryStream
- history=3
+ value=StreamIn[x].Data.SampleRate =
+ history=4
+  StreamIn[x].Data.SampleRate =
   TMemoryStream
   samplerate
   
@@ -512,7 +513,7 @@ makeoptionson=8
  63
  63
  63
- 2
+ 3
  32
  48
  63
@@ -804,15 +805,15 @@ on=5
 path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/consoleplaymemorybuffer.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos_libsndfile.pas
+ /home/fred/uos/examples/consoleplaymemorybuffer.pas
 line=5
- 5703
- 5019
- 101
+ 5712
+ 5028
  406
  41
+ 112
 address=5
  0
  0
@@ -894,8 +895,16 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=WriteBuffer
+finddtext=filetob
 findhistory=20
+ filetob
+ AddFromMemoryBuffer
+ AddFromMemoryBuffer Before all.
+ Filetobuffer
+ File2Buffer
+ filetobu
+ uos_File2Buffer
+ uos_AddIntoDevOut
  WriteBuffer
  uos_File2File
  rat :=
@@ -904,20 +913,12 @@ findhistory=20
  AddFromMemoryStream
  soundt
  samplerate
- Filetobuffer
  AddFromMemory
  file2
  fileto
  file2b
- addfrommem
- FramesCount
- filetobuff
- tempoutmemory
- addfromme
- uosInit.uosPlayers
- uosDeviceCount
 findoptions=1
-editpos=15
+editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -925,13 +926,17 @@ editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,19
  0,-1073741823
  0,-1073741823
- 0,133
  0,-1073741823
  0,-1073741823
- 0,0
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,10
+ 0,-1073741823
+ 0,107
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -948,7 +953,11 @@ bookmarks11=0
 bookmarks12=0
 bookmarks13=0
 bookmarks14=0
-sourcefiles=15
+bookmarks15=0
+bookmarks16=0
+bookmarks17=0
+bookmarks18=0
+sourcefiles=19
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
@@ -964,7 +973,11 @@ sourcefiles=15
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_libsndfile.pas
-relpaths=15
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=19
  deviceinfos_fpGUI.pas
  uos.pas
  define.inc
@@ -980,7 +993,15 @@ relpaths=15
  uos_dsp_noiseremoval.pas
  uos_flat.pas
  uos_libsndfile.pas
-ismoduletexts=15
+ uos.pas
+ define.inc
+ consoleplaymemorybuffer.pas
+ uos_flat.pas
+ismoduletexts=19
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1005,7 +1026,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=15
+order=19
  0
  1
  2
@@ -1020,10 +1041,14 @@ order=15
  9
  12
  13
+ 15
+ 17
+ 18
+ 16
  10
 tabsize=60
-firsttab=7
-index=14
+firsttab=11
+index=15
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1038,8 +1063,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=585
+ cx=1356
+ cy=798
  rcx=0
  rcy=0
  [mainfo]
@@ -1051,17 +1076,17 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=197
+ y=42
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,1356,798
  focusedchild=0
- wsize=0
- active=1
+ wsize=6
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1079,8 +1104,8 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
- visible=0
+ active=1
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1102,7 +1127,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1148,7 +1173,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=confideufo
  parent=
  mdistate=0
  nx=0
@@ -1174,7 +1199,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=428
+ cy=525
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1184,7 +1209,7 @@ windowlayout=549
  width1=43
  sortdescend1=0
  sorted=0
- col=0
+ col=1
  row=1
  rowheight=17
  [stackfo]
@@ -1224,14 +1249,14 @@ windowlayout=549
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1240,7 +1265,7 @@ windowlayout=549
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1383,9 +1408,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=485
- cx=929
- cy=100
+ y=588
+ cx=1356
+ cy=210
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1484,8 +1509,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=57
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1500,8 +1525,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=57
  rcx=0
  rcy=0
  [sourcefo]
@@ -1516,15 +1541,15 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=767
- cy=428
+ cx=1194
+ cy=525
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0
@@ -1535,25 +1560,6 @@ windowlayout=549
  y=113
  cx=352
  cy=277
- rcx=0
- rcy=0
- wsize=0
- active=0
- visible=0
- [_mse_guitemplatesmo_mse_]
- splitdir=0
- useroptions=805322875
- stackedunder=
- parent=
- mdistate=0
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=99
- y=135
- cx=493
- cy=132
  rcx=0
  rcy=0
  wsize=0
@@ -1570,11 +1576,30 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=54
- cx=929
- cy=428
+ y=60
+ cx=1356
+ cy=525
  rcx=0
  rcy=0
+ [_mse_guitemplatesmo_mse_]
+ splitdir=0
+ useroptions=805322875
+ stackedunder=mainfo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=99
+ y=135
+ cx=493
+ cy=132
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=0
 [targetconsole]
 finddtext=Input from memory
 findhistory=1

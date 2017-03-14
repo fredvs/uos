@@ -137,6 +137,7 @@ la5 = 1760.0;
   type
   TuosF_Data = Tuos_Data;
   TuosF_FFT = Tuos_FFT ;
+  TuosF_BufferInfos = Tuos_BufferInfos;
 
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   const
@@ -229,17 +230,16 @@ function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint
   // FramesCount : default : -1 (65536)
   //  result : Input Index in array  -1 = error
   // example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);
-  
-function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; OutputIndex: cint32; Channels: cint32 ;
-    SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
+
+function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; Bufferinfos: Tuos_bufferinfos;
+ OutputIndex: cint32; FramesCount: cint32): cint32;
   // Add a input from memory buffer with custom parameters
-  // FileName : filename of audio file
-  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')  // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)  // SampleRate : delault : -1 (44100)
-  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-  // FramesCount : default : -1 (4096)
+  // MemoryBuffer : the buffer
+  // Bufferinfos : infos of the buffer
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')  // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)  // SampleRate : delault : -1 (44100)  // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := uos_AddFromMemoryBuffer(0, mybuffer,-1,2,44100,0,1024);
-  
+  // example : InputIndex1 := AddFromMemoryBuffer(mybuffer, buffinfos,-1,1024); 
+
 function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; 
          TypeAudio: cint32; OutputIndex: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // MemoryStream : Memory stream of encoded audio.
@@ -660,12 +660,14 @@ procedure uos_Pause(PlayerIndex: cint32);  // Pause playing
 
 function uos_GetVersion() : cint32 ;  // version of uos
 
-function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; outmemory: TDArFloat ): TDArFloat;
+function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos ): TDArFloat;
   // Create a memory buffer of a audio file.
-  // FileName : filename of audio file  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // FileName : filename of audio file  
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // Outmemory : the buffer to store data.
+  // bufferinfos : the infos of the buffer.
   //  result :  The memory buffer
-  // example : buffmem := uos_File2Buffer(edit5.Text,0,buffmem);
+  // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos);
 
 procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32 ; typeout: cint32 );
   // Create a audio file from a audio file.
@@ -1146,22 +1148,19 @@ begin
   Result := uosPlayers[PlayerIndex].AddFromFile(Filename, -1, -1, -1);
 end;
 
-function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; OutputIndex: cint32; Channels: cint32 ;
-    SampleRate: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
+function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; Bufferinfos: Tuos_bufferinfos;
+ OutputIndex: cint32; FramesCount: cint32): cint32;
   // Add a input from memory buffer with custom parameters
-  // FileName : filename of audio file
-  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')  // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)  // SampleRate : delault : -1 (44100)
-  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-  // FramesCount : default : -1 (4096)
+  // MemoryBuffer : the buffer
+  // Bufferinfos : infos of the buffer
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')  // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)  // SampleRate : delault : -1 (44100)  // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := uos_AddFromMemoryBuffer(0, mybuffer,-1,2,44100,0,1024);
-
+  // example : InputIndex1 := AddFromMemoryBuffer(mybuffer, buffinfos,-1,1024);
 begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-  Result := uosPlayers[PlayerIndex].AddFromMemoryBuffer(MemoryBuffer, OutputIndex, Channels,
-   SampleRate, SampleFormat, FramesCount);
+  Result := uosPlayers[PlayerIndex].AddFromMemoryBuffer(MemoryBuffer, Bufferinfos, OutputIndex, FramesCount);
 end;
 
 function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; 
@@ -1560,15 +1559,17 @@ begin
  uosPlayers[PlayerIndex].StreamOut[OutIndex].LoopProc := Proc;
 end;
 
-function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; outmemory: TDArFloat ): TDArFloat;
+function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos ): TDArFloat;
   // Create a memory buffer of a audio file.
-  // FileName : filename of audio file  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // FileName : filename of audio file  
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // Outmemory : the buffer to store data.
+  // bufferinfos : the infos of the buffer.
   //  result :  The memory buffer
-  // example : buffmem := Filetobuffer(edit5.Text,0,buffmem);
+  // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos);
  begin
   ifflat := true;
-result := uos.uos_File2Buffer(Filename, SampleFormat, outmemory)  ;
+result := uos.uos_File2Buffer(Filename, SampleFormat, outmemory, bufferinfos)  ;
   end;
   
 procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32 ; typeout: cint32 );

@@ -64,7 +64,7 @@ var
     MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     OF_FileName := ordir + 'lib/Linux/32bit/LibOpusFile-32.so';
     {$endif}
-     SoundFilename := ordir + 'sound/test.mp3';
+     SoundFilename := ordir + 'sound/test.flac';
     {$ENDIF}
 
  {$IFDEF freebsd}
@@ -106,7 +106,7 @@ var
     
     uos_CreatePlayer(PlayerIndex1);
    
-    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,1,-1,0,-1);
+    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,0,-1,0,-1);
   // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of encoded audio.
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
@@ -127,7 +127,7 @@ var
 
   /////// everything is ready, here we are, lets play it...
 
-   uos_Play(PlayerIndex1);
+  uos_Play(PlayerIndex1);
    
   sleep(2000);
   
@@ -143,7 +143,7 @@ var
   writeln('Press a key to exit...');
   readln;
   Terminate;
-  //  thememorystream.free;
+  uos_FreePlayer(PlayerIndex1);
   sleep(50);
   uos_free();
   end;

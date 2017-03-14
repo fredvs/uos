@@ -30,8 +30,9 @@ type
 var
   res, i: integer;
   ordir, opath, st, SoundFilename, PA_FileName, SF_FileName: string;
-  PlayerIndex1 : integer;
+  PlayerIndex1, input1 : integer;
   thebuffer : array of cfloat;
+  thebufferinfos : TuosF_BufferInfos;
 
   { TuosConsole }
 
@@ -91,22 +92,24 @@ var
        PlayerIndex1 := 0;
 
     // Create a memory buffer from a audio file
-   thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebuffer);
-
+    thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebuffer, thebufferinfos);
+  
     // You may store that buffer into ressource...
     // ... and when you get the buffer from bressource....
-    
+   
     uos_CreatePlayer(PlayerIndex1);
-
-   // Add a input from memory buffer with custom parameters
-   uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,-1,-1,-1,0,1024);
+    
+    // Add a input from memory buffer with custom parameters
+  input1 := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024);
 
    // add a Output into device with default parameters
-   uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0, 1024);
-
+  uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,input1), 
+  uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024);
+ 
     /////// everything is ready, here we are, lets play it...
 
-   uos_Play(PlayerIndex1);
+ uos_Play(PlayerIndex1);
+ 
     sleep(2000);
     end;
 

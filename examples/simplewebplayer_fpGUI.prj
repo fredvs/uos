@@ -69,14 +69,15 @@ finddialog=8
  y=205
  cx=298
  cy=116
-replacedialog=20
+replacedialog=21
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=InputIndex1
- history=7
+ value=BufferInfos.
+ history=8
+  BufferInfos.
   InputIndex1
   OutputIndex1
   PluginIndex1
@@ -86,8 +87,8 @@ replacedialog=20
   
  [replacedialogfo]
  stackedunder=
- x=260
- y=216
+ x=437
+ y=377
  cx=437
  cy=171
 options=114
@@ -722,13 +723,27 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=0
-path=0
-line=0
-address=0
-addbkpt=0
-ignore=0
-condition=0
+on=2
+ 0
+ 0
+path=2
+ /home/fred/uos/examples/uos.pas
+ /home/fred/uos/examples/uos.pas
+line=2
+ 1014
+ 4097
+address=2
+ 0
+ 0
+addbkpt=2
+ 0
+ 0
+ignore=2
+ 0
+ 0
+condition=2
+ 
+ 
 panels=1
  panel1
 units=
@@ -801,10 +816,21 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=addintomemory
+finddtext=theplayer.StreamIn[in1].Data.
 findhistory=20
- addintomemory
+ theplayer.StreamIn[in1].Data.
  Filetobuffer
+ addfromm
+ uos_File2Buffer
+ addfromfilei
+ bufferinfos
+ AddFromfile
+ AddFromMemoryBuffer
+ Addinto
+ AddIntoDevOut
+ file2b
+ uos_AddFromMemoryBuffer
+ addintomemory
  addfromfilein
  addfromfile
  addintofile
@@ -812,19 +838,8 @@ findhistory=20
  channel
  getch
  memory
- InputLength
- uos_InputLength
- AddIntoMemory
- addintome
- filetobu
- writewa
- ChangePlugSet
- urlinit
- addfromur
- btnCloseClick
- close
 findoptions=1
-editpos=23
+editpos=24
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -838,16 +853,17 @@ editpos=23
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 15,1246
+ 0,4102
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 55,1188
- 0,1359
- 0,246
- 0,76
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,239
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -871,7 +887,8 @@ bookmarks19=0
 bookmarks20=0
 bookmarks21=0
 bookmarks22=0
-sourcefiles=23
+bookmarks23=0
+sourcefiles=24
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
@@ -895,7 +912,8 @@ sourcefiles=23
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/SimplePlayer_MSE.pas
-relpaths=23
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=24
  simplewebplayer_fpGUI.pas
  uos.pas
  uos_portaudio.pas
@@ -919,7 +937,9 @@ relpaths=23
  simpleplayer_fpGUI.pas
  main_sp.pas
  SimplePlayer_MSE.pas
-ismoduletexts=23
+ uos_flat.pas
+ismoduletexts=24
+ 0
  0
  0
  0
@@ -948,9 +968,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=23
+order=24
  0
  13
+ 23
  19
  20
  21
@@ -1002,9 +1023,9 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=149
- y=37
- cx=939
+ x=-117
+ y=87
+ cx=1009
  cy=621
  rcx=0
  rcy=0
@@ -1031,7 +1052,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1099,7 +1120,7 @@ windowlayout=530
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1135,8 +1156,8 @@ windowlayout=530
  width1=43
  sortdescend1=0
  sorted=0
- col=0
- row=1
+ col=1
+ row=10
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1475,7 +1496,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
