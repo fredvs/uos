@@ -4223,7 +4223,7 @@ var
   StreamIn[x].Data.bitrate := BufferInfos.bitrate;
   //StreamIn[x].Data.Length := BufferInfos.Length;
   StreamIn[x].Data.LibOpen := 0;
-  StreamIn[x].Data.Ratio := 2 ; 
+  StreamIn[x].Data.ratio := StreamIn[x].Data.Channels;  
   
   StreamIn[x].Data.posmem := 0;
   StreamIn[x].Data.Output := OutputIndex;
@@ -4955,14 +4955,14 @@ begin
 
   case StreamIn[x].Data.LibOpen of
   {$IF DEFINED(sndfile)}
-  0:  StreamIn[x].Data.ratio := 2;
+  0:  StreamIn[x].Data.ratio := StreamIn[x].Data.Channels;
   {$endif}
   {$IF DEFINED(mpg123)}
   1: begin
   if StreamIn[x].Data.SampleFormat = 2 then
-  StreamIn[x].Data.ratio := 2
+  StreamIn[x].Data.ratio := streamIn[x].Data.Channels
   else
-  StreamIn[x].Data.ratio := 4;
+  StreamIn[x].Data.ratio := 2 * streamIn[x].Data.Channels;
 
   if StreamIn[x].Data.SampleFormat = 0 then
   mpg123_param(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Channels,
@@ -4970,18 +4970,19 @@ begin
   end;
   {$endif}
   {$IF DEFINED(neaac)}
-  2 : StreamIn[x].Data.ratio := 2;
+  2 : StreamIn[x].Data.ratio := streamIn[x].AACI.Channels;
   {$endif}
   {$IF DEFINED(cdrom)}
-  3 : StreamIn[x].Data.ratio := 2;
+  3 : StreamIn[x].Data.ratio := streamIn[x].pCD^.Channels;
   {$endif}
   {$IF DEFINED(opus)}
-  4 : StreamIn[x].Data.ratio := 2;
+  4 : StreamIn[x].Data.ratio :=  streamIn[x].Data.Channels;
   {$endif}
   end;
   end;
   end;
 end;
+
 
 function Tuos_Player.AddFromFile(Filename: PChar; OutputIndex: cint32;
   SampleFormat: cint32 ; FramesCount: cint32 ): cint32;
@@ -5438,14 +5439,14 @@ begin
 
   case StreamIn[x].Data.LibOpen of
 
-  0:  StreamIn[x].Data.ratio := 2;
+  0:  StreamIn[x].Data.ratio := StreamIn[x].Data.Channels;
 
   {$IF DEFINED(mpg123)}
   1: begin
   if StreamIn[x].Data.SampleFormat = 2 then
-  StreamIn[x].Data.ratio := 2
+  StreamIn[x].Data.ratio := streamIn[x].Data.Channels
   else
-  StreamIn[x].Data.ratio := 4;
+  StreamIn[x].Data.ratio := 2 * streamIn[x].Data.Channels;
 
   if StreamIn[x].Data.SampleFormat = 0 then
   mpg123_param(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Channels,
@@ -5453,13 +5454,13 @@ begin
   end;
   {$endif}
   {$IF DEFINED(neaac)}
-  2 : StreamIn[x].Data.ratio := 2;
+  2 : StreamIn[x].Data.ratio := streamIn[x].AACI.Channels;
   {$endif}
   {$IF DEFINED(cdrom)}
-  3 : StreamIn[x].Data.ratio := 2;
+  3 : StreamIn[x].Data.ratio := streamIn[x].pCD^.Channels;
   {$endif}
   {$IF DEFINED(opus)}
-  4 : StreamIn[x].Data.ratio :=  2;
+  4 : StreamIn[x].Data.ratio :=  streamIn[x].Data.Channels;
   {$endif}
   end;
   end;

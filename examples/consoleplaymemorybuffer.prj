@@ -895,8 +895,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromMemoryBuffer
+finddtext=AddFromFile
 findhistory=20
+ AddFromFile
  AddFromMemoryBuffer
  File2Buffer
  filetob
@@ -916,7 +917,6 @@ findhistory=20
  AddFromMemory
  file2
  fileto
- file2b
 findoptions=1
 editpos=19
  0,-1073741823
@@ -934,9 +934,9 @@ editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 4,4181
+ 6,5324
  0,-1073741823
- 0,102
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1064,7 +1064,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=798
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -1083,7 +1083,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,798
+  basedock,0,0,1356,701
  focusedchild=0
  wsize=6
  active=1
@@ -1199,7 +1199,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=524
+ cy=460
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1408,9 +1408,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=587
+ y=516
  cx=1356
- cy=211
+ cy=185
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1510,7 +1510,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=57
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1526,7 +1526,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=57
+ cy=50
  rcx=0
  rcy=0
  [sourcefo]
@@ -1542,7 +1542,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=524
+ cy=460
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1576,9 +1576,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=60
+ y=53
  cx=1356
- cy=524
+ cy=460
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

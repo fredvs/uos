@@ -984,7 +984,7 @@ editpos=28
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 27,1071
+ 16,1058
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1287,7 +1287,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=confideufo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
