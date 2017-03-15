@@ -4265,7 +4265,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
  {$IF DEFINED(debug)}
   WriteLn('Before setlength.');  
  {$endif}  
-  
+ 
   SetLength(StreamIn, Length(StreamIn) + 1);
   StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
   x := Length(StreamIn) - 1;
@@ -4274,7 +4274,8 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   StreamIn[x].Data.enabled := true;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
-  StreamIn[x].Data.wantframes := FramesCount;
+   // StreamIn[x].Data.wantframes := FramesCount;
+ 
   {$IF DEFINED(debug)} 
   writeln('Before Filetobuffer');
   {$endif}
@@ -4306,6 +4307,10 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   StreamIn[x].Data.SampleFormat := tempSampleFormat;
   StreamIn[x].Data.LibOpen := tempLibOpen;
   StreamIn[x].Data.Channels := tempchan;
+  
+  if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 65536 div  StreamIn[x].Data.Channels  else
+  StreamIn[x].Data.Wantframes := FramesCount ; 
+  
   StreamIn[x].Data.ratio := tempratio;
   StreamIn[x].Data.posmem := 0;
   StreamIn[x].Data.Output := OutputIndex;

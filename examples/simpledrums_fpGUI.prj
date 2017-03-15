@@ -948,9 +948,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=nofree
+finddtext=AddFromFileIntoMemory
 findhistory=20
+ AddFromFileIntoMemory
  nofree
+ FramesCount
  AddFromMemoryStream
  length(tempoutmemory
  Before Filetobuffer
@@ -968,8 +970,6 @@ findhistory=20
  timerr
  ordir
  fromm
- create
- timer
 findoptions=1
 editpos=30
  0,-1073741823
@@ -993,14 +993,14 @@ editpos=30
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,111
+ 0,-1073741823
+ 0,-1073741823
+ 0,8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,6596
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 2,4303
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1167,7 +1167,7 @@ order=30
  10
 tabsize=60
 firsttab=13
-index=15
+index=17
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1318,7 +1318,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1527,9 +1527,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=580
+ y=581
  cx=1356
- cy=121
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1661,7 +1661,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1697,7 +1697,7 @@ windowlayout=549
  x=0
  y=65
  cx=1356
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
