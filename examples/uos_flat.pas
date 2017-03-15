@@ -1724,8 +1724,7 @@ if length(uosPlayers) > 0 then
   begin
   if assigned(uosPlayers[x]) then
   begin
-   uosPlayers[x].NoFree := false;
-   uosPlayers[x].Stop;
+   uosPlayers[x].FreePlayer;
   end;
   end;
 sleep(50);  

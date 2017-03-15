@@ -305,7 +305,7 @@ makeoptions=8
  -l -Mobjfpc -Schi
  -FE.
  -FUunits
- ghl
+ -ghl
  -B
  -O2 -XX -Xs -CX
  -vewnhibq
@@ -545,12 +545,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4093
+ 4095
  0
  0
  0
  0
- 2
+ 0
 exeusedon=14
  4095
  0
@@ -806,9 +806,9 @@ line=3
  5056
  101
 address=3
- 0
- 0
- 0
+ 4884839
+ 4873263
+ 4197920
 addbkpt=3
  0
  0
@@ -878,8 +878,13 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromMemory
+finddtext=freeplayer
 findhistory=20
+ freeplayer
+ .play()
+ uos_play()
+ uos_play
+ play
  AddFromMemory
  file2b
  Filetobuffer
@@ -895,32 +900,32 @@ findhistory=20
  uosDeviceInfos
  uosLoadResult
  uosLevelArray
- uosPlayers
- tempchan
- tempLibOpen
- tempSampleFormat
- tempSamplerate
 findoptions=1
-editpos=4
+editpos=5
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,0
+ 0,112
+ 0,1727
+ 0,1555
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=4
+ ${PROJECTDIR}/uos.pas
+relpaths=5
  deviceinfos_fpGUI.pas
  uos.pas
  consoleplay.pas
  uos_flat.pas
-ismoduletexts=4
+ uos.pas
+ismoduletexts=5
+ 0
  0
  0
  0
@@ -934,9 +939,15 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
+order=5
+ 0
+ 1
+ 2
+ 4
+ 3
 tabsize=60
 firsttab=2
-index=3
+index=2
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -951,8 +962,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=929
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -964,16 +975,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=128
- y=58
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,929,585
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -985,15 +996,15 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=430
- y=183
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1015,7 +1026,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1087,7 +1098,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1097,8 +1108,8 @@ windowlayout=549
  width1=43
  sortdescend1=0
  sorted=0
- col=0
- row=1
+ col=1
+ row=7
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1296,9 +1307,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=581
- cx=1356
- cy=120
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1397,8 +1408,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=63
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1413,8 +1424,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1356
- cy=63
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [sourcefo]
@@ -1429,8 +1440,8 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
- cy=512
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1453,26 +1464,10 @@ windowlayout=549
  wsize=0
  active=0
  visible=0
- [mainfo.panel1]
- splitdir=1
- useroptions=838958571
- parent=mainfo.basedock
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=0
- y=66
- cx=1356
- cy=512
- rcx=0
- rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1488,6 +1483,22 @@ windowlayout=549
  wsize=0
  active=0
  visible=1
+ [mainfo.panel1]
+ splitdir=1
+ useroptions=838958571
+ parent=mainfo.basedock
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=54
+ cx=929
+ cy=428
+ rcx=0
+ rcy=0
 [targetconsole]
 finddtext=Input from memory
 findhistory=1

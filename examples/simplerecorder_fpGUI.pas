@@ -122,7 +122,7 @@ var
    //////////// PlayerIndex : Index of a existing Player
    //////////// ClosePlayer1 : procedure of object to execute inside the loop
 
-   uos_Play(PlayerIndex1);  /////// everything is ready to play...
+  uos_Play(PlayerIndex1);  /////// everything is ready to play...
 
     btnStart.Enabled := False;
     btnStop.Enabled := False;

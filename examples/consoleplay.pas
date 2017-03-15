@@ -108,8 +108,8 @@ var
     uos_AddIntoDevOut(PlayerIndex1);
 
     /////// everything is ready, here we are, lets play it...
-    
     uos_Play(PlayerIndex1);
+   
     sleep(2000);
    end;
 

@@ -576,7 +576,7 @@ type
 
   procedure Pause();  // Pause playing
   
-  Procedure PlayNoFree() ;  // Start playing but do not free the player after stop
+  Procedure PlayNoFree() ;  // Starting but do not free the player after stop
   
   Procedure FreePlayer() ;  // Free the player: works only when PlayNoFree() was called.
 
@@ -1558,9 +1558,9 @@ begin
  if (isAssigned = True) then
   begin
   NoFree := false;
-  RTLeventSetEvent(evPause);
-  Status := 0;
- end;; 
+  play;
+  stop;
+  end;; 
 end;
 
 procedure Tuos_Player.RePlay();  // Resume Playing after Pause
@@ -5999,6 +5999,7 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
  {$endif}
  
   if (StreamIn[x].Data.levelEnable = 1) or (StreamIn[x].Data.levelEnable = 3) then StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
+
 
   // Adding level in array-level  // ideal for pre-wave form
   if (StreamIn[x].Data.levelArrayEnable = 1) then
