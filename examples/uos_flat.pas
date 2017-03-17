@@ -363,6 +363,11 @@ procedure uos_EndProc(PlayerIndex: cint32; Proc: TProc);
   // PlayerIndex : Index of a existing Player
   // InIndex : Index of a existing Input
 
+procedure uos_EndProcOnly(PlayerIndex: cint32; Proc: TProcOnly);
+  // Assign the procedure  (not of object) to execute  at end, after loop
+  // PlayerIndex : Index of a existing Player
+  // InIndex : Index of a existing Input
+
 procedure uos_LoopBeginProc(PlayerIndex: cint32; Proc: TProc);
   // Assign the procedure of object to execute  at begin of loop
   // PlayerIndex : Index of a existing Player
@@ -1526,6 +1531,14 @@ procedure uos_EndProc(PlayerIndex: cint32; Proc: TProc );
   // InIndex : Index of a existing Input
 begin
  uosPlayers[PlayerIndex].EndProc := Proc;
+end;
+
+procedure uos_EndProcOnly(PlayerIndex: cint32; Proc: TProcOnly );
+  // Assign the procedure (not of object) to execute at end, after loop
+  // PlayerIndex : Index of a existing Player
+  // InIndex : Index of a existing Input
+begin
+ uosPlayers[PlayerIndex].EndProcOnly := Proc;
 end;
 
 procedure uos_LoopBeginProc(PlayerIndex: cint32; Proc: TProc );

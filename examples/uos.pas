@@ -404,6 +404,8 @@ type
   TProc = procedure of object;
   {$endif}
 
+  TProcOnly = procedure;
+
   {$IF DEFINED(bs2b)}
   TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; Abs2bd : Tt_bs2bdp; inputData: Tuos_Data;
   param1: float; param2: float; param3: float; param4: float;
@@ -531,16 +533,19 @@ type
   // Do not free the player at end of thread.
 
   BeginProc: TProc;
-  // External procedure to execute at begin of thread
+  // External procedure of object to execute at begin of thread
 
   LoopBeginProc: TProc;
-  // External procedure to execute at each begin of loop
+  // External procedure of object to execute at each begin of loop
 
   LoopEndProc: TProc;
-  // External procedure to execute at each end of loop
+  // External procedure of object to execute at each end of loop
 
   EndProc: TProc;
-  // Procedure to execute at end of thread
+  // Procedure of object to execute at end of thread
+
+  EndProcOnly: TProcOnly;
+  // Procedure to execute at end of thread (not of object)
 
   StreamIn: array of Tuos_InStream;
   StreamOut: array of Tuos_OutStream;
@@ -6742,6 +6747,9 @@ if err > 0 then
   {$endif}
 
   {$endif}
+ 
+   if EndProcOnly <> nil then EndProcOnly;
+   
   sleep(1);
   RTLeventResetEvent(evPause);
   Status := 2;
@@ -6929,6 +6937,9 @@ writeln('Status = 0');
   {$endif}
 
   {$endif}
+
+  if EndProcOnly <> nil then EndProcOnly;
+ 
   isAssigned := false ;
 
  {$IF DEFINED(debug)}
@@ -7477,6 +7488,7 @@ begin
   status := 2;
   BeginProc := nil;
   EndProc := nil;
+  EndProcOnly := nil;
   loopBeginProc := nil;
   loopEndProc := nil;
 end;
