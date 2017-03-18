@@ -878,8 +878,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=onthreadterminate
+finddtext=OnTerminate
 findhistory=20
+ OnTerminate
  onthreadterminate
  onthred
  ontermin
@@ -899,36 +900,40 @@ findhistory=20
  addfromme
  fileto
  uosInit.uosPlayers
- uosDeviceCount
 findoptions=1
-editpos=6
+editpos=7
  0,-1073741823
  0,-1073741823
- 0,110
  0,-1073741823
- 0,0
- 0,7471
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,572
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-sourcefiles=6
+bookmarks6=0
+sourcefiles=7
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos.pas
-relpaths=6
+ ${PROJECTDIR}/uos.pas
+relpaths=7
  deviceinfos_fpGUI.pas
  uos.pas
  consoleplay.pas
  uos_flat.pas
  uos.pas
  uos.pas
-ismoduletexts=6
+ uos.pas
+ismoduletexts=7
+ 0
  0
  0
  0
@@ -944,16 +949,17 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=6
+order=7
  0
  1
  2
+ 6
  5
  4
  3
 tabsize=60
 firsttab=2
-index=2
+index=3
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -991,7 +997,7 @@ windowlayout=549
   basedock,0,0,1356,701
  focusedchild=0
  wsize=6
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1009,7 +1015,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1489,7 +1495,7 @@ windowlayout=549
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
