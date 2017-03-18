@@ -523,7 +523,6 @@ type
   protected
   evPause: PRTLEvent;  // for pausing
   procedure Execute; override;
-  procedure onTerminate;
   public
   isAssigned: boolean ;
   Status: cint32;
@@ -6951,17 +6950,6 @@ writeln('Status = 0');
  {$endif}  
 end;
 
-procedure Tuos_Player.onTerminate() ;
-begin
-if ifflat = true then
-  begin
- // uosPlayers[Index].destroy;
-  uosPlayers[Index] := nil ;
-  uosPlayersStat[Index] := -1 ;
-end;
-// else destroy;
-end;
- 
 procedure Tuos_Init.unloadPlugin(PluginName: Pchar);
   // Unload Plugin... 
 begin
