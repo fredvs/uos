@@ -806,8 +806,8 @@ line=3
  5055
  101
 address=3
- 4884839
- 4873263
+ 4884887
+ 4873246
  4197920
 addbkpt=3
  0
@@ -878,8 +878,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=ontermin
+finddtext=onthreadterminate
 findhistory=20
+ onthreadterminate
+ onthred
  ontermin
  inherited
  freeplayer
@@ -898,16 +900,14 @@ findhistory=20
  fileto
  uosInit.uosPlayers
  uosDeviceCount
- uosDefaultDevice
- uosDeviceInfos
 findoptions=1
 editpos=6
  0,-1073741823
  0,-1073741823
  0,110
  0,-1073741823
- 0,-1073741823
- 0,6952
+ 0,0
+ 0,7471
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -953,7 +953,7 @@ order=6
  3
 tabsize=60
 firsttab=2
-index=3
+index=2
 [layout]
 windowlayout=549
  [mainfo.basedock]
