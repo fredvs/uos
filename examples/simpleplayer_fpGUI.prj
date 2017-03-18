@@ -978,13 +978,7 @@ findhistory=20
  timer
  fromfilein
 findoptions=1
-editpos=27
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,6015
+editpos=28
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1002,10 +996,17 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1724
+ 0,0
  0,-1073741823
- 0,609
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1033,7 +1034,8 @@ bookmarks23=0
 bookmarks24=0
 bookmarks25=0
 bookmarks26=0
-sourcefiles=27
+bookmarks27=0
+sourcefiles=28
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1061,7 +1063,8 @@ sourcefiles=27
  ${PROJECTDIR}/consoleplaymemory.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_libsndfile.pas
-relpaths=27
+ ${PROJECTDIR}/mainmse_sp.pas
+relpaths=28
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1089,7 +1092,9 @@ relpaths=27
  consoleplaymemory.pas
  simpleplayer_fpGUI.pas
  uos_libsndfile.pas
-ismoduletexts=27
+ mainmse_sp.pas
+ismoduletexts=28
+ 0
  0
  0
  0
@@ -1122,41 +1127,42 @@ modules=1
 moduleoptions=1
  0
 visiblemodules=1
- 0
+ -1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=27
+order=28
  0
  1
  2
- 11
+ 3
+ 4
+ 5
  6
- 18
- 14
+ 7
+ 8
+ 9
+ 10
+ 11
  12
+ 13
+ 14
  15
  16
  17
- 7
- 8
- 3
- 21
- 20
- 4
- 5
  27
- 24
- 26
- 25
- 23
+ 18
  19
- 13
- 9
- 10
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
 tabsize=60
 firsttab=17
-index=17
+index=18
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1172,7 +1178,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=682
+ cy=779
  rcx=0
  rcy=0
  [mainfo]
@@ -1191,10 +1197,10 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,682
+  basedock,0,0,1356,779
  focusedchild=0
  wsize=6
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1212,7 +1218,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1235,7 +1241,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1307,7 +1313,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=499
+ cy=570
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1516,9 +1522,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=565
+ y=645
  cx=1356
- cy=117
+ cy=134
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1618,7 +1624,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=60
+ cy=69
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1634,7 +1640,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=60
+ cy=69
  rcx=0
  rcy=0
  [sourcefo]
@@ -1650,14 +1656,14 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=499
+ cy=570
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1668,25 +1674,6 @@ windowlayout=549
  y=113
  cx=352
  cy=277
- rcx=0
- rcy=0
- wsize=0
- active=0
- visible=0
- [_mse_simple_player_mse_]
- splitdir=0
- useroptions=805322875
- stackedunder=
- parent=
- mdistate=0
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=363
- y=73
- cx=526
- cy=357
  rcx=0
  rcy=0
  wsize=0
@@ -1703,11 +1690,30 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=63
+ y=72
  cx=1356
- cy=499
+ cy=570
  rcx=0
  rcy=0
+ [_mse_simple_player_mse_]
+ splitdir=0
+ useroptions=805322875
+ stackedunder=targetconsolefo
+ parent=
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=363
+ y=73
+ cx=526
+ cy=357
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=1
 [targetconsole]
 finddtext=Length(BufferplugFL) =
 findhistory=4

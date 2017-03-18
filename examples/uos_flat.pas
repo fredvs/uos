@@ -1494,7 +1494,10 @@ Procedure uos_FreePlayer(PlayerIndex: cint32) ;  // Works only when PlayNoFree()
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+begin
 uosPlayers[PlayerIndex].FreePlayer() ;
+uosPlayers[PlayerIndex] := nil;
+end
 end;
 
 procedure uos_RePlay(PlayerIndex: cint32);  // Resume playing after pause

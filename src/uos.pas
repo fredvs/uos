@@ -6955,9 +6955,11 @@ procedure Tuos_Player.onTerminate() ;
 begin
 if ifflat = true then
   begin
-  uosPlayers[Index].destroy;
-uosPlayersStat[Index] := -1 ;
-end else destroy;
+ // uosPlayers[Index].destroy;
+  uosPlayers[Index] := nil ;
+  uosPlayersStat[Index] := -1 ;
+end;
+// else destroy;
 end;
  
 procedure Tuos_Init.unloadPlugin(PluginName: Pchar);
