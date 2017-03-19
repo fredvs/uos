@@ -570,7 +570,7 @@ type
 
   destructor Destroy; override;
 
-  procedure OnThreadTerminate; 
+  procedure DoTerminate; override;  
   // Audio methods
 
   Procedure Play() ;  // Start playing
@@ -6889,8 +6889,6 @@ writeln('Status = 0');
 
   if EndProcOnly <> nil then EndProcOnly;
   
-  OnThreadTerminate; 
- 
   isAssigned := false ;
   
   {$IF DEFINED(debug)}
@@ -7435,13 +7433,14 @@ begin
   loopEndProc := nil;
 end;
 
-procedure Tuos_Player.OnThreadTerminate;
+procedure Tuos_Player.DoTerminate;
 begin
 if ifflat = true then
   begin
   uosPlayers[Index] := nil;
   uosPlayersStat[Index] := -1 ;
  end;
+inherited DoTerminate; 
 end;
 
 destructor Tuos_Player.Destroy;

@@ -882,6 +882,7 @@ hintheight=19
 finddtext=OnThreadTerminate
 findhistory=20
  OnThreadTerminate
+ doTerminate
  OnTerminate
  sleep
  freeplayer
@@ -900,7 +901,6 @@ findhistory=20
  addfrommem
  FramesCount
  filetobuff
- tempoutmemory
 findoptions=1
 editpos=7
  0,-1073741823
@@ -909,7 +909,7 @@ editpos=7
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,7440
+ 0,6888
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -975,8 +975,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=604
+ cx=1356
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -988,17 +988,17 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=381
+ y=49
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,604
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=0
- active=0
+ wsize=6
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1016,7 +1016,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1111,7 +1111,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=442
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1320,9 +1320,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=501
- cx=929
- cy=103
+ y=581
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1421,8 +1421,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1437,8 +1437,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1453,8 +1453,8 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=767
- cy=442
+ cx=1194
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1488,15 +1488,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=56
- cx=929
- cy=442
+ y=65
+ cx=1356
+ cy=513
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
