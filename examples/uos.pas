@@ -1294,56 +1294,6 @@ begin
   TObject(ahandle).Free;
 end;
 
-{
-function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
-  SampleFormat: cint32 ; FramesCount: cint32; outmemory: TDArFloat ): TDArFloat;
-  // Add a input from audio file with custom parameters
-  // FileName : filename of audio file
-  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-  // FramesCount : default : -1 (4096)
-  // Outmemory : the buffer to store data.
-  //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := Filetobuffer(edit5.Text,-1,0,-1, buffmem);
-  var
-  theplayer : Tuos_Player;
-  in1 : cint32; 
-  begin
-  {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
-  theplayer := Tuos_Player.Create(true);
-  {$else}
-  theplayer := Tuos_Player.Create(true,self);
-  {$endif}
-  
-  {$IF DEFINED(debug)}
-  writeln('begin Filetobuffer');
-  {$endif}
-  In1 := theplayer.AddFromFile( pchar(Filename), OutputIndex, SampleFormat, FramesCount) ;
-  if in1 > -1 then 
-  begin
-  {$IF DEFINED(debug)}
-  writeln('in1 = ' + inttostr(in1));
-  writeln('theplayer.InputLength(In1) = ' + inttostr(theplayer.InputLength(In1)));
-  {$endif}
-  
-  
-  setlength(outmemory, theplayer.InputLength(In1));
-  
-  tempchan := theplayer.StreamIn[in1].Data.Channels; 
-  tempratio := theplayer.StreamIn[in1].Data.ratio;
-  tempSampleFormat := theplayer.StreamIn[in1].Data.SampleFormat; 
-  tempSamplerate := theplayer.StreamIn[in1].Data.Samplerate; 
-  templength := theplayer.StreamIn[in1].Data.Length;
-  
-  theplayer.AddIntoMemoryBuffer(pointer(outmemory));
-  theplayer.Play(); 
-  end;
-  sleep(60);
-  result := outmemory;
-  
-  end;  
-}
-
 function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   SampleFormat: cint32 ; FramesCount: cint32; outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos): TDArFloat;
   // Add a input from audio file with custom parameters
@@ -6751,7 +6701,6 @@ if err > 0 then
  
    if EndProcOnly <> nil then EndProcOnly;
    
-  sleep(1);
   RTLeventResetEvent(evPause);
   Status := 2;
   end;

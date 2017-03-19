@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplay.prj
-findinfiledialog=39
+findinfiledialog=40
  [findinfileadialogfo.subdirs]
  value=0
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,9 @@ findinfiledialog=39
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=
- history=1
+ value=endproconly
+ history=2
+  endproconly
   
  [findinfileadialogfo]
  stackedunder=
@@ -802,12 +803,12 @@ path=3
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
 line=3
- 5732
- 5055
+ 5682
+ 5005
  101
 address=3
- 4884887
- 4873246
+ 4885287
+ 4873646
  4197920
 addbkpt=3
  0
@@ -878,14 +879,16 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=OnTerminate
+finddtext=sleep
 findhistory=20
+ sleep
+ freeplayer
+ freepl
  OnTerminate
  onthreadterminate
  onthred
  ontermin
  inherited
- freeplayer
  .play()
  uos_play()
  uos_play
@@ -898,17 +901,15 @@ findhistory=20
  filetobuff
  tempoutmemory
  addfromme
- fileto
- uosInit.uosPlayers
 findoptions=1
 editpos=7
  0,-1073741823
  0,-1073741823
+ 0,110
+ 0,1665
+ 10,1299
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,572
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -945,7 +946,7 @@ modules=1
 moduleoptions=1
  0
 visiblemodules=1
- -1
+ 0
 nomenumodules=1
  0
 [sourcefo.files_tab]
@@ -959,7 +960,7 @@ order=7
  3
 tabsize=60
 firsttab=2
-index=3
+index=5
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -997,7 +998,7 @@ windowlayout=549
   basedock,0,0,1356,701
  focusedchild=0
  wsize=6
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1015,7 +1016,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1460,7 +1461,7 @@ windowlayout=549
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1495,7 +1496,7 @@ windowlayout=549
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=confideufo
  parent=
  mdistate=0
  nx=0
@@ -1508,9 +1509,9 @@ windowlayout=549
  cy=132
  rcx=0
  rcy=0
- wsize=0
+ wsize=5
  active=0
- visible=1
+ visible=0
 [targetconsole]
 finddtext=Input from memory
 findhistory=1

@@ -691,6 +691,20 @@ var
  
 implementation
 
+function PlayersNotFree: Boolean; 
+Var 
+ i: Integer; 
+begin 
+ if uosPlayers <> nil then 
+  for i:= 0 to Length(uosPlayers)-1 do 
+     if uosPlayers[i] <> nil then 
+   begin 
+    Result:= True; 
+    Exit; 
+   end; 
+ Result:= False; 
+end; 
+
 {$IF DEFINED(noiseremoval)}
 procedure uos_InputAddDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32);
 begin
@@ -1497,6 +1511,7 @@ begin
 begin
 uosPlayers[PlayerIndex].FreePlayer() ;
 uosPlayers[PlayerIndex] := nil;
+uosPlayersStat[PlayerIndex] := -1;
 end
 end;
 
@@ -1648,7 +1663,7 @@ procedure uos_unloadlib() ;
   begin
   uosPlayers[x].nofree := false;
   uosPlayers[x].Stop();
-  sleep(300) ;
+  while PlayersNotFree do Sleep(10);
   end;
   end;
 
@@ -1740,10 +1755,12 @@ if length(uosPlayers) > 0 then
   begin
   if assigned(uosPlayers[x]) then
   begin
-   uosPlayers[x].FreePlayer;
+   uos_FreePlayer(x);
   end;
   end;
-sleep(50);  
+
+while PlayersNotFree do Sleep(10);  
+ 
 uos.uos_free();
 end;
 
