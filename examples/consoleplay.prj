@@ -879,13 +879,15 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=OnThreadTerminate
+finddtext=DoTerminate
 findhistory=20
+ DoTerminate
+ PlayersNotFree
+ freeplayer
+ OnTerminate
  OnThreadTerminate
  doTerminate
- OnTerminate
  sleep
- freeplayer
  freepl
  onthreadterminate
  onthred
@@ -899,17 +901,15 @@ findhistory=20
  file2b
  Filetobuffer
  addfrommem
- FramesCount
- filetobuff
 findoptions=1
 editpos=7
  0,-1073741823
  0,-1073741823
  0,110
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,6888
+ 0,1670
+ 0,0
+ 0,0
+ 0,7435
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -960,7 +960,7 @@ order=7
  3
 tabsize=60
 firsttab=2
-index=2
+index=3
 [layout]
 windowlayout=549
  [mainfo.basedock]

@@ -695,9 +695,9 @@ function PlayersNotFree: Boolean;
 Var 
  i: Integer; 
 begin 
- if uosPlayers <> nil then 
-  for i:= 0 to Length(uosPlayers)-1 do 
-     if uosPlayers[i] <> nil then 
+ if uosPlayersStat <> nil then 
+  for i:= 0 to Length(uosPlayersStat)-1 do 
+   if uosPlayersStat[i] <> -1 then 
    begin 
     Result:= True; 
     Exit; 
@@ -1504,15 +1504,14 @@ begin
 uosPlayers[PlayerIndex].PlayNoFree() ;
 end;
 
-Procedure uos_FreePlayer(PlayerIndex: cint32) ;  // Works only when PlayNoFree() was used: free the player
+Procedure uos_FreePlayer(PlayerIndex: cint32) ;  
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 begin
 uosPlayers[PlayerIndex].FreePlayer() ;
 uosPlayers[PlayerIndex] := nil;
-uosPlayersStat[PlayerIndex] := -1;
-end
+end;
 end;
 
 procedure uos_RePlay(PlayerIndex: cint32);  // Resume playing after pause
@@ -1652,6 +1651,7 @@ end;
 procedure uos_unloadlib() ;
   var
   x: cint32;
+  nt : integer = 300;
   begin
   if assigned(uosPlayers) then
   begin
@@ -1663,7 +1663,13 @@ procedure uos_unloadlib() ;
   begin
   uosPlayers[x].nofree := false;
   uosPlayers[x].Stop();
-  while PlayersNotFree do Sleep(10);
+  
+  while (PlayersNotFree = true) and (nt > 0) do 
+  begin 
+  Sleep(10); 
+  Dec(nt); 
+  end; 
+  
   end;
   end;
 
@@ -1747,6 +1753,7 @@ end;
 procedure uos_Free();
 var
 x : integer;
+nt : integer = 300;
 begin
 
 if assigned(uosPlayers) then
@@ -1759,9 +1766,14 @@ if length(uosPlayers) > 0 then
   end;
   end;
 
-while PlayersNotFree do Sleep(10);  
+while (PlayersNotFree = true) and (nt > 0) do 
+ begin 
+  Sleep(10); 
+  Dec(nt); 
+ end; 
  
 uos.uos_free();
 end;
+
 
 end.

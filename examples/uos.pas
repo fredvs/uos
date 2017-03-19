@@ -7439,8 +7439,7 @@ if ifflat = true then
   begin
   uosPlayers[Index] := nil;
   uosPlayersStat[Index] := -1 ;
- end;
-inherited DoTerminate; 
+  end; 
 end;
 
 destructor Tuos_Player.Destroy;
