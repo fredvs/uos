@@ -796,37 +796,44 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=4
+on=5
  0
  0
  0
  0
-path=4
+ 0
+path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos_libsndfile.pas
-line=4
+ /home/fred/uos/examples/uos_flat.pas
+line=5
  5708
  5024
  406
  41
-address=4
+ 1737
+address=5
  0
  0
  0
  0
-addbkpt=4
+ 0
+addbkpt=5
  0
  0
  0
  0
-ignore=4
+ 0
+ignore=5
  0
  0
  0
  0
-condition=4
+ 0
+condition=5
+ 
  
  
  
@@ -888,14 +895,17 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=uos_unloadlib()
+finddtext=PlayersNotFree
 findhistory=20
+ PlayersNotFree
+ playersnotfree
+ create
+ doter
  uos_unloadlib()
  play()
  intobuf
  frombuf
  addintomem
- doter
  uos_File2Buffer
  AddFromMemoryBuffer
  frommem
@@ -907,9 +917,6 @@ findhistory=20
  AddFromMemoryBuffer Before all.
  Filetobuffer
  filetobu
- uos_AddIntoDevOut
- WriteBuffer
- uos_File2File
 findoptions=1
 editpos=20
  0,-1073741823
@@ -929,9 +936,9 @@ editpos=20
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 7,1662
+ 0,1737
  0,-1073741823
- 0,7224
+ 0,7385
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0

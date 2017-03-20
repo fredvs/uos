@@ -705,6 +705,19 @@ begin
  Result:= False; 
 end; 
 
+function PlayerNotFree(indexplayer : integer): Boolean; 
+Var 
+ i: Integer; 
+begin 
+ if uosPlayersStat <> nil then 
+    if uosPlayersStat[indexplayer] <> -1 then 
+   begin 
+    Result:= True; 
+    Exit; 
+   end; 
+ Result:= False; 
+end; 
+
 {$IF DEFINED(noiseremoval)}
 procedure uos_InputAddDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32);
 begin
@@ -1721,17 +1734,29 @@ procedure uos_CreatePlayer(PlayerIndex : cint32);
 {$endif}
 // Create the player , PlayerIndex1 : from 0 to what your computer can do !
 // If PlayerIndex exists already, it will be overwriten...
-
  var
 x : cint32;
+nt : integer = 300;
 begin
 if PlayerIndex + 1 > length(uosPlayers) then
 begin
  setlength(uosPlayers,PlayerIndex + 1) ;
+ uosPlayers[PlayerIndex] := nil;
  setlength(uosPlayersStat,PlayerIndex + 1) ;
  setlength(uosLevelArray,PlayerIndex + 1) ;
 end;
-  if uosPlayers[PlayerIndex] <> nil then uosPlayers[PlayerIndex].Terminate;
+
+  if uosPlayers[PlayerIndex] <> nil then
+  begin
+  uosPlayers[x].nofree := false;
+  uosPlayers[x].Stop();
+  while (PlayerNotFree(PlayerIndex) = true) and (nt > 0) do 
+  begin 
+  Sleep(10); 
+  Dec(nt); 
+  end;
+  
+  end;
 
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   uosPlayers[PlayerIndex] := Tuos_Player.Create(true,AParent);  // for fpGUI
