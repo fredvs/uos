@@ -711,12 +711,10 @@ Var
 begin 
  if uosPlayersStat <> nil then 
     if uosPlayersStat[indexplayer] <> -1 then 
-   begin 
-    Result:= True; 
-    Exit; 
-   end; 
+    Result:= True else
  Result:= False; 
 end; 
+
 
 {$IF DEFINED(noiseremoval)}
 procedure uos_InputAddDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32);
