@@ -527,6 +527,8 @@ type
   isAssigned: boolean ;
   Status: cint32;
   Index: cint32;
+  
+  intobuf :boolean; // to check, needed for filetobuf
 
   NoFree : boolean;
   // Do not free the player at end of thread.
@@ -1433,8 +1435,8 @@ var
      
   theplayer.AddIntoFile(FilenameOUT, theplayer.StreamIn[0].data.samplerate, 
   theplayer.StreamIn[0].data.channels, SampleFormat, -1 , typeout);
- 
-  theplayer.Play(); 
+  
+    theplayer.Play(); 
   end;
  
   end;  
@@ -3633,7 +3635,7 @@ begin
   Streamout[x].BufferOut := outmemory;
   StreamOut[x].Data.Wantframes := 1024 ;
   SetLength(StreamOut[x].Data.Buffer,1024*2);
-
+  intobuf := true; // to check, why ?
   result := x;
   end;
 
@@ -4132,7 +4134,7 @@ var
   StreamIn[x].Data.enabled := true;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
-      
+     
   setlength(StreamIn[x].Data.memorybuffer, length(MemoryBuffer));
     
   for i := 0 to length(MemoryBuffer) -1 do
@@ -7424,7 +7426,8 @@ begin
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   refer := aparent; // for fpGUI
   {$endif}
-  isAssigned := true ;
+  isAssigned := true; 
+  intobuf := false;
   status := 2;
   BeginProc := nil;
   EndProc := nil;
@@ -7435,7 +7438,7 @@ end;
 
 procedure Tuos_Player.DoTerminate;
 begin
-if ifflat = true then
+if (ifflat = true) and (intobuf = false) then
   begin
   uosPlayers[Index] := nil;
   uosPlayersStat[Index] := -1 ;

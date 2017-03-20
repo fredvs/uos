@@ -514,7 +514,7 @@ makeoptionson=8
  63
  63
  3
- 32
+ 34
  48
  63
 compilerusedon=29
@@ -548,12 +548,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4093
+ 4095
  0
  0
  0
  0
- 2
+ 0
 exeusedon=14
  4095
  0
@@ -796,44 +796,37 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=5
+on=4
  0
  0
  0
  0
- 0
-path=5
+path=4
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos_libsndfile.pas
- /home/fred/uos/examples/consoleplaymemorybuffer.pas
-line=5
- 5712
- 5028
+line=4
+ 5719
+ 5035
  406
  41
- 112
-address=5
+address=4
  0
  0
  0
  0
- 0
-addbkpt=5
- 0
+addbkpt=4
  0
  0
  0
  0
-ignore=5
+ignore=4
  0
  0
  0
  0
- 0
-condition=5
- 
+condition=4
  
  
  
@@ -895,30 +888,30 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromFile
+finddtext=frombuf
 findhistory=20
- AddFromFile
+ frombuf
+ addintomem
+ doter
+ uos_File2Buffer
  AddFromMemoryBuffer
+ frommem
+ index
+ filetobuffer
+ AddFromFile
  File2Buffer
  filetob
  AddFromMemoryBuffer Before all.
  Filetobuffer
  filetobu
- uos_File2Buffer
  uos_AddIntoDevOut
  WriteBuffer
  uos_File2File
  rat :=
  addintofile
  file2f
- AddFromMemoryStream
- soundt
- samplerate
- AddFromMemory
- file2
- fileto
 findoptions=1
-editpos=19
+editpos=20
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -934,10 +927,11 @@ editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 6,5324
+ 0,0
+ 0,79
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 14,3630
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -957,7 +951,8 @@ bookmarks15=0
 bookmarks16=0
 bookmarks17=0
 bookmarks18=0
-sourcefiles=19
+bookmarks19=0
+sourcefiles=20
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
@@ -968,7 +963,6 @@ sourcefiles=19
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/tfloatbuf.pas
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -977,7 +971,9 @@ sourcefiles=19
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=19
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/uos.pas
+relpaths=20
  deviceinfos_fpGUI.pas
  uos.pas
  define.inc
@@ -988,7 +984,6 @@ relpaths=19
  define.inc
  uos.pas
  uos_flat.pas
- consoleplaymemorybuffer.pas
  tfloatbuf.pas
  uos_dsp_noiseremoval.pas
  uos_flat.pas
@@ -997,7 +992,10 @@ relpaths=19
  define.inc
  consoleplaymemorybuffer.pas
  uos_flat.pas
-ismoduletexts=19
+ define.inc
+ uos.pas
+ismoduletexts=20
+ 0
  0
  0
  0
@@ -1026,7 +1024,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=19
+order=20
  0
  1
  2
@@ -1042,13 +1040,14 @@ order=19
  12
  13
  15
+ 19
  17
+ 20
  18
  16
- 10
 tabsize=60
-firsttab=11
-index=14
+firsttab=13
+index=17
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1076,8 +1075,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=134
- y=33
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
@@ -1199,7 +1198,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=460
+ cy=512
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1209,7 +1208,7 @@ windowlayout=549
  width1=43
  sortdescend1=0
  sorted=0
- col=1
+ col=0
  row=1
  rowheight=17
  [stackfo]
@@ -1408,9 +1407,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=516
+ y=580
  cx=1356
- cy=185
+ cy=121
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1510,7 +1509,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=50
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1526,7 +1525,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=50
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1542,7 +1541,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=460
+ cy=512
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1576,9 +1575,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=53
+ y=65
  cx=1356
- cy=460
+ cy=512
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

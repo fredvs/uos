@@ -1006,7 +1006,7 @@ editpos=28
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
+ 41,7
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1178,7 +1178,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=604
+ cy=798
  rcx=0
  rcy=0
  [mainfo]
@@ -1197,10 +1197,10 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,604
+  basedock,0,0,1356,798
  focusedchild=0
- wsize=0
- active=1
+ wsize=6
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1218,7 +1218,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1313,7 +1313,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=441
+ cy=583
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1522,9 +1522,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=500
+ y=660
  cx=1356
- cy=104
+ cy=138
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1624,7 +1624,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=53
+ cy=71
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1640,7 +1640,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=53
+ cy=71
  rcx=0
  rcy=0
  [sourcefo]
@@ -1656,14 +1656,14 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=441
+ cy=583
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1690,9 +1690,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=56
+ y=74
  cx=1356
- cy=441
+ cy=583
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

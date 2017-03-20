@@ -215,11 +215,6 @@ function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble
 function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar): cint32;
   // Add a input from audio file with default parameters
 
-function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : cint32;
-  // Add a Output into memory buffer
-  // outmemory : pointer of buffer to use to store memory.
-  // example : OutputIndex1 := uos_AddIntoMemoryBuffer(0, pointer(bufmemory));
-
 function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint32;
   SampleFormat: cint32 ; FramesCount: cint32): cint32;
   // Add a input from audio file with custom parameters
@@ -230,6 +225,11 @@ function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint
   // FramesCount : default : -1 (65536)
   //  result : Input Index in array  -1 = error
   // example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0);
+
+function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : cint32;
+  // Add a Output into memory buffer
+  // outmemory : pointer of buffer to use to store memory.
+  // example : OutputIndex1 := uos_AddIntoMemoryBuffer(0, pointer(bufmemory));
 
 function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; Bufferinfos: Tuos_bufferinfos;
  OutputIndex: cint32; FramesCount: cint32): cint32;
@@ -1099,17 +1099,6 @@ function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: 
  Host, User, Password, MountFile  );
 end;
   {$endif}
-  
-function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : cint32;
-  // Add a Output into memory buffer
-  // outmemory : pointer of buffer to use to store memory.
-  // example : OutputIndex1 := uos_AddIntoMemoryBuffer(0, pointer(bufmemory));  
- begin
-  result := -1 ;
-  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
-  if  uosPlayersStat[PlayerIndex] = 1 then
-  Result :=  uosPlayers[PlayerIndex].AddIntoMemoryBuffer(outmemory);
-end;
 
 {$IF DEFINED(portaudio)}
  function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
@@ -1165,6 +1154,17 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   Result := uosPlayers[PlayerIndex].AddFromFile(Filename, -1, -1, -1);
+end;
+
+function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : cint32;
+  // Add a Output into memory buffer
+  // outmemory : pointer of buffer to use to store memory.
+  // example : OutputIndex1 := uos_AddIntoMemoryBuffer(0, pointer(bufmemory));  
+ begin
+  result := -1 ;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  Result :=  uosPlayers[PlayerIndex].AddIntoMemoryBuffer(outmemory);
 end;
 
 function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; Bufferinfos: Tuos_bufferinfos;
@@ -1754,6 +1754,7 @@ procedure uos_Free();
 var
 x : integer;
 nt : integer = 300;
+frombuf : boolean = false; // to check why is it needed ?
 begin
 
 if assigned(uosPlayers) then

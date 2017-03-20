@@ -681,8 +681,8 @@ findhistory=4
  DrawWaveForm
 findoptions=1
 editpos=4
- 0,6188
- 0,35
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
  126,186
 bookmarks0=0
@@ -754,7 +754,7 @@ windowlayout=522
   basedock,0,0,1356,701
  focusedchild=0
  wsize=6
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -772,7 +772,7 @@ windowlayout=522
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1209,7 +1209,7 @@ windowlayout=522
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

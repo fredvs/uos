@@ -942,7 +942,7 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,6638
+ 7,6624
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -954,7 +954,7 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,145
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1134,8 +1134,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=232
- y=52
+ x=209
+ y=90
  cx=939
  cy=621
  rcx=0
@@ -1143,8 +1143,8 @@ windowlayout=549
  children=1
   basedock,0,0,1356,682
  focusedchild=0
- wsize=6
- active=1
+ wsize=0
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1162,7 +1162,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1231,7 +1231,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=confideufo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1642,7 +1642,7 @@ windowlayout=549
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

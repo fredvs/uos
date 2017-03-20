@@ -879,15 +879,15 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=DoTerminate
+finddtext=sleep
 findhistory=20
- DoTerminate
+ sleep
  PlayersNotFree
+ DoTerminate
  freeplayer
  OnTerminate
  OnThreadTerminate
  doTerminate
- sleep
  freepl
  onthreadterminate
  onthred
@@ -902,40 +902,30 @@ findhistory=20
  Filetobuffer
  addfrommem
 findoptions=1
-editpos=7
+editpos=5
  0,-1073741823
  0,-1073741823
- 0,110
- 0,1670
- 0,0
- 0,0
- 0,7435
+ 0,-1073741823
+ 0,-1073741823
+ 0,1362
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-sourcefiles=7
+sourcefiles=5
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos.pas
-relpaths=7
+relpaths=5
  deviceinfos_fpGUI.pas
  uos.pas
  consoleplay.pas
  uos_flat.pas
  uos.pas
- uos.pas
- uos.pas
-ismoduletexts=7
- 0
- 0
+ismoduletexts=5
  0
  0
  0
@@ -950,12 +940,10 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=7
+order=5
  0
  1
  2
- 6
- 5
  4
  3
 tabsize=60
@@ -1017,7 +1005,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1111,7 +1099,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1422,7 +1410,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1438,7 +1426,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [sourcefo]
@@ -1454,7 +1442,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1488,15 +1476,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=65
+ y=66
  cx=1356
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

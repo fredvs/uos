@@ -868,7 +868,7 @@ editpos=20
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,243
+ 4,229
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1038,7 +1038,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1482,7 +1482,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

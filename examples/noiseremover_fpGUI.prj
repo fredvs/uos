@@ -896,31 +896,26 @@ findhistory=20
  loadlibr
  hNeAAC
 findoptions=1
-editpos=5
+editpos=4
+ 0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,7
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-bookmarks4=0
-sourcefiles=5
+sourcefiles=4
  ${PROJECTDIR}/noiseremover_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/uos.pas
- /home/fred/fpgui/src/corelib/gdi/fpg_impl.pas
-relpaths=5
+relpaths=4
  noiseremover_fpGUI.pas
  uos_flat.pas
  uos_dsp_noiseremoval.pas
  uos.pas
- ../fpgui/src/corelib/gdi/fpg_impl.pas
-ismoduletexts=5
- 0
+ismoduletexts=4
  0
  0
  0
@@ -930,12 +925,6 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=5
- 0
- 4
- 1
- 2
- 3
 tabsize=60
 firsttab=0
 index=1
@@ -1017,7 +1006,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1181,7 +1170,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1439,7 +1428,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
