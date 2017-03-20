@@ -807,8 +807,8 @@ path=4
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos_libsndfile.pas
 line=4
- 5719
- 5035
+ 5708
+ 5024
  406
  41
 address=4
@@ -888,8 +888,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=frombuf
+finddtext=uos_unloadlib()
 findhistory=20
+ uos_unloadlib()
+ play()
+ intobuf
  frombuf
  addintomem
  doter
@@ -907,9 +910,6 @@ findhistory=20
  uos_AddIntoDevOut
  WriteBuffer
  uos_File2File
- rat :=
- addintofile
- file2f
 findoptions=1
 editpos=20
  0,-1073741823
@@ -927,11 +927,11 @@ editpos=20
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
- 0,79
  0,-1073741823
  0,-1073741823
- 14,3630
+ 7,1662
+ 0,-1073741823
+ 0,7224
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1024,29 +1024,8 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=20
- 0
- 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 14
- 11
- 9
- 12
- 13
- 15
- 19
- 17
- 20
- 18
- 16
 tabsize=60
-firsttab=13
+firsttab=14
 index=17
 [layout]
 windowlayout=549
@@ -1075,7 +1054,7 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=231
+ x=229
  y=53
  cx=939
  cy=621
@@ -1198,7 +1177,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=517
  rcx=0
  rcy=0
  [projecttreefo.project_tree]
@@ -1407,9 +1386,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=580
+ y=581
  cx=1356
- cy=121
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1509,7 +1488,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1525,7 +1504,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=58
  rcx=0
  rcy=0
  [sourcefo]
@@ -1541,7 +1520,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=512
+ cy=517
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1575,9 +1554,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=65
+ y=61
  cx=1356
- cy=512
+ cy=517
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

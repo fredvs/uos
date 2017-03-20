@@ -573,7 +573,10 @@ type
   destructor Destroy; override;
 
   procedure DoTerminate; override;  
+  
   // Audio methods
+  
+  procedure PlayEx(no_free: Boolean); // Start playing with free at end as parameter
 
   Procedure Play() ;  // Start playing
 
@@ -1447,42 +1450,13 @@ begin
   if (isAssigned = True) then  result := Status else result := -1 ;
 end;
 
-procedure Tuos_Player.Play() ;
+procedure Tuos_Player.PlayEx(no_free: Boolean);
 var
   x: cint32;
  begin
   if (isAssigned = True) then
   begin
-  NoFree := false;
-{$IF DEFINED(portaudio)}
-  for x := 0 to high(StreamOut) do
-  if StreamOut[x].Data.HandleSt <> nil then
-  begin
-  Pa_StartStream(StreamOut[x].Data.HandleSt);
-  end;
-
-  for x := 0 to high(StreamIn) do
-  if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
-  begin
-  Pa_StartStream(StreamIn[x].Data.HandleSt);
-  // if x > 0 then sleep(200);
-  end;
-{$endif}
-
-  start;  // resume;  { if fpc version <= 2.4.4}
-  Status := 1;
-  RTLeventSetEvent(evPause);
-end;
-
-end;
-
-procedure Tuos_Player.PlayNoFree() ;
-var
-  x: cint32;
- begin
-  if (isAssigned = True) then
-  begin
-  NoFree := true;
+  NoFree := no_free;
 
   {$IF DEFINED(portaudio)}
   for x := 0 to high(StreamOut) do
@@ -1493,10 +1467,15 @@ var
 
   for x := 0 to high(StreamIn) do
   begin
-  InputSeek(x, 0);
-  if StreamIn[x].Data.TypePut = 4 then
-  StreamIn[x].Data.posmem := 0;
-  StreamIn[x].Data.status  := 1 ;
+
+   if no_free then 
+   begin 
+    InputSeek(x, 0);
+    if StreamIn[x].Data.TypePut = 4 then
+    StreamIn[x].Data.posmem := 0;
+    StreamIn[x].Data.status  := 1 ;
+   end;
+
   if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
   begin
   Pa_StartStream(StreamIn[x].Data.HandleSt);
@@ -1508,7 +1487,17 @@ var
   RTLeventSetEvent(evPause);
  end;
 
-end;
+end;     
+
+procedure Tuos_Player.Play() ;
+begin
+ PlayEx(False);
+end;    
+
+procedure Tuos_Player.PlayNoFree() ;
+begin
+ PlayEx(True);
+end; 
 
 Procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
 begin

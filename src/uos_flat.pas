@@ -1663,15 +1663,14 @@ procedure uos_unloadlib() ;
   begin
   uosPlayers[x].nofree := false;
   uosPlayers[x].Stop();
+  end;
+  end;
   
   while (PlayersNotFree = true) and (nt > 0) do 
   begin 
   Sleep(10); 
   Dec(nt); 
   end; 
-  
-  end;
-  end;
 
   setlength(uosPlayers, 0) ;
   setlength(uosPlayersStat, 0) ;
@@ -1754,7 +1753,6 @@ procedure uos_Free();
 var
 x : integer;
 nt : integer = 300;
-frombuf : boolean = false; // to check why is it needed ?
 begin
 
 if assigned(uosPlayers) then
