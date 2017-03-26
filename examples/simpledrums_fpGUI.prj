@@ -554,12 +554,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3902
+ 3903
  0
  0
  0
  0
- 193
+ 192
 exeusedon=14
  3903
  0
@@ -829,9 +829,9 @@ line=9
  764
  2681
  1994
- 527
+ 526
  201
- 209
+ 208
 address=9
  5002412
  0
@@ -977,22 +977,27 @@ findhistory=20
  addoutputtofile
  inputp
 findoptions=1
-editpos=3
+editpos=4
  0,-1073741823
- 0,1458
- 0,202
+ 0,6748
+ 0,209
+ 0,1794
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
+bookmarks3=0
+sourcefiles=4
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpledrums_fpGUI.pas
-relpaths=3
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=4
  simpledrums_fpGUI.pas
  uos.pas
  simpledrums_fpGUI.pas
-ismoduletexts=3
+ uos_flat.pas
+ismoduletexts=4
+ 0
  0
  0
  0
@@ -1001,9 +1006,14 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=4
+ 0
+ 1
+ 3
+ 2
 tabsize=60
 firsttab=0
-index=2
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1031,8 +1041,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=232
- y=53
+ x=280
+ y=48
  cx=939
  cy=621
  rcx=0
@@ -1060,7 +1070,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1164,8 +1174,8 @@ windowlayout=530
  width1=12
  sortdescend1=0
  sorted=0
- col=-1073741823
- row=-1073741823
+ col=0
+ row=5
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1504,7 +1514,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

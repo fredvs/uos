@@ -186,8 +186,16 @@ targetfile=${PROJECTNAME}${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=1
+unitdirs=9
  ${lazarus}*
+ ${lazarus}/components/*
+ ${lazarus}/*
+ ${lazarus}/lcl/*
+ ${lazarus}/lcl/interfaces/*
+ ${lazarus}/lcl/interfaces/gtk2
+ ${lazarus}/lcl/components/*
+ ${lazarus}/lcl/include
+ ${lazarus}/lcl
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -195,15 +203,17 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=7
+makeoptions=8
  -l -Mobjfpc -Sh
  -gl
- -gh
+ -ghl
+ -vi
  -B
  -O-
  -O3 -XX -CX -Xs
  -FUunits/
-makeoptpurpose=7
+makeoptpurpose=8
+ 
  
  
  
@@ -409,7 +419,7 @@ usercolorcomment=30
  
 formatmacronames=0
 formatmacrovalues=0
-settingsfile=/home/graemeg/devel/wisa_clean.prj
+settingsfile=
 settingseditor=1
 settingsdebugger=1
 settingsstorage=1
@@ -420,13 +430,14 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=7
+makeoptionson=8
  63
- 30
- 0
- 34
  2
- 33
+ 0
+ 4095
+ 2
+ 2
+ 61
  63
 compilerusedon=29
  4095
@@ -497,10 +508,18 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=20:26:15 23/03/2017
+project_date=15:21:42 26/03/2017
 project_comment=
 aftcommandon=0
-unitdirson=1
+unitdirson=9
+ 987135
+ 987135
+ 987135
+ 987135
+ 987135
+ 987135
+ 987135
+ 987135
  987135
 macroon=0
 macronames=0
@@ -609,22 +628,9 @@ beforeload=
 afterload=
 beforerun=
 sourcebase=
-sourcedirs=16
- ${pb}/synchro/
- ${pb}/other/
- ${pb}/model/
- ${pb}/gui/
- ${pb}/
- ${wisaweb}/src/wa/utils/
- ${wisaweb}/src/wwclient/
- ${fpcpkgs}/wst/
- ${fpcpkgs}/tiopf/GUI/LCL/
- ${fpcpkgs}/tiopf/GUI/
- ${fpcpkgs}/tiopf/Options/
- ${fpcpkgs}/tiopf/Core/
- ${fpcpkgs}/synapse/source/lib/
- ${fpcpkgs}/synapse/source/
- ${fpcpkgs}/fpspreadsheet/
+sourcedirs=3
+ ${MSELIBDIR}kernel/$TARGETOSDIR/
+ ${MSELIBDIR}*/
  ./
 defines=0
 progparameters=
@@ -727,16 +733,16 @@ finddtext=
 findhistory=0
 findoptions=1
 editpos=2
- 0,149
- 0,-1073741823
+ 0,9
+ 0,138
 bookmarks0=0
 bookmarks1=0
 sourcefiles=2
+ ${PROJECTDIR}/simpledrums.lpr
  ${PROJECTDIR}/main_sd.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
 relpaths=2
+ simpledrums.lpr
  main_sd.pas
- simpledrums_fpGUI.pas
 ismoduletexts=2
  0
  0
@@ -747,7 +753,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -758,12 +764,12 @@ windowlayout=520
  mdistate=0
  nx=0
  ny=0
- ncx=668
- ncy=0
+ ncx=687
+ ncy=211
  x=0
  y=0
- cx=1356
- cy=798
+ cx=929
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -775,16 +781,16 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=232
- y=52
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,798
+  basedock,0,0,929,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -898,7 +904,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=596
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -990,7 +996,7 @@ windowlayout=520
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1099,9 +1105,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=661
- cx=1356
- cy=137
+ y=501
+ cx=929
+ cy=103
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1168,7 +1174,7 @@ windowlayout=520
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1198,8 +1204,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
- cy=59
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1210,12 +1216,12 @@ windowlayout=520
  mdistate=0
  nx=0
  ny=0
- ncx=929
+ ncx=928
  ncy=2
  x=0
  y=0
- cx=1356
- cy=59
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1230,15 +1236,15 @@ windowlayout=520
  ncy=0
  x=162
  y=0
- cx=1194
- cy=596
+ cx=767
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1265,9 +1271,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=62
- cx=1356
- cy=596
+ y=56
+ cx=929
+ cy=442
  rcx=0
  rcy=0
 [targetconsole]

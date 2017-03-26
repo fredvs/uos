@@ -135,8 +135,8 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
 for i := 0 to 2 do
  begin
 uos_CreatePlayer(i);
-uos_AddIntoDevOut(i, -1, 0, -1, 1, 0, 256);
-uos_AddFromFileIntoMemory(i, pchar(sound[i]), -1, 0, 256) ;
+uos_AddIntoDevOut(i, -1, 0.001, -1, 1, 0, 512);
+uos_AddFromFileIntoMemory(i, pchar(sound[i]), -1, 0, 512) ;
 end;
 
 end;

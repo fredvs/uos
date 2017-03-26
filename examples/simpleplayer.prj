@@ -186,8 +186,16 @@ targetfile=${PROJECTNAME}${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=1
+unitdirs=9
  ${lazarus}*
+ ${lazarus}/components/*
+ ${lazarus}/*
+ ${lazarus}/lcl/*
+ ${lazarus}/interfaces/*
+ ${lazarus}/interfaces/gtk2
+ ${lazarus}/lcl/components/*
+ ${lazarus}/lcl/include
+ ${lazarus}/lcl
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -195,15 +203,17 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=7
+makeoptions=8
  -l -Mobjfpc -Sh
  -gl
  -ghl
  -B
  -O-
  -O3 -XX -CX -Xs
+ -vi
  -FUunits/
-makeoptpurpose=7
+makeoptpurpose=8
+ 
  
  
  
@@ -420,16 +430,17 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=7
+makeoptionson=8
  63
  2
  0
  2
  2
  61
+ 4095
  63
 compilerusedon=29
- 69631
+ 4095
  0
  0
  0
@@ -459,14 +470,14 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 69631
+ 4095
  0
  0
  0
  0
  0
 exeusedon=14
- 69631
+ 4095
  0
  0
  0
@@ -497,10 +508,18 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=
+project_date=15:21:42 26/03/2017
 project_comment=
 aftcommandon=0
-unitdirson=1
+unitdirson=9
+ 987135
+ 987135
+ 987135
+ 987135
+ 987135
+ 987135
+ 987135
+ 987135
  987135
 macroon=0
 macronames=0
@@ -713,10 +732,20 @@ hintheight=0
 finddtext=
 findhistory=0
 findoptions=1
-editpos=0
-sourcefiles=0
-relpaths=0
-ismoduletexts=0
+editpos=2
+ 0,6
+ 0,-1073741823
+bookmarks0=0
+bookmarks1=0
+sourcefiles=2
+ ${PROJECTDIR}/simpleplayer.lpr
+ ${PROJECTDIR}/main_sp.pas
+relpaths=2
+ simpleplayer.lpr
+ main_sp.pas
+ismoduletexts=2
+ 0
+ 0
 modules=0
 moduleoptions=0
 visiblemodules=0
@@ -724,7 +753,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=-1
+index=0
 [layout]
 windowlayout=520
  [mainfo.basedock]

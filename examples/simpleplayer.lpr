@@ -4,11 +4,11 @@ program simpleplayer;
  {$DEFINE UseCThreads}
 
 uses
-   {$IFDEF UNIX} {$IFDEF UseCThreads}
+  {$IFDEF UNIX}
   cthreads,
-  cwstring, {$ENDIF} {$ENDIF}
+  cwstring, {$ENDIF} 
   Interfaces, // this includes the LCL widgetset
-   ctypes,
+  ctypes,
   Forms,
   main_sp { you can add units after this };
 
