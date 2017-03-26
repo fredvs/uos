@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="9"/>
     <General>
       <MainUnit Value="0"/>
       <Title Value="SimplePlayer"/>
@@ -10,12 +10,6 @@
       <UseXPManifest Value="True"/>
       <XPManifest>
         <DpiAware Value="True"/>
-        <UseCompatibility Value="True"/>
-        <UseCompatibilityVista Value="True"/>
-        <UseCompatibilityWin7 Value="True"/>
-        <UseCompatibilityWin8 Value="True"/>
-        <UseCompatibilityWin81 Value="True"/>
-        <UseCompatibilityWin10 Value="True"/>
       </XPManifest>
     </General>
     <i18n>
@@ -137,7 +131,7 @@ install:
       <Unit0>
         <Filename Value="simpleplayer.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="3"/>
         <CursorPos Y="22"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -148,6 +142,7 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <CursorPos X="80" Y="290"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -276,7 +271,7 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="6149"/>
         <CursorPos X="31" Y="6161"/>
         <UsageCount Value="100"/>
@@ -409,7 +404,7 @@ install:
       </Unit44>
       <Unit45>
         <Filename Value="simpleplayer_fpGUI.pas"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="361"/>
         <CursorPos X="24" Y="377"/>
         <UsageCount Value="21"/>
@@ -438,7 +433,7 @@ install:
       </Unit49>
       <Unit50>
         <Filename Value="uos_flat.pas"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="508"/>
         <CursorPos X="45" Y="523"/>
         <UsageCount Value="22"/>
@@ -478,7 +473,7 @@ install:
       </Unit55>
       <Unit56>
         <Filename Value="define.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <CursorPos X="78" Y="10"/>
         <UsageCount Value="19"/>
         <Loaded Value="True"/>
@@ -571,12 +566,10 @@ install:
       <Unit71>
         <Filename Value="/usr/local/codetyphon/typhon/components/BaseUtils/lazutf8sysutils.pas"/>
         <UnitName Value="LazUTF8SysUtils"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="10"/>
         <CursorPos X="5" Y="29"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit71>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">

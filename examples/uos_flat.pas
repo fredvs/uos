@@ -1753,9 +1753,10 @@ end;
   begin
    uosPlayers[PlayerIndex].nofree := false;
    uosPlayers[PlayerIndex].Stop();
+   Sleep(20); 
   while (PlayerNotFree(PlayerIndex) = true) and (nt > 0) do 
   begin 
-  Sleep(5); 
+  Sleep(10); 
   Dec(nt); 
   end;
   
@@ -1797,6 +1798,8 @@ if length(uosPlayers) > 0 then
    uos_FreePlayer(x);
   end;
   end;
+
+Sleep(40);
 
 while (PlayersNotFree = true) and (nt > 0) do 
  begin 

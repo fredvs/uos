@@ -52,15 +52,19 @@ if stopit = false then
     for i := 0 to 2 do
     if(Copy(drum_beats[i], posi, 1) = 'x') then
     begin
-    uos_Playnofree(i) ;
+   if uos_getstatus(i) = -1 then
+   begin 
+   uos_CreatePlayer(i);
+   uos_AddIntoDevOut(i, -1, 0.001, -1, 1, 0, 256);
+   uos_AddFromFile(i, pchar(sound[i]), -1, 0, 256) ;
+   end;
+   uos_Playnofree(i) ;
     end;
     
  inc(posi);
  if(posi > 16) then posi := 1;
-
   end
   else Timer1.Enabled := false;
-
 
 end;
 
@@ -131,14 +135,14 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
  drum_beats[2] := 'x0000000x0x00000'; // kick
 
   posi := 1;
-
+{
 for i := 0 to 2 do
  begin
 uos_CreatePlayer(i);
-uos_AddIntoDevOut(i, -1, 0.001, -1, 1, 0, 512);
-uos_AddFromFileIntoMemory(i, pchar(sound[i]), -1, 0, 512) ;
+uos_AddIntoDevOut(i, -1, 0.001, -1, 1, 0, 256);
+uos_AddFromFileIntoMemory(i, pchar(sound[i]), -1, 0, 256) ;
 end;
-
+}
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -151,7 +155,7 @@ for i := 0 to 2 do   // free player (not done with playnofree)
   uos_FreePlayer(i);
  end;
 sleep(10);
-  uos_free();
+uos_free();
 end;
 
 end.

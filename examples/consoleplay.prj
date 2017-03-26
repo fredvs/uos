@@ -512,7 +512,7 @@ makeoptionson=8
  63
  63
  2
- 32
+ 34
  48
  63
 compilerusedon=29
@@ -794,31 +794,38 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=3
+on=4
  0
  0
  0
-path=3
+ 0
+path=4
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
-line=3
- 5681
- 5004
+ /home/fred/uos/examples/uos.pas
+line=4
+ 5684
+ 5007
  101
-address=3
- 4885047
- 4873406
+ 1516
+address=4
+ 4885127
+ 4873517
  4197920
-addbkpt=3
+ 4812813
+addbkpt=4
  0
  0
  0
-ignore=3
+ 0
+ignore=4
  0
  0
  0
-condition=3
+ 0
+condition=4
+ 
  
  
  
@@ -879,8 +886,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=sleep
+finddtext=replay
 findhistory=20
+ replay
+ freepla
+ playex
  sleep
  PlayersNotFree
  DoTerminate
@@ -898,16 +908,13 @@ findhistory=20
  uos_play
  play
  AddFromMemory
- file2b
- Filetobuffer
- addfrommem
 findoptions=1
 editpos=5
  0,-1073741823
  0,-1073741823
+ 21,93
  0,-1073741823
  0,-1073741823
- 0,1362
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -948,7 +955,7 @@ order=5
  3
 tabsize=60
 firsttab=2
-index=3
+index=2
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -963,8 +970,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=929
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -976,16 +983,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=381
- y=49
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,929,585
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1027,7 +1034,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1088,7 +1095,7 @@ windowlayout=549
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1099,19 +1106,19 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=428
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
- propcolwidthref=49
- width0=110
+ [projecttreefo.grid]
+ propcolwidthref=18
+ width0=141
  sortdescend0=0
- width1=43
+ width1=12
  sortdescend1=0
  sorted=0
- col=0
- row=1
- rowheight=17
+ col=-1073741823
+ row=-1073741823
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1308,9 +1315,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=581
- cx=1356
- cy=120
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1409,8 +1416,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=63
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1425,8 +1432,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1356
- cy=63
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [sourcefo]
@@ -1441,8 +1448,8 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
- cy=512
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1465,22 +1472,6 @@ windowlayout=549
  wsize=0
  active=0
  visible=0
- [mainfo.panel1]
- splitdir=1
- useroptions=838958571
- parent=mainfo.basedock
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=0
- y=66
- cx=1356
- cy=512
- rcx=0
- rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
@@ -1500,6 +1491,22 @@ windowlayout=549
  wsize=0
  active=0
  visible=0
+ [mainfo.panel1]
+ splitdir=1
+ useroptions=838958571
+ parent=mainfo.basedock
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=54
+ cx=929
+ cy=428
+ rcx=0
+ rcy=0
 [targetconsole]
 finddtext=Input from memory
 findhistory=1

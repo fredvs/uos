@@ -192,7 +192,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=0
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=514
@@ -451,11 +451,11 @@ makeoptionson=8
  2
  63
 compilerusedon=21
- 4095
+ 4063
  0
  0
  0
- 0
+ 32
  0
  0
  0
@@ -473,16 +473,16 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 4095
+ 4063
  0
  0
  0
  0
- 0
+ 32
 exeusedon=14
- 4095
+ 4063
  0
- 0
+ 32
  0
  0
  0
@@ -517,9 +517,9 @@ aftcommandon=0
 unitdirson=7
  196671
  196671
- 0
+ 196640
  196671
- 196671
+ 196639
  196671
  196671
 macroon=5
@@ -728,8 +728,8 @@ path=2
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
 line=2
- 4338
- 4402
+ 4448
+ 4512
 address=2
  4615765
  4616949
@@ -809,8 +809,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=InputPositionTime
+finddtext=freepl
 findhistory=20
+ freepl
  InputPositionTime
  SeekTime
  uos_SeekTime
@@ -830,12 +831,11 @@ findhistory=20
  destructor Destroy
  .play
  play
- In1Index
 findoptions=1
 editpos=12
+ 0,1619
  0,-1073741823
  0,-1073741823
- 0,4
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -916,7 +916,7 @@ order=12
  3
 tabsize=60
 firsttab=2
-index=3
+index=5
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -931,8 +931,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=585
+ cx=1356
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -951,9 +951,9 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -973,7 +973,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1067,7 +1067,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=428
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1276,9 +1276,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=485
- cx=929
- cy=100
+ y=581
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1377,8 +1377,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1393,8 +1393,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1409,15 +1409,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=767
- cy=428
+ cx=1194
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1444,9 +1444,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=54
- cx=929
- cy=428
+ y=65
+ cx=1356
+ cy=513
  rcx=0
  rcy=0
 [targetconsole]

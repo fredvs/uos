@@ -1467,7 +1467,6 @@ var
   begin
   Pa_StartStream(StreamOut[x].Data.HandleSt);
   end;
-  FirstNoFree := false;
   end;
   
   
@@ -1489,7 +1488,8 @@ var
   end;
   {$endif}
   Status := 1;
-  start;  // resume;  { if fpc version <= 2.4.4}
+  if (NoFree = false) or ((NoFree = true) and (firstNoFree = true)) then start;  // resume;  { if fpc version <= 2.4.4}
+   FirstNoFree := false;
   RTLeventSetEvent(evPause);
  end;
 
@@ -1506,13 +1506,16 @@ begin
 end; 
 
 Procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
+var
+x : integer;
 begin
- if (isAssigned = True) then
+
+ if (isAssigned = True) and (NoFree = true) then
   begin
   NoFree := false;
-  play;
-  stop;
-  end;; 
+  Status := 0;
+  RTLeventSetEvent(evPause);
+  end;
 end;
 
 procedure Tuos_Player.RePlay();  // Resume Playing after Pause

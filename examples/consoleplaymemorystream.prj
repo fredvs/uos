@@ -190,7 +190,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -311,7 +311,7 @@ makeoptions=8
  -l -Mobjfpc -Schi
  -FE.
  -FUunits
- ghl
+ -ghl
  -B
  -O2 -XX -Xs -CX
  -vewnhibq
@@ -942,7 +942,7 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 7,6624
+ 0,6624
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -954,7 +954,7 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 0,129
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1106,7 +1106,7 @@ order=27
  12
 tabsize=60
 firsttab=12
-index=14
+index=15
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1121,7 +1121,7 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=929
  cy=682
  rcx=0
  rcy=0
@@ -1141,10 +1141,10 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,682
+  basedock,0,0,929,682
  focusedchild=0
  wsize=0
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1162,8 +1162,8 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=1
- visible=1
+ active=0
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1246,7 +1246,7 @@ windowlayout=549
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1260,16 +1260,16 @@ windowlayout=549
  cy=499
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
- propcolwidthref=49
- width0=110
+ [projecttreefo.grid]
+ propcolwidthref=18
+ width0=141
  sortdescend0=0
- width1=43
+ width1=12
  sortdescend1=0
  sorted=0
  col=0
- row=1
- rowheight=17
+ row=-1073741823
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1467,7 +1467,7 @@ windowlayout=549
  ncy=0
  x=0
  y=565
- cx=1356
+ cx=929
  cy=117
  rcx=0
  rcy=0
@@ -1567,7 +1567,7 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=929
  cy=60
  rcx=0
  rcy=0
@@ -1583,7 +1583,7 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=929
  cy=60
  rcx=0
  rcy=0
@@ -1599,7 +1599,7 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
+ cx=767
  cy=499
  rcx=0
  rcy=0
@@ -1635,7 +1635,7 @@ windowlayout=549
  ncy=0
  x=0
  y=63
- cx=1356
+ cx=929
  cy=499
  rcx=0
  rcy=0
