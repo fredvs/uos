@@ -531,6 +531,7 @@ type
   intobuf :boolean; // to check, needed for filetobuf
 
   NoFree : boolean;
+  FirstNoFree : boolean;
   // Do not free the player at end of thread.
 
   BeginProc: TProc;
@@ -1457,14 +1458,19 @@ var
   if (isAssigned = True) then
   begin
   NoFree := no_free;
-
+  
+  if (NoFree = false) or ((NoFree = true) and (firstNoFree = true)) then
+  begin
   {$IF DEFINED(portaudio)}
   for x := 0 to high(StreamOut) do
   if StreamOut[x].Data.HandleSt <> nil then
   begin
   Pa_StartStream(StreamOut[x].Data.HandleSt);
   end;
-
+  FirstNoFree := false;
+  end;
+  
+  
   for x := 0 to high(StreamIn) do
   begin
 
@@ -7417,6 +7423,7 @@ begin
   {$endif}
   isAssigned := true; 
   intobuf := false;
+  FirstNoFree := true;
   status := 2;
   BeginProc := nil;
   EndProc := nil;

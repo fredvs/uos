@@ -208,7 +208,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -255,17 +255,12 @@ programparameters=18
  y=243
  cx=328
  cy=348
-settings=13
- [settingsfo.tsplitter2]
- x=193
- y=16
- xprop=0.59763313609468
- yprop=0.97297297297297
- [settingsfo]
- x=410
- y=41
- cx=344
- cy=651
+settings=8
+ [settings_form]
+ x=447
+ y=148
+ cx=471
+ cy=446
  wsize=0
  active=1
  visible=1
@@ -529,9 +524,9 @@ makeoptionson=10
  2
  128
 compilerusedon=29
- 3903
- 0
- 0
+ 3891
+ 4
+ 8
  128
  64
  0
@@ -559,12 +554,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3903
+ 3902
  0
  0
  0
  0
- 192
+ 193
 exeusedon=14
  3903
  0
@@ -807,7 +802,7 @@ sigsettings=27
  30,30,T,F
 defaultmake=32
 [breakpoints]
-on=7
+on=9
  -1
  0
  -1
@@ -815,7 +810,9 @@ on=7
  0
  -1
  0
-path=7
+ 0
+ 0
+path=9
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/paio_channelhelper.pas
  /home/fred/uos_aac_new/examples/uos_aac.pas
@@ -823,15 +820,19 @@ path=7
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
-line=7
- 3835
+ /home/fred/uos/examples/simpledrums_fpGUI.pas
+ /home/fred/uos/examples/simpledrums_fpGUI.pas
+line=9
+ 3841
  33
  913
  764
- 2675
- 1988
- 539
-address=7
+ 2681
+ 1994
+ 527
+ 201
+ 209
+address=9
  5002412
  0
  0
@@ -839,7 +840,9 @@ address=7
  4984300
  4973483
  0
-addbkpt=7
+ 0
+ 0
+addbkpt=9
  0
  0
  0
@@ -847,7 +850,9 @@ addbkpt=7
  0
  0
  0
-ignore=7
+ 0
+ 0
+ignore=9
  0
  0
  0
@@ -855,7 +860,11 @@ ignore=7
  0
  0
  0
-condition=7
+ 0
+ 0
+condition=9
+ 
+ 
  
  
  
@@ -945,11 +954,14 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=dot
+finddtext=firstno
 findhistory=20
+ firstno
+ nofree
+ PlayNoFree
+ AddIntoDevOut
  dot
  AddFromFileIntoMemory
- nofree
  FramesCount
  AddFromMemoryStream
  length(tempoutmemory
@@ -964,22 +976,24 @@ findhistory=20
  AddIntoFileWAV
  addoutputtofile
  inputp
- endproc
- timerr
- ordir
 findoptions=1
-editpos=2
+editpos=3
  0,-1073741823
- 0,7424
+ 0,1458
+ 0,202
 bookmarks0=0
 bookmarks1=0
-sourcefiles=2
+bookmarks2=0
+sourcefiles=3
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/uos.pas
-relpaths=2
+ ${PROJECTDIR}/simpledrums_fpGUI.pas
+relpaths=3
  simpledrums_fpGUI.pas
  uos.pas
-ismoduletexts=2
+ simpledrums_fpGUI.pas
+ismoduletexts=3
+ 0
  0
  0
 modules=0
@@ -989,7 +1003,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1004,8 +1018,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=585
+ cx=1356
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -1017,17 +1031,17 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=231
+ x=232
  y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=0
- active=0
+ wsize=6
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1045,7 +1059,7 @@ windowlayout=530
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1129,7 +1143,7 @@ windowlayout=530
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1140,19 +1154,19 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=428
+ cy=513
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
- propcolwidthref=49
- width0=110
+ [projecttreefo.grid]
+ propcolwidthref=18
+ width0=141
  sortdescend0=0
- width1=43
+ width1=12
  sortdescend1=0
  sorted=0
- col=0
- row=10
- rowheight=17
+ col=-1073741823
+ row=-1073741823
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1349,9 +1363,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=485
- cx=929
- cy=100
+ y=581
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1450,8 +1464,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1466,8 +1480,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1482,15 +1496,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=767
- cy=428
+ cx=1194
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1517,9 +1531,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=54
- cx=929
- cy=428
+ y=65
+ cx=1356
+ cy=513
  rcx=0
  rcy=0
 [targetconsole]

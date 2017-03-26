@@ -6,7 +6,7 @@
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="simple_drums"/>
+      <Title Value="simpledrums"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
     </General>
@@ -31,7 +31,7 @@
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
-        <Filename Value="simple_drums.lpr"/>
+        <Filename Value="simpledrums.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
@@ -47,7 +47,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="simple_drums"/>
+      <Filename Value="simpledrums"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

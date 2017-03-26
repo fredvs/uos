@@ -1,4 +1,4 @@
-program simple_drums;
+program simpledrums;
 
 {$mode objfpc}{$H+}
 

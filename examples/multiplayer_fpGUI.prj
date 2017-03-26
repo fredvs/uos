@@ -84,7 +84,7 @@ replacedialog=20
  y=216
  cx=437
  cy=171
-options=108
+options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -163,9 +163,15 @@ options=108
  sortdescend10=0
  width11=479
  sortdescend11=0
+ [projectoptionsfo.comment_1]
+ value=
+ [projectoptionsfo.comment_B]
+ value=
+ [projectoptionsfo.comment_M]
+ value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -184,9 +190,9 @@ options=108
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=1
- [projectoptionsfo.tabwidget]
+ [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo]
  stackedunder=
  x=514
@@ -250,7 +256,15 @@ makeoptions=8
  -O2 -XX -Xs -CX
  -ghl
  -vewnhibq
-makeoptpurpose=0
+makeoptpurpose=8
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 compilerused=21
  ${COMPILER} (Default)
  Pascal 1
@@ -497,7 +511,7 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=
+project_date=20:46:53 23/03/2017
 project_comment=
 aftcommandon=0
 unitdirson=7
@@ -821,7 +835,7 @@ findoptions=1
 editpos=12
  0,-1073741823
  0,-1073741823
- 0,5
+ 0,4
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -940,7 +954,7 @@ windowlayout=530
   basedock,0,0,929,585
  focusedchild=0
  wsize=0
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -958,7 +972,7 @@ windowlayout=530
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1042,7 +1056,7 @@ windowlayout=530
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1056,16 +1070,16 @@ windowlayout=530
  cy=428
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
- propcolwidthref=49
- width0=110
+ [projecttreefo.grid]
+ propcolwidthref=18
+ width0=141
  sortdescend0=0
- width1=43
+ width1=12
  sortdescend1=0
  sorted=0
- col=0
- row=1
- rowheight=17
+ col=-1073741823
+ row=-1073741823
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1403,7 +1417,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

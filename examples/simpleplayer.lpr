@@ -12,8 +12,6 @@ uses
   Forms,
   main_sp { you can add units after this };
 
-{$R *.res}
-
 begin
   Application.Title := 'SimplePlayer';
   Application.Initialize;

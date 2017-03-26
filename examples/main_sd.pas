@@ -49,26 +49,15 @@ begin
 
 if stopit = false then
  begin
-   for i := 0 to 2 do
-  begin
+    for i := 0 to 2 do
     if(Copy(drum_beats[i], posi, 1) = 'x') then
-   uos_InputSetEnable(x,i,true)
-    else
-    uos_InputSetEnable(x,i,false);
+    begin
+    uos_Playnofree(i) ;
     end;
+    
+ inc(posi);
+ if(posi > 16) then posi := 1;
 
-  uos_PlayNoFree(x)  ;
-
-  posi := posi + 1;
-
-  if(posi > 16) then
-  begin
-    posi := 1;
-  end;
-
-    inc(x);
-  if x > 2 then x := 0 ;
-  //  x := 0 ;   // to try with only one player
   end
   else Timer1.Enabled := false;
 
@@ -80,8 +69,7 @@ begin
  Timer1.interval := strtoint(edit1.Text);
  stopit := false;
  posi := 1;
- x := 0 ;
-Timer1.Enabled := true;
+ Timer1.Enabled := true;
  end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -142,22 +130,14 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
  drum_beats[1] := '0000x0000000x000'; // snare
  drum_beats[2] := 'x0000000x0x00000'; // kick
 
- posi := 1;
+  posi := 1;
 
- for i := 0 to 2 do
+for i := 0 to 2 do
  begin
 uos_CreatePlayer(i);
-uos_AddIntoDevOut(i, -1, -1, -1, 1, 0, 512);
-for j := 0 to 2 do
- begin
- uos_AddFromFileIntoMemory(i, pchar(sound[j]), -1, 0, 512) ;
- uos_InputSetEnable(i,j,false);
- // uos_InputSetPositionEnable(i, j, 1) ;  // if you need to change position
-
+uos_AddIntoDevOut(i, -1, 0, -1, 1, 0, 256);
+uos_AddFromFileIntoMemory(i, pchar(sound[i]), -1, 0, 256) ;
 end;
-uos_AddFromSynth(i,1,0,0, -1,-1, -1, 512 );  // this for a dummy endless input, must be last input
-end;
-uos_PlayNoFree(i)  ;
 
 end;
 
@@ -167,6 +147,7 @@ i : integer;
 begin
 for i := 0 to 2 do   // free player (not done with playnofree)
  begin
+  uos_Stop(i);
   uos_FreePlayer(i);
  end;
 sleep(10);
