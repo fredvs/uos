@@ -182,7 +182,7 @@ object Form1: TForm1
     TabOrder = 3
   end
   object Button3: TButton
-    Left = 708
+    Left = 710
     Height = 25
     Top = 438
     Width = 54
@@ -577,7 +577,7 @@ object Form1: TForm1
     ParentFont = False
   end
   object Button2: TButton
-    Left = 238
+    Left = 240
     Height = 25
     Top = 438
     Width = 55

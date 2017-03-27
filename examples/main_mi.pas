@@ -143,8 +143,9 @@ procedure TForm1.ClosePlayer0;
 begin
   button16.Enabled := False;
   button15.Enabled := False;
-  button3.Enabled := False;
-  button14.Enabled := true;
+  button3.Enabled := false;
+  button14.Enabled := false;
+  button2.Enabled := true;
 end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
@@ -343,11 +344,12 @@ end;
 procedure TForm1.Button14Click(Sender: TObject);
 begin
 
-   button15.Enabled := True;
+  button15.Enabled := True;
   button3.Enabled := True;
   button14.Enabled := false;
   button16.Enabled := false;
-
+  button2.Enabled := false;
+  
   // set the volume from the sliders.
   TrackBar1Change(self);
   TrackBar2Change(self);
@@ -357,7 +359,8 @@ begin
       TrackBar6Change(self);
        TrackBar7Change(self);
         TrackBar8Change(self);
-
+        
+  
   uos_PlayNoFree(PlayerIndex0);
   ////// Ok let start it
 
@@ -434,18 +437,35 @@ begin
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
+  
+  CheckBox1Change(Sender);
+  CheckBox2Change(Sender);
+  CheckBox3Change(Sender);
+  CheckBox4Change(Sender);
+  CheckBox5Change(Sender);
+  CheckBox6Change(Sender);
+  CheckBox7Change(Sender);
+  CheckBox8Change(Sender);
+  
 
   /////// procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex0, @ClosePlayer0);
   ///// Assign the procedure of object to execute at end
   //////////// PlayerIndex : Index of a existing Player
   //////////// ClosePlayer1 : procedure of object to execute inside the loop
+
+   application.ProcessMessages;
+    sleep(100);
+   button14.Enabled := true;
 end;
 
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
   uos_Stop(PlayerIndex0);
+  sleep(100);
+  button2.Enabled:=true;
+  button3.Enabled:=false;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);

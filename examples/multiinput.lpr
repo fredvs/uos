@@ -11,7 +11,7 @@ uses
   Forms,
   main_mi { you can add units after this };
 
- {$R *.res}
+
 begin
   Application.Title := 'MultiInput';
   Application.Initialize;
