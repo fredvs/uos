@@ -531,7 +531,7 @@ type
   intobuf :boolean; // to check, needed for filetobuf
 
   NoFree : boolean;
-  FirstNoFree : boolean;
+  // FirstNoFree : boolean;
   // Do not free the player at end of thread.
 
   BeginProc: TProc;
@@ -1461,15 +1461,12 @@ var
   
   
   {$IF DEFINED(portaudio)}
-  if (NoFree = false) or ((NoFree = true) and (status = 2)) then
-   begin
   for x := 0 to high(StreamOut) do
   if StreamOut[x].Data.HandleSt <> nil then
   begin
   Pa_StartStream(StreamOut[x].Data.HandleSt);
   end;
-  end;
-   
+    
   for x := 0 to high(StreamIn) do
   begin
   if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
@@ -1489,8 +1486,9 @@ var
    
   Status := 1;
   
-  if (NoFree = false) or ((NoFree = true) and (firstNoFree = true)) then start;  // resume;  { if fpc version <= 2.4.4}
-  FirstNoFree := false;
+  // if (NoFree = false) or ((NoFree = true) and (firstNoFree = true)) then 
+  start;  // resume;  { if fpc version <= 2.4.4}
+  //FirstNoFree := false;
   RTLeventSetEvent(evPause);
  end;
 
@@ -1507,15 +1505,15 @@ begin
 end; 
 
 Procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
-var
-x : integer;
 begin
 
- if (isAssigned = True) and (NoFree = true) then
+ if (isAssigned = True) then
   begin
   NoFree := false;
-  Status := 0;
-  RTLeventSetEvent(evPause);
+  //Status := 0;
+  //RTLeventSetEvent(evPause);
+  play;
+  stop;
   end;
 end;
 
@@ -6839,11 +6837,16 @@ writeln('Status = 0');
   begin
   {$IF DEFINED(portaudio)}
   {$if defined(Windows) and defined(cpu64)}
+   if (StreamOut[x].Data.HandleSt <> nil) and 
+  (StreamOut[x].Data.TypePut = 1) then
+  begin
+  Pa_CloseStream(StreamOut[x].Data.HandleSt);
+  end;
    {$else}
   if (StreamOut[x].Data.HandleSt <> nil) and 
   (StreamOut[x].Data.TypePut = 1) then
   begin
-  // Pa_StopStream(StreamOut[x].Data.HandleSt);
+   Pa_StopStream(StreamOut[x].Data.HandleSt);
    Pa_CloseStream(StreamOut[x].Data.HandleSt);
   end;
   {$ENDIF}
@@ -7431,7 +7434,7 @@ begin
   {$endif}
   isAssigned := true; 
   intobuf := false;
-  FirstNoFree := true;
+  //FirstNoFree := true;
   status := 2;
   BeginProc := nil;
   EndProc := nil;

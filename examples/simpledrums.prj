@@ -736,17 +736,19 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=playex
-findhistory=4
+finddtext=firstn
+findhistory=6
+ firstn
+ freepl
  playex
  GetStatus
  status
  playerno
 findoptions=1
 editpos=6
- 0,5
  0,-1073741823
- 0,1492
+ 0,-1073741823
+ 0,6869
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -806,8 +808,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
- cy=682
+ cx=929
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -819,16 +821,16 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=231
+ x=380
  y=52
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,682
+  basedock,0,0,929,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -870,7 +872,7 @@ windowlayout=520
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -942,7 +944,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=499
+ cy=441
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1143,9 +1145,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=565
- cx=1356
- cy=117
+ y=500
+ cx=929
+ cy=104
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1242,8 +1244,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
- cy=60
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1258,8 +1260,8 @@ windowlayout=520
  ncy=2
  x=0
  y=0
- cx=1356
- cy=60
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1274,8 +1276,8 @@ windowlayout=520
  ncy=0
  x=162
  y=0
- cx=1194
- cy=499
+ cx=767
+ cy=441
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1309,9 +1311,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=63
- cx=1356
- cy=499
+ y=56
+ cx=929
+ cy=441
  rcx=0
  rcy=0
 [targetconsole]

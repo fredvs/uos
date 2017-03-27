@@ -705,18 +705,6 @@ begin
  Result:= False; 
 end; 
 
-function PlayerNotFree(indexplayer : integer): Boolean; 
-Var 
- i: Integer; 
-begin 
-Result:= False;
- if uosPlayersStat <> nil then 
-    if uosPlayersStat[indexplayer] <> -1 then 
-    Result:= True else
- Result:= False; 
-end; 
-
-
 {$IF DEFINED(noiseremoval)}
 procedure uos_InputAddDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32);
 begin
@@ -1733,40 +1721,19 @@ procedure uos_CreatePlayer(PlayerIndex : cint32);
 {$endif}
 // Create the player , PlayerIndex1 : from 0 to what your computer can do !
 // If PlayerIndex exists already, it will be overwriten...
+
  var
 x : cint32;
-nt : integer = 200;
 begin
-
 if PlayerIndex + 1 > length(uosPlayers) then
 begin
  setlength(uosPlayers,PlayerIndex + 1) ;
- uosPlayers[PlayerIndex] := nil;
  setlength(uosPlayersStat,PlayerIndex + 1) ;
+  uosPlayers[PlayerIndex]  := nil;
  setlength(uosLevelArray,PlayerIndex + 1) ;
 end;
+  if uosPlayers[PlayerIndex] <> nil then uosPlayers[PlayerIndex].Terminate;
 
- {$IF DEFINED(debug)}
- writeln('before uosPlayers[PlayerIndex] <> nil ');
- {$endif}  
-  
-  if (uosPlayers[PlayerIndex] <> nil) then
-  begin
-   uosPlayers[PlayerIndex].nofree := false;
-   uosPlayers[PlayerIndex].Stop();
-   Sleep(20); 
-  while (PlayerNotFree(PlayerIndex) = true) and (nt > 0) do 
-  begin 
-  Sleep(10); 
-  Dec(nt); 
-  end;
-  
-  end;
-
-{$IF DEFINED(debug)}
- writeln('after uosPlayers[PlayerIndex] <> nil ');
-{$endif}  
-  
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   uosPlayers[PlayerIndex] := Tuos_Player.Create(true,AParent);  // for fpGUI
   {$else}
@@ -1775,19 +1742,18 @@ end;
 
   uosPlayers[PlayerIndex].Index := PlayerIndex;
   uosPlayersStat[PlayerIndex] := 1 ;
- 
   for x := 0 to length(uosPlayersStat) -1 do
-  if uosPlayersStat[x] <> 1 then
-   begin
-   uosPlayersStat[x] := -1 ;
-   uosPlayers[x] := nil ;
-   end;
+if uosPlayersStat[x] <> 1 then
+begin
+uosPlayersStat[x] := -1 ;
+uosPlayers[x] := nil ;
+end;
 end;
 
 procedure uos_Free();
 var
 x : integer;
-nt : integer = 200;
+nt : integer = 300;
 begin
 
 if assigned(uosPlayers) then
@@ -1800,8 +1766,6 @@ if length(uosPlayers) > 0 then
   end;
   end;
 
-Sleep(40);
-
 while (PlayersNotFree = true) and (nt > 0) do 
  begin 
   Sleep(10); 
@@ -1810,5 +1774,6 @@ while (PlayersNotFree = true) and (nt > 0) do
  
 uos.uos_free();
 end;
+
 
 end.
