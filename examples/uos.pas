@@ -6838,11 +6838,15 @@ writeln('Status = 0');
   for x := 0 to high(StreamOut) do
   begin
   {$IF DEFINED(portaudio)}
-  if (StreamOut[x].Data.HandleSt <> nil) and (StreamOut[x].Data.TypePut = 1) then
+  {$if defined(Windows) and defined(cpu64)}
+   {$else}
+  if (StreamOut[x].Data.HandleSt <> nil) and 
+  (StreamOut[x].Data.TypePut = 1) then
   begin
   // Pa_StopStream(StreamOut[x].Data.HandleSt);
-  Pa_CloseStream(StreamOut[x].Data.HandleSt);
+   Pa_CloseStream(StreamOut[x].Data.HandleSt);
   end;
+  {$ENDIF}
   {$endif}
 
   {$IF DEFINED(shout)}

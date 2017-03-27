@@ -57,6 +57,15 @@ findinfiledialog=37
  y=415
  cx=339
  cy=251
+finddialog=8
+ [finddialogfo.selectedonly]
+ value=0
+ [finddialogfo]
+ stackedunder=
+ x=319
+ y=205
+ cx=312
+ cy=114
 options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -729,21 +738,33 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=
-findhistory=0
+finddtext=playnofr
+findhistory=2
+ playnofr
+ Pa_StopStream
 findoptions=1
-editpos=2
+editpos=4
  0,-1073741823
- 0,478
+ 10,530
+ 0,6844
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
-sourcefiles=2
+bookmarks2=0
+bookmarks3=0
+sourcefiles=4
  ${PROJECTDIR}/multiplayer.lpr
  ${PROJECTDIR}/main_mp.pas
-relpaths=2
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+relpaths=4
  multiplayer.lpr
  main_mp.pas
-ismoduletexts=2
+ uos.pas
+ uos_portaudio.pas
+ismoduletexts=4
+ 0
+ 0
  0
  0
 modules=0
@@ -751,9 +772,14 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=4
+ 0
+ 2
+ 3
+ 1
 tabsize=60
 firsttab=0
-index=1
+index=3
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -768,8 +794,8 @@ windowlayout=520
  ncy=211
  x=0
  y=0
- cx=929
- cy=604
+ cx=1356
+ cy=798
  rcx=0
  rcy=0
  [mainfo]
@@ -788,9 +814,9 @@ windowlayout=520
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,604
+  basedock,0,0,1356,798
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -904,7 +930,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=442
+ cy=584
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1105,9 +1131,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=501
- cx=929
- cy=103
+ y=661
+ cx=1356
+ cy=137
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1204,8 +1230,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=71
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1220,8 +1246,8 @@ windowlayout=520
  ncy=2
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=71
  rcx=0
  rcy=0
  [sourcefo]
@@ -1236,8 +1262,8 @@ windowlayout=520
  ncy=0
  x=162
  y=0
- cx=767
- cy=442
+ cx=1194
+ cy=584
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1271,9 +1297,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=56
- cx=929
- cy=442
+ y=74
+ cx=1356
+ cy=584
  rcx=0
  rcy=0
 [targetconsole]
