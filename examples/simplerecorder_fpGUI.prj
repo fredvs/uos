@@ -259,7 +259,7 @@ makeoptions=7
  -FE.
  -FUunits
  -B -ghl
- -O2 -XX -Xs -CX
+ -O4 -XX -Xs -CX
  -vewnhibq
 makeoptpurpose=7
  
@@ -458,11 +458,11 @@ makeoptionson=7
  127
  127
  127
- 2
- 112
+ 0
+ 127
  127
 compilerusedon=29
- 69631
+ 4095
  0
  0
  0
@@ -492,14 +492,14 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 69631
+ 4064
  0
  0
  0
  0
- 0
+ 31
 exeusedon=14
- 69631
+ 4095
  0
  0
  0
@@ -530,7 +530,7 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=
+project_date=04:37:58 27/03/2017
 project_comment=
 aftcommandon=0
 unitdirson=7
@@ -850,6 +850,7 @@ findhistory=20
  sleep(
 findoptions=1
 editpos=20
+ 0,1568
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -867,8 +868,7 @@ editpos=20
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 4,229
+ 37,222
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -997,7 +997,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=701
+ cy=798
  rcx=0
  rcy=0
  [mainfo]
@@ -1016,7 +1016,7 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,1356,798
  focusedchild=0
  wsize=6
  active=1
@@ -1121,7 +1121,7 @@ windowlayout=530
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1132,19 +1132,19 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=512
+ cy=583
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
- propcolwidthref=49
- width0=110
+ [projecttreefo.grid]
+ propcolwidthref=18
+ width0=141
  sortdescend0=0
- width1=43
+ width1=12
  sortdescend1=0
  sorted=0
- col=0
- row=1
- rowheight=17
+ col=-1073741823
+ row=-1073741823
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1341,9 +1341,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=580
+ y=660
  cx=1356
- cy=121
+ cy=138
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1443,7 +1443,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=62
+ cy=71
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1459,7 +1459,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=62
+ cy=71
  rcx=0
  rcy=0
  [sourcefo]
@@ -1475,7 +1475,7 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=512
+ cy=583
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1509,9 +1509,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=65
+ y=74
  cx=1356
- cy=512
+ cy=583
  rcx=0
  rcy=0
 [targetconsole]

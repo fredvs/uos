@@ -955,8 +955,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=$IF DEFINED(webstream
+finddtext=playernotfre
 findhistory=20
+ playernotfre
  $IF DEFINED(webstream
  mpg_read_strea
  m_get_filelen
@@ -976,9 +977,8 @@ findhistory=20
  fromm
  create
  timer
- fromfilein
 findoptions=1
-editpos=28
+editpos=30
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1006,7 +1006,9 @@ editpos=28
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,20
+ 0,-1073741823
+ 0,-1073741823
+ 8,703
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1035,7 +1037,9 @@ bookmarks24=0
 bookmarks25=0
 bookmarks26=0
 bookmarks27=0
-sourcefiles=28
+bookmarks28=0
+bookmarks29=0
+sourcefiles=30
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1064,7 +1068,9 @@ sourcefiles=28
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/mainmse_sp.pas
-relpaths=28
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=30
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1093,7 +1099,11 @@ relpaths=28
  simpleplayer_fpGUI.pas
  uos_libsndfile.pas
  mainmse_sp.pas
-ismoduletexts=28
+ uos.pas
+ uos_flat.pas
+ismoduletexts=30
+ 0
+ 0
  0
  0
  0
@@ -1131,7 +1141,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=28
+order=30
  0
  1
  2
@@ -1151,6 +1161,8 @@ order=28
  16
  17
  27
+ 28
+ 29
  18
  19
  20
@@ -1162,7 +1174,7 @@ order=28
  26
 tabsize=60
 firsttab=17
-index=18
+index=20
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1177,8 +1189,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=604
+ cx=1356
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -1190,16 +1202,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=230
+ y=54
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,604
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1302,7 +1314,7 @@ windowlayout=549
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1313,19 +1325,19 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=442
+ cy=513
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
- propcolwidthref=49
- width0=110
+ [projecttreefo.grid]
+ propcolwidthref=18
+ width0=141
  sortdescend0=0
- width1=43
+ width1=12
  sortdescend1=0
  sorted=0
  col=0
- row=1
- rowheight=17
+ row=5
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1522,9 +1534,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=501
- cx=929
- cy=103
+ y=581
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1623,8 +1635,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1639,8 +1651,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1655,8 +1667,8 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=767
- cy=442
+ cx=1194
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1690,9 +1702,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=56
- cx=929
- cy=442
+ y=65
+ cx=1356
+ cy=513
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

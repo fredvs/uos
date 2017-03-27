@@ -709,6 +709,7 @@ function PlayerNotFree(indexplayer : integer): Boolean;
 Var 
  i: Integer; 
 begin 
+Result:= False;
  if uosPlayersStat <> nil then 
     if uosPlayersStat[indexplayer] <> -1 then 
     Result:= True else
@@ -1749,7 +1750,7 @@ end;
  writeln('before uosPlayers[PlayerIndex] <> nil ');
  {$endif}  
   
-  if uosPlayers[PlayerIndex] <> nil then
+  if (uosPlayers[PlayerIndex] <> nil) then
   begin
    uosPlayers[PlayerIndex].nofree := false;
    uosPlayers[PlayerIndex].Stop();

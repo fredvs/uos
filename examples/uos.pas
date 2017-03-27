@@ -1459,20 +1459,26 @@ var
   begin
   NoFree := no_free;
   
-  if (NoFree = false) or ((NoFree = true) and (firstNoFree = true)) then
-  begin
+  
   {$IF DEFINED(portaudio)}
+  if (NoFree = false) or ((NoFree = true) and (status = 2)) then
+   begin
   for x := 0 to high(StreamOut) do
   if StreamOut[x].Data.HandleSt <> nil then
   begin
   Pa_StartStream(StreamOut[x].Data.HandleSt);
   end;
   end;
-  
-  
+   
   for x := 0 to high(StreamIn) do
   begin
-
+  if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
+  begin
+  Pa_StartStream(StreamIn[x].Data.HandleSt);
+  end;
+  end;
+  {$endif}
+  
    if no_free then 
    begin 
     InputSeek(x, 0);
@@ -1480,16 +1486,11 @@ var
     StreamIn[x].Data.posmem := 0;
     StreamIn[x].Data.status  := 1 ;
    end;
-
-  if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
-  begin
-  Pa_StartStream(StreamIn[x].Data.HandleSt);
-  end;
-  end;
-  {$endif}
+   
   Status := 1;
+  
   if (NoFree = false) or ((NoFree = true) and (firstNoFree = true)) then start;  // resume;  { if fpc version <= 2.4.4}
-   FirstNoFree := false;
+  FirstNoFree := false;
   RTLeventSetEvent(evPause);
  end;
 
@@ -6676,7 +6677,7 @@ if err > 0 then
   WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
   // StreamOut[x].FileBuffer.Data.Free;
   end;
-
+  
   {$IF not DEFINED(Library)}
   if EndProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
@@ -6839,7 +6840,7 @@ writeln('Status = 0');
   {$IF DEFINED(portaudio)}
   if (StreamOut[x].Data.HandleSt <> nil) and (StreamOut[x].Data.TypePut = 1) then
   begin
-  Pa_StopStream(StreamOut[x].Data.HandleSt);
+  // Pa_StopStream(StreamOut[x].Data.HandleSt);
   Pa_CloseStream(StreamOut[x].Data.HandleSt);
   end;
   {$endif}

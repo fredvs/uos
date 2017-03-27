@@ -912,9 +912,9 @@ findoptions=1
 editpos=5
  0,-1073741823
  0,-1073741823
- 21,93
+ 0,110
  0,-1073741823
- 0,-1073741823
+ 0,6807
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -955,7 +955,7 @@ order=5
  3
 tabsize=60
 firsttab=2
-index=2
+index=3
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1034,7 +1034,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1472,6 +1472,22 @@ windowlayout=549
  wsize=0
  active=0
  visible=0
+ [mainfo.panel1]
+ splitdir=1
+ useroptions=838958571
+ parent=mainfo.basedock
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=54
+ cx=929
+ cy=428
+ rcx=0
+ rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
@@ -1491,22 +1507,6 @@ windowlayout=549
  wsize=0
  active=0
  visible=0
- [mainfo.panel1]
- splitdir=1
- useroptions=838958571
- parent=mainfo.basedock
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=0
- y=54
- cx=929
- cy=428
- rcx=0
- rcy=0
 [targetconsole]
 finddtext=Input from memory
 findhistory=1

@@ -980,10 +980,10 @@ findoptions=1
 editpos=6
  0,-1073741823
  0,-1073741823
+ 0,5
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 2,39
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1024,8 +1024,8 @@ order=6
  5
  4
 tabsize=60
-firsttab=0
-index=4
+firsttab=1
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
