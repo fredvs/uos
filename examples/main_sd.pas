@@ -5,7 +5,7 @@ unit main_sd;
 interface
 
 uses
-  SysUtils, Forms, StdCtrls,
+  SysUtils, Forms, Classes, StdCtrls,
   ExtCtrls,  uos_flat;
 
 type
@@ -36,7 +36,8 @@ var
   Form1: TForm1;
   stopit :boolean = false;
   x: integer = 0;
-
+  ms0, ms1, ms2 : Tmemorystream; 
+  
 implementation
 
 {$R *.lfm}
@@ -52,13 +53,7 @@ if stopit = false then
     for i := 0 to 2 do
     if(Copy(drum_beats[i], posi, 1) = 'x') then
     begin
-   if uos_getstatus(i) = -1 then
-   begin 
-   uos_CreatePlayer(i);
-   uos_AddIntoDevOut(i, -1, 0.001, -1, 1, 0, 256);
-   uos_AddFromFile(i, pchar(sound[i]), -1, 0, 256) ;
-   end;
-   uos_Playnofree(i) ;
+    uos_Playnofree(i) ;
     end;
     
  inc(posi);
@@ -135,14 +130,29 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
  drum_beats[2] := 'x0000000x0x00000'; // kick
 
   posi := 1;
-{
-for i := 0 to 2 do
+ ms0:= TMemoryStream.Create; 
+ ms0.LoadFromFile(pchar(sound[0])); 
+ ms0.Position:= 0;
+ 
+ ms1:= TMemoryStream.Create; 
+ ms1.LoadFromFile(pchar(sound[1])); 
+ ms1.Position:= 0;
+ 
+ ms2:= TMemoryStream.Create; 
+ ms2.LoadFromFile(pchar(sound[2])); 
+ ms2.Position:= 0; 
+ 
+   for i := 0 to 2 do   // free player (not done with playnofree)
  begin
-uos_CreatePlayer(i);
-uos_AddIntoDevOut(i, -1, 0.001, -1, 1, 0, 256);
-uos_AddFromFileIntoMemory(i, pchar(sound[i]), -1, 0, 256) ;
-end;
-}
+   uos_CreatePlayer(i);
+   uos_AddIntoDevOut(i, -1, 0.0001, -1, 1, 0, 256);
+  case i of
+  0: uos_AddFromMemoryStream(i,ms0,0,-1,0,256);
+  1: uos_AddFromMemoryStream(i,ms1,0,-1,0,256);
+  2: uos_AddFromMemoryStream(i,ms2,0,-1,0,256);
+  end;
+ end;  
+  
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);

@@ -162,7 +162,7 @@ options=114
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=0
+ index=1
  [projectoptionsfo.filefiltergrid]
  propcolwidthref=618
  width0=112
@@ -174,7 +174,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=278
@@ -195,13 +195,12 @@ targetfile=${PROJECTNAME}${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=9
+unitdirs=8
  ${lazarus}*
  ${lazarus}/components/*
  ${lazarus}/*
  ${lazarus}/lcl/*
- ${lazarus}/lcl/interfaces/*
- ${lazarus}/lcl/interfaces/gtk2
+ ${lazarus}/lcl/interfaces/qt
  ${lazarus}/lcl/components/*
  ${lazarus}/lcl/include
  ${lazarus}/lcl
@@ -219,7 +218,7 @@ makeoptions=8
  -vi
  -B
  -O-
- -O3 -XX -CX -Xs
+ -O4 -XX -CX -Xs
  -FUunits/
 makeoptpurpose=8
  
@@ -444,7 +443,7 @@ makeoptionson=8
  2
  0
  4095
- 2
+ 3
  2
  61
  63
@@ -520,8 +519,7 @@ project_time=
 project_date=15:21:42 26/03/2017
 project_comment=
 aftcommandon=0
-unitdirson=9
- 987135
+unitdirson=8
  987135
  987135
  987135
@@ -745,30 +743,35 @@ findhistory=4
  playerno
  playex
 findoptions=1
-editpos=5
+editpos=6
  0,-1073741823
- 0,61
- 0,1447
- 0,1313
- 21,9
+ 0,51
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,256
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+sourcefiles=6
  ${PROJECTDIR}/simpledrums.lpr
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/simpledrums_fpGUI.pas
-relpaths=5
+ ${PROJECTDIR}/simpledrums_fpGUI.pas
+relpaths=6
  simpledrums.lpr
  main_sd.pas
  uos.pas
  uos_flat.pas
  simpledrums_fpGUI.pas
-ismoduletexts=5
+ simpledrums_fpGUI.pas
+ismoduletexts=6
+ 0
  0
  0
  0
@@ -779,9 +782,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=5
+order=6
  0
  1
+ 5
  4
  3
  2
@@ -798,8 +802,8 @@ windowlayout=520
  mdistate=0
  nx=0
  ny=0
- ncx=687
- ncy=211
+ ncx=668
+ ncy=0
  x=0
  y=0
  cx=1356
@@ -815,8 +819,8 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=232
+ y=52
  cx=939
  cy=621
  rcx=0
@@ -988,14 +992,14 @@ windowlayout=520
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1004,7 +1008,7 @@ windowlayout=520
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1250,7 +1254,7 @@ windowlayout=520
  mdistate=0
  nx=0
  ny=0
- ncx=928
+ ncx=929
  ncy=2
  x=0
  y=0
