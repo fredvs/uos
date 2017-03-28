@@ -162,7 +162,7 @@ options=114
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=0
+ index=1
  [projectoptionsfo.filefiltergrid]
  propcolwidthref=618
  width0=112
@@ -174,7 +174,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=278
@@ -195,12 +195,13 @@ targetfile=${PROJECTNAME}${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=9
+unitdirs=10
  ${lazarus}*
  ${lazarus}/components/*
  ${lazarus}/*
  ${lazarus}/lcl/*
- 
+ ${lazarus}/lcl/interfaces/qt
+ ${lazarus}/lcl/interfaces/win32
  ${lazarus}/lcl/interfaces/gtk2
  ${lazarus}/lcl/components/*
  ${lazarus}/lcl/include
@@ -212,16 +213,18 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=8
+makeoptions=9
  -l -Mobjfpc -Sh
  -gl
  -ghl
  -vi
+ -WG
  -B
  -O-
- -O3 -XX -CX -Xs
+ -O4 -XX -CX -Xs
  -FUunits/
-makeoptpurpose=8
+makeoptpurpose=9
+ 
  
  
  
@@ -439,21 +442,22 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=8
+makeoptionson=9
  63
  2
  0
  4095
+ 48
  2
  2
  61
  63
 compilerusedon=29
- 4095
- 0
- 0
- 0
- 0
+ 4035
+ 4
+ 8
+ 16
+ 32
  0
  0
  0
@@ -486,9 +490,9 @@ debuggerusedon=6
  0
  7
 exeusedon=14
- 4095
+ 4047
  0
- 0
+ 48
  0
  0
  0
@@ -520,13 +524,14 @@ project_time=
 project_date=15:21:42 26/03/2017
 project_comment=
 aftcommandon=0
-unitdirson=9
+unitdirson=10
  987135
  987135
  987135
  987135
- 987135
- 987135
+ 987087
+ 983088
+ 983040
  987135
  987135
  987135
@@ -745,8 +750,8 @@ findhistory=2
 findoptions=1
 editpos=4
  0,-1073741823
+ 0,478
  0,-1073741823
- 38,6848
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -779,7 +784,7 @@ order=4
  1
 tabsize=60
 firsttab=0
-index=1
+index=3
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -790,8 +795,8 @@ windowlayout=520
  mdistate=0
  nx=0
  ny=0
- ncx=687
- ncy=211
+ ncx=668
+ ncy=0
  x=0
  y=0
  cx=1356
@@ -807,8 +812,8 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=233
- y=60
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
@@ -980,14 +985,14 @@ windowlayout=520
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -996,7 +1001,7 @@ windowlayout=520
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1131,9 +1136,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=581
+ y=580
  cx=1356
- cy=120
+ cy=121
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1231,7 +1236,7 @@ windowlayout=520
  x=0
  y=0
  cx=1356
- cy=63
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1242,12 +1247,12 @@ windowlayout=520
  mdistate=0
  nx=0
  ny=0
- ncx=928
+ ncx=929
  ncy=2
  x=0
  y=0
  cx=1356
- cy=63
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1297,7 +1302,7 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=66
+ y=65
  cx=1356
  cy=512
  rcx=0

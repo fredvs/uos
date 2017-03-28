@@ -797,6 +797,7 @@ end;
   
 function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
+ result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagTitle(InputIndex) ;
@@ -804,6 +805,7 @@ result := uosPlayers[PlayerIndex].InputGetTagTitle(InputIndex) ;
 
 function uos_InputGetTagArtist(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
+  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagArtist(InputIndex) ;
@@ -811,6 +813,7 @@ result := uosPlayers[PlayerIndex].InputGetTagArtist(InputIndex) ;
 
 function uos_InputGetTagAlbum(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
+  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagAlbum(InputIndex) ;
@@ -818,6 +821,7 @@ result := uosPlayers[PlayerIndex].InputGetTagAlbum(InputIndex) ;
 
 function uos_InputGetTagComment(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
+  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagComment(InputIndex) ;
@@ -825,6 +829,7 @@ result := uosPlayers[PlayerIndex].InputGetTagComment(InputIndex) ;
 
 function uos_InputGetTagTag(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
+  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagTag(InputIndex) ;
@@ -832,6 +837,7 @@ result := uosPlayers[PlayerIndex].InputGetTagTag(InputIndex) ;
  
 function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
+  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagDate(InputIndex) ;
@@ -1011,6 +1017,7 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
   // Add a Input from Device Input with custom parameters
   // PlayerIndex : Index of a existing Player
 begin
+ result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   Result :=  uosPlayers[PlayerIndex].AddFromDevIn(-1, -1, -1, -1, -1, -1) ;
@@ -1074,6 +1081,7 @@ function uos_AddIntoFile(PlayerIndex: cint32;  Filename: PChar): cint32;
   // PlayerIndex : Index of a existing Player
   // FileName : filename of saved audio wav file
  begin
+ result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  Result :=  uosPlayers[PlayerIndex].AddIntoFile(Filename, -1, -1, -1, -1, -1);
@@ -1093,6 +1101,7 @@ function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: 
   // MountFile : default : 'def' (= '/example.opus')
   //  result :  Output Index in array  -1 = error
  begin
+ result := -1;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  Result :=  uosPlayers[PlayerIndex].AddIntoIceServer(SampleRate, Channels, SampleFormat, EncodeType, Port, 
@@ -1346,6 +1355,7 @@ function uos_InputLengthTime(PlayerIndex: cint32; InputIndex: cint32): TTime;
   // InputIndex : InputIndex of existing input
   //  result : Length of Input in time format
 begin
+Result := sysutils.EncodeTime(0, 0, 0, 0);
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  result := uosPlayers[PlayerIndex].InputLengthTime(InputIndex) ;
@@ -1473,6 +1483,7 @@ function uos_InputPositionTime(PlayerIndex: cint32; InputIndex: cint32): TTime;
   // InputIndex : InputIndex of existing input
   //  result : current postion of Input in time format
 begin
+Result := sysutils.EncodeTime(0, 0, 0, 0);
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  result := uosPlayers[PlayerIndex].InputPositionTime(InputIndex) ;
@@ -1485,6 +1496,7 @@ function uos_InputAddDSP1ChanTo2Chan(PlayerIndex: cint32; InputIndex: cint32): c
   //  result :  index of DSPIn in array
   // example  DSPIndex1 := InputAddDSP1ChanTo2Chan(InputIndex1);
 begin
+result := -1;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  result := uosPlayers[PlayerIndex].InputAddDSP1ChanTo2Chan(InputIndex) ;

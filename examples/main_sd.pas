@@ -145,7 +145,7 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
    for i := 0 to 2 do   // free player (not done with playnofree)
  begin
    uos_CreatePlayer(i);
-   uos_AddIntoDevOut(i, -1, 0.0001, -1, 1, 0, 256);
+   uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 256);
   case i of
   0: uos_AddFromMemoryStream(i,ms0,0,-1,0,256);
   1: uos_AddFromMemoryStream(i,ms1,0,-1,0,256);

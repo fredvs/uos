@@ -1587,11 +1587,13 @@ end;
 function Tuos_Player.InputLength(InputIndex: cint32): cint32;
   // gives length in samples
 begin
+result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.Length;
 end;
 
 function Tuos_Player.InputLengthSeconds(InputIndex: cint32): cfloat;
 begin
+result := 0;
   if  (isAssigned = True) then Result := StreamIn[InputIndex].Data.Length / StreamIn[InputIndex].Data.SampleRate;
 end;
 
@@ -1600,7 +1602,7 @@ var
   tmp: cfloat;
   h, m, s, ms: word;
 begin
-
+ Result := sysutils.EncodeTime(0, 0, 0, 0);
   if (Status > 0) and (isAssigned = True) then tmp := InputLengthSeconds(InputIndex);
   ms := trunc(frac(tmp) * 1000);
   h := trunc(tmp / 3600);
@@ -1612,6 +1614,7 @@ end;
 function Tuos_Player.InputPosition(InputIndex: cint32): cint32;
   // gives current position
 begin
+ Result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.Position;
 end;
 
@@ -1683,6 +1686,7 @@ function Tuos_Player.InputGetLevelLeft(InputIndex: cint32): double;
   // InputIndex : InputIndex of existing input
   // result : left level(volume) from 0 to 1
 begin
+Result := 0;
   if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelLeft;
 end;
 
@@ -1690,11 +1694,13 @@ function Tuos_Player.InputGetLevelRight(InputIndex: cint32): double;
   // InputIndex : InputIndex of existing input
   // result : right level(volume) from 0 to 1
 begin
+Result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelRight;
 end;
 
 function Tuos_Player.InputPositionSeconds(InputIndex: cint32): float;
 begin
+Result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.Position / StreamIn[InputIndex].Data.SampleRate;
 end;
 
@@ -1703,6 +1709,7 @@ var
   tmp: float;
   h, m, s, ms: word;
 begin
+Result := sysutils.EncodeTime(0, 0, 0, 0);
   if (isAssigned = True) then tmp := InputPositionSeconds(InputIndex);
   {$IF DEFINED(debug)}
 	WriteLn('InputPositionTime(): InputPositionSeconds: '+ floattostr(tmp));
@@ -1719,31 +1726,37 @@ end;
 
 function Tuos_Player.InputGetTagTitle(InputIndex: cint32): pchar;
  begin
+ Result := nil;
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.title);
  end;
 
 function Tuos_Player.InputGetTagArtist(InputIndex: cint32): pchar;
  begin
+ Result := nil;
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.Artist);
  end;
 
 function Tuos_Player.InputGetTagAlbum(InputIndex: cint32): pchar;
  begin
+ Result := nil;
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.album);
  end;
 
 function Tuos_Player.InputGetTagComment(InputIndex: cint32): pchar;
  begin
+ Result := nil;
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.comment);
  end;
 
 function Tuos_Player.InputGetTagTag(InputIndex: cint32): pchar;
  begin
+ Result := nil;
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.tag);
  end;
  
 function Tuos_Player.InputGetTagDate(InputIndex: cint32): pchar;
  begin
+ Result := nil;
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.date);
  end;
 
@@ -4312,7 +4325,7 @@ Const
  SEEK_CUR = 1;
  SEEK_END = 2;
 begin
-
+Result:= 0 ;
  case whence of
   SEEK_SET: Result:= pms^.Seek(offset, soFromBeginning);
   SEEK_CUR: Result:= pms^.Seek(offset, soFromCurrent);
@@ -6675,7 +6688,7 @@ if err > 0 then
   WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
   // StreamOut[x].FileBuffer.Data.Free;
   end;
-  
+       
   {$IF not DEFINED(Library)}
   if EndProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
