@@ -835,7 +835,7 @@ line=8
  764
  2679
  1999
- 541
+ 540
  249
 address=8
  5002795
@@ -978,7 +978,7 @@ findhistory=20
  fromm
  create
 findoptions=1
-editpos=41
+editpos=43
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1009,7 +1009,6 @@ editpos=41
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,14
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1019,7 +1018,10 @@ editpos=41
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,6725
+ 0,-1073741823
+ 14,6715
+ 0,342
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1061,7 +1063,9 @@ bookmarks37=0
 bookmarks38=0
 bookmarks39=0
 bookmarks40=0
-sourcefiles=41
+bookmarks41=0
+bookmarks42=0
+sourcefiles=43
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1103,7 +1107,9 @@ sourcefiles=41
  ${PROJECTDIR}/waveform_fpGUI.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
-relpaths=41
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=43
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1145,7 +1151,11 @@ relpaths=41
  waveform_fpGUI.pas
  simpleplayer_fpGUI.pas
  uos.pas
-ismoduletexts=41
+ simpleplayer_fpGUI.pas
+ uos_flat.pas
+ismoduletexts=43
+ 0
+ 0
  0
  0
  0
@@ -1196,7 +1206,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=41
+order=43
  21
  0
  1
@@ -1230,6 +1240,8 @@ order=41
  29
  30
  40
+ 41
+ 42
  18
  19
  20
@@ -1255,8 +1267,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=1350
+ cy=699
  rcx=0
  rcy=0
  [mainfo]
@@ -1268,16 +1280,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=231
- y=54
- cx=939
- cy=621
+ x=3
+ y=24
+ cx=1360
+ cy=716
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,1350,699
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1391,7 +1403,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=512
+ cy=511
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1402,7 +1414,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=10
+ row=5
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1600,9 +1612,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=580
- cx=1356
- cy=121
+ y=579
+ cx=1350
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1701,7 +1713,7 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=62
  rcx=0
  rcy=0
@@ -1717,7 +1729,7 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=62
  rcx=0
  rcy=0
@@ -1733,8 +1745,8 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
- cy=512
+ cx=1188
+ cy=511
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1769,8 +1781,8 @@ windowlayout=549
  ncy=0
  x=0
  y=65
- cx=1356
- cy=512
+ cx=1350
+ cy=511
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

@@ -6715,14 +6715,16 @@ if err > 0 then
   RTLeventResetEvent(evPause);
   Status := 2;
   
+  {$IF DEFINED(portaudio)}
   for x := 0 to high(StreamOut) do
   begin
-     if (StreamOut[x].Data.HandleSt <> nil) and 
+  if (StreamOut[x].Data.HandleSt <> nil) and 
   (StreamOut[x].Data.TypePut = 1) then
   begin
-  Pa_StopStream(StreamOut[x].Data.HandleSt);
+   Pa_StopStream(StreamOut[x].Data.HandleSt);
   end;
   end;
+  {$ENDIF}
      
   end;
   
@@ -6859,13 +6861,6 @@ writeln('Status = 0');
   for x := 0 to high(StreamOut) do
   begin
   {$IF DEFINED(portaudio)}
-  {$if defined(Windows) and defined(cpu64)}
-   if (StreamOut[x].Data.HandleSt <> nil) and 
-  (StreamOut[x].Data.TypePut = 1) then
-  begin
-  Pa_CloseStream(StreamOut[x].Data.HandleSt);
-  end;
-   {$else}
   if (StreamOut[x].Data.HandleSt <> nil) and 
   (StreamOut[x].Data.TypePut = 1) then
   begin
@@ -6873,8 +6868,7 @@ writeln('Status = 0');
    Pa_CloseStream(StreamOut[x].Data.HandleSt);
   end;
   {$ENDIF}
-  {$endif}
-
+  
   {$IF DEFINED(shout)}
   if  (StreamOut[x].Data.TypePut = 2) then
   begin

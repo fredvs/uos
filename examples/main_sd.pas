@@ -146,11 +146,13 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
  begin
    uos_CreatePlayer(i);
    uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 256);
+   
   case i of
   0: uos_AddFromMemoryStream(i,ms0,0,-1,0,256);
   1: uos_AddFromMemoryStream(i,ms1,0,-1,0,256);
   2: uos_AddFromMemoryStream(i,ms2,0,-1,0,256);
   end;
+ 
  end;  
   
 end;

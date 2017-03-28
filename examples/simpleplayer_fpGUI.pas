@@ -8,7 +8,6 @@ uses
   cthreads, 
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
-  Math,
   uos_flat,
   ctypes, 
   Classes,
@@ -331,17 +330,17 @@ loadok : boolean = false;
     vuright.UpdateWindowPosition;
     vuLeft.UpdateWindowPosition;
     btnStart.Enabled := True;
-    btnStop.Enabled := False;
     btnPause.Enabled := False;
     btnresume.Enabled := False;
     trackbar1.Position := 0;
     lposition.Text := '00:00:00.000';
+    fpgapplication.processmessages;
+    btnStop.Enabled := False;
   end;
 
   procedure TSimpleplayer.btnStopClick(Sender: TObject);
   begin
-    uos_Stop(PlayerIndex1);
-    closeplayer1;
+     uos_Stop(PlayerIndex1);
   end;
 
   ///// example how to do custom dsp
