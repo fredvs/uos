@@ -743,31 +743,37 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=playnofr
-findhistory=2
+finddtext=uos_CreatePlayer
+findhistory=3
+ uos_CreatePlayer
  playnofr
  Pa_StopStream
 findoptions=1
-editpos=4
+editpos=5
  0,-1073741823
- 0,478
+ 0,11
+ 0,7400
  0,-1073741823
- 0,-1073741823
+ 0,193
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/multiplayer.lpr
  ${PROJECTDIR}/main_mp.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
-relpaths=4
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=5
  multiplayer.lpr
  main_mp.pas
  uos.pas
  uos_portaudio.pas
-ismoduletexts=4
+ uos_flat.pas
+ismoduletexts=5
+ 0
  0
  0
  0
@@ -777,14 +783,15 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=4
+order=5
  0
  2
  3
  1
+ 4
 tabsize=60
 firsttab=0
-index=3
+index=4
 [layout]
 windowlayout=520
  [mainfo.basedock]

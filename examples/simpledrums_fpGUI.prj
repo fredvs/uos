@@ -954,8 +954,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=ttime
+finddtext=levelarray
 findhistory=20
+ levelarray
  ttime
  PlayerNotFree
  playex
@@ -975,7 +976,6 @@ findhistory=20
  AddIntoFile
  audioformat
  HDFormat
- typeput
 findoptions=1
 editpos=8
  0,-1073741823
@@ -984,7 +984,7 @@ editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 31,7473
  0,1485
 bookmarks0=0
 bookmarks1=0
@@ -1037,7 +1037,7 @@ order=8
  4
 tabsize=60
 firsttab=1
-index=5
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1052,8 +1052,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=585
+ cx=1356
+ cy=701
  rcx=0
  rcy=0
  [mainfo]
@@ -1072,9 +1072,9 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,1356,701
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1116,7 +1116,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1188,7 +1188,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=428
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1397,9 +1397,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=485
- cx=929
- cy=100
+ y=581
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1498,8 +1498,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1514,8 +1514,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1530,8 +1530,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=767
- cy=428
+ cx=1194
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1565,9 +1565,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=54
- cx=929
- cy=428
+ y=65
+ cx=1356
+ cy=513
  rcx=0
  rcy=0
 [targetconsole]

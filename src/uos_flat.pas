@@ -187,10 +187,11 @@ procedure uos_unloadServerLib();
 procedure uos_UnloadPlugin(PluginName: PChar);
 
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-procedure uos_CreatePlayer(PlayerIndex: cint32; AParent: TObject);
+function uos_CreatePlayer(PlayerIndex: cint32; AParent: TObject) : boolean;
 {$else}
-procedure uos_CreatePlayer(PlayerIndex: cint32);
+function uos_CreatePlayer(PlayerIndex: cint32): boolean;
 {$endif}
+// result --> true if created
 
 {$IF DEFINED(portaudio)}
 function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
@@ -1727,16 +1728,20 @@ end;
 {$endif}
 
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-procedure uos_CreatePlayer(PlayerIndex : cint32 ; AParent: TObject);
+function uos_CreatePlayer(PlayerIndex : cint32 ; AParent: TObject): boolean;
 {$else}
-procedure uos_CreatePlayer(PlayerIndex : cint32);
+function uos_CreatePlayer(PlayerIndex : cint32): boolean;
 {$endif}
 // Create the player , PlayerIndex1 : from 0 to what your computer can do !
 // If PlayerIndex exists already, it will be overwriten...
+// result --> true if created
 
  var
 x : cint32;
 begin
+result := false;
+if PlayerIndex >= 0 then
+begin 
 if PlayerIndex + 1 > length(uosPlayers) then
 begin
  setlength(uosPlayers,PlayerIndex + 1) ;
@@ -1759,6 +1764,8 @@ if uosPlayersStat[x] <> 1 then
 begin
 uosPlayersStat[x] := -1 ;
 uosPlayers[x] := nil ;
+end;
+result := true;
 end;
 end;
 
