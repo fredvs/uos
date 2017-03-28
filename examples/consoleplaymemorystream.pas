@@ -143,8 +143,6 @@ var
   writeln('Press a key to exit...');
   readln;
   Terminate;
-  uos_FreePlayer(PlayerIndex1);
-  sleep(50);
   uos_free();
   end;
 

@@ -596,9 +596,7 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-  uos_FreePlayer(PlayerIndex0);
-
-   uos_free;
+    uos_free;
 end;
 
 end.

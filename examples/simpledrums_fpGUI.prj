@@ -954,10 +954,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=createp
+finddtext=function
 findhistory=20
- createp
  function
+ createp
  levelarray
  ttime
  PlayerNotFree
@@ -981,11 +981,11 @@ editpos=8
  0,-1073741823
  0,2466
  0,234
- 0,1801
+ 0,1804
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 15,826
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1037,7 +1037,7 @@ order=8
  4
 tabsize=60
 firsttab=1
-index=2
+index=5
 [layout]
 windowlayout=530
  [mainfo.basedock]

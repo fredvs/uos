@@ -393,8 +393,7 @@ begin
     Button3.Click;
     sleep(500);
   end;
-   application.ProcessMessages;
-  if button1.Enabled = False then
+   if button1.Enabled = False then
    uos_free;
 end;
 

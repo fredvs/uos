@@ -134,9 +134,6 @@ writeln('Try to connect to ' + theurl);
      writeln('Press a key to exit...');
  end;
       readln;
-   if res <> -1 then uos_stop(PlayerIndex1);
-     sleep(200);
-      uos_unloadLib();
-      uos_free;
+       uos_free;
      
 end.
