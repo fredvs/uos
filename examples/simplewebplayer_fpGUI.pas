@@ -8,6 +8,8 @@ uses
   cthreads,
   cwstring, {$ENDIF}
   SysUtils,
+  fpg_style_chrome_silver_flatmenu,
+  fpg_stylemanager,
   uos_flat,
   ctypes,
   Classes,
@@ -1004,7 +1006,8 @@ end;
     frm: TSimpleplayer;
   begin
     fpgApplication.Initialize;
- //   frm := TSimpleplayer.Create(nil);
+  if fpgStyleManager.SetStyle('Chrome silver flat menu') then
+          fpgStyle := fpgStyleManager.Style;
        fpgApplication.CreateForm(TSimpleplayer, frm);
     try
       frm.Show;

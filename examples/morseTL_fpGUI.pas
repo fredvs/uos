@@ -7,6 +7,8 @@ uses
   {$IFDEF UNIX}
  cthreads,
   cwstring, {$ENDIF}
+  fpg_stylemanager,
+  fpg_style_chrome_silver_flatmenu,
    SysUtils, Classes,  fpg_base,
   fpg_main,    fpg_form, fpg_button,
   fpg_label, fpg_edit, fpg_memo, uos_flat;
@@ -274,8 +276,10 @@ var
   frm: Tform1;
 begin
   fpgApplication.Initialize;
-  frm := Tform1.Create(nil);
-  try
+   if fpgStyleManager.SetStyle('Chrome silver flat menu') then
+          fpgStyle := fpgStyleManager.Style;
+    fpgApplication.CreateForm(Tform1, frm);
+   try
     frm.Show;
     frm.UpdateWindowPosition;
     fpgApplication.Run;

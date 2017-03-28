@@ -680,26 +680,31 @@ findhistory=4
  InputGetArrayLevel
  DrawWaveForm
 findoptions=1
-editpos=4
+editpos=5
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 126,186
+ 0,-1073741823
+ 0,275
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/waveform_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_opus.pas
-relpaths=4
+ ${PROJECTDIR}/waveform_fpGUI.pas
+relpaths=5
  uos.pas
  waveform_fpGUI.pas
  uos_flat.pas
  uos_opus.pas
-ismoduletexts=4
+ waveform_fpGUI.pas
+ismoduletexts=5
+ 0
  0
  0
  0
@@ -709,14 +714,15 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=4
+order=5
  0
  3
+ 4
  1
  2
 tabsize=60
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=522
  [mainfo.basedock]
@@ -731,8 +737,8 @@ windowlayout=522
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=929
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -744,17 +750,17 @@ windowlayout=522
  ny=0
  ncx=0
  ncy=0
- x=158
- y=51
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,929,585
  focusedchild=0
- wsize=6
- active=1
+ wsize=0
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -765,14 +771,14 @@ windowlayout=522
  ny=0
  ncx=0
  ncy=0
- x=866
- y=230
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -795,7 +801,7 @@ windowlayout=522
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -867,7 +873,7 @@ windowlayout=522
  x=0
  y=0
  cx=159
- cy=512
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1068,9 +1074,9 @@ windowlayout=522
  ncx=0
  ncy=0
  x=0
- y=581
- cx=1356
- cy=120
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1169,8 +1175,8 @@ windowlayout=522
  ncy=0
  x=0
  y=0
- cx=1356
- cy=63
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1185,8 +1191,8 @@ windowlayout=522
  ncy=2
  x=0
  y=0
- cx=1356
- cy=63
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [sourcefo]
@@ -1201,15 +1207,15 @@ windowlayout=522
  ncy=0
  x=162
  y=0
- cx=1194
- cy=512
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1236,9 +1242,9 @@ windowlayout=522
  ncx=0
  ncy=0
  x=0
- y=66
- cx=1356
- cy=512
+ y=54
+ cx=929
+ cy=428
  rcx=0
  rcy=0
 [targetconsole]

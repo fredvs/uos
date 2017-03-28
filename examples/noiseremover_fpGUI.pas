@@ -12,6 +12,8 @@ uses
   ctypes, 
   //Math,
   Classes,
+  fpg_stylemanager,
+  fpg_style_chrome_silver_flatmenu,
   fpg_button,
   fpg_widget,
   fpg_label,
@@ -511,6 +513,8 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     frm: TSimpleplayer;
   begin
     fpgApplication.Initialize;
+    if fpgStyleManager.SetStyle('Chrome silver flat menu') then
+          fpgStyle := fpgStyleManager.Style;
     fpgApplication.CreateForm(TSimpleplayer, frm);
     try
      frm.Show;

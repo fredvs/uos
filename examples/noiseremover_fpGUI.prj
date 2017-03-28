@@ -1006,7 +1006,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1067,7 +1067,7 @@ windowlayout=530
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1081,16 +1081,16 @@ windowlayout=530
  cy=426
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
+ [projecttreefo.grid]
  propcolwidthref=18
  width0=141
  sortdescend0=0
  width1=12
  sortdescend1=0
  sorted=0
- col=1
+ col=0
  row=-1073741823
- rowheight=17
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049

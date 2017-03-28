@@ -11,6 +11,8 @@ uses {$IFDEF UNIX}
   fpg_widget,
   uos_flat,
   ctypes,
+  fpg_style_chrome_silver_flatmenu,
+  fpg_stylemanager,
   {%units 'Auto-generated GUI code'}
   fpg_form,
   fpg_editbtn,
@@ -272,7 +274,9 @@ var
   begin
     fpgApplication.Initialize;
     try
-      frm := Twaveform.Create(nil);
+      if fpgStyleManager.SetStyle('Chrome silver flat menu') then
+          fpgStyle := fpgStyleManager.Style;
+      fpgApplication.CreateForm(Twaveform, frm);
       fpgApplication.MainForm := frm;
       frm.Show;
       fpgApplication.Run;

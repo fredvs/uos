@@ -476,7 +476,7 @@ begin
   //////////// PlayerIndex : Index of a existing Player
   //////////// ClosePlayer1 : procedure of object to execute inside the loop
 
-  uos_Play(PlayerIndex1);
+  uos_Playnofree(PlayerIndex1);
   ////// Ok let start it
 
   button17.Enabled := True;

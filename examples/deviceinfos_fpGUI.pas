@@ -8,6 +8,8 @@ program deviceinfos_fpGUI;
   fpg_main,
   fpg_form,
   uos_flat,
+  fpg_style_chrome_silver_flatmenu,
+  fpg_stylemanager,
   Classes,
   fpg_button,
   fpg_widget,
@@ -322,6 +324,8 @@ var
     frm: TDevicesInfos;
   begin
     fpgApplication.Initialize;
+      if fpgStyleManager.SetStyle('Chrome silver flat menu') then
+          fpgStyle := fpgStyleManager.Style;
     frm := TDevicesInfos.Create(nil);
     try
       frm.Show;

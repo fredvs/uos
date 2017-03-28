@@ -8,7 +8,8 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
   uos_flat,
-
+  fpg_style_chrome_silver_flatmenu,
+  fpg_stylemanager,
   ctypes,
   Math,
   Classes,
@@ -817,6 +818,8 @@ var
     frm: TFilterplayer;
   begin
     fpgApplication.Initialize;
+      if fpgStyleManager.SetStyle('Chrome silver flat menu') then
+          fpgStyle := fpgStyleManager.Style;
     frm := TFilterplayer.Create(nil);
     try
       frm.Show;

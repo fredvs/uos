@@ -794,14 +794,15 @@ findhistory=10
  Sort
  sort
 findoptions=1
-editpos=7
+editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,283
- 0,-1073741823
+ 0,281
+ 0,517
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -809,7 +810,8 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
+bookmarks7=0
+sourcefiles=8
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -817,7 +819,8 @@ sourcefiles=7
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/morseTL_fpGUI.pas
  ${PROJECTDIR}/morseTL_fpGUI.pas
-relpaths=7
+ ${PROJECTDIR}/noiseremover_fpGUI.pas
+relpaths=8
  uos.pas
  uos_flat.pas
  define.inc
@@ -825,7 +828,9 @@ relpaths=7
  uos_portaudio.pas
  morseTL_fpGUI.pas
  morseTL_fpGUI.pas
-ismoduletexts=7
+ noiseremover_fpGUI.pas
+ismoduletexts=8
+ 0
  0
  0
  0
@@ -838,7 +843,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=7
+order=8
  0
  1
  6
@@ -846,9 +851,10 @@ order=7
  3
  4
  5
+ 7
 tabsize=60
-firsttab=0
-index=6
+firsttab=2
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -927,7 +933,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -988,7 +994,7 @@ windowlayout=530
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1002,16 +1008,16 @@ windowlayout=530
  cy=426
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
+ [projecttreefo.grid]
  propcolwidthref=18
  width0=141
  sortdescend0=0
  width1=12
  sortdescend1=0
  sorted=0
- col=1
+ col=-1073741823
  row=-1073741823
- rowheight=17
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049

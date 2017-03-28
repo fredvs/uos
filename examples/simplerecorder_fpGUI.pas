@@ -4,7 +4,7 @@ program simplerecorder_fpGUI;
   {$DEFINE UseCThreads}
 
 uses
- cmem,
+ 
  {$IFDEF UNIX} {$IFDEF UseCThreads}
  
   cthreads,
@@ -13,6 +13,8 @@ uses
   uos_flat,
   uos,
   Classes,
+  fpg_style_chrome_silver_flatmenu,
+  fpg_stylemanager,
   fpg_button,
   fpg_widget,
   fpg_label,
@@ -615,6 +617,8 @@ var
     frm: TSimplerecorder;
   begin
     fpgApplication.Initialize;
+      if fpgStyleManager.SetStyle('Chrome silver flat menu') then
+          fpgStyle := fpgStyleManager.Style;
     frm := TSimplerecorder.Create(nil);
     try
       frm.Show;

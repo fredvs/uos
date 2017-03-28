@@ -6714,6 +6714,16 @@ if err > 0 then
    
   RTLeventResetEvent(evPause);
   Status := 2;
+  
+  for x := 0 to high(StreamOut) do
+  begin
+     if (StreamOut[x].Data.HandleSt <> nil) and 
+  (StreamOut[x].Data.TypePut = 1) then
+  begin
+  Pa_StopStream(StreamOut[x].Data.HandleSt);
+  end;
+  end;
+     
   end;
   
    {$IF DEFINED(debug)}
@@ -7404,7 +7414,7 @@ end;
 constructor Tuos_Init.Create;
 begin
   SetExceptionMask(GetExceptionMask + [exZeroDivide] + [exInvalidOp] +
-  [exDenormalized] + [exOverflow] + [exPrecision]);
+  [exDenormalized] + [exOverflow] + [exUnderflow] + [exPrecision]);
   uosLoadResult.PAloadERROR := -1;
   uosLoadResult.SFloadERROR := -1;
   uosLoadResult.BSloadERROR := -1;

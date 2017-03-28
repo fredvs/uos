@@ -8,6 +8,8 @@ uses {$IFDEF UNIX} {$IFDEF UseCThreads}
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
   uos_flat,
+  fpg_style_chrome_silver_flatmenu,
+  fpg_stylemanager,
   ctypes,
   Math,
   Classes,
@@ -966,6 +968,8 @@ var
     x : integer;
   begin
     fpgApplication.Initialize;
+     if fpgStyleManager.SetStyle('Chrome silver flat menu') then
+          fpgStyle := fpgStyleManager.Style;
     frm := TMultiplayer.Create(nil);
     try
       frm.Show;

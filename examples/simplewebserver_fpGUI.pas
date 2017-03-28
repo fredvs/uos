@@ -9,6 +9,8 @@ uses
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
   uos_flat,
+  fpg_stylemanager,
+  fpg_style_chrome_silver_flatmenu,
   ctypes, 
   Classes,
   fpg_button,
