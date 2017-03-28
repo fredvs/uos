@@ -519,7 +519,7 @@ makeoptionson=10
  511
  192
  511
- 369
+ 497
  255
  2
  128
@@ -829,7 +829,7 @@ line=9
  764
  2717
  2030
- 552
+ 545
  219
  234
 address=9
@@ -980,11 +980,11 @@ findoptions=1
 editpos=8
  0,-1073741823
  0,-1073741823
+ 0,234
  0,-1073741823
  0,-1073741823
+ 0,0
  0,-1073741823
- 0,-1073741823
- 1,7473
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1037,7 +1037,7 @@ order=8
  4
 tabsize=60
 firsttab=1
-index=4
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]

@@ -47,7 +47,7 @@ implementation
 procedure TForm1.Timer1Timer(Sender: TObject);
   var i: integer;
 begin
-
+ 
 if stopit = false then
  begin
     for i := 0 to 2 do
@@ -55,7 +55,7 @@ if stopit = false then
     begin
     uos_Playnofree(i) ;
     end;
-    
+  
  inc(posi);
  if(posi > 16) then posi := 1;
   end
@@ -161,12 +161,6 @@ procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 var
 i : integer;
 begin
-for i := 0 to 2 do   // free player (not done with playnofree)
- begin
-  uos_Stop(i);
-  uos_FreePlayer(i);
- end;
-sleep(10);
 uos_free();
 end;
 

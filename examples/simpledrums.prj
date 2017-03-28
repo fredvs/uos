@@ -162,7 +162,7 @@ options=114
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=1
+ index=0
  [projectoptionsfo.filefiltergrid]
  propcolwidthref=618
  width0=112
@@ -174,7 +174,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=278
@@ -483,12 +483,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4092
+ 4095
  0
  0
  0
  0
- 3
+ 0
 exeusedon=14
  4047
  0
@@ -743,10 +743,10 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=playex
+finddtext=firstn
 findhistory=6
- playex
  firstn
+ playex
  freepl
  GetStatus
  status
@@ -754,8 +754,8 @@ findhistory=6
 findoptions=1
 editpos=6
  0,-1073741823
- 0,-1073741823
- 2,6728
+ 0,49
+ 0,1505
  0,-1073741823
  0,-1073741823
  0,-1073741823
