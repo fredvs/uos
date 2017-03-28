@@ -1448,6 +1448,7 @@ var
 function Tuos_Player.GetStatus() : cint32 ;
   // Get the status of the player : -1 => error, 0 => has stopped, 1 => is running, 2 => is paused.
 begin
+result := -1 ;
   if (isAssigned = True) then  result := Status else result := -1 ;
 end;
 
