@@ -187,11 +187,10 @@ procedure uos_unloadServerLib();
 procedure uos_UnloadPlugin(PluginName: PChar);
 
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-function uos_CreatePlayer(PlayerIndex: cint32; AParent: TObject) : boolean;
+procedure uos_CreatePlayer(PlayerIndex: cint32; AParent: TObject);
 {$else}
-function uos_CreatePlayer(PlayerIndex: cint32): boolean;
+procedure uos_CreatePlayer(PlayerIndex: cint32);
 {$endif}
-// result --> true if created
 
 {$IF DEFINED(portaudio)}
 function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
@@ -706,6 +705,17 @@ begin
  Result:= False; 
 end; 
 
+function PlayerNotFree(indexplayer : integer): Boolean; 
+begin 
+ if uosPlayersStat <> nil then
+  if uosPlayersStat[indexplayer] <> -1 then 
+  begin
+   Result:= True;
+   Exit;
+  end;
+ Result:= False; 
+end; 
+
 {$IF DEFINED(noiseremoval)}
 procedure uos_InputAddDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32);
 begin
@@ -798,7 +808,6 @@ end;
   
 function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
- result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagTitle(InputIndex) ;
@@ -806,7 +815,6 @@ result := uosPlayers[PlayerIndex].InputGetTagTitle(InputIndex) ;
 
 function uos_InputGetTagArtist(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
-  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagArtist(InputIndex) ;
@@ -814,7 +822,6 @@ result := uosPlayers[PlayerIndex].InputGetTagArtist(InputIndex) ;
 
 function uos_InputGetTagAlbum(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
-  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagAlbum(InputIndex) ;
@@ -822,7 +829,6 @@ result := uosPlayers[PlayerIndex].InputGetTagAlbum(InputIndex) ;
 
 function uos_InputGetTagComment(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
-  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagComment(InputIndex) ;
@@ -830,7 +836,6 @@ result := uosPlayers[PlayerIndex].InputGetTagComment(InputIndex) ;
 
 function uos_InputGetTagTag(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
-  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagTag(InputIndex) ;
@@ -838,7 +843,6 @@ result := uosPlayers[PlayerIndex].InputGetTagTag(InputIndex) ;
  
 function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin
-  result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputGetTagDate(InputIndex) ;
@@ -1018,7 +1022,6 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
   // Add a Input from Device Input with custom parameters
   // PlayerIndex : Index of a existing Player
 begin
- result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   Result :=  uosPlayers[PlayerIndex].AddFromDevIn(-1, -1, -1, -1, -1, -1) ;
@@ -1082,7 +1085,6 @@ function uos_AddIntoFile(PlayerIndex: cint32;  Filename: PChar): cint32;
   // PlayerIndex : Index of a existing Player
   // FileName : filename of saved audio wav file
  begin
- result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  Result :=  uosPlayers[PlayerIndex].AddIntoFile(Filename, -1, -1, -1, -1, -1);
@@ -1102,7 +1104,6 @@ function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: 
   // MountFile : default : 'def' (= '/example.opus')
   //  result :  Output Index in array  -1 = error
  begin
- result := -1;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  Result :=  uosPlayers[PlayerIndex].AddIntoIceServer(SampleRate, Channels, SampleFormat, EncodeType, Port, 
@@ -1356,7 +1357,6 @@ function uos_InputLengthTime(PlayerIndex: cint32; InputIndex: cint32): TTime;
   // InputIndex : InputIndex of existing input
   //  result : Length of Input in time format
 begin
-Result := sysutils.EncodeTime(0, 0, 0, 0);
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  result := uosPlayers[PlayerIndex].InputLengthTime(InputIndex) ;
@@ -1484,7 +1484,6 @@ function uos_InputPositionTime(PlayerIndex: cint32; InputIndex: cint32): TTime;
   // InputIndex : InputIndex of existing input
   //  result : current postion of Input in time format
 begin
-Result := sysutils.EncodeTime(0, 0, 0, 0);
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  result := uosPlayers[PlayerIndex].InputPositionTime(InputIndex) ;
@@ -1497,7 +1496,6 @@ function uos_InputAddDSP1ChanTo2Chan(PlayerIndex: cint32; InputIndex: cint32): c
   //  result :  index of DSPIn in array
   // example  DSPIndex1 := InputAddDSP1ChanTo2Chan(InputIndex1);
 begin
-result := -1;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  result := uosPlayers[PlayerIndex].InputAddDSP1ChanTo2Chan(InputIndex) ;
@@ -1728,29 +1726,46 @@ end;
 {$endif}
 
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-function uos_CreatePlayer(PlayerIndex : cint32 ; AParent: TObject): boolean;
+procedure uos_CreatePlayer(PlayerIndex : cint32 ; AParent: TObject);
 {$else}
-function uos_CreatePlayer(PlayerIndex : cint32): boolean;
+procedure uos_CreatePlayer(PlayerIndex : cint32);
 {$endif}
 // Create the player , PlayerIndex1 : from 0 to what your computer can do !
 // If PlayerIndex exists already, it will be overwriten...
-// result --> true if created
-
  var
 x : cint32;
+nt : integer = 200;
 begin
-result := false;
-if PlayerIndex >= 0 then
-begin 
+
 if PlayerIndex + 1 > length(uosPlayers) then
 begin
  setlength(uosPlayers,PlayerIndex + 1) ;
+ uosPlayers[PlayerIndex] := nil;
  setlength(uosPlayersStat,PlayerIndex + 1) ;
-  uosPlayers[PlayerIndex]  := nil;
  setlength(uosLevelArray,PlayerIndex + 1) ;
 end;
-  if uosPlayers[PlayerIndex] <> nil then uosPlayers[PlayerIndex].Terminate;
 
+ {$IF DEFINED(debug)}
+ writeln('before uosPlayers[PlayerIndex] <> nil ');
+ {$endif}  
+  
+  if (uosPlayers[PlayerIndex] <> nil) then
+  begin
+   uosPlayers[PlayerIndex].nofree := false;
+   uosPlayers[PlayerIndex].Stop();
+   Sleep(20); 
+  while (PlayerNotFree(PlayerIndex) = true) and (nt > 0) do 
+  begin 
+  Sleep(10); 
+  Dec(nt); 
+  end;
+  
+  end;
+
+{$IF DEFINED(debug)}
+ writeln('after uosPlayers[PlayerIndex] <> nil ');
+{$endif}  
+  
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   uosPlayers[PlayerIndex] := Tuos_Player.Create(true,AParent);  // for fpGUI
   {$else}
@@ -1759,20 +1774,19 @@ end;
 
   uosPlayers[PlayerIndex].Index := PlayerIndex;
   uosPlayersStat[PlayerIndex] := 1 ;
+ 
   for x := 0 to length(uosPlayersStat) -1 do
-if uosPlayersStat[x] <> 1 then
-begin
-uosPlayersStat[x] := -1 ;
-uosPlayers[x] := nil ;
-end;
-result := true;
-end;
+  if uosPlayersStat[x] <> 1 then
+   begin
+   uosPlayersStat[x] := -1 ;
+   uosPlayers[x] := nil ;
+   end;
 end;
 
 procedure uos_Free();
 var
 x : integer;
-nt : integer = 300;
+nt : integer = 200;
 begin
 
 if assigned(uosPlayers) then
@@ -1785,6 +1799,8 @@ if length(uosPlayers) > 0 then
   end;
   end;
 
+Sleep(40);
+
 while (PlayersNotFree = true) and (nt > 0) do 
  begin 
   Sleep(10); 
@@ -1793,6 +1809,5 @@ while (PlayersNotFree = true) and (nt > 0) do
  
 uos.uos_free();
 end;
-
 
 end.
