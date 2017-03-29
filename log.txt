@@ -5,7 +5,7 @@
 *          United procedures to access Open Sound (IN/OUT) libraries              *
 *                                                                                 *
 *              With Big contributions of (in alphabetic order)                    *
-*       Andrew, BigChimp, Blaazen, KpjComp, Leledumbo, Phoenix, Sandro.           *
+*   Andrew, BigChimp, Blaazen, Franklyn, KpjComp, Leledumbo, Phoenix, Sandro.     *
 *                                                                                 *
 *                 Fred van Stappen /  fiens@hotmail.com                           *
 *                                                                                 *
