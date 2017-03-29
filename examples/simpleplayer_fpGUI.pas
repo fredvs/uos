@@ -484,7 +484,9 @@ loadok : boolean = false;
     //// Create the player.
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
-
+     
+     fpgapplication.processmessages;
+     
      InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(filenameEdit4.filename), -1, 
      samformat, -1);
     //// add input from audio file with custom parameters
@@ -603,8 +605,7 @@ loadok : boolean = false;
     TrackBar1.position := 0;
     trackbar1.Enabled := True;
     CheckBox1.Enabled := True;
-
-    btnStart.Enabled := False;
+    
     btnStop.Enabled := True;
     btnpause.Enabled := True;
     btnresume.Enabled := False;

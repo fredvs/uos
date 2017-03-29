@@ -97,10 +97,17 @@ begin
   if (btfFlat in AFlags) and not (btfIsPressed in AFlags) then
     Exit; // no need to go further
 
-   // so we don't paint over the border
-  InflateRect(r, -1, -1);
+ InflateRect(r, -1, -1);
+  // outer rectangle
+  ACanvas.SetLineStyle(1, lsSolid);
+ // ACanvas.SetColor(TfpgColor($a6a6a6));
+   ACanvas.SetColor(clblack);
+  ACanvas.DrawRectangle(r);
+
+  // so we don't paint over the border
+ 
   // now paint the face of the button
-  if (btfIsPressed in AFlags) or (btfHover in AFlags) then
+  if (btfIsPressed in AFlags) or (btfHover in AFlags) and not (btfDisabled in AFlags)  then
   begin
     ACanvas.GradientFill(r21, clHilite1, clwhite, gdVertical);
     ACanvas.GradientFill(r22, clwhite, clHilite1, gdVertical);

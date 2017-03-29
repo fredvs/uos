@@ -1,15 +1,15 @@
-{*******************************************************************************
-*                  United Openlibraries of Sound ( uos )                       *
-*                  --------------------------------------                      *
-*                                                                              *
-*          United procedures to access Open Sound (IN/OUT) libraries           *
-*                                                                              *
-*              With Big contributions of (in alphabetic order)                 *
-*       Andrew, BigChimp, Blaazen, Dibo, KpjComp, Leledumbo, Sandro.           *
-*                                                                              *
-*                 Fred van Stappen /  fiens@hotmail.com                        *
-*                                                                              *
-*                                                                              *
+{**********************************************************************************
+*                  United Openlibraries of Sound ( uos )                          *
+*                  --------------------------------------                         *
+*                                                                                 *
+*          United procedures to access Open Sound (IN/OUT) libraries              *
+*                                                                                 *
+*              With Big contributions of (in alphabetic order)                    *
+*       Andrew, BigChimp, Blaazen, KpjComp, Leledumbo, Phoenix, Sandro.           *
+*                                                                                 *
+*                 Fred van Stappen /  fiens@hotmail.com                           *
+*                                                                                 *
+*                                                                                 *
 ***********************************************************************************
 *  1 th changes: 2012-07-20 (First shot)                                          *
 *  2 th changes: 2012-07-31 (Mono thread, only one stream)                        *

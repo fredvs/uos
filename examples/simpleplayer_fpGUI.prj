@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpleplayer_fpGUI.prj
-findinfiledialog=58
+findinfiledialog=59
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,29 +29,31 @@ findinfiledialog=58
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=1
+ value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/uos/examples/
- filecolwidth=0
+  /home/fred/fpgui/
+ filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
+ filehistory=1
+  /home/fred/fpgui/
  filefilterindex=0
- filefilter=
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=tm_get_filele
+ value=mifSelected
  history=20
+  mifSelected
   tm_get_filele
   sf_count_t
   AddIntoMemory
@@ -71,7 +73,6 @@ findinfiledialog=58
   DSPNoiseRemoval
   setDSPVolumeout
   setDSPVolumein
-  AddDSPVolumein
  [findinfileadialogfo]
  stackedunder=
  x=615
@@ -835,7 +836,7 @@ line=8
  764
  2679
  1999
- 540
+ 542
  249
 address=8
  5002795
@@ -978,7 +979,7 @@ findhistory=20
  fromm
  create
 findoptions=1
-editpos=43
+editpos=46
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1019,8 +1020,11 @@ editpos=43
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 14,6715
- 0,342
+ 0,-1073741823
+ 1,608
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1065,7 +1069,10 @@ bookmarks39=0
 bookmarks40=0
 bookmarks41=0
 bookmarks42=0
-sourcefiles=43
+bookmarks43=0
+bookmarks44=0
+bookmarks45=0
+sourcefiles=46
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1107,9 +1114,12 @@ sourcefiles=43
  ${PROJECTDIR}/waveform_fpGUI.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ /home/fred/uos/examples/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=43
+ ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
+ /home/fred/fpgui/src/gui/fpg_style_carbon.pas
+ /home/fred/fpgui/src/corelib/fpg_main.pas
+relpaths=46
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1153,7 +1163,13 @@ relpaths=43
  uos.pas
  simpleplayer_fpGUI.pas
  uos_flat.pas
-ismoduletexts=43
+ fpg_style_chrome_silver_flatmenu.pas
+ fpgui/src/gui/fpg_style_carbon.pas
+ fpgui/src/corelib/fpg_main.pas
+ismoduletexts=46
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1206,7 +1222,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=43
+order=46
  21
  0
  1
@@ -1240,6 +1256,9 @@ order=43
  29
  30
  40
+ 43
+ 44
+ 45
  41
  42
  18
@@ -1252,7 +1271,7 @@ order=43
  26
 tabsize=60
 firsttab=31
-index=32
+index=36
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1386,7 +1405,7 @@ windowlayout=549
  ncy=0
  x=239
  y=115
- cx=678
+ cx=935
  cy=414
  rcx=0
  rcy=0
