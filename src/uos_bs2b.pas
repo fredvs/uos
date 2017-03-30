@@ -317,7 +317,7 @@ result:=true {is it already there ?}
 end  else begin {go & load the library}
     if Length(libfilename) = 0 then exit;
    
-    {$IFDEF windows} // try load dependency if not in /windows/system/
+    {$IFDEF windows} 
     gc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_dw2-1.dll');
     {$endif}
    

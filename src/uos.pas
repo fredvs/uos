@@ -6792,6 +6792,7 @@ writeln('Status = 0');
   {$IF DEFINED(bs2b)}
   if Plugin[x].Name = 'bs2b' then
   begin
+  bs2b_clear(Plugin[x].Abs2b);
   bs2b_close(Plugin[x].Abs2b); 
   end;
   {$endif}

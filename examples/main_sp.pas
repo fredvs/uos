@@ -196,7 +196,8 @@ begin
   Edit10.text := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
   Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
   Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
-  Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
+  // Error on Windows10 --> when closing application.
+  //Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
    {$endif}
   Edit4.Text := ordir + 'sound\test.ogg';
  {$ENDIF}
