@@ -733,8 +733,8 @@ finddtext=
 findhistory=0
 findoptions=1
 editpos=2
- 0,6
- 0,-1073741823
+ 0,9
+ 2,239
 bookmarks0=0
 bookmarks1=0
 sourcefiles=2
@@ -753,7 +753,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -1244,7 +1244,7 @@ windowlayout=520
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

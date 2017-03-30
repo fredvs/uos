@@ -243,6 +243,14 @@ var
  
  of_Handle:TLibHandle=dynlibs.NilHandle; 
  
+ op_Handle:TLibHandle=dynlibs.NilHandle;
+ 
+  {$IFDEF windows} 
+ lc_Handle:TLibHandle=dynlibs.NilHandle;
+ wt_Handle:TLibHandle=dynlibs.NilHandle; 
+ og_Handle:TLibHandle=dynlibs.NilHandle; 
+   {$endif}
+
  ReferenceCounter : cardinal = 0;  
          
  function of_IsLoaded : boolean; inline; 
@@ -270,6 +278,17 @@ begin
   begin
     DynLibs.UnloadLibrary(of_Handle);
     of_Handle:=DynLibs.NilHandle;
+    DynLibs.UnloadLibrary(op_Handle);
+    op_Handle:=DynLibs.NilHandle;
+     {$IFDEF windows} 
+    DynLibs.UnloadLibrary(lc_Handle);
+    lc_Handle:=DynLibs.NilHandle;
+    DynLibs.UnloadLibrary(wt_Handle);
+    wt_Handle:=DynLibs.NilHandle;
+    DynLibs.UnloadLibrary(og_Handle);
+    og_Handle:=DynLibs.NilHandle; 
+   {$endif}
+    
   end;
 end;
 
@@ -283,6 +302,16 @@ begin
 end  else 
 begin {go & load the library}
     if Length(libfilename) = 0 then exit;
+    
+ {$IFDEF windows} 
+ wt_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libwinpthread-1.dll');
+ lc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_sjlj-1.dll');
+ og_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libogg-0.dll'); 
+ op_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libopus-0.dll');
+   {$else}
+  op_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libopus.so');
+ {$endif}
+    
     of_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
   	if of_Handle <> DynLibs.NilHandle then
 begin {now we tie the functions to the VARs from above}

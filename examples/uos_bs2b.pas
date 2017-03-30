@@ -235,7 +235,7 @@ end;
 
   var
     bs_Handle :TLibHandle=dynlibs.NilHandle;
-    {$IFDEF windows} // try load dependency if not in /windows/system/
+    {$IFDEF windows} // try load dependency if not in /windows/system32/
     gc_Handle :TLibHandle=dynlibs.NilHandle;
     {$endif}
     ReferenceCounter : cardinal = 0;  // Reference counter
@@ -258,8 +258,10 @@ begin
     DynLibs.UnloadLibrary(bs_Handle);
     bs_Handle:=DynLibs.NilHandle;
      {$IFDEF windows}
+    if gc_Handle <> DynLibs.NilHandle then begin
     DynLibs.UnloadLibrary(gc_Handle);
     gc_Handle:=DynLibs.NilHandle;
+    end;
      {$endif}
       bs2b_open:=nil;
       bs2b_close:=nil;
@@ -316,11 +318,12 @@ end  else begin {go & load the library}
     if Length(libfilename) = 0 then exit;
    
     {$IFDEF windows} // try load dependency if not in /windows/system/
-   gc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_dw2-1.dll');
+    gc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_dw2-1.dll');
     {$endif}
    
     bs_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
-  	if bs_Handle <> DynLibs.NilHandle then
+ 
+ 	if bs_Handle <> DynLibs.NilHandle then
        begin {now we tie the functions to the VARs from above}
 
       pointer(bs2b_open):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_open'));

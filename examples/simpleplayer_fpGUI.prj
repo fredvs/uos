@@ -209,7 +209,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -230,7 +230,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=339
@@ -528,7 +528,7 @@ makeoptionson=10
  511
  192
  511
- 369
+ 497
  255
  0
  0
@@ -979,7 +979,7 @@ findhistory=20
  fromm
  create
 findoptions=1
-editpos=46
+editpos=48
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1021,11 +1021,13 @@ editpos=46
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1406
+ 0,1302
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,323
+ 0,308
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1072,7 +1074,9 @@ bookmarks42=0
 bookmarks43=0
 bookmarks44=0
 bookmarks45=0
-sourcefiles=46
+bookmarks46=0
+bookmarks47=0
+sourcefiles=48
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1119,7 +1123,9 @@ sourcefiles=46
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
  /home/fred/fpgui/src/gui/fpg_style_carbon.pas
  /home/fred/fpgui/src/corelib/fpg_main.pas
-relpaths=46
+ ${PROJECTDIR}/uos_bs2b.pas
+ ${PROJECTDIR}/uos_opusfile.pas
+relpaths=48
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1166,7 +1172,11 @@ relpaths=46
  fpg_style_chrome_silver_flatmenu.pas
  fpgui/src/gui/fpg_style_carbon.pas
  fpgui/src/corelib/fpg_main.pas
-ismoduletexts=46
+ uos_bs2b.pas
+ uos_opusfile.pas
+ismoduletexts=48
+ 0
+ 0
  0
  0
  0
@@ -1222,7 +1232,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=46
+order=48
  21
  0
  1
@@ -1260,6 +1270,8 @@ order=46
  44
  45
  41
+ 46
+ 47
  42
  18
  19
@@ -1271,7 +1283,7 @@ order=46
  26
 tabsize=60
 firsttab=31
-index=36
+index=38
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1433,7 +1445,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=5
+ row=2
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1772,7 +1784,7 @@ windowlayout=549
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

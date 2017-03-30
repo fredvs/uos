@@ -193,10 +193,7 @@ begin
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
   Edit7.text := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
-
-  // To play opus file you should copy \uos\examples\lib\Windows\32bit\libopus-0.dll into your windows\system directory. 
-  // Edit10.text := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
-  
+  Edit10.text := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
   Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
   Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
   Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
@@ -211,8 +208,6 @@ begin
     Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
     Edit5.Text := '' ;
     Edit6.text := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
-   
-    // To play opus file you should copy uos/examples/lib/FreeBSD/64bit/libopus.so and paste into /usr/local/lib.  
     Edit10.text := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
   
     {$else}
@@ -242,8 +237,7 @@ begin
   Edit7.text := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
   Edit8.text := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
   
-  // To play opus file you should copy uos/examples/lib/Linux/64bit/libopus.so and paste into /usr/local/lib. 
-  // Edit10.text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
+  Edit10.text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
   
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
   Edit6.Text := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
