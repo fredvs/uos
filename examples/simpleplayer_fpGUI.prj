@@ -1021,7 +1021,7 @@ editpos=46
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 1,608
+ 0,1406
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1114,7 +1114,7 @@ sourcefiles=46
  ${PROJECTDIR}/waveform_fpGUI.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
  /home/fred/fpgui/src/gui/fpg_style_carbon.pas

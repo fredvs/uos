@@ -1404,11 +1404,8 @@ end;
      frm.Show;
      fpgApplication.Run;
     finally
-   //   uos_FreePlayer(PlayerIndex1); 
-    // uosPlayers[PlayerIndex1].destroy; // do not forget this...
-    //   uos_unloadlib;
-       // do not forget this...
-    //  frm.Free;
+      uos_free;
+      frm.Free;
     end;
   end;
 

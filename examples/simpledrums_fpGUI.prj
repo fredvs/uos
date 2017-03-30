@@ -985,7 +985,7 @@ editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 15,826
+ 0,826
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1188,7 +1188,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1499,7 +1499,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1515,7 +1515,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [sourcefo]
@@ -1531,7 +1531,7 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1565,9 +1565,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=65
+ y=66
  cx=1356
- cy=513
+ cy=512
  rcx=0
  rcy=0
 [targetconsole]
