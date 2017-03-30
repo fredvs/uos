@@ -193,7 +193,8 @@ begin
   Edit7.text := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
   Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
   Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
-  Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
+  // Problems with Windows10 when closing application
+  //Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
    {$endif}
   Edit4.Text := ordir + 'sound\test.mp3';
  {$ENDIF}

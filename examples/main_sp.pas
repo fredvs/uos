@@ -248,7 +248,8 @@ begin
   Edit7.text := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
   Edit8.text := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
   Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
-  Edit6.Text := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
+  // Problems with Windows10 when closing application
+  //Edit6.Text := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
 {$endif}
   Edit4.Text := ordir + 'sound/test.ogg';
             {$ENDIF}

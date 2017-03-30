@@ -1298,12 +1298,13 @@ end;
     FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
     FilenameEdit7.FileName := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
     FilenameEdit8.FileName := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
-    
-   // To play opus file you should copy \uos\examples\lib\Windows\32bit\libopus-0.dll into your windows/system directory. 
+   
     FilenameEdit31.FileName := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
     
     FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
-    FilenameEdit6.FileName := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
+   
+   // problem with windows10 when closing application
+   // FilenameEdit6.FileName := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
     
   {$endif}
     FilenameEdit4.FileName := ordir + 'sound\test.ogg';

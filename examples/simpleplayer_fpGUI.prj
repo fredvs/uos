@@ -979,7 +979,7 @@ findhistory=20
  fromm
  create
 findoptions=1
-editpos=48
+editpos=50
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1021,13 +1021,15 @@ editpos=48
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1302
+ 0,1305
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,323
- 0,308
+ 0,-1073741823
+ 0,296
+ 0,250
+ 53,195
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1076,7 +1078,9 @@ bookmarks44=0
 bookmarks45=0
 bookmarks46=0
 bookmarks47=0
-sourcefiles=48
+bookmarks48=0
+bookmarks49=0
+sourcefiles=50
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1125,7 +1129,9 @@ sourcefiles=48
  /home/fred/fpgui/src/corelib/fpg_main.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/uos_opusfile.pas
-relpaths=48
+ ${PROJECTDIR}/main_sp.pas
+ ${PROJECTDIR}/main_sp_nf.pas
+relpaths=50
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1174,7 +1180,11 @@ relpaths=48
  fpgui/src/corelib/fpg_main.pas
  uos_bs2b.pas
  uos_opusfile.pas
-ismoduletexts=48
+ main_sp.pas
+ main_sp_nf.pas
+ismoduletexts=50
+ 0
+ 0
  0
  0
  0
@@ -1232,7 +1242,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=48
+order=50
  21
  0
  1
@@ -1270,6 +1280,8 @@ order=48
  44
  45
  41
+ 48
+ 49
  46
  47
  42
@@ -1282,7 +1294,7 @@ order=48
  25
  26
 tabsize=60
-firsttab=31
+firsttab=34
 index=38
 [layout]
 windowlayout=549
@@ -1784,7 +1796,7 @@ windowlayout=549
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0

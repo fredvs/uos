@@ -732,18 +732,23 @@ hintheight=0
 finddtext=
 findhistory=0
 findoptions=1
-editpos=2
- 0,9
+editpos=3
+ 0,-1073741823
  2,239
+ 0,9
 bookmarks0=0
 bookmarks1=0
-sourcefiles=2
+bookmarks2=0
+sourcefiles=3
  ${PROJECTDIR}/simpleplayer.lpr
  ${PROJECTDIR}/main_sp.pas
-relpaths=2
+ ${PROJECTDIR}/simpleplayer.lpr
+relpaths=3
  simpleplayer.lpr
  main_sp.pas
-ismoduletexts=2
+ simpleplayer.lpr
+ismoduletexts=3
+ 0
  0
  0
 modules=0
@@ -753,7 +758,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -1244,7 +1249,7 @@ windowlayout=520
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
