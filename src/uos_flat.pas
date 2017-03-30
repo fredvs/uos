@@ -651,9 +651,12 @@ function uos_InputGetChannels(PlayerIndex: cint32; InputIndex: cint32): cint32;
   // InputIndex : InputIndex of existing input
   // result : default channels
 
-procedure uos_Play(PlayerIndex: cint32) ;  // Start playing
+procedure uos_PlayEx(PlayerIndex: cint32;
+ nofree: Boolean; nloop: Integer);
 
-Procedure uos_PlayNoFree(PlayerIndex: cint32) ;  // Start playing but do not free the player after stop
+procedure uos_Play(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing
+
+Procedure uos_PlayNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing but do not free the player after stop
 
 Procedure uos_FreePlayer(PlayerIndex: cint32) ;  // Works only when PlayNoFree() was used: free the player
 
@@ -1514,18 +1517,22 @@ Result := -1 ;
  result := uosPlayers[PlayerIndex].InputAddDSP1ChanTo2Chan(InputIndex) ;
 end;
 
-Procedure uos_Play(PlayerIndex: cint32) ;  // Start playing
+Procedure uos_PlayEx(PlayerIndex: cint32;
+ nofree: Boolean; nloop: Integer);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].Play() ;
+uosPlayers[PlayerIndex].PlayEx(nofree,nloop) ;
 end;
 
-Procedure uos_PlayNoFree(PlayerIndex: cint32) ;  // Start playing but do not free the player after stop
+Procedure uos_Play(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing
 begin
-  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
-  if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].PlayNoFree() ;
+  uos_PlayEx(PlayerIndex, False,nloop);
+end;
+
+Procedure uos_PlayNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing but do not free the player after stop
+begin
+ uos_PlayEx(PlayerIndex, True,nloop);
 end;
 
 Procedure uos_FreePlayer(PlayerIndex: cint32) ;  

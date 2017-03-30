@@ -69,7 +69,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 17170329 ;
+  uos_version : cint32 = 17170330 ;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -530,8 +530,9 @@ type
   
   intobuf :boolean; // to check, needed for filetobuf
 
+  NLooped : Integer; // -1 infinite loop; 0 no loop; > 0 n-loop
+
   NoFree : boolean;
-  // FirstNoFree : boolean;
   // Do not free the player at end of thread.
 
   BeginProc: TProc;
@@ -573,13 +574,15 @@ type
 
   destructor Destroy; override;
 
-  procedure DoTerminate; override;  
+  procedure DoTerminate; override;
+
+  function IsLooped: Boolean;  
   
   // Audio methods
   
-  procedure PlayEx(no_free: Boolean); // Start playing with free at end as parameter
+  procedure PlayEx(no_free: Boolean; nloop: Integer); // Start playing with free at end as parameter and assign loop
 
-  Procedure Play() ;  // Start playing
+  Procedure Play(nloop: Integer = 0) ;  // Start playing with loop
 
   procedure RePlay();  // Resume playing after pause
 
@@ -587,7 +590,7 @@ type
 
   procedure Pause();  // Pause playing
   
-  Procedure PlayNoFree() ;  // Starting but do not free the player after stop
+  Procedure PlayNoFree(nloop: Integer = 0) ; // Starting but do not free the player after stop with loop
   
   Procedure FreePlayer() ;  // Free the player: works only when PlayNoFree() was called.
 
@@ -1364,7 +1367,7 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   bufferinfos.Ratio := 2 ;
   
   theplayer.AddIntoMemoryBuffer(pointer(outmemory));
-  theplayer.Play(); 
+  theplayer.Play(0); 
   end;
   sleep(60);
   result := outmemory;
@@ -1440,7 +1443,7 @@ var
   theplayer.AddIntoFile(FilenameOUT, theplayer.StreamIn[0].data.samplerate, 
   theplayer.StreamIn[0].data.channels, SampleFormat, -1 , typeout);
   
-    theplayer.Play(); 
+    theplayer.Play(0); 
   end;
  
   end;  
@@ -1452,13 +1455,20 @@ result := -1 ;
   if (isAssigned = True) then  result := Status else result := -1 ;
 end;
 
-procedure Tuos_Player.PlayEx(no_free: Boolean);
+function Tuos_Player.IsLooped: Boolean;
+begin
+ Result:= (NLooped <> 0) and
+          (NLooped <> 1);
+end;
+
+procedure Tuos_Player.PlayEx(no_free: Boolean; nloop: Integer);
 var
   x: cint32;
  begin
-  if (isAssigned = True) then
+  if (isAssigned = True) and (not IsLooped) then 
   begin
-  NoFree := no_free;
+  NLooped:= nloop;
+  NoFree:= no_free;
   
   
   {$IF DEFINED(portaudio)}
@@ -1486,23 +1496,22 @@ var
    end;
    
   Status := 1;
-  
-  // if (NoFree = false) or ((NoFree = true) and (firstNoFree = true)) then 
+
   start;  // resume;  { if fpc version <= 2.4.4}
-  //FirstNoFree := false;
+  
   RTLeventSetEvent(evPause);
  end;
 
 end;     
 
-procedure Tuos_Player.Play() ;
+procedure Tuos_Player.Play(nloop: Integer = 0) ;//###
 begin
- PlayEx(False);
+ PlayEx(False,nloop);
 end;    
 
-procedure Tuos_Player.PlayNoFree() ;
+procedure Tuos_Player.PlayNoFree(nloop: Integer = 0) ;//###
 begin
- PlayEx(True);
+ PlayEx(True,nloop);//###
 end; 
 
 Procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
@@ -1510,17 +1519,17 @@ begin
 
  if (isAssigned = True) then
   begin
+  NLooped:= 0;
   NoFree := false;
-  //Status := 0;
-  //RTLeventSetEvent(evPause);
-  play;
+  play(0);
   stop;
   end;
 end;
 
 procedure Tuos_Player.RePlay();  // Resume Playing after Pause
 begin
-  if  (Status > 0) and (isAssigned = True) then
+   if  (Status > 0) and (isAssigned = True) and
+      (not IsLooped) then 
   begin
   Status := 1;
   RTLeventSetEvent(evPause);
@@ -1531,6 +1540,7 @@ procedure Tuos_Player.Stop();
 begin
   if (Status > 0) and (isAssigned = True) then
   begin
+  NLooped:= 0;
   RTLeventSetEvent(evPause);
   Status := 0;
   end;
@@ -5924,7 +5934,7 @@ begin
   
   end; 
   
-  end;
+  end; //case StreamIn[x].Data.TypePut of
 
  {$IF DEFINED(webstream)}
   if (StreamIn[x].Data.TypePut = 2) and (StreamIn[x].Data.LibOpen = 1 )then
@@ -6091,11 +6101,11 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
  writeln('End level after DSP procedure');
  {$endif}
  
-  end;
+  end;//if  StreamIn[x].Data.status > 0 then
 
-  end;
+  end;//if (StreamIn[x].Data.Status > 0) and (StreamIn[x].Data.Enabled = True) then
 
-  end;  // end for low(StreamIn[x]) to high(StreamIn[x])
+  end;// end for low(StreamIn[x]) to high(StreamIn[x])
 
  // Seeking if StreamIn is terminated
  {$IF DEFINED(debug)}
@@ -6118,6 +6128,27 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
   (StreamIn[x].Data.TypePut = 1) then statustemp := status ;
   end ;
   if statustemp <> status then status := statustemp;
+
+  if (status = 0) and IsLooped then 
+  begin
+   for x:= 0 to high(StreamIn) do
+   begin
+    InputSeek(x, 0);
+    if StreamIn[x].Data.TypePut = 4 then
+     StreamIn[x].Data.posmem:= 0;
+    StreamIn[x].Data.status:= 1;
+   end;
+
+   Status:= 1;
+
+   {$IF DEFINED(debug)}
+    WriteLn('Loop (NLooped: '+IntToStr(NLooped)+')----');
+   {$endif}
+
+   if NLooped > 0 then
+    Dec(NLooped);
+  end; 
+
   end;
   {$IF DEFINED(debug)}
  writeln('status = ' +inttostr(status));
@@ -6716,16 +6747,12 @@ if err > 0 then
   RTLeventResetEvent(evPause);
   Status := 2;
   
-  {$IF DEFINED(portaudio)}
-  for x := 0 to high(StreamOut) do
-  begin
-  if (StreamOut[x].Data.HandleSt <> nil) and 
-  (StreamOut[x].Data.TypePut = 1) then
-  begin
-   Pa_StopStream(StreamOut[x].Data.HandleSt);
-  end;
-  end;
-  {$ENDIF}
+   {$IF DEFINED(portaudio)}
+   for x := 0 to high(StreamOut) do
+    if (StreamOut[x].Data.HandleSt <> nil) and
+       (StreamOut[x].Data.TypePut = 1) then
+     Pa_StopStream(StreamOut[x].Data.HandleSt);
+   {$ENDIF}
      
   end;
   
@@ -7452,7 +7479,8 @@ begin
   {$endif}
   isAssigned := true; 
   intobuf := false;
-  //FirstNoFree := true;
+  NLooped:= 0; 
+  NoFree:= False; 
   status := 2;
   BeginProc := nil;
   EndProc := nil;
