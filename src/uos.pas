@@ -8,7 +8,7 @@ unit uos;
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}
 
-// For custom configuration of directive to compiler --->  define.inc
+// For custom configuration of directive to compiler --->  define.inc 
 {$I define.inc}
 
 interface
