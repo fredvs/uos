@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 267
   Height = 373
-  Top = 73
+  Top = 72
   Width = 499
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'
@@ -293,10 +293,10 @@ object Form1: TForm1
     Visible = False
     OnClick = Panel1Click
     object Edit4: TEdit
-      Left = 116
+      Left = 118
       Height = 27
       Top = 9
-      Width = 278
+      Width = 286
       Alignment = taCenter
       AutoSize = False
       TabOrder = 0
@@ -304,17 +304,17 @@ object Form1: TForm1
     object CheckBox1: TCheckBox
       Left = 122
       Height = 22
-      Top = 133
+      Top = 138
       Width = 98
       Caption = 'Play Reverse'
       OnChange = CheckBox1Change
       TabOrder = 1
     end
     object TrackBar2: TTrackBar
-      Left = 110
+      Left = 120
       Height = 35
       Top = 35
-      Width = 369
+      Width = 355
       Max = 100
       Position = 0
       TickStyle = tsNone
@@ -324,7 +324,7 @@ object Form1: TForm1
       TabOrder = 2
     end
     object Label4: TLabel
-      Left = 16
+      Left = 12
       Height = 14
       Top = 115
       Width = 27
@@ -386,7 +386,7 @@ object Form1: TForm1
     object TrackBar3: TTrackBar
       Left = 76
       Height = 100
-      Top = 8
+      Top = 10
       Width = 31
       Max = 100
       OnChange = TrackBar1Change
@@ -397,7 +397,7 @@ object Form1: TForm1
       TabOrder = 8
     end
     object Label5: TLabel
-      Left = 73
+      Left = 76
       Height = 14
       Top = 115
       Width = 29
@@ -464,7 +464,7 @@ object Form1: TForm1
     object llength: TLabel
       Left = 304
       Height = 15
-      Top = 59
+      Top = 75
       Width = 84
       Caption = '00:00:00.000'
       ParentColor = False
@@ -472,7 +472,7 @@ object Form1: TForm1
     object lposition: TLabel
       Left = 200
       Height = 15
-      Top = 59
+      Top = 75
       Width = 84
       Caption = '00:00:00.000'
       ParentColor = False
@@ -480,7 +480,7 @@ object Form1: TForm1
     object Label8: TLabel
       Left = 294
       Height = 15
-      Top = 59
+      Top = 75
       Width = 4
       Caption = '/'
       ParentColor = False
@@ -500,9 +500,9 @@ object Form1: TForm1
       Brush.Color = clLime
     end
     object CheckBox2: TCheckBox
-      Left = 264
+      Left = 266
       Height = 22
-      Top = 85
+      Top = 94
       Width = 184
       Caption = 'Enable SoundTouch Plugin'
       OnChange = ChangePlugSet
@@ -526,30 +526,30 @@ object Form1: TForm1
       ParentColor = False
     end
     object Label9: TLabel
-      Left = 386
+      Left = 382
       Height = 15
-      Top = 121
+      Top = 120
       Width = 58
       Caption = 'Pitch: 1.0'
       ParentColor = False
     end
     object TrackBar4: TTrackBar
-      Left = 340
+      Left = 342
       Height = 66
-      Top = 107
+      Top = 118
       Width = 34
       Max = 100
       OnChange = ChangePlugSet
       Orientation = trVertical
-      Position = 50
+      Position = 100
       Reversed = True
       TickStyle = tsNone
       TabOrder = 12
     end
     object TrackBar5: TTrackBar
-      Left = 445
+      Left = 444
       Height = 66
-      Top = 107
+      Top = 118
       Width = 34
       Max = 100
       OnChange = ChangePlugSet
@@ -560,9 +560,9 @@ object Form1: TForm1
       TabOrder = 13
     end
     object CheckBox3: TCheckBox
-      Left = 120
+      Left = 122
       Height = 22
-      Top = 86
+      Top = 96
       Width = 133
       Caption = 'Stereo to BinAural'
       OnChange = CheckBox3Change
@@ -571,7 +571,7 @@ object Form1: TForm1
     object Chknoise: TCheckBox
       Left = 122
       Height = 22
-      Top = 152
+      Top = 160
       Width = 112
       Caption = 'Noise Remover'
       OnChange = ChknoiseChange
@@ -579,9 +579,9 @@ object Form1: TForm1
       Visible = False
     end
     object chkstereo2mono: TCheckBox
-      Left = 120
+      Left = 122
       Height = 22
-      Top = 107
+      Top = 116
       Width = 115
       Caption = 'Stereo to Mono'
       OnChange = chkstereo2monoChange
