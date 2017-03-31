@@ -8,7 +8,7 @@ unit uos;
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}
 
-// For custom configuration of directive to compiler --->  define.inc 
+// For custom configuration of directive to compiler --->  define.inc
 {$I define.inc}
 
 interface
@@ -69,7 +69,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 17170330 ;
+  uos_version : cint32 = 17170330;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -157,6 +157,12 @@ la5 = 1760.0;
   cMAX_FRAME_SIZE = 6 * 960;
   cMAX_PACKET_SIZE = 3 * 1276;
 {$endif}
+
+type
+   TDummyThread = Class(TThread)
+   public
+     procedure execute; override;
+   end;
   
 type
  
@@ -1100,6 +1106,12 @@ var
   {$endif}
 
 implementation
+
+procedure TDummyThread.Execute;
+begin
+   FreeOnTerminate:=True;
+   Terminate;
+end;
 
 function FormatBuf(Inbuf: TDArFloat; format: cint32): TDArFloat;
 var
@@ -6792,7 +6804,6 @@ writeln('Status = 0');
   {$IF DEFINED(bs2b)}
   if Plugin[x].Name = 'bs2b' then
   begin
-  bs2b_clear(Plugin[x].Abs2b);
   bs2b_close(Plugin[x].Abs2b); 
   end;
   {$endif}
@@ -7436,6 +7447,9 @@ end;
 
 constructor Tuos_Init.Create;
 begin
+
+  TDummyThread.Create(True);
+
   SetExceptionMask(GetExceptionMask + [exZeroDivide] + [exInvalidOp] +
   [exDenormalized] + [exOverflow] + [exUnderflow] + [exPrecision]);
   uosLoadResult.PAloadERROR := -1;

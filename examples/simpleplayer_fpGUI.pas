@@ -1396,7 +1396,7 @@ end;
   var
     frm: TSimpleplayer;
   begin
-    fpgApplication.Initialize;
+     fpgApplication.Initialize;
      if fpgStyleManager.SetStyle('Chrome silver flat menu') then
           fpgStyle := fpgStyleManager.Style;
     fpgApplication.CreateForm(TSimpleplayer, frm);

@@ -157,6 +157,12 @@ la5 = 1760.0;
   cMAX_FRAME_SIZE = 6 * 960;
   cMAX_PACKET_SIZE = 3 * 1276;
 {$endif}
+
+type
+   TDummyThread = Class(TThread)
+   public
+     procedure execute; override;
+   end;
   
 type
  
@@ -1100,6 +1106,12 @@ var
   {$endif}
 
 implementation
+
+procedure TDummyThread.Execute;
+begin
+   FreeOnTerminate:=True;
+   Terminate;
+end;
 
 function FormatBuf(Inbuf: TDArFloat; format: cint32): TDArFloat;
 var
@@ -7435,6 +7447,9 @@ end;
 
 constructor Tuos_Init.Create;
 begin
+
+  TDummyThread.Create(True);
+
   SetExceptionMask(GetExceptionMask + [exZeroDivide] + [exInvalidOp] +
   [exDenormalized] + [exOverflow] + [exUnderflow] + [exPrecision]);
   uosLoadResult.PAloadERROR := -1;

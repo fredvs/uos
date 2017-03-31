@@ -177,7 +177,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -462,11 +462,11 @@ makeoptionson=7
  127
  127
 compilerusedon=29
- 4095
+ 3983
  0
  0
- 0
- 0
+ 16
+ 32
  0
  0
  0
@@ -536,9 +536,9 @@ aftcommandon=0
 unitdirson=7
  196735
  196735
- 196704
- 196735
- 196639
+ 196656
+ 196671
+ 196623
  196735
  196735
 macroon=5
@@ -849,7 +849,7 @@ findhistory=20
  WriteWave
  sleep(
 findoptions=1
-editpos=20
+editpos=22
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -868,8 +868,10 @@ editpos=20
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 37,222
  0,-1073741823
+ 0,-1073741823
+ 0,103
+ 119,171
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -890,7 +892,9 @@ bookmarks16=0
 bookmarks17=0
 bookmarks18=0
 bookmarks19=0
-sourcefiles=20
+bookmarks20=0
+bookmarks21=0
+sourcefiles=22
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -911,7 +915,9 @@ sourcefiles=20
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/consoleplaymemory.pas
-relpaths=20
+ /home/fred/fpgui/src/corelib/fpg_main.pas
+ ${PROJECTDIR}/uos_opus.pas
+relpaths=22
  uos.pas
  uos_flat.pas
  define.inc
@@ -932,7 +938,11 @@ relpaths=20
  define.inc
  simplerecorder_fpGUI.pas
  consoleplaymemory.pas
-ismoduletexts=20
+ ../fpgui/src/corelib/fpg_main.pas
+ uos_opus.pas
+ismoduletexts=22
+ 0
+ 0
  0
  0
  0
@@ -958,10 +968,12 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=20
+order=22
  0
  19
  18
+ 20
+ 21
  1
  2
  3
@@ -981,7 +993,7 @@ order=20
  17
 tabsize=60
 firsttab=0
-index=2
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
