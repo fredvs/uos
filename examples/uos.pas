@@ -7460,7 +7460,7 @@ end;
 constructor Tuos_Init.Create;
 begin
 
-  TDummyThread.Create(True);
+  TDummyThread.Create(True); // for initializing
 
   SetExceptionMask(GetExceptionMask + [exZeroDivide] + [exInvalidOp] +
   [exDenormalized] + [exOverflow] + [exUnderflow] + [exPrecision]);

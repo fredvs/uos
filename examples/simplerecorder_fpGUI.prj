@@ -253,15 +253,17 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=7
+makeoptions=8
  -fPIC
  -l -Mobjfpc -Schi
  -FE.
  -FUunits
+ -WG
  -B -ghl
  -O4 -XX -Xs -CX
  -vewnhibq
-makeoptpurpose=7
+makeoptpurpose=8
+ 
  
  
  
@@ -453,20 +455,21 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=7
+makeoptionson=8
  0
- 127
- 127
- 127
+ 1023
+ 511
+ 511
+ 192
  0
- 127
- 127
+ 511
+ 511
 compilerusedon=29
- 3983
+ 3903
  0
  0
- 16
- 32
+ 128
+ 64
  0
  0
  0
@@ -492,12 +495,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4064
+ 3840
  0
  0
  0
  0
- 31
+ 511
 exeusedon=14
  4095
  0
@@ -534,13 +537,13 @@ project_date=04:37:58 27/03/2017
 project_comment=
 aftcommandon=0
 unitdirson=7
- 196735
- 196735
- 196656
+ 196863
+ 196863
+ 196800
+ 196863
  196671
- 196623
- 196735
- 196735
+ 196863
+ 196863
 macroon=5
  1
  3
@@ -849,7 +852,7 @@ findhistory=20
  WriteWave
  sleep(
 findoptions=1
-editpos=22
+editpos=23
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -870,8 +873,9 @@ editpos=22
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,107
  0,-1073741823
+ 0,-1073741823
+ 0,15
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -894,7 +898,8 @@ bookmarks18=0
 bookmarks19=0
 bookmarks20=0
 bookmarks21=0
-sourcefiles=22
+bookmarks22=0
+sourcefiles=23
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -917,7 +922,8 @@ sourcefiles=22
  ${PROJECTDIR}/consoleplaymemory.pas
  /home/fred/fpgui/src/corelib/fpg_main.pas
  ${PROJECTDIR}/uos_opus.pas
-relpaths=22
+ ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
+relpaths=23
  uos.pas
  uos_flat.pas
  define.inc
@@ -938,9 +944,11 @@ relpaths=22
  define.inc
  simplerecorder_fpGUI.pas
  consoleplaymemory.pas
- ../fpgui/src/corelib/fpg_main.pas
+ fpgui/src/corelib/fpg_main.pas
  uos_opus.pas
-ismoduletexts=22
+ fpg_style_chrome_silver_flatmenu.pas
+ismoduletexts=23
+ 0
  0
  0
  0
@@ -968,8 +976,9 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=22
+order=23
  0
+ 22
  19
  18
  20
@@ -993,7 +1002,7 @@ order=22
  17
 tabsize=60
 firsttab=0
-index=3
+index=1
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1144,7 +1153,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1455,7 +1464,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1471,7 +1480,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [sourcefo]
@@ -1487,7 +1496,7 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1521,9 +1530,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=65
+ y=66
  cx=1356
- cy=513
+ cy=512
  rcx=0
  rcy=0
 [targetconsole]
