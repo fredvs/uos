@@ -69,7 +69,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 17170330;
+  uos_version : cint32 = 17170401;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -540,6 +540,8 @@ type
 
   NoFree : boolean;
   // Do not free the player at end of thread.
+  
+  isfirst : boolean;
 
   BeginProc: TProc;
   // External procedure of object to execute at begin of thread
@@ -1481,49 +1483,57 @@ var
   begin
   NLooped:= nloop;
   NoFree:= no_free;
-  
-  
+   
   {$IF DEFINED(portaudio)}
   for x := 0 to high(StreamOut) do
   if StreamOut[x].Data.HandleSt <> nil then
   begin
+  if (isfirst = true) or (nofree = false) then
   Pa_StartStream(StreamOut[x].Data.HandleSt);
-  end;
-    
-  for x := 0 to high(StreamIn) do
-  begin
-  if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
-  begin
-  Pa_StartStream(StreamIn[x].Data.HandleSt);
-  end;
   end;
   {$endif}
   
-   if no_free then 
-   begin 
-    InputSeek(x, 0);
-    if StreamIn[x].Data.TypePut = 4 then
-    StreamIn[x].Data.posmem := 0;
-    StreamIn[x].Data.status  := 1 ;
-   end;
+  isfirst := false;
+    
+  for x := 0 to high(StreamIn) do
+  begin
+  {$IF DEFINED(portaudio)}
+   if (StreamIn[x].Data.HandleSt <> nil) and (StreamIn[x].Data.TypePut = 1) then
+  Pa_StartStream(StreamIn[x].Data.HandleSt);
+  {$endif}
+  
+   if (no_free = true) and (StreamIn[x].Data.HandleSt <> nil) 
+  and (StreamIn[x].Data.TypePut = 4) then
+      StreamIn[x].Data.posmem := 0;
    
+   if (no_free = true) and (StreamIn[x].Data.HandleSt <> nil) 
+  and ((StreamIn[x].Data.TypePut = 0) or (StreamIn[x].Data.TypePut = 4)) then
+      InputSeek(x, 0); 
+  
+  StreamIn[x].Data.status  := 1 ;
+  end;
+ 
   Status := 1;
-
+  
+  sleep(1);
+  
   start;  // resume;  { if fpc version <= 2.4.4}
   
+  
+   
   RTLeventSetEvent(evPause);
  end;
 
 end;     
 
-procedure Tuos_Player.Play(nloop: Integer = 0) ;//###
+procedure Tuos_Player.Play(nloop: Integer = 0) ;
 begin
  PlayEx(False,nloop);
 end;    
 
-procedure Tuos_Player.PlayNoFree(nloop: Integer = 0) ;//###
+procedure Tuos_Player.PlayNoFree(nloop: Integer = 0) ;
 begin
- PlayEx(True,nloop);//###
+ PlayEx(True,nloop);
 end; 
 
 Procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
@@ -6759,6 +6769,8 @@ if err > 0 then
   RTLeventResetEvent(evPause);
   Status := 2;
   
+  isfirst := true;
+  
    {$IF DEFINED(portaudio)}
    for x := 0 to high(StreamOut) do
     if (StreamOut[x].Data.HandleSt <> nil) and
@@ -7495,7 +7507,8 @@ begin
   isAssigned := true; 
   intobuf := false;
   NLooped:= 0; 
-  NoFree:= False; 
+  NoFree:= False;
+  isfirst := true; 
   status := 2;
   BeginProc := nil;
   EndProc := nil;

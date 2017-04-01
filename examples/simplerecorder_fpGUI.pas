@@ -150,7 +150,7 @@ var
       sleep(100);
     end;
     if btnLoad.Enabled = False then
-      uos_UnloadLib();
+      uos_free();
   end;
 
   procedure TSimplerecorder.btnLoadClick(Sender: TObject);
@@ -190,7 +190,6 @@ var
   procedure TSimplerecorder.btnStopClick(Sender: TObject);
   begin
     uos_Stop(PlayerIndex1);
-    closeplayer1;
   end;
 
   procedure TSimplerecorder.btnStartClick(Sender: TObject);
@@ -624,7 +623,6 @@ var
       frm.Show;
       fpgApplication.Run;
     finally
-      uos_free;
       frm.Free;
     end;
   end;
