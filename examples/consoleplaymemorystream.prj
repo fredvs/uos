@@ -516,7 +516,7 @@ makeoptionson=8
  255
  255
  255
- 2
+ 3
  224
  240
  255
@@ -823,7 +823,7 @@ line=6
 address=6
  0
  0
- 0
+ 4198424
  0
  0
  0
@@ -942,7 +942,6 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,6624
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -954,7 +953,8 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,129
+ 0,-1073741823
+ 6,149
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1121,8 +1121,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=682
+ cx=1356
+ cy=779
  rcx=0
  rcy=0
  [mainfo]
@@ -1134,16 +1134,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=209
+ x=210
  y=90
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,682
+  basedock,0,0,1356,779
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1163,7 +1163,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1257,7 +1257,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=499
+ cy=570
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1466,9 +1466,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=565
- cx=929
- cy=117
+ y=645
+ cx=1356
+ cy=134
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1567,8 +1567,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=60
+ cx=1356
+ cy=69
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1583,8 +1583,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=929
- cy=60
+ cx=1356
+ cy=69
  rcx=0
  rcy=0
  [sourcefo]
@@ -1599,8 +1599,8 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=767
- cy=499
+ cx=1194
+ cy=570
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1634,15 +1634,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=63
- cx=929
- cy=499
+ y=72
+ cx=1356
+ cy=570
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

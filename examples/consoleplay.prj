@@ -511,7 +511,7 @@ makeoptionson=8
  63
  63
  63
- 2
+ 3
  34
  48
  63
@@ -886,8 +886,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=PlayersNotFree
+finddtext=dummy
 findhistory=20
+ dummy
+ loop
+ play(
  PlayersNotFree
  PlayerNotFree
  replay
@@ -905,34 +908,36 @@ findhistory=20
  ontermin
  inherited
  .play()
- uos_play()
- uos_play
- play
 findoptions=1
-editpos=5
+editpos=6
  0,-1073741823
  0,-1073741823
  0,110
- 0,714
- 0,-1073741823
+ 0,1824
+ 0,7462
+ 0,1521
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+sourcefiles=6
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
-relpaths=5
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=6
  deviceinfos_fpGUI.pas
  uos.pas
  consoleplay.pas
  uos_flat.pas
  uos.pas
-ismoduletexts=5
+ uos_flat.pas
+ismoduletexts=6
+ 0
  0
  0
  0
@@ -947,10 +952,11 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=5
+order=6
  0
  1
  2
+ 5
  4
  3
 tabsize=60
@@ -983,8 +989,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=200
+ y=64
  cx=939
  cy=621
  rcx=0
@@ -993,7 +999,7 @@ windowlayout=549
   basedock,0,0,1356,701
  focusedchild=0
  wsize=6
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1011,8 +1017,8 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
- visible=0
+ active=1
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1106,7 +1112,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1417,7 +1423,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1433,7 +1439,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=62
+ cy=63
  rcx=0
  rcy=0
  [sourcefo]
@@ -1449,7 +1455,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1483,9 +1489,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=65
+ y=66
  cx=1356
- cy=513
+ cy=512
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

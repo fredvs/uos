@@ -91,7 +91,7 @@ var
 
    // Load the libraries
    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
-   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), Pchar(MP_FileName), nil, nil, Pchar(OF_FileName)) ;
+   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), Pchar(MP_FileName), nil, nil, nil) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 
@@ -143,6 +143,7 @@ var
   writeln('Press a key to exit...');
   readln;
   Terminate;
+  uos_UnLoadLib;
   uos_free();
   end;
 
