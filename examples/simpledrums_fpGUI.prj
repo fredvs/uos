@@ -980,11 +980,11 @@ findoptions=1
 editpos=8
  0,-1073741823
  0,-1073741823
+ 0,100
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1516
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1037,7 +1037,7 @@ order=8
  4
 tabsize=60
 firsttab=1
-index=4
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1052,7 +1052,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
+ cx=1122
  cy=604
  rcx=0
  rcy=0
@@ -1066,13 +1066,13 @@ windowlayout=530
  ncx=0
  ncy=0
  x=231
- y=50
- cx=939
+ y=53
+ cx=1132
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,604
+  basedock,0,0,1122,604
  focusedchild=0
  wsize=0
  active=1
@@ -1398,7 +1398,7 @@ windowlayout=530
  ncy=0
  x=0
  y=501
- cx=929
+ cx=1122
  cy=103
  rcx=0
  rcy=0
@@ -1498,7 +1498,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
+ cx=1122
  cy=53
  rcx=0
  rcy=0
@@ -1514,7 +1514,7 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=929
+ cx=1122
  cy=53
  rcx=0
  rcy=0
@@ -1530,7 +1530,7 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=767
+ cx=960
  cy=442
  rcx=0
  rcy=0
@@ -1566,7 +1566,7 @@ windowlayout=530
  ncy=0
  x=0
  y=56
- cx=929
+ cx=1122
  cy=442
  rcx=0
  rcy=0

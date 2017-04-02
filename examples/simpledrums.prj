@@ -743,8 +743,9 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=###
-findhistory=9
+finddtext=AddIntoDevOut
+findhistory=10
+ AddIntoDevOut
  ###
  play()
  play
@@ -757,8 +758,8 @@ findhistory=9
 findoptions=1
 editpos=7
  0,-1073741823
+ 0,130
  0,-1073741823
- 0,71
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -809,7 +810,7 @@ order=7
  6
 tabsize=60
 firsttab=1
-index=5
+index=1
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -824,8 +825,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=929
- cy=604
+ cx=1356
+ cy=798
  rcx=0
  rcy=0
  [mainfo]
@@ -837,16 +838,16 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=231
+ x=230
  y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,604
+  basedock,0,0,1356,798
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -888,7 +889,7 @@ windowlayout=520
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -960,7 +961,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=442
+ cy=584
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1161,9 +1162,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=501
- cx=929
- cy=103
+ y=661
+ cx=1356
+ cy=137
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1260,8 +1261,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=71
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1276,8 +1277,8 @@ windowlayout=520
  ncy=2
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=71
  rcx=0
  rcy=0
  [sourcefo]
@@ -1292,8 +1293,8 @@ windowlayout=520
  ncy=0
  x=162
  y=0
- cx=767
- cy=442
+ cx=1194
+ cy=584
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1327,9 +1328,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=56
- cx=929
- cy=442
+ y=74
+ cx=1356
+ cy=584
  rcx=0
  rcy=0
 [targetconsole]

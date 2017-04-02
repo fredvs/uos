@@ -142,7 +142,7 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
  ms2.LoadFromFile(pchar(sound[2])); 
  ms2.Position:= 0; 
  
-   for i := 0 to 2 do   // free player (not done with playnofree)
+   for i := 0 to 2 do   
  begin
    uos_CreatePlayer(i);
    uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 256);
