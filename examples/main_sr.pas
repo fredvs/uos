@@ -186,10 +186,10 @@ begin
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    uos_AddIntoFileFromMem(PlayerIndex1, Pchar(edit3.Text));
+    //uos_AddIntoFileFromMem(PlayerIndex1, Pchar(edit3.Text));
     //// add Output into wav file (save record) from TMemoryStream  with default parameters
 
-    //  uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));
+      uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));
     //// add Output into wav file (save record) from TFileStream  with default parameters
 
     //   uos_addIntoFile(PlayerIndex1, Pchar(edit3.Text) ,8000,1,1,-1 ); //  add a Output into wav with custom parameters mono radio-quality
