@@ -1365,8 +1365,9 @@ var
   wFileSize: cint32;
   ID: array[0..3] of char;
 begin
-  ID := 'data';
-  wFileSize := 0;
+  Data.data.Position:= 42;//(after 'data')
+  Data.data.Write(Data.data.Size, 4);
+  ID := 'RIFF';
   Data.data.Seek(SizeOf(ID), soFromBeginning);
   wFileSize := Data.data.Size - SizeOf(ID) - SizeOf(wFileSize);
   Data.data.Write(wFileSize, 4);
@@ -3818,6 +3819,8 @@ begin
   StreamOut[x].FileBuffer.Data.WriteBuffer(Header, SizeOf(Header));
   ID := 'data';
   StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+  wChunkSize:= 0;
+  StreamOut[x].FileBuffer.Data.WriteBuffer(wChunkSize, 4);
   end;
   
   except

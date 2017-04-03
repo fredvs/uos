@@ -871,13 +871,13 @@ editpos=25
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,216
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1287
- 31,1120
+ 0,1120
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1014,7 +1014,7 @@ order=25
  17
 tabsize=60
 firsttab=0
-index=3
+index=5
 [layout]
 windowlayout=530
  [mainfo.basedock]
