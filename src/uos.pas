@@ -294,6 +294,7 @@ type
   wSamplesPerSec: cint32;
   wBitsPerSample: word;
   wChannels: word;
+  FileFormat: integer;
   Data: TFileStream;
   DataMS: TMemoryStream;
   end;
@@ -498,7 +499,6 @@ type
   // cbits: tbytes;
   {$endif}
   FileBuffer: Tuos_FileBuffer;
-  FileFormat: integer;
   LoopProc: TProc;  // external procedure of object to synchronize in loop
   {$IF DEFINED(Java)}
   procedure LoopProcjava;
@@ -632,7 +632,7 @@ type
   // example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1, -1);
 
   function AddIntoFileFromMem(Filename: PChar; SampleRate: LongInt;  
-      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt;  
     /////// Add a Output into audio wav file with custom parameters from TMemoryStream
      ////////// FileName : filename of saved audio wav file
     //////////// SampleRate : delault : -1 (44100)
@@ -1282,9 +1282,38 @@ var
 begin
   Result := noError;
   f := nil;
-  try
-    f := TFileStream.Create(FileName, fmCreate);
-    f.Seek(0, soFromBeginning);
+  f := TFileStream.Create(FileName, fmCreate);
+  f.Seek(0, soFromBeginning);
+    if Data.FileFormat = 0 then 
+  begin // wav file
+  {
+  ID := 'RIFF';
+  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+  wFileSize := 0;
+  StreamOut[x].FileBuffer.Data.WriteBuffer(wFileSize, 4);
+  ID := 'WAVE';
+  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+  ID := 'fmt ';
+  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+  wChunkSize := SizeOf(Header);
+  StreamOut[x].FileBuffer.Data.WriteBuffer(wChunkSize, 4);
+  Header.wFormatTag := 1;
+
+  Header.wChannels := StreamOut[x].FileBuffer.wChannels;
+
+  Header.wSamplesPerSec := StreamOut[x].FileBuffer.wSamplesPerSec;
+
+  Header.wBlockAlign := StreamOut[x].FileBuffer.wChannels * (StreamOut[x].FileBuffer.wBitsPerSample div 8);
+
+  Header.wAvgBytesPerSec := StreamOut[x].FileBuffer.wSamplesPerSec * Header.wBlockAlign;
+  Header.wBitsPerSample := StreamOut[x].FileBuffer.wBitsPerSample;
+  Header.wcbSize := 0;
+  StreamOut[x].FileBuffer.Data.WriteBuffer(Header, SizeOf(Header));
+  ID := 'data';
+  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+  end;
+  }
+    try
     ID := 'RIFF';
     f.WriteBuffer(ID, 4);
     wFileSize := 0;
@@ -1315,11 +1344,15 @@ begin
     f.WriteBuffer(ID, 4);
     wChunkSize := Data.DataMS.Size;
     f.WriteBuffer(wChunkSize, 4);
-    Data.DataMS.Seek(0, soFromBeginning);
-    f.CopyFrom(Data.DataMS, Data.DataMS.Size);
-  except
+  
+    except
     Result := StreamError;
   end;
+  
+  end;
+
+  Data.DataMS.Seek(0, soFromBeginning);
+    f.CopyFrom(Data.DataMS, Data.DataMS.Size);
   f.Seek(SizeOf(ID), soFromBeginning);
   wFileSize := f.Size - SizeOf(ID) - SizeOf(wFileSize);
   f.Write(wFileSize, 4);
@@ -3620,15 +3653,16 @@ if err =0 then begin
  {$endif}
 
 function Tuos_Player.AddIntoFileFromMem(Filename: PChar; SampleRate: LongInt;
-  Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt): LongInt;
-  /////// Add a Output into audio wav file with Custom parameters
-  ////////// FileName : filename of saved audio wav file
-  //////////// SampleRate : delault : -1 (44100)
-  //////////// Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
-  //////////// SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)
-   //////////// FramesCount : -1 default : 65536 div channels
+  Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt; FileFormat: cint32): LongInt;
+  // Add a Output into audio wav file with Custom parameters
+  // FileName : filename of saved audio wav file
+  // SampleRate : delault : -1 (44100)
+  // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
+  //  SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)
+  // FramesCount : -1 default : 65536 div channels
+  // FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
   //  result :  Output Index in array    -1 = error
-  //////////// example : OutputIndex1 := AddIntoFileFromMem(edit5.Text,-1,-1,0, -1);
+  // example : OutputIndex1 := AddIntoFileFromMem(edit5.Text,-1,-1,0, -1);
 var
   x: LongInt;
 begin
@@ -3640,10 +3674,12 @@ begin
   StreamOut[x].FileBuffer.ERROR := 0;
   StreamOut[x].Data.Enabled := True;
   StreamOut[x].Data.Filename := filename;
+  if (FileFormat = -1) or (FileFormat = 0) then 
+  StreamOut[x].FileBuffer.FileFormat := 0 else StreamOut[x].FileBuffer.FileFormat := FileFormat;
   StreamOut[x].Data.TypePut := 4;
     FillChar(StreamOut[x].FileBuffer, sizeof(StreamOut[x].FileBuffer), 0);
   StreamOut[x].FileBuffer.DataMS := TMemoryStream.Create;
-
+   
   result := x;
 
    if (Channels = -1) then
@@ -3707,7 +3743,7 @@ begin
   StreamOut[x].Data.Enabled := True;
   StreamOut[x].Data.Filename := filename;
   if (FileFormat = -1) or (FileFormat = 0) then 
-  StreamOut[x].FileFormat := 0 else StreamOut[x].FileFormat := FileFormat;
+  StreamOut[x].FileBuffer.FileFormat := 0 else StreamOut[x].FileBuffer.FileFormat := FileFormat;
   
   
   FillChar(StreamOut[x].FileBuffer, sizeof(StreamOut[x].FileBuffer), 0);
@@ -3756,7 +3792,7 @@ begin
   StreamOut[x].FileBuffer.Data := TFileStream.Create(filename,fmCreate);
   StreamOut[x].FileBuffer.Data.Seek(0, soFromBeginning);
   
-  if StreamOut[x].FileFormat = 0 then 
+  if StreamOut[x].FileBuffer.FileFormat = 0 then 
   begin // wav file
   ID := 'RIFF';
   StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);

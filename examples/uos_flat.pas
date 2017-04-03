@@ -313,16 +313,16 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar): cint32;
   // FileName : filename of saved audio wav file
 
 function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate: LongInt;  
-      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
-    /////// Add a Output into audio wav file with custom parameters from TMemoryStream
-    // PlayerIndex : Index of a existing Player
-    ////////// FileName : filename of saved audio wav file
-    //////////// SampleRate : delault : -1 (44100)
-    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
-    //////////// FramesCount : default : -1 (= 4096)
-    //  result : Output Index in array     -1 = error
-    //////////// example : OutputIndex1 := AddIntoFileFromBuf(edit5.Text,-1,-1, 0, -1);
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt;  
+    // Add a Output into audio wav file with Custom parameters
+  // FileName : filename of saved audio wav file
+  // SampleRate : delault : -1 (44100)
+  // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
+  //  SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)
+  // FramesCount : -1 default : 65536 div channels
+  // FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
+  //  result :  Output Index in array    -1 = error
+  // example : OutputIndex1 := AddIntoFileFromMem(0, edit5.Text,-1,-1,0, -1);
 
 function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
   // Add a Output into audio wav file with Default parameters from TMemoryStream
@@ -1119,21 +1119,21 @@ function uos_AddIntoFile(PlayerIndex: cint32;  Filename: PChar): cint32;
 end;
 
 function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate: LongInt;  
-      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
-    /////// Add a Output into audio wav file with custom parameters from TMemoryStream
-    // PlayerIndex : Index of a existing Player
-    ////////// FileName : filename of saved audio wav file
-    //////////// SampleRate : delault : -1 (44100)
-    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
-    //////////// FramesCount : default : -1 (= 4096)
-    //  result : Output Index in array     -1 = error
-    //////////// example : OutputIndex1 := AddIntoFileFromBuf(edit5.Text,-1,-1, 0, -1);
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt;  
+  // Add a Output into audio wav file with Custom parameters
+  // FileName : filename of saved audio wav file
+  // SampleRate : delault : -1 (44100)
+  // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
+  //  SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)
+  // FramesCount : -1 default : 65536 div channels
+  // FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
+  //  result :  Output Index in array    -1 = error
+  // example : OutputIndex1 := AddIntoFileFromMem(edit5.Text,-1,-1,0, -1,-1);
 begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
- Result :=  uosPlayers[PlayerIndex].AddIntoFileFromMem(Filename, SampleRate, Channels, SampleFormat, FramesCount);
+ Result :=  uosPlayers[PlayerIndex].AddIntoFileFromMem(Filename, SampleRate, Channels, SampleFormat, FramesCount, FileFormat);
 end;
 
 function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
@@ -1144,7 +1144,7 @@ function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
- Result :=  uosPlayers[PlayerIndex].AddIntoFileFromMem(Filename, -1, -1, -1, -1);
+ Result :=  uosPlayers[PlayerIndex].AddIntoFileFromMem(Filename, -1, -1, -1, -1, -1);
 end;
 
  {$IF DEFINED(shout)}

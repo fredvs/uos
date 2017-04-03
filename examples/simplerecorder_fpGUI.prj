@@ -829,8 +829,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=tfile
+finddtext=TFileStream
 findhistory=20
+ TFileStream
  tfile
  wChunkSize
  writebu
@@ -847,12 +848,11 @@ findhistory=20
  AftFunc
  FileBuffer
  Tuos_FileBuffer
- TFileStream
  player2
  AddDSPin
  .create
 findoptions=1
-editpos=24
+editpos=25
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -871,12 +871,13 @@ editpos=24
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 25,210
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,6814
+ 0,-1073741823
+ 0,1287
+ 31,1120
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -901,7 +902,8 @@ bookmarks20=0
 bookmarks21=0
 bookmarks22=0
 bookmarks23=0
-sourcefiles=24
+bookmarks24=0
+sourcefiles=25
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -926,7 +928,8 @@ sourcefiles=24
  ${PROJECTDIR}/uos_opus.pas
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
  ${PROJECTDIR}/uos.pas
-relpaths=24
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=25
  uos.pas
  uos_flat.pas
  define.inc
@@ -951,7 +954,9 @@ relpaths=24
  uos_opus.pas
  fpg_style_chrome_silver_flatmenu.pas
  uos.pas
-ismoduletexts=24
+ uos_flat.pas
+ismoduletexts=25
+ 0
  0
  0
  0
@@ -981,10 +986,11 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=24
+order=25
  0
  22
  23
+ 24
  19
  18
  20
@@ -1008,7 +1014,7 @@ order=24
  17
 tabsize=60
 firsttab=0
-index=4
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
