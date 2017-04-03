@@ -912,10 +912,10 @@ findoptions=1
 editpos=6
  0,-1073741823
  0,-1073741823
- 0,110
- 0,1824
- 0,7462
- 0,1521
+ 0,-1073741823
+ 0,-1073741823
+ 0,7461
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -999,7 +999,7 @@ windowlayout=549
   basedock,0,0,1356,701
  focusedchild=0
  wsize=6
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1017,8 +1017,8 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=1
- visible=1
+ active=0
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857

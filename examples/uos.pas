@@ -295,6 +295,7 @@ type
   wBitsPerSample: word;
   wChannels: word;
   Data: TFileStream;
+  DataMS: TMemoryStream;
   end;
 
 type
@@ -304,7 +305,8 @@ type
   TypePut: integer;
   // -1 : nothing,  for Input  : 0: from audio file, 1: from input device (like mic),
                               // 2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer
-  // for Output : 0: into wav file, 1: into output device, 2: into stream server, 3: into memory buffer
+                 // for Output : 0: into wav file fromfilestream, 1: into output device, 2: into stream server, 3: into memory buffer, 4: into wav from memorystream
+  
     
   Seekable: boolean;
   Status: integer;
@@ -618,7 +620,8 @@ type
 
   function AddIntoFile(Filename: PChar; SampleRate: cint32;
   Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
-  // Add a Output into audio wav file with custom parameters
+
+  // Add a Output into audio wav file with custom parameters from TFileStream
   // FileName : filename of saved audio wav file
   // SampleRate : delault : -1 (44100)
   // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
@@ -627,6 +630,17 @@ type
   // FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
   //  result : Output Index in array  -1 = error
   // example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1, -1);
+
+  function AddIntoFileFromMem(Filename: PChar; SampleRate: LongInt;  
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
+    /////// Add a Output into audio wav file with custom parameters from TMemoryStream
+     ////////// FileName : filename of saved audio wav file
+    //////////// SampleRate : delault : -1 (44100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+    //////////// FramesCount : default : -1 (= 4096)
+    //  result : Output Index in array     -1 = error
+    //////////// example : OutputIndex1 := AddIntoFileFromBuf(edit5.Text,-1,-1, 0, -1);
   
   function AddIntoMemoryBuffer(outmemory: PDArFloat) : cint32;
   // Add a Output into memory buffer
@@ -1257,6 +1271,61 @@ begin
   arfl[x] := pl^[x] / 2147483647;
   Result := arfl;
 end;
+
+function WriteWaveFromMem(FileName: ansistring; Data: Tuos_FileBuffer): word;
+var
+  f: TFileStream;
+  wFileSize: LongInt;
+  wChunkSize: LongInt;
+  ID: array[0..3] of char;
+  Header: Tuos_WaveHeaderChunk;
+begin
+  Result := noError;
+  f := nil;
+  try
+    f := TFileStream.Create(FileName, fmCreate);
+    f.Seek(0, soFromBeginning);
+    ID := 'RIFF';
+    f.WriteBuffer(ID, 4);
+    wFileSize := 0;
+    f.WriteBuffer(wFileSize, 4);
+    ID := 'WAVE';
+    f.WriteBuffer(ID, 4);
+    ID := 'fmt ';
+    f.WriteBuffer(ID, 4);
+    wChunkSize := SizeOf(Header);
+    f.WriteBuffer(wChunkSize, 4);
+    Header.wFormatTag := 1;
+
+    Header.wChannels := Data.wChannels;
+
+    Header.wSamplesPerSec := Data.wSamplesPerSec;
+
+    Header.wBlockAlign := Data.wChannels * (Data.wBitsPerSample div 8);
+
+    Header.wAvgBytesPerSec := Data.wSamplesPerSec * Header.wBlockAlign;
+    Header.wBitsPerSample := Data.wBitsPerSample;
+    Header.wcbSize := 0;
+    f.WriteBuffer(Header, SizeOf(Header));
+  except
+    Result := HeaderWriteError;
+  end;
+  try
+    ID := 'data';
+    f.WriteBuffer(ID, 4);
+    wChunkSize := Data.DataMS.Size;
+    f.WriteBuffer(wChunkSize, 4);
+    Data.DataMS.Seek(0, soFromBeginning);
+    f.CopyFrom(Data.DataMS, Data.DataMS.Size);
+  except
+    Result := StreamError;
+  end;
+  f.Seek(SizeOf(ID), soFromBeginning);
+  wFileSize := f.Size - SizeOf(ID) - SizeOf(wFileSize);
+  f.Write(wFileSize, 4);
+  f.Free;
+end;
+
 
 procedure WriteWave(FileName: UTF8String; Data: Tuos_FileBuffer);
 var
@@ -3549,6 +3618,66 @@ if err =0 then begin
  end;
  end; 
  {$endif}
+
+function Tuos_Player.AddIntoFileFromMem(Filename: PChar; SampleRate: LongInt;
+  Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt): LongInt;
+  /////// Add a Output into audio wav file with Custom parameters
+  ////////// FileName : filename of saved audio wav file
+  //////////// SampleRate : delault : -1 (44100)
+  //////////// Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
+  //////////// SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)
+   //////////// FramesCount : -1 default : 65536 div channels
+  //  result :  Output Index in array    -1 = error
+  //////////// example : OutputIndex1 := AddIntoFileFromMem(edit5.Text,-1,-1,0, -1);
+var
+  x: LongInt;
+begin
+  result := -1 ;
+  x := 0;
+  SetLength(StreamOut, Length(StreamOut) + 1);
+  StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
+  x := Length(StreamOut) - 1;
+  StreamOut[x].FileBuffer.ERROR := 0;
+  StreamOut[x].Data.Enabled := True;
+  StreamOut[x].Data.Filename := filename;
+  StreamOut[x].Data.TypePut := 4;
+    FillChar(StreamOut[x].FileBuffer, sizeof(StreamOut[x].FileBuffer), 0);
+  StreamOut[x].FileBuffer.DataMS := TMemoryStream.Create;
+
+  result := x;
+
+   if (Channels = -1) then
+    StreamOut[x].FileBuffer.wChannels := 2
+  else
+    StreamOut[x].FileBuffer.wChannels := Channels;
+
+   StreamOut[x].Data.Channels := StreamOut[x].FileBuffer.wChannels;
+
+    if FramesCount = -1 then  StreamOut[x].Data.Wantframes :=  65536 div StreamOut[x].Data.Channels else
+  StreamOut[x].Data.Wantframes := FramesCount ;
+
+  SetLength(StreamOut[x].Data.Buffer, StreamOut[x].Data.Wantframes*StreamOut[x].Data.Channels);
+
+    if (SampleFormat = -1) or (SampleFormat = 2) then
+  begin
+    StreamOut[x].FileBuffer.wBitsPerSample := 16;
+    StreamOut[x].Data.SampleFormat := 2;
+  end;
+
+  if (SampleFormat = 1) then
+  begin
+    StreamOut[x].FileBuffer.wBitsPerSample := 32;
+    StreamOut[x].Data.SampleFormat := 1;
+  end;
+
+  if SampleRate = -1 then
+    StreamOut[x].FileBuffer.wSamplesPerSec := 44100
+  else
+    StreamOut[x].FileBuffer.wSamplesPerSec := samplerate;
+    
+  StreamOut[x].Data.Samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
+  StreamOut[x].LoopProc := nil;
+end;
 
 function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: cint32;
   Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
@@ -6455,7 +6584,7 @@ if err > 0 then
   {$endif}
 
   0:
-  begin  // Give to wav file
+  begin  // Give to wav file from TFileStream
 
   if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
   begin
@@ -6466,6 +6595,22 @@ if err > 0 then
   BufferplugSH := CvFloat32ToInt16(BufferplugFL);
   end;
   StreamOut[x].FileBuffer.Data.WriteBuffer(BufferplugSH[0],
+  Length(BufferplugSH));
+
+  end;
+
+  4:
+  begin  // Give to wav file from TMemoryStream
+
+  if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
+  begin
+  Bufferst2mo :=  CvSteroToMono(BufferplugFL, Length(BufferplugFL) div 2);
+  BufferplugSH := CvFloat32ToInt16(Bufferst2mo);
+  end else
+  begin
+  BufferplugSH := CvFloat32ToInt16(BufferplugFL);
+  end;
+  StreamOut[x].FileBuffer.DataMS.WriteBuffer(BufferplugSH[0],
   Length(BufferplugSH));
 
   end;
@@ -6642,8 +6787,36 @@ if err > 0 then
   {$endif} 
   
   end;
+  
+  4:  // Give to wav file from TMemoryStream
+  begin
+
+  case StreamOut[x].Data.SampleFormat of
+  0: rat := 2 ;
+  1: rat := 2 ;
+  2: rat := 1 ;
+  end;
+
+  if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
+  begin
+
+  Bufferst2mo  := CvSteroToMono(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
+
+  StreamOut[x].FileBuffer.DataMS.WriteBuffer(
+  Bufferst2mo[0],
+  StreamIn[x2].Data.outframes * rat);
+  end else
+  if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 1) then
+  begin
+  StreamOut[x].FileBuffer.DataMS.WriteBuffer(
+  StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.ratio * rat);
+  end else
+
+  StreamOut[x].FileBuffer.DataMS.WriteBuffer(
+  StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels * rat);
+  end;
  
-  0:  // Give to wav file
+  0:  // Give to wav file from TFileStream
   begin
 
   case StreamOut[x].Data.SampleFormat of
@@ -6740,6 +6913,12 @@ if err > 0 then
   if (StreamOut[x].Data.TypePut = 0) then
   begin
   WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
+  // StreamOut[x].FileBuffer.Data.Free;
+  end;
+
+  if (StreamOut[x].Data.TypePut = 4) then
+  begin
+  WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
   // StreamOut[x].FileBuffer.Data.Free;
   end;
        
@@ -6935,6 +7114,14 @@ writeln('Status = 0');
   WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
   //  StreamOut[x].FileBuffer.Data.Free;
   end;
+
+  if (StreamOut[x].Data.TypePut = 4) then
+  begin
+  WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
+   StreamOut[x].FileBuffer.Data.Free;
+  end;
+ 
+
   end;
   
  {$IF DEFINED(debug)}

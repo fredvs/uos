@@ -296,7 +296,7 @@ function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
 
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
   Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
-  // Add a Output into audio wav file with custom parameters
+  // Add a Output into audio wav file with custom parameters from TFileStream
   // PlayerIndex : Index of a existing Player
   // FileName : filename of saved audio wav file
   // SampleRate : delault : -1 (44100)
@@ -308,7 +308,24 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint3
   // example : OutputIndex1 := uos_AddIntoFile(0,edit5.Text,-1,-1, 0, 1);
 
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar): cint32;
-  // Add a Output into audio wav file with Default parameters
+  // Add a Output into audio wav file with Default parameters from TFileStream
+  // PlayerIndex : Index of a existing Player
+  // FileName : filename of saved audio wav file
+
+function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate: LongInt;  
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
+    /////// Add a Output into audio wav file with custom parameters from TMemoryStream
+    // PlayerIndex : Index of a existing Player
+    ////////// FileName : filename of saved audio wav file
+    //////////// SampleRate : delault : -1 (44100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+    //////////// FramesCount : default : -1 (= 4096)
+    //  result : Output Index in array     -1 = error
+    //////////// example : OutputIndex1 := AddIntoFileFromBuf(edit5.Text,-1,-1, 0, -1);
+
+function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
+  // Add a Output into audio wav file with Default parameters from TMemoryStream
   // PlayerIndex : Index of a existing Player
   // FileName : filename of saved audio wav file
 
@@ -1099,6 +1116,35 @@ function uos_AddIntoFile(PlayerIndex: cint32;  Filename: PChar): cint32;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
  Result :=  uosPlayers[PlayerIndex].AddIntoFile(Filename, -1, -1, -1, -1, -1);
+end;
+
+function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate: LongInt;  
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
+    /////// Add a Output into audio wav file with custom parameters from TMemoryStream
+    // PlayerIndex : Index of a existing Player
+    ////////// FileName : filename of saved audio wav file
+    //////////// SampleRate : delault : -1 (44100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+    //////////// FramesCount : default : -1 (= 4096)
+    //  result : Output Index in array     -1 = error
+    //////////// example : OutputIndex1 := AddIntoFileFromBuf(edit5.Text,-1,-1, 0, -1);
+begin
+  result := -1 ;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+ Result :=  uosPlayers[PlayerIndex].AddIntoFileFromMem(Filename, SampleRate, Channels, SampleFormat, FramesCount);
+end;
+
+function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
+  // Add a Output into audio wav file with Default parameters from TMemoryStream
+  // PlayerIndex : Index of a existing Player
+  // FileName : filename of saved audio wav file
+ begin
+ result := -1 ;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+ Result :=  uosPlayers[PlayerIndex].AddIntoFileFromMem(Filename, -1, -1, -1, -1);
 end;
 
  {$IF DEFINED(shout)}

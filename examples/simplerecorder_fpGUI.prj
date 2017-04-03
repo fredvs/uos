@@ -829,8 +829,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=writebu
+finddtext=tfile
 findhistory=20
+ tfile
+ wChunkSize
  writebu
  read
  readb
@@ -849,10 +851,8 @@ findhistory=20
  player2
  AddDSPin
  .create
- WriteWave
- sleep(
 findoptions=1
-editpos=23
+editpos=24
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -871,11 +871,12 @@ editpos=23
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 25,210
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,15
+ 0,6814
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -899,7 +900,8 @@ bookmarks19=0
 bookmarks20=0
 bookmarks21=0
 bookmarks22=0
-sourcefiles=23
+bookmarks23=0
+sourcefiles=24
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -923,7 +925,8 @@ sourcefiles=23
  /home/fred/fpgui/src/corelib/fpg_main.pas
  ${PROJECTDIR}/uos_opus.pas
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
-relpaths=23
+ ${PROJECTDIR}/uos.pas
+relpaths=24
  uos.pas
  uos_flat.pas
  define.inc
@@ -947,7 +950,9 @@ relpaths=23
  fpgui/src/corelib/fpg_main.pas
  uos_opus.pas
  fpg_style_chrome_silver_flatmenu.pas
-ismoduletexts=23
+ uos.pas
+ismoduletexts=24
+ 0
  0
  0
  0
@@ -976,9 +981,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=23
+order=24
  0
  22
+ 23
  19
  18
  20
@@ -1002,7 +1008,7 @@ order=23
  17
 tabsize=60
 firsttab=0
-index=1
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1031,7 +1037,7 @@ windowlayout=530
  ncx=0
  ncy=0
  x=231
- y=52
+ y=51
  cx=939
  cy=621
  rcx=0
@@ -1362,9 +1368,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=581
+ y=580
  cx=1356
- cy=120
+ cy=121
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1464,7 +1470,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=63
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1480,7 +1486,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=63
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1530,7 +1536,7 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=66
+ y=65
  cx=1356
  cy=512
  rcx=0

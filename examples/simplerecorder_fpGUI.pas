@@ -213,6 +213,8 @@ var
   //// If PlayerIndex exists already, it will be overwriten...
 
    uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
+   
+    uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
   //// add Output into wav file (save record)  with default parameters
   
    // uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename), -1, -1, 1, -1, -1);
