@@ -40,8 +40,6 @@ type
     btnStart: TfpgButton;
     btnStop: TfpgButton;
     Labelsnf: TfpgLabel;
-    Labelmpg: TfpgLabel;
-    FilenameEdit3: TfpgFileNameEdit;
     btnpause: TfpgButton;
     btnresume: TfpgButton;
     chknoise: TfpgCheckBox;
@@ -117,7 +115,7 @@ loadok : boolean = false;
   // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
 if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
- Pchar(FilenameEdit3.FileName), nil, nil, nil) = 0 then
+nil, nil, nil, nil) = 0 then
     begin
       hide;
       loadok := true;
@@ -126,19 +124,18 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
       btnLoad.Enabled := False;
       FilenameEdit1.ReadOnly := True;
       FilenameEdit2.ReadOnly := True;
-      FilenameEdit3.ReadOnly := True;
        UpdateWindowPosition;
        btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123 libraries are loaded...'
-       end else btnLoad.Text :=
-        'One or more libraries did not load, check filenames...';
-        
-             
+        'PortAudio, SndFile, Mpg123 libraries are loaded...';
+                  
       WindowPosition := wpScreenCenter;
       WindowTitle := 'Noise Remover.    uos Version ' + inttostr(uos_getversion());
        fpgapplication.ProcessMessages;
       sleep(500);
       Show;
+        end else btnLoad.Text :=
+        'One or more libraries did not load, check filenames...';
+     
     end;
 
 
@@ -245,7 +242,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
 
     {@VFD_BODY_BEGIN: Simpleplayer}
   Name := 'Simpleplayer';
-  SetPosition(396, 317, 503, 291);
+  SetPosition(396, 317, 503, 229);
   WindowTitle := 'Noise remover';
   IconName := '';
   BackGroundColor := $80000001;
@@ -265,7 +262,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
   with Labelport do
   begin
     Name := 'Labelport';
-    SetPosition(136, 0, 320, 15);
+    SetPosition(136, 4, 320, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
@@ -291,7 +288,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
   with FilenameEdit1 do
   begin
     Name := 'FilenameEdit1';
-    SetPosition(136, 16, 356, 24);
+    SetPosition(140, 24, 356, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -303,7 +300,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
   with FilenameEdit2 do
   begin
     Name := 'FilenameEdit2';
-    SetPosition(136, 56, 356, 24);
+    SetPosition(140, 84, 356, 24);
     ExtraHint := '';
     FileName := '';
     Filter := '';
@@ -357,36 +354,12 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
   with Labelsnf do
   begin
     Name := 'Labelsnf';
-    SetPosition(140, 40, 316, 15);
+    SetPosition(144, 64, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
     ParentShowHint := False;
     Text := 'Folder + filename of SndFile Library';
     Hint := '';
-  end;
-
-  Labelmpg := TfpgLabel.Create(self);
-  with Labelmpg do
-  begin
-    Name := 'Labelmpg';
-    SetPosition(136, 80, 316, 15);
-    Alignment := taCenter;
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Folder + filename of Mpg123 Library';
-    Hint := '';
-  end;
-
-  FilenameEdit3 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit3 do
-  begin
-    Name := 'FilenameEdit3';
-    SetPosition(136, 96, 356, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 12;
   end;
 
   btnpause := TfpgButton.Create(self);
@@ -443,13 +416,10 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
      {$if defined(cpu64)}
     FilenameEdit1.FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     FilenameEdit2.FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
-    FilenameEdit3.FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
- {$else}
+     {$else}
     FilenameEdit1.FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     FilenameEdit2.FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
-    FilenameEdit3.FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
-  
-  {$endif}
+     {$endif}
     FilenameEdit4.FileName := ordir + 'sound\noisyvoice.ogg';
  {$ENDIF}
 
@@ -458,7 +428,6 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     opath := copy(opath, 1, Pos('/uos', opath) - 1);
     FilenameEdit1.FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     FilenameEdit2.FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
-    FilenameEdit3.FileName := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
     FilenameEdit4.FileName := opath + 'sound/noisyvoice.ogg';
             {$ENDIF}
 
@@ -466,13 +435,11 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
     {$if defined(cpu64)}
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
-    FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-    
+       
 {$else}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-    FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
-      
+          
 {$endif}
     FilenameEdit4.FileName := ordir + 'sound/noisyvoice.ogg';
             {$ENDIF}
@@ -480,22 +447,17 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
   {$IFDEF freebsd}
     {$if defined(cpu64)}
     FilenameEdit1.FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
-     FilenameEdit2.FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
-    FilenameEdit3.FileName := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
-     {$else}
+    FilenameEdit2.FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    {$else}
     FilenameEdit1.FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
-    FilenameEdit3.FileName := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
-   
-{$endif}
+    {$endif}
     FilenameEdit4.FileName := ordir + 'sound/noisyvoice.ogg';
 {$ENDIF}
     FilenameEdit4.Initialdir := ordir + 'sound';
     FilenameEdit1.Initialdir := ordir + 'lib';
     FilenameEdit2.Initialdir := ordir + 'lib';
-    FilenameEdit3.Initialdir := ordir + 'lib';
-  
-
+   
   end;
 
   procedure TSimpleplayer.uos_logo(Sender: TObject);

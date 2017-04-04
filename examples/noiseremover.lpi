@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="10"/>
+    <General>
+      <MainUnit Value="0"/>
+      <Title Value="NoiseRemover"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+      </XPManifest>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <CustomData Count="15">
+      <Item0 Name="lazpackager/copyright" Value="2012 Fred van Stappen"/>
+      <Item1 Name="lazpackager/deb/ppa" Value="ppa:fiens/uos"/>
+      <Item2 Name="lazpackager/deb/series" Value="precise"/>
+      <Item3 Name="lazpackager/deb/tpl_changelog" Value="?PACKAGE_NAME? (?FULLVERSION?) ?SERIES?; urgency=low
+
+  * Original version ?VERSION? packaged with lazdebian
+
+ -- ?MAINTAINER? &lt;?MAINTAINER_EMAIL?>  ?DATER?
+"/>
+      <Item4 Name="lazpackager/deb/tpl_control" Value="Source: ?PACKAGE_NAME?
+Maintainer: ?MAINTAINER? &lt;?MAINTAINER_EMAIL?>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.3
+Build-Depends: fpc, lcl, lcl-utils, lazarus, debhelper (>= 8)
+
+Package: ?PACKAGE_NAME?
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+Description: ?DESCRIPTION?
+ ?DESCRIPTION_LONG?
+"/>
+      <Item5 Name="lazpackager/deb/tpl_copyright" Value="Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+
+Files: *
+Copyright: ?COPYRIGHT?
+License: GPL-2+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ at your option) any later version.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License along
+ with this program; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ .
+ On Debian systems, the full text of the GNU General Public
+ License version 2 can be found in the file
+ /usr/share/common-licenses/GPL-2
+"/>
+      <Item6 Name="lazpackager/deb/tpl_rules" Value="#!/usr/bin/make -f
+
+# see http://www.debian.org/doc/manuals/maint-guide/dreq.en.html
+
+override_dh_auto_build:
+	dh_auto_build -- PREFIX=/usr
+
+override_dh_auto_install:
+	dh_auto_install -- PREFIX=/usr
+
+%:
+	dh $@
+"/>
+      <Item7 Name="lazpackager/description" Value="United Openlib of Sound"/>
+      <Item8 Name="lazpackager/description_long" Value="United Openlib of Sound is a Pascal linker for Portaudio, Sndfile and MPG123 audio libraries.
+With UOS audio life is easier..."/>
+      <Item9 Name="lazpackager/export_cmd" Value="?CP? *.lpi ?TEMPFOLDER?/
+?CP? *.lpr ?TEMPFOLDER?/
+?CP? *.pas ?TEMPFOLDER?/
+?CP? *.lfm ?TEMPFOLDER?/
+?CP? *.ico ?TEMPFOLDER?/
+"/>
+      <Item10 Name="lazpackager/maintainer" Value="Fred van Stappen"/>
+      <Item11 Name="lazpackager/maintainer_email" Value="fiens@hotmail.com"/>
+      <Item12 Name="lazpackager/package_name" Value="united_openlib_sound"/>
+      <Item13 Name="lazpackager/tpl_makefile" Value="PREFIX = /usr/local
+
+# debuild will set DESTDIR to the fakeroot path and
+# in the override rules we will change PREFIX to /usr
+BINDIR = $(DESTDIR)$(PREFIX)/bin
+
+.PHONY : all
+all:
+	lazbuild ?PROJECT?
+
+.PHONY : clean
+clean:
+	$(RM) -r lib
+	$(RM) *.res
+	$(RM) ?EXECUTABLE?
+
+.PHONY : install
+install:
+	mkdir -p $(BINDIR)
+	install -s ?EXECUTABLE? $(BINDIR)/
+"/>
+      <Item14 Name="lazpackager/use_existing_makefile" Value="False"/>
+    </CustomData>
+    <BuildModes Count="1" Active="Default">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="72">
+      <Unit0>
+        <Filename Value="noiseremover.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="3"/>
+        <CursorPos Y="22"/>
+        <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="main_nr.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="210"/>
+        <CursorPos X="57" Y="216"/>
+        <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="lazdyn_portaudio.pas"/>
+        <TopLine Value="371"/>
+        <CursorPos X="89" Y="4"/>
+        <UsageCount Value="99"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="Lazdyn_SoundTouch.pas"/>
+        <CursorPos X="59" Y="12"/>
+        <UsageCount Value="6"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="u_os.pas"/>
+        <TopLine Value="445"/>
+        <CursorPos X="10" Y="402"/>
+        <UsageCount Value="81"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../firstprognew/mainmixxl.pas"/>
+        <TopLine Value="4347"/>
+        <CursorPos X="9" Y="4364"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../dynmpg123/waveutils.pas"/>
+        <TopLine Value="3"/>
+        <CursorPos X="45" Y="43"/>
+        <UsageCount Value="6"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="kPGtest.pas"/>
+        <TopLine Value="111"/>
+        <CursorPos X="32" Y="128"/>
+        <UsageCount Value="8"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="kPGtestSF.pas"/>
+        <TopLine Value="27"/>
+        <CursorPos X="29" Y="32"/>
+        <UsageCount Value="8"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="lazdyn_mpg123.pas"/>
+        <TopLine Value="244"/>
+        <CursorPos X="102" Y="250"/>
+        <UsageCount Value="99"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="../OpenC2Pas/src/main.pas"/>
+        <TopLine Value="193"/>
+        <CursorPos Y="232"/>
+        <UsageCount Value="5"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="lazdyn_libsndfile.pas"/>
+        <CursorPos Y="12"/>
+        <UsageCount Value="99"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="../U_OS_Test (copie)/u_os.pas"/>
+        <TopLine Value="72"/>
+        <CursorPos X="34" Y="236"/>
+        <UsageCount Value="1"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="PA_SF_MP.pas"/>
+        <TopLine Value="77"/>
+        <CursorPos X="20" Y="10"/>
+        <UsageCount Value="3"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/sysutils/sysstrh.inc"/>
+        <TopLine Value="100"/>
+        <CursorPos X="10" Y="112"/>
+        <UsageCount Value="6"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="../lazarus64/examples/multithreading/mainunit.pas"/>
+        <TopLine Value="70"/>
+        <UsageCount Value="6"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="../lazarus64/examples/pascalstream/componentstreampas.pas"/>
+        <TopLine Value="33"/>
+        <UsageCount Value="9"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="../firstprognewssbpm/mainmixxl.pas"/>
+        <ComponentName Value="MiXimumLP"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <TopLine Value="2775"/>
+        <CursorPos X="20" Y="2792"/>
+        <UsageCount Value="8"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="/media/Windows7/dynsndfile/libsndfilestrings.pas"/>
+        <UsageCount Value="6"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="/media/Windows7/dynsndfile/lazdyn_libsndfile.pas"/>
+        <UsageCount Value="6"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../logouos/unit1.pas"/>
+        <TopLine Value="67"/>
+        <CursorPos X="51" Y="83"/>
+        <UsageCount Value="6"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="/usr/lib/codetyphon/lazarus/lcl/graphics.pp"/>
+        <TopLine Value="1168"/>
+        <CursorPos X="49" Y="1181"/>
+        <UsageCount Value="8"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/objpas/objpas.pp"/>
+        <TopLine Value="119"/>
+        <CursorPos X="8" Y="28"/>
+        <UsageCount Value="6"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="uos.pas"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="6149"/>
+        <CursorPos X="31" Y="6161"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="uos_new.pas"/>
+        <TopLine Value="310"/>
+        <CursorPos X="29" Y="478"/>
+        <UsageCount Value="80"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="../firstprognew/bass.pas"/>
+        <TopLine Value="810"/>
+        <UsageCount Value="5"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="../onenamevar/unit1.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <TopLine Value="81"/>
+        <CursorPos X="44" Y="100"/>
+        <UsageCount Value="8"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="/usr/lib/codetyphon/lazarus/packager/registration/fcllaz.pas"/>
+        <CursorPos Y="4"/>
+        <UsageCount Value="2"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="../lazarus32/packager/registration/fcllaz.pas"/>
+        <UsageCount Value="2"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="../U_OS_Testnewonetype/uos.pas"/>
+        <TopLine Value="444"/>
+        <CursorPos X="79" Y="452"/>
+        <UsageCount Value="7"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="/media/Windows7/UOS/uos.pas"/>
+        <TopLine Value="747"/>
+        <CursorPos X="5" Y="750"/>
+        <UsageCount Value="3"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="/usr/lib/codetyphon/lazarus/components/codetools/codebeautifier.pas"/>
+        <TopLine Value="405"/>
+        <UsageCount Value="5"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="../dynportaudio/mainunitsine.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <TopLine Value="463"/>
+        <CursorPos Y="483"/>
+        <UsageCount Value="17"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="../dynportaudio/unit1.pas"/>
+        <TopLine Value="81"/>
+        <CursorPos X="16" Y="91"/>
+        <UsageCount Value="10"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="/media/Windows7/hollytray/unit1.pas"/>
+        <TopLine Value="48"/>
+        <UsageCount Value="9"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="../DynSynthDemo/umain.pas"/>
+        <TopLine Value="260"/>
+        <CursorPos X="100" Y="281"/>
+        <UsageCount Value="9"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="uos_portaudio.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="2"/>
+        <UsageCount Value="26"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="noiseremover_fpGUI.lpr"/>
+        <TopLine Value="263"/>
+        <CursorPos X="29" Y="270"/>
+        <UsageCount Value="11"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="/media/fred/Windows7/uos/examples/main_sp.pas"/>
+        <TopLine Value="108"/>
+        <CursorPos X="37" Y="119"/>
+        <UsageCount Value="10"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="uos_soundtouch.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="2"/>
+        <UsageCount Value="17"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="uos_soundtouchok.pas"/>
+        <TopLine Value="92"/>
+        <CursorPos X="40" Y="101"/>
+        <UsageCount Value="10"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="../../uos-master/examples/uos.pas"/>
+        <CursorPos X="66" Y="517"/>
+        <UsageCount Value="12"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="../../uos2/src/uos.pas"/>
+        <TopLine Value="1906"/>
+        <CursorPos X="38" Y="1917"/>
+        <UsageCount Value="10"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="/usr/share/lazarus/1.2RC2/ide/compiler.pp"/>
+        <TopLine Value="30"/>
+        <CursorPos X="6" Y="33"/>
+        <UsageCount Value="10"/>
+      </Unit43>
+      <Unit44>
+        <Filename Value="../../libuos/src/libuos.pas"/>
+        <TopLine Value="3"/>
+        <CursorPos X="32" Y="24"/>
+        <UsageCount Value="16"/>
+      </Unit44>
+      <Unit45>
+        <Filename Value="noiseremover_fpGUI.pas"/>
+        <UnitName Value="noiseremove_fpGUI"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="361"/>
+        <CursorPos X="24" Y="377"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit45>
+      <Unit46>
+        <Filename Value="../../codetyphon/fpcsrc/rtl/objpas/sysutils/filutilh.inc"/>
+        <CursorPos X="10" Y="143"/>
+        <UsageCount Value="11"/>
+      </Unit46>
+      <Unit47>
+        <Filename Value="../../lazarus/fpc/2.6.2/source/rtl/win/sysutils.pp"/>
+        <UsageCount Value="11"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="../../lazarus/components/lazutils/fileutil.pas"/>
+        <TopLine Value="24"/>
+        <CursorPos X="65" Y="29"/>
+        <UsageCount Value="11"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="../../codetyphon/typhon/components/lazutils/fileutil.pas"/>
+        <TopLine Value="201"/>
+        <CursorPos X="19" Y="217"/>
+        <UsageCount Value="10"/>
+      </Unit49>
+      <Unit50>
+        <Filename Value="uos_flat.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="508"/>
+        <CursorPos X="45" Y="523"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="uos_libsndfile.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="61" Y="11"/>
+        <UsageCount Value="21"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="/usr/lib/codetyphon/fpcsrc/rtl/linux/ptypes.inc"/>
+        <TopLine Value="90"/>
+        <CursorPos X="5" Y="94"/>
+        <UsageCount Value="10"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="../../uoslib/src/uos.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3417"/>
+        <CursorPos X="17" Y="3438"/>
+        <UsageCount Value="10"/>
+      </Unit53>
+      <Unit54>
+        <Filename Value="uos_bs2b.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="2"/>
+        <UsageCount Value="16"/>
+      </Unit54>
+      <Unit55>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/rtl/inc/systemh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="491"/>
+        <CursorPos X="10" Y="493"/>
+        <UsageCount Value="10"/>
+      </Unit55>
+      <Unit56>
+        <Filename Value="define.inc"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="78" Y="10"/>
+        <UsageCount Value="19"/>
+        <Loaded Value="True"/>
+      </Unit56>
+      <Unit57>
+        <Filename Value="mcwAAC.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="57"/>
+        <CursorPos X="95" Y="74"/>
+        <UsageCount Value="10"/>
+      </Unit57>
+      <Unit58>
+        <Filename Value="uos_cdrom.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="11" Y="5"/>
+        <UsageCount Value="14"/>
+      </Unit58>
+      <Unit59>
+        <Filename Value="uos_aac.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="14" Y="6"/>
+        <UsageCount Value="15"/>
+      </Unit59>
+      <Unit60>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/packages/cdrom/src/cdrom.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="18"/>
+        <CursorPos X="13" Y="44"/>
+        <UsageCount Value="10"/>
+      </Unit60>
+      <Unit61>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/packages/cdrom/src/cdromw32.inc"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit61>
+      <Unit62>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/packages/cdrom/src/wincd.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="308"/>
+        <CursorPos X="44" Y="341"/>
+        <UsageCount Value="10"/>
+      </Unit62>
+      <Unit63>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/rtl/inc/ctypes.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="38"/>
+        <CursorPos X="10" Y="71"/>
+        <UsageCount Value="10"/>
+      </Unit63>
+      <Unit64>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/rtl/unix/unixtype.pp"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit64>
+      <Unit65>
+        <Filename Value="/usr/local/codetyphon/fpcsrc/rtl/unix/aliasctp.inc"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit65>
+      <Unit66>
+        <Filename Value="uos_httpgetthread.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="78" Y="16"/>
+        <UsageCount Value="14"/>
+      </Unit66>
+      <Unit67>
+        <Filename Value="uos_mpg123.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="2"/>
+        <UsageCount Value="14"/>
+      </Unit67>
+      <Unit68>
+        <Filename Value="uos_dsp_noiseremoval.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="9" Y="6"/>
+        <UsageCount Value="14"/>
+      </Unit68>
+      <Unit69>
+        <Filename Value="noiseremover_fpGUI_noflat.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="6" Y="8"/>
+        <UsageCount Value="10"/>
+      </Unit69>
+      <Unit70>
+        <Filename Value="simplerecorder_fpGUI.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="4" Y="7"/>
+        <UsageCount Value="10"/>
+      </Unit70>
+      <Unit71>
+        <Filename Value="/usr/local/codetyphon/typhon/components/BaseUtils/lazutf8sysutils.pas"/>
+        <UnitName Value="LazUTF8SysUtils"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="10"/>
+        <CursorPos X="5" Y="29"/>
+        <UsageCount Value="10"/>
+      </Unit71>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="115" Column="18" TopLine="97"/>
+      </Position1>
+      <Position2>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="114" Column="18" TopLine="96"/>
+      </Position2>
+      <Position3>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="113" Column="18" TopLine="95"/>
+      </Position3>
+      <Position4>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="112" Column="18" TopLine="94"/>
+      </Position4>
+      <Position5>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="111" Column="18" TopLine="93"/>
+      </Position5>
+      <Position6>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="110" Column="18" TopLine="92"/>
+      </Position6>
+      <Position7>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="109" Column="18" TopLine="91"/>
+      </Position7>
+      <Position8>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="108" Column="18" TopLine="90"/>
+      </Position8>
+      <Position9>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="107" Column="18" TopLine="89"/>
+      </Position9>
+      <Position10>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="106" Column="18" TopLine="88"/>
+      </Position10>
+      <Position11>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="107" Column="13" TopLine="98"/>
+      </Position11>
+      <Position12>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="106" Column="13" TopLine="97"/>
+      </Position12>
+      <Position13>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="105" Column="13" TopLine="96"/>
+      </Position13>
+      <Position14>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="104" Column="13" TopLine="95"/>
+      </Position14>
+      <Position15>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="103" Column="13" TopLine="94"/>
+      </Position15>
+      <Position16>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="102" Column="13" TopLine="93"/>
+      </Position16>
+      <Position17>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="101" Column="13" TopLine="92"/>
+      </Position17>
+      <Position18>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="100" Column="13" TopLine="91"/>
+      </Position18>
+      <Position19>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="101" Column="13" TopLine="92"/>
+      </Position19>
+      <Position20>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="104" Column="13" TopLine="104"/>
+      </Position20>
+      <Position21>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="103" Column="13" TopLine="103"/>
+      </Position21>
+      <Position22>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="102" Column="13" TopLine="102"/>
+      </Position22>
+      <Position23>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="101" Column="13" TopLine="101"/>
+      </Position23>
+      <Position24>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="100" Column="13" TopLine="100"/>
+      </Position24>
+      <Position25>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="99" Column="13" TopLine="99"/>
+      </Position25>
+      <Position26>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="98" Column="13" TopLine="98"/>
+      </Position26>
+      <Position27>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="261" Column="45" TopLine="250"/>
+      </Position27>
+      <Position28>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="169" Column="3" TopLine="145"/>
+      </Position28>
+      <Position29>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="180" Column="2" TopLine="173"/>
+      </Position29>
+      <Position30>
+        <Filename Value="main_nr.pas"/>
+        <Caret Line="219" Column="56" TopLine="210"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <Target>
+      <Filename Value="noiseremover"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="units/$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <Optimizations>
+        <OptimizationLevel Value="2"/>
+      </Optimizations>
+    </CodeGeneration>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+        <UseExternalDbgSyms Value="True"/>
+      </Debugging>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <WriteFPCLogo Value="False"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="u_os.pas"/>
+        <Line Value="42"/>
+      </Item1>
+    </BreakPoints>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

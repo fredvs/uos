@@ -99,7 +99,7 @@ replacedialog=23
  y=216
  cx=437
  cy=171
-options=108
+options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -178,6 +178,12 @@ options=108
  sortdescend10=0
  width11=479
  sortdescend11=0
+ [projectoptionsfo.comment_1]
+ value=
+ [projectoptionsfo.comment_B]
+ value=
+ [projectoptionsfo.comment_M]
+ value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
  index=2
@@ -199,7 +205,7 @@ options=108
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=1
- [projectoptionsfo.tabwidget]
+ [projectoptionsfo.setting_tab]
  firsttab=0
  index=2
  [projectoptionsfo]
@@ -897,7 +903,7 @@ findhistory=20
  hNeAAC
 findoptions=1
 editpos=4
- 0,-1073741823
+ 0,469
  0,0
  0,-1073741823
  0,-1073741823
@@ -927,7 +933,7 @@ nomenumodules=0
 [sourcefo.files_tab]
 tabsize=60
 firsttab=0
-index=1
+index=0
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -942,8 +948,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=954
- cy=585
+ cx=1356
+ cy=682
  rcx=0
  rcy=0
  [mainfo]
@@ -956,16 +962,16 @@ windowlayout=530
  ncx=0
  ncy=0
  x=240
- y=61
+ y=60
  cx=964
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,954,585
+  basedock,0,0,1356,682
  focusedchild=0
- wsize=0
- active=0
+ wsize=6
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -983,8 +989,8 @@ windowlayout=530
  rcx=0
  rcy=0
  wsize=0
- active=1
- visible=1
+ active=0
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1006,7 +1012,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1078,7 +1084,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=426
+ cy=498
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1287,9 +1293,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=488
- cx=954
- cy=97
+ y=569
+ cx=1356
+ cy=113
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1388,8 +1394,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=954
- cy=56
+ cx=1356
+ cy=65
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1404,8 +1410,8 @@ windowlayout=530
  ncy=3
  x=0
  y=0
- cx=954
- cy=56
+ cx=1356
+ cy=65
  rcx=0
  rcy=0
  [sourcefo]
@@ -1420,8 +1426,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=792
- cy=426
+ cx=1194
+ cy=498
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1455,9 +1461,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=59
- cx=954
- cy=426
+ y=68
+ cx=1356
+ cy=498
  rcx=0
  rcy=0
 [targetconsole]
