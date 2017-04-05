@@ -748,7 +748,7 @@ on=1
 path=1
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=1
- 190
+ 196
 address=1
  4209953
 addbkpt=1
@@ -852,7 +852,7 @@ findhistory=20
  AddDSPin
  .create
 findoptions=1
-editpos=25
+editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -871,13 +871,14 @@ editpos=25
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,216
+ 0,78
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,6705
+ 0,0
+ 0,104
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -903,7 +904,8 @@ bookmarks21=0
 bookmarks22=0
 bookmarks23=0
 bookmarks24=0
-sourcefiles=25
+bookmarks25=0
+sourcefiles=26
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -929,7 +931,8 @@ sourcefiles=25
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=25
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+relpaths=26
  uos.pas
  uos_flat.pas
  define.inc
@@ -955,7 +958,9 @@ relpaths=25
  fpg_style_chrome_silver_flatmenu.pas
  uos.pas
  uos_flat.pas
-ismoduletexts=25
+ simpleplayer_fpGUI.pas
+ismoduletexts=26
+ 0
  0
  0
  0
@@ -986,13 +991,14 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=25
+order=26
  0
  22
  23
  24
  19
  18
+ 25
  20
  21
  1
@@ -1043,7 +1049,7 @@ windowlayout=530
  ncx=0
  ncy=0
  x=231
- y=51
+ y=52
  cx=939
  cy=621
  rcx=0
@@ -1165,7 +1171,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1374,9 +1380,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=580
+ y=581
  cx=1356
- cy=121
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1508,7 +1514,7 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=512
+ cy=513
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1544,7 +1550,7 @@ windowlayout=530
  x=0
  y=65
  cx=1356
- cy=512
+ cy=513
  rcx=0
  rcy=0
 [targetconsole]

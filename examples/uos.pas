@@ -306,8 +306,7 @@ type
   TypePut: integer;
   // -1 : nothing,  for Input  : 0: from audio file, 1: from input device (like mic),
                               // 2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer
-                 // for Output : 0: into wav file fromfilestream, 1: into output device, 2: into stream server, 3: into memory buffer, 4: into wav from memorystream
-  
+                 // for Output : 0: into wav file from filestream, 1: into output device, 2: into stream server, 3: into memory buffer, 4: into wav from memorystream
     
   Seekable: boolean;
   Status: integer;
@@ -373,7 +372,7 @@ type
   Sections: cint32;
   Encoding: cint32;
   bitrate: cint32;
-  Length: cint32;  //  length samples total ;
+  Length: cint32;  //  length samples total 
   LibOpen: integer;  // -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom, 4: opus
   Ratio: integer;  //  if mpg123 or aac then ratio := 2
   
@@ -862,6 +861,9 @@ procedure InputSetDSP(InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
   // Enable :  DSP enabled
   // example : InputSetDSP(InputIndex1,DSPinIndex1,True);
 
+procedure OutputSetEnable(OutputIndex: cint32; enabled: boolean);
+  // set enable true or false
+
 function OutputAddDSP(OutputIndex: cint32; BeforeFunc: TFunc;
   AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;  // usefull if multi output
   // OutputIndex : OutputIndex of a existing Output
@@ -1272,7 +1274,7 @@ begin
   Result := arfl;
 end;
 
-function WriteWaveFromMem(FileName: ansistring; Data: Tuos_FileBuffer): word;
+function WriteWaveFromMem(FileName: UTF8String; Data: Tuos_FileBuffer): word;
 var
   f: TFileStream;
   wFileSize: LongInt;
@@ -1286,33 +1288,6 @@ begin
   f.Seek(0, soFromBeginning);
     if Data.FileFormat = 0 then 
   begin // wav file
-  {
-  ID := 'RIFF';
-  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
-  wFileSize := 0;
-  StreamOut[x].FileBuffer.Data.WriteBuffer(wFileSize, 4);
-  ID := 'WAVE';
-  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
-  ID := 'fmt ';
-  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
-  wChunkSize := SizeOf(Header);
-  StreamOut[x].FileBuffer.Data.WriteBuffer(wChunkSize, 4);
-  Header.wFormatTag := 1;
-
-  Header.wChannels := StreamOut[x].FileBuffer.wChannels;
-
-  Header.wSamplesPerSec := StreamOut[x].FileBuffer.wSamplesPerSec;
-
-  Header.wBlockAlign := StreamOut[x].FileBuffer.wChannels * (StreamOut[x].FileBuffer.wBitsPerSample div 8);
-
-  Header.wAvgBytesPerSec := StreamOut[x].FileBuffer.wSamplesPerSec * Header.wBlockAlign;
-  Header.wBitsPerSample := StreamOut[x].FileBuffer.wBitsPerSample;
-  Header.wcbSize := 0;
-  StreamOut[x].FileBuffer.Data.WriteBuffer(Header, SizeOf(Header));
-  ID := 'data';
-  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
-  end;
-  }
     try
     ID := 'RIFF';
     f.WriteBuffer(ID, 4);
@@ -1344,8 +1319,7 @@ begin
     f.WriteBuffer(ID, 4);
     wChunkSize := Data.DataMS.Size;
     f.WriteBuffer(wChunkSize, 4);
-  
-    except
+  except
     Result := StreamError;
   end;
   
@@ -1921,6 +1895,12 @@ begin
 
   Result := Length(StreamIn[InputIndex].DSP) - 1;
  end;
+
+procedure Tuos_Player.OutputSetEnable(OutputIndex: cint32; enabled: boolean);
+  // set enable true or false
+begin
+StreamOut[OutputIndex].data.Enabled := enabled;
+end;
 
 function Tuos_Player.OutputAddDSP(OutputIndex: cint32; BeforeFunc: TFunc;
   AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): cint32;
@@ -3533,8 +3513,8 @@ var
   x := Length(StreamOut) - 1;
   
   if (EncodeType = -1) or (EncodeType = 0)  then typeenc := OPUS_APPLICATION_AUDIO else
-  typeenc := OPUS_APPLICATION_VOIP ;
-  
+  typeenc := OPUS_APPLICATION_VOIP ; 
+
   if SampleRate = -1 then StreamOut[x].Data.SampleRate := 48000 else
   StreamOut[x].Data.SampleRate := SampleRate;
   
@@ -3680,8 +3660,8 @@ begin
   StreamOut[x].Data.TypePut := 4;
     FillChar(StreamOut[x].FileBuffer, sizeof(StreamOut[x].FileBuffer), 0);
   StreamOut[x].FileBuffer.DataMS := TMemoryStream.Create;
-   
-  result := x;
+
+   result := x;
 
    if (Channels = -1) then
     StreamOut[x].FileBuffer.wChannels := 2
@@ -3741,11 +3721,12 @@ begin
   StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
   x := Length(StreamOut) - 1;
   StreamOut[x].FileBuffer.ERROR := 0;
-  StreamOut[x].Data.Enabled := True;
+  
   StreamOut[x].Data.Filename := filename;
   if (FileFormat = -1) or (FileFormat = 0) then 
   StreamOut[x].FileBuffer.FileFormat := 0 else StreamOut[x].FileBuffer.FileFormat := FileFormat;
   
+  StreamOut[x].Data.Enabled := true;
   
   FillChar(StreamOut[x].FileBuffer, sizeof(StreamOut[x].FileBuffer), 0);
 
@@ -3870,6 +3851,7 @@ begin
   SetLength(StreamOut, Length(StreamOut) + 1);
   StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
   x := Length(StreamOut) - 1;
+
   StreamOut[x].PAParam.hostApiSpecificStreamInfo := nil;
   if device = -1 then
   StreamOut[x].PAParam.device := Pa_GetDefaultOutputDevice()
@@ -3911,7 +3893,8 @@ begin
   StreamOut[x].Data.TypePut := 1;
   StreamOut[x].Data.Wantframes :=
   length(StreamOut[x].Data.Buffer) div StreamOut[x].Data.channels;
-  StreamOut[x].Data.Enabled := True;
+  
+StreamOut[x].Data.Enabled := True;
 
   err := Pa_OpenStream(@StreamOut[x].Data.HandleSt, nil,
   @StreamOut[x].PAParam, StreamOut[x].Data.SampleRate, 512, paClipOff, nil, nil);
@@ -6720,7 +6703,7 @@ if err > 0 then
  //  err := // if you want clean buffer
  
  if assigned(StreamOut[x].Data.HandleSt) then
-  Pa_WriteStream(StreamOut[x].Data.HandleSt,
+   Pa_WriteStream(StreamOut[x].Data.HandleSt,
   @StreamOut[x].Data.Buffer[0], StreamIn[x2].Data.outframes div StreamIn[x2].Data.ratio);
  
  {$IF DEFINED(debug)}
@@ -6729,7 +6712,7 @@ if err > 0 then
   end else
   begin
   // err := // if you want clean buffer
-  Pa_WriteStream(StreamOut[x].Data.HandleSt,
+    Pa_WriteStream(StreamOut[x].Data.HandleSt,
   @StreamOut[x].Data.Buffer[0], StreamIn[x2].Data.outframes);
   end;
    // if err <> 0 then status := 0; // if you want clean buffer ...

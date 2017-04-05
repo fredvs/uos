@@ -11,20 +11,18 @@ uses
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
   uos_flat,
-  uos,
   Classes,
   fpg_style_chrome_silver_flatmenu,
   fpg_stylemanager,
   fpg_button,
   fpg_widget,
   fpg_label,
+  fpg_TrackBar,
   fpg_Editbtn,
-  fpg_RadioButton,
-  fpg_trackbar,
   fpg_CheckBox,
   fpg_base,
   fpg_main,
-  fpg_form { you can add units after this };
+  fpg_form;
 
 type
 
@@ -63,6 +61,7 @@ type
     procedure btnPlaySavedClick(Sender: TObject);
     procedure ClosePlayer1;
     procedure VolumeChange(Sender: TObject; pos: integer);
+    procedure Changechk1(Sender: TObject);
   end;
 
   {@VFD_NEWFORM_DECL}
@@ -70,10 +69,15 @@ type
   {@VFD_NEWFORM_IMPL}
 
 var
-  PlayerIndex1: cardinal ;
+  PlayerIndex1: cardinal;
   ordir, opath: string;
-  In1Index : integer;
-
+  In1Index, out1index : integer;
+  
+  procedure TSimplerecorder.Changechk1(Sender: TObject);
+  begin
+  uos_outputsetenable(0,1,checkbox1.checked);
+  end;
+  
   procedure TSimplerecorder.btnPlaySavedClick(Sender: TObject);
   begin
   
@@ -185,6 +189,8 @@ var
     btnStop.Enabled := False;
     button4.Enabled := True;
     button5.Enabled := False;
+    CheckBox1.Enabled := true;
+    CheckBox2.Enabled := true;
   end;
 
   procedure TSimplerecorder.btnStopClick(Sender: TObject);
@@ -226,9 +232,11 @@ var
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
     //////////// FileFormat : -1 default : wav (0:wav, 1:pcm, 2:uos, 3:custom)
-
-    if checkbox1.Checked = True then
-    uos_AddIntoDevOut(PlayerIndex1);
+    
+   //  if checkbox1.Checked then
+     out1Index := uos_AddIntoDevOut(PlayerIndex1);
+     uos_outputsetenable(PlayerIndex1,out1Index,checkbox1.checked);
+   
     //// add a Output into OUT device with default parameters
     
     //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 1,-1); 
@@ -241,7 +249,7 @@ var
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
 
-   In1Index :=uos_AddFromDevIn(PlayerIndex1);
+   In1Index := uos_AddFromDevIn(PlayerIndex1);
    /// add Input from mic/aux into IN device with default parameters
     
    //    In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, 1, -1);   
@@ -278,8 +286,9 @@ var
    //////////// ClosePlayer1 : procedure of object to execute inside the loop
 
     uos_Play(PlayerIndex1);  /////// everything is ready to play...
-
-      CheckBox1.Enabled := True;
+      
+    //  CheckBox1.Enabled := false;
+      CheckBox2.Enabled := false;
       btnStart.Enabled := False;
       btnStop.Enabled := True;
       button5.Enabled := False;
@@ -456,6 +465,7 @@ var
       Hint := '';
       TabOrder := 17;
       Text := 'Listen MIC';
+      OnChange := @Changechk1;
     end;
 
     Label2 := TfpgLabel.Create(self);
@@ -620,7 +630,7 @@ var
     fpgApplication.Initialize;
       if fpgStyleManager.SetStyle('Chrome silver flat menu') then
           fpgStyle := fpgStyleManager.Style;
-    frm := TSimplerecorder.Create(nil);
+      fpgApplication.CreateForm(TSimplerecorder, frm);
     try
       frm.Show;
       fpgApplication.Run;

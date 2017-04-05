@@ -595,6 +595,9 @@ procedure uos_InputSeekTime(PlayerIndex: cint32; InputIndex: cint32; pos: TTime)
 procedure uos_InputSetEnable(PlayerIndex: cint32; InputIndex: cint32; enabled: boolean);
   // set enable true or false (usefull for multi input)
 
+procedure uos_OutputSetEnable(PlayerIndex: cint32; OutputIndex: cint32; enabled: boolean);
+  // set enable true or false (usefull for multi outputput)
+
 function uos_InputLength(PlayerIndex: cint32; InputIndex: cint32): cint32;
   // InputIndex : InputIndex of existing input
   //  result : Length of Input in samples
@@ -1458,6 +1461,14 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   uosPlayers[PlayerIndex].InputSetEnable(InputIndex, enabled) ;
+end;
+
+procedure uos_OutputSetEnable(PlayerIndex: cint32; OutputIndex: cint32; enabled: boolean);
+  // set enable true or false (usefull for multi outputput)
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  uosPlayers[PlayerIndex].OutputSetEnable(OutputIndex, enabled) ;
 end;
 
 procedure uos_InputSetPositionEnable(PlayerIndex: cint32; InputIndex: cint32 ; enable : cint32);

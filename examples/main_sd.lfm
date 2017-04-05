@@ -12,7 +12,7 @@ object Form1: TForm1
   object Button1: TButton
     Left = 76
     Height = 25
-    Top = 72
+    Top = 76
     Width = 75
     Caption = 'Play'
     OnClick = Button1Click
@@ -21,7 +21,7 @@ object Form1: TForm1
   object Button2: TButton
     Left = 76
     Height = 25
-    Top = 104
+    Top = 114
     Width = 75
     Caption = 'Stop'
     OnClick = Button2Click
@@ -30,16 +30,16 @@ object Form1: TForm1
   object Edit1: TEdit
     Left = 84
     Height = 25
-    Top = 30
+    Top = 38
     Width = 56
     Alignment = taCenter
     TabOrder = 2
     Text = '100'
   end
   object Label1: TLabel
-    Left = 68
+    Left = 72
     Height = 15
-    Top = 10
+    Top = 6
     Width = 83
     Caption = 'Interval in ms'
     ParentColor = False

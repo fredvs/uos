@@ -55,7 +55,7 @@ var
   Form1: TForm1;
   BufferBMP: TBitmap;
   PlayerIndex1: cardinal;
-  In1Index : integer;
+  In1Index, out1index : integer;
 
 implementation
 
@@ -200,8 +200,9 @@ begin
     //////////// SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)  (only int16 and int32 are implemented)
     //////////// FramesCount : -1 default : 65536
 
-   if checkbox1.Checked = True then
-    uos_AddIntoDevOut(PlayerIndex1);  //// add a Output into OUT device with default parameters
+  // if checkbox1.Checked = True then
+   out1index := uos_AddIntoDevOut(PlayerIndex1);  //// add a Output into OUT device with default parameters
+    uos_outputsetenable(PlayerIndex1,out1index,checkbox1.checked);
 
    // uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536 );   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
@@ -244,7 +245,7 @@ begin
     Button2.Enabled := False;
     Button3.Enabled := True;
     Button4.Enabled := False;
-    CheckBox1.Enabled := False;
+    //CheckBox1.Enabled := False;
     CheckBox2.Enabled := False;
   end;
 end;
@@ -322,10 +323,7 @@ end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
-  if checkbox1.Checked = True then
-    label7.Show
-  else
-    label7.hide;
+ uos_outputsetenable(0,out1index,checkbox1.checked);
 end;
 
 procedure uos_logo();
