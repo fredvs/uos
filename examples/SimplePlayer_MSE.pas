@@ -26,8 +26,7 @@ begin
     mainfo.m4dir.value := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
     mainfo.fadir.value := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
   
-    // To play opus file you should copy \uos\examples\lib\Windows\32bit\libopus-0.dll into your windows\system directory. 
-    //mainfo.ofdir.value := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
+    mainfo.ofdir.value := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
     
     mainfo.stdir.value := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
     mainfo.bsdir.value := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
@@ -44,8 +43,7 @@ begin
     mainfo.m4dir.value := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
     mainfo.fadir.value := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
    
-    // To play opus file you should copy uos/examples/lib/Linux/64bit/libopus.so and paste into /usr/local/lib. 
-    // mainfo.ofdir.value := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
+     mainfo.ofdir.value := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
     
     mainfo.stdir.value := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
     mainfo.bsdir.value := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
@@ -73,8 +71,7 @@ begin
     mainfo.fadir.value := ordir + 'lib/FreeBSD/64bit/libfaad2-64.so';
     mainfo.bsdir.value := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
    
-   // To play opus file you should copy uos/examples/lib/FreeBSD/64bit/libopus.so and paste into /usr/local/lib. 
-   // mainfo.opdir.value := ordir + 'lib/FreeBSD/64bit/libopus-64.so';
+    mainfo.opdir.value := ordir + 'lib/FreeBSD/64bit/libopus-64.so';
    
     {$else}
     mainfo.padir.value := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
