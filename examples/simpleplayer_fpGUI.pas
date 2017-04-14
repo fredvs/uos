@@ -212,8 +212,8 @@ var
 
   procedure TSimpleplayer.changecheck(Sender: TObject);
   begin
-    if (btnstart.Enabled = False) then
       uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+    
   end;
 
   procedure TSimpleplayer.VolumeChange(Sender: TObject; pos: integer);
@@ -1008,6 +1008,7 @@ end;
     TabOrder := 17;
     Text := 'Play Reverse';
     Hint := '';
+    onchange := @changecheck;
   end;
 
   RadioButton1 := TfpgRadioButton.Create(Panel1);
@@ -1283,7 +1284,6 @@ end;
     //////////////////////
 
     ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
-    checkbox1.OnChange := @changecheck;
     RadioButton1.Checked := True;
     height := 364;
              {$IFDEF Windows}

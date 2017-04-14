@@ -1961,6 +1961,7 @@ function Tuos_Player.InputAddDSP(InputIndex: cint32; BeforeFunc: TFunc;
 begin
   SetLength(StreamIn[InputIndex].DSP, Length(StreamIn[InputIndex].DSP) + 1);
   StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1] := Tuos_DSP.Create();
+  StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].Enabled := false;
   StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].BefFunc := BeforeFunc;
   StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].AftFunc := AfterFunc;
   StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1].EndFunc := EndedFunc;
@@ -1982,6 +1983,7 @@ begin
   SetLength(StreamOut[OutputIndex].DSP, Length(StreamOut[OutputIndex].DSP) + 1);
   StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1] :=
   Tuos_DSP.Create;
+  StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].Enabled := false;
   StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].BefFunc :=
   BeforeFunc;
   StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1].AftFunc :=
@@ -2515,10 +2517,10 @@ x := -1 ;
   if lowercase(PlugName) = 'soundtouch' then
   begin // 
   SetLength(Plugin, Length(Plugin) + 1);
-  Plugin[Length(Plugin) - 1] := Tuos_Plugin.Create();
   x := Length(Plugin) - 1;
+  Plugin[x] := Tuos_Plugin.Create();
+  Plugin[x].Enabled := false;
   Plugin[x].Name := lowercase(PlugName);
-  Plugin[x].Enabled := True;
   Plugin[x].param1 := -1;
   Plugin[x].param2 := -1;
   Plugin[x].param3 := -1;
@@ -2570,6 +2572,7 @@ x := -1 ;
   Plugin[x].PlugFunc := @bs2bplug;
   end;
   {$endif}  
+  Plugin[x].Enabled := true;
   Result := x;
  end;
 
@@ -4516,7 +4519,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   SetLength(StreamIn, Length(StreamIn) + 1);
   StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
   x := Length(StreamIn) - 1;
-  StreamIn[x].Data.Enabled := True;
+  StreamIn[x].Data.Enabled := false;
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.typeput := 4;
   StreamIn[x].Data.positionEnable := 0;

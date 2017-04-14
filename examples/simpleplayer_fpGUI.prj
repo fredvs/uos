@@ -182,9 +182,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=142
  xprop=1
- yprop=0.32882882882883
+ yprop=0.32954545454545
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -563,12 +563,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3903
+ 3902
  0
  0
  0
  0
- 194
+ 195
 exeusedon=14
  3903
  0
@@ -957,8 +957,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=write
+finddtext=changecheck
 findhistory=20
+ changecheck
+ checkbox1
+ .enabled := false
+ .enable := false
  write
  setexceptionmask
  playernotfre
@@ -975,10 +979,6 @@ findhistory=20
  Lengthst
  AddFromMemory
  uos_InputAdd
- InputAddDS
- soundt
- timerr
- fromm
 findoptions=1
 editpos=55
  0,-1073741823
@@ -1022,7 +1022,7 @@ editpos=55
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,611
+ 0,215
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1034,7 +1034,7 @@ editpos=55
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 0,4513
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1133,7 +1133,7 @@ sourcefiles=55
  ${PROJECTDIR}/waveform_fpGUI.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
  /home/fred/fpgui/src/gui/fpg_style_carbon.pas
@@ -1341,7 +1341,7 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=702
  rcx=0
  rcy=0
@@ -1361,7 +1361,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,702
+  basedock,0,0,1350,702
  focusedchild=0
  wsize=6
  active=1
@@ -1687,7 +1687,7 @@ windowlayout=549
  ncy=0
  x=0
  y=581
- cx=1356
+ cx=1350
  cy=121
  rcx=0
  rcy=0
@@ -1787,7 +1787,7 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=60
  rcx=0
  rcy=0
@@ -1803,7 +1803,7 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=60
  rcx=0
  rcy=0
@@ -1819,7 +1819,7 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
+ cx=1188
  cy=515
  rcx=0
  rcy=0
@@ -1855,7 +1855,7 @@ windowlayout=549
  ncy=0
  x=0
  y=63
- cx=1356
+ cx=1350
  cy=515
  rcx=0
  rcy=0
