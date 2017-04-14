@@ -3397,6 +3397,7 @@ begin
   SetLength(StreamIn, Length(StreamIn) + 1);
   StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create();
   x := Length(StreamIn) - 1;
+  StreamIn[x].Data.Enabled := false;
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.PositionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
@@ -3443,7 +3444,7 @@ begin
 
  // StreamIn[x].Data.outframes := length(StreamIn[x].Data.Buffer);
   StreamIn[x].Data.outframes := 0;
-  StreamIn[x].Data.Enabled := True;
+  
   StreamIn[x].Data.Status := 1;
   StreamIn[x].Data.TypePut := 1;
   StreamIn[x].Data.ratio := 2;
@@ -3456,7 +3457,10 @@ begin
 
   if err <> 0 then
   else
+  begin
+  StreamIn[x].Data.Enabled := True;
   Result := x;
+  end;
 end;
 {$endif}
 
@@ -3483,6 +3487,7 @@ begin
   SetLength(StreamIn, Length(StreamIn) + 1);
   StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create();
   x := Length(StreamIn) - 1;
+  StreamIn[x].Data.Enabled := false;
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.PositionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
@@ -3524,7 +3529,6 @@ begin
   if VolumeR = -1 then StreamIn[x].Data.Vright := 1 else
   StreamIn[x].Data.Vright := VolumeR;
  
-  StreamIn[x].Data.Enabled := True;
   StreamIn[x].Data.Status := 1;
   StreamIn[x].Data.TypePut := 3;
   StreamIn[x].Data.HandleSt := pchar('synth');
@@ -3533,7 +3537,7 @@ begin
   StreamIn[x].Data.seekable := False;
   StreamIn[x].Data.LibOpen := -1;
   StreamIn[x].LoopProc := nil;
-
+  StreamIn[x].Data.Enabled := True;
   Result := x;
 end;
 
@@ -3586,6 +3590,8 @@ var
   StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
   x := Length(StreamOut) - 1;
   
+   StreamOut[x].Data.Enabled := false;
+  
   if (EncodeType = -1) or (EncodeType = 0)  then typeenc := OPUS_APPLICATION_AUDIO else
   typeenc := OPUS_APPLICATION_VOIP ; 
 
@@ -3599,7 +3605,7 @@ var
   StreamOut[x].Data.SampleFormat := SampleFormat;
  
   StreamOut[x].Data.TypePut := 2 ;
-  StreamOut[x].Data.Enabled := True;
+ 
   setlength(StreamOut[x].Data.Buffer,1024 *2); 
   
   //  setlength(StreamOut[x].Data.Buffer,960); 
@@ -3690,7 +3696,11 @@ if err =0 then begin
   WriteLn('shout_open error: ' + pchar(shout_get_error(StreamOut[x].Data.HandleSt)));
   {$endif}
   
-  if err = SHOUTERR_SUCCESS then result := x else
+  if err = SHOUTERR_SUCCESS then 
+  begin
+   StreamOut[x].Data.Enabled := True;
+  result := x 
+  end else
   begin
   shout_free(StreamOut[x].Data.HandleSt);
   StreamOut[Length(StreamOut) - 1].Destroy;
@@ -3726,8 +3736,8 @@ begin
   SetLength(StreamOut, Length(StreamOut) + 1);
   StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
   x := Length(StreamOut) - 1;
+   StreamOut[x].Data.Enabled := false;
   StreamOut[x].FileBuffer.ERROR := 0;
-  StreamOut[x].Data.Enabled := True;
   StreamOut[x].Data.Filename := filename;
   if (FileFormat = -1) or (FileFormat = 0) then 
   StreamOut[x].FileBuffer.FileFormat := 0 else StreamOut[x].FileBuffer.FileFormat := FileFormat;
@@ -3768,6 +3778,7 @@ begin
     
   StreamOut[x].Data.Samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
   StreamOut[x].LoopProc := nil;
+  StreamOut[x].Data.Enabled := True;
 end;
 
 function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: cint32;
@@ -3794,13 +3805,12 @@ begin
   SetLength(StreamOut, Length(StreamOut) + 1);
   StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
   x := Length(StreamOut) - 1;
+   StreamOut[x].Data.Enabled := false;
   StreamOut[x].FileBuffer.ERROR := 0;
   
   StreamOut[x].Data.Filename := filename;
   if (FileFormat = -1) or (FileFormat = 0) then 
   StreamOut[x].FileBuffer.FileFormat := 0 else StreamOut[x].FileBuffer.FileFormat := FileFormat;
-  
-  StreamOut[x].Data.Enabled := true;
   
   FillChar(StreamOut[x].FileBuffer, sizeof(StreamOut[x].FileBuffer), 0);
 
@@ -3876,6 +3886,7 @@ begin
   StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
   wChunkSize:= 0;
   StreamOut[x].FileBuffer.Data.WriteBuffer(wChunkSize, 4);
+  StreamOut[x].Data.Enabled := True;
   end;
   
   except
@@ -3895,7 +3906,7 @@ begin
   SetLength(StreamOut, Length(StreamOut) + 1);
   StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
   x := Length(StreamOut) - 1;
-  StreamOut[x].Data.Enabled := True;
+  StreamOut[x].Data.Enabled := false;
   StreamOut[x].Data.TypePut := 3;
   Streamout[x].Data.posmem := 0;
   Streamout[x].BufferOut := outmemory;
@@ -3903,6 +3914,7 @@ begin
   SetLength(StreamOut[x].Data.Buffer,1024*2);
   intobuf := true; // to check, why ?
   result := x;
+   StreamOut[x].Data.Enabled := True;
   end;
 
 {$IF DEFINED(portaudio)}
@@ -3925,6 +3937,8 @@ begin
   SetLength(StreamOut, Length(StreamOut) + 1);
   StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
   x := Length(StreamOut) - 1;
+  
+   StreamOut[x].Data.Enabled := false;
 
   StreamOut[x].PAParam.hostApiSpecificStreamInfo := nil;
   if device = -1 then
@@ -3968,14 +3982,15 @@ begin
   StreamOut[x].Data.Wantframes :=
   length(StreamOut[x].Data.Buffer) div StreamOut[x].Data.channels;
   
-StreamOut[x].Data.Enabled := True;
-
   err := Pa_OpenStream(@StreamOut[x].Data.HandleSt, nil,
   @StreamOut[x].PAParam, StreamOut[x].Data.SampleRate, 512, paClipOff, nil, nil);
   StreamOut[x].LoopProc := nil;
   if err <> 0 then
   else
+  begin
+  StreamOut[x].Data.Enabled := True;
   Result := x;
+  end;
 end;
  {$endif}
 
@@ -4023,6 +4038,8 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   
   StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
   x := Length(StreamIn) - 1;
+  
+  StreamIn[x].Data.Enabled := false;
   
   StreamIn[x].Data.LibOpen := -1;
   StreamIn[x].Data.levelEnable := 0;
@@ -4169,7 +4186,6 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   
   StreamIn[x].Data.LibOpen := 4;
   StreamIn[x].Data.Status := 1;
-  StreamIn[x].Data.Enabled := True;
   StreamIn[x].Data.Position := 0;
   StreamIn[x].Data.OutFrames := 0;
   StreamIn[x].Data.Poseek := -1;
@@ -4177,6 +4193,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   StreamIn[x].Data.ratio := 1;
   StreamIn[x].Data.seekable := false;
   StreamIn[x].LoopProc := nil;
+  StreamIn[x].Data.Enabled := True;
 
  {$IF DEFINED(debug)}
   WriteLn('End opus');  
@@ -4265,7 +4282,6 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
 
   StreamIn[x].Data.Output := OutputIndex;
   StreamIn[x].Data.Status := 1;
-  StreamIn[x].Data.Enabled := True;
   StreamIn[x].Data.Position := 0;
   StreamIn[x].Data.OutFrames := 0;
   StreamIn[x].Data.Poseek := -1;
@@ -4335,6 +4351,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   mpg123_param(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Channels,
   MPG123_FORCE_FLOAT, 0);
   
+  StreamIn[x].Data.Enabled := True;
   {$IF DEFINED(debug)}
   writeln('===> mpg123_infos end => ok');
   {$endif}  
@@ -4364,7 +4381,11 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   end;
   
   result := -1
-  end else result := x ;
+  end else
+  begin
+  StreamIn[x].Data.Enabled := True;
+   result := x ;
+  end; 
   end;
   {$ENDIF}
 
@@ -4397,9 +4418,10 @@ var
   SetLength(StreamIn, Length(StreamIn) + 1);
   StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
   x := Length(StreamIn) - 1;
+  
+  StreamIn[x].Data.Enabled := false;
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.typeput := 4;
-  StreamIn[x].Data.enabled := true;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
      
@@ -4459,7 +4481,7 @@ var
   StreamIn[x].Data.seekable := true;
   StreamIn[x].LoopProc := nil;
   setlength(StreamIn[x].Data.buffer,StreamIn[x].Data.wantframes*StreamIn[x].Data.Channels);
-  
+  StreamIn[x].Data.Enabled := True;
   result := x; 
   end; 
   
@@ -4494,9 +4516,9 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   SetLength(StreamIn, Length(StreamIn) + 1);
   StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
   x := Length(StreamIn) - 1;
+  StreamIn[x].Data.Enabled := True;
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.typeput := 4;
-  StreamIn[x].Data.enabled := true;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
    // StreamIn[x].Data.wantframes := FramesCount;
@@ -4567,6 +4589,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   StreamIn[x].Data.Ratio := 2 ; 
   
   setlength(StreamIn[x].Data.buffer,StreamIn[x].Data.wantframes*StreamIn[x].Data.Channels);
+  StreamIn[x].Data.Enabled := True;
   result := x; 
   end; 
    
@@ -4661,6 +4684,7 @@ begin
   StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
   x := Length(StreamIn) - 1;
   err := -1;
+  StreamIn[x].Data.Enabled := false;
   StreamIn[x].Data.LibOpen := -1;
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.positionEnable := 0;
@@ -4720,7 +4744,6 @@ begin
   sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_COMMENT);
   StreamIn[x].Data.date := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_DATE);
   StreamIn[x].Data.Length := sfInfo.frames;
-  StreamIn[x].Data.Enabled := false;
   err := 0;
   {$IF DEFINED(debug)}
   WriteLn('sf_open END OK');  
@@ -5166,7 +5189,6 @@ begin
   Result := x;
   StreamIn[x].Data.Output := OutputIndex;
   StreamIn[x].Data.Status := 1;
-  StreamIn[x].Data.Enabled := True;
   StreamIn[x].Data.Position := 0;
   StreamIn[x].Data.OutFrames := 0;
   StreamIn[x].Data.Poseek := -1;
@@ -5204,6 +5226,7 @@ begin
   4 : StreamIn[x].Data.ratio :=  streamIn[x].Data.Channels;
   {$endif}
   end;
+  StreamIn[x].Data.Enabled := True;
   end;
   end;
 end;
@@ -5257,6 +5280,7 @@ begin
   StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
   x := Length(StreamIn) - 1;
   err := -1;
+  StreamIn[x].Data.Enabled := false;
   StreamIn[x].Data.LibOpen := -1;
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.positionEnable := 0;
@@ -5306,7 +5330,6 @@ begin
   sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_COMMENT);
   StreamIn[x].Data.date := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_DATE);
   StreamIn[x].Data.Length := sfInfo.frames;
-  StreamIn[x].Data.Enabled := False;
   err := 0;
   {$IF DEFINED(debug)}
   WriteLn('sf_open END OK');  
@@ -5650,7 +5673,6 @@ begin
   Result := x;
   StreamIn[x].Data.Output := OutputIndex;
   StreamIn[x].Data.Status := 1;
-  StreamIn[x].Data.Enabled := True;
   StreamIn[x].Data.Position := 0;
   StreamIn[x].Data.OutFrames := 0;
   StreamIn[x].Data.Poseek := -1;
@@ -5688,6 +5710,7 @@ begin
   4 : StreamIn[x].Data.ratio :=  streamIn[x].Data.Channels;
   {$endif}
   end;
+  StreamIn[x].Data.Enabled := True;
   end;
   end;
 end;
