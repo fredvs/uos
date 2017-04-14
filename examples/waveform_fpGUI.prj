@@ -133,10 +133,10 @@ options=114
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
- index=0
+ index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo]
  stackedunder=
  x=356
@@ -380,9 +380,9 @@ modulefiles=0
 befcommandon=0
 makeoptionson=6
  63
- 31
- 34
- 32
+ 30
+ 35
+ 33
  4095
  4034
 compilerusedon=21
@@ -503,7 +503,7 @@ sourcefilemasks=3
  "*.c" "*.cc" "*.h"
  "*.mfm"
 syntaxdeffiles=3
- ${SYNTAXDEFDIR}pascal.sdef
+ ${SYNTAXDEFDIR}pascal_ideu.sdef
  ${SYNTAXDEFDIR}cpp.sdef
  ${SYNTAXDEFDIR}objecttext.sdef
 filemasknames=3
@@ -545,6 +545,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=2
 encoding=1
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -680,30 +681,40 @@ findhistory=4
  InputGetArrayLevel
  DrawWaveForm
 findoptions=1
-editpos=5
+editpos=7
+ 0,-1073741823
+ 0,49
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,275
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+bookmarks6=0
+sourcefiles=7
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/waveform_fpGUI.pas
+ /home/fred/uos/examples/waveform_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_opus.pas
  ${PROJECTDIR}/waveform_fpGUI.pas
-relpaths=5
+ ${PROJECTDIR}/uos_opus.pas
+ ${PROJECTDIR}/define.inc
+relpaths=7
  uos.pas
  waveform_fpGUI.pas
  uos_flat.pas
  uos_opus.pas
  waveform_fpGUI.pas
-ismoduletexts=5
+ uos_opus.pas
+ define.inc
+ismoduletexts=7
+ 0
+ 0
  0
  0
  0
@@ -714,15 +725,17 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=5
+order=7
  0
+ 6
  3
  4
+ 5
  1
  2
-tabsize=60
+tabsize=21
 firsttab=0
-index=2
+index=5
 [layout]
 windowlayout=522
  [mainfo.basedock]
@@ -738,7 +751,7 @@ windowlayout=522
  x=0
  y=0
  cx=929
- cy=585
+ cy=702
  rcx=0
  rcy=0
  [mainfo]
@@ -750,17 +763,17 @@ windowlayout=522
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=294
+ y=74
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,929,702
  focusedchild=0
  wsize=0
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -771,14 +784,14 @@ windowlayout=522
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=848
+ y=243
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -801,7 +814,7 @@ windowlayout=522
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -873,7 +886,7 @@ windowlayout=522
  x=0
  y=0
  cx=159
- cy=428
+ cy=514
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1074,9 +1087,9 @@ windowlayout=522
  ncx=0
  ncy=0
  x=0
- y=485
+ y=582
  cx=929
- cy=100
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1176,7 +1189,7 @@ windowlayout=522
  x=0
  y=0
  cx=929
- cy=51
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1192,7 +1205,7 @@ windowlayout=522
  x=0
  y=0
  cx=929
- cy=51
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1208,14 +1221,14 @@ windowlayout=522
  x=162
  y=0
  cx=767
- cy=428
+ cy=514
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1242,9 +1255,9 @@ windowlayout=522
  ncx=0
  ncy=0
  x=0
- y=54
+ y=65
  cx=929
- cy=428
+ cy=514
  rcx=0
  rcy=0
 [targetconsole]

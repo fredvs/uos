@@ -748,7 +748,7 @@ on=1
 path=1
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=1
- 196
+ 198
 address=1
  4209953
 addbkpt=1
@@ -829,8 +829,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=TFileStream
+finddtext=out1Index
 findhistory=20
+ out1Index
  TFileStream
  tfile
  wChunkSize
@@ -850,9 +851,8 @@ findhistory=20
  Tuos_FileBuffer
  player2
  AddDSPin
- .create
 findoptions=1
-editpos=26
+editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -871,14 +871,15 @@ editpos=26
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,78
+ 14,43
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,6705
- 0,0
- 0,104
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -905,7 +906,8 @@ bookmarks22=0
 bookmarks23=0
 bookmarks24=0
 bookmarks25=0
-sourcefiles=26
+bookmarks26=0
+sourcefiles=27
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -924,7 +926,7 @@ sourcefiles=26
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ /home/fred/uos/examples/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/consoleplaymemory.pas
  /home/fred/fpgui/src/corelib/fpg_main.pas
  ${PROJECTDIR}/uos_opus.pas
@@ -932,7 +934,8 @@ sourcefiles=26
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=26
+ ${PROJECTDIR}/main_sr.pas
+relpaths=27
  uos.pas
  uos_flat.pas
  define.inc
@@ -959,7 +962,9 @@ relpaths=26
  uos.pas
  uos_flat.pas
  simpleplayer_fpGUI.pas
-ismoduletexts=26
+ main_sr.pas
+ismoduletexts=27
+ 0
  0
  0
  0
@@ -991,7 +996,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=26
+order=27
  0
  22
  23
@@ -999,6 +1004,7 @@ order=26
  19
  18
  25
+ 26
  20
  21
  1
@@ -1035,8 +1041,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=929
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1049,15 +1055,15 @@ windowlayout=530
  ncx=0
  ncy=0
  x=231
- y=52
+ y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,929,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1171,7 +1177,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=513
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1380,9 +1386,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=581
- cx=1356
- cy=120
+ y=501
+ cx=929
+ cy=103
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1481,8 +1487,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1497,8 +1503,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1513,8 +1519,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=513
+ cx=767
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1548,9 +1554,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=65
- cx=1356
- cy=513
+ y=56
+ cx=929
+ cy=442
  rcx=0
  rcy=0
 [targetconsole]

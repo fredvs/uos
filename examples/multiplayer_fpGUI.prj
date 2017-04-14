@@ -833,7 +833,7 @@ findhistory=20
  play
 findoptions=1
 editpos=12
- 0,1619
+ 9,1604
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -954,7 +954,7 @@ windowlayout=530
   basedock,0,0,929,585
  focusedchild=0
  wsize=0
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -972,7 +972,7 @@ windowlayout=530
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1417,7 +1417,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

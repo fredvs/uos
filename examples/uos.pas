@@ -14,6 +14,7 @@ unit uos;
 interface
 
 uses
+
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
 fpg_base, fpg_main, 
 {$endif}
@@ -835,6 +836,8 @@ function InputPositionSeconds(InputIndex: cint32): float;
 function InputPositionTime(InputIndex: cint32): TTime;
   // InputIndex : InputIndex of existing input
   //  result : current postion of Input in time format
+
+function InputUpdateTag(InputIndex: cint32): boolean;
 
 function InputGetTagTitle(InputIndex: cint32): pchar;
 function InputGetTagArtist(InputIndex: cint32): pchar;
@@ -1833,6 +1836,77 @@ Result := sysutils.EncodeTime(0, 0, 0, 0);
 	WriteLn('EncodeTime(): '+ timetostr(Result));
   {$endif}  
 end;
+
+// for mp3 and opus files only
+function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
+var
+  {$IF DEFINED(opus)}
+  s: UTF8String;
+  j: Integer;
+  OpusTag: POpusTags;
+  LComment: PPAnsiChar;
+  LcommentLength: PInteger;
+  {$endif}
+  
+  {$IF DEFINED(mpg123)}
+  mpinfo: Tmpg123_frameinfo;
+  mpid3v1: Tmpg123_id3v1;
+  mpid3v2: Tmpg123_id3v2;
+  {$endif}
+begin
+
+ Result := false;
+  if (isAssigned = True) then
+ begin
+if StreamIn[InputIndex].Data.LibOpen = 1 then // mp3
+begin
+ mpg123_info(StreamIn[InputIndex].Data.HandleSt, MPinfo);
+  mpg123_id3(StreamIn[InputIndex].Data.HandleSt, @mpid3v1, @mpid3v2);
+  StreamIn[InputIndex].Data.title := trim(mpid3v1.title);
+  StreamIn[InputIndex].Data.artist := mpid3v1.artist;
+  StreamIn[InputIndex].Data.album := mpid3v1.album;
+  StreamIn[InputIndex].Data.date := mpid3v1.year;
+  StreamIn[InputIndex].Data.comment := mpid3v1.comment;
+  StreamIn[InputIndex].Data.tag := mpid3v1.tag;
+  StreamIn[InputIndex].Data.genre := mpid3v1.genre;
+  Result := true;
+  // ?  freeandnil(MPinfo);
+end;
+
+if StreamIn[InputIndex].Data.LibOpen = 4 then // opus
+begin
+ OpusTag := op_tags(StreamIn[InputIndex].Data.HandleOP, nil);
+  
+  if OpusTag<>nil
+  
+  then begin
+  
+  if OpusTag^.comments>0
+  then begin
+
+  LComment := OpusTag^.user_comments;
+  LcommentLength := OpusTag^.comment_lengths;
+  for j := 0 to OpusTag^.comments - 1 do
+  begin
+  SetLength(s, LcommentLength^);
+  move(Pointer(LComment^)^, Pointer(s)^, LcommentLength^);
+ 
+  if j = 1 then StreamIn[InputIndex].Data.title := s;
+  if j = 2 then StreamIn[InputIndex].Data.artist := s;
+  if j = 3 then StreamIn[InputIndex].Data.album := s;
+  if j = 4 then StreamIn[InputIndex].Data.date := s;
+  if j = 5 then StreamIn[InputIndex].Data.comment := s;
+  if j = 6 then StreamIn[InputIndex].Data.tag := s;
+  
+  inc(LComment);
+  inc(LcommentLength);
+  end;
+  result := true;
+  end;
+  end;
+ end;
+ end;
+ end;
 
 function Tuos_Player.InputGetTagTitle(InputIndex: cint32): pchar;
  begin

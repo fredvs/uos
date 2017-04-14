@@ -187,7 +187,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -518,8 +518,8 @@ makeoptionson=8
  48
  63
 compilerusedon=29
- 4095
- 0
+ 4094
+ 1
  0
  0
  0
@@ -976,7 +976,7 @@ sourcefiles=20
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/consoleplaymemorybuffer.pas
+ /home/fred/uos/examples/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos.pas
@@ -1090,7 +1090,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1569,7 +1569,7 @@ windowlayout=549
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

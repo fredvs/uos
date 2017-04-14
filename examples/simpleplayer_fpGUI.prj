@@ -727,6 +727,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=0
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -956,8 +957,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=setexceptionmask
+finddtext=write
 findhistory=20
+ write
  setexceptionmask
  playernotfre
  $IF DEFINED(webstream
@@ -977,9 +979,8 @@ findhistory=20
  soundt
  timerr
  fromm
- create
 findoptions=1
-editpos=51
+editpos=55
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1021,6 +1022,7 @@ editpos=51
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,611
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1030,7 +1032,10 @@ editpos=51
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 4,7438
+ 0,-1073741823
+ 0,-1073741823
+ 0,12
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1082,7 +1087,11 @@ bookmarks47=0
 bookmarks48=0
 bookmarks49=0
 bookmarks50=0
-sourcefiles=51
+bookmarks51=0
+bookmarks52=0
+bookmarks53=0
+bookmarks54=0
+sourcefiles=55
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1134,7 +1143,11 @@ sourcefiles=51
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/main_sp_nf.pas
  ${PROJECTDIR}/uos.pas
-relpaths=51
+ ${PROJECTDIR}/simpleplayer_java.pas
+ /home/fred/test/myapp.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/fourier.pas
+relpaths=55
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1186,7 +1199,15 @@ relpaths=51
  main_sp.pas
  main_sp_nf.pas
  uos.pas
-ismoduletexts=51
+ simpleplayer_java.pas
+ test/myapp.pas
+ uos.pas
+ fourier.pas
+ismoduletexts=55
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1247,7 +1268,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=51
+order=55
  21
  0
  1
@@ -1285,6 +1306,10 @@ order=51
  44
  45
  41
+ 52
+ 53
+ 54
+ 51
  48
  50
  49
@@ -1299,9 +1324,9 @@ order=51
  24
  25
  26
-tabsize=60
+tabsize=24
 firsttab=34
-index=38
+index=36
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1316,8 +1341,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=703
+ cx=1350
+ cy=705
  rcx=0
  rcy=0
  [mainfo]
@@ -1336,7 +1361,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,703
+  basedock,0,0,1350,705
  focusedchild=0
  wsize=6
  active=1
@@ -1358,7 +1383,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1380,7 +1405,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1452,7 +1477,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=516
+ cy=517
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1662,8 +1687,8 @@ windowlayout=549
  ncy=0
  x=0
  y=584
- cx=1356
- cy=119
+ cx=1350
+ cy=121
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1762,8 +1787,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=62
+ cx=1350
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1778,8 +1803,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1356
- cy=62
+ cx=1350
+ cy=61
  rcx=0
  rcy=0
  [sourcefo]
@@ -1794,8 +1819,8 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
- cy=516
+ cx=1188
+ cy=517
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1829,15 +1854,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=65
- cx=1356
- cy=516
+ y=64
+ cx=1350
+ cy=517
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

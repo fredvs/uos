@@ -119,7 +119,7 @@ var
   OutputIndex1, InputIndex1, DSPIndex1, DSPIndex2, PluginIndex1, PluginIndex2: integer;
   plugsoundtouch : boolean = false;
   plugbs2b : boolean = false;
- 
+  
   procedure TSimpleplayer.btnTrackOnClick(Sender: TObject; Button: TMouseButton;
     Shift: TShiftState; const pos: TPoint);
   begin
@@ -609,7 +609,7 @@ loadok : boolean = false;
     btnStop.Enabled := True;
     btnpause.Enabled := True;
     btnresume.Enabled := False;
-    
+       
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
   
     end;

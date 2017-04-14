@@ -82,8 +82,8 @@ var
     
     chan := uos_InputGetChannels(PlayerIndex1, In1Index);
     
-    writeln('chan = ' + inttostr(chan));
-     writeln('filelength = ' + inttostr(filelength));
+   // writeln('chan = ' + inttostr(chan));
+   //  writeln('filelength = ' + inttostr(filelength));
 
     ///// set calculation of level/volume into array (usefull for wave form procedure)
     uos_InputSetArrayLevelEnable(PlayerIndex1, In1Index, 2);
