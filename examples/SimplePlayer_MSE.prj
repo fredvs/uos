@@ -857,7 +857,7 @@ editpos=1
  9,2
 bookmarks0=0
 sourcefiles=1
- ${PROJECTDIR}/mainmse_sp.pas
+ /home/fred/uos/examples/mainmse_sp.pas
 relpaths=1
  mainmse_sp.pas
 ismoduletexts=1

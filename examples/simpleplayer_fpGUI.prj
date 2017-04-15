@@ -831,12 +831,12 @@ path=8
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=8
- 3824
+ 3828
  33
  913
  764
- 2679
- 1999
+ 2683
+ 2003
  542
  249
 address=8
@@ -957,8 +957,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=changecheck
+finddtext=uos_getversion
 findhistory=20
+ uos_getversion
  changecheck
  checkbox1
  .enabled := false
@@ -978,9 +979,8 @@ findhistory=20
  AddIntoMemory
  Lengthst
  AddFromMemory
- uos_InputAdd
 findoptions=1
-editpos=55
+editpos=56
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1022,7 +1022,7 @@ editpos=55
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,215
+ 0,206
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1034,8 +1034,9 @@ editpos=55
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 29,7667
  0,-1073741823
- 0,-1073741823
+ 0,1751
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1091,7 +1092,8 @@ bookmarks51=0
 bookmarks52=0
 bookmarks53=0
 bookmarks54=0
-sourcefiles=55
+bookmarks55=0
+sourcefiles=56
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1147,7 +1149,8 @@ sourcefiles=55
  /home/fred/test/myapp.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/fourier.pas
-relpaths=55
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=56
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1203,7 +1206,9 @@ relpaths=55
  test/myapp.pas
  uos.pas
  fourier.pas
-ismoduletexts=55
+ uos_flat.pas
+ismoduletexts=56
+ 0
  0
  0
  0
@@ -1268,7 +1273,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=55
+order=56
  21
  0
  1
@@ -1308,6 +1313,7 @@ order=55
  41
  52
  53
+ 55
  54
  51
  48
@@ -1326,7 +1332,7 @@ order=55
  26
 tabsize=24
 firsttab=34
-index=36
+index=38
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1342,7 +1348,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=705
+ cy=708
  rcx=0
  rcy=0
  [mainfo]
@@ -1361,7 +1367,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,705
+  basedock,0,0,1356,708
  focusedchild=0
  wsize=6
  active=1
@@ -1405,7 +1411,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1477,7 +1483,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=517
+ cy=519
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1488,7 +1494,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=10
+ row=5
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1686,9 +1692,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=583
+ y=585
  cx=1356
- cy=122
+ cy=123
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1820,7 +1826,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=517
+ cy=519
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1856,7 +1862,7 @@ windowlayout=549
  x=0
  y=63
  cx=1356
- cy=517
+ cy=519
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
@@ -1869,9 +1875,9 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=363
- y=73
- cx=526
+ x=434
+ y=52
+ cx=493
  cy=357
  rcx=0
  rcy=0

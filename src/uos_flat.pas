@@ -691,6 +691,10 @@ procedure uos_Pause(PlayerIndex: cint32);  // Pause playing
 
 function uos_GetVersion() : cint32 ;  // version of uos
 
+function uos_SetGlobalEvent(isenabled : boolean) : boolean;
+  // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
+  // result : true if set ok.
+
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos ): TDArFloat;
   // Create a memory buffer of a audio file.
   // FileName : filename of audio file  
@@ -1748,6 +1752,13 @@ procedure uos_unloadServerLib();
 function uos_GetVersion() : cint32 ;
 begin
 result := uos.uos_GetVersion() ;
+end;
+
+function uos_SetGlobalEvent(isenabled : boolean) : boolean;
+  // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
+  // result : true if set ok.
+begin
+result := uos.uos_SetGlobalEvent(isenabled) ;
 end;
 
 procedure uos_unloadlib() ;

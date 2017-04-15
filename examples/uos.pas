@@ -232,6 +232,8 @@ end;
 type
   Tuos_Init = class(TObject)
   public
+  evGlobalPause: PRTLEvent;  // for global pausing
+  isGlobalPause: boolean ;
   constructor Create;
   private
 
@@ -1050,6 +1052,10 @@ procedure uos_Free();
   // To call at end of application.
   // If uos_flat.pas was used, it will free all the uos_player created.
   
+function uos_SetGlobalEvent(isenabled : boolean) : boolean;
+  // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
+  // result : true if set ok. 
+  
 function uos_GetVersion() : cint32 ;  // version of uos
 
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos ): TDArFloat;
@@ -1599,8 +1605,8 @@ var
   
   start;  // resume;  { if fpc version <= 2.4.4}
   
-  
-   
+  if uosInit.isGlobalPause = true then
+  RTLeventSetEvent(uosInit.evGlobalPause) else   
   RTLeventSetEvent(evPause);
  end;
 
@@ -1634,6 +1640,8 @@ begin
       (not IsLooped) then 
   begin
   Status := 1;
+  if uosInit.isGlobalPause = true then
+  RTLeventSetEvent(uosInit.evGlobalPause) else   
   RTLeventSetEvent(evPause);
   end;
 end;
@@ -1643,6 +1651,8 @@ begin
   if (Status > 0) and (isAssigned = True) then
   begin
   NLooped:= 0;
+  if uosInit.isGlobalPause = true then
+  RTLeventSetEvent(uosInit.evGlobalPause) else   
   RTLeventSetEvent(evPause);
   Status := 0;
   end;
@@ -1652,6 +1662,8 @@ procedure Tuos_Player.Pause();
 begin
   if (Status > 0) and (isAssigned = True) then
   begin
+  if uosInit.isGlobalPause = true then
+  RTLeventReSetEvent(uosInit.evGlobalPause) else   
   RTLeventResetEvent(evPause);
   Status := 2;
   end;
@@ -5807,9 +5819,17 @@ begin
    WriteLn('Before for x := 0 to high(StreamIn)');
   {$endif}
   
+   if uosInit.isGlobalPause = true then
+  begin 
+  RTLeventWaitFor(uosInit.evGlobalPause);
+  RTLeventSetEvent(uosInit.evGlobalPause);
+  end
+   else  
+  begin
   RTLeventWaitFor(evPause);  // is there a pause waiting ?
   RTLeventSetEvent(evPause);
-
+  end;
+  
   if (StreamIn[x].Data.Status > 0) and
   (StreamIn[x].Data.Enabled = True) then
   begin
@@ -5854,10 +5874,18 @@ begin
   (StreamIn[x].DSP[x2].BefFunc <> nil) then
   StreamIn[x].DSP[x2].BefFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
   // end DSP BeforeBuffProc
-
-  RTLeventWaitFor(evPause);  // Is there a pause waiting ?
-  RTLeventSetEvent(evPause);
   
+  if uosInit.isGlobalPause = true then
+  begin 
+  RTLeventWaitFor(uosInit.evGlobalPause);
+  RTLeventSetEvent(uosInit.evGlobalPause);
+  end
+   else  
+  begin
+  RTLeventWaitFor(evPause);  // is there a pause waiting ?
+  RTLeventSetEvent(evPause);
+  end;
+   
  case StreamIn[x].Data.TypePut of
  
   0:  // It is a input from audio file.
@@ -6426,8 +6454,17 @@ if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
   {$IF DEFINED(debug)}
  writeln('status = ' +inttostr(status));
  {$endif}
+ 
+ if uosInit.isGlobalPause = true then
+  begin 
+  RTLeventWaitFor(uosInit.evGlobalPause);
+  RTLeventSetEvent(uosInit.evGlobalPause);
+  end
+   else  
+  begin
   RTLeventWaitFor(evPause);  // is there a pause waiting ?
   RTLeventSetEvent(evPause);
+  end;
   
   // Give Buffer to Output
   if status = 1 then
@@ -7067,7 +7104,16 @@ if err > 0 then
  
    if EndProcOnly <> nil then EndProcOnly;
    
-  RTLeventResetEvent(evPause);
+  if uosInit.isGlobalPause = true then
+  begin 
+  RTLeventReSetEvent(uosInit.evGlobalPause)
+  end
+   else  
+  begin
+  RTLeventReSetEvent(evPause);
+  end;
+  
+  
   Status := 2;
   
   isfirst := true;
@@ -7617,6 +7663,19 @@ begin
 result := uos_version ;
 end;
 
+function uos_SetGlobalEvent(isenabled : boolean) : boolean;
+  // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
+  // result : true if set ok.
+begin
+result := false;
+if assigned(uosinit) then 
+begin
+uosinit.isGlobalPause := isenabled;
+result := true;
+end;
+
+end;   
+
 procedure uos_unloadlib() ;
 begin
  if assigned(uosInit) then
@@ -7770,6 +7829,8 @@ constructor Tuos_Init.Create;
 begin
 
   TDummyThread.Create(false);
+  isGlobalPause := false;
+  evGlobalPause := RTLEventCreate;
 
   SetExceptionMask(GetExceptionMask + [exZeroDivide] + [exInvalidOp] +
   [exDenormalized] + [exOverflow] + [exUnderflow] + [exPrecision]);
@@ -7934,7 +7995,12 @@ end;
 procedure uos_Free();
 begin
  uos_unloadlib() ;
- if assigned(uosInit) then freeandnil(uosInit);
+
+ if assigned(uosInit) then
+ begin
+  RTLeventdestroy(uosInit.evGlobalPause);
+  freeandnil(uosInit);
+  end;
 end;
 
 end.

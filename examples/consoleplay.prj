@@ -69,14 +69,15 @@ finddialog=8
  y=209
  cx=331
  cy=116
-replacedialog=28
+replacedialog=29
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=uosPlayers
- history=15
+ value=if uosInit.isGlobalPause
+ history=16
+  if uosInit.isGlobalPause
   uosPlayers
   uosInit.uosDeviceCount
   uosInit.uosDefaultDevice
@@ -806,10 +807,10 @@ path=4
  /home/fred/uos/examples/consoleplay.pas
  /home/fred/uos/examples/uos.pas
 line=4
- 5710
- 5034
+ 5718
+ 5042
  101
- 1516
+ 1518
 address=4
  4885271
  4873547
@@ -887,8 +888,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=.create
+finddtext=if uosInit.evGlobalPause
 findhistory=20
+ if uosInit.evGlobalPause
+ evPause
+ evglobalPause
  .create
  addfrom
  addp
@@ -906,9 +910,6 @@ findhistory=20
  freepla
  playex
  sleep
- DoTerminate
- freeplayer
- OnTerminate
 findoptions=1
 editpos=8
  0,-1073741823
@@ -917,7 +918,7 @@ editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1289
+ 9,6451
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -990,7 +991,7 @@ windowlayout=549
  x=0
  y=0
  cx=929
- cy=702
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -1009,9 +1010,9 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,702
+  basedock,0,0,929,585
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1031,7 +1032,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1053,7 +1054,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1125,7 +1126,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=514
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1334,9 +1335,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=582
+ y=485
  cx=929
- cy=120
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1436,7 +1437,7 @@ windowlayout=549
  x=0
  y=0
  cx=929
- cy=62
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1452,7 +1453,7 @@ windowlayout=549
  x=0
  y=0
  cx=929
- cy=62
+ cy=51
  rcx=0
  rcy=0
  [sourcefo]
@@ -1468,7 +1469,7 @@ windowlayout=549
  x=162
  y=0
  cx=767
- cy=514
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1491,26 +1492,10 @@ windowlayout=549
  wsize=0
  active=0
  visible=0
- [mainfo.panel1]
- splitdir=1
- useroptions=838958571
- parent=mainfo.basedock
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=0
- y=65
- cx=929
- cy=514
- rcx=0
- rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1526,6 +1511,22 @@ windowlayout=549
  wsize=0
  active=0
  visible=0
+ [mainfo.panel1]
+ splitdir=1
+ useroptions=838958571
+ parent=mainfo.basedock
+ visible=1
+ mdistate=0
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=0
+ y=54
+ cx=929
+ cy=428
+ rcx=0
+ rcy=0
 [targetconsole]
 finddtext=Input from memory
 findhistory=1
