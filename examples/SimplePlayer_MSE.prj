@@ -295,9 +295,108 @@ colordialog=5
  y=234
  cx=338
  cy=298
+sourcefilemasks=3
+ "*.pas" "*.dpr" "*.lpr" "*.pp" "*.inc"
+ "*.c" "*.cc" "*.h"
+ "*.mfm"
+syntaxdeffiles=3
+ ${SYNTAXDEFDIR}pascal_ideu.sdef
+ ${SYNTAXDEFDIR}cpp.sdef
+ ${SYNTAXDEFDIR}objecttext.sdef
+filemasknames=3
+ Source
+ Forms
+ All Files
+filemasks=3
+ "*.pp" "*.pas" "*.inc" "*.dpr" "*.lpr"
+ *.mfm
+ *
+codetemplatedirs=1
+ ${TEMPLATEDIR}
+showgrid=1
+snaptogrid=1
+moveonfirstclick=1
+noformdesignerdocking=0
+componenthints=1
+gridsizex=8
+gridsizey=8
+autoindent=1
+blockindent=1
+linenumberson=1
+rightmarginon=1
+rightmarginchars=80
+scrollheight=0
+tabstops=4
+spacetabs=0
+showtabs=0
+tabindent=0
+editfontname=mseide_source
+editfontheight=0
+editfontwidth=0
+editfontextraspace=0
+editfontcolor=-1879048183
+editbkcolor=-1879048186
+statementcolor=14745599
+pairmarkcolor=-1610612712
+editfontantialiased=1
+editmarkbrackets=1
+editmarkpairwords=1
+backupfilecount=0
+encoding=1
+eolstyle=1
+trimtrailingwhitespace=0
+debugcommand=${DEBUGGER}
+debugoptions=
+debugtarget=
+runcommand=
+xtermcommand=xterm -S${PTSN}/${PTSH}
+remoteconnection=
+uploadcommand=
+gdbprocessor=Auto
+gdbservercommand=
+gdbservercommandattach=
+beforeconnect=
+afterconnect=
+beforeload=
+afterload=
+beforerun=
+sourcebase=
+sourcedirs=4
+ ${MSEDIR}lib/addon/*/
+ ${MSEDIR}lib/common/kernel/$TARGETOSDIR/
+ ${MSEDIR}lib/common/*/
+ ./
+defines=0
+progparameters=
+progworkingdirectory=
+envvarnames=0
+envvarvalues=0
+defineson=0
+stoponexception=0
+valuehints=1
+activateonbreak=1
+raiseonbreak=1
+showconsole=1
+externalconsole=0
+settty=1
+gdbdownload=0
+downloadalways=0
+startupbkpt=0
+startupbkpton=0
+gdbsimulator=0
+gdbserverstartonce=0
+gdbloadtimeout=
+gdbserverwait=0
+nogdbserverexit=0
+gdbservertty=0
+exceptclassnames=1
+ EconvertError
+exceptignore=1
+ 0
+nodebugbeginend=0
+fpcgdbworkaround=1
 mainfile=${PROJECTNAME}.pas
 targetfile=${PROJECTNAME}${EXEEXT}
-messageoutputfile=
 makecommand=${COMPILER}
 makedir=
 unitdirs=4
@@ -319,6 +418,7 @@ makeoptions=6
  -ghl
  -B
  -O2 -XX -Xs -CX
+reversepathorder=0
 makeoptpurpose=6
  
  
@@ -326,65 +426,106 @@ makeoptpurpose=6
  
  
  
-compilerused=29
- ${COMPILER} (Default)
- Pascal 1
- Pascal 2
- Pascal 3
- Pascal 4
- Pascal 5
- Pascal 6
- Pascal 7
- Pascal 8
- C 1
- C 2
- C 3
- C 4
- C 5
- C 6
- C 7
- C 8
- Java 1
- Java 2
- Java 3
- Java 4
- Python 1
- Python 2
- Python 3
- Python 4
- Other 1
- Other 2
- Other 3
- Other 4
-debuggerused=6
- ${DEBUGGER} (Default)
- Debugger 1
- Debugger 2
- Debugger 3
- Debugger 4
- None
-exeused=15
- ${EXEEXT} (Default)
- No Extension
- .exe
- .com
- .bin
- .prog
- .pyc
- .class
- .java
- .so
- .dll
- .lib
- .o
- .res
- .inf
-codetemplatedirs=1
- ${TEMPLATEDIR}
-toolmenus=0
-toolfiles=0
-toolparams=0
+befcommandon=0
+makeoptionson=6
+ 2559
+ 2559
+ 2559
+ 2
+ 2355
+ 2547
+aftcommandon=0
+unitdirson=4
+ 200703
+ 69615
+ 983056
+ 69631
+uid=0
+macroon=0
+macronames=0
+macrovalues=0
+groupcomments=10
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+fontalias=0
 fontnames=0
+fontancestors=0
+fontoptions=0
+fontheights=0
+fontwidths=0
+fontxscales=0
+usercolors=30
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+usercolorcomment=30
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+formatmacronames=0
+formatmacrovalues=0
 scriptbeforecopy=
 scriptaftercopy=
 newprojectfiles=4
@@ -461,203 +602,6 @@ newfoforms=11
  ${TEMPLATEDIR}mse/default/report.mfm
  ${TEMPLATEDIR}mse/default/pascform.mfm
  ${TEMPLATEDIR}mse/default/inheritedform.mfm
-forcezorder=0
-stripmessageesc=0
-copymessages=0
-closemessages=0
-checkmethods=1
-colorerror=-1610612712
-colorwarning=-1610612717
-colornote=-1610612716
-usercolors=30
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
-usercolorcomment=30
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-formatmacronames=0
-formatmacrovalues=0
-settingsfile=
-settingseditor=0
-settingsdebugger=0
-settingsstorage=0
-settingsprojecttree=0
-settingsautoload=0
-settingsautosave=0
-modulenames=1
- SIMPLE_PLAYER
-moduletypes=1
- TMAINFO
-modulefiles=1
- /home/fred/uos/examples/mainmse_sp.mfm
-befcommandon=0
-makeoptionson=6
- 2559
- 2559
- 2559
- 2
- 2355
- 2547
-compilerusedon=29
- 69631
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
-debuggerusedon=6
- 69631
- 0
- 0
- 0
- 0
- 0
-exeusedon=15
- 69631
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
-comment_M=
-comment_B=
-comment_1=
-comment_2=
-comment_3=
-comment_4=
-comment_5=
-comment_6=
-comment_7=
-comment_8=
-comment_9=
-comment_0=
-project_name=
-project_creator=
-project_copyright=
-project_license=
-project_time=
-project_date=
-project_comment=
-aftcommandon=0
-unitdirson=4
- 200703
- 69615
- 983056
- 69631
-macroon=0
-macronames=0
-macrovalues=0
-macrogroup=0
-groupcomments=10
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-toolsave=0
-toolhide=0
-toolparse=0
-toolmessages=0
-toolshortcuts=0
-fontalias=0
-fontancestors=0
-fontheights=0
-fontwidths=0
-fontoptions=0
-fontxscales=0
 expandprojectfilemacros=4
  1
  1
@@ -680,108 +624,46 @@ newinheritedforms=11
  0
  0
  -1
-uid=0
-sourcefilemasks=3
- "*.pas" "*.dpr" "*.lpr" "*.pp" "*.inc"
- "*.c" "*.cc" "*.h"
- "*.mfm"
-syntaxdeffiles=3
- ${SYNTAXDEFDIR}pascal_ideu.sdef
- ${SYNTAXDEFDIR}cpp.sdef
- ${SYNTAXDEFDIR}objecttext.sdef
-filemasknames=3
- Source
- Forms
- All Files
-filemasks=3
- "*.pp" "*.pas" "*.inc" "*.dpr" "*.lpr"
- *.mfm
- *
-showgrid=1
-snaptogrid=1
-moveonfirstclick=1
-noformdesignerdocking=0
-componenthints=1
-gridsizex=8
-gridsizey=8
-autoindent=1
-blockindent=1
-linenumberson=1
-rightmarginon=1
-rightmarginchars=80
-scrollheight=0
-tabstops=4
-spacetabs=0
-showtabs=0
-tabindent=0
-editfontname=mseide_source
-editfontheight=0
-editfontwidth=0
-editfontextraspace=0
-editfontcolor=-1879048183
-editbkcolor=-1879048186
-statementcolor=14745599
-pairmarkcolor=-1610612712
-editfontantialiased=1
-editmarkbrackets=1
-editmarkpairwords=1
-fpgdesigner=1
-backupfilecount=0
-encoding=1
-eolstyle=1
-trimtrailingwhitespace=0
-codetemplatedirs=1
- ${TEMPLATEDIR}
-debugcommand=${DEBUGGER}
-debugoptions=
-debugtarget=
-runcommand=
-xtermcommand=xterm -S${PTSN}/${PTSH}
-remoteconnection=
-uploadcommand=
-gdbprocessor=Auto
-gdbservercommand=
-gdbservercommandattach=
-beforeconnect=
-afterconnect=
-beforeload=
-afterload=
-beforerun=
-sourcebase=
-sourcedirs=4
- ${MSEDIR}lib/addon/*/
- ${MSEDIR}lib/common/kernel/$TARGETOSDIR/
- ${MSEDIR}lib/common/*/
- ./
-defines=0
-progparameters=
-progworkingdirectory=
-envvarnames=0
-envvarvalues=0
-defineson=0
-stoponexception=0
-valuehints=1
-activateonbreak=1
-raiseonbreak=1
-showconsole=1
-externalconsole=0
-settty=1
-gdbdownload=0
-downloadalways=0
-startupbkpt=0
-startupbkpton=0
-gdbsimulator=0
-gdbserverstartonce=0
-gdbloadtimeout=
-gdbserverwait=0
-nogdbserverexit=0
-gdbservertty=0
-exceptclassnames=1
- EconvertError
-exceptignore=1
- 0
-nodebugbeginend=0
-fpcgdbworkaround=1
+toolmenus=0
+toolfiles=0
+toolparams=0
+toolsave=0
+toolhide=0
+toolparse=0
+toolmessages=0
+toolshortcuts=0
+settingsfile=
+settingsautoload=0
+settingsautosave=0
+settingseditor=0
+settingsdebugger=0
+settingsmake=1
+settingsmacros=0
+settingsfontalias=0
+settingsusercolors=0
+settingsformatmacros=0
+settingstemplates=0
+settingstools=0
+settingsstorage=0
+settingscomponentstore=0
+settingsprojecttree=0
+settingslayout=0
+messageoutputfile=
+modulenames=1
+ SIMPLE_PLAYER
+moduletypes=1
+ TMAINFO
+modulefiles=1
+ /home/fred/uos/examples/mainmse_sp.mfm
+macrogroup=0
+forcezorder=0
+stripmessageesc=0
+copymessages=0
+closemessages=0
+checkmethods=1
+colorerror=-1610612712
+colorwarning=-1610612717
+colornote=-1610612716
 sigsettings=27
  1,1,T,F
  3,3,T,F
@@ -870,31 +752,45 @@ visiblemodules=1
  -1
 nomenumodules=1
  0
-[sourcefo.files_tab]
-tabsize=24
+[sourcefo.tabwidget]
+tabsize=60
 firsttab=0
 index=0
 [layout]
-windowlayout=527
- [mainfo.basedock]
- splitdir=2
- useroptions=11395
- parent=mainfo.container
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=687
- ncy=211
+windowlayout=526
+ [mainfo.openform]
+ filenames=0
+ filecolwidth=0
  x=0
  y=0
- cx=929
- cy=604
- rcx=0
- rcy=0
+ cx=0
+ cy=0
+ filehistory=0
+ filefilterindex=0
+ filefilter=
+ [mainfo.projectfiledia]
+ filecolwidth=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ [mainfo.openfile]
+ filenames=0
+ filecolwidth=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ filehistory=0
+ filefilterindex=0
+ filefilter=
+ [mainfo.basedock]
+ splitdir=2
+ useroptions=268450944
  [mainfo]
  splitdir=0
- useroptions=838860925
+ useroptions=838860923
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -907,9 +803,6 @@ windowlayout=527
  cy=621
  rcx=0
  rcy=0
- children=1
-  basedock,0,0,929,604
- focusedchild=0
  wsize=0
  active=1
  visible=1
@@ -952,7 +845,7 @@ windowlayout=527
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=cpuc86_64fo
  parent=
  mdistate=0
  nx=0
@@ -979,7 +872,7 @@ windowlayout=527
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -998,7 +891,7 @@ windowlayout=527
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=symbolfo
  parent=
  mdistate=0
  nx=0
@@ -1024,7 +917,7 @@ windowlayout=527
  x=0
  y=0
  cx=159
- cy=442
+ cy=427
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1116,7 +1009,7 @@ windowlayout=527
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=breakpointsfo
  parent=
  mdistate=0
  nx=0
@@ -1141,7 +1034,7 @@ windowlayout=527
  [symbolfo]
  splitdir=0
  useroptions=805322875
- stackedunder=
+ stackedunder=componentstorefo
  parent=
  mdistate=0
  nx=0
@@ -1202,7 +1095,7 @@ windowlayout=527
  value=1
  [messagefo]
  splitdir=0
- useroptions=82027
+ useroptions=805388395
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1211,15 +1104,15 @@ windowlayout=527
  ncx=0
  ncy=0
  x=0
- y=501
+ y=484
  cx=929
- cy=103
+ cy=99
  rcx=0
  rcy=0
  [componentstorefo]
  splitdir=0
  useroptions=805331067
- stackedunder=
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0
@@ -1282,7 +1175,7 @@ windowlayout=527
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=
+ stackedunder=disassfo
  parent=
  mdistate=3
  nx=0
@@ -1302,7 +1195,7 @@ windowlayout=527
  activetab=0
  [debuggerfo]
  splitdir=0
- useroptions=24683
+ useroptions=268460139
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1313,28 +1206,12 @@ windowlayout=527
  x=0
  y=0
  cx=929
- cy=53
- rcx=0
- rcy=0
- [debuggerfo.basedock]
- splitdir=2
- useroptions=146563
- parent=debuggerfo.container
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=928
- ncy=2
- x=0
- y=0
- cx=929
- cy=53
+ cy=51
  rcx=0
  rcy=0
  [sourcefo]
  splitdir=0
- useroptions=16489
+ useroptions=805322857
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1345,14 +1222,18 @@ windowlayout=527
  x=162
  y=0
  cx=767
- cy=442
+ cy=427
  rcx=0
  rcy=0
+ [actionsmo.watchesonact]
+ checked=1
+ [actionsmo.bluedotsonact]
+ checked=1
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1379,9 +1260,9 @@ windowlayout=527
  ncx=0
  ncy=0
  x=0
- y=56
+ y=54
  cx=929
- cy=442
+ cy=427
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

@@ -831,12 +831,12 @@ path=8
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=8
- 3828
+ 3845
  33
  913
  764
- 2683
- 2003
+ 2700
+ 2020
  542
  249
 address=8
@@ -957,8 +957,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=uos_getversion
+finddtext=updatet
 findhistory=20
+ updatet
+ addfromu
+ mpg123_feature
+ icy
  uos_getversion
  changecheck
  checkbox1
@@ -975,12 +979,8 @@ findhistory=20
  TMemoryStream.Creat
  Streamin [x] .Data.MemoryStream: = TMemoryStream.Creat
  AddIntoMemoryBuffer
- AddInto
- AddIntoMemory
- Lengthst
- AddFromMemory
 findoptions=1
-editpos=56
+editpos=58
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1022,7 +1022,6 @@ editpos=56
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,206
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1034,9 +1033,12 @@ editpos=56
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 29,7667
  0,-1073741823
- 0,1751
+ 0,1888
+ 0,-1073741823
+ 0,-1073741823
+ 0,69
+ 0,128
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1093,7 +1095,9 @@ bookmarks52=0
 bookmarks53=0
 bookmarks54=0
 bookmarks55=0
-sourcefiles=56
+bookmarks56=0
+bookmarks57=0
+sourcefiles=58
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
@@ -1150,7 +1154,9 @@ sourcefiles=56
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/fourier.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=56
+ ${PROJECTDIR}/uos_httpgetthread.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+relpaths=58
  simpleplayer_fpGUI.pas
  uos_portaudio.pas
  simpleplayer_fpGUI.pas
@@ -1207,7 +1213,11 @@ relpaths=56
  uos.pas
  fourier.pas
  uos_flat.pas
-ismoduletexts=56
+ uos_httpgetthread.pas
+ uos_mpg123.pas
+ismoduletexts=58
+ 0
+ 0
  0
  0
  0
@@ -1269,11 +1279,11 @@ modules=1
 moduleoptions=1
  0
 visiblemodules=1
- -1
+ 0
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=56
+order=58
  21
  0
  1
@@ -1313,6 +1323,8 @@ order=56
  41
  52
  53
+ 56
+ 57
  55
  54
  51
@@ -1348,7 +1360,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=708
+ cy=702
  rcx=0
  rcy=0
  [mainfo]
@@ -1367,7 +1379,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,708
+  basedock,0,0,1356,702
  focusedchild=0
  wsize=6
  active=1
@@ -1411,7 +1423,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1483,7 +1495,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=519
+ cy=515
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1494,7 +1506,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=5
+ row=7
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1692,7 +1704,7 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=585
+ y=579
  cx=1356
  cy=123
  rcx=0
@@ -1794,7 +1806,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=60
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1810,7 +1822,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=60
+ cy=58
  rcx=0
  rcy=0
  [sourcefo]
@@ -1826,7 +1838,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=519
+ cy=515
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1860,15 +1872,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=63
+ y=61
  cx=1356
- cy=519
+ cy=515
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=confideufo
  parent=
  mdistate=0
  nx=0
@@ -1881,9 +1893,9 @@ windowlayout=549
  cy=357
  rcx=0
  rcy=0
- wsize=0
+ wsize=5
  active=0
- visible=1
+ visible=0
 [targetconsole]
 finddtext=Length(BufferplugFL) =
 findhistory=4

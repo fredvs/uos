@@ -639,6 +639,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=0
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -863,7 +864,7 @@ editpos=24
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,239
+ 0,222
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1033,7 +1034,7 @@ windowlayout=530
   basedock,0,0,929,585
  focusedchild=0
  wsize=0
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1051,8 +1052,8 @@ windowlayout=530
  rcx=0
  rcy=0
  wsize=0
- active=1
- visible=1
+ active=0
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1074,7 +1075,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0

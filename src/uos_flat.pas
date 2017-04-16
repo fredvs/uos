@@ -658,6 +658,9 @@ function uos_InputPositionTime(PlayerIndex: cint32; InputIndex: cint32): TTime;
 function uos_InputUpdateTag(PlayerIndex: cint32;InputIndex: cint32): boolean;
 // for mp3 and opus files only
 
+function uos_InputUpdateICY(PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): boolean;
+// for mp3 only
+
 function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): pchar;
 function uos_InputGetTagArtist(PlayerIndex: cint32; InputIndex: cint32): pchar;
 function uos_InputGetTagAlbum(PlayerIndex: cint32; InputIndex: cint32): pchar;
@@ -835,6 +838,15 @@ end;
   // VolRight : Right volume
   // Enable : Enabled
   // example  uos_OutputSetDSPVolume(0,InputIndex1,1,0.8,True);
+  
+function uos_InputUpdateICY(PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): boolean;
+// for mp3 only
+begin
+ Result := false;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+result := uosPlayers[PlayerIndex].InputUpdateICY(InputIndex, icy_data) ;
+ end;  
 
 function uos_InputUpdateTag(PlayerIndex: cint32;InputIndex: cint32): boolean;
 // for mp3 and opus files only

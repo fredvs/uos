@@ -67,6 +67,7 @@ begin
   repeat
   try
     Http.RequestHeaders.Clear;
+    // Http.RequestHeaders.Add('Accept: icy-metadata:1');  // icy
     Http.Get(URL, FOutStream);
   except
     on e: EHTTPClient do
