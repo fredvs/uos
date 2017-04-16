@@ -726,8 +726,8 @@ path=3
  /home/fred/uos/examples/uos.pas
 line=3
  146
- 4274
- 3244
+ 4273
+ 3243
 address=3
  0
  0
@@ -809,6 +809,10 @@ hintheight=19
 finddtext=icy
 findhistory=20
  icy
+ inputupdateicy
+ MPG123_OK
+ add_s
+ uos_inputupdateicy
  feature
  icy =
  inputup
@@ -824,10 +828,6 @@ findhistory=20
  streo2mono
  AddDSPVolumeIn
  dspvolume
- BufferURL
- The synchro main loop procedurebefore
- seek out
- op_test_callbacks
 findoptions=1
 editpos=13
  0,-1073741823
@@ -837,12 +837,12 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,1884
+ 0,-1073741823
  0,72
- 0,-1073741823
- 0,69
- 0,141
- 0,-1073741823
- 0,-1073741823
+ 0,142
+ 0,672
+ 0,847
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -919,7 +919,7 @@ order=13
  10
 tabsize=24
 firsttab=7
-index=7
+index=12
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -974,7 +974,7 @@ windowlayout=530
  cy=314
  rcx=0
  rcy=0
- wsize=0
+ wsize=5
  active=0
  visible=0
  [threadsfo]

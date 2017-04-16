@@ -863,7 +863,7 @@ function InputPositionTime(InputIndex: cint32): TTime;
 
 function InputUpdateTag(InputIndex: cint32): boolean;
 
-function InputUpdateICY(InputIndex: cint32; var icy_data : pchar): boolean;
+function InputUpdateICY(InputIndex: cint32; var icy_data : ppchar): integer;
 
 function InputGetTagTitle(InputIndex: cint32): pchar;
 function InputGetTagArtist(InputIndex: cint32): pchar;
@@ -1875,15 +1875,14 @@ end;
 
 
 // for mp3 files only
-function Tuos_Player.InputUpdateICY(InputIndex: cint32; var icy_data : pchar): boolean;
+function Tuos_Player.InputUpdateICY(InputIndex: cint32; var icy_data : ppchar): integer;
 begin
-Result := false;
+Result := -1;
   if (isAssigned = True) then
  begin
 if StreamIn[InputIndex].Data.LibOpen = 1 then // mp3
 begin
-mpg123_icy(StreamIn[InputIndex].Data.HandleSt, pointer(icy_data)); 
-Result := true;
+Result := mpg123_icy(StreamIn[InputIndex].Data.HandleSt, icy_data); 
 end;
 end;
 end;

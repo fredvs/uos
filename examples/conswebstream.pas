@@ -16,7 +16,8 @@ uses
 
 var
   res, res2: integer;
-  ordir, opath, PA_FileName, MP_FileName, OF_FileName, theurl, theicytag : string;
+  ordir, opath, PA_FileName, MP_FileName, OF_FileName, theurl : string;
+  theicytag : ppchar;
   PlayerIndex1: integer;
 
  begin
@@ -132,14 +133,14 @@ writeln('Try to connect to ' + theurl);
      /// OK, let play it.
    if res <> -1 then uos_Play(PlayerIndex1);
   
-  {
+ {
    sleep(3000);
-   uos_inputupdateicy(PlayerIndex1,0,pointer(theicytag));
+   writeln('0 = ok : num = ' + inttostr(uos_inputupdateicy(PlayerIndex1,0,(theicytag))));
    writeln('icy = ' + (theicytag));
-   sleep(3000);
-   uos_inputupdateicy(PlayerIndex1,0,pointer(theicytag));
+   sleep(5000);
+   writeln('0 = ok : num = ' + inttostr(uos_inputupdateicy(PlayerIndex1,0,(theicytag))));
    writeln('icy = ' + (theicytag));
-   }
+  }
    
    writeln('Press a key to exit...');
  end;
