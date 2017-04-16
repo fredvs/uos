@@ -670,8 +670,8 @@ type
     v2: PPmpg123_id3v2): integer; cdecl;
 
 type
-  Tmpg123_icy = function(mh: Tmpg123_handle; var icy_meta: PPChar): integer; cdecl;
-
+   Tmpg123_icy = function(mh: Tmpg123_handle; var icy_meta: PChar): integer; cdecl;
+  // Tmpg123_icy = function(mh: Tmpg123_handle; icy_meta: PPChar): integer; cdecl; 
 type
   Tmpg123_icy2utf8 = function(icy_text: PChar): PChar; cdecl;
 

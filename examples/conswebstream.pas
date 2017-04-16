@@ -17,7 +17,8 @@ uses
 var
   res, res2: integer;
   ordir, opath, PA_FileName, MP_FileName, OF_FileName, theurl : string;
-  theicytag : ppchar;
+  theicytag : pchar;
+  theicytag2 : string;
   PlayerIndex1: integer;
 
  begin
@@ -134,13 +135,22 @@ writeln('Try to connect to ' + theurl);
    if res <> -1 then uos_Play(PlayerIndex1);
   
  {
-   sleep(3000);
-   writeln('0 = ok : num = ' + inttostr(uos_inputupdateicy(PlayerIndex1,0,(theicytag))));
-   writeln('icy = ' + (theicytag));
+ while true do
+ begin
    sleep(5000);
-   writeln('0 = ok : num = ' + inttostr(uos_inputupdateicy(PlayerIndex1,0,(theicytag))));
-   writeln('icy = ' + (theicytag));
-  }
+  res := uos_inputupdateicy(PlayerIndex1,0,theicytag);
+   writeln('error = ' + inttostr(res));
+   writeln('length theicytag = ' + inttostr(length(theicytag^)));
+
+   if Assigned(theicytag) then writeln('theicytag = assigned')
+  else writeln('theicytag NOT assigned') ;
+
+if (res = 0) and Assigned(theicytag) 
+then writeln(theicytag);
+
+   
+  end;
+ // }
    
    writeln('Press a key to exit...');
  end;

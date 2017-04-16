@@ -863,7 +863,7 @@ function InputPositionTime(InputIndex: cint32): TTime;
 
 function InputUpdateTag(InputIndex: cint32): boolean;
 
-function InputUpdateICY(InputIndex: cint32; var icy_data : ppchar): integer;
+function InputUpdateICY(InputIndex: cint32; var icy_data : pchar): integer;
 
 function InputGetTagTitle(InputIndex: cint32): pchar;
 function InputGetTagArtist(InputIndex: cint32): pchar;
@@ -1875,7 +1875,7 @@ end;
 
 
 // for mp3 files only
-function Tuos_Player.InputUpdateICY(InputIndex: cint32; var icy_data : ppchar): integer;
+function Tuos_Player.InputUpdateICY(InputIndex: cint32; var icy_data : pchar): integer;
 begin
 Result := -1;
   if (isAssigned = True) then

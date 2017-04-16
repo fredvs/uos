@@ -716,31 +716,38 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=3
+on=4
  -1
  0
  0
-path=3
+ 0
+path=4
  /home/fred/uos/examples/uos_opusfile.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
-line=3
+ /home/fred/uos/examples/conswebstream.pas
+line=4
  146
  4273
  3243
-address=3
+ 147
+address=4
  0
  0
  0
-addbkpt=3
+ 0
+addbkpt=4
  0
  0
  0
-ignore=3
+ 0
+ignore=4
  0
  0
  0
-condition=3
+ 0
+condition=4
+ 
  
  
  
@@ -829,7 +836,7 @@ findhistory=20
  AddDSPVolumeIn
  dspvolume
 findoptions=1
-editpos=13
+editpos=17
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -837,12 +844,16 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1884
  0,-1073741823
- 0,72
- 0,142
- 0,672
- 0,847
+ 0,-1073741823
+ 0,-1073741823
+ 0,136
+ 0,670
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -856,7 +867,11 @@ bookmarks9=0
 bookmarks10=0
 bookmarks11=0
 bookmarks12=0
-sourcefiles=13
+bookmarks13=0
+bookmarks14=0
+bookmarks15=0
+bookmarks16=0
+sourcefiles=17
  ${PROJECTDIR}/uos_opusurl.pas
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/conswebstream.pas
@@ -870,7 +885,11 @@ sourcefiles=13
  ${PROJECTDIR}/conswebstream.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=13
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos_opusfile.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=17
  uos_opusurl.pas
  simplewebplayer_fpGUI.pas
  conswebstream.pas
@@ -884,7 +903,15 @@ relpaths=13
  conswebstream.pas
  uos_mpg123.pas
  uos_flat.pas
-ismoduletexts=13
+ uos_flat.pas
+ uos_opusfile.pas
+ uos.pas
+ uos_flat.pas
+ismoduletexts=17
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -903,7 +930,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=13
+order=17
  0
  1
  2
@@ -912,14 +939,18 @@ order=13
  5
  6
  7
+ 13
  12
  11
+ 15
+ 16
  8
  9
  10
+ 14
 tabsize=24
-firsttab=7
-index=12
+firsttab=10
+index=15
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -968,15 +999,15 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=493
- y=170
+ x=580
+ y=153
  cx=709
  cy=314
  rcx=0
  rcy=0
- wsize=5
+ wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -986,8 +1017,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=444
- y=431
+ x=713
+ y=418
  cx=418
  cy=126
  rcx=0
@@ -1420,7 +1451,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

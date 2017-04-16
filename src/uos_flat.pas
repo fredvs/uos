@@ -658,7 +658,7 @@ function uos_InputPositionTime(PlayerIndex: cint32; InputIndex: cint32): TTime;
 function uos_InputUpdateTag(PlayerIndex: cint32;InputIndex: cint32): boolean;
 // for mp3 and opus files only
 
-function uos_InputUpdateICY(PlayerIndex: cint32; InputIndex: cint32; var icy_data : ppchar): integer;
+function uos_InputUpdateICY(PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): integer;
 // for mp3 only
 
 function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): pchar;
@@ -839,7 +839,7 @@ end;
   // Enable : Enabled
   // example  uos_OutputSetDSPVolume(0,InputIndex1,1,0.8,True);
   
-function uos_InputUpdateICY(PlayerIndex: cint32; InputIndex: cint32; var icy_data : ppchar): integer;
+function uos_InputUpdateICY(PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): integer;
 // for mp3 only
 begin
  Result := -1;
