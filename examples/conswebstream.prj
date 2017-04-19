@@ -203,7 +203,7 @@ options=114
  index=0
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -448,7 +448,7 @@ makeoptionson=7
  63
  63
  63
- 34
+ 35
  51
  63
 compilerusedon=21
@@ -728,9 +728,9 @@ path=4
  /home/fred/uos/examples/conswebstream.pas
 line=4
  146
- 4273
- 3243
- 147
+ 4277
+ 3247
+ 150
 address=4
  0
  0
@@ -813,9 +813,16 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=icy
+finddtext=updat
 findhistory=20
+ updat
  icy
+ UpdateIcyMetaInterval
+  mpg123_open_handle
+ Tuos_InStream
+ Tuos_InStream = class(TObject)
+ Tuos_InStream = class(TObject) 
+ fromurl
  inputupdateicy
  MPG123_OK
  add_s
@@ -828,15 +835,8 @@ findhistory=20
  getsam
  InPipe
  writeln('===> Before op_read_x.')
- AddFromfile
- ono2Stereo
- stereo2m
- dsp
- streo2mono
- AddDSPVolumeIn
- dspvolume
 findoptions=1
-editpos=17
+editpos=18
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -847,8 +847,9 @@ editpos=17
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,136
- 0,670
+ 0,156
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -871,7 +872,8 @@ bookmarks13=0
 bookmarks14=0
 bookmarks15=0
 bookmarks16=0
-sourcefiles=17
+bookmarks17=0
+sourcefiles=18
  ${PROJECTDIR}/uos_opusurl.pas
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/conswebstream.pas
@@ -889,7 +891,8 @@ sourcefiles=17
  ${PROJECTDIR}/uos_opusfile.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=17
+ ${PROJECTDIR}/uos.pas
+relpaths=18
  uos_opusurl.pas
  simplewebplayer_fpGUI.pas
  conswebstream.pas
@@ -907,7 +910,9 @@ relpaths=17
  uos_opusfile.pas
  uos.pas
  uos_flat.pas
-ismoduletexts=17
+ uos.pas
+ismoduletexts=18
+ 0
  0
  0
  0
@@ -930,7 +935,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=17
+order=18
  0
  1
  2
@@ -946,11 +951,12 @@ order=17
  16
  8
  9
+ 17
  10
  14
 tabsize=24
-firsttab=10
-index=15
+firsttab=11
+index=16
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1111,8 +1117,8 @@ windowlayout=530
  width1=12
  sortdescend1=0
  sorted=0
- col=0
- row=3
+ col=1
+ row=8
  rowheight=18
  [stackfo]
  splitdir=0

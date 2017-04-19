@@ -14,22 +14,29 @@ interface
 uses
   Classes, SysUtils,  Pipes;
 
-type
 
-  { TThreadHttpGetter }
+type
+  
+ { TThreadHttpGetter }
 
   TThreadHttpGetter = class(TThread)
   private
     FOutStream: TOutputPipeStream;
     FWantedURL: String;
     FIsRunning: Boolean;
+    FIcyMetaInt: Int64;
+    FOnIcyMetaInt: TNotifyEvent;
+    property OnIcyMetaInt: TNotifyEvent read FOnIcyMetaInt write FOnIcyMetaInt; 
+    procedure DoIcyMetaInt;
     function GetRedirectURL(AResponseStrings: TStrings): String;
+    procedure Headers(Sender: TObject);
   protected
     procedure Execute; override;
   public
-    constructor Create(AWantedURL: String; AOutputStream: TOutputPipeStream);
+    property IcyMetaInt: Int64 read FIcyMetaInt;
     property IsRunning: Boolean read FIsRunning;
-  end;
+    constructor Create(AWantedURL: String; AOutputStream: TOutputPipeStream);
+   end;
 
 implementation
 uses
@@ -57,6 +64,19 @@ begin
   end;
 end;
 
+procedure TThreadHttpGetter.DoIcyMetaInt; 
+begin 
+  if Assigned(FOnIcyMetaInt) then 
+    FOnIcyMetaInt(Self); 
+end; 
+
+procedure TThreadHttpGetter.Headers(Sender: TObject ); 
+begin 
+  FIcyMetaInt := StrToInt64Def(TFPHTTPClient(Sender).GetHeader(TFPHTTPClient(Sender).ResponseHeaders, 'icy-metaint'),0); 
+  if (FIcyMetaInt>0) and (FOnIcyMetaInt<>nil) then 
+       Synchronize(@DoIcyMetaInt); 
+end;
+
 procedure TThreadHttpGetter.Execute;
 var
   Http: TFPHTTPClient;
@@ -67,7 +87,8 @@ begin
   repeat
   try
     Http.RequestHeaders.Clear;
-    Http.RequestHeaders.Add('Accept: icy-metadata:1');  // icy
+  //  Http.RequestHeaders.Add('icy-metadata:1');  // icy
+    Http.OnHeaders := @Headers; 
     Http.Get(URL, FOutStream);
   except
     on e: EHTTPClient do
@@ -101,15 +122,14 @@ begin
     FIsRunning:=False;
   end;
 end;
-
-
+ 
 constructor TThreadHttpGetter.Create(AWantedURL: String; AOutputStream: TOutputPipeStream);
 begin
   inherited Create(True);
   FIsRunning:=True;
   FWantedURL:=AWantedURL;
   FOutStream:=AOutputStream;
-  Start;
+  //Start;
 end;
 
 end.

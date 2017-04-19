@@ -15,10 +15,9 @@ uses
   uos_flat;
 
 var
-  res, res2: integer;
+  res, res2, x: integer;
   ordir, opath, PA_FileName, MP_FileName, OF_FileName, theurl : string;
   theicytag : pchar;
-  theicytag2 : string;
   PlayerIndex1: integer;
 
  begin
@@ -77,14 +76,14 @@ var
      uos_CreatePlayer(PlayerIndex1); //// Create the player
      writeln('===> uos_CreatePlayer => ok');
 
-   theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
+ // theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
  // theurl := 'http://www.alouette.fr/alouette.m3u' ;
  // theurl := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
  // theurl := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
  // theurl := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
- // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
- theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
-    // for opus file, set AudioFormat = 1 in AddFromURL()
+  theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
+  
+ // for opus file, set AudioFormat = 1 in AddFromURL()
  // theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
  {
@@ -132,13 +131,17 @@ writeln('Try to connect to ' + theurl);
          readln;
 
      /// OK, let play it.
-   if res <> -1 then uos_Play(PlayerIndex1);
+   if res <> -1 then
+   begin
+   uos_Play(PlayerIndex1);
+   
+   x := 0;
   
- {
- while true do
+// {
+ while x < 10 do
  begin
-   sleep(5000);
-  res := uos_inputupdateicy(PlayerIndex1,0,theicytag);
+   sleep(10000);
+  res := uos_InputUpdateICY(PlayerIndex1,0,theicytag);
    writeln('error = ' + inttostr(res));
    writeln('length theicytag = ' + inttostr(length(theicytag^)));
 
@@ -148,13 +151,13 @@ writeln('Try to connect to ' + theurl);
 if (res = 0) and Assigned(theicytag) 
 then writeln(theicytag);
 
-   
+inc(x);   
   end;
  // }
-   
+   end;
    writeln('Press a key to exit...');
  end;
       readln;
-       uos_free;
+      uos_free;
      
 end.

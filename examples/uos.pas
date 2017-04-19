@@ -446,6 +446,10 @@ type
   
 type
   Tuos_InStream = class(TObject)
+  {$IF DEFINED(webstream)}
+  private
+  procedure UpdateIcyMetaInterval; 
+  {$endif}
   public
   Data: Tuos_Data;
   DSP: array of Tuos_DSP;
@@ -4306,6 +4310,12 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   {$IF DEFINED(debug)}
   if err = 0 then writeln('===> mpg123_replace_reader_handle => ok.') ;
   {$endif}
+  
+  StreamIn[x].UpdateIcyMetaInterval ;
+  
+  StreamIn[x].httpget.Start; 
+  CheckSynchronize(10000); 
+  
  
   Err :=  mpg123_open_handle(StreamIn[x].Data.HandleSt, Pointer(StreamIn[x].InPipe));
   
@@ -7955,6 +7965,7 @@ begin
 (PEnv^^).CallVoidMethod(PEnv,Obj,LoopEndProc)  ;
 end;
 
+
 procedure Tuos_DSP.LoopProcjava();
 begin
 // todo
@@ -7970,6 +7981,14 @@ begin
 // todo
 end;
 
+{$endif}
+
+{$IF DEFINED(webstream)}
+procedure Tuos_InStream.UpdateIcyMetaInterval; 
+begin 
+  if Data.HandleSt<>nil then 
+    mpg123_param(Data.HandleSt, MPG123_ICY_INTERVAL, httpget.IcyMetaInt, 0); 
+end;
 {$endif}
 
 constructor Tuos_Init.Create;
