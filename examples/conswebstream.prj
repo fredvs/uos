@@ -203,7 +203,7 @@ options=114
  index=0
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -474,12 +474,12 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 4095
+ 4094
  0
  0
  0
  0
- 0
+ 1
 exeusedon=14
  4095
  0
@@ -728,9 +728,9 @@ path=4
  /home/fred/uos/examples/conswebstream.pas
 line=4
  146
- 4277
- 3247
- 150
+ 4287
+ 3253
+ 149
 address=4
  0
  0
@@ -813,10 +813,13 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=updat
+finddtext=icy
 findhistory=20
- updat
  icy
+ start
+ AddFromURL
+ InputUpdateICY
+ updat
  UpdateIcyMetaInterval
   mpg123_open_handle
  Tuos_InStream
@@ -830,13 +833,10 @@ findhistory=20
  feature
  icy =
  inputup
- AddFromURL
  samplereate
  getsam
- InPipe
- writeln('===> Before op_read_x.')
 findoptions=1
-editpos=18
+editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -846,14 +846,15 @@ editpos=18
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,156
- 0,-1073741823
- 0,-1073741823
+ 0,135
+ 0,99
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,4145
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -873,7 +874,8 @@ bookmarks14=0
 bookmarks15=0
 bookmarks16=0
 bookmarks17=0
-sourcefiles=18
+bookmarks18=0
+sourcefiles=19
  ${PROJECTDIR}/uos_opusurl.pas
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/conswebstream.pas
@@ -892,7 +894,8 @@ sourcefiles=18
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
-relpaths=18
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=19
  uos_opusurl.pas
  simplewebplayer_fpGUI.pas
  conswebstream.pas
@@ -911,7 +914,9 @@ relpaths=18
  uos.pas
  uos_flat.pas
  uos.pas
-ismoduletexts=18
+ uos_flat.pas
+ismoduletexts=19
+ 0
  0
  0
  0
@@ -935,7 +940,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=18
+order=19
  0
  1
  2
@@ -952,11 +957,12 @@ order=18
  8
  9
  17
+ 18
  10
  14
 tabsize=24
 firsttab=11
-index=16
+index=15
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -972,7 +978,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=702
+ cy=683
  rcx=0
  rcy=0
  [mainfo]
@@ -984,14 +990,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=129
- y=58
+ x=231
+ y=52
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,702
+  basedock,0,0,1356,683
  focusedchild=0
  wsize=6
  active=1
@@ -1005,9 +1011,9 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=580
- y=153
- cx=709
+ x=493
+ y=171
+ cx=497
  cy=314
  rcx=0
  rcy=0
@@ -1023,8 +1029,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=713
- y=418
+ x=444
+ y=431
  cx=418
  cy=126
  rcx=0
@@ -1035,7 +1041,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1107,7 +1113,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=514
+ cy=500
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1117,8 +1123,8 @@ windowlayout=530
  width1=12
  sortdescend1=0
  sorted=0
- col=1
- row=8
+ col=0
+ row=3
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1316,9 +1322,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=582
+ y=566
  cx=1356
- cy=120
+ cy=117
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1418,7 +1424,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=62
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1434,7 +1440,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=62
+ cy=60
  rcx=0
  rcy=0
  [sourcefo]
@@ -1450,7 +1456,7 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=514
+ cy=500
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1484,9 +1490,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=65
+ y=63
  cx=1356
- cy=514
+ cy=500
  rcx=0
  rcy=0
 [targetconsole]

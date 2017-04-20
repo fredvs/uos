@@ -284,7 +284,7 @@ function uos_AddFromURL(PlayerIndex: cint32; URL: PChar): cint32;
   // Add a Input from Audio URL with default parameters
 
 function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
-  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32): cint32;
+  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32 ; ICYon : boolean): cint32;
   // Add a Input from Audio URL with custom parameters
   // URL : URL of audio file 
   // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
@@ -1326,19 +1326,26 @@ end;
 
 {$IF DEFINED(webstream)}
 function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
-  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32): cint32;
+  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32 ; ICYon : boolean): cint32;
+  // Add a Input from Audio URL
+  // URL : URL of audio file
+  // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
+  // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
+  // FramesCount : default : -1 (4096)
+  // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+  // ICYon : ICY data on/off  
   // Add a Input from Audio URL
   // URL : URL of audio file (like  'http://someserver/somesound.mp3')
   // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
   // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (65536)
   // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
-  // example : InputIndex := uos_AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1);
+  // example : InputIndex := uos_AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1, false);
 begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-  Result := uosPlayers[PlayerIndex].AddFromURL(URL, OutputIndex, SampleFormat, FramesCount, AudioFormat);
+  Result := uosPlayers[PlayerIndex].AddFromURL(URL, OutputIndex, SampleFormat, FramesCount, AudioFormat , ICYon);
 end;
 
 function uos_AddFromURL(PlayerIndex: cint32; URL: PChar): cint32;
@@ -1346,7 +1353,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-  Result := uosPlayers[PlayerIndex].AddFromURL(URL, -1, -1, -1, -1);
+  Result := uosPlayers[PlayerIndex].AddFromURL(URL, -1, -1, -1, -1, false);
 end;
 {$ENDIF}
 

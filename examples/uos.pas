@@ -768,14 +768,21 @@ function AddFromMemoryStream(MemoryStream: TMemoryStream;
 
 {$IF DEFINED(webstream)}
 function AddFromURL(URL: PChar; OutputIndex: cint32;
-  SampleFormat: cint32 ; FramesCount: cint32 ; AudioFormat: cint32): cint32;
+  SampleFormat: cint32 ; FramesCount: cint32 ; AudioFormat: cint32 ; ICYon : boolean): cint32;
   // Add a Input from Audio URL
   // URL : URL of audio file
   // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
   // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
   // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
-  // example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1);
+  // ICYon : ICY data on/off
+  // Add a Input from Audio URL
+  // URL : URL of audio file
+  // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
+  // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
+  // FramesCount : default : -1 (4096)
+  // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+  // example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1,false);
 {$ENDIF}
 
 function AddPlugin(PlugName: Pchar; SampleRate: cint32;
@@ -1876,7 +1883,6 @@ Result := sysutils.EncodeTime(0, 0, 0, 0);
 	WriteLn('EncodeTime(): '+ timetostr(Result));
   {$endif}  
 end;
-
 
 // for mp3 files only
 function Tuos_Player.InputUpdateICY(InputIndex: cint32; var icy_data : pchar): integer;
@@ -4051,14 +4057,15 @@ end;
 {$IF DEFINED(webstream)}
 
 function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
-  SampleFormat: cint32 ; FramesCount: cint32 ; AudioFormat: cint32): cint32;
+  SampleFormat: cint32 ; FramesCount: cint32 ; AudioFormat: cint32 ; ICYon : boolean): cint32;
   // Add a Input from Audio URL
   // URL : URL of audio file
   // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
   // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
   // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
-  // example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1,-1);
+  // ICYon : ICY data on/off
+  // example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1,-1, false);
  
  var
   x, err, len, len2, i : cint32;
@@ -4128,12 +4135,15 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
 
   StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
- 
+  
   len := 1 ;
   len2 := 0 ;
   
   setlength(buffadd, PipeBufferSize);
   setlength(StreamIn[x].data.BufferTMP, PipeBufferSize);
+  
+    StreamIn[x].httpget.Start; 
+  //  WriteLn('StreamIn[x].httpget.Start');
  
   while (len2 < PipeBufferSize) and (len > 0) do
   begin
@@ -4154,13 +4164,13 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
  {$IF DEFINED(debug)}
   WriteLn('StreamIn[x].Data.HandleSt assisgned');
   {$endif}
- 
-  StreamIn[x].Data.HandleOP :=
+  
+   StreamIn[x].Data.HandleOP :=
 
  op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
  
 //  op_test_memory(StreamIn[x].data.BufferTMP[0],PipeBufferSize, Err);
- 
+  
  {$IF DEFINED(debug)}
   WriteLn('error: op_test_*: ' + inttostr(err));
  {$endif}
@@ -4250,8 +4260,8 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   StreamIn[x].Data.seekable := false;
   StreamIn[x].LoopProc := nil;
   StreamIn[x].Data.Enabled := True;
-
- {$IF DEFINED(debug)}
+ 
+  {$IF DEFINED(debug)}
   WriteLn('End opus');  
  {$endif}  
 
@@ -4279,6 +4289,8 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
 
   StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
+  
+   StreamIn[x].httpget.ICYenabled := ICYon;
   
   StreamIn[x].Data.HandleSt := mpg123_new(nil, Err);
 
@@ -4311,10 +4323,13 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   if err = 0 then writeln('===> mpg123_replace_reader_handle => ok.') ;
   {$endif}
   
-  StreamIn[x].UpdateIcyMetaInterval ;
+  if StreamIn[x].httpget.ICYenabled = true then
+   StreamIn[x].UpdateIcyMetaInterval ;
   
   StreamIn[x].httpget.Start; 
-  CheckSynchronize(10000); 
+  
+  if StreamIn[x].httpget.ICYenabled = true then
+   CheckSynchronize(10000); 
   
  
   Err :=  mpg123_open_handle(StreamIn[x].Data.HandleSt, Pointer(StreamIn[x].InPipe));

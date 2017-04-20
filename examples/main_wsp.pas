@@ -306,14 +306,14 @@ var
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    In1Index :=  uos_AddFromURL(PlayerIndex1, pchar(edit4.text),-1,samformat,-1, audioformat) ;
+    In1Index :=  uos_AddFromURL(PlayerIndex1, pchar(edit4.text),-1,samformat,-1, audioformat, false) ;
               /////// Add a Input from Audio URL with custom parameters
               ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
               ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
               ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
               //////////// FramesCount : default : -1 (1024)
               //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
-  
+                          // ICY data on/off
               ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
               //  result : -1 nothing created, otherwise Input Index in array
    

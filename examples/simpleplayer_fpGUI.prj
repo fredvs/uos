@@ -1037,8 +1037,8 @@ editpos=58
  0,1888
  0,-1073741823
  0,-1073741823
- 0,69
- 0,128
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1359,7 +1359,7 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=702
  rcx=0
  rcy=0
@@ -1379,7 +1379,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,702
+  basedock,0,0,1350,702
  focusedchild=0
  wsize=6
  active=1
@@ -1705,7 +1705,7 @@ windowlayout=549
  ncy=0
  x=0
  y=579
- cx=1356
+ cx=1350
  cy=123
  rcx=0
  rcy=0
@@ -1805,7 +1805,7 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=58
  rcx=0
  rcy=0
@@ -1821,7 +1821,7 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=58
  rcx=0
  rcy=0
@@ -1837,7 +1837,7 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
+ cx=1188
  cy=515
  rcx=0
  rcy=0
@@ -1845,7 +1845,7 @@ windowlayout=549
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0
@@ -1873,14 +1873,14 @@ windowlayout=549
  ncy=0
  x=0
  y=61
- cx=1356
+ cx=1350
  cy=515
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=confideufo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1893,7 +1893,7 @@ windowlayout=549
  cy=357
  rcx=0
  rcy=0
- wsize=5
+ wsize=0
  active=0
  visible=0
 [targetconsole]

@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simplewebplayer_fpGUI.prj
-findinfiledialog=40
+findinfiledialog=41
  [findinfileadialogfo.subdirs]
  value=0
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,9 @@ findinfiledialog=40
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=libopus-
- history=2
+ value=avant unload
+ history=3
+  avant unload
   libopus-
   
  [findinfileadialogfo]
@@ -151,9 +152,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=142
  xprop=1
- yprop=0.32882882882883
+ yprop=0.32954545454545
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -199,7 +200,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=514
@@ -267,7 +268,14 @@ makeoptions=7
  -B
  -O2 -XX -Xs -CX
  -vewnhibq
-makeoptpurpose=0
+makeoptpurpose=7
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 compilerused=21
  ${COMPILER} (Default)
  Pascal 1
@@ -475,12 +483,12 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 4095
+ 4094
  0
  0
  0
  0
- 0
+ 1
 exeusedon=14
  4095
  0
@@ -513,7 +521,7 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=
+project_date=19:42:27 20/04/2017
 project_comment=
 aftcommandon=0
 unitdirson=7
@@ -817,8 +825,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=theplayer.StreamIn[in1].Data.
+finddtext=fromurl
 findhistory=20
+ fromurl
  theplayer.StreamIn[in1].Data.
  Filetobuffer
  addfromm
@@ -838,130 +847,19 @@ findhistory=20
  InputGetChannels
  channel
  getch
- memory
 findoptions=1
-editpos=24
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,222
+editpos=2
+ 0,277
+ 0,4260
 bookmarks0=0
 bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-bookmarks23=0
-sourcefiles=24
+sourcefiles=2
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/uos_httpgetthread.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/conswebstream.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/main_wsp.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/waveform_fpGUI.pas
- ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/simplewebserver_fpGUI.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/SimplePlayer_MSE.pas
- ${PROJECTDIR}/uos_flat.pas
-relpaths=24
+relpaths=2
  simplewebplayer_fpGUI.pas
  uos.pas
- uos_portaudio.pas
- define.inc
- uos_flat.pas
- uos_libsndfile.pas
- uos_mpg123.pas
- uos_soundtouch.pas
- uos_httpgetthread.pas
- simpleplayer_fpGUI.pas
- conswebstream.pas
- define.inc
- main_wsp.pas
- uos.pas
- define.inc
- waveform_fpGUI.pas
- simpleplayer_fpGUI_noflat.pas
- uos_flat.pas
- define.inc
- simplewebserver_fpGUI.pas
- simpleplayer_fpGUI.pas
- main_sp.pas
- SimplePlayer_MSE.pas
- uos_flat.pas
-ismoduletexts=24
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=2
  0
  0
 modules=0
@@ -969,34 +867,9 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=24
- 0
- 13
- 23
- 19
- 20
- 21
- 22
- 18
- 16
- 15
- 14
- 12
- 11
- 10
- 9
- 17
- 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
-tabsize=60
+tabsize=24
 firsttab=0
-index=2
+index=0
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1011,8 +884,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=585
+ cx=1356
+ cy=702
  rcx=0
  rcy=0
  [mainfo]
@@ -1024,16 +897,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=230
+ y=54
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,1356,702
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1053,7 +926,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1147,7 +1020,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=428
+ cy=514
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1157,8 +1030,8 @@ windowlayout=530
  width1=12
  sortdescend1=0
  sorted=0
- col=-1073741823
- row=-1073741823
+ col=0
+ row=8
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1356,9 +1229,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=485
- cx=929
- cy=100
+ y=582
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1457,8 +1330,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1473,8 +1346,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1489,15 +1362,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=767
- cy=428
+ cx=1194
+ cy=514
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1524,9 +1397,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=54
- cx=929
- cy=428
+ y=65
+ cx=1356
+ cy=514
  rcx=0
  rcy=0
 [targetconsole]

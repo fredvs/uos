@@ -14,7 +14,6 @@ interface
 uses
   Classes, SysUtils,  Pipes;
 
-
 type
   
  { TThreadHttpGetter }
@@ -33,6 +32,7 @@ type
   protected
     procedure Execute; override;
   public
+    ICYenabled: Boolean;
     property IcyMetaInt: Int64 read FIcyMetaInt;
     property IsRunning: Boolean read FIsRunning;
     constructor Create(AWantedURL: String; AOutputStream: TOutputPipeStream);
@@ -72,9 +72,12 @@ end;
 
 procedure TThreadHttpGetter.Headers(Sender: TObject ); 
 begin 
+if ICYenabled = true then
+begin
   FIcyMetaInt := StrToInt64Def(TFPHTTPClient(Sender).GetHeader(TFPHTTPClient(Sender).ResponseHeaders, 'icy-metaint'),0); 
   if (FIcyMetaInt>0) and (FOnIcyMetaInt<>nil) then 
        Synchronize(@DoIcyMetaInt); 
+end;       
 end;
 
 procedure TThreadHttpGetter.Execute;
@@ -126,6 +129,7 @@ end;
 constructor TThreadHttpGetter.Create(AWantedURL: String; AOutputStream: TOutputPipeStream);
 begin
   inherited Create(True);
+  ICYenabled:=false;
   FIsRunning:=True;
   FWantedURL:=AWantedURL;
   FOutStream:=AOutputStream;

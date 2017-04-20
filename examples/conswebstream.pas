@@ -76,7 +76,7 @@ var
      uos_CreatePlayer(PlayerIndex1); //// Create the player
      writeln('===> uos_CreatePlayer => ok');
 
- // theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
+  theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
  // theurl := 'http://www.alouette.fr/alouette.m3u' ;
  // theurl := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
  // theurl := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
@@ -84,24 +84,25 @@ var
   theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
   
  // for opus file, set AudioFormat = 1 in AddFromURL()
- // theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+ theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
  {
  with TfpHttpClient.Create(nil) do
    try   WriteLn(Get(theurl));
     finally  Free;
    end;
-   }
+ }
    
 writeln('Try to connect to ' + theurl);
 // res := uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
-  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,0) ;
+  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,1, false) ;
   
  ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (1024)
     //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+    ///////// ICYenabled : ICY data enable on/off
   
  if res < 0 then  writeln('===> uos_AddFromURL => NOT OK:' +  inttostr(res)) else
  begin
@@ -137,16 +138,14 @@ writeln('Try to connect to ' + theurl);
    
    x := 0;
   
-// {
+ {
  while x < 10 do
  begin
    sleep(10000);
-  res := uos_InputUpdateICY(PlayerIndex1,0,theicytag);
-   writeln('error = ' + inttostr(res));
-   writeln('length theicytag = ' + inttostr(length(theicytag^)));
-
-   if Assigned(theicytag) then writeln('theicytag = assigned')
-  else writeln('theicytag NOT assigned') ;
+//  res := uos_InputUpdateICY(PlayerIndex1,0,theicytag);
+   writeln('Error = ' + inttostr(res));
+  
+   if Assigned(theicytag) then writeln('theicytag = assigned') else writeln('theicytag NOT assigned') ;
 
 if (res = 0) and Assigned(theicytag) 
 then writeln(theicytag);
