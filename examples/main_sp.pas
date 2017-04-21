@@ -271,8 +271,7 @@ end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
-  if (button3.Enabled = False) then
-    uos_InputSetDSPVolume(PlayerIndex1, InputIndex1, TrackBar1.position / 100,
+   uos_InputSetDSPVolume(PlayerIndex1, InputIndex1, TrackBar1.position / 100,
       TrackBar3.position / 100, True);
 end;
 
@@ -380,21 +379,18 @@ begin
 
   if fileexists(Edit4.Text) then
   begin
-
-     uos_Stop(PlayerIndex1);
-
-    PlayerIndex1 := 0;
-    // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
-    // If PlayerIndex exists already, it will be overwritten...
-
+  
     if radiobutton1.Checked = True then
       samformat := 0;
     if radiobutton2.Checked = True then
       samformat := 1;
     if radiobutton3.Checked = True then
       samformat := 2;
-
     radiogroup1.Enabled := False;
+ 
+    PlayerIndex1 := 0;
+    // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
+    // If PlayerIndex exists already, it will be overwritten...
 
     uos_CreatePlayer(PlayerIndex1);
     //// Create the player.

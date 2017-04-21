@@ -5,6 +5,7 @@ program conswebstream;
 {$mode objfpc}{$H+}
 {$DEFINE UseCThreads}
 uses
+cmem,
  {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
@@ -16,7 +17,8 @@ uses
 
 var
   res, res2: integer;
-  ordir, opath, PA_FileName, MP_FileName, OF_FileName, theurl, theicytag : string;
+  ordir, opath, PA_FileName, MP_FileName, OF_FileName, theurl : string;
+  theicytag : pchar;
   PlayerIndex1: integer;
 
  begin
@@ -83,7 +85,7 @@ var
  // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
  theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
     // for opus file, set AudioFormat = 1 in AddFromURL()
- // theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+// theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
  {
  with TfpHttpClient.Create(nil) do
@@ -101,6 +103,7 @@ writeln('Try to connect to ' + theurl);
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (1024)
     //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+    ///////////// ICY data enabled 
   
  if res < 0 then  writeln('===> uos_AddFromURL => NOT OK:' +  inttostr(res)) else
  begin
@@ -131,15 +134,14 @@ writeln('Try to connect to ' + theurl);
 
      /// OK, let play it.
    if res <> -1 then uos_Play(PlayerIndex1);
-  
-  {
-   sleep(3000);
+ { 
+    sleep(3000);
    uos_inputupdateicy(PlayerIndex1,0,theicytag);
    writeln('icy = ' + (theicytag));
    sleep(3000);
    uos_inputupdateicy(PlayerIndex1,0,theicytag);
    writeln('icy = ' + (theicytag));
-   }
+ } 
    
    writeln('Press a key to exit...');
  end;

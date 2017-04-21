@@ -117,9 +117,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=121
+ y=120
  xprop=1
- yprop=0.24077669902913
+ yprop=0.24070450097847
  [projectoptionsfo.macrogrid]
  propcolwidthref=481
  sortdescend0=0
@@ -144,7 +144,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -155,10 +155,10 @@ options=114
  firsttab=0
  index=5
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=618
+ propcolwidthref=621
  width0=112
  sortdescend0=0
- width1=611
+ width1=614
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
@@ -168,8 +168,8 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=278
- y=87
+ x=445
+ y=114
  cx=759
  cy=568
 settings=8
@@ -191,8 +191,8 @@ unitdirs=9
  ${lazarus}/components/*
  ${lazarus}/*
  ${lazarus}/lcl/*
- ${lazarus}/interfaces/*
- ${lazarus}/interfaces/gtk2
+ ${lazarus}/lcl/interfaces/*
+ ${lazarus}/lcl/interfaces/gtk2
  ${lazarus}/lcl/components/*
  ${lazarus}/lcl/include
  ${lazarus}/lcl
@@ -609,6 +609,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=1
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -732,22 +733,27 @@ hintheight=0
 finddtext=
 findhistory=0
 findoptions=1
-editpos=3
- 0,-1073741823
- 2,239
+editpos=4
  0,9
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
+bookmarks3=0
+sourcefiles=4
  ${PROJECTDIR}/simpleplayer.lpr
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/simpleplayer.lpr
-relpaths=3
+ /home/fred/msegui/lib/common/kernel/mseapplication.pas
+relpaths=4
  simpleplayer.lpr
  main_sp.pas
  simpleplayer.lpr
-ismoduletexts=3
+ msegui/lib/common/kernel/mseapplication.pas
+ismoduletexts=4
+ 0
  0
  0
  0
@@ -756,9 +762,8 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-tabsize=60
 firsttab=0
-index=2
+index=0
 [layout]
 windowlayout=520
  [mainfo.basedock]

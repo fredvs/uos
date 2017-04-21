@@ -22,7 +22,6 @@ type
   private
     FOutStream: TOutputPipeStream;
     FWantedURL: String;
-    FIsRunning: Boolean;
     FIcyMetaInt: Int64;
     FOnIcyMetaInt: TNotifyEvent;
     property OnIcyMetaInt: TNotifyEvent read FOnIcyMetaInt write FOnIcyMetaInt; 
@@ -32,6 +31,7 @@ type
   protected
     procedure Execute; override;
   public
+    FIsRunning: Boolean;
     ICYenabled: Boolean;
     property IcyMetaInt: Int64 read FIcyMetaInt;
     property IsRunning: Boolean read FIsRunning;
@@ -75,7 +75,6 @@ begin
   FIcyMetaInt := StrToInt64Def(TFPHTTPClient(Sender).GetHeader(TFPHTTPClient(Sender).ResponseHeaders, 'icy-metaint'),0); 
   if (FIcyMetaInt>0) and (FOnIcyMetaInt<>nil) then 
        Synchronize(@DoIcyMetaInt); 
- 
 end;
 
 procedure TThreadHttpGetter.Execute;
@@ -128,10 +127,10 @@ constructor TThreadHttpGetter.Create(AWantedURL: String; AOutputStream: TOutputP
 begin
   inherited Create(True);
   ICYenabled:=false;
-  FIsRunning:=True;
+  // FIsRunning:=True;
   FWantedURL:=AWantedURL;
   FOutStream:=AOutputStream;
-  //Start;
+  // Start;
 end;
 
 end.

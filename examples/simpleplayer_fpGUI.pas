@@ -456,8 +456,6 @@ loadok : boolean = false;
     ho, mi, se, ms: word;
   begin
   
-    uos_Stop(PlayerIndex1);
-
     if radiobutton1.Checked = True then
       samformat := 0;
     if radiobutton2.Checked = True then
@@ -472,8 +470,8 @@ loadok : boolean = false;
     PlayerIndex1 := 0;
     // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
     // If PlayerIndex exists already, it will be overwritten...
-
-    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
+    
+   {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
      uos_CreatePlayer(PlayerIndex1);
      {$else}
     uos_CreatePlayer(PlayerIndex1,self);
@@ -481,8 +479,6 @@ loadok : boolean = false;
     //// Create the player.
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
-     
-     fpgapplication.processmessages;
      
      InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(filenameEdit4.filename), -1, 
      samformat, -1);
@@ -510,7 +506,7 @@ loadok : boolean = false;
     //////////// FramesCount : default : -1 (65536)
     //  result : -1 nothing created, otherwise Output Index in array
 
-  uos_InputSetLevelEnable(PlayerIndex1, InputIndex1, 2) ;
+     uos_InputSetLevelEnable(PlayerIndex1, InputIndex1, 2) ;
      ///// set calculation of level/volume (usefull for showvolume procedure)
                        ///////// set level calculation (default is 0)
                           // 0 => no calcul
@@ -518,13 +514,13 @@ loadok : boolean = false;
                           // 2 => calcul after all DSP procedures.
                           // 3 => calcul before and after all DSP procedures.
 
-   uos_InputSetPositionEnable(PlayerIndex1, InputIndex1, 1) ;
+      uos_InputSetPositionEnable(PlayerIndex1, InputIndex1, 1) ;
      ///// set calculation of position (usefull for positions procedure)
                        ///////// set position calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul position.
 
-   uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
+      uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
     ///// Assign the procedure of object to execute inside the loop
     //////////// PlayerIndex : Index of a existing Player
     //////////// InputIndex1 : Index of a existing Input
@@ -559,8 +555,7 @@ loadok : boolean = false;
    
    //// set the parameters of custom DSP
    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
-    
-    
+     
    // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)  
  DSPIndex2 := uos_InputAddDSP(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
  uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked); 

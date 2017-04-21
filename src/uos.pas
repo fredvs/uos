@@ -4072,9 +4072,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   PipeBufferSize, totsamples : integer;
   buffadd : tbytes;
   
-  // icytext :string;
-  
-  {$IF DEFINED(sndfile)}
+   {$IF DEFINED(sndfile)}
 //  sfInfo: TSF_INFO;
   {$endif}
   
@@ -4136,15 +4134,20 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
 
   StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
   
+  StreamIn[x].httpget.ICYenabled := false; // TODO
+  
+  StreamIn[x].httpget.FIsRunning:=True;
+
+  StreamIn[x].httpget.Start; 
+  //  WriteLn('StreamIn[x].httpget.Start');
+  
   len := 1 ;
   len2 := 0 ;
   
   setlength(buffadd, PipeBufferSize);
   setlength(StreamIn[x].data.BufferTMP, PipeBufferSize);
   
-    StreamIn[x].httpget.Start; 
-  //  WriteLn('StreamIn[x].httpget.Start');
- 
+    
   while (len2 < PipeBufferSize) and (len > 0) do
   begin
  len := StreamIn[x].InPipe.Read(buffadd[0],PipeBufferSize-len2);
@@ -4157,17 +4160,17 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   WriteLn('PipeBufferSize = ' + inttostr(PipeBufferSize));
   WriteLn('InPipe.Read = ' + inttostr(len2));
   WriteLn('----------------------------------');
- // writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferTMP));
+  //writeln(tencoding.utf8.getstring(StreamIn[x].data.BufferTMP));
   {$endif}
 
   StreamIn[x].Data.HandleSt := pchar('opusurl');
  {$IF DEFINED(debug)}
-  WriteLn('StreamIn[x].Data.HandleSt assisgned');
+  WriteLn('StreamIn[x].Data.HandleSt url assisgned');
   {$endif}
   
-   StreamIn[x].Data.HandleOP :=
+ StreamIn[x].Data.HandleOP :=
 
- op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
+   op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
  
 //  op_test_memory(StreamIn[x].data.BufferTMP[0],PipeBufferSize, Err);
   
@@ -4263,7 +4266,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
  
   {$IF DEFINED(debug)}
   WriteLn('End opus');  
- {$endif}  
+  {$endif}  
 
   end;
   end;
@@ -4325,7 +4328,9 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   
   if StreamIn[x].httpget.ICYenabled = true then
    StreamIn[x].UpdateIcyMetaInterval ;
-  
+
+ 
+  StreamIn[x].httpget.FIsRunning:=True; 
   StreamIn[x].httpget.Start; 
   
   if StreamIn[x].httpget.ICYenabled = true then
@@ -6207,6 +6212,7 @@ begin
    {$IF DEFINED(opus)}
    4: begin
    op_free(StreamIn[x].Data.HandleOP);
+   sleep(50); // needed ?
    end;
    {$ENDIF}
 
@@ -6237,6 +6243,7 @@ begin
    {$IF DEFINED(opus)}
    4: begin
    op_free(StreamIn[x].Data.HandleOP);
+   sleep(50); // needed ?
    end;
    {$ENDIF}
    end;
@@ -6901,6 +6908,15 @@ if StreamIn[x].Data.outframes < 0 then StreamIn[x].Data.outframes := 0 ;
 {$ENDIF}
 end;
 end;
+
+  if (StreamIn[x].Data.TypePut = 2) and ((StreamIn[x].Data.LibOpen = 1 ) or (StreamIn[x].Data.LibOpen = 4 )) then
+  begin
+  if StreamIn[x].httpget.IsRunning = false then  StreamIn[x].Data.status := 0; // no more data then close the stream
+  {$IF DEFINED(debug)}
+  writeln('Check if internet is stopped.');
+  {$endif}
+  end;
+
 end;
 
 procedure Tuos_Player.ReadFile(x : integer);
@@ -7182,16 +7198,7 @@ begin
 
   end; //case StreamIn[x].Data.TypePut of
 
- {$IF DEFINED(webstream)}
-  if (StreamIn[x].Data.TypePut = 2) and (StreamIn[x].Data.LibOpen = 1 )then
-  begin
-  if StreamIn[x].httpget.IsRunning = false then  StreamIn[x].Data.status := 0; // no more data then close the stream
-  {$IF DEFINED(debug)}
-  writeln('Check if internet is stopped.');
-  {$endif}
-  end;
-{$ENDIF}
-
+ 
   if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
 
   if (StreamIn[x].Data.Seekable = True) then if StreamIn[x].Data.OutFrames < 100 then

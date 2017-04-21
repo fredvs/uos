@@ -371,14 +371,10 @@ var
     radiobutton3.Enabled := False;
 
       PlayerIndex1 := 0;
-    
-     uos_Stop(PlayerIndex1); // if something is playing
-       
     // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
     // If PlayerIndex exists already, it will be overwritten...
 
       uos_CreatePlayer(PlayerIndex1);
-  
     //// Create the player.
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...

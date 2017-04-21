@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/conswebstream.prj
-findinfiledialog=47
+findinfiledialog=48
  [findinfileadialogfo.subdirs]
  value=0
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,9 @@ findinfiledialog=47
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=cardinal
- history=9
+ value=uos_callbacks
+ history=10
+  uos_callbacks
   cardinal
   _name
   HostAPIName
@@ -203,7 +204,7 @@ options=114
  index=0
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -728,9 +729,9 @@ path=4
  /home/fred/uos/examples/conswebstream.pas
 line=4
  146
- 4287
+ 4289
  3253
- 149
+ 150
 address=4
  0
  0
@@ -813,12 +814,13 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromURL
+finddtext=StreamIn[x].Data.HandleSt assisgned
 findhistory=20
+ StreamIn[x].Data.HandleSt assisgned
  AddFromURL
+ start
  readurl
  icy
- start
  InputUpdateICY
  updat
  UpdateIcyMetaInterval
@@ -834,28 +836,17 @@ findhistory=20
  feature
  icy =
  inputup
- samplereate
 findoptions=1
-editpos=19
+editpos=9
+ 0,4172
  0,-1073741823
+ 0,98
+ 0,25
  0,-1073741823
+ 0,0
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,90
- 0,139
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,214
+ 0,206
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -865,67 +856,27 @@ bookmarks5=0
 bookmarks6=0
 bookmarks7=0
 bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-sourcefiles=19
- ${PROJECTDIR}/uos_opusurl.pas
- ${PROJECTDIR}/simplewebplayer_fpGUI.pas
- ${PROJECTDIR}/conswebstream.pas
+sourcefiles=9
  ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/conswebstream.pas
- ${PROJECTDIR}/uos_opusfile.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/define.inc
+ /home/fred/uos (autre copie)/examples/uos.pas
+ /home/fred/uos (autre copie)/examples/uos_httpgetthread.pas
  ${PROJECTDIR}/uos_httpgetthread.pas
- ${PROJECTDIR}/conswebstream.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_opusfile.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
-relpaths=19
- uos_opusurl.pas
- simplewebplayer_fpGUI.pas
- conswebstream.pas
+ /home/fred/uos (autre copie)/examples/uos_opusfile.pas
+relpaths=9
  uos.pas
+ uos_flat.pas
  conswebstream.pas
- uos_opusfile.pas
  define.inc
- uos.pas
- define.inc
+ uos (autre copie)/examples/uos.pas
+ ../uos (autre copie)/examples/uos_httpgetthread.pas
  uos_httpgetthread.pas
- conswebstream.pas
- uos_mpg123.pas
- uos_flat.pas
- uos_flat.pas
  uos_opusfile.pas
- uos.pas
- uos_flat.pas
- uos.pas
- uos_flat.pas
-ismoduletexts=19
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ ../uos (autre copie)/examples/uos_opusfile.pas
+ismoduletexts=9
  0
  0
  0
@@ -940,30 +891,20 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=19
+order=9
  0
+ 7
+ 8
+ 4
+ 6
+ 5
  1
  2
  3
- 4
- 5
- 6
- 7
- 13
- 12
- 11
- 15
- 16
- 8
- 9
- 17
- 18
- 10
- 14
-firsttab=11
-index=17
+firsttab=0
+index=7
 [layout]
-windowlayout=530
+windowlayout=522
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -977,7 +918,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=705
+ cy=683
  rcx=0
  rcy=0
  [mainfo]
@@ -989,14 +930,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=6
- y=24
- cx=1360
- cy=716
+ x=231
+ y=53
+ cx=939
+ cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,705
+  basedock,0,0,1356,683
  focusedchild=0
  wsize=6
  active=1
@@ -1010,8 +951,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=522
- y=190
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
@@ -1040,7 +981,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1086,7 +1027,7 @@ windowlayout=530
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1112,7 +1053,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=528
+ cy=500
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1122,8 +1063,8 @@ windowlayout=530
  width1=12
  sortdescend1=0
  sorted=0
- col=1
- row=8
+ col=0
+ row=1
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1285,31 +1226,23 @@ windowlayout=530
  rcy=583
  [watchfo.grid]
  propcolwidthref=121
- values0=2
-  -1
-  -1
+ values0=0
  values0_ci=-1
  sortdescend0=0
- values1=2
-  po2^
-  test
+ values1=0
  width1=66
  sortdescend1=0
- values3=2
-  0
-  0
+ values3=0
  values3_ci=-1
  sortdescend3=0
- values4=2
-  0
-  0
+ values4=0
  values4_ci=-1
  width4=13
  sortdescend4=0
  [watchfo.watchon]
  [watchfo.expression]
  [watchfo.watcheson]
- value=1
+ value=0
  [messagefo]
  splitdir=0
  useroptions=82027
@@ -1321,9 +1254,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=583
+ y=566
  cx=1356
- cy=122
+ cy=117
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1423,7 +1356,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=49
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1439,7 +1372,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=49
+ cy=60
  rcx=0
  rcy=0
  [sourcefo]
@@ -1455,14 +1388,14 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=528
+ cy=500
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1489,9 +1422,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=52
+ y=63
  cx=1356
- cy=528
+ cy=500
  rcx=0
  rcy=0
 [targetconsole]

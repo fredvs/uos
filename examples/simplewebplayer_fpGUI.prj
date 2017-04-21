@@ -848,18 +848,23 @@ findhistory=20
  channel
  getch
 findoptions=1
-editpos=2
- 5,428
- 0,-1073741823
+editpos=3
+ 0,268
+ 0,0
+ 0,0
 bookmarks0=0
 bookmarks1=0
-sourcefiles=2
+bookmarks2=0
+sourcefiles=3
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
-relpaths=2
+ /home/fred/uos (autre copie)/examples/main_wsp.pas
+relpaths=3
  simplewebplayer_fpGUI.pas
  uos.pas
-ismoduletexts=2
+ ../uos (autre copie)/examples/main_wsp.pas
+ismoduletexts=3
+ 0
  0
  0
 modules=0
@@ -867,8 +872,12 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=3
+ 0
+ 2
+ 1
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -883,7 +892,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=800
  rcx=0
  rcy=0
@@ -896,14 +905,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=-61
+ x=0
  y=24
  cx=1360
  cy=716
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,800
+  basedock,0,0,1350,800
  focusedchild=0
  wsize=6
  active=1
@@ -947,7 +956,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -993,7 +1002,7 @@ windowlayout=530
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1229,7 +1238,7 @@ windowlayout=530
  ncy=0
  x=0
  y=663
- cx=1356
+ cx=1350
  cy=137
  rcx=0
  rcy=0
@@ -1329,7 +1338,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=70
  rcx=0
  rcy=0
@@ -1345,7 +1354,7 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=70
  rcx=0
  rcy=0
@@ -1361,7 +1370,7 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
+ cx=1188
  cy=587
  rcx=0
  rcy=0
@@ -1369,7 +1378,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1397,7 +1406,7 @@ windowlayout=530
  ncy=0
  x=0
  y=73
- cx=1356
+ cx=1350
  cy=587
  rcx=0
  rcy=0
