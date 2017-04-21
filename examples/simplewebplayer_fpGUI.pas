@@ -167,7 +167,6 @@ var
 
   procedure TSimpleplayer.VolumeChange(Sender: TObject; pos: integer);
   begin
-    if (btnstart.Enabled = False) then
       uos_InputSetDSPVolume(PlayerIndex1, In1Index,
         (100 - TrackBar2.position) / 100,
         (100 - TrackBar3.position) / 100, True);
@@ -190,7 +189,6 @@ var
   procedure TSimpleplayer.btnCloseClick(Sender: TObject);
   begin
    fpgapplication.ProcessMessages;
-   writeln('avant close');
     uos_stop(PlayerIndex1);
     if (btnstart.Enabled = False) then
     begin
@@ -205,10 +203,7 @@ var
     end;
     if btnLoad.Enabled = False then
     begin
-     writeln('avant unload');
-    ou_unload;
-    writeln('ou_unload');
-      uos_UnloadLib();
+      uos_free();
       sleep(100);
       fpgapplication.terminate; 
     end;
@@ -235,7 +230,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
       FilenameEdit2.ReadOnly := True;
       UpdateWindowPosition;
         btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123, Opus libraries are loaded...'
+        'PortAudio, Mpg123, Opus libraries are loaded...'
         end else btnLoad.Text :=
         'One or more libraries did not load, check filenames...';
        
@@ -246,7 +241,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
        begin
       plugsoundtouch := true;
           btnLoad.Text :=
-        'PortAudio, SndFile, Mpg123, Opus and Plugin SoundTouch are loaded...';
+        'PortAudio, Mpg123, Opus and Plugin SoundTouch are loaded...';
         end
          else
          begin
@@ -258,12 +253,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
        label7.enabled := false;
            end;    
        
-         if ou_load(OU_FileName) = true then
-       writeln('===> opusurl is loaded.') else
-       writeln('===> opusurl is NOT loaded.') ;
-     
-       
-       WindowPosition := wpScreenCenter;
+      WindowPosition := wpScreenCenter;
       WindowTitle := 'Simple Web Player    uos version ' + inttostr(uos_getversion());
 
       // Some audio web streaming
@@ -306,7 +296,6 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
   procedure TSimpleplayer.btnStopClick(Sender: TObject);
   begin
     uos_Stop(PlayerIndex1);
-    closeplayer1;
   end;
 
    procedure TSimpleplayer.btnStartClick(Sender: TObject);
@@ -339,7 +328,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    In1Index :=  uos_AddFromURL(PlayerIndex1,pchar(edit1.text),-1,samformat,-1, audioformat) ;
+    In1Index :=  uos_AddFromURL(PlayerIndex1,pchar(edit1.text),-1,samformat,-1, audioformat, false) ;
     /////// Add a Input from Audio URL with custom parameters
               ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
               ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
@@ -422,8 +411,7 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     uos_Play(PlayerIndex1); 
     sleep(300);
     uos_stop(PlayerIndex1); 
-    // btnCloseClick(sender);
-    //fpgapplication.terminate;
+   
     end;
   end;
 

@@ -15,9 +15,8 @@ uses
   uos_flat;
 
 var
-  res, res2, x: integer;
-  ordir, opath, PA_FileName, MP_FileName, OF_FileName, theurl : string;
-  theicytag : pchar;
+  res, res2: integer;
+  ordir, opath, PA_FileName, MP_FileName, OF_FileName, theurl, theicytag : string;
   PlayerIndex1: integer;
 
  begin
@@ -76,33 +75,32 @@ var
      uos_CreatePlayer(PlayerIndex1); //// Create the player
      writeln('===> uos_CreatePlayer => ok');
 
-  theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
+   theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
  // theurl := 'http://www.alouette.fr/alouette.m3u' ;
  // theurl := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
  // theurl := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
  // theurl := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
-  theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
-  
- // for opus file, set AudioFormat = 1 in AddFromURL()
- theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+ // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
+ theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
+    // for opus file, set AudioFormat = 1 in AddFromURL()
+ // theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
  {
  with TfpHttpClient.Create(nil) do
    try   WriteLn(Get(theurl));
     finally  Free;
    end;
- }
+   }
    
 writeln('Try to connect to ' + theurl);
 // res := uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
-  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,1, false) ;
+  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,-1, false) ;
   
  ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (1024)
     //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
-    ///////// ICYenabled : ICY data enable on/off
   
  if res < 0 then  writeln('===> uos_AddFromURL => NOT OK:' +  inttostr(res)) else
  begin
@@ -132,31 +130,20 @@ writeln('Try to connect to ' + theurl);
          readln;
 
      /// OK, let play it.
-   if res <> -1 then
-   begin
-   uos_Play(PlayerIndex1);
+   if res <> -1 then uos_Play(PlayerIndex1);
+  
+  {
+   sleep(3000);
+   uos_inputupdateicy(PlayerIndex1,0,theicytag);
+   writeln('icy = ' + (theicytag));
+   sleep(3000);
+   uos_inputupdateicy(PlayerIndex1,0,theicytag);
+   writeln('icy = ' + (theicytag));
+   }
    
-   x := 0;
-  
- {
- while x < 10 do
- begin
-   sleep(10000);
-//  res := uos_InputUpdateICY(PlayerIndex1,0,theicytag);
-   writeln('Error = ' + inttostr(res));
-  
-   if Assigned(theicytag) then writeln('theicytag = assigned') else writeln('theicytag NOT assigned') ;
-
-if (res = 0) and Assigned(theicytag) 
-then writeln(theicytag);
-
-inc(x);   
-  end;
- // }
-   end;
    writeln('Press a key to exit...');
  end;
       readln;
-      uos_free;
+       uos_free;
      
 end.

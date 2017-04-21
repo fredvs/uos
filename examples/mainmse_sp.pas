@@ -171,14 +171,12 @@ uses
  
    procedure tmainfo.ChangePlugSetBs2b(const Sender: TObject);
    begin
-  if radiobutton1.enabled = False then   /// player1 was created
   uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, chkst2b.value);   
   application.processmessages;
   end;
   
   procedure tmainfo.Changestereo2mono(const Sender: TObject);
   begin
-   if radiobutton1.enabled = False then   /// player1 was created
    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.value); 
   application.processmessages;
   end;
@@ -214,18 +212,14 @@ uses
   begin
     TrackBar4.value := 0.5;
     TrackBar5.value := 0.5;
-    if radiobutton1.Enabled = False then   /// player1 was created
-    begin
-      uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, 1, 1, checkbox2.value);
-    end;
- application.processmessages;
+     uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, 1, 1, checkbox2.value);
+    application.processmessages;
   end;
   
  
   procedure tmainfo.changereverse(const Sender: TObject);
   begin
-    if (btnstart.Enabled = False) then
-      uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.value);
+   uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.value);
   end;
   
    procedure tmainfo.ShowLevel;
@@ -241,9 +235,7 @@ uses
     vuRight.top := 105 - vuRight.Height;
    
   end;
-  
-  
-  
+    
  procedure tmainfo.ShowPosition;
   var
     temptime: ttime;
@@ -366,7 +358,7 @@ var
     temptime: ttime;
     ho, mi, se, ms: word;
   begin
-
+  
     if radiobutton1.value = True then
       samformat := 0 else
     if radiobutton2.value = True then
@@ -378,7 +370,10 @@ var
     radiobutton2.Enabled := False;
     radiobutton3.Enabled := False;
 
-    PlayerIndex1 := 0;
+      PlayerIndex1 := 0;
+    
+     uos_Stop(PlayerIndex1); // if something is playing
+       
     // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
     // If PlayerIndex exists already, it will be overwritten...
 
@@ -504,7 +499,6 @@ var
     trackbar1.Enabled := True;
     CheckBox1.Enabled := True;
 
-    btnStart.Enabled := False;
     btnStop.Enabled := True;
     btnpause.Enabled := True;
     btnresume.Enabled := False;
@@ -515,7 +509,6 @@ var
 
 procedure tmainfo.changevolume(const sender: TObject);
 begin
-  if (btnstart.Enabled = False) then
       uos_InputSetDSPVolume(PlayerIndex1, InputIndex1,
         ( TrackBar2.value),
         ( TrackBar3.value), True);
@@ -529,8 +522,7 @@ end;
 
 procedure tmainfo.pauseit(const sender: TObject);
 begin
-uos_Pause(PlayerIndex1);
-    btnStart.Enabled := False;
+    uos_Pause(PlayerIndex1);
     btnStop.Enabled := True;
     btnPause.Enabled := False;
     btnresume.Enabled := True;
@@ -543,7 +535,6 @@ end;
 procedure tmainfo.resumeit(const sender: TObject);
 begin
     uos_RePlay(PlayerIndex1);
-    btnStart.Enabled := False;
     btnStop.Enabled := True;
     btnPause.Enabled := True;
     btnresume.Enabled := False;
@@ -552,7 +543,6 @@ end;
 procedure tmainfo.stopit(const sender: TObject);
 begin
  uos_Stop(PlayerIndex1);
-ClosePlayer1;
 end;
 
 procedure tmainfo.closeit(const sender: TObject);
@@ -571,20 +561,14 @@ begin
       uos_UnloadPlugin('soundtouch');
       uos_UnloadPlugin('bs2b');
     end; 
-   // uos_FreePlayer(PlayerIndex1);
-   // uosPlayers[PlayerIndex1].destroy; // do not forget this...
-    uos_free; // do not forget this...
-    
+     uos_free; // do not forget this...
 end;
 
 procedure tmainfo.resetplugst(const sender: TObject);
 begin
  TrackBar4.value := 0.5;
-    TrackBar5.value := 0.5;
-    if radiobutton1.Enabled = False then   /// player1 was created
-    begin
-      uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, 1, 1, checkbox2.value);
-    end;
+ TrackBar5.value := 0.5;
+ uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, 1, 1, checkbox2.value);
 end;
 
 procedure tmainfo.changepos(const sender: TObject; var avalue: realty;

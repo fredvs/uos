@@ -514,12 +514,9 @@ settingsstorage=0
 settingsprojecttree=0
 settingsautoload=0
 settingsautosave=0
-modulenames=1
- SIMPLE_PLAYER
-moduletypes=1
- TMAINFO
-modulefiles=1
- /home/fred/uos/examples/mainmse_sp.mfm
+modulenames=0
+moduletypes=0
+modulefiles=0
 befcommandon=0
 makeoptionson=10
  0
@@ -837,7 +834,7 @@ line=8
  764
  2700
  2020
- 542
+ 539
  249
 address=8
  5002795
@@ -980,373 +977,38 @@ findhistory=20
  Streamin [x] .Data.MemoryStream: = TMemoryStream.Creat
  AddIntoMemoryBuffer
 findoptions=1
-editpos=58
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,1888
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+editpos=3
+ 0,0
+ 12,8
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-bookmarks23=0
-bookmarks24=0
-bookmarks25=0
-bookmarks26=0
-bookmarks27=0
-bookmarks28=0
-bookmarks29=0
-bookmarks30=0
-bookmarks31=0
-bookmarks32=0
-bookmarks33=0
-bookmarks34=0
-bookmarks35=0
-bookmarks36=0
-bookmarks37=0
-bookmarks38=0
-bookmarks39=0
-bookmarks40=0
-bookmarks41=0
-bookmarks42=0
-bookmarks43=0
-bookmarks44=0
-bookmarks45=0
-bookmarks46=0
-bookmarks47=0
-bookmarks48=0
-bookmarks49=0
-bookmarks50=0
-bookmarks51=0
-bookmarks52=0
-bookmarks53=0
-bookmarks54=0
-bookmarks55=0
-bookmarks56=0
-bookmarks57=0
-sourcefiles=58
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/mainmse_sp.pas
- ${PROJECTDIR}/simplewebserver_fpGUI.pas
- ${PROJECTDIR}/filterplayer_fpGUI.pas
- ${PROJECTDIR}/main_fp.pas
- ${PROJECTDIR}/main_sp_nf.pas
- ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
- ${PROJECTDIR}/main_mi.pas
- ${PROJECTDIR}/main_wsp.pas
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
- ${PROJECTDIR}/simplewebplayer_fpGUI.pas
- ${PROJECTDIR}/main_sr.pas
- ${PROJECTDIR}/noiseremover_fpGUI.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- /home/fred/sak/sak/sak_fpg/examples/sak_fpg.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/main_sr.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/consoleplaymemory.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/mainmse_sp.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
- ${PROJECTDIR}/deviceinfos_fpGUI.pas
- ${PROJECTDIR}/filterplayer_fpGUI.pas
- ${PROJECTDIR}/multiplayer_fpGUI.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/simplewebplayer_fpGUI.pas
- ${PROJECTDIR}/waveform_fpGUI.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
+sourcefiles=3
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
- /home/fred/fpgui/src/gui/fpg_style_carbon.pas
- /home/fred/fpgui/src/corelib/fpg_main.pas
- ${PROJECTDIR}/uos_bs2b.pas
- ${PROJECTDIR}/uos_opusfile.pas
- ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/main_sp_nf.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_java.pas
- /home/fred/test/myapp.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/fourier.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_httpgetthread.pas
- ${PROJECTDIR}/uos_mpg123.pas
-relpaths=58
- simpleplayer_fpGUI.pas
- uos_portaudio.pas
- simpleplayer_fpGUI.pas
- uos_flat.pas
- define.inc
- uos.pas
- main_sp.pas
- mainmse_sp.pas
- simplewebserver_fpGUI.pas
- filterplayer_fpGUI.pas
- main_fp.pas
- main_sp_nf.pas
- simpleplayer_fpGUI_noflat.pas
- main_mi.pas
- main_wsp.pas
- simplerecorder_fpGUI.pas
- simplewebplayer_fpGUI.pas
- main_sr.pas
- noiseremover_fpGUI.pas
- simpleplayer_fpGUI.pas
- sak/sak/sak_fpg/examples/sak_fpg.pas
- simpledrums_fpGUI.pas
- main_sr.pas
- uos_flat.pas
- consoleplaymemory.pas
- simpleplayer_fpGUI.pas
- uos_libsndfile.pas
- mainmse_sp.pas
- uos.pas
- uos_flat.pas
- simpleplayer_fpGUI.pas
- fpg_style_chrome_silver_flatmenu.pas
- simplerecorder_fpGUI.pas
- deviceinfos_fpGUI.pas
- filterplayer_fpGUI.pas
- multiplayer_fpGUI.pas
- simpledrums_fpGUI.pas
- simplewebplayer_fpGUI.pas
- waveform_fpGUI.pas
- simpleplayer_fpGUI.pas
+relpaths=3
  uos.pas
  simpleplayer_fpGUI.pas
  uos_flat.pas
- fpg_style_chrome_silver_flatmenu.pas
- fpgui/src/gui/fpg_style_carbon.pas
- fpgui/src/corelib/fpg_main.pas
- uos_bs2b.pas
- uos_opusfile.pas
- main_sp.pas
- main_sp_nf.pas
- uos.pas
- simpleplayer_java.pas
- test/myapp.pas
- uos.pas
- fourier.pas
- uos_flat.pas
- uos_httpgetthread.pas
- uos_mpg123.pas
-ismoduletexts=58
+ismoduletexts=3
  0
  0
  0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
-modules=1
- /home/fred/uos/examples/mainmse_sp.mfm
-moduleoptions=1
- 0
-visiblemodules=1
- 0
-nomenumodules=1
- 0
+modules=0
+moduleoptions=0
+visiblemodules=0
+nomenumodules=0
 [sourcefo.files_tab]
-order=58
- 21
- 0
+order=3
  1
+ 0
  2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 27
- 28
- 31
- 32
- 33
- 34
- 35
- 39
- 36
- 37
- 38
- 29
- 30
- 40
- 43
- 44
- 45
- 41
- 52
- 53
- 56
- 57
- 55
- 54
- 51
- 48
- 50
- 49
- 46
- 47
- 42
- 18
- 19
- 20
- 22
- 23
- 24
- 25
- 26
-tabsize=24
-firsttab=34
-index=38
+firsttab=0
+index=0
 [layout]
-windowlayout=549
+windowlayout=530
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1359,7 +1021,7 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1350
+ cx=1356
  cy=702
  rcx=0
  rcy=0
@@ -1379,7 +1041,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1350,702
+  basedock,0,0,1356,702
  focusedchild=0
  wsize=6
  active=1
@@ -1495,7 +1157,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=515
+ cy=514
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1506,7 +1168,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=7
+ row=5
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1704,9 +1366,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=579
- cx=1350
- cy=123
+ y=578
+ cx=1356
+ cy=124
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1805,7 +1467,7 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1350
+ cx=1356
  cy=58
  rcx=0
  rcy=0
@@ -1821,7 +1483,7 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=1350
+ cx=1356
  cy=58
  rcx=0
  rcy=0
@@ -1837,15 +1499,15 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1188
- cy=515
+ cx=1194
+ cy=514
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1873,29 +1535,10 @@ windowlayout=549
  ncy=0
  x=0
  y=61
- cx=1350
- cy=515
+ cx=1356
+ cy=514
  rcx=0
  rcy=0
- [_mse_simple_player_mse_]
- splitdir=0
- useroptions=805322875
- stackedunder=targetconsolefo
- parent=
- mdistate=0
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=434
- y=52
- cx=493
- cy=357
- rcx=0
- rcy=0
- wsize=0
- active=0
- visible=0
 [targetconsole]
 finddtext=Length(BufferplugFL) =
 findhistory=4

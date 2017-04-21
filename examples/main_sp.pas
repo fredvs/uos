@@ -381,6 +381,8 @@ begin
   if fileexists(Edit4.Text) then
   begin
 
+     uos_Stop(PlayerIndex1);
+
     PlayerIndex1 := 0;
     // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
     // If PlayerIndex exists already, it will be overwritten...
@@ -513,7 +515,7 @@ begin
 
     TrackBar2.position := 0;
     trackbar2.Enabled := True;
-    Button3.Enabled := False;
+    //Button3.Enabled := False;
     Button4.Enabled := False;
     Button6.Enabled := True;
     Button5.Enabled := True;
@@ -542,28 +544,22 @@ end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
-  if (button3.Enabled = False) then
-    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
+  uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
 end;
 
 procedure TForm1.CheckBox3Change(Sender: TObject);
 begin
-  if radiogroup1.Enabled = False then   /// player1 was created
-  begin
    uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, checkbox3.checked);
-    end;
-end;
+  end;
 
 procedure TForm1.ChknoiseChange(Sender: TObject);
 begin
-   if radiogroup1.Enabled = False then
   uos_InputSetDSPNoiseRemoval(PlayerIndex1, InputIndex1, chknoise.Checked);
 end;
 
 procedure TForm1.chkstereo2monoChange(Sender: TObject);
 begin
-   if radiogroup1.Enabled = False then
-    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked);
+  uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.checked);
  end;
 
 procedure TForm1.Edit5Change(Sender: TObject);

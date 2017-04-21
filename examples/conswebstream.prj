@@ -474,12 +474,12 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 4094
+ 4095
  0
  0
  0
  0
- 1
+ 0
 exeusedon=14
  4095
  0
@@ -813,11 +813,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=icy
+finddtext=AddFromURL
 findhistory=20
+ AddFromURL
+ readurl
  icy
  start
- AddFromURL
  InputUpdateICY
  updat
  UpdateIcyMetaInterval
@@ -834,7 +835,6 @@ findhistory=20
  icy =
  inputup
  samplereate
- getsam
 findoptions=1
 editpos=19
  0,-1073741823
@@ -846,15 +846,15 @@ editpos=19
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,135
- 0,99
+ 0,90
+ 0,139
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,4145
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -960,9 +960,8 @@ order=19
  18
  10
  14
-tabsize=24
 firsttab=11
-index=15
+index=17
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -978,7 +977,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=683
+ cy=705
  rcx=0
  rcy=0
  [mainfo]
@@ -990,14 +989,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=231
- y=52
- cx=939
- cy=621
+ x=6
+ y=24
+ cx=1360
+ cy=716
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,683
+  basedock,0,0,1356,705
  focusedchild=0
  wsize=6
  active=1
@@ -1011,8 +1010,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=522
+ y=190
  cx=497
  cy=314
  rcx=0
@@ -1041,7 +1040,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1113,7 +1112,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=500
+ cy=528
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1123,8 +1122,8 @@ windowlayout=530
  width1=12
  sortdescend1=0
  sorted=0
- col=0
- row=3
+ col=1
+ row=8
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1322,9 +1321,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=566
+ y=583
  cx=1356
- cy=117
+ cy=122
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1424,7 +1423,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=60
+ cy=49
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1440,7 +1439,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=60
+ cy=49
  rcx=0
  rcy=0
  [sourcefo]
@@ -1456,7 +1455,7 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=500
+ cy=528
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1490,9 +1489,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=63
+ y=52
  cx=1356
- cy=500
+ cy=528
  rcx=0
  rcy=0
 [targetconsole]

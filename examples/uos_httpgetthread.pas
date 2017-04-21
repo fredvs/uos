@@ -72,12 +72,10 @@ end;
 
 procedure TThreadHttpGetter.Headers(Sender: TObject ); 
 begin 
-if ICYenabled = true then
-begin
   FIcyMetaInt := StrToInt64Def(TFPHTTPClient(Sender).GetHeader(TFPHTTPClient(Sender).ResponseHeaders, 'icy-metaint'),0); 
   if (FIcyMetaInt>0) and (FOnIcyMetaInt<>nil) then 
        Synchronize(@DoIcyMetaInt); 
-end;       
+ 
 end;
 
 procedure TThreadHttpGetter.Execute;
@@ -90,7 +88,7 @@ begin
   repeat
   try
     Http.RequestHeaders.Clear;
-  //  Http.RequestHeaders.Add('icy-metadata:1');  // icy
+    if ICYenabled = true then
     Http.OnHeaders := @Headers; 
     Http.Get(URL, FOutStream);
   except

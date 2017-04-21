@@ -1,3 +1,4 @@
+
 program simpleplayer_fpGUI;
 
 {$mode objfpc}{$H+}
@@ -128,14 +129,12 @@ var
    
    procedure TSimpleplayer.ChangePlugSetBs2b(Sender: TObject);
    begin
-  if radiobutton1.Enabled = False then   /// player1 was created
-  uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, chkst2b.Checked);   
+   uos_SetPluginBs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, chkst2b.Checked);   
   end;
   
   procedure TSimpleplayer.Changestereo2mono(Sender: TObject);
   begin
-   if radiobutton1.Enabled = False then   /// player1 was created
-   uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.Checked); 
+    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.Checked); 
   end;
 
   procedure TSimpleplayer.ChangePlugSetSoundTouch(Sender: TObject);
@@ -156,21 +155,18 @@ var
     label6.Text := 'Tempo: ' + floattostrf(tempo, ffFixed, 15, 1);
     label7.Text := 'Pitch: ' + floattostrf(rate, ffFixed, 15, 1);
 
-    if radiobutton1.Enabled = False then   /// player1 was created
-    begin
-      uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, tempo, rate, checkbox2.Checked);
+    uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, tempo, rate, checkbox2.Checked);
     end;
-    end;
+    
   end;
 
   procedure TSimpleplayer.ResetPlugClick(Sender: TObject);
   begin
        TrackBar4.Position := 50;
     TrackBar5.Position := 50;
-    if radiobutton1.Enabled = False then   /// player1 was created
-    begin
+  
       uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, 1, 1, checkbox2.Checked);
-    end;
+   
   end;
 
   procedure TSimpleplayer.TrackChangePlugSetSoundTouch(Sender: TObject; pos: integer);
@@ -218,7 +214,6 @@ var
 
   procedure TSimpleplayer.VolumeChange(Sender: TObject; pos: integer);
   begin
-    if (btnstart.Enabled = False) then
       uos_InputSetDSPVolume(PlayerIndex1, InputIndex1,
         (100 - TrackBar2.position) / 100,
         (100 - TrackBar3.position) / 100, True);
@@ -460,6 +455,8 @@ loadok : boolean = false;
     temptime: ttime;
     ho, mi, se, ms: word;
   begin
+  
+    uos_Stop(PlayerIndex1);
 
     if radiobutton1.Checked = True then
       samformat := 0;
