@@ -847,11 +847,11 @@ findhistory=20
 findoptions=1
 editpos=6
  0,-1073741823
- 0,100
+ 49,97
  0,-1073741823
- 21,4179
  0,-1073741823
- 0,209
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -885,7 +885,7 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=3
+index=1
 [layout]
 windowlayout=522
  [mainfo.basedock]
@@ -942,7 +942,7 @@ windowlayout=522
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1378,7 +1378,7 @@ windowlayout=522
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

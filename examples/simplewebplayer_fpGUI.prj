@@ -849,7 +849,7 @@ findhistory=20
  getch
 findoptions=1
 editpos=3
- 4,268
+ 0,417
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -892,7 +892,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=702
  rcx=0
  rcy=0
@@ -912,7 +912,7 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,702
+  basedock,0,0,1350,702
  focusedchild=0
  wsize=6
  active=1
@@ -1238,7 +1238,7 @@ windowlayout=530
  ncy=0
  x=0
  y=581
- cx=1356
+ cx=1350
  cy=121
  rcx=0
  rcy=0
@@ -1338,7 +1338,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=61
  rcx=0
  rcy=0
@@ -1354,7 +1354,7 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=61
  rcx=0
  rcy=0
@@ -1370,7 +1370,7 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
+ cx=1188
  cy=514
  rcx=0
  rcy=0
@@ -1406,7 +1406,7 @@ windowlayout=530
  ncy=0
  x=0
  y=64
- cx=1356
+ cx=1350
  cy=514
  rcx=0
  rcy=0

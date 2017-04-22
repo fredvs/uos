@@ -415,7 +415,6 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
     end;
   end;
 
-
    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
       {$else}
   procedure TSimpleplayer.CustomMsgReceived(var msg: TfpgMessageRec);

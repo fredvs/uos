@@ -77,7 +77,7 @@ var
      uos_CreatePlayer(PlayerIndex1); //// Create the player
      writeln('===> uos_CreatePlayer => ok');
 
-   theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
+ //  theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
  // theurl := 'http://www.alouette.fr/alouette.m3u' ;
  // theurl := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
  // theurl := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
@@ -85,7 +85,7 @@ var
  // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
  theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
     // for opus file, set AudioFormat = 1 in AddFromURL()
- theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+    // theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
  {
  with TfpHttpClient.Create(nil) do
@@ -96,7 +96,7 @@ var
    
 writeln('Try to connect to ' + theurl);
 // res := uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
-  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,1, false) ;
+  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,-1, false) ;
   
  ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
