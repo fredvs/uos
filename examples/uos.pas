@@ -551,10 +551,12 @@ type
   procedure DoLoopEndMethods;
   procedure DoArrayLevel(x: integer);
   procedure DoSeek(x: integer);
+  procedure DoDSPinBeforeBufProc(x: integer);
   procedure DoDSPinAfterBufProc(x: integer);
   procedure DoDSPOutAfterBufProc(x: integer);
   procedure DoMainLoopProc(x: integer);
   procedure SeekIfTerminated;
+  procedure DoTerminateNoFreePlayer;
   procedure DoTerminatePlayer;
   procedure DoEndProc;
   procedure Execute; override;
@@ -1891,6 +1893,8 @@ Result := -1;
   if (isAssigned = True) then
  begin
 if StreamIn[InputIndex].Data.LibOpen = 1 then // mp3
+if assigned(StreamIn[InputIndex].httpget) then
+if StreamIn[InputIndex].httpget.ICYenabled = true then
 begin
 Result := mpg123_icy(StreamIn[InputIndex].Data.HandleSt, icy_data); 
 end;
@@ -4169,9 +4173,8 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   {$endif}
   
  StreamIn[x].Data.HandleOP :=
-
-   op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
- 
+// op_open_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
+ op_test_callbacks(StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
 //  op_test_memory(StreamIn[x].data.BufferTMP[0],PipeBufferSize, Err);
   
  {$IF DEFINED(debug)}
@@ -5982,6 +5985,16 @@ begin
    //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  // if you want clean buffer
 end;
 
+procedure Tuos_Player.DoDSPinBeforeBufProc(x: integer);
+var
+x2 : integer;
+begin
+  for x2 := 0 to high(StreamIn[x].DSP) do
+  if (StreamIn[x].DSP[x2].Enabled = True) and
+  (StreamIn[x].DSP[x2].BefFunc <> nil) then
+  StreamIn[x].DSP[x2].BefFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
+end;
+
 procedure Tuos_Player.DoDSPinAfterBufProc(x: integer);
 var
 x2 : integer;
@@ -6135,6 +6148,84 @@ begin
   {$endif}
 
   {$endif}
+end;
+
+procedure Tuos_Player.DoTerminateNoFreePlayer;
+var
+x, x2 : integer;
+begin
+ 
+  for x := 0 to high(StreamIn) do
+  begin
+  if (length(StreamIn[x].DSP) > 0) then
+  for x2 := 0 to high(StreamIn[x].DSP) do
+  if (StreamIn[x].DSP[x2].EndFunc <> nil) then
+  StreamIn[x].DSP[x2].EndFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
+  end;
+
+  for x := 0 to high(StreamOut) do
+  begin
+  if (length(StreamOut[x].DSP) > 0) then
+  for x2 := 0 to high(StreamOut[x].DSP) do
+  if (StreamOut[x].DSP[x2].EndFunc <> nil) then
+  StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
+  end;
+
+  if (StreamOut[x].Data.TypePut = 0) then
+  begin
+  WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
+  // StreamOut[x].FileBuffer.Data.Free;
+  end;
+
+  if (StreamOut[x].Data.TypePut = 4) then
+  begin
+  WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
+  // StreamOut[x].FileBuffer.Data.Free;
+  end;
+
+  {$IF not DEFINED(Library)}
+  if EndProc <> nil then
+  {$IF FPC_FULLVERSION>=20701}
+  queue(EndProc);
+  {$else}
+  synchronize(EndProc); //  Execute EndProc procedure
+  {$endif}
+
+  {$elseif not DEFINED(java)}
+  if (EndProc <> nil) then
+  EndProc;
+  {$else}
+  if (EndProc <> nil) then
+  {$IF FPC_FULLVERSION>=20701}
+  queue(@endprocjava);
+  {$else}
+  synchronize(@endprocjava); //  Execute EndProc procedure
+  {$endif}
+
+  {$endif}
+
+   if EndProcOnly <> nil then EndProcOnly;
+
+  if uosInit.isGlobalPause = true then
+  begin
+  RTLeventReSetEvent(uosInit.evGlobalPause)
+  end
+   else
+  begin
+  RTLeventReSetEvent(evPause);
+  end;
+
+  Status := 2;
+
+  isfirst := true;
+
+   {$IF DEFINED(portaudio)}
+   for x := 0 to high(StreamOut) do
+    if (StreamOut[x].Data.HandleSt <> nil) and
+       (StreamOut[x].Data.TypePut = 1) then
+     Pa_StopStream(StreamOut[x].Data.HandleSt);
+   {$ENDIF}
+
 end;
 
 procedure Tuos_Player.DoTerminatePlayer;
@@ -7128,9 +7219,9 @@ var
 
 begin
 
-  DoBeginMethods();
+   DoBeginMethods();
 
-   repeat
+ repeat
 
    DoLoopBeginMethods;
   
@@ -7163,17 +7254,18 @@ begin
   if (StreamIn[x].Data.positionEnable = 1)  and (StreamIn[x].Data.Seekable = True) then
   StreamIn[x].Data.position := curpos;
 
-  // DSPin BeforeBuffProc
+ {$IF DEFINED(debug)}
+  writeln('DSPin BeforeBufProc 1');
+ {$endif}
   if (StreamIn[x].Data.Status = 1) and (length(StreamIn[x].DSP) > 0) then
-  for x2 := 0 to high(StreamIn[x].DSP) do
-  if (StreamIn[x].DSP[x2].Enabled = True) and
-  (StreamIn[x].DSP[x2].BefFunc <> nil) then
-  StreamIn[x].DSP[x2].BefFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
-  // end DSP BeforeBuffProc
-  
+  DoDSPinBeforeBufProc(x); // Procedure in DSP to execute before fill buffer.
+  {$IF DEFINED(debug)}
+  writeln('DSPin BeforeBufProc 2');
+  {$endif}   
+
   CheckIfPaused ; // is there a pause waiting ?
    
- case StreamIn[x].Data.TypePut of
+  case StreamIn[x].Data.TypePut of
  
   0:  // It is a input from audio file.
   ReadFile(x);
@@ -7208,7 +7300,7 @@ begin
   writeln('StreamIn[x].Data.status = ' + inttostr(StreamIn[x].Data.status));
  {$endif}  
 
-  if  StreamIn[x].Data.status > 0 then
+  if  StreamIn[x].Data.status > 0 then  // still working
   begin
   
   if (StreamIn[x].Data.positionEnable = 1) then
@@ -7321,6 +7413,7 @@ begin
   writeln('for x3 := 0 to high(StreamIn[x2].Data.Buffer) do');
   writeln('high(StreamIn[x2].Data.Buffer) = '+ inttostr(high(StreamIn[x2].Data.Buffer)));
   {$endif}
+ 
   for x3 := 0 to high(StreamIn[x2].Data.Buffer) do
   begin
   StreamOut[x].Data.Buffer[x3] :=
@@ -7328,17 +7421,15 @@ begin
   cfloat(StreamIn[x2].Data.Buffer[x3]);
   end;
   
-   {$IF DEFINED(debug2)}
+   {$IF DEFINED(debug)}
    WriteLn('StreamOut[x].Data.Buffer ------------------------------');
    st := '';
    for i := 0 to length(StreamOut[0].Data.Buffer) -1 do
    st := st + '|' + inttostr(i) + '=' + floattostr(Streamout[0].Data.Buffer[i]); 
    // WriteLn(st); 
+    writeln('for x3 := 0 to high(StreamIn[x2].Data.Buffer) done');
    {$endif}
-  
-  {$IF DEFINED(debug)}
-  writeln('for x3 := 0 to high(StreamIn[x2].Data.Buffer) done');
-  {$endif}
+   
   case StreamIn[x2].Data.LibOpen of
   0:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes ; // sndfile
   1:  StreamOut[x].Data.outframes := StreamIn[x2].Data.outframes div StreamIn[x2].Data.Channels; // mpg123
@@ -7353,13 +7444,13 @@ begin
   {$IF DEFINED(debug)}
   writeln('copy buffer-in into buffer-out');
   {$endif}
+ 
   // DSPOut AfterBuffProc
   if (length(StreamOut[x].DSP) > 0) then
 
   DoDSPOutAfterBufProc(x) ;
 
-   // apply plugin (ex: SoundTouch Library)
-
+  // apply plugin (ex: SoundTouch Library)
   plugenabled := False;
 
   {$IF DEFINED(debug)}
@@ -7396,81 +7487,10 @@ begin
   {$endif}
 
   if (nofree = true) and (status = 0)  then
-  begin
-  for x := 0 to high(StreamIn) do
-  begin
-  if (length(StreamIn[x].DSP) > 0) then
-  for x2 := 0 to high(StreamIn[x].DSP) do
-  if (StreamIn[x].DSP[x2].EndFunc <> nil) then
-  StreamIn[x].DSP[x2].EndFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
-  end;
 
-  for x := 0 to high(StreamOut) do
-  begin
-  if (length(StreamOut[x].DSP) > 0) then
-  for x2 := 0 to high(StreamOut[x].DSP) do
-  if (StreamOut[x].DSP[x2].EndFunc <> nil) then
-  StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
-  end;
+  DoTerminateNoFreePlayer ;
 
-  if (StreamOut[x].Data.TypePut = 0) then
-  begin
-  WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
-  // StreamOut[x].FileBuffer.Data.Free;
-  end;
-
-  if (StreamOut[x].Data.TypePut = 4) then
-  begin
-  WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
-  // StreamOut[x].FileBuffer.Data.Free;
-  end;
-       
-  {$IF not DEFINED(Library)}
-  if EndProc <> nil then
-  {$IF FPC_FULLVERSION>=20701}
-  queue(EndProc);
-  {$else}
-  synchronize(EndProc); //  Execute EndProc procedure
-  {$endif}
-
-  {$elseif not DEFINED(java)}
-  if (EndProc <> nil) then
-  EndProc;
-  {$else}
-  if (EndProc <> nil) then
-  {$IF FPC_FULLVERSION>=20701}
-  queue(@endprocjava);
-  {$else}
-  synchronize(@endprocjava); //  Execute EndProc procedure
-  {$endif}
-
-  {$endif}
- 
-   if EndProcOnly <> nil then EndProcOnly;
-   
-  if uosInit.isGlobalPause = true then
-  begin 
-  RTLeventReSetEvent(uosInit.evGlobalPause)
-  end
-   else  
-  begin
-  RTLeventReSetEvent(evPause);
-  end;
-
-  Status := 2;
-  
-  isfirst := true;
-  
-   {$IF DEFINED(portaudio)}
-   for x := 0 to high(StreamOut) do
-    if (StreamOut[x].Data.HandleSt <> nil) and
-       (StreamOut[x].Data.TypePut = 1) then
-     Pa_StopStream(StreamOut[x].Data.HandleSt);
-   {$ENDIF}
-     
-  end;
-  
-   {$IF DEFINED(debug)}
+    {$IF DEFINED(debug)}
    WriteLn('Before until status = 0;----');
   {$endif}
 

@@ -209,7 +209,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -978,10 +978,10 @@ findhistory=20
  Streamin [x] .Data.MemoryStream: = TMemoryStream.Creat
 findoptions=1
 editpos=4
- 0,6296
+ 20,6277
  7,603
+ 0,-1073741823
  0,0
- 0,13
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1008,11 +1008,11 @@ nomenumodules=0
 [sourcefo.files_tab]
 order=4
  1
- 3
+ 4
  0
  2
 firsttab=0
-index=0
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1027,7 +1027,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=702
  rcx=0
  rcy=0
@@ -1047,7 +1047,7 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,702
+  basedock,0,0,1350,702
  focusedchild=0
  wsize=6
  active=1
@@ -1373,7 +1373,7 @@ windowlayout=530
  ncy=0
  x=0
  y=578
- cx=1356
+ cx=1350
  cy=124
  rcx=0
  rcy=0
@@ -1473,7 +1473,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=58
  rcx=0
  rcy=0
@@ -1489,7 +1489,7 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=58
  rcx=0
  rcy=0
@@ -1505,7 +1505,7 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
+ cx=1188
  cy=514
  rcx=0
  rcy=0
@@ -1513,7 +1513,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1541,7 +1541,7 @@ windowlayout=530
  ncy=0
  x=0
  y=61
- cx=1356
+ cx=1350
  cy=514
  rcx=0
  rcy=0

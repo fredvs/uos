@@ -85,7 +85,7 @@ var
  // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
  theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
     // for opus file, set AudioFormat = 1 in AddFromURL()
-// theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+ theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
  {
  with TfpHttpClient.Create(nil) do
@@ -96,7 +96,7 @@ var
    
 writeln('Try to connect to ' + theurl);
 // res := uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
-  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,-1, false) ;
+  res := uos_AddFromURL(PlayerIndex1,pchar(theurl),-1,-1,-1,1, false) ;
   
  ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
@@ -141,7 +141,7 @@ writeln('Try to connect to ' + theurl);
    sleep(3000);
    uos_inputupdateicy(PlayerIndex1,0,theicytag);
    writeln('icy = ' + (theicytag));
- } 
+// } 
    
    writeln('Press a key to exit...');
  end;

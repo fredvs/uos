@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/conswebstream.prj
-findinfiledialog=48
+findinfiledialog=49
  [findinfileadialogfo.subdirs]
  value=0
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,9 @@ findinfiledialog=48
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=uos_callbacks
- history=10
+ value=op_test_callbacks
+ history=11
+  op_test_callbacks
   uos_callbacks
   cardinal
   _name
@@ -67,7 +68,7 @@ findinfiledialog=48
  x=386
  y=189
  cx=339
- cy=251
+ cy=270
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -103,33 +104,33 @@ options=114
   70
   70
  [projectoptionsfo.twidgetgrid3]
- propcolwidthref=740
+ propcolwidthref=798
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
  sortdescend3=0
- width4=345
+ width4=372
  sortdescend4=0
- width5=186
+ width5=201
  sortdescend5=0
- width6=158
+ width6=170
  sortdescend6=0
- width7=51
+ width7=55
  sortdescend7=0
  width8=1
  sortdescend8=0
- width9=302
+ width9=326
  sortdescend9=0
  [projectoptionsfo.twidgetgrid4]
- propcolwidthref=564
+ propcolwidthref=622
  width0=96
  sortdescend0=0
  sortdescend1=0
  width2=73
  sortdescend2=0
- width3=271
+ width3=299
  sortdescend3=0
- width4=283
+ width4=313
  sortdescend4=0
  sorted=0
  col=-1073741823
@@ -139,10 +140,10 @@ options=114
  firsttab=0
  index=0
  [projectoptionsfo.fontaliasgrid]
- propcolwidthref=423
+ propcolwidthref=481
  width0=98
  sortdescend0=0
- width1=412
+ width1=470
  sortdescend1=0
  width2=30
  sortdescend2=0
@@ -160,7 +161,7 @@ options=114
  xprop=1
  yprop=0.32954545454545
  [projectoptionsfo.macrogrid]
- propcolwidthref=495
+ propcolwidthref=553
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
@@ -173,7 +174,7 @@ options=114
  sortdescend9=0
  width10=146
  sortdescend10=0
- width11=479
+ width11=537
  sortdescend11=0
  [projectoptionsfo.comment_1]
  value=
@@ -183,21 +184,21 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=5
  [projectoptionsfo.exceptionsgrid]
- propcolwidthref=724
+ propcolwidthref=794
  width0=47
  sortdescend0=0
- width1=718
+ width1=788
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
  index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=632
+ propcolwidthref=690
  width0=112
  sortdescend0=0
- width1=625
+ width1=683
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
@@ -209,7 +210,7 @@ options=114
  stackedunder=
  x=292
  y=97
- cx=773
+ cx=831
  cy=497
 programparameters=18
  [programparametersfo.grid]
@@ -717,37 +718,44 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=4
+on=5
  -1
  0
  0
  0
-path=4
+ -1
+path=5
  /home/fred/uos/examples/uos_opusfile.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/conswebstream.pas
-line=4
+ /home/fred/uos/examples/conswebstream.pas
+line=5
  146
- 4289
- 3253
+ 4290
+ 3255
  150
-address=4
+ 105
+address=5
  0
  0
  0
  0
-addbkpt=4
+ 0
+addbkpt=5
  0
  0
  0
  0
-ignore=4
+ 0
+ignore=5
  0
  0
  0
  0
-condition=4
+ 0
+condition=5
+ 
  
  
  
@@ -814,10 +822,14 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=StreamIn[x].Data.HandleSt assisgned
+finddtext=AddFromURL
 findhistory=20
- StreamIn[x].Data.HandleSt assisgned
  AddFromURL
+ WriteOutPlug
+ inputupdateicy
+ StreamIn[x].Data.HandleSt u
+ StreamIn[x].Data.HandleSt 
+ StreamIn[x].Data.HandleSt assisgned
  start
  readurl
  icy
@@ -829,57 +841,38 @@ findhistory=20
  Tuos_InStream = class(TObject)
  Tuos_InStream = class(TObject) 
  fromurl
- inputupdateicy
  MPG123_OK
  add_s
  uos_inputupdateicy
- feature
- icy =
- inputup
 findoptions=1
-editpos=9
- 0,4172
+editpos=6
  0,-1073741823
- 0,98
- 0,25
+ 0,100
  0,-1073741823
- 0,0
+ 21,4179
  0,-1073741823
- 0,214
- 0,206
+ 0,209
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-sourcefiles=9
- ${PROJECTDIR}/uos.pas
+sourcefiles=6
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/conswebstream.pas
  ${PROJECTDIR}/define.inc
- /home/fred/uos (autre copie)/examples/uos.pas
- /home/fred/uos (autre copie)/examples/uos_httpgetthread.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_httpgetthread.pas
  ${PROJECTDIR}/uos_opusfile.pas
- /home/fred/uos (autre copie)/examples/uos_opusfile.pas
-relpaths=9
- uos.pas
+relpaths=6
  uos_flat.pas
  conswebstream.pas
  define.inc
- uos (autre copie)/examples/uos.pas
- ../uos (autre copie)/examples/uos_httpgetthread.pas
+ uos.pas
  uos_httpgetthread.pas
  uos_opusfile.pas
- ../uos (autre copie)/examples/uos_opusfile.pas
-ismoduletexts=9
- 0
- 0
- 0
+ismoduletexts=6
  0
  0
  0
@@ -891,18 +884,8 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=9
- 0
- 7
- 8
- 4
- 6
- 5
- 1
- 2
- 3
 firsttab=0
-index=7
+index=3
 [layout]
 windowlayout=522
  [mainfo.basedock]
@@ -918,7 +901,7 @@ windowlayout=522
  x=0
  y=0
  cx=1356
- cy=683
+ cy=702
  rcx=0
  rcy=0
  [mainfo]
@@ -931,13 +914,13 @@ windowlayout=522
  ncx=0
  ncy=0
  x=231
- y=53
+ y=51
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,683
+  basedock,0,0,1356,702
  focusedchild=0
  wsize=6
  active=1
@@ -981,7 +964,7 @@ windowlayout=522
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1027,7 +1010,7 @@ windowlayout=522
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1053,7 +1036,7 @@ windowlayout=522
  x=0
  y=0
  cx=159
- cy=500
+ cy=514
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1063,8 +1046,8 @@ windowlayout=522
  width1=12
  sortdescend1=0
  sorted=0
- col=0
- row=1
+ col=1
+ row=8
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1254,9 +1237,9 @@ windowlayout=522
  ncx=0
  ncy=0
  x=0
- y=566
+ y=582
  cx=1356
- cy=117
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1356,7 +1339,7 @@ windowlayout=522
  x=0
  y=0
  cx=1356
- cy=60
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1372,7 +1355,7 @@ windowlayout=522
  x=0
  y=0
  cx=1356
- cy=60
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1388,14 +1371,14 @@ windowlayout=522
  x=162
  y=0
  cx=1194
- cy=500
+ cy=514
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1422,9 +1405,9 @@ windowlayout=522
  ncx=0
  ncy=0
  x=0
- y=63
+ y=65
  cx=1356
- cy=500
+ cy=514
  rcx=0
  rcy=0
 [targetconsole]
