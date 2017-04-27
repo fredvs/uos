@@ -70,7 +70,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 17170416;
+  uos_version : cint32 = 17170527;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -536,23 +536,27 @@ type
   Tuos_Player = class(TThread)
   protected
   evPause: PRTLEvent;  // for pausing
-  procedure ReadFile(x : integer);
-  procedure ReadUrl(x : integer);
-  {$IF DEFINED(synthesizer)}
-  procedure ReadSynth(x : integer);
+  procedure ReadFile(x : integer); 
+  {$IF DEFINED(webstream)}
+  procedure ReadUrl(x : integer); 
   {$endif}
-  procedure ReadMem(x : integer);
-  procedure ReadDevice(x : integer);
-  procedure WriteOutPlug(x:integer;  x2 : integer);
-  procedure WriteOut(x:integer;  x2 : integer);
-  Procedure CheckIfPaused ;
-  procedure DoBeginMethods;
-  procedure DoLoopBeginMethods;
-  procedure DoLoopEndMethods;
-  procedure DoArrayLevel(x: integer);
-  procedure DoSeek(x: integer);
-  procedure DoDSPinBeforeBufProc(x: integer);
-  procedure DoDSPinAfterBufProc(x: integer);
+  {$IF DEFINED(synthesizer)}
+  procedure ReadSynth(x : integer); 
+  {$endif}
+  procedure ReadMem(x : integer); 
+  {$IF DEFINED(portaudio)}
+  procedure ReadDevice(x : integer); 
+  {$endif}
+  procedure WriteOutPlug(x:integer;  x2 : integer);  
+  procedure WriteOut(x:integer;  x2 : integer); 
+  Procedure CheckIfPaused ;  
+  procedure DoBeginMethods;  
+  procedure DoLoopBeginMethods;  
+  procedure DoLoopEndMethods;  
+  procedure DoArrayLevel(x: integer);  
+  procedure DoSeek(x: integer); 
+  procedure DoDSPinBeforeBufProc(x: integer); 
+  procedure DoDSPinAfterBufProc(x: integer); 
   procedure DoDSPOutAfterBufProc(x: integer);
   procedure DoMainLoopProc(x: integer);
   procedure SeekIfTerminated;
@@ -619,9 +623,11 @@ type
   
   // Audio methods
   
-  procedure PlayEx(no_free: Boolean; nloop: Integer); // Start playing with free at end as parameter and assign loop
+  procedure PlayEx(no_free: Boolean; nloop: Integer; paused: boolean= false); // Start playing with free at end as parameter and assign loop
 
   Procedure Play(nloop: Integer = 0) ;  // Start playing with loop
+  
+  Procedure PlayPaused(nloop: Integer = 0) ;  // Start play paused with loop
 
   procedure RePlay();  // Resume playing after pause
 
@@ -630,6 +636,8 @@ type
   procedure Pause();  // Pause playing
   
   Procedure PlayNoFree(nloop: Integer = 0) ; // Starting but do not free the player after stop with loop
+  
+  Procedure PlayPausedNoFree(nloop: Integer = 0) ;  // Start play paused with loop but not free player at end
   
   Procedure FreePlayer() ;  // Free the player: works only when PlayNoFree() was called.
 
@@ -876,7 +884,9 @@ function InputPositionTime(InputIndex: cint32): TTime;
 
 function InputUpdateTag(InputIndex: cint32): boolean;
 
+{$IF DEFINED(webstream) and DEFINED(mpg123)}
 function InputUpdateICY(InputIndex: cint32; var icy_data : pchar): integer;
+{$endif}
 
 function InputGetTagTitle(InputIndex: cint32): pchar;
 function InputGetTagArtist(InputIndex: cint32): pchar;
@@ -1598,7 +1608,7 @@ begin
           (NLooped <> 1);
 end;
 
-procedure Tuos_Player.PlayEx(no_free: Boolean; nloop: Integer);
+procedure Tuos_Player.PlayEx(no_free: Boolean; nloop: Integer; paused: boolean= false);
 var
   x: cint32;
  begin
@@ -1633,21 +1643,39 @@ var
   and ((StreamIn[x].Data.TypePut = 0) or (StreamIn[x].Data.TypePut = 4)) then
       InputSeek(x, 0); 
   
-  StreamIn[x].Data.status  := 1 ;
+   StreamIn[x].Data.status  := 1 ;
+  
   end;
  
   Status := 1;
   
-  sleep(1);
-  
-  start;  // resume;  { if fpc version <= 2.4.4}
-  
   if uosInit.isGlobalPause = true then
   RTLeventSetEvent(uosInit.evGlobalPause) else   
   RTLeventSetEvent(evPause);
+  
+ if  paused = true then
+ begin
+   if uosInit.isGlobalPause = true then
+  RTLeventReSetEvent(uosInit.evGlobalPause) else   
+  RTLeventResetEvent(evPause);
+  Status := 2;
  end;
+ 
+  start;  // resume;  { if fpc version <= 2.4.4}
+ 
+   end;
 
 end;     
+
+Procedure Tuos_Player.PlayPaused(nloop: Integer = 0) ;  // Start play paused with loop
+begin
+ PlayEx(False,nloop,true);
+end;
+
+Procedure Tuos_Player.PlayPausedNoFree(nloop: Integer = 0) ;  // Start play paused with loop not free player at end
+begin
+ PlayEx(true,nloop,true);
+end;
 
 procedure Tuos_Player.Play(nloop: Integer = 0) ;
 begin
@@ -1734,8 +1762,8 @@ begin
   StreamIn[InputIndex].Data.Poseek := possample;
   
  {$IF DEFINED(debug)}
- WriteLn('TTime: '+ timetostr(pos));
-	WriteLn('SeekTime() : Data.Poseek: '+ inttostr(possample));
+  WriteLn('TTime: '+ timetostr(pos));
+  WriteLn('SeekTime() : Data.Poseek: '+ inttostr(possample));
  {$endif}
   end;
 end;
@@ -1886,24 +1914,19 @@ Result := sysutils.EncodeTime(0, 0, 0, 0);
   {$endif}  
 end;
 
-// for mp3 files only
-function Tuos_Player.InputUpdateICY(InputIndex: cint32; var icy_data : pchar): integer;
-begin
-Result := -1;
-  if (isAssigned = True) then
- begin
-if StreamIn[InputIndex].Data.LibOpen = 1 then // mp3
-if assigned(StreamIn[InputIndex].httpget) then
-if StreamIn[InputIndex].httpget.ICYenabled = true then
-begin
-Result := mpg123_icy(StreamIn[InputIndex].Data.HandleSt, icy_data); 
-end;
-end;
-end;
 
 // for mp3 and opus files only
 function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
-var
+
+{$IF DEFINED(mpg123) or DEFINED(opus) }
+ var
+ {$endif}
+ {$IF DEFINED(mpg123)}
+  mpinfo: Tmpg123_frameinfo;
+  mpid3v1: Tmpg123_id3v1;
+  mpid3v2: Tmpg123_id3v2;
+  {$endif}
+  
   {$IF DEFINED(opus)}
   s: UTF8String;
   j: Integer;
@@ -1912,16 +1935,12 @@ var
   LcommentLength: PInteger;
   {$endif}
   
-  {$IF DEFINED(mpg123)}
-  mpinfo: Tmpg123_frameinfo;
-  mpid3v1: Tmpg123_id3v1;
-  mpid3v2: Tmpg123_id3v2;
-  {$endif}
-begin
+  begin
 
  Result := false;
   if (isAssigned = True) then
  begin
+ {$IF DEFINED(mpg123)}
 if StreamIn[InputIndex].Data.LibOpen = 1 then // mp3
 begin
  mpg123_info(StreamIn[InputIndex].Data.HandleSt, MPinfo);
@@ -1936,7 +1955,9 @@ begin
   Result := true;
   // ?  freeandnil(MPinfo);
 end;
+{$endif}
 
+{$IF DEFINED(opus)}
 if StreamIn[InputIndex].Data.LibOpen = 4 then // opus
 begin
  OpusTag := op_tags(StreamIn[InputIndex].Data.HandleOP, nil);
@@ -1969,8 +1990,28 @@ begin
   end;
   end;
  end;
+ {$endif}
  end;
  end;
+
+{$IF DEFINED(webstream)}
+// for mp3 files only
+function Tuos_Player.InputUpdateICY(InputIndex: cint32; var icy_data : pchar): integer;
+begin
+Result := -1;
+  if (isAssigned = True) then
+ begin
+if StreamIn[InputIndex].Data.LibOpen = 1 then // mp3
+if assigned(StreamIn[InputIndex].httpget) then
+if StreamIn[InputIndex].httpget.ICYenabled = true then
+begin
+ {$IF DEFINED(mpg123)}
+Result := mpg123_icy(StreamIn[InputIndex].Data.HandleSt, icy_data); 
+ {$endif}
+end;
+end;
+end; 
+{$ENDIF}
 
 function Tuos_Player.InputGetTagTitle(InputIndex: cint32): pchar;
  begin
@@ -4841,10 +4882,9 @@ begin
 
   {$endif}
   
+   {$IF DEFINED(mpg123)}
   if ((StreamIn[x].Data.LibOpen = -1)) then
-  
-  {$IF DEFINED(mpg123)}
-  // mpg123
+   // mpg123
   if (TypeAudio = 1) and  (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.MPloadERROR = 0) then
   begin
   Err := -1;
@@ -5804,7 +5844,7 @@ begin
 end;
 
 {$IF DEFINED(synthesizer)}
-procedure Tuos_Player.ReadSynth(x :integer);
+procedure Tuos_Player.ReadSynth(x :integer);  
 var
 x2 : integer;
   begin
@@ -5848,7 +5888,7 @@ x2 : integer;
   end;
   {$endif}
 
-procedure Tuos_Player.ReadMem(X : integer);
+procedure Tuos_Player.ReadMem(X : integer);  
 var
 x2, wantframestemp : integer;
 {$IF DEFINED(debug)}
@@ -5890,7 +5930,7 @@ WriteLn(st);
 {$endif}
 end;
 
-procedure Tuos_Player.DoSeek( x : integer);
+procedure Tuos_Player.DoSeek( x : integer);  
 begin
  if StreamIn[x].Data.TypePut = 4 then
   StreamIn[x].Data.posmem := 0
@@ -5915,7 +5955,7 @@ begin
   end;
 end;
 
-procedure Tuos_Player.DoDSPOutAfterBufProc(x: integer);
+procedure Tuos_Player.DoDSPOutAfterBufProc(x: integer);  
 var
 x3 : integer;
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
@@ -5970,7 +6010,7 @@ begin
  uosLevelArray[index][x][length(uosLevelArray[index][x]) -1 ] := StreamIn[x].Data.LevelRight;
 end;
 
-procedure Tuos_Player.ReadDevice(x : integer);
+procedure Tuos_Player.ReadDevice(x : integer);  
 var
 x2 : integer;
 begin
@@ -5985,7 +6025,7 @@ begin
    //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;  // if you want clean buffer
 end;
 
-procedure Tuos_Player.DoDSPinBeforeBufProc(x: integer);
+procedure Tuos_Player.DoDSPinBeforeBufProc(x: integer);  
 var
 x2 : integer;
 begin
@@ -5995,7 +6035,7 @@ begin
   StreamIn[x].DSP[x2].BefFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
 end;
 
-procedure Tuos_Player.DoDSPinAfterBufProc(x: integer);
+procedure Tuos_Player.DoDSPinAfterBufProc(x: integer);  
 var
 x2 : integer;
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
@@ -6205,17 +6245,11 @@ begin
   {$endif}
 
    if EndProcOnly <> nil then EndProcOnly;
+   
+   StreamIn[x].Data.Poseek := 0; // set to begin
+   doseek(x);
 
-  if uosInit.isGlobalPause = true then
-  begin
-  RTLeventReSetEvent(uosInit.evGlobalPause)
-  end
-   else
-  begin
-  RTLeventReSetEvent(evPause);
-  end;
-
-  Status := 2;
+   Status := 2;
 
   isfirst := true;
 
@@ -6225,6 +6259,15 @@ begin
        (StreamOut[x].Data.TypePut = 1) then
      Pa_StopStream(StreamOut[x].Data.HandleSt);
    {$ENDIF}
+   
+    if uosInit.isGlobalPause = true then
+  begin
+  RTLeventReSetEvent(uosInit.evGlobalPause)
+  end
+   else
+  begin
+  RTLeventReSetEvent(evPause);
+  end;
 
 end;
 
@@ -6484,7 +6527,7 @@ begin
   {$endif}
 end;
 
-procedure Tuos_Player.WriteOut(x:integer;  x2 : integer);
+procedure Tuos_Player.WriteOut(x:integer;  x2 : integer);  
  var
  err, rat, wantframestemp: integer;
  {$IF DEFINED(debug)}
@@ -6699,7 +6742,7 @@ if err > 0 then
   end;
 end;
 
-procedure Tuos_Player.WriteOutPlug(x:integer;  x2 : integer);
+procedure Tuos_Player.WriteOutPlug(x:integer;  x2 : integer);  
  var
  x3, x4, err, wantframestemp: integer;
   {$IF DEFINED(debug)}
@@ -6925,7 +6968,8 @@ if err > 0 then
   end;
 end;
 
-procedure Tuos_Player.ReadUrl(x : integer);
+{$IF DEFINED(webstream)}
+procedure Tuos_Player.ReadUrl(x : integer);  
 var
 err : integer;
 {$IF DEFINED(debug)}
@@ -7009,10 +7053,15 @@ end;
   end;
 
 end;
+{$endif}
 
-procedure Tuos_Player.ReadFile(x : integer);
+procedure Tuos_Player.ReadFile(x : integer);  
+{$IF DEFINED(neaac) or DEFINED(debug)}
 var
-outBytes: longword; // for AAC
+{$endif}
+{$IF DEFINED(neaac)}
+outBytes: longword;
+{$endif}
 {$IF DEFINED(debug)}
 i : integer;
  st : string;
@@ -7218,13 +7267,18 @@ var
   curpos: cint64 = 0;
 
 begin
+ 
+   CheckIfPaused ; // is there a pause waiting ?
 
    DoBeginMethods();
+   
+   CheckIfPaused ; // is there a pause waiting ?
 
  repeat
 
    DoLoopBeginMethods;
-  
+ 
+   CheckIfPaused ; // is there a pause waiting ?
     // Dealing with input
   for x := 0 to high(StreamIn) do
   begin

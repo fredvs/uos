@@ -53,8 +53,13 @@ if stopit = false then
     for i := 0 to 2 do
     if(Copy(drum_beats[i], posi, 1) = 'x') then
     begin
-    uos_Playnofree(i) ;
-    end;
+     application.processmessages;
+     uos_PlayPausednofree(i) ;
+     end;
+   
+    for i := 0 to 2 do
+    if(Copy(drum_beats[i], posi, 1) = 'x') then
+    uos_RePlay(i) ;
   
  inc(posi);
  if(posi > 16) then posi := 1;
@@ -79,7 +84,7 @@ end;
 procedure TForm1.FormActivate(Sender: TObject);
 var ordir: string;
     lib1, lib2: string;
-    i,j : integer;
+    i : integer;
 begin
   ordir := Application.Location;
 
@@ -130,6 +135,8 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
  drum_beats[2] := 'x0000000x0x00000'; // kick
 
   posi := 1;
+  
+{  // using memorystream
  ms0:= TMemoryStream.Create; 
  ms0.LoadFromFile(pchar(sound[0])); 
  ms0.Position:= 0;
@@ -141,25 +148,31 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
  ms2:= TMemoryStream.Create; 
  ms2.LoadFromFile(pchar(sound[2])); 
  ms2.Position:= 0; 
- 
+ }
    for i := 0 to 2 do   
  begin
    uos_CreatePlayer(i);
-   uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 256);
    
+  { // using memorystream
   case i of
-  0: uos_AddFromMemoryStream(i,ms0,0,-1,0,256);
-  1: uos_AddFromMemoryStream(i,ms1,0,-1,0,256);
-  2: uos_AddFromMemoryStream(i,ms2,0,-1,0,256);
+  0: uos_AddFromMemoryStream(i,ms0,0,-1,0,512);
+  1: uos_AddFromMemoryStream(i,ms1,0,-1,0,512);
+  2: uos_AddFromMemoryStream(i,ms2,0,-1,0,512);
   end;
- 
- end;  
+ }
+  case i of // using file
+  0: uos_AddFromfile(i,pchar(sound[0]),-1,0,512);
+  1: uos_AddFromfile(i,pchar(sound[1]),-1,0,512);
+  2: uos_AddFromfile(i,pchar(sound[2]),-1,0,512);
+  end;
+  uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 512);
+  uos_PlayNoFree(i);
+  sleep(150);
+ end;
   
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-var
-i : integer;
 begin
 uos_free();
 end;

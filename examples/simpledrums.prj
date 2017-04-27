@@ -126,9 +126,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=121
+ y=120
  xprop=1
- yprop=0.24077669902913
+ yprop=0.24070450097847
  [projectoptionsfo.macrogrid]
  propcolwidthref=481
  sortdescend0=0
@@ -153,7 +153,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=5
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -164,10 +164,10 @@ options=114
  firsttab=0
  index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=618
+ propcolwidthref=621
  width0=112
  sortdescend0=0
- width1=611
+ width1=614
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
@@ -191,16 +191,21 @@ settings=8
  active=1
  visible=1
 mainfile=${PROJECTNAME}.lpr
-targetfile=${PROJECTNAME}${EXEEXT}
+targetfile=${PROJECTNAME}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=10
+unitdirs=15
  ${lazarus}*
  ${lazarus}/components/*
  ${lazarus}/*
  ${lazarus}/lcl/*
+ ${lazarus}/lcl/images
+ ${lazarus}/lcl/include
+ ${lazarus}/lcl/forms
+ ${lazarus}/lcl/interfaces
  ${lazarus}/lcl/interfaces/qt
+ ${lazarus}/lcl/widgetset
  ${lazarus}/lcl/interfaces/win32
  ${lazarus}/lcl/interfaces/gtk2
  ${lazarus}/lcl/components/*
@@ -443,15 +448,15 @@ moduletypes=0
 modulefiles=0
 befcommandon=0
 makeoptionson=9
- 63
+ 255
  2
  0
  4095
- 48
- 62
+ 240
+ 254
  2
- 61
- 63
+ 509
+ 255
 compilerusedon=29
  4035
  4
@@ -483,12 +488,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4095
+ 4035
  0
  0
  0
  0
- 0
+ 60
 exeusedon=14
  4047
  0
@@ -524,12 +529,17 @@ project_time=
 project_date=15:21:42 26/03/2017
 project_comment=
 aftcommandon=0
-unitdirson=10
+unitdirson=15
+ 987135
+ 987135
+ 987135
+ 987087
  987135
  987135
  987135
  987135
  987087
+ 987135
  983088
  983040
  987135
@@ -623,6 +633,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=1
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -756,10 +767,13 @@ findhistory=10
  status
  playerno
 findoptions=1
-editpos=7
+editpos=10
  0,-1073741823
- 0,130
+ 0,55
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 6,227
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -771,7 +785,10 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
+bookmarks7=0
+bookmarks8=0
+bookmarks9=0
+sourcefiles=10
  ${PROJECTDIR}/simpledrums.lpr
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
@@ -779,7 +796,10 @@ sourcefiles=7
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=7
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/simpledrums.lpr
+relpaths=10
  simpledrums.lpr
  main_sd.pas
  uos.pas
@@ -787,7 +807,13 @@ relpaths=7
  simpledrums_fpGUI.pas
  simpledrums_fpGUI.pas
  uos_flat.pas
-ismoduletexts=7
+ uos.pas
+ define.inc
+ simpledrums.lpr
+ismoduletexts=10
+ 0
+ 0
+ 0
  0
  0
  0
@@ -800,17 +826,19 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=7
+order=10
  0
  1
+ 7
  5
  4
+ 9
  3
  2
+ 8
  6
-tabsize=60
 firsttab=1
-index=1
+index=3
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -825,8 +853,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
- cy=701
+ cx=929
+ cy=585
  rcx=0
  rcy=0
  [mainfo]
@@ -838,16 +866,16 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=230
+ x=231
  y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,701
+  basedock,0,0,929,585
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -961,7 +989,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=512
+ cy=428
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1011,14 +1039,14 @@ windowlayout=520
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1027,7 +1055,7 @@ windowlayout=520
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1162,9 +1190,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=581
- cx=1356
- cy=120
+ y=485
+ cx=929
+ cy=100
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1261,8 +1289,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
- cy=63
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1277,8 +1305,8 @@ windowlayout=520
  ncy=2
  x=0
  y=0
- cx=1356
- cy=63
+ cx=929
+ cy=51
  rcx=0
  rcy=0
  [sourcefo]
@@ -1293,8 +1321,8 @@ windowlayout=520
  ncy=0
  x=162
  y=0
- cx=1194
- cy=512
+ cx=767
+ cy=428
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1328,9 +1356,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=66
- cx=1356
- cy=512
+ y=54
+ cx=929
+ cy=428
  rcx=0
  rcy=0
 [targetconsole]

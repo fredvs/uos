@@ -50,8 +50,9 @@ findinfiledialog=58
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=outputinput
+ value=writeln
  history=20
+  writeln
   outputinput
   inputoutput
   AddDSP2ChanTo1Chanout
@@ -71,7 +72,6 @@ findinfiledialog=58
   setdspout
   setdspin
   dspin
-  adddsp
  [findinfileadialogfo]
  stackedunder=
  x=615
@@ -181,9 +181,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=142
  xprop=1
- yprop=0.32882882882883
+ yprop=0.32954545454545
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -519,7 +519,7 @@ makeoptionson=10
  511
  192
  511
- 497
+ 509
  255
  2
  128
@@ -554,12 +554,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3900
+ 3888
  0
  0
  0
  0
- 195
+ 207
 exeusedon=14
  3903
  0
@@ -718,6 +718,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=0
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -823,15 +824,15 @@ path=9
  /home/fred/uos/examples/simpledrums_fpGUI.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
 line=9
- 3888
+ 3929
  33
  913
  764
- 2728
- 2041
- 545
- 219
- 234
+ 2769
+ 2082
+ 561
+ 230
+ 250
 address=9
  5002412
  0
@@ -954,33 +955,36 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=typeput
+finddtext=playex
 findhistory=20
+ playex
+ setgl
+ start
+ execute
+ nofree
+ .play
+ uos_Play
+ status
+ inputseek
+ AddFromMemoryStream
+ InputUpdateTag
+ readurl
+ writeln
  typeput
  isfirst
  NoFree
- playex
  PlayerNotFree
  function
  createp
  levelarray
- ttime
- firstno
- nofree
- PlayNoFree
- AddIntoDevOut
- dot
- AddFromFileIntoMemory
- FramesCount
- AddFromMemoryStream
- length(tempoutmemory
- Before Filetobuffer
- Before Give to memory ------------------------------
 findoptions=1
-editpos=8
+editpos=11
  0,-1073741823
  0,-1073741823
- 0,100
+ 0,232
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -994,7 +998,10 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 bookmarks7=0
-sourcefiles=8
+bookmarks8=0
+bookmarks9=0
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpledrums_fpGUI.pas
@@ -1003,7 +1010,10 @@ sourcefiles=8
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=8
+ ${PROJECTDIR}/define.inc
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=11
  simpledrums_fpGUI.pas
  uos.pas
  simpledrums_fpGUI.pas
@@ -1012,7 +1022,13 @@ relpaths=8
  main_sd.pas
  uos.pas
  uos_flat.pas
-ismoduletexts=8
+ define.inc
+ uos_flat.pas
+ uos_flat.pas
+ismoduletexts=11
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1026,18 +1042,20 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=8
+order=11
  0
  1
+ 10
+ 8
+ 9
  3
  2
  6
  7
  5
  4
-tabsize=60
 firsttab=1
-index=3
+index=6
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1052,8 +1070,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1122
- cy=604
+ cx=1356
+ cy=800
  rcx=0
  rcy=0
  [mainfo]
@@ -1065,16 +1083,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=89
- y=33
- cx=1132
+ x=187
+ y=75
+ cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1122,604
+  basedock,0,0,1356,800
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1087,9 +1105,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=493
- y=171
+ y=172
  cx=497
- cy=314
+ cy=313
  rcx=0
  rcy=0
  wsize=0
@@ -1188,7 +1206,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=442
+ cy=586
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1238,14 +1256,14 @@ windowlayout=530
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1254,7 +1272,7 @@ windowlayout=530
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1397,9 +1415,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=501
- cx=1122
- cy=103
+ y=663
+ cx=1356
+ cy=137
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1498,8 +1516,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1122
- cy=53
+ cx=1356
+ cy=71
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1514,8 +1532,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1122
- cy=53
+ cx=1356
+ cy=71
  rcx=0
  rcy=0
  [sourcefo]
@@ -1530,8 +1548,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=960
- cy=442
+ cx=1194
+ cy=586
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1565,9 +1583,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=56
- cx=1122
- cy=442
+ y=74
+ cx=1356
+ cy=586
  rcx=0
  rcy=0
 [targetconsole]

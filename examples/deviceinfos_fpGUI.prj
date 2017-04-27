@@ -623,6 +623,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=0
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -787,15 +788,16 @@ findhistory=13
  sort
  uses
 findoptions=1
-editpos=8
- 0,-1073741823
- 0,-1073741823
+editpos=9
+ 12,6
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,336
  0,-1073741823
  0,-1073741823
+ 0,9
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -804,7 +806,8 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 bookmarks7=0
-sourcefiles=8
+bookmarks8=0
+sourcefiles=9
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -813,7 +816,8 @@ sourcefiles=8
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos.pas
-relpaths=8
+ ${PROJECTDIR}/consoleplayloop.pas
+relpaths=9
  deviceinfos_fpGUI.pas
  uos.pas
  uos_flat.pas
@@ -822,7 +826,9 @@ relpaths=8
  deviceinfos_fpGUI.pas
  uos.pas
  uos.pas
-ismoduletexts=8
+ consoleplayloop.pas
+ismoduletexts=9
+ 0
  0
  0
  0
@@ -836,8 +842,9 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=8
+order=9
  0
+ 8
  5
  1
  2
@@ -845,9 +852,8 @@ order=8
  3
  6
  4
-tabsize=60
 firsttab=0
-index=1
+index=0
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -926,7 +932,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -987,7 +993,7 @@ windowlayout=530
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1001,16 +1007,16 @@ windowlayout=530
  cy=426
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
+ [projecttreefo.grid]
  propcolwidthref=18
  width0=141
  sortdescend0=0
  width1=12
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
- rowheight=17
+ col=0
+ row=2
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1090,7 +1096,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1348,7 +1354,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

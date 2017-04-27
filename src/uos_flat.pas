@@ -658,8 +658,10 @@ function uos_InputPositionTime(PlayerIndex: cint32; InputIndex: cint32): TTime;
 function uos_InputUpdateTag(PlayerIndex: cint32;InputIndex: cint32): boolean;
 // for mp3 and opus files only
 
+{$IF DEFINED(webstream) and DEFINED(mpg123)}
 function uos_InputUpdateICY(PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): integer;
 // for mp3 only
+{$endif}
 
 function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): pchar;
 function uos_InputGetTagArtist(PlayerIndex: cint32; InputIndex: cint32): pchar;
@@ -677,13 +679,17 @@ function uos_InputGetChannels(PlayerIndex: cint32; InputIndex: cint32): cint32;
   // InputIndex : InputIndex of existing input
   // result : default channels
 
-procedure uos_PlayEx(PlayerIndex: cint32;
- nofree: Boolean; nloop: Integer);
+procedure uos_PlayEx(PlayerIndex: cint32; no_free: Boolean; nloop: Integer; paused: boolean= false); 
+// Start playing with free at end as parameter and assign loop
 
 procedure uos_Play(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing
 
+Procedure uos_PlayPaused(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start play paused with loop
+
 Procedure uos_PlayNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing but do not free the player after stop
 
+Procedure uos_PlayPausedNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start play paused with loop but not free player at end
+  
 Procedure uos_FreePlayer(PlayerIndex: cint32) ;  // Works only when PlayNoFree() was used: free the player
 
 procedure uos_RePlay(PlayerIndex: cint32);  // Resume playing after pause
@@ -838,7 +844,8 @@ end;
   // VolRight : Right volume
   // Enable : Enabled
   // example  uos_OutputSetDSPVolume(0,InputIndex1,1,0.8,True);
-  
+
+{$IF DEFINED(webstream) and DEFINED(mpg123)} 
 function uos_InputUpdateICY(PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): integer;
 // for mp3 only
 begin
@@ -846,7 +853,8 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
 result := uosPlayers[PlayerIndex].InputUpdateICY(InputIndex, icy_data) ;
- end;  
+ end; 
+{$endif} 
 
 function uos_InputUpdateTag(PlayerIndex: cint32;InputIndex: cint32): boolean;
 // for mp3 and opus files only
@@ -1610,11 +1618,12 @@ Result := -1 ;
 end;
 
 Procedure uos_PlayEx(PlayerIndex: cint32;
- nofree: Boolean; nloop: Integer);
+ no_free: Boolean; nloop: Integer; paused: boolean= false); // Start playing with free at end as parameter and assign loop
+
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-uosPlayers[PlayerIndex].PlayEx(nofree,nloop) ;
+uosPlayers[PlayerIndex].PlayEx(no_free,nloop, paused ) ;
 end;
 
 Procedure uos_Play(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing
@@ -1622,9 +1631,19 @@ begin
   uos_PlayEx(PlayerIndex, False,nloop);
 end;
 
+Procedure uos_PlayPaused(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing paused
+begin
+  uos_PlayEx(PlayerIndex, False,nloop,true);
+end;
+
 Procedure uos_PlayNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing but do not free the player after stop
 begin
  uos_PlayEx(PlayerIndex, True,nloop);
+end;
+
+Procedure uos_PlayPausedNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing paused but do not free the player after stop
+begin
+ uos_PlayEx(PlayerIndex, True,nloop, true);
 end;
 
 Procedure uos_FreePlayer(PlayerIndex: cint32) ;  

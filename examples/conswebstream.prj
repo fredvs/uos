@@ -184,12 +184,12 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=5
+ index=0
  [projectoptionsfo.exceptionsgrid]
- propcolwidthref=794
+ propcolwidthref=782
  width0=47
  sortdescend0=0
- width1=788
+ width1=776
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
@@ -822,8 +822,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromURL
+finddtext=cdecl;
 findhistory=20
+ cdecl;
+ cdecl
  AddFromURL
  WriteOutPlug
  inputupdateicy
@@ -842,12 +844,10 @@ findhistory=20
  Tuos_InStream = class(TObject) 
  fromurl
  MPG123_OK
- add_s
- uos_inputupdateicy
 findoptions=1
 editpos=6
  0,-1073741823
- 49,97
+ 18,92
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -860,7 +860,7 @@ bookmarks4=0
 bookmarks5=0
 sourcefiles=6
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/conswebstream.pas
+ /home/fred/uos/examples/conswebstream.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_httpgetthread.pas
@@ -914,7 +914,7 @@ windowlayout=522
  ncx=0
  ncy=0
  x=231
- y=51
+ y=53
  cx=939
  cy=621
  rcx=0
@@ -942,7 +942,7 @@ windowlayout=522
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1378,7 +1378,7 @@ windowlayout=522
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

@@ -3,6 +3,10 @@ program deviceinfos_fpGUI;
 {$mode objfpc}{$H+}
 
  uses
+{$IFDEF UNIX}
+  cthreads, 
+  cwstring, 
+ {$ENDIF}
     SysUtils,
   fpg_base,
   fpg_main,

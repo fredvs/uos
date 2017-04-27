@@ -85,7 +85,7 @@ var
  // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
  theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
     // for opus file, set AudioFormat = 1 in AddFromURL()
-    // theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+//  theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
  
  {
  with TfpHttpClient.Create(nil) do

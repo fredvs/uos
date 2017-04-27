@@ -179,7 +179,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -200,7 +200,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=514
@@ -454,18 +454,18 @@ modulefiles=0
 befcommandon=0
 makeoptionson=7
  0
- 63
- 63
- 63
- 32
- 48
- 63
+ 255
+ 255
+ 255
+ 252
+ 240
+ 255
 compilerusedon=21
- 4095
- 0
- 0
- 0
- 0
+ 3891
+ 4
+ 8
+ 64
+ 128
  0
  0
  0
@@ -483,12 +483,12 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 4094
+ 3902
  0
  0
  0
  0
- 1
+ 193
 exeusedon=14
  4095
  0
@@ -525,13 +525,13 @@ project_date=19:42:27 20/04/2017
 project_comment=
 aftcommandon=0
 unitdirson=7
+ 196863
+ 196863
+ 196800
+ 196863
  196671
- 196671
- 0
- 196671
- 196671
- 196671
- 196671
+ 196863
+ 196863
 macroon=5
  1
  3
@@ -825,8 +825,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=fromurl
+finddtext=readfile
 findhistory=20
+ readfile
+ readurl
  fromurl
  theplayer.StreamIn[in1].Data.
  Filetobuffer
@@ -845,25 +847,28 @@ findhistory=20
  addfromfile
  addintofile
  InputGetChannels
- channel
- getch
 findoptions=1
-editpos=3
- 0,417
+editpos=4
+ 0,401
+ 0,7012
  0,-1073741823
- 0,-1073741823
+ 0,215
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
+bookmarks3=0
+sourcefiles=4
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  /home/fred/uos (autre copie)/examples/main_wsp.pas
-relpaths=3
+ ${PROJECTDIR}/uos_opusfile.pas
+relpaths=4
  simplewebplayer_fpGUI.pas
  uos.pas
  uos (autre copie)/examples/main_wsp.pas
-ismoduletexts=3
+ uos_opusfile.pas
+ismoduletexts=4
+ 0
  0
  0
  0
@@ -872,12 +877,13 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=3
+order=4
  0
  2
  1
+ 3
 firsttab=0
-index=0
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -893,7 +899,7 @@ windowlayout=530
  x=0
  y=0
  cx=1350
- cy=702
+ cy=699
  rcx=0
  rcy=0
  [mainfo]
@@ -905,16 +911,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=0
+ x=3
  y=24
  cx=1360
  cy=716
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1350,702
+  basedock,0,0,1350,699
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1028,7 +1034,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=514
+ cy=512
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1237,9 +1243,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=581
+ y=579
  cx=1350
- cy=121
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1371,7 +1377,7 @@ windowlayout=530
  x=162
  y=0
  cx=1188
- cy=514
+ cy=512
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1407,7 +1413,7 @@ windowlayout=530
  x=0
  y=64
  cx=1350
- cy=514
+ cy=512
  rcx=0
  rcy=0
 [targetconsole]
