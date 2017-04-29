@@ -1626,8 +1626,6 @@ var
   end;
   {$endif}
   
-  isfirst := false;
-    
   for x := 0 to high(StreamIn) do
   begin
   {$IF DEFINED(portaudio)}
@@ -1658,11 +1656,12 @@ var
    if uosInit.isGlobalPause = true then
   RTLeventReSetEvent(uosInit.evGlobalPause) else   
   RTLeventResetEvent(evPause);
-  Status := 2;
  end;
  
+ if (isfirst = true) or (nofree = false) then
   start;  // resume;  { if fpc version <= 2.4.4}
- 
+
+  isfirst := false; 
    end;
 
 end;     
@@ -6248,18 +6247,9 @@ begin
    
    StreamIn[x].Data.Poseek := 0; // set to begin
    doseek(x);
-
+   
    Status := 2;
 
-  isfirst := true;
-
-   {$IF DEFINED(portaudio)}
-   for x := 0 to high(StreamOut) do
-    if (StreamOut[x].Data.HandleSt <> nil) and
-       (StreamOut[x].Data.TypePut = 1) then
-     Pa_StopStream(StreamOut[x].Data.HandleSt);
-   {$ENDIF}
-   
     if uosInit.isGlobalPause = true then
   begin
   RTLeventReSetEvent(uosInit.evGlobalPause)

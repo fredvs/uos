@@ -153,7 +153,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=5
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -226,7 +226,7 @@ makeoptions=9
  -WG
  -B
  -O-
- -O3 -XX -CX -Xs
+ -O2 -XX -CX -Xs
  -FUunits/
 makeoptpurpose=9
  
@@ -488,12 +488,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4035
+ 4032
  0
  0
  0
  0
- 60
+ 63
 exeusedon=14
  4047
  0
@@ -716,13 +716,20 @@ sigsettings=27
  30,30,T,F
 defaultmake=1
 [breakpoints]
-on=0
-path=0
-line=0
-address=0
-addbkpt=0
-ignore=0
-condition=0
+on=1
+ 0
+path=1
+ /home/fred/uos/examples/main_sd.pas
+line=1
+ 164
+address=1
+ 0
+addbkpt=1
+ 0
+ignore=1
+ 0
+condition=1
+ 
 panels=1
  panel1
 units=
@@ -754,30 +761,32 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=AddIntoDevOut
+finddtext=playex
 findhistory=10
+ playex
  AddIntoDevOut
  ###
  play()
  play
  firstn
- playex
  freepl
  GetStatus
  status
  playerno
 findoptions=1
-editpos=10
+editpos=12
  0,-1073741823
- 0,55
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 6,227
+ 0,163
+ 0,6171
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,17
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -788,29 +797,37 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 bookmarks9=0
-sourcefiles=10
+bookmarks10=0
+bookmarks11=0
+sourcefiles=12
  ${PROJECTDIR}/simpledrums.lpr
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/simpledrums.lpr
-relpaths=10
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/simpledrums.lpr
+ ${PROJECTDIR}/simpledrums.lpr
+relpaths=12
  simpledrums.lpr
  main_sd.pas
  uos.pas
  uos_flat.pas
  simpledrums_fpGUI.pas
- simpledrums_fpGUI.pas
  uos_flat.pas
  uos.pas
  define.inc
  simpledrums.lpr
-ismoduletexts=10
+ uos_flat.pas
+ simpledrums.lpr
+ simpledrums.lpr
+ismoduletexts=12
+ 0
+ 0
  0
  0
  0
@@ -826,19 +843,21 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=10
+order=12
  0
  1
- 7
- 5
- 4
- 9
- 3
+ 11
+ 10
  2
- 8
+ 3
+ 4
+ 5
  6
+ 7
+ 8
+ 9
 firsttab=1
-index=3
+index=1
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -853,8 +872,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=929
- cy=585
+ cx=1356
+ cy=702
  rcx=0
  rcy=0
  [mainfo]
@@ -873,9 +892,9 @@ windowlayout=520
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,1356,702
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -989,7 +1008,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=428
+ cy=514
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1039,14 +1058,14 @@ windowlayout=520
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1055,7 +1074,7 @@ windowlayout=520
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1190,9 +1209,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=485
- cx=929
- cy=100
+ y=582
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1289,8 +1308,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1305,8 +1324,8 @@ windowlayout=520
  ncy=2
  x=0
  y=0
- cx=929
- cy=51
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1321,8 +1340,8 @@ windowlayout=520
  ncy=0
  x=162
  y=0
- cx=767
- cy=428
+ cx=1194
+ cy=514
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1356,9 +1375,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=54
- cx=929
- cy=428
+ y=65
+ cx=1356
+ cy=514
  rcx=0
  rcy=0
 [targetconsole]

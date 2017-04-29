@@ -46,25 +46,36 @@ implementation
 
 procedure TForm1.Timer1Timer(Sender: TObject);
   var i: integer;
+   ge : boolean = false;
 begin
- 
+ Timer1.Enabled := false;
 if stopit = false then
  begin
+
     for i := 0 to 2 do
     if(Copy(drum_beats[i], posi, 1) = 'x') then
     begin
-     application.processmessages;
      uos_PlayPausednofree(i) ;
      end;
-   
+     
+    application.processmessages;
+    
+    // if uos_SetGlobalEvent(true) was executed --> This set events (like pause/replay threads) to global.
+    // One event (for example uos_replay) will have impact on all players.
+ 
     for i := 0 to 2 do
-    if(Copy(drum_beats[i], posi, 1) = 'x') then
-    uos_RePlay(i) ;
+    if(ge = false) and (Copy(drum_beats[i], posi, 1) = 'x') then 
+    begin
+    uos_RePlay(i); 
+    //ge := true; // A uos_replay() of each player will have impact on all players.
+    end;
   
  inc(posi);
  if(posi > 16) then posi := 1;
-  end
-  else Timer1.Enabled := false;
+ Timer1.Enabled := true;
+  end 
+  ;
+ // else Timer1.Enabled := false;
 
 end;
 
@@ -136,7 +147,7 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
 
   posi := 1;
   
-{  // using memorystream
+// {  // using memorystream
  ms0:= TMemoryStream.Create; 
  ms0.LoadFromFile(pchar(sound[0])); 
  ms0.Position:= 0;
@@ -148,27 +159,35 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
  ms2:= TMemoryStream.Create; 
  ms2.LoadFromFile(pchar(sound[2])); 
  ms2.Position:= 0; 
- }
-   for i := 0 to 2 do   
+// }
+
+// uos_SetGlobalEvent(true) ; // This set events (like pause/replay thread) to global.
+                           // One event (for example replay) will have impact on all players.
+ 
+    for i := 0 to 2 do   
  begin
    uos_CreatePlayer(i);
    
-  { // using memorystream
+//  { // using memorystream
   case i of
-  0: uos_AddFromMemoryStream(i,ms0,0,-1,0,512);
-  1: uos_AddFromMemoryStream(i,ms1,0,-1,0,512);
-  2: uos_AddFromMemoryStream(i,ms2,0,-1,0,512);
+  0: uos_AddFromMemoryStream(i,ms0,0,-1,0,256);
+  1: uos_AddFromMemoryStream(i,ms1,0,-1,0,256);
+  2: uos_AddFromMemoryStream(i,ms2,0,-1,0,256);
   end;
- }
-  case i of // using file
-  0: uos_AddFromfile(i,pchar(sound[0]),-1,0,512);
-  1: uos_AddFromfile(i,pchar(sound[1]),-1,0,512);
-  2: uos_AddFromfile(i,pchar(sound[2]),-1,0,512);
+  // }
+  { 
+   case i of // using file
+  0: uos_AddFromfile(i,pchar(sound[0]),-1,0,256);
+  1: uos_AddFromfile(i,pchar(sound[1]),-1,0,256);
+  2: uos_AddFromfile(i,pchar(sound[2]),-1,0,256);
   end;
-  uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 512);
+// }  
+
+  uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 256);
   uos_PlayNoFree(i);
   sleep(150);
  end;
+
   
 end;
 

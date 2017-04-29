@@ -3,6 +3,7 @@ program simpledrums;
 {$mode objfpc}{$H+}
 
 uses
+ //  cmem,
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
