@@ -25,7 +25,8 @@ type
     procedure Timer1Timer(Sender: TObject);
   private
     { private declarations }
-    sound: array[0..3] of string;
+    sound: array[0..2] of string;
+    ms :  array[0..2] of Tmemorystream; 
     posi: integer;
     drum_beats: array[0..2] of string;
   public
@@ -36,8 +37,7 @@ var
   Form1: TForm1;
   stopit :boolean = false;
   x: integer = 0;
-  ms0, ms1, ms2 : Tmemorystream; 
-  
+   
 implementation
 
 {$R *.lfm}
@@ -58,26 +58,23 @@ if stopit = false then
      uos_PlayPausednofree(i) ;
      end;
      
-    application.processmessages;
+   // application.processmessages;  // yes or no ?
     
     // if uos_SetGlobalEvent(true) was executed --> This set events (like pause/replay threads) to global.
     // One event (for example uos_replay) will have impact on all players.
- 
-    for i := 0 to 2 do
+     for i := 0 to 2 do
     if(ge = false) and (Copy(drum_beats[i], posi, 1) = 'x') then 
     begin
     uos_RePlay(i); 
-    //ge := true; // A uos_replay() of each player will have impact on all players.
+    ge := true; // A uos_replay() of each player will have impact on all players.
     end;
   
  inc(posi);
  if(posi > 16) then posi := 1;
  Timer1.Enabled := true;
-  end 
-  ;
- // else Timer1.Enabled := false;
-
-end;
+  end;
+ 
+ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
@@ -141,53 +138,46 @@ sound[0] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
 sound[1] := Application.Location + 'sound' + directoryseparator +  'drums' + directoryseparator + 'SD.wav';
 sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + directoryseparator + 'BD.wav';
 
- drum_beats[0] := 'x0x0x0x0x0x0x0x0'; // hat
- drum_beats[1] := '0000x0000000x000'; // snare
- drum_beats[2] := 'x0000000x0x00000'; // kick
-
-  posi := 1;
-  
 // {  // using memorystream
- ms0:= TMemoryStream.Create; 
- ms0.LoadFromFile(pchar(sound[0])); 
- ms0.Position:= 0;
- 
- ms1:= TMemoryStream.Create; 
- ms1.LoadFromFile(pchar(sound[1])); 
- ms1.Position:= 0;
- 
- ms2:= TMemoryStream.Create; 
- ms2.LoadFromFile(pchar(sound[2])); 
- ms2.Position:= 0; 
+ms[0] := TMemoryStream.Create; 
+ms[0].LoadFromFile(pchar(sound[0]));  
+ms[0].Position:= 0;
+
+ms[1] := TMemoryStream.Create; 
+ms[1].LoadFromFile(pchar(sound[1]));  
+ms[1].Position:= 0;
+
+ms[2] := TMemoryStream.Create; 
+ms[2].LoadFromFile(pchar(sound[2]));  
+ms[2].Position:= 0;
 // }
 
-// uos_SetGlobalEvent(true) ; // This set events (like pause/replay thread) to global.
+drum_beats[0] := 'x0x0x0x0x0x0x0x0'; // hat
+drum_beats[1] := '0000x0000000x000'; // snare
+drum_beats[2] := 'x0000000x0x00000'; // kick
+
+posi := 1;
+
+ uos_SetGlobalEvent(true) ; // This set events (like pause/replay thread) to global.
                            // One event (for example replay) will have impact on all players.
  
-    for i := 0 to 2 do   
+     for i := 0 to 2 do   
  begin
    uos_CreatePlayer(i);
    
-//  { // using memorystream
-  case i of
-  0: uos_AddFromMemoryStream(i,ms0,0,-1,0,256);
-  1: uos_AddFromMemoryStream(i,ms1,0,-1,0,256);
-  2: uos_AddFromMemoryStream(i,ms2,0,-1,0,256);
-  end;
-  // }
-  { 
-   case i of // using file
-  0: uos_AddFromfile(i,pchar(sound[0]),-1,0,256);
-  1: uos_AddFromfile(i,pchar(sound[1]),-1,0,256);
-  2: uos_AddFromfile(i,pchar(sound[2]),-1,0,256);
-  end;
-// }  
+   // using memorystream
+   uos_AddFromMemoryStream(i,ms[i],0,-1,0,256);
+   
+   // using file
+   // uos_AddFromfile(i,pchar(sound[i]),-1,0,256);
+ 
   uos_AddFromSynth(i,1,0,0, -1,-1, -1, 256 );  // this for a dummy endless input, must be last input
+ 
   uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 256);
+ 
   uos_PlayNoFree(i);
   sleep(150);
  end;
-
   
 end;
 

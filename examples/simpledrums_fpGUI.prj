@@ -830,9 +830,9 @@ line=9
  764
  2768
  2081
- 573
- 235
- 262
+ 576
+ 236
+ 265
 address=9
  5002412
  0
@@ -979,7 +979,7 @@ findhistory=20
  NoFree
 findoptions=1
 editpos=4
- 101,139
+ 0,250
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1023,8 +1023,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=702
+ cx=929
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1036,16 +1036,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=228
- y=78
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,702
+  basedock,0,0,929,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1058,9 +1058,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=493
- y=172
+ y=171
  cx=497
- cy=313
+ cy=314
  rcx=0
  rcy=0
  wsize=0
@@ -1159,7 +1159,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=514
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1209,14 +1209,14 @@ windowlayout=530
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1225,7 +1225,7 @@ windowlayout=530
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1368,9 +1368,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=582
- cx=1356
- cy=120
+ y=501
+ cx=929
+ cy=103
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1469,8 +1469,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1485,8 +1485,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
- cy=62
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1501,8 +1501,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=514
+ cx=767
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1536,9 +1536,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=65
- cx=1356
- cy=514
+ y=56
+ cx=929
+ cy=442
  rcx=0
  rcy=0
 [targetconsole]
