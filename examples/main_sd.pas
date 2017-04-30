@@ -182,7 +182,7 @@ sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + dir
   2: uos_AddFromfile(i,pchar(sound[2]),-1,0,256);
   end;
 // }  
-
+  uos_AddFromSynth(i,1,0,0, -1,-1, -1, 256 );  // this for a dummy endless input, must be last input
   uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 256);
   uos_PlayNoFree(i);
   sleep(150);
