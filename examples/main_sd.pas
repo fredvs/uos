@@ -171,7 +171,7 @@ posi := 1;
    // using file
    // uos_AddFromfile(i,pchar(sound[i]),-1,0,256);
  
-  uos_AddFromEndlessMuted(i, 256 );  // this for a dummy endless input, must be last input
+  uos_AddFromEndlessMuted(i, 256);  // this for a dummy endless input, must be last input
  
   uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 256);
  

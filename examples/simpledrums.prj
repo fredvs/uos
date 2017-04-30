@@ -453,7 +453,7 @@ makeoptionson=9
  0
  4095
  240
- 254
+ 250
  2
  509
  255
@@ -761,8 +761,9 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=playex
-findhistory=10
+finddtext=AddFromEndlessMuted
+findhistory=11
+ AddFromEndlessMuted
  playex
  AddIntoDevOut
  ###
@@ -776,17 +777,17 @@ findhistory=10
 findoptions=1
 editpos=12
  0,-1073741823
- 0,142
- 0,-1073741823
- 0,-1073741823
- 0,133
+ 0,173
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,3653
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -857,7 +858,7 @@ order=12
  8
  9
 firsttab=1
-index=1
+index=8
 [layout]
 windowlayout=520
  [mainfo.basedock]
