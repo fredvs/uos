@@ -717,6 +717,9 @@ type
 {$endif}
 
 {$IF DEFINED(synthesizer)}
+function AddFromEndlessMuted(FramesCount : cint32): cint32;
+  // Add a input from Endless Muted dummy sine wav
+
 function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
@@ -3644,6 +3647,12 @@ begin
   StreamIn[x].Data.Enabled := True;
   Result := x;
 end;
+
+function Tuos_Player.AddFromEndlessMuted(FramesCount : cint32): cint32;
+  // Add a input from Endless Muted dummy sine wav
+begin
+AddFromSynth(1,0,0, -1,-1, -1, FramesCount );
+end; 
 
 procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
