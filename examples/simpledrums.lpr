@@ -3,7 +3,7 @@ program simpledrums;
 {$mode objfpc}{$H+}
 
 uses
- //  cmem,
+   // cmem,
   {$IFDEF UNIX}
   cthreads,
   {$ENDIF}
@@ -11,7 +11,6 @@ uses
   Forms, main_sd;
 
 begin
- // RequireDerivedFormResource := True;
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.Run;

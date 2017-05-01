@@ -130,7 +130,7 @@ procedure uos_logo();
 var
   Form1: TForm1;
   BufferBMP: TBitmap;
-  PlayerIndex0, inindex1, inindex2, inindex3, inindex4, inindex5, inindex6, inindex7, inindex8 : cardinal;
+  PlayerIndex0, inindex1, inindex2, inindex3, inindex4, inindex5, inindex6, inindex7, inindex8, channels : cardinal;
 
 
 implementation
@@ -385,11 +385,8 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
    PlayerIndex0 := 0;
-
- uos_Stop(PlayerIndex0);
- sleep(100);
- uos_FreePlayer(PlayerIndex0);
-  sleep(100);
+   
+   channels := 2 ; // (stereo output)
 
  uos_CreatePlayer(PlayerIndex0);
 
@@ -409,7 +406,7 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
- uos_AddFromSynth(PlayerIndex0,1,0,0, -1,-1, -1, 1024 );
+ uos_AddFromEndlessMuted(PlayerIndex0, 1024 div channels);  
  // this for a dummy endless input, must be last input
 
   uos_InputAddDSPVolume(PlayerIndex0, InIndex1, 1, 1);
@@ -446,8 +443,7 @@ begin
   CheckBox6Change(Sender);
   CheckBox7Change(Sender);
   CheckBox8Change(Sender);
-  
-
+ 
   /////// procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex0, @ClosePlayer0);
   ///// Assign the procedure of object to execute at end
@@ -455,7 +451,7 @@ begin
   //////////// ClosePlayer1 : procedure of object to execute inside the loop
 
    application.ProcessMessages;
-    sleep(100);
+   
    button14.Enabled := true;
 end;
 

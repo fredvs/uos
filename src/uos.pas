@@ -719,6 +719,7 @@ type
 {$IF DEFINED(synthesizer)}
 function AddFromEndlessMuted(FramesCount : cint32): cint32;
   // Add a input from Endless Muted dummy sine wav
+  // FramesCount = FramesCount of other input div channels 
 
 function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
@@ -3650,8 +3651,9 @@ end;
 
 function Tuos_Player.AddFromEndlessMuted(FramesCount : cint32): cint32;
   // Add a input from Endless Muted dummy sine wav
+  // FramesCount = FramesCount div channels 
 begin
-AddFromSynth(1,0,0, -1,-1, -1, FramesCount*2);
+AddFromSynth(1,0,0, -1,-1, -1, FramesCount * 2);
 end; 
 
 procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);

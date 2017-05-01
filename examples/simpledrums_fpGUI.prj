@@ -313,7 +313,7 @@ makeoptions=10
  -FUunits
  -WG
  -B
- -O2 -XX -Xs -CX
+ -O4 -XX -Xs -CX
  -vewnbq
  -ghl
  -CX -Cg  -g -gl -Xg -vewnhibq 
@@ -824,15 +824,15 @@ path=9
  /home/fred/uos/examples/simpledrums_fpGUI.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
 line=9
- 3937
+ 3938
  33
  913
  764
  2771
  2084
- 576
- 236
- 265
+ 598
+ 245
+ 287
 address=9
  5002412
  0
@@ -979,8 +979,8 @@ findhistory=20
  writeln
 findoptions=1
 editpos=4
+ 0,137
  0,-1073741823
- 70,173
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -1008,7 +1008,7 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=1
+index=0
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1036,8 +1036,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=169
- y=76
+ x=231
+ y=53
  cx=939
  cy=621
  rcx=0

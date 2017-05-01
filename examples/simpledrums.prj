@@ -721,7 +721,7 @@ on=1
 path=1
  /home/fred/uos/examples/main_sd.pas
 line=1
- 161
+ 162
 address=1
  0
 addbkpt=1
@@ -775,19 +775,20 @@ findhistory=11
  status
  playerno
 findoptions=1
-editpos=12
+editpos=13
  0,-1073741823
- 0,173
- 0,-1073741823
- 0,-1073741823
+ 0,180
  0,-1073741823
  0,-1073741823
- 0,3653
+ 0,144
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,5
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -800,7 +801,8 @@ bookmarks8=0
 bookmarks9=0
 bookmarks10=0
 bookmarks11=0
-sourcefiles=12
+bookmarks12=0
+sourcefiles=13
  ${PROJECTDIR}/simpledrums.lpr
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
@@ -813,7 +815,8 @@ sourcefiles=12
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/simpledrums.lpr
  ${PROJECTDIR}/simpledrums.lpr
-relpaths=12
+ ${PROJECTDIR}/simpledrums.lpr
+relpaths=13
  simpledrums.lpr
  main_sd.pas
  uos.pas
@@ -826,7 +829,9 @@ relpaths=12
  uos_flat.pas
  simpledrums.lpr
  simpledrums.lpr
-ismoduletexts=12
+ simpledrums.lpr
+ismoduletexts=13
+ 0
  0
  0
  0
@@ -844,7 +849,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=12
+order=13
  0
  1
  11
@@ -852,13 +857,14 @@ order=12
  2
  3
  4
+ 12
  5
  6
  7
  8
  9
 firsttab=1
-index=8
+index=6
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -886,8 +892,8 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=206
- y=29
+ x=245
+ y=77
  cx=939
  cy=621
  rcx=0
@@ -1009,7 +1015,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=520
+ cy=518
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1310,7 +1316,7 @@ windowlayout=520
  x=0
  y=0
  cx=1356
- cy=56
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1326,7 +1332,7 @@ windowlayout=520
  x=0
  y=0
  cx=1356
- cy=56
+ cy=58
  rcx=0
  rcy=0
  [sourcefo]
@@ -1342,7 +1348,7 @@ windowlayout=520
  x=162
  y=0
  cx=1194
- cy=520
+ cy=518
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1376,9 +1382,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=59
+ y=61
  cx=1356
- cy=520
+ cy=518
  rcx=0
  rcy=0
 [targetconsole]

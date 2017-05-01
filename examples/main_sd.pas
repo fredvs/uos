@@ -37,6 +37,7 @@ var
   Form1: TForm1;
   stopit :boolean = false;
   x: integer = 0;
+  channels : cardinal = 2 ; // mono output
    
 implementation
 
@@ -58,7 +59,7 @@ if stopit = false then
      uos_PlayPausednofree(i) ;
      end;
      
-   // application.processmessages;  // yes or no ?
+     application.processmessages;  // yes or no ?
     
     // if uos_SetGlobalEvent(true) was executed --> This set events (like pause/replay threads) to global.
     // One event (for example uos_replay) will have impact on all players.
@@ -171,12 +172,13 @@ posi := 1;
    // using file
    // uos_AddFromfile(i,pchar(sound[i]),-1,0,256);
  
-  uos_AddFromEndlessMuted(i, 256);  // this for a dummy endless input, must be last input
+  uos_AddFromEndlessMuted(i, 256 div channels); 
+   // this for a dummy endless input, must be last input
  
-  uos_AddIntoDevOut(i, -1, 0.03, -1, 1, 0, 256);
+  uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256);
  
   uos_PlayNoFree(i);
-  sleep(150);
+  sleep(250);
  end;
   
 end;
