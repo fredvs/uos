@@ -739,19 +739,21 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=AddFromSynth
-findhistory=1
+finddtext=AddFromEndlessMuted
+findhistory=2
+ AddFromEndlessMuted
  AddFromSynth
 findoptions=1
-editpos=8
+editpos=9
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,534
  0,-1073741823
  0,-1073741823
+ 0,715
  0,-1073741823
  0,19
+ 56,1109
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -760,7 +762,8 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 bookmarks7=0
-sourcefiles=8
+bookmarks8=0
+sourcefiles=9
  ${PROJECTDIR}/multiplayer.lpr
  ${PROJECTDIR}/main_mp.pas
  ${PROJECTDIR}/multiinput.lpr
@@ -769,7 +772,8 @@ sourcefiles=8
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/multiinput.lpr
  ${PROJECTDIR}/multiinput.lpr
-relpaths=8
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=9
  multiplayer.lpr
  main_mp.pas
  multiinput.lpr
@@ -778,7 +782,9 @@ relpaths=8
  uos.pas
  multiinput.lpr
  multiinput.lpr
-ismoduletexts=8
+ uos_flat.pas
+ismoduletexts=9
+ 0
  0
  0
  0
@@ -792,7 +798,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=8
+order=9
  0
  1
  2
@@ -800,9 +806,10 @@ order=8
  7
  6
  5
+ 8
  4
-firsttab=0
-index=4
+firsttab=1
+index=7
 [layout]
 windowlayout=520
  [mainfo.basedock]
