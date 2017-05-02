@@ -173,8 +173,8 @@ posi := 1;
    // using file
    // if uos_AddFromfile(i,pchar(sound[i]),-1,0,256) > -1 then
  
-  if uos_AddFromEndlessMuted(i, 256 div channels) > -1 then
-   // this for a dummy endless input, must be last input
+   if uos_AddFromEndlessMuted(i, channels, 256) > -1 then 
+ // this for a dummy endless input, must be last input
  
   if uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256) > -1 then // stereo output
  begin
@@ -184,7 +184,7 @@ posi := 1;
  end else allok := false; 
  end;
  
- if allok = false then application.terminate;
+// if allok = false then application.terminate;
 end;                                            
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);

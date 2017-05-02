@@ -308,7 +308,7 @@ type
   
   TypePut: integer;
   // -1 : nothing,  for Input  : 0: from audio file, 1: from input device (like mic),
-                              // 2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer
+                              // 2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer, 5: from endless-muted
                  // for Output : 0: into wav file from filestream, 1: into output device, 2: into stream server, 3: into memory buffer, 4: into wav from memorystream
     
   Seekable: boolean;
@@ -543,6 +543,7 @@ type
   {$IF DEFINED(synthesizer)}
   procedure ReadSynth(x : integer); 
   {$endif}
+  procedure ReadEndless(x : integer); 
   procedure ReadMem(x : integer); 
   {$IF DEFINED(portaudio)}
   procedure ReadDevice(x : integer); 
@@ -716,11 +717,12 @@ type
   // example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1);
 {$endif}
 
-{$IF DEFINED(synthesizer)}
-function AddFromEndlessMuted(FramesCountByChan : cint32): cint32;
+function AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
   // Add a input from Endless Muted dummy sine wav
-  // FramesCountByChan = FramesCount of input-to-follow div channels of input-to-follow.
+  // FramesCount = FramesCount of input-to-follow 
+  // Channels = Channels of input-to-follow.
 
+{$IF DEFINED(synthesizer)}
 function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
@@ -3572,6 +3574,53 @@ begin
 end;
 {$endif}
 
+function Tuos_Player.AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
+  // Add a input from Endless Muted dummy sine wav
+  // FramesCountByChan = FramesCount of input-to-follow div channels of input-to-follow.
+var
+  x : cint32;
+begin
+ result := -1 ;
+  x := 0;
+
+  SetLength(StreamIn, Length(StreamIn) + 1);
+  StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create();
+  x := Length(StreamIn) - 1;
+  StreamIn[x].Data.Enabled := false;
+  StreamIn[x].Data.levelEnable := 0;
+  StreamIn[x].Data.PositionEnable := 0;
+  StreamIn[x].Data.levelArrayEnable := 0;
+
+ if channels = -1 then
+ StreamIn[x].data.channels := 2 else
+  StreamIn[x].data.channels := Channels;
+  
+  StreamIn[x].Data.SampleRate := DefRate;
+  
+  if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=  round(1024 * 2 div StreamIn[x].Data.channels)
+  else
+  StreamIn[x].Data.Wantframes := FramesCount * 2 div channels  ;
+ 
+  SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
+  
+  StreamIn[x].Data.SampleFormat := CInt32(0);
+ 
+  StreamIn[x].Data.VLeft := 0;
+  
+  StreamIn[x].Data.Vright := 0;
+ 
+  StreamIn[x].Data.Status := 1;
+  StreamIn[x].Data.TypePut := 5;
+  StreamIn[x].Data.HandleSt := pchar('endless');
+  StreamIn[x].Data.ratio := 2;
+  StreamIn[x].Data.Output := -1;
+  StreamIn[x].Data.seekable := False;
+  StreamIn[x].Data.LibOpen := -1;
+  StreamIn[x].LoopProc := nil;
+  StreamIn[x].Data.Enabled := True;
+  Result := x;
+end;
+
 {$IF DEFINED(synthesizer)}
 function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
@@ -3648,13 +3697,6 @@ begin
   StreamIn[x].Data.Enabled := True;
   Result := x;
 end;
-
-function Tuos_Player.AddFromEndlessMuted(FramesCountByChan : cint32): cint32;
-  // Add a input from Endless Muted dummy sine wav
-  // FramesCountByChan = FramesCount of input-to-follow div channels of input-to-follow.
-begin
-AddFromSynth(1,0,0, -1,-1, -1, FramesCountByChan * 2);
-end; 
 
 procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
@@ -5853,6 +5895,21 @@ begin
   end;
 end;
 
+procedure Tuos_Player.ReadEndless(x : integer);
+var
+x2 : integer = 0;
+  begin
+ 
+  while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
+
+  begin
+  StreamIn[x].Data.Buffer[x2] := 0.0;
+  x2 := x2 + 1 ;
+  end;
+ 
+  StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames ;
+  end;
+ 
 {$IF DEFINED(synthesizer)}
 procedure Tuos_Player.ReadSynth(x :integer);  
 var
@@ -7342,6 +7399,9 @@ begin
   
   4:  // for Input from memory
   ReadMem(x);
+  
+  5:  // for Input from endless muted
+  ReadEndless(x);
 
   end; //case StreamIn[x].Data.TypePut of
 

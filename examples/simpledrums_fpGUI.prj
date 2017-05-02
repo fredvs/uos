@@ -803,7 +803,7 @@ sigsettings=27
  30,30,T,F
 defaultmake=32
 [breakpoints]
-on=9
+on=11
  -1
  0
  -1
@@ -813,7 +813,9 @@ on=9
  0
  0
  0
-path=9
+ 0
+ 0
+path=11
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/paio_channelhelper.pas
  /home/fred/uos_aac_new/examples/uos_aac.pas
@@ -823,17 +825,21 @@ path=9
  /home/fred/uos/examples/simpledrums_fpGUI.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
-line=9
- 3938
+ /home/fred/uos/examples/uos_flat.pas
+ /home/fred/uos/examples/simpledrums_fpGUI.pas
+line=11
+ 3980
  33
  913
  764
- 2771
- 2084
+ 2773
+ 2086
  603
  250
  292
-address=9
+ 356
+ 142
+address=11
  5002412
  0
  0
@@ -843,7 +849,9 @@ address=9
  0
  0
  0
-addbkpt=9
+ 0
+ 0
+addbkpt=11
  0
  0
  0
@@ -853,7 +861,9 @@ addbkpt=9
  0
  0
  0
-ignore=9
+ 0
+ 0
+ignore=11
  0
  0
  0
@@ -863,7 +873,11 @@ ignore=9
  0
  0
  0
-condition=9
+ 0
+ 0
+condition=11
+ 
+ 
  
  
  
@@ -955,8 +969,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=AddFromSynth
+finddtext=AddFromEndlessMuted
 findhistory=20
+ AddFromEndlessMuted
+ readsynt
+ TypePut
  AddFromSynth
  addfrom
  isfirst
@@ -974,30 +991,42 @@ findhistory=20
  status
  inputseek
  AddFromMemoryStream
- InputUpdateTag
- readurl
- writeln
 findoptions=1
-editpos=4
- 0,-1073741823
- 23,186
- 0,-1073741823
- 0,-1073741823
+editpos=7
+ 0,141
+ 0,176
+ 0,3576
+ 0,1101
+ 0,3616
+ 0,115
+ 25,408
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+bookmarks5=0
+bookmarks6=0
+sourcefiles=7
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=4
+ /home/fred/uos/src/uos.pas
+ ${PROJECTDIR}/uos_opus.pas
+ ${PROJECTDIR}/main_mi.pas
+relpaths=7
  simpledrums_fpGUI.pas
  main_sd.pas
  uos.pas
  uos_flat.pas
-ismoduletexts=4
+ src/uos.pas
+ uos_opus.pas
+ main_mi.pas
+ismoduletexts=7
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1007,8 +1036,16 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=7
+ 0
+ 1
+ 6
+ 2
+ 5
+ 4
+ 3
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1024,7 +1061,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=800
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -1043,7 +1080,7 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,800
+  basedock,0,0,1356,694
  focusedchild=0
  wsize=6
  active=1
@@ -1159,7 +1196,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=586
+ cy=507
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1368,9 +1405,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=663
+ y=574
  cx=1356
- cy=137
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1470,7 +1507,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=71
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1486,7 +1523,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=71
+ cy=61
  rcx=0
  rcy=0
  [sourcefo]
@@ -1502,14 +1539,14 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=586
+ cy=507
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1536,9 +1573,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=74
+ y=64
  cx=1356
- cy=586
+ cy=507
  rcx=0
  rcy=0
 [targetconsole]

@@ -406,7 +406,7 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
- uos_AddFromEndlessMuted(PlayerIndex0, 1024 div channels);  
+ uos_AddFromEndlessMuted(PlayerIndex0, channels, 1024) ;
  // this for a dummy endless input, must be last input
 
   uos_InputAddDSPVolume(PlayerIndex0, InIndex1, 1, 1);

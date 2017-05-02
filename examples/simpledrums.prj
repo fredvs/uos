@@ -780,7 +780,7 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,144
+ 6,131
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -943,7 +943,7 @@ windowlayout=520
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0

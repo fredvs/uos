@@ -126,9 +126,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=121
+ y=120
  xprop=1
- yprop=0.24077669902913
+ yprop=0.24070450097847
  [projectoptionsfo.macrogrid]
  propcolwidthref=481
  sortdescend0=0
@@ -153,7 +153,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=3
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -164,10 +164,10 @@ options=114
  firsttab=0
  index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=618
+ propcolwidthref=621
  width0=112
  sortdescend0=0
- width1=611
+ width1=614
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
@@ -444,7 +444,7 @@ makeoptionson=8
  2
  0
  4095
- 2
+ 6
  2
  61
  63
@@ -743,7 +743,7 @@ finddtext=AddFromSynth
 findhistory=1
  AddFromSynth
 findoptions=1
-editpos=7
+editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -751,6 +751,7 @@ editpos=7
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,19
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -758,7 +759,8 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
+bookmarks7=0
+sourcefiles=8
  ${PROJECTDIR}/multiplayer.lpr
  ${PROJECTDIR}/main_mp.pas
  ${PROJECTDIR}/multiinput.lpr
@@ -766,7 +768,8 @@ sourcefiles=7
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/multiinput.lpr
-relpaths=7
+ ${PROJECTDIR}/multiinput.lpr
+relpaths=8
  multiplayer.lpr
  main_mp.pas
  multiinput.lpr
@@ -774,7 +777,9 @@ relpaths=7
  uos_flat.pas
  uos.pas
  multiinput.lpr
-ismoduletexts=7
+ multiinput.lpr
+ismoduletexts=8
+ 0
  0
  0
  0
@@ -787,16 +792,17 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=7
+order=8
  0
  1
  2
  3
+ 7
  6
  5
  4
 firsttab=0
-index=3
+index=4
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -825,7 +831,7 @@ windowlayout=520
  ncx=0
  ncy=0
  x=338
- y=120
+ y=112
  cx=939
  cy=621
  rcx=0
