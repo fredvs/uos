@@ -3578,7 +3578,7 @@ function Tuos_Player.AddFromEndlessMuted(Channels : cint32; FramesCount: cint32)
   // Add a input from Endless Muted dummy sine wav
   // FramesCountByChan = FramesCount of input-to-follow div channels of input-to-follow.
 var
-  x : cint32;
+  x, i : cint32;
 begin
  result := -1 ;
   x := 0;
@@ -3602,6 +3602,11 @@ begin
   StreamIn[x].Data.Wantframes := FramesCount * 2 div channels  ;
  
   SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
+  
+   StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames ;
+  
+   for i := 0 to length(StreamIn[x].Data.Buffer) -1 do
+  StreamIn[x].Data.Buffer[i] := 0.0;
   
   StreamIn[x].Data.SampleFormat := CInt32(0);
  
@@ -5896,18 +5901,11 @@ begin
 end;
 
 procedure Tuos_Player.ReadEndless(x : integer);
-var
-x2 : integer = 0;
   begin
- 
-  while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
-
-  begin
-  StreamIn[x].Data.Buffer[x2] := 0.0;
-  x2 := x2 + 1 ;
-  end;
- 
-  StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames ;
+{ 
+ Nothing to do: all is done with AddFromEndlessMuted.
+  }
+  
   end;
  
 {$IF DEFINED(synthesizer)}
