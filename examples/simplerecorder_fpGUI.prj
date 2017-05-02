@@ -659,6 +659,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=0
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -926,7 +927,7 @@ sourcefiles=27
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/define.inc
- /home/fred/uos/examples/simplerecorder_fpGUI.pas
+ ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/consoleplaymemory.pas
  /home/fred/fpgui/src/corelib/fpg_main.pas
  ${PROJECTDIR}/uos_opus.pas
@@ -1024,7 +1025,6 @@ order=27
  15
  16
  17
-tabsize=60
 firsttab=0
 index=5
 [layout]

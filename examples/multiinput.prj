@@ -744,13 +744,13 @@ findhistory=1
  AddFromSynth
 findoptions=1
 editpos=7
- 0,0
- 0,0
- 0,0
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,534
- 0,0
- 0,0
- 0,19
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -811,8 +811,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
- cy=781
+ cx=929
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -824,16 +824,16 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=232
- y=53
+ x=338
+ y=120
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,781
+  basedock,0,0,929,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -947,7 +947,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=572
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1148,9 +1148,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=647
- cx=1356
- cy=134
+ y=501
+ cx=929
+ cy=103
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1247,8 +1247,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
- cy=69
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1263,8 +1263,8 @@ windowlayout=520
  ncy=2
  x=0
  y=0
- cx=1356
- cy=69
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1279,8 +1279,8 @@ windowlayout=520
  ncy=0
  x=162
  y=0
- cx=1194
- cy=572
+ cx=767
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1314,9 +1314,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=72
- cx=1356
- cy=572
+ y=56
+ cx=929
+ cy=442
  rcx=0
  rcy=0
 [targetconsole]

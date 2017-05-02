@@ -96,7 +96,7 @@ var
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 
    if res = 0 then begin
-   
+    InputIndex1 := -1 ;
     PlayerIndex1 := 0;
     
     // Create a memory stream from a audio file
@@ -104,7 +104,7 @@ var
     thememorystream.LoadFromFile(pchar(SoundFilename)); 
     thememorystream.Position:= 0; 
     
-    uos_CreatePlayer(PlayerIndex1);
+    if uos_CreatePlayer(PlayerIndex1) then
    
     InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,0,-1,0,-1);
   // Add a input from memory stream with custom parameters

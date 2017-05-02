@@ -790,14 +790,14 @@ findhistory=13
 findoptions=1
 editpos=9
  12,6
- 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,336
  0,-1073741823
  0,-1073741823
- 0,9
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -910,7 +910,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -932,7 +932,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1354,7 +1354,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

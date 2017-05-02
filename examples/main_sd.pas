@@ -36,6 +36,7 @@ type
 var
   Form1: TForm1;
   stopit :boolean = false;
+  allok : boolean = false;
   x: integer = 0;
   channels : cardinal = 2 ; // mono output
    
@@ -164,24 +165,27 @@ posi := 1;
  
      for i := 0 to 2 do   
  begin
-   uos_CreatePlayer(i);
+  if uos_CreatePlayer(i) then
    
    // using memorystream
-   uos_AddFromMemoryStream(i,ms[i],0,-1,0,256);
+  if uos_AddFromMemoryStream(i,ms[i],0,-1,0,256) > -1 then
    
    // using file
-   // uos_AddFromfile(i,pchar(sound[i]),-1,0,256);
+   // if uos_AddFromfile(i,pchar(sound[i]),-1,0,256) > -1 then
  
-  uos_AddFromEndlessMuted(i, 256 div channels); 
+  if uos_AddFromEndlessMuted(i, 256 div channels) > -1 then
    // this for a dummy endless input, must be last input
  
-  uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256);
- 
+  if uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256) > -1 then // stereo output
+ begin
   uos_PlayNoFree(i);
   sleep(250);
+  allok := true;
+ end else allok := false; 
  end;
-  
-end;
+ 
+ if allok = false then application.terminate;
+end;                                            
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin

@@ -81,7 +81,9 @@ var
     //// If PlayerIndex exists already, it will be overwriten...
   
    PlayerIndex1 := 0;
-   uos_CreatePlayer(PlayerIndex1); 
+   inindex1 := -1;
+   
+   if uos_CreatePlayer(PlayerIndex1) then
 
     inindex1 := uos_AddFromSynth(PlayerIndex1,440,-1,-1, -1,-1, -1, -1 );  
       
@@ -96,13 +98,14 @@ var
      //  result :   Input Index in array    -1 = error
   //  uos_AddFromSynth(PlayerIndex1,110,-1,-1, -1,-1, -1, 512 );  
    
-    uos_AddIntoDevOut(PlayerIndex1,-1,-1,-1,-1, 0,-1);
-   //// add a Output into device with custom parameters
+ if inindex1 > -1 then
+ if uos_AddIntoDevOut(PlayerIndex1,-1,-1,-1,-1, 0,-1) > - 1 then
+    //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
 
-   
-    /////// everything is ready, here we are, lets play it...
+  begin 
+ /////// everything is ready, here we are, lets play it...
     
     uos_Play(PlayerIndex1);
    
@@ -130,6 +133,7 @@ var
      uos_InputSetSynth(PlayerIndex1,inindex1, 440, 1, 1, true);
       sleep(1200) ; 
       
+   end;
    end;
 
  end;

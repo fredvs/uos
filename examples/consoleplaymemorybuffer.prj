@@ -712,6 +712,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=0
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -976,7 +977,7 @@ sourcefiles=20
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
- /home/fred/uos/examples/consoleplaymemorybuffer.pas
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos.pas
@@ -1031,7 +1032,6 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-tabsize=60
 firsttab=14
 index=16
 [layout]
@@ -1048,8 +1048,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=604
+ cx=1356
+ cy=702
  rcx=0
  rcy=0
  [mainfo]
@@ -1068,10 +1068,10 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,604
+  basedock,0,0,1356,702
  focusedchild=0
- wsize=0
- active=1
+ wsize=6
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1089,7 +1089,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1184,7 +1184,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=442
+ cy=514
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1393,9 +1393,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=501
- cx=929
- cy=103
+ y=582
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1494,8 +1494,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1510,8 +1510,8 @@ windowlayout=549
  ncy=2
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
  [sourcefo]
@@ -1526,8 +1526,8 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=767
- cy=442
+ cx=1194
+ cy=514
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1561,15 +1561,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=56
- cx=929
- cy=442
+ y=65
+ cx=1356
+ cy=514
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

@@ -628,6 +628,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=0
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -800,9 +801,9 @@ editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,283
+ 0,-1073741823
  0,281
- 0,517
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -852,7 +853,6 @@ order=8
  4
  5
  7
-tabsize=60
 firsttab=2
 index=2
 [layout]

@@ -92,25 +92,29 @@ var
     //// If PlayerIndex exists already, it will be overwriten...
   
    PlayerIndex1 := 0;
-   uos_CreatePlayer(PlayerIndex1); 
-
+  
+  if uos_CreatePlayer(PlayerIndex1) then
+  
+  begin
+  
     //// add a Input from audio-file with default parameters
     //////////// PlayerIndex : Index of a existing Player
     ////////// FileName : filename of audio file
     //  result : -1 nothing created, otherwise Input Index in array
     
-    uos_AddFromFile(PlayerIndex1,(pchar(SoundFilename)));
+   if uos_AddFromFile(PlayerIndex1,(pchar(SoundFilename))) > -1 then
 
     //// add a Output into device with default parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
 
-    uos_AddIntoDevOut(PlayerIndex1);
+   if uos_AddIntoDevOut(PlayerIndex1) > -1 then
 
     /////// everything is ready, here we are, lets play it...
     uos_Play(PlayerIndex1);
    
     sleep(2000);
+   end;
    end;
 
  end;

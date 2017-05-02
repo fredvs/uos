@@ -621,6 +621,7 @@ editmarkpairwords=1
 fpgdesigner=1
 backupfilecount=0
 encoding=0
+eolstyle=1
 trimtrailingwhitespace=0
 codetemplatedirs=1
  ${TEMPLATEDIR}
@@ -710,7 +711,7 @@ on=1
 path=1
  /home/fred/uos/examples/consolesynth.pas
 line=1
- 87
+ 89
 address=1
  0
 addbkpt=1
@@ -798,7 +799,7 @@ editpos=17
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,144
+ 20,133
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -903,7 +904,6 @@ order=17
  2
  3
  4
-tabsize=60
 firsttab=2
 index=3
 [layout]
@@ -962,7 +962,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -984,7 +984,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1045,7 +1045,7 @@ windowlayout=530
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=268484715
+ useroptions=805355627
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1059,16 +1059,16 @@ windowlayout=530
  cy=440
  rcx=0
  rcy=0
- [projecttreefo.project_tree]
+ [projecttreefo.grid]
  propcolwidthref=18
  width0=141
  sortdescend0=0
  width1=12
  sortdescend1=0
  sorted=0
- col=1
+ col=0
  row=-1073741823
- rowheight=17
+ rowheight=18
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1406,7 +1406,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

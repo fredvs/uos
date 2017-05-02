@@ -153,7 +153,7 @@ options=114
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=5
+ index=0
  [projectoptionsfo.filefiltergrid]
  propcolwidthref=621
  width0=112
@@ -434,14 +434,14 @@ makeoptionson=8
  63
  2
  0
- 2
+ 7
  2
  61
  4095
  63
 compilerusedon=29
- 4095
- 0
+ 4080
+ 15
  0
  0
  0
@@ -470,12 +470,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4095
+ 3840
  0
  0
  0
  0
- 0
+ 127
 exeusedon=14
  4095
  0
@@ -733,27 +733,22 @@ hintheight=0
 finddtext=
 findhistory=0
 findoptions=1
-editpos=4
+editpos=3
  0,9
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-bookmarks3=0
-sourcefiles=4
+sourcefiles=3
  ${PROJECTDIR}/simpleplayer.lpr
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/simpleplayer.lpr
- /home/fred/msegui/lib/common/kernel/mseapplication.pas
-relpaths=4
+relpaths=3
  simpleplayer.lpr
  main_sp.pas
  simpleplayer.lpr
- msegui/lib/common/kernel/mseapplication.pas
-ismoduletexts=4
- 0
+ismoduletexts=3
  0
  0
  0
@@ -763,7 +758,7 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=2
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -842,7 +837,7 @@ windowlayout=520
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0

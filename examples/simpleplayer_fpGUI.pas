@@ -466,15 +466,16 @@ loadok : boolean = false;
     radiobutton1.Enabled := False;
     radiobutton2.Enabled := False;
     radiobutton3.Enabled := False;
-
+   
+   InputIndex1 := -1;
     PlayerIndex1 := 0;
     // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
     // If PlayerIndex exists already, it will be overwritten...
     
    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
-     uos_CreatePlayer(PlayerIndex1);
+   if uos_CreatePlayer(PlayerIndex1) then
      {$else}
-    uos_CreatePlayer(PlayerIndex1,self);
+   if uos_CreatePlayer(PlayerIndex1,self) then
     {$endif}
     //// Create the player.
     //// PlayerIndex : from 0 to what your computer can do !
