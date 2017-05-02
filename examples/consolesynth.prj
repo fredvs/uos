@@ -777,8 +777,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=synth
-findhistory=12
+finddtext=addfrome
+findhistory=13
+ addfrome
  synth
  AddFromSynth
  writeln
@@ -794,18 +795,18 @@ findhistory=12
 findoptions=1
 editpos=17
  0,-1073741823
+ 0,3651
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,133
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 20,133
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,1101
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -905,7 +906,7 @@ order=17
  3
  4
 firsttab=2
-index=3
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -984,7 +985,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0

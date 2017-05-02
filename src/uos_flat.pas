@@ -350,9 +350,9 @@ function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
 {$endif}
 
 {$IF DEFINED(synthesizer)}
-function uos_AddFromEndlessMuted(PlayerIndex: cint32; FramesCount : cint32): cint32;
- // Add a input from Endless Muted dummy sine wav
- // FramesCount = FramesCount div channels
+function uos_AddFromEndlessMuted(PlayerIndex: cint32; FramesCountByChan : cint32): cint32;
+  // Add a input from Endless Muted dummy sine wav
+  // FramesCountByChan = FramesCount of input-to-follow div channels of input-to-follow.
  
 function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
@@ -1099,14 +1099,15 @@ end;
 {$endif}
 
 {$IF DEFINED(synthesizer)}
-function uos_AddFromEndlessMuted(PlayerIndex: cint32; FramesCount : cint32): cint32;
- // Add a input from Endless Muted dummy sine wav
- // FramesCount = FramesCount div channels
+function uos_AddFromEndlessMuted(PlayerIndex: cint32; FramesCountByChan : cint32): cint32;
+  // Add a input from Endless Muted dummy sine wav
+  // FramesCountByChan = FramesCount of input-to-follow div channels of input-to-follow.
+
 begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-  Result :=  uosPlayers[PlayerIndex].AddFromEndlessMuted(FramesCount) ;
+  Result :=  uosPlayers[PlayerIndex].AddFromEndlessMuted(FramesCountByChan) ;
 end; 
 
 function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
