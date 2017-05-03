@@ -6308,6 +6308,15 @@ begin
   {$endif}
 
   {$endif}
+  
+   isfirst := true; 
+  
+   {$IF DEFINED(portaudio)} 
+   for x := 0 to high(StreamOut) do 
+    if (StreamOut[x].Data.HandleSt <> nil) and 
+       (StreamOut[x].Data.TypePut = 1) then 
+     Pa_StopStream(StreamOut[x].Data.HandleSt); 
+   {$ENDIF}   
 
    if EndProcOnly <> nil then EndProcOnly;
    

@@ -969,8 +969,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=readendl
+finddtext=DoTerminateNoFreePlaye
 findhistory=20
+ DoTerminateNoFreePlaye
  readendl
  AddFromEndlessMuted
  readsynt
@@ -990,16 +991,16 @@ findhistory=20
  .play
  uos_Play
  status
- inputseek
 findoptions=1
-editpos=7
+editpos=8
  0,-1073741823
  0,-1073741823
- 0,5905
+ 0,6311
  0,-1073741823
- 0,3616
  0,-1073741823
- 0,408
+ 0,-1073741823
+ 0,-1073741823
+ 0,29
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1007,7 +1008,8 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
+bookmarks7=0
+sourcefiles=8
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
@@ -1015,7 +1017,8 @@ sourcefiles=7
  /home/fred/uos/src/uos.pas
  ${PROJECTDIR}/uos_opus.pas
  ${PROJECTDIR}/main_mi.pas
-relpaths=7
+ ${PROJECTDIR}/define.inc
+relpaths=8
  simpledrums_fpGUI.pas
  main_sd.pas
  uos.pas
@@ -1023,7 +1026,9 @@ relpaths=7
  src/uos.pas
  uos_opus.pas
  main_mi.pas
-ismoduletexts=7
+ define.inc
+ismoduletexts=8
+ 0
  0
  0
  0
@@ -1036,16 +1041,17 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=7
+order=8
  0
  1
  6
  2
+ 7
  5
  4
  3
 firsttab=0
-index=3
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1060,8 +1066,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=675
+ cx=929
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1073,16 +1079,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=123
+ y=65
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,675
+  basedock,0,0,929,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1124,7 +1130,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1196,7 +1202,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=494
+ cy=441
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1207,7 +1213,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=5
+ row=1
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1405,9 +1411,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=559
- cx=1356
- cy=116
+ y=500
+ cx=929
+ cy=104
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1506,8 +1512,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=59
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1522,8 +1528,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
- cy=59
+ cx=929
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1538,8 +1544,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=494
+ cx=767
+ cy=441
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1573,9 +1579,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=62
- cx=1356
- cy=494
+ y=56
+ cx=929
+ cy=441
  rcx=0
  rcy=0
 [targetconsole]
