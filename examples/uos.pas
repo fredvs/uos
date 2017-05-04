@@ -577,8 +577,6 @@ type
   NoFree : boolean;
   // Do not free the player at end of thread.
   
-  isfirst : boolean;
-
   BeginProc: TProc;
   // External procedure of object to execute at begin of thread
 
@@ -1626,10 +1624,7 @@ var
   {$IF DEFINED(portaudio)}
   for x := 0 to high(StreamOut) do
   if StreamOut[x].Data.HandleSt <> nil then
-  begin
-  if (isfirst = true) or (nofree = false) then
-  Pa_StartStream(StreamOut[x].Data.HandleSt);
-  end;
+   Pa_StartStream(StreamOut[x].Data.HandleSt);
   {$endif}
   
   for x := 0 to high(StreamIn) do
@@ -1664,11 +1659,8 @@ var
   RTLeventResetEvent(evPause);
  end;
  
- if (isfirst = true) or (nofree = false) then
-  start;  // resume;  { if fpc version <= 2.4.4}
-
-  isfirst := false; 
-   end;
+ start;  // resume;  { if fpc version <= 2.4.4}
+  end;
 
 end;     
 
@@ -6309,8 +6301,6 @@ begin
 
   {$endif}
   
-   isfirst := true; 
-  
    {$IF DEFINED(portaudio)} 
    for x := 0 to high(StreamOut) do 
     if (StreamOut[x].Data.HandleSt <> nil) and 
@@ -8208,7 +8198,6 @@ begin
   intobuf := false;
   NLooped:= 0; 
   NoFree:= False;
-  isfirst := true; 
   status := 2;
   BeginProc := nil;
   EndProc := nil;

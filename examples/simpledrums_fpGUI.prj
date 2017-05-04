@@ -828,12 +828,12 @@ path=11
  /home/fred/uos/examples/uos_flat.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
 line=11
- 3980
+ 3972
  33
  913
  764
- 2773
- 2086
+ 2765
+ 2078
  603
  250
  292
@@ -969,8 +969,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=DoTerminateNoFreePlaye
+finddtext=isfirst
 findhistory=20
+ isfirst
  DoTerminateNoFreePlaye
  readendl
  AddFromEndlessMuted
@@ -978,7 +979,6 @@ findhistory=20
  TypePut
  AddFromSynth
  addfrom
- isfirst
  dotermina
  freeplayer(
  freepla
@@ -995,7 +995,7 @@ findoptions=1
 editpos=8
  0,-1073741823
  0,-1073741823
- 0,6311
+ 0,8200
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1051,7 +1051,7 @@ order=8
  4
  3
 firsttab=0
-index=4
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1066,8 +1066,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=604
+ cx=1356
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -1086,9 +1086,9 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,604
+  basedock,0,0,1356,694
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1202,7 +1202,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=441
+ cy=507
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1213,7 +1213,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=1
+ row=11
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1411,9 +1411,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=500
- cx=929
- cy=104
+ y=574
+ cx=1356
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1512,8 +1512,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1528,8 +1528,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [sourcefo]
@@ -1544,8 +1544,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=767
- cy=441
+ cx=1194
+ cy=507
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1579,9 +1579,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=56
- cx=929
- cy=441
+ y=64
+ cx=1356
+ cy=507
  rcx=0
  rcy=0
 [targetconsole]
