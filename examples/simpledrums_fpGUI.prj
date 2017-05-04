@@ -50,8 +50,9 @@ findinfiledialog=58
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=writeln
+ value=uos_playpausedn
  history=20
+  uos_playpausedn
   writeln
   outputinput
   inputoutput
@@ -71,7 +72,6 @@ findinfiledialog=58
   adddspout
   setdspout
   setdspin
-  dspin
  [findinfileadialogfo]
  stackedunder=
  x=615
@@ -969,8 +969,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=isfirst
+finddtext=paused
 findhistory=20
+ paused
  isfirst
  DoTerminateNoFreePlaye
  readendl
@@ -990,17 +991,18 @@ findhistory=20
  nofree
  .play
  uos_Play
- status
 findoptions=1
-editpos=8
+editpos=10
  0,-1073741823
  0,-1073741823
- 0,8200
+ 0,7495
+ 0,1688
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,29
+ 0,307
+ 0,59
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1009,7 +1011,9 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 bookmarks7=0
-sourcefiles=8
+bookmarks8=0
+bookmarks9=0
+sourcefiles=10
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
@@ -1018,7 +1022,9 @@ sourcefiles=8
  ${PROJECTDIR}/uos_opus.pas
  ${PROJECTDIR}/main_mi.pas
  ${PROJECTDIR}/define.inc
-relpaths=8
+ ${PROJECTDIR}/simpledrums_fpGUI.pas
+ ${PROJECTDIR}/main_sd.pas
+relpaths=10
  simpledrums_fpGUI.pas
  main_sd.pas
  uos.pas
@@ -1027,7 +1033,11 @@ relpaths=8
  uos_opus.pas
  main_mi.pas
  define.inc
-ismoduletexts=8
+ simpledrums_fpGUI.pas
+ main_sd.pas
+ismoduletexts=10
+ 0
+ 0
  0
  0
  0
@@ -1041,7 +1051,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=8
+order=10
  0
  1
  6
@@ -1050,8 +1060,10 @@ order=8
  5
  4
  3
+ 8
+ 9
 firsttab=0
-index=3
+index=9
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1176,7 +1188,7 @@ windowlayout=530
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1552,7 +1564,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

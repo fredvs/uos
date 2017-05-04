@@ -57,7 +57,7 @@ if stopit = false then
     for i := 0 to 2 do
     if(Copy(drum_beats[i], posi, 1) = 'x') then
     begin
-     uos_PlayPausednofree(i) ;
+     uos_PlaynofreePaused(i) ;
      end;
      
      application.processmessages;  // yes or no ?

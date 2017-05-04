@@ -693,7 +693,7 @@ Procedure uos_PlayPaused(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start pl
 
 Procedure uos_PlayNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing but do not free the player after stop
 
-Procedure uos_PlayPausedNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start play paused with loop but not free player at end
+Procedure uos_PlayNoFreePaused(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start play paused with loop but not free player at end
   
 Procedure uos_FreePlayer(PlayerIndex: cint32) ;  // Works only when PlayNoFree() was used: free the player
 
@@ -1657,7 +1657,7 @@ begin
  uos_PlayEx(PlayerIndex, True,nloop);
 end;
 
-Procedure uos_PlayPausedNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing paused but do not free the player after stop
+Procedure uos_PlayNoFreePaused(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing paused but do not free the player after stop
 begin
  uos_PlayEx(PlayerIndex, True,nloop, true);
 end;

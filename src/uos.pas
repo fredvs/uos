@@ -636,7 +636,7 @@ type
   
   Procedure PlayNoFree(nloop: Integer = 0) ; // Starting but do not free the player after stop with loop
   
-  Procedure PlayPausedNoFree(nloop: Integer = 0) ;  // Start play paused with loop but not free player at end
+  Procedure PlayNoFreePaused(nloop: Integer = 0) ;  // Start play paused with loop but not free player at end
   
   Procedure FreePlayer() ;  // Free the player: works only when PlayNoFree() was called.
 
@@ -1669,7 +1669,7 @@ begin
  PlayEx(False,nloop,true);
 end;
 
-Procedure Tuos_Player.PlayPausedNoFree(nloop: Integer = 0) ;  // Start play paused with loop not free player at end
+Procedure Tuos_Player.PlayNoFreePaused(nloop: Integer = 0) ;  // Start play paused with loop not free player at end
 begin
  PlayEx(true,nloop,true);
 end;
