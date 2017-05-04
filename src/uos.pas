@@ -70,7 +70,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 170502;
+  uos_version : cint32 = 170505;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -567,6 +567,7 @@ type
   procedure Execute; override;
   public
   isAssigned: boolean ;
+  isFirst: boolean;
   Status: cint32;
   Index: cint32;
   
@@ -1622,6 +1623,7 @@ var
   NoFree:= no_free;
    
   {$IF DEFINED(portaudio)}
+  if ((isFirst = true) and (NoFree = true)) or (NoFree = false) then
   for x := 0 to high(StreamOut) do
   if StreamOut[x].Data.HandleSt <> nil then
    Pa_StartStream(StreamOut[x].Data.HandleSt);
@@ -1645,6 +1647,8 @@ var
    StreamIn[x].Data.status  := 1 ;
   
   end;
+  
+  isFirst := false;
  
   Status := 1;
   
@@ -1659,7 +1663,7 @@ var
   RTLeventResetEvent(evPause);
  end;
  
- start;  // resume;  { if fpc version <= 2.4.4}
+ Start;  // resume;  { if fpc version <= 2.4.4}
   end;
 
 end;     
@@ -1669,7 +1673,7 @@ begin
  PlayEx(False,nloop,true);
 end;
 
-Procedure Tuos_Player.PlayNoFreePaused(nloop: Integer = 0) ;  // Start play paused with loop not free player at end
+Procedure Tuos_Player.PlayNoFreePaused(nloop: Integer = 0) ;  // Start play paused with loop and not free player at end
 begin
  PlayEx(true,nloop,true);
 end;
@@ -1686,7 +1690,6 @@ end;
 
 Procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
 begin
-
  if (isAssigned = True) then
   begin
   NLooped:= 0;
@@ -1837,14 +1840,12 @@ procedure Tuos_Player.InputSetArrayLevelEnable(InputIndex: cint32 ; levelcalc : 
 begin
  if (Status > 0) and (isAssigned = True) then
  begin
-
-if index + 1 > length(uosLevelArray) then
+ if index + 1 > length(uosLevelArray) then
  setlength(uosLevelArray,index + 1) ;
  if InputIndex + 1 > length(uosLevelArray[index]) then
  setlength(uosLevelArray[index],InputIndex + 1) ;
   setlength(uosLevelArray[index][InputIndex],0) ;
  StreamIn[InputIndex].Data.levelArrayEnable := levelcalc;
-
 end;
 end;
 
@@ -2766,7 +2767,7 @@ var
  // volumearray : array of double;
 
   ps: PDArShort;  // if input is Int16 format
-  pl: PDArLong;  // if input is Int32 format
+  pl: PDArLong;   // if input is Int32 format
   pf: PDArFloat;  // if input is Float32 format
 begin
 //setlength(volumearray,Data.channels);
@@ -3235,7 +3236,7 @@ var
   
   end;
   
-  function ConvertSampleFormat(Data: Tuos_Data): TDArFloat;
+function ConvertSampleFormat(Data: Tuos_Data): TDArFloat;
   var
   x : integer ;
   
@@ -3341,11 +3342,8 @@ StreamOut[OutputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
 end;
   
 procedure Tuos_Player.OutputSetDSPNoiseRemoval(OutputIndex: cint32; Enable: boolean);
-  
  begin
-
-StreamOut[OutputIndex].DSP[StreamOut[OutputIndex].data.DSPNoiseIndex].enabled := Enable ; 
-
+ StreamOut[OutputIndex].DSP[StreamOut[OutputIndex].data.DSPNoiseIndex].enabled := Enable ; 
  end;  
   
   {$endif}  
@@ -3474,7 +3472,6 @@ begin
   Gain, TypeFilter, AlsoBuf, True, LoopProc);
 
   Result := FilterIndex;
-
 end;
 
 {$IF DEFINED(portaudio)}
@@ -3700,10 +3697,7 @@ procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: float; Volume
   // VolumeL :  from 0 to 1 (-1 = do not change)
   // VolumeR :  from 0 to 1 (-1 = do not change)
   // Enabled : true or false ;
-
-// var
-// x2 : cint32;
- begin
+begin
  if Frequency <> -1 then
  begin
  StreamIn[InputIndex].Data.Enabled := Enable;
@@ -4240,7 +4234,6 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   
   setlength(buffadd, PipeBufferSize);
   setlength(StreamIn[x].data.BufferTMP, PipeBufferSize);
-  
     
   while (len2 < PipeBufferSize) and (len > 0) do
   begin
@@ -6251,6 +6244,8 @@ procedure Tuos_Player.DoTerminateNoFreePlayer;
 var
 x, x2 : integer;
 begin
+
+  isFirst := true;
  
   for x := 0 to high(StreamIn) do
   begin
@@ -8195,6 +8190,7 @@ begin
   refer := aparent; // for fpGUI
   {$endif}
   isAssigned := true; 
+  isFirst := true; 
   intobuf := false;
   NLooped:= 0; 
   NoFree:= False;

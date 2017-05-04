@@ -804,12 +804,12 @@ sigsettings=27
 defaultmake=32
 [breakpoints]
 on=11
- -1
- 0
- -1
  0
  0
  -1
+ 0
+ 0
+ 0
  0
  0
  0
@@ -828,15 +828,15 @@ path=11
  /home/fred/uos/examples/uos_flat.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
 line=11
- 3972
+ 3966
  33
  913
  764
- 2765
- 2078
- 603
+ 2766
+ 2079
+ 599
  250
- 292
+ 291
  356
  142
 address=11
@@ -972,6 +972,9 @@ hintheight=95
 finddtext=paused
 findhistory=20
  paused
+ terminate
+ .crea
+ isassign
  isfirst
  DoTerminateNoFreePlaye
  readendl
@@ -988,21 +991,19 @@ findhistory=20
  setgl
  start
  execute
- nofree
- .play
- uos_Play
 findoptions=1
-editpos=10
+editpos=11
  0,-1073741823
  0,-1073741823
- 0,7495
- 0,1688
+ 0,72
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,307
- 0,59
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1013,7 +1014,8 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 bookmarks9=0
-sourcefiles=10
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
@@ -1024,7 +1026,8 @@ sourcefiles=10
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
-relpaths=10
+ ${PROJECTDIR}/define.inc
+relpaths=11
  simpledrums_fpGUI.pas
  main_sd.pas
  uos.pas
@@ -1035,7 +1038,9 @@ relpaths=10
  define.inc
  simpledrums_fpGUI.pas
  main_sd.pas
-ismoduletexts=10
+ define.inc
+ismoduletexts=11
+ 0
  0
  0
  0
@@ -1051,7 +1056,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=10
+order=11
  0
  1
  6
@@ -1062,8 +1067,9 @@ order=10
  3
  8
  9
+ 10
 firsttab=0
-index=9
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1091,8 +1097,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=123
- y=65
+ x=226
+ y=77
  cx=939
  cy=621
  rcx=0
@@ -1188,7 +1194,7 @@ windowlayout=530
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1225,7 +1231,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=11
+ row=1
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1564,7 +1570,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=findinfilefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

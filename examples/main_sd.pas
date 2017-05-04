@@ -38,7 +38,7 @@ var
   stopit :boolean = false;
   allok : boolean = false;
   x: integer = 0;
-  channels : cardinal = 2 ; // mono output
+  channels : cardinal = 2 ; // stereo output
    
 implementation
 
