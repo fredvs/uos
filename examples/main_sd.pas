@@ -160,12 +160,13 @@ drum_beats[2] := 'x0000000x0x00000'; // kick
 
 posi := 1;
 
- uos_SetGlobalEvent(true) ; // This set events (like pause/replay thread) to global.
-                           // One event (for example replay) will have impact on all players.
- 
      for i := 0 to 2 do   
  begin
   if uos_CreatePlayer(i) then
+  
+   if uos_SetGlobalEvent(i, true) then
+  // This set events (like pause/replay thread) to global.
+  //One event (for example replay) will have impact on all players.  
    
    // using memorystream
   if uos_AddFromMemoryStream(i,ms[i],0,-1,0,256) > -1 then

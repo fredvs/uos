@@ -705,7 +705,7 @@ procedure uos_Pause(PlayerIndex: cint32);  // Pause playing
 
 function uos_GetVersion() : cint32 ;  // version of uos
 
-function uos_SetGlobalEvent(isenabled : boolean) : boolean;
+function uos_SetGlobalEvent(PlayerIndex: cint32; isenabled : boolean) : boolean;
   // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
   // result : true if set ok.
 
@@ -791,6 +791,16 @@ begin
 uosPlayers[PlayerIndex].OutputSetDSPNoiseRemoval(OutputIndex, Enable);
 end;
 {$endif} 
+
+function uos_SetGlobalEvent(PlayerIndex: cint32; isenabled : boolean) : boolean;
+  // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
+  // result : true if set ok.
+begin
+result := false;
+if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+result := uosPlayers[PlayerIndex].SetGlobalEvent(isenabled);
+end;
 
 procedure uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
   VolRight: double);
@@ -1806,13 +1816,6 @@ procedure uos_unloadServerLib();
 function uos_GetVersion() : cint32 ;
 begin
 result := uos.uos_GetVersion() ;
-end;
-
-function uos_SetGlobalEvent(isenabled : boolean) : boolean;
-  // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
-  // result : true if set ok.
-begin
-result := uos.uos_SetGlobalEvent(isenabled) ;
 end;
 
 procedure uos_unloadlib() ;

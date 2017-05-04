@@ -233,7 +233,6 @@ type
   Tuos_Init = class(TObject)
   public
   evGlobalPause: PRTLEvent;  // for global pausing
-  isGlobalPause: boolean ;
   constructor Create;
   private
 
@@ -565,8 +564,10 @@ type
   procedure DoTerminatePlayer;
   procedure DoEndProc;
   procedure Execute; override;
+  
   public
   isAssigned: boolean ;
+  isGlobalPause: boolean ;
   isFirst: boolean;
   Status: cint32;
   Index: cint32;
@@ -621,6 +622,10 @@ type
 
   function IsLooped: Boolean;  
   
+   function SetGlobalEvent(isenabled : boolean) : boolean;
+  // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
+  // result : true if set ok. 
+   
   // Audio methods
   
   procedure PlayEx(no_free: Boolean; nloop: Integer; paused: boolean= false); // Start playing with free at end as parameter and assign loop
@@ -1103,10 +1108,6 @@ procedure uos_unloadPlugin(PluginName: PChar);
 procedure uos_Free();
   // To call at end of application.
   // If uos_flat.pas was used, it will free all the uos_player created.
-  
-function uos_SetGlobalEvent(isenabled : boolean) : boolean;
-  // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
-  // result : true if set ok. 
   
 function uos_GetVersion() : cint32 ;  // version of uos
 
@@ -1652,13 +1653,13 @@ var
  
   Status := 1;
   
-  if uosInit.isGlobalPause = true then
+  if isGlobalPause = true then
   RTLeventSetEvent(uosInit.evGlobalPause) else   
   RTLeventSetEvent(evPause);
   
  if  paused = true then
  begin
-   if uosInit.isGlobalPause = true then
+   if isGlobalPause = true then
   RTLeventReSetEvent(uosInit.evGlobalPause) else   
   RTLeventResetEvent(evPause);
  end;
@@ -1705,7 +1706,7 @@ begin
       (not IsLooped) then 
   begin
   Status := 1;
-  if uosInit.isGlobalPause = true then
+  if isGlobalPause = true then
   RTLeventSetEvent(uosInit.evGlobalPause) else   
   RTLeventSetEvent(evPause);
   end;
@@ -1716,7 +1717,7 @@ begin
   if (Status > 0) and (isAssigned = True) then
   begin
   NLooped:= 0;
-  if uosInit.isGlobalPause = true then
+  if isGlobalPause = true then
   RTLeventSetEvent(uosInit.evGlobalPause) else   
   RTLeventSetEvent(evPause);
   Status := 0;
@@ -1727,7 +1728,7 @@ procedure Tuos_Player.Pause();
 begin
   if (Status > 0) and (isAssigned = True) then
   begin
-  if uosInit.isGlobalPause = true then
+  if isGlobalPause = true then
   RTLeventReSetEvent(uosInit.evGlobalPause) else   
   RTLeventResetEvent(evPause);
   Status := 2;
@@ -6310,7 +6311,7 @@ begin
    
    Status := 2;
 
-    if uosInit.isGlobalPause = true then
+    if isGlobalPause = true then
   begin
   RTLeventReSetEvent(uosInit.evGlobalPause)
   end
@@ -7297,7 +7298,7 @@ end;
 
 Procedure Tuos_Player.CheckIfPaused ;
 begin
-   if uosInit.isGlobalPause = true then
+   if isGlobalPause = true then
   begin
   RTLeventWaitFor(uosInit.evGlobalPause);
   RTLeventSetEvent(uosInit.evGlobalPause);
@@ -7969,17 +7970,16 @@ begin
 result := uos_version ;
 end;
 
-function uos_SetGlobalEvent(isenabled : boolean) : boolean;
+function Tuos_Player.SetGlobalEvent(isenabled : boolean) : boolean;
   // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
   // result : true if set ok.
 begin
 result := false;
-if assigned(uosinit) then 
-begin
-uosinit.isGlobalPause := isenabled;
-result := true;
-end;
-
+ if (isAssigned = True) then
+  begin
+  isGlobalPause := isenabled;
+  result := true;
+  end;
 end;   
 
 procedure uos_unloadlib() ;
@@ -8144,7 +8144,6 @@ constructor Tuos_Init.Create;
 begin
 
   TDummyThread.Create(false);
-  isGlobalPause := false;
   evGlobalPause := RTLEventCreate;
 
   SetExceptionMask(GetExceptionMask + [exZeroDivide] + [exInvalidOp] +
@@ -8190,7 +8189,8 @@ begin
   refer := aparent; // for fpGUI
   {$endif}
   isAssigned := true; 
-  isFirst := true; 
+  isFirst := true;
+  isGlobalPause := false;
   intobuf := false;
   NLooped:= 0; 
   NoFree:= False;

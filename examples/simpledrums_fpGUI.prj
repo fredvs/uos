@@ -83,8 +83,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=520
- y=215
+ x=521
+ y=217
  cx=298
  cy=116
 replacedialog=33
@@ -828,17 +828,17 @@ path=11
  /home/fred/uos/examples/uos_flat.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
 line=11
- 3966
+ 3967
  33
  913
  764
- 2766
- 2079
- 599
- 250
- 291
+ 2767
+ 2080
+ 601
+ 252
+ 293
  356
- 142
+ 144
 address=11
  5002412
  0
@@ -969,13 +969,16 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=paused
+finddtext=SetGlobalEvent
 findhistory=20
+ SetGlobalEvent
+ isGlobalPause
+ isfirst
+ setg
  paused
  terminate
  .crea
  isassign
- isfirst
  DoTerminateNoFreePlaye
  readendl
  AddFromEndlessMuted
@@ -988,22 +991,21 @@ findhistory=20
  freepla
  playex
  inputset
- setgl
- start
- execute
 findoptions=1
-editpos=11
+editpos=13
  0,-1073741823
- 0,-1073741823
- 0,72
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 1,175
+ 0,627
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,801
+ 0,134
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1015,7 +1017,9 @@ bookmarks7=0
 bookmarks8=0
 bookmarks9=0
 bookmarks10=0
-sourcefiles=11
+bookmarks11=0
+bookmarks12=0
+sourcefiles=13
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
@@ -1027,7 +1031,9 @@ sourcefiles=11
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/define.inc
-relpaths=11
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/simpledrums_fpGUI.pas
+relpaths=13
  simpledrums_fpGUI.pas
  main_sd.pas
  uos.pas
@@ -1039,7 +1045,11 @@ relpaths=11
  simpledrums_fpGUI.pas
  main_sd.pas
  define.inc
-ismoduletexts=11
+ uos_flat.pas
+ simpledrums_fpGUI.pas
+ismoduletexts=13
+ 0
+ 0
  0
  0
  0
@@ -1056,11 +1066,13 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=11
+order=13
  0
  1
  6
  2
+ 12
+ 11
  7
  5
  4
@@ -1069,7 +1081,7 @@ order=11
  9
  10
 firsttab=0
-index=3
+index=1
 [layout]
 windowlayout=530
  [mainfo.basedock]
