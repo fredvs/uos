@@ -778,7 +778,7 @@ findoptions=1
 editpos=13
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 0,0
  0,-1073741823
  0,131
  0,-1073741823
@@ -864,7 +864,7 @@ order=13
  8
  9
 firsttab=1
-index=6
+index=4
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -880,7 +880,7 @@ windowlayout=520
  x=0
  y=0
  cx=929
- cy=585
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -899,7 +899,7 @@ windowlayout=520
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,929,604
  focusedchild=0
  wsize=0
  active=1
@@ -1015,7 +1015,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=428
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1216,9 +1216,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=485
+ y=501
  cx=929
- cy=100
+ cy=103
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1316,7 +1316,7 @@ windowlayout=520
  x=0
  y=0
  cx=929
- cy=51
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1332,7 +1332,7 @@ windowlayout=520
  x=0
  y=0
  cx=929
- cy=51
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1348,7 +1348,7 @@ windowlayout=520
  x=162
  y=0
  cx=767
- cy=428
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1382,9 +1382,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=54
+ y=56
  cx=929
- cy=428
+ cy=442
  rcx=0
  rcy=0
 [targetconsole]

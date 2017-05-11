@@ -765,6 +765,7 @@ procedure uos_InputAddDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].StreamIn[InputIndex].data.DSPNoiseIndex :=
   uosPlayers[PlayerIndex].InputAddDSPNoiseRemoval(InputIndex);
 end;
@@ -773,6 +774,7 @@ procedure uos_InputSetDSPNoiseRemoval(PlayerIndex: cint32; InputIndex: cint32; E
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].InputSetDSPNoiseRemoval(InputIndex, Enable);
 end;
 
@@ -780,6 +782,7 @@ procedure uos_OutputAddDSPNoiseRemoval(PlayerIndex: cint32; OutputIndex: cint32)
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].StreamOut[OutputIndex].data.DSPNoiseIndex :=
   uosPlayers[PlayerIndex].OutputAddDSPNoiseRemoval(OutputIndex);
 end;
@@ -788,6 +791,7 @@ procedure uos_OutputSetDSPNoiseRemoval(PlayerIndex: cint32; OutputIndex: cint32;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].OutputSetDSPNoiseRemoval(OutputIndex, Enable);
 end;
 {$endif} 
@@ -799,6 +803,7 @@ begin
 result := false;
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].SetGlobalEvent(isenabled);
 end;
 
@@ -807,6 +812,7 @@ procedure uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].InputAddDSPVolume(InputIndex, VolLeft, VolRight);
 end;
   // DSP Volume changer
@@ -822,6 +828,7 @@ procedure uos_OutputAddDSPVolume(PlayerIndex: cint32; OutputIndex: cint32; VolLe
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].OutputAddDSPVolume(OutputIndex, VolLeft, VolRight);
 end;
   // DSP Volume changer
@@ -837,6 +844,7 @@ procedure uos_InputSetDSPVolume(PlayerIndex: cint32; InputIndex: cint32;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].InputSetDSPVolume(InputIndex,  uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex, VolLeft, VolRight, Enable);
 end;
   // InputIndex : InputIndex of a existing Input
@@ -851,6 +859,7 @@ procedure uos_OutputSetDSPVolume(PlayerIndex: cint32; OutputIndex: cint32;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].OutputSetDSPVolume(OutputIndex, uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex, VolLeft, VolRight, Enable);
 end;
   // OutputIndex : OutputIndex of a existing Output
@@ -867,6 +876,7 @@ begin
  Result := -1;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputUpdateICY(InputIndex, icy_data) ;
  end; 
 {$endif} 
@@ -877,6 +887,7 @@ function uos_InputUpdateTag(PlayerIndex: cint32;InputIndex: cint32): boolean;
  Result := false;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputUpdateTag(InputIndex) ;
  end;
   
@@ -885,6 +896,7 @@ function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): pchar;
  Result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputGetTagTitle(InputIndex) ;
  end;
 
@@ -893,6 +905,7 @@ function uos_InputGetTagArtist(PlayerIndex: cint32; InputIndex: cint32): pchar;
  Result :=nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputGetTagArtist(InputIndex) ;
  end;
 
@@ -901,6 +914,7 @@ function uos_InputGetTagAlbum(PlayerIndex: cint32; InputIndex: cint32): pchar;
  Result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputGetTagAlbum(InputIndex) ;
  end;
 
@@ -909,6 +923,7 @@ function uos_InputGetTagComment(PlayerIndex: cint32; InputIndex: cint32): pchar;
  Result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputGetTagComment(InputIndex) ;
  end;
 
@@ -917,6 +932,7 @@ function uos_InputGetTagTag(PlayerIndex: cint32; InputIndex: cint32): pchar;
  Result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputGetTagTag(InputIndex) ;
  end;
  
@@ -925,6 +941,7 @@ function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32): pchar;
  Result := nil;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputGetTagDate(InputIndex) ;
  end;
 
@@ -943,6 +960,7 @@ begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputAddDSP(InputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
 end;
 
@@ -955,6 +973,7 @@ procedure uos_InputSetDSP(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: c
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].InputSetDSP(InputIndex, DSPinIndex, Enable) ;
 end;
 
@@ -972,6 +991,7 @@ begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].OutputAddDSP(OutputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
 end;
 
@@ -984,6 +1004,7 @@ procedure uos_OutputSetDSP(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].OutputSetDSP(OutputIndex, DSPoutIndex, Enable) ;
 end;
 
@@ -1005,6 +1026,7 @@ begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputAddFilter(InputIndex, LowFrequency, HighFrequency, Gain, TypeFilter,
   AlsoBuf, LoopProc) ;
 end;
@@ -1027,6 +1049,7 @@ procedure uos_InputSetFilter(PlayerIndex: cint32; InputIndex: cint32; FilterInde
 begin
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetFilter(InputIndex, FilterIndex, LowFrequency, HighFrequency, Gain,
   TypeFilter, AlsoBuf, Enable, LoopProc);
 end;
@@ -1049,6 +1072,7 @@ begin
  result := -1 ;
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].OutputAddFilter(OutputIndex, LowFrequency, HighFrequency, Gain, TypeFilter,
   AlsoBuf, LoopProc) ;
 end;
@@ -1071,6 +1095,7 @@ procedure uos_OutputSetFilter(PlayerIndex: cint32; OutputIndex: cint32; FilterIn
 begin
 if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].OutputSetFilter(OutputIndex, FilterIndex, LowFrequency, HighFrequency, Gain,
   TypeFilter, AlsoBuf, Enable, LoopProc);
 end;
@@ -1094,6 +1119,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddFromDevIn(Device, Latency, SampleRate, OutputIndex,
   SampleFormat, FramesCount) ;
 end;
@@ -1105,6 +1131,7 @@ begin
 result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddFromDevIn(-1, -1, -1, -1, -1, -1) ;
 end;
 {$endif}
@@ -1117,6 +1144,7 @@ function uos_AddFromEndlessMuted(PlayerIndex: cint32; Channels : cint32; FramesC
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddFromEndlessMuted(Channels, FramesCount) ;
 end; 
 
@@ -1137,6 +1165,7 @@ function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float;
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddFromSynth(Frequency, VolumeL, VolumeR, OutputIndex,
   SampleFormat, SampleRate,  FramesCount) ;
 end;
@@ -1149,6 +1178,7 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: 
   begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetSynth(InputIndex, Frequency, VolumeL, VolumeR, Enable) ;
 end;
 {$endif}
@@ -1169,6 +1199,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  Result :=  uosPlayers[PlayerIndex].AddIntoFile(Filename, SampleRate, Channels, SampleFormat, FramesCount, FileFormat);
 end;
 
@@ -1180,6 +1211,7 @@ function uos_AddIntoFile(PlayerIndex: cint32;  Filename: PChar): cint32;
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  Result :=  uosPlayers[PlayerIndex].AddIntoFile(Filename, -1, -1, -1, -1, -1);
 end;
 
@@ -1198,6 +1230,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  Result :=  uosPlayers[PlayerIndex].AddIntoFileFromMem(Filename, SampleRate, Channels, SampleFormat, FramesCount, FileFormat);
 end;
 
@@ -1209,6 +1242,7 @@ function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  Result :=  uosPlayers[PlayerIndex].AddIntoFileFromMem(Filename, -1, -1, -1, -1, -1);
 end;
 
@@ -1229,6 +1263,7 @@ function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: 
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  Result :=  uosPlayers[PlayerIndex].AddIntoIceServer(SampleRate, Channels, SampleFormat, EncodeType, Port, 
  Host, User, Password, MountFile  );
 end;
@@ -1242,6 +1277,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddIntoDevOut(Device, Latency, SampleRate, Channels, SampleFormat , FramesCount);
 end;
   // PlayerIndex : Index of a existing Player
@@ -1260,6 +1296,7 @@ begin
   Result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddIntoDevOut(-1, -1, -1, -1, -1 ,-1);
 end;
 {$endif}
@@ -1278,6 +1315,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result := uosPlayers[PlayerIndex].AddFromFile(Filename, OutputIndex, SampleFormat, FramesCount);
 end;
 
@@ -1287,6 +1325,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result := uosPlayers[PlayerIndex].AddFromFile(Filename, -1, -1, -1);
 end;
 
@@ -1298,6 +1337,7 @@ function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : ci
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddIntoMemoryBuffer(outmemory);
 end;
 
@@ -1313,6 +1353,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result := uosPlayers[PlayerIndex].AddFromMemoryBuffer(MemoryBuffer, Bufferinfos, OutputIndex, FramesCount);
 end;
 
@@ -1329,6 +1370,7 @@ begin
  result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result := uosPlayers[PlayerIndex].AddFromMemoryStream(MemoryStream, TypeAudio, OutputIndex, SampleFormat, FramesCount);
 end;
 
@@ -1346,6 +1388,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result := uosPlayers[PlayerIndex].AddFromFileIntoMemory(Filename, OutputIndex, SampleFormat, FramesCount);
 end;
 
@@ -1355,6 +1398,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result := uosPlayers[PlayerIndex].AddFromFileIntoMemory(Filename, -1, -1, -1);
 end;
 
@@ -1379,6 +1423,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result := uosPlayers[PlayerIndex].AddFromURL(URL, OutputIndex, SampleFormat, FramesCount, AudioFormat , ICYon);
 end;
 
@@ -1387,6 +1432,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result := uosPlayers[PlayerIndex].AddFromURL(URL, -1, -1, -1, -1, false);
 end;
 {$ENDIF}
@@ -1402,6 +1448,7 @@ begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   Result := uosPlayers[PlayerIndex].AddPlugin(PlugName, SampleRate, Channels);
 end;
 
@@ -1413,7 +1460,8 @@ procedure uos_SetPluginSoundTouch(PlayerIndex: cint32; PluginIndex: cint32; Temp
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
- uosPlayers[PlayerIndex].SetPluginSoundTouch(PluginIndex, Tempo, Pitch, Enable);
+  if assigned(uosPlayers[PlayerIndex]) then
+   uosPlayers[PlayerIndex].SetPluginSoundTouch(PluginIndex, Tempo, Pitch, Enable);
 end;
 {$endif}
 
@@ -1425,6 +1473,7 @@ end;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  uosPlayers[PlayerIndex].SetPluginBs2b(PluginIndex, level, fcut, feed, Enable);
 end;
 {$endif}
@@ -1434,6 +1483,7 @@ procedure uos_InputSeek(PlayerIndex: cint32; InputIndex: cint32; pos: Tcount_t);
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSeek(InputIndex, pos);
 end;
 
@@ -1442,7 +1492,8 @@ function uos_GetStatus(PlayerIndex: cint32) : cint32 ;
 begin
 result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
-  begin
+  if assigned(uosPlayers[PlayerIndex]) then
+   begin
  if  uosPlayersStat[PlayerIndex] = 1 then
  result :=  uosPlayers[PlayerIndex].Status else result := -1 ;
  end else  result := -1 ;
@@ -1453,6 +1504,7 @@ procedure uos_InputSeekSeconds(PlayerIndex: cint32; InputIndex: cint32; pos: cfl
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSeekSeconds(InputIndex, pos);
 end;
 
@@ -1461,6 +1513,7 @@ procedure uos_InputSeekTime(PlayerIndex: cint32; InputIndex: cint32; pos: TTime)
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSeekTime(InputIndex, pos);
 end;
 
@@ -1471,6 +1524,7 @@ begin
   result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputLength(InputIndex) ;
 end;
 
@@ -1481,6 +1535,7 @@ begin
   result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputLengthSeconds(InputIndex) ;
 end;
 
@@ -1491,6 +1546,7 @@ begin
 Result := sysutils.EncodeTime(0, 0, 0, 0);
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputLengthTime(InputIndex) ;
 end;
 
@@ -1501,6 +1557,7 @@ begin
   result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputPosition(InputIndex) ;
 end;
 
@@ -1508,6 +1565,7 @@ procedure uos_InputSetFrameCount(PlayerIndex: cint32; InputIndex: cint32 ; frame
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetFrameCount(InputIndex, framecount) ;
 end;
 
@@ -1521,6 +1579,7 @@ procedure uos_InputSetLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ; enab
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetLevelEnable(InputIndex, enable) ;
 end;
 
@@ -1529,6 +1588,7 @@ procedure uos_InputSetEnable(PlayerIndex: cint32; InputIndex: cint32; enabled: b
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetEnable(InputIndex, enabled) ;
 end;
 
@@ -1537,6 +1597,7 @@ procedure uos_OutputSetEnable(PlayerIndex: cint32; OutputIndex: cint32; enabled:
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].OutputSetEnable(OutputIndex, enabled) ;
 end;
 
@@ -1547,6 +1608,7 @@ procedure uos_InputSetPositionEnable(PlayerIndex: cint32; InputIndex: cint32 ; e
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetPositionEnable(InputIndex, enable) ;
 end;
 
@@ -1558,11 +1620,13 @@ procedure uos_InputSetArrayLevelEnable(PlayerIndex: cint32; InputIndex: cint32 ;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetArrayLevelEnable(InputIndex, levelcalc) ;
 end;
 
 function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: cint32) : TDArFloat;
 begin
+if assigned(uosPlayers[PlayerIndex]) then
   result :=  uosLevelArray[PlayerIndex][InputIndex] ;
  end;
 
@@ -1573,6 +1637,7 @@ begin
   result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputGetLevelLeft(InputIndex) ;
 end;
 
@@ -1585,6 +1650,7 @@ begin
   (length(uosPlayers[PlayerIndex].StreamIn) > 0) and (InputIndex +1 <= length(uosPlayers[PlayerIndex].StreamIn))
   then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.SamplerateRoot;
 end;
 
@@ -1597,6 +1663,7 @@ begin
   (length(uosPlayers[PlayerIndex].StreamIn) > 0) and (InputIndex +1 <= length(uosPlayers[PlayerIndex].StreamIn))
   then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.Channels;
 end;
 
@@ -1607,6 +1674,7 @@ begin
   result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputGetLevelRight(InputIndex) ;
 end;
 
@@ -1617,6 +1685,7 @@ begin
   result := 0;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputPositionSeconds(InputIndex) ;
 end;
 
@@ -1627,6 +1696,7 @@ begin
 Result := sysutils.EncodeTime(0, 0, 0, 0);
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputPositionTime(InputIndex) ;
 end;
 
@@ -1640,6 +1710,7 @@ begin
 Result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputAddDSP1ChanTo2Chan(InputIndex) ;
 end;
 
@@ -1649,26 +1720,39 @@ Procedure uos_PlayEx(PlayerIndex: cint32;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].PlayEx(no_free,nloop, paused ) ;
 end;
 
 Procedure uos_Play(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing
 begin
+ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uos_PlayEx(PlayerIndex, False,nloop);
 end;
 
 Procedure uos_PlayPaused(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing paused
 begin
+ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
   uos_PlayEx(PlayerIndex, False,nloop,true);
 end;
 
 Procedure uos_PlayNoFree(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing but do not free the player after stop
 begin
+ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  uos_PlayEx(PlayerIndex, True,nloop);
 end;
 
 Procedure uos_PlayNoFreePaused(PlayerIndex: cint32; nloop: Integer = 0) ;  // Start playing paused but do not free the player after stop
 begin
+ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
  uos_PlayEx(PlayerIndex, True,nloop, true);
 end;
 
@@ -1686,6 +1770,7 @@ procedure uos_RePlay(PlayerIndex: cint32);  // Resume playing after pause
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].RePlay() ;
 end;
 
@@ -1693,6 +1778,7 @@ procedure uos_Stop(PlayerIndex: cint32);  // Stop playing and if uos_Play() was 
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].Stop() ;
 end;
 
@@ -1700,6 +1786,7 @@ procedure uos_Pause(PlayerIndex: cint32);  // Pause playing
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
 uosPlayers[PlayerIndex].Pause() ;
 end;
 
@@ -1707,6 +1794,9 @@ procedure uos_BeginProc(PlayerIndex: cint32; Proc: TProc );
   // Assign the procedure of object to execute at begin, before loop
   // PlayerIndex : Index of a existing Player
 begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].BeginProc := Proc;
 end;
 
@@ -1715,6 +1805,9 @@ procedure uos_EndProc(PlayerIndex: cint32; Proc: TProc );
   // PlayerIndex : Index of a existing Player
   // InIndex : Index of a existing Input
 begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
  uosPlayers[PlayerIndex].EndProc := Proc;
 end;
 
@@ -1723,6 +1816,9 @@ procedure uos_EndProcOnly(PlayerIndex: cint32; Proc: TProcOnly );
   // PlayerIndex : Index of a existing Player
   // InIndex : Index of a existing Input
 begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
  uosPlayers[PlayerIndex].EndProcOnly := Proc;
 end;
 
@@ -1730,6 +1826,9 @@ procedure uos_LoopBeginProc(PlayerIndex: cint32; Proc: TProc );
   // Assign the procedure of object to execute at begin, before loop
   // PlayerIndex : Index of a existing Player
 begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].LoopBeginProc := Proc;
 end;
 
@@ -1738,6 +1837,9 @@ procedure uos_LoopEndProc(PlayerIndex: cint32; Proc: TProc );
   // PlayerIndex : Index of a existing Player
   // InIndex : Index of a existing Input
 begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
  uosPlayers[PlayerIndex].LoopEndProc := Proc;
 end;
 
@@ -1746,6 +1848,9 @@ procedure uos_LoopProcIn(PlayerIndex: cint32; InIndex: cint32; Proc: TProc );
   // PlayerIndex : Index of a existing Player
   // InIndex : Index of a existing Input
 begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].StreamIn[InIndex].LoopProc := Proc;
 end;
 
@@ -1754,6 +1859,9 @@ procedure uos_LoopProcOut(PlayerIndex: cint32; OutIndex: cint32; Proc: TProc);
   // PlayerIndex : Index of a existing Player
   // OutIndex : Index of a existing Output
 begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+   if assigned(uosPlayers[PlayerIndex]) then
  uosPlayers[PlayerIndex].StreamOut[OutIndex].LoopProc := Proc;
 end;
 

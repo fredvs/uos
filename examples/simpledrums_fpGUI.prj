@@ -969,8 +969,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=SetGlobalEvent
+finddtext=uos_InputSetDSPVolume
 findhistory=20
+ uos_InputSetDSPVolume
+ InputSetDSPVolume
+ isFirst
  SetGlobalEvent
  isGlobalPause
  isfirst
@@ -988,24 +991,21 @@ findhistory=20
  addfrom
  dotermina
  freeplayer(
- freepla
- playex
- inputset
 findoptions=1
 editpos=13
  0,-1073741823
- 1,175
- 0,627
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,3381
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,2085
  0,-1073741823
- 0,-1073741823
- 0,801
- 0,134
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1081,7 +1081,7 @@ order=13
  9
  10
 firsttab=0
-index=1
+index=5
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1232,7 +1232,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=507
+ cy=506
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1441,9 +1441,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=574
+ y=573
  cx=1356
- cy=120
+ cy=121
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1575,7 +1575,7 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=507
+ cy=506
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1611,7 +1611,7 @@ windowlayout=530
  x=0
  y=64
  cx=1356
- cy=507
+ cy=506
  rcx=0
  rcy=0
 [targetconsole]
