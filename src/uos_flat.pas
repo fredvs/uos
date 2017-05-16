@@ -1626,9 +1626,8 @@ end;
 
 function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: cint32) : TDArFloat;
 begin
-if assigned(uosPlayers[PlayerIndex]) then
   result :=  uosLevelArray[PlayerIndex][InputIndex] ;
- end;
+end;
 
 function uos_InputGetLevelLeft(PlayerIndex: cint32; InputIndex: cint32): double;
   // InputIndex : InputIndex of existing input

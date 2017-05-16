@@ -51,7 +51,6 @@ var
   procedure Twaveform.DrawWaveForm;
   begin
      waveformdata := uos_InputGetArrayLevel(PlayerIndex1, In1Index);
-
     fpgapplication.ProcessMessages;
     button1.tag := 1;
     custom1.Visible := True;
@@ -78,8 +77,7 @@ var
 
     /// get the length of the audio file
     filelength := uos_InputLength(PlayerIndex1, In1Index);
-    
-    
+
     chan := uos_InputGetChannels(PlayerIndex1, In1Index);
     
    // writeln('chan = ' + inttostr(chan));
@@ -96,7 +94,7 @@ var
     framewanted := filelength div custom1.Width;
     uos_InputSetFrameCount(PlayerIndex1, In1Index, framewanted);
 
-    ///// Assign the procedure of object to execute at end of stream
+     ///// Assign the procedure of object to execute at end of stream
     uos_EndProc(PlayerIndex1, @DrawWaveForm);
 
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets do it...

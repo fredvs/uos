@@ -856,7 +856,7 @@ findhistory=1
 findoptions=1
 editpos=3
  0,402
- 0,6240
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -899,7 +899,7 @@ windowlayout=541
  x=0
  y=0
  cx=929
- cy=585
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -918,7 +918,7 @@ windowlayout=541
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,585
+  basedock,0,0,929,604
  focusedchild=0
  wsize=0
  active=1
@@ -962,7 +962,7 @@ windowlayout=541
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1034,7 +1034,7 @@ windowlayout=541
  x=0
  y=0
  cx=159
- cy=428
+ cy=441
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1056,10 +1056,10 @@ windowlayout=541
  ny=0
  ncx=0
  ncy=0
- x=423
- y=321
- cx=344
- cy=155
+ x=0
+ y=0
+ cx=0
+ cy=0
  rcx=0
  rcy=0
  wsize=0
@@ -1203,8 +1203,8 @@ windowlayout=541
  y=0
  cx=247
  cy=44
- rcx=1262
- rcy=583
+ rcx=929
+ rcy=604
  [watchfo.grid]
  propcolwidthref=121
  values0=0
@@ -1235,9 +1235,9 @@ windowlayout=541
  ncx=0
  ncy=0
  x=0
- y=485
+ y=500
  cx=929
- cy=100
+ cy=104
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1337,7 +1337,7 @@ windowlayout=541
  x=0
  y=0
  cx=929
- cy=51
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1353,7 +1353,7 @@ windowlayout=541
  x=0
  y=0
  cx=929
- cy=51
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1369,7 +1369,7 @@ windowlayout=541
  x=162
  y=0
  cx=767
- cy=428
+ cy=441
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1403,9 +1403,9 @@ windowlayout=541
  ncx=0
  ncy=0
  x=0
- y=54
+ y=56
  cx=929
- cy=428
+ cy=441
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

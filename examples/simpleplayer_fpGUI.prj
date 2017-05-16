@@ -984,7 +984,7 @@ editpos=7
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,423
+ 0,446
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1045,8 +1045,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1350
- cy=705
+ cx=1356
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -1065,7 +1065,7 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1350,705
+  basedock,0,0,1356,694
  focusedchild=0
  wsize=6
  active=1
@@ -1087,7 +1087,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1181,7 +1181,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=515
+ cy=507
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1390,9 +1390,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=579
- cx=1350
- cy=126
+ y=570
+ cx=1356
+ cy=124
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1491,8 +1491,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1350
- cy=58
+ cx=1356
+ cy=57
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1507,8 +1507,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1350
- cy=58
+ cx=1356
+ cy=57
  rcx=0
  rcy=0
  [sourcefo]
@@ -1523,15 +1523,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1188
- cy=515
+ cx=1194
+ cy=507
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1558,9 +1558,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=61
- cx=1350
- cy=515
+ y=60
+ cx=1356
+ cy=507
  rcx=0
  rcy=0
 [targetconsole]

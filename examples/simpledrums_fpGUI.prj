@@ -834,11 +834,11 @@ line=11
  764
  2767
  2080
- 601
- 252
- 293
+ 620
+ 271
+ 312
  356
- 144
+ 163
 address=11
  5002412
  0
@@ -997,15 +997,15 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,3381
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,2085
  0,-1073741823
+ 0,-1073741823
+ 0,132
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1032,7 +1032,7 @@ sourcefiles=13
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
+ /home/fred/uos/examples/simpledrums_fpGUI.pas
 relpaths=13
  simpledrums_fpGUI.pas
  main_sd.pas
@@ -1081,7 +1081,7 @@ order=13
  9
  10
 firsttab=0
-index=5
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1096,8 +1096,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=694
+ cx=1350
+ cy=692
  rcx=0
  rcy=0
  [mainfo]
@@ -1109,16 +1109,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=226
- y=77
- cx=939
- cy=621
+ x=3
+ y=24
+ cx=1360
+ cy=709
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1350,692
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1232,7 +1232,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=506
+ cy=505
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1242,8 +1242,8 @@ windowlayout=530
  width1=12
  sortdescend1=0
  sorted=0
- col=0
- row=1
+ col=1
+ row=12
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1441,9 +1441,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=573
- cx=1356
- cy=121
+ y=572
+ cx=1350
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1542,7 +1542,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=61
  rcx=0
  rcy=0
@@ -1558,7 +1558,7 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=61
  rcx=0
  rcy=0
@@ -1574,8 +1574,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=506
+ cx=1188
+ cy=505
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1610,8 +1610,8 @@ windowlayout=530
  ncy=0
  x=0
  y=64
- cx=1356
- cy=506
+ cx=1350
+ cy=505
  rcx=0
  rcy=0
 [targetconsole]

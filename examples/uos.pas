@@ -70,7 +70,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 170505;
+  uos_version : cint32 = 170517;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -2719,7 +2719,7 @@ end;
 
 function uos_InputGetArrayLevel(PlayerIndex: cint32; InputIndex: cint32) : TDArFloat;
 begin
-  result :=  uosLevelArray[PlayerIndex][InputIndex] ;
+   result :=  uosLevelArray[PlayerIndex][InputIndex] ;
 end;
   
 {$IF DEFINED(noiseremoval)}
@@ -6059,6 +6059,8 @@ begin
 
  setlength(uosLevelArray[index][x],length(uosLevelArray[index][x]) +1);
  uosLevelArray[index][x][length(uosLevelArray[index][x]) -1 ] := StreamIn[x].Data.LevelRight;
+
+// writeln('array length = ' + inttostr(length(uosLevelArray[index][x])));
 end;
 
 procedure Tuos_Player.ReadDevice(x : integer);  
@@ -7442,6 +7444,7 @@ begin
  {$IF DEFINED(debug)}
  writeln('DSPin AfterBuffProcBefore');
  {$endif}
+
   if (StreamIn[x].Data.Status = 1) and (length(StreamIn[x].DSP) > 0) then
    DoDSPinAfterBufProc(x) ;
  {$IF DEFINED(debug)}
@@ -7467,7 +7470,7 @@ begin
   StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
   DoArrayLevel(x);
   end;
-  
+
   {$IF DEFINED(debug)}
  writeln('End level after DSP procedure');
  {$endif}

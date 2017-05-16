@@ -88,9 +88,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=121
+ y=120
  xprop=1
- yprop=0.24077669902913
+ yprop=0.24070450097847
  [projectoptionsfo.macrogrid]
  propcolwidthref=478
  sortdescend0=0
@@ -126,17 +126,17 @@ options=114
  firsttab=0
  index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=615
+ propcolwidthref=621
  width0=112
  sortdescend0=0
- width1=608
+ width1=614
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=356
@@ -380,15 +380,15 @@ modulefiles=0
 befcommandon=0
 makeoptionson=6
  63
- 30
- 35
- 33
+ 24
+ 39
+ 39
  4095
  4034
 compilerusedon=21
- 4095
- 0
- 0
+ 4083
+ 4
+ 8
  0
  0
  0
@@ -674,17 +674,17 @@ envvarons=0
 [edit]
 hintwidth=314
 hintheight=214
-finddtext=freeo
-findhistory=4
- freeo
+finddtext=uosLevelArray
+findhistory=6
  uosLevelArray
+ writeln
+ uos_InputGetArrayLevel
  InputGetArrayLevel
+ freeo
  DrawWaveForm
 findoptions=1
-editpos=7
- 0,-1073741823
- 0,49
- 0,-1073741823
+editpos=5
+ 5,6055
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -694,27 +694,19 @@ bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-sourcefiles=7
+sourcefiles=5
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/waveform_fpGUI.pas
+ ${PROJECTDIR}/waveform_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_opus.pas
- ${PROJECTDIR}/waveform_fpGUI.pas
- ${PROJECTDIR}/uos_opus.pas
  ${PROJECTDIR}/define.inc
-relpaths=7
+relpaths=5
  uos.pas
  waveform_fpGUI.pas
  uos_flat.pas
  uos_opus.pas
- waveform_fpGUI.pas
- uos_opus.pas
  define.inc
-ismoduletexts=7
- 0
- 0
+ismoduletexts=5
  0
  0
  0
@@ -725,17 +717,8 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=7
- 0
- 6
- 3
- 4
- 5
- 1
- 2
-tabsize=21
 firsttab=0
-index=5
+index=0
 [layout]
 windowlayout=522
  [mainfo.basedock]
@@ -750,8 +733,8 @@ windowlayout=522
  ncy=0
  x=0
  y=0
- cx=929
- cy=702
+ cx=1356
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -763,16 +746,16 @@ windowlayout=522
  ny=0
  ncx=0
  ncy=0
- x=294
+ x=266
  y=74
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,702
+  basedock,0,0,1356,694
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -784,15 +767,15 @@ windowlayout=522
  ny=0
  ncx=0
  ncy=0
- x=848
- y=243
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -886,7 +869,7 @@ windowlayout=522
  x=0
  y=0
  cx=159
- cy=514
+ cy=507
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1087,8 +1070,8 @@ windowlayout=522
  ncx=0
  ncy=0
  x=0
- y=582
- cx=929
+ y=574
+ cx=1356
  cy=120
  rcx=0
  rcy=0
@@ -1188,8 +1171,8 @@ windowlayout=522
  ncy=0
  x=0
  y=0
- cx=929
- cy=62
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1204,8 +1187,8 @@ windowlayout=522
  ncy=2
  x=0
  y=0
- cx=929
- cy=62
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [sourcefo]
@@ -1220,15 +1203,15 @@ windowlayout=522
  ncy=0
  x=162
  y=0
- cx=767
- cy=514
+ cx=1194
+ cy=507
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1255,9 +1238,9 @@ windowlayout=522
  ncx=0
  ncy=0
  x=0
- y=65
- cx=929
- cy=514
+ y=64
+ cx=1356
+ cy=507
  rcx=0
  rcy=0
 [targetconsole]
