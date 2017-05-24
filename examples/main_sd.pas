@@ -57,6 +57,7 @@ if stopit = false then
     for i := 0 to 2 do
     if(Copy(drum_beats[i], posi, 1) = 'x') then
     begin
+     // uos_InputSetDSPVolume(i,0,0.5,0.5,true);
      uos_PlaynofreePaused(i) ;
      end;
      
@@ -173,6 +174,8 @@ posi := 1;
    
    // using file
    // if uos_AddFromfile(i,pchar(sound[i]),-1,0,256) > -1 then
+   
+  //  if uos_InputAddDSPVolume(i,0,1,1) > -1 then
  
    if uos_AddFromEndlessMuted(i, channels, 256) > -1 then 
  // this for a dummy endless input, must be last input

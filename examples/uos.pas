@@ -1206,13 +1206,13 @@ begin
   begin
   ps := @inbuf;
   for x := 0 to high(inbuf) do
-  ps^[x] := cint16(round(ps^[x]));
+  ps^[x] := cint16(trunc(ps^[x]));
   end;
   1:
   begin
   pl := @inbuf;
   for x := 0 to high(inbuf) do
-  pl^[x] := cint32(round(pl^[x]));
+  pl^[x] := cint32(trunc(pl^[x]));
   end;
   0:
   begin
@@ -1232,7 +1232,7 @@ begin
   SetLength(arsh, length(inbuf));
   for x := 0 to high(Inbuf) do
   begin
-  i := round(Inbuf[x] * 32768);
+  i := trunc(Inbuf[x] * 32768);
   if i > 32767 then
   i := 32767
   else
@@ -1252,7 +1252,7 @@ begin
   SetLength(arlo, length(inbuf));
   for x := 0 to high(Inbuf) do
   begin
-  i := round(Inbuf[x] * 2147483647);
+  i := trunc(Inbuf[x] * 2147483647);
   if i > 2147483647 then
   i := 2147483647
   else
@@ -1278,7 +1278,7 @@ begin
   
   for x := 0 to nb -1 do
   begin
-  pl2^[x] := round((pf^[x]) * 2147483647);
+  pl2^[x] := trunc((pf^[x]) * 2147483647);
   end;
   Result := buffer2;
 end;
@@ -1311,7 +1311,7 @@ var
   while x < (len * 2)-1 do
   begin
   // TODO -> this takes only chan1, not (chan1+chan2)/2 -> it get bad noise dont know why ???...
-  // arsh[y]  := round((Inbuf[x] + Inbuf[x+1])/ 2) ;
+  // arsh[y]  := trunc((Inbuf[x] + Inbuf[x+1])/ 2) ;
 
   arsh[y]  := Inbuf[x+1] ;
 
@@ -2502,7 +2502,7 @@ var
   inputData.outframes div cint(inputData.Channels * ratio));
   
   {$IF DEFINED(debug)}
-  writeln('inputData.outframes div round(inputData.Channels * ratio) = '
+  writeln('inputData.outframes div trunc(inputData.Channels * ratio) = '
   + inttostr(inputData.outframes div inputData.Channels * ratio)); 
   {$endif}
   
@@ -2539,15 +2539,15 @@ var
   
   if numoutbuf > 0 then begin
   {$IF DEFINED(debug)}
-  writeln('SetLength(BufferplugFL) = '  + inttostr(length(BufferplugFL) + round(numoutbuf * inputData.Channels))); 
+  writeln('SetLength(BufferplugFL) = '  + inttostr(length(BufferplugFL) + trunc(numoutbuf * inputData.Channels))); 
   {$endif}
   
-  //  SetLength(BufferplugFL, length(BufferplugFL) + round(numoutbuf * inputData.Channels));
-  SetLength(BufferplugFL, length(BufferplugFL) + round(numoutbuf * 2));
+  //  SetLength(BufferplugFL, length(BufferplugFL) + trunc(numoutbuf * inputData.Channels));
+  SetLength(BufferplugFL, length(BufferplugFL) + trunc(numoutbuf * 2));
   
   x2 := Length(BufferplugFL) - (numoutbuf * inputData.Channels);
 
-  for x1 := 0 to round(numoutbuf * inputData.Channels) -1 do
+  for x1 := 0 to trunc(numoutbuf * inputData.Channels) -1 do
   begin
   BufferplugFL[x1 + x2] := BufferplugFLTMP[x1];
   end;
@@ -2582,13 +2582,13 @@ var
  begin
  
   if (inputData.libopen = 0) or (inputData.libopen = 2)  or (inputData.libopen = 3) or (inputData.libopen = 4) then
-  x2 := round(inputData.ratio * (inputData.outframes div round(inputData.channels))) ;
+  x2 := trunc(inputData.ratio * (inputData.outframes div trunc(inputData.channels))) ;
   
   if (inputData.libopen = 1)  then
   begin
   if inputData.SampleFormat < 2 then 
-  x2 := round((inputData.outframes div round(inputData.channels)))
-  else x2 := round(inputData.ratio * (inputData.outframes div round(inputData.channels))) ;
+  x2 := trunc((inputData.outframes div trunc(inputData.channels)))
+  else x2 := trunc(inputData.ratio * (inputData.outframes div trunc(inputData.channels))) ;
   end;
   
   SetLength(Bufferplug,x2);
@@ -3028,15 +3028,15 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  fft.RightResult := round((res * 1) + (res2 * fft.gain));
+  fft.RightResult := trunc((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
-  ps^[i] := round((res * 1) + (res2 * fft.gain));
+  ps^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   1:
   begin
-  fft.RightResult := round((res * 1) + (res2 * fft.gain));
+  fft.RightResult := trunc((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
-  pl^[i] := round((res * 1) + (res2 * fft.gain));
+  pl^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   0:
   begin
@@ -3051,15 +3051,15 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  fft.RightResult := round(res * fft.gain);
+  fft.RightResult := trunc(res * fft.gain);
   if ifbuf = True then
-  ps^[i] := round((res * fft.gain));
+  ps^[i] := trunc((res * fft.gain));
   end;
   1:
   begin
-  fft.RightResult := round((res * fft.gain));
+  fft.RightResult := trunc((res * fft.gain));
   if ifbuf = True then
-  pl^[i] := round((res * fft.gain));
+  pl^[i] := trunc((res * fft.gain));
   end;
   0:
   begin
@@ -3102,16 +3102,16 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  fft.LeftResult := round((res * 1) + (res2 * fft.gain));
+  fft.LeftResult := trunc((res * 1) + (res2 * fft.gain));
 
   if ifbuf = True then
-  ps^[i] := round((res * 1) + (res2 * fft.gain));
+  ps^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   1:
   begin
-  fft.LeftResult := round((res * 1) + (res2 * fft.gain));
+  fft.LeftResult := trunc((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
-  pl^[i] := round((res * 1) + (res2 * fft.gain));
+  pl^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   0:
   begin
@@ -3126,15 +3126,15 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  fft.LeftResult := round((res * fft.gain));
+  fft.LeftResult := trunc((res * fft.gain));
   if ifbuf = True then
-  ps^[i] := round((res * fft.gain));
+  ps^[i] := trunc((res * fft.gain));
   end;
   1:
   begin
-  fft.LeftResult := round((res * fft.gain));
+  fft.LeftResult := trunc((res * fft.gain));
   if ifbuf = True then
-  pl^[i] := round((res * fft.gain));
+  pl^[i] := trunc((res * fft.gain));
   end;
   0:
   begin
@@ -3587,7 +3587,7 @@ begin
   
   StreamIn[x].Data.SampleRate := DefRate;
   
-  if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=  round(1024 * 2 div StreamIn[x].Data.channels)
+  if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=  trunc(1024 * 2 div StreamIn[x].Data.channels)
   else
   StreamIn[x].Data.Wantframes := FramesCount * 2 div channels  ;
  
@@ -3662,7 +3662,7 @@ begin
   else
   begin
   StreamIn[x].Data.freqsine := Frequency ;
-  StreamIn[x].Data.lensine := round(StreamIn[x].Data.SampleRate / Frequency) ;
+  StreamIn[x].Data.lensine := trunc(StreamIn[x].Data.SampleRate / Frequency) ;
   end;
   
   StreamIn[x].Data.posLsine := 0 ;
@@ -3703,7 +3703,7 @@ begin
  begin
  StreamIn[InputIndex].Data.Enabled := Enable;
  StreamIn[InputIndex].Data.freqsine := Frequency ;
- StreamIn[InputIndex].Data.lensine := round(StreamIn[InputIndex].Data.SampleRate / Frequency) ;
+ StreamIn[InputIndex].Data.lensine := trunc(StreamIn[InputIndex].Data.SampleRate / Frequency) ;
  end;
  if VolumeL <> -1 then StreamIn[InputIndex].Data.VLeft := VolumeL;
   
@@ -7207,7 +7207,7 @@ begin
  end;
  End;
  if StreamIn[x].AACI.lwDataLen > (StreamIn[x].AACI.BitsPerSample div 8) then
- StreamIn[x].Data.outframes := round(StreamIn[x].AACI.lwDataLen div (StreamIn[x].AACI.BitsPerSample div 8))
+ StreamIn[x].Data.outframes := trunc(StreamIn[x].AACI.lwDataLen div (StreamIn[x].AACI.BitsPerSample div 8))
  else
  StreamIn[x].Data.outframes := 0;
 

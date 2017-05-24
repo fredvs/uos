@@ -427,13 +427,14 @@ function uos_InputAddDSP1ChanTo2Chan(PlayerIndex: cint32; InputIndex: cint32): c
   //  result :  index of DSPIn in array
   // example  DSPIndex1 := InputAddDSP1ChanTo2Chan(InputIndex1);
   
-procedure uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
-  VolRight: double) ;
+function uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
+  VolRight: double) : cint32 ;
   // DSP Volume changer
   // PlayerIndex : Index of a existing Player
   // InputIndex : InputIndex of a existing Input
   // VolLeft : Left volume
   // VolRight : Right volume
+   //  result :  index of DSPIn in array
   // example  uos_InputAddDSPVolume(0,InputIndex1,1,1);
 
 procedure uos_OutputAddDSPVolume(PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
@@ -807,13 +808,17 @@ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
 result := uosPlayers[PlayerIndex].SetGlobalEvent(isenabled);
 end;
 
-procedure uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
-  VolRight: double);
+function uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
+  VolRight: double) : cint32;
 begin
+result:= -1;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
+  begin
   uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].InputAddDSPVolume(InputIndex, VolLeft, VolRight);
+  result := uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.DSPVolumeIndex;
+  end;
 end;
   // DSP Volume changer
   // PlayerIndex : Index of a existing Player

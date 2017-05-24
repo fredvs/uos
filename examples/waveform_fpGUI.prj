@@ -674,8 +674,9 @@ envvarons=0
 [edit]
 hintwidth=314
 hintheight=214
-finddtext=uosLevelArray
-findhistory=6
+finddtext=InputAddDSP
+findhistory=7
+ InputAddDSP
  uosLevelArray
  writeln
  uos_InputGetArrayLevel
@@ -684,7 +685,7 @@ findhistory=6
  DrawWaveForm
 findoptions=1
 editpos=5
- 5,6055
+ 0,2082
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -695,7 +696,7 @@ bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 sourcefiles=5
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/waveform_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_opus.pas

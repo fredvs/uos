@@ -19,17 +19,21 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpledrums.prj
-findinfiledialog=37
+findinfiledialog=42
  [findinfileadialogfo.subdirs]
  value=1
+ [findinfileadialogfo.incurrentfile]
+ value=0
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
  value=0
+ [findinfileadialogfo.inprojectdir]
+ value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=1
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
@@ -37,18 +41,19 @@ findinfiledialog=37
  [findinfileadialogfo.dir]
  filenames=1
   /home/graemeg/devel/
- filehistory=1
-  /home/graemeg/devel/
- filefilterindex=0
- filefilter="*.pas" "*.pp" "*.inc"
  filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
+ filehistory=1
+  /home/graemeg/devel/
+ filefilterindex=0
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=lapAutoAdjustForDPI
- history=2
+ value=round(
+ history=3
+  round(
   lapAutoAdjustForDPI
   
  [findinfileadialogfo]
@@ -66,6 +71,22 @@ finddialog=8
  y=205
  cx=312
  cy=114
+replacedialog=15
+ [replacedialogfo.promptonreplace]
+ value=1
+ [replacedialogfo.selectedonly]
+ value=0
+ [replacedialogfo.replacetext]
+ value=trunc(
+ history=2
+  trunc(
+  
+ [replacedialogfo]
+ stackedunder=
+ x=142
+ y=302
+ cx=427
+ cy=163
 options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -721,7 +742,7 @@ on=1
 path=1
  /home/fred/uos/examples/main_sd.pas
 line=1
- 162
+ 163
 address=1
  0
 addbkpt=1
@@ -761,8 +782,15 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=AddFromEndlessMuted
-findhistory=11
+finddtext=round
+findhistory=18
+ round
+ round(
+ InputAddDSPVolum
+ uos_InputAddDSPVolume
+ dsplev
+ inputadddsple
+ adddsple
  AddFromEndlessMuted
  playex
  AddIntoDevOut
@@ -775,20 +803,21 @@ findhistory=11
  status
  playerno
 findoptions=1
-editpos=13
+editpos=14
  0,-1073741823
- 0,-1073741823
- 0,0
- 0,-1073741823
- 0,-1073741823
+ 0,177
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,6
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 40,14
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -802,7 +831,8 @@ bookmarks9=0
 bookmarks10=0
 bookmarks11=0
 bookmarks12=0
-sourcefiles=13
+bookmarks13=0
+sourcefiles=14
  ${PROJECTDIR}/simpledrums.lpr
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
@@ -816,7 +846,8 @@ sourcefiles=13
  ${PROJECTDIR}/simpledrums.lpr
  ${PROJECTDIR}/simpledrums.lpr
  ${PROJECTDIR}/simpledrums.lpr
-relpaths=13
+ ${PROJECTDIR}/simpledrums.lpr
+relpaths=14
  simpledrums.lpr
  main_sd.pas
  uos.pas
@@ -830,7 +861,9 @@ relpaths=13
  simpledrums.lpr
  simpledrums.lpr
  simpledrums.lpr
-ismoduletexts=13
+ simpledrums.lpr
+ismoduletexts=14
+ 0
  0
  0
  0
@@ -849,7 +882,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=13
+order=14
  0
  1
  11
@@ -860,11 +893,12 @@ order=13
  12
  5
  6
+ 13
  7
  8
  9
 firsttab=1
-index=4
+index=10
 [layout]
 windowlayout=520
  [mainfo.basedock]
@@ -879,8 +913,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=929
- cy=604
+ cx=1356
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -899,9 +933,9 @@ windowlayout=520
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,929,604
+  basedock,0,0,1356,694
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1015,7 +1049,7 @@ windowlayout=520
  x=0
  y=0
  cx=159
- cy=442
+ cy=508
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1216,9 +1250,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=501
- cx=929
- cy=103
+ y=575
+ cx=1356
+ cy=119
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1315,8 +1349,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1331,8 +1365,8 @@ windowlayout=520
  ncy=2
  x=0
  y=0
- cx=929
- cy=53
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [sourcefo]
@@ -1347,8 +1381,8 @@ windowlayout=520
  ncy=0
  x=162
  y=0
- cx=767
- cy=442
+ cx=1194
+ cy=508
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1382,9 +1416,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=56
- cx=929
- cy=442
+ y=64
+ cx=1356
+ cy=508
  rcx=0
  rcy=0
 [targetconsole]

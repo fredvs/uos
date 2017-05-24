@@ -828,12 +828,12 @@ path=8
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=8
- 3845
+ 3848
  33
  913
  764
- 2700
- 2020
+ 2703
+ 2023
  536
  249
 address=8
@@ -954,8 +954,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=soundt
+finddtext=Tuos_InStream
 findhistory=20
+ Tuos_InStream
+ Tuos_InStream.c
+ InputAddDSP
+ InputAddDSPVolume
  soundt
  readd
  readfile
@@ -972,19 +976,16 @@ findhistory=20
  setexceptionmask
  playernotfre
  $IF DEFINED(webstream
- mpg_read_strea
- m_get_filelen
- tm_get_filele
- sf_count_t
 findoptions=1
-editpos=7
+editpos=8
+ 38,1496
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,446
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -992,7 +993,8 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
+bookmarks7=0
+sourcefiles=8
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -1000,7 +1002,8 @@ sourcefiles=7
  ${PROJECTDIR}/uos_opusfile.pas
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/main_sp.pas
-relpaths=7
+ ${PROJECTDIR}/uos_dsp_noiseremoval.pas
+relpaths=8
  uos.pas
  simpleplayer_fpGUI.pas
  uos_flat.pas
@@ -1008,7 +1011,9 @@ relpaths=7
  uos_opusfile.pas
  uos_soundtouch.pas
  main_sp.pas
-ismoduletexts=7
+ uos_dsp_noiseremoval.pas
+ismoduletexts=8
+ 0
  0
  0
  0
@@ -1021,8 +1026,9 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=7
+order=8
  0
+ 7
  4
  5
  1
@@ -1030,7 +1036,7 @@ order=7
  2
  3
 firsttab=0
-index=4
+index=0
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1045,7 +1051,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=694
  rcx=0
  rcy=0
@@ -1065,7 +1071,7 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1350,694
  focusedchild=0
  wsize=6
  active=1
@@ -1155,7 +1161,7 @@ windowlayout=530
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1181,7 +1187,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=507
+ cy=508
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1391,7 +1397,7 @@ windowlayout=530
  ncy=0
  x=0
  y=570
- cx=1356
+ cx=1350
  cy=124
  rcx=0
  rcy=0
@@ -1491,8 +1497,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=57
+ cx=1350
+ cy=56
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1507,8 +1513,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
- cy=57
+ cx=1350
+ cy=56
  rcx=0
  rcy=0
  [sourcefo]
@@ -1523,15 +1529,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=507
+ cx=1188
+ cy=508
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1558,9 +1564,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=60
- cx=1356
- cy=507
+ y=59
+ cx=1350
+ cy=508
  rcx=0
  rcy=0
 [targetconsole]
