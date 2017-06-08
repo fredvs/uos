@@ -777,15 +777,15 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=posLsine
+finddtext=AddFromSynth
 findhistory=17
+ AddFromSynth
  posLsine
  addfromSynth
  InputSetSynth
   uos_InputSetSynth
  addfrome
  synth
- AddFromSynth
  writeln
  HandleSt
  typeput
@@ -799,7 +799,7 @@ findhistory=17
 findoptions=1
 editpos=17
  0,-1073741823
- 0,5917
+ 0,730
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -810,7 +810,7 @@ editpos=17
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1194
+ 0,1167
  0,-1073741823
  0,-1073741823
  0,-1073741823

@@ -85,13 +85,13 @@ var
    
    if uos_CreatePlayer(PlayerIndex1) then
 
-    inindex1 := uos_AddFromSynth(PlayerIndex1,440,-1,-1, 3000,-1, -1, -1, -1 );  
+    inindex1 := uos_AddFromSynth(PlayerIndex1,440,-1,-1, 0, -1, -1, -1, -1 );  
       
    // Add a input from Synthesizer with custom parameters
   // Frequency : default : -1 (440 htz)
   // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
   // VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
-  // Duration : default :  -1 (= 1000)  => duration in msec
+  // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
   // SampleRate : delault : -1 (44100)
@@ -116,6 +116,7 @@ var
        ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
+     // Duration : duration in msec (-1 = do not change)
      //////////// Enabled : true or false ;
    
     sleep(300) ;

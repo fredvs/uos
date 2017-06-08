@@ -362,7 +362,7 @@ Duration : cint32;  OutputIndex: cint32;
   // Frequency : default : -1 (440 htz)
   // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
   // VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
-  // Duration : default :  -1 (= 1000)  => duration in msec
+  // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
   // SampleRate : delault : -1 (44100)
@@ -1165,7 +1165,7 @@ Duration : cint32;  OutputIndex: cint32;
   // Frequency : default : -1 (440 htz)
   // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
   // VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
-  // Duration : default :  -1 (= 1000)  => duration in msec
+  // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
   // SampleRate : delault : -1 (44100)

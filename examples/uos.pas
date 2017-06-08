@@ -734,7 +734,7 @@ function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; Duration
   // Frequency : default : -1 (440 htz)
   // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
   // VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth
-  // Duration : default :  -1 (= 1000)  => duration in msec
+  // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
   // SampleRate : delault : -1 (44100)
@@ -3626,7 +3626,7 @@ function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: flo
   // Frequency : default : -1 (440 htz)
   // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
   // VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth
-  // Duration : default :  -1 (= 1000)  => duration in msec
+  // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
   // SampleRate : delault : -1 (44100)
@@ -3677,6 +3677,7 @@ begin
   
   StreamIn[x].Data.posdursine := 0 ;
   
+  if duration = -1 then duration := 1000;
   StreamIn[x].Data.dursine := trunc( StreamIn[x].Data.SampleRate * duration / 1000);  
   
   if SampleFormat = -1 then
@@ -5917,7 +5918,7 @@ x2 : integer;
   
   StreamIn[x].Data.posdursine := StreamIn[x].Data.posdursine + ( StreamIn[x].Data.WantFrames div StreamIn[x].Data.Channels);
   
-  if StreamIn[x].Data.posdursine <= StreamIn[x].Data.dursine then
+  if (StreamIn[x].Data.posdursine <= StreamIn[x].Data.dursine) or (StreamIn[x].Data.dursine = 0) then
   
   begin
 
