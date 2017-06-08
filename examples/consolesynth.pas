@@ -85,18 +85,19 @@ var
    
    if uos_CreatePlayer(PlayerIndex1) then
 
-    inindex1 := uos_AddFromSynth(PlayerIndex1,440,-1,-1, -1,-1, -1, -1 );  
+    inindex1 := uos_AddFromSynth(PlayerIndex1,440,-1,-1, 3000,-1, -1, -1, -1 );  
       
-     /////// Add a input from Synthesizer with custom parameters
-    ////////// Frequency : default : -1 (440 htz)
-     ////////// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
-     ////////// VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
-       ////////// OutputIndex : Output index of used output// -1: all output, -2: no output, other LongInt refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-    //////////// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
-    //////////// SampleRate : delault : -1 (44100)
-      //////////// FramesCount : -1 default : 1024
-     //  result :   Input Index in array    -1 = error
-  //  uos_AddFromSynth(PlayerIndex1,110,-1,-1, -1,-1, -1, 512 );  
+   // Add a input from Synthesizer with custom parameters
+  // Frequency : default : -1 (440 htz)
+  // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
+  // VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+  // Duration : default :  -1 (= 1000)  => duration in msec
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+  // SampleRate : delault : -1 (44100)
+  // FramesCount : -1 default : 1024
+  //  result :  Input Index in array  -1 = error
+  // example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
    
  if inindex1 > -1 then
  if uos_AddIntoDevOut(PlayerIndex1,-1,-1,-1,-1, 0,-1) > - 1 then
@@ -111,26 +112,26 @@ var
    
     sleep(200) ;
     
-    uos_InputSetSynth(PlayerIndex1,inindex1, 550, -1,0.2, true);
+    uos_InputSetSynth(PlayerIndex1,inindex1, 550, -1,0.2, -1,true);
        ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
      //////////// Enabled : true or false ;
    
     sleep(300) ;
-     uos_InputSetSynth(PlayerIndex1,inindex1, 620, 0.2,1, true);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 620, 0.2,1, -1, true);
       sleep(300) ;
-     uos_InputSetSynth(PlayerIndex1,inindex1, la1, 1,0.2, true);
+     uos_InputSetSynth(PlayerIndex1,inindex1, la1, 1,0.2, -1,true);
     sleep(300) ;
-    uos_InputSetSynth(PlayerIndex1,inindex1, 220, 0.2,1, true);
+    uos_InputSetSynth(PlayerIndex1,inindex1, 220, 0.2,1, -1 ,true);
      sleep(300) ; 
-     uos_InputSetSynth(PlayerIndex1,inindex1, 320,1,0.2, true);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 320,1,0.2, -1,true);
      sleep(300) ; 
-     uos_InputSetSynth(PlayerIndex1,inindex1, 360, 0.2,1, true);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 360, 0.2,1, -1, true);
      sleep(300) ; 
-     uos_InputSetSynth(PlayerIndex1,inindex1, 280, 1,0.2, true);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 280, 1,0.2, -1, true);
       sleep(300) ; 
-     uos_InputSetSynth(PlayerIndex1,inindex1, 440, 1, 1, true);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 440, 1, 1, -1, true);
       sleep(1200) ; 
       
    end;

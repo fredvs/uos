@@ -70,7 +70,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 170517;
+  uos_version : cint32 = 170608;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -335,6 +335,7 @@ type
   
   freqsine: cfloat;
   lensine: cint32;
+  dursine, posdursine: cint32;
   posLsine, posRsine: cint32;
   
 {$if defined(cpu64)}
@@ -727,23 +728,25 @@ function AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
   // Channels = Channels of input-to-follow.
 
 {$IF DEFINED(synthesizer)}
-function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
+function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; Duration: cint32; OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
   // Frequency : default : -1 (440 htz)
   // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
-  // VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+  // VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth
+  // Duration : default :  -1 (= 1000)  => duration in msec
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
   // SampleRate : delault : -1 (44100)
   // FramesCount : -1 default : 1024
   //  result :  Input Index in array  -1 = error
-  // example : InputIndex1 := AddFromSynth(880,-1,-1,-1,-1,-1,-1);
+  // example : InputIndex1 := AddFromSynth(880,-1,-1,-1,-1,-1,-1, -1);
   
-procedure InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
+procedure InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;  Duration: cint32; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
   // VolumeL :  from 0 to 1 (-1 = do not change)
   // VolumeR :  from 0 to 1 (-1 = do not change)
+  // Duration : in msec (-1 = do not change)
   // Enable : true or false ;
 {$endif}
 
@@ -3617,12 +3620,13 @@ begin
 end;
 
 {$IF DEFINED(synthesizer)}
-function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
+function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; duration : cint32; OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
   // Frequency : default : -1 (440 htz)
   // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
-  // VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+  // VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth
+  // Duration : default :  -1 (= 1000)  => duration in msec
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
   // SampleRate : delault : -1 (44100)
@@ -3668,7 +3672,12 @@ begin
   StreamIn[x].Data.posLsine := 0 ;
   StreamIn[x].Data.posRsine := 0 ;
   
- SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
+ 
+  SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
+  
+  StreamIn[x].Data.posdursine := 0 ;
+  
+  StreamIn[x].Data.dursine := trunc( StreamIn[x].Data.SampleRate * duration / 1000);  
   
   if SampleFormat = -1 then
   StreamIn[x].Data.SampleFormat := CInt32(0)
@@ -3693,11 +3702,13 @@ begin
   Result := x;
 end;
 
-procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
+procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;  Duration: cint32; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
   // VolumeL :  from 0 to 1 (-1 = do not change)
   // VolumeR :  from 0 to 1 (-1 = do not change)
-  // Enabled : true or false ;
+  // Duration : in msec (-1 = do not change)
+  // Enable : true or false ;
+
 begin
  if Frequency <> -1 then
  begin
@@ -3708,6 +3719,8 @@ begin
  if VolumeL <> -1 then StreamIn[InputIndex].Data.VLeft := VolumeL;
   
  if VolumeR <> -1 then StreamIn[InputIndex].Data.Vright := VolumeR;
+ 
+ if Duration <> -1 then  StreamIn[InputIndex].Data.dursine := trunc( StreamIn[InputIndex].Data.SampleRate * duration / 1000);  
 end;
 {$endif}
 
@@ -5901,6 +5914,12 @@ x2 : integer;
   begin
 
   x2 := 0 ;
+  
+  StreamIn[x].Data.posdursine := StreamIn[x].Data.posdursine + ( StreamIn[x].Data.WantFrames div StreamIn[x].Data.Channels);
+  
+  if StreamIn[x].Data.posdursine <= StreamIn[x].Data.dursine then
+  
+  begin
 
   while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
 
@@ -5936,6 +5955,8 @@ x2 : integer;
   end;
 
   StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames ;
+  end else StreamIn[x].Data.OutFrames :=  0 ;
+  
   end;
   {$endif}
 

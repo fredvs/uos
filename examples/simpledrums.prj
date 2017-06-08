@@ -805,19 +805,19 @@ findhistory=18
 findoptions=1
 editpos=14
  0,-1073741823
- 0,177
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,6
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 40,14
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,1
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -913,7 +913,7 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=929
  cy=694
  rcx=0
  rcy=0
@@ -933,7 +933,7 @@ windowlayout=520
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,929,694
  focusedchild=0
  wsize=6
  active=1
@@ -1251,7 +1251,7 @@ windowlayout=520
  ncy=0
  x=0
  y=575
- cx=1356
+ cx=929
  cy=119
  rcx=0
  rcy=0
@@ -1349,7 +1349,7 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=929
  cy=61
  rcx=0
  rcy=0
@@ -1365,7 +1365,7 @@ windowlayout=520
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=929
  cy=61
  rcx=0
  rcy=0
@@ -1381,7 +1381,7 @@ windowlayout=520
  ncy=0
  x=162
  y=0
- cx=1194
+ cx=767
  cy=508
  rcx=0
  rcy=0
@@ -1417,7 +1417,7 @@ windowlayout=520
  ncy=0
  x=0
  y=64
- cx=1356
+ cx=929
  cy=508
  rcx=0
  rcy=0

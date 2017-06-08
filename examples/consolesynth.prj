@@ -777,8 +777,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=addfrome
-findhistory=13
+finddtext=posLsine
+findhistory=17
+ posLsine
+ addfromSynth
+ InputSetSynth
+  uos_InputSetSynth
  addfrome
  synth
  AddFromSynth
@@ -795,18 +799,18 @@ findhistory=13
 findoptions=1
 editpos=17
  0,-1073741823
- 0,3651
+ 0,5917
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,133
+ 0,87
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1101
+ 0,1194
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -906,7 +910,7 @@ order=17
  3
  4
 firsttab=2
-index=4
+index=3
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -921,8 +925,8 @@ windowlayout=530
  ncy=585
  x=0
  y=0
- cx=954
- cy=604
+ cx=1356
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -934,16 +938,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=240
- y=61
+ x=239
+ y=63
  cx=964
- cy=621
+ cy=620
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,954,604
+  basedock,0,0,1356,694
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1057,7 +1061,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=440
+ cy=506
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1266,9 +1270,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=504
- cx=954
- cy=100
+ y=579
+ cx=1356
+ cy=115
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1367,8 +1371,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=954
- cy=58
+ cx=1356
+ cy=67
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1383,8 +1387,8 @@ windowlayout=530
  ncy=3
  x=0
  y=0
- cx=954
- cy=58
+ cx=1356
+ cy=67
  rcx=0
  rcy=0
  [sourcefo]
@@ -1399,8 +1403,8 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=792
- cy=440
+ cx=1194
+ cy=506
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1434,9 +1438,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=61
- cx=954
- cy=440
+ y=70
+ cx=1356
+ cy=506
  rcx=0
  rcy=0
 [targetconsole]

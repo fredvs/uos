@@ -355,12 +355,14 @@ function uos_AddFromEndlessMuted(PlayerIndex: cint32; Channels : cint32; FramesC
   // Channels = Channels of input-to-follow.
  
 {$IF DEFINED(synthesizer)}
-function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;
+Duration : cint32;  OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
   // Frequency : default : -1 (440 htz)
   // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
   // VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+  // Duration : default :  -1 (= 1000)  => duration in msec
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
   // SampleRate : delault : -1 (44100)
@@ -368,10 +370,12 @@ function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float;
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
   
-procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: float;
+ VolumeL: float; VolumeR: float; Duration: cint32; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
   // VolumeL :  from 0 to 1 (-1 = do not change)
   // VolumeR :  from 0 to 1 (-1 = do not change)
+  // Duration : in msec (-1 = do not change)
   // Enabled : true or false ;
 {$endif}
   
@@ -1154,12 +1158,14 @@ function uos_AddFromEndlessMuted(PlayerIndex: cint32; Channels : cint32; FramesC
 end; 
 
 {$IF DEFINED(synthesizer)}
-function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; OutputIndex: cint32;
-  SampleFormat: cint32 ; SampleRate: cint32; FramesCount : cint32): cint32;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;
+Duration : cint32;  OutputIndex: cint32;
+  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
   // Frequency : default : -1 (440 htz)
   // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
   // VolumeR : default : -1 (= 1) (from 0 to 1) => volume right
+  // Duration : default :  -1 (= 1000)  => duration in msec
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
   // SampleRate : delault : -1 (44100)
@@ -1171,20 +1177,22 @@ function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
-  Result :=  uosPlayers[PlayerIndex].AddFromSynth(Frequency, VolumeL, VolumeR, OutputIndex,
+  Result :=  uosPlayers[PlayerIndex].AddFromSynth(Frequency, VolumeL, VolumeR, Duration, OutputIndex,
   SampleFormat, SampleRate,  FramesCount) ;
 end;
 
-procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float; Enable : boolean);
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: float;
+ VolumeL: float; VolumeR: float; Duration: cint32; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
   // VolumeL :  from 0 to 1 (-1 = do not change)
   // VolumeR :  from 0 to 1 (-1 = do not change)
+  // Duration : in msec (-1 = do not change)
   // Enabled : true or false ;
   begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
-  uosPlayers[PlayerIndex].InputSetSynth(InputIndex, Frequency, VolumeL, VolumeR, Enable) ;
+  uosPlayers[PlayerIndex].InputSetSynth(InputIndex, Frequency, VolumeL, VolumeR, Duration, Enable) ;
 end;
 {$endif}
 
