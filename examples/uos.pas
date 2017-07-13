@@ -84,7 +84,7 @@ const
   BS2B_CMOY_CLEVEL =(CInt32(700)) or ((CInt32(60)) shl 16);
   BS2B_JMEIER_CLEVEL = (CInt32(650)) or ((CInt32(95)) shl 16);
 {$endif}
-  
+
 {$IF DEFINED(synthesizer)}
 const // musical note ==> frequency in hertz
 la0  = 55.0; 
@@ -158,6 +158,8 @@ la5 = 1760.0;
   cMAX_FRAME_SIZE = 6 * 960;
   cMAX_PACKET_SIZE = 3 * 1276;
 {$endif}
+
+
 
 type
    TDummyThread = Class(TThread)
@@ -417,7 +419,7 @@ type
 
   TProcOnly = procedure;
 
-  {$IF DEFINED(bs2b)}
+  {$IF DEFINED(bs2b) or  DEFINED(soundtouch)}
   TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; Abs2bd : Tt_bs2bdp; inputData: Tuos_Data;
   param1: float; param2: float; param3: float; param4: float;
   param5: float; param6: float;  param7: float; param8: float): TDArFloat;
@@ -517,7 +519,7 @@ type
   Enabled: boolean;
   Name: string;
   PlugHandle: THandle;
-  {$IF DEFINED(bs2b)}
+  {$IF DEFINED(bs2b) or  DEFINED(soundtouch)}
   Abs2b : Tt_bs2bdp;
   PlugFunc: TPlugFunc;
   {$endif}

@@ -1,14 +1,14 @@
 object Form1: TForm1
-  Left = 485
+  Left = 696
   Height = 148
-  Top = 238
+  Top = 246
   Width = 221
   Caption = 'Simple Drums'
   ClientHeight = 148
   ClientWidth = 221
   OnActivate = FormActivate
   OnClose = FormClose
-  LCLVersion = '5.9'
+  LCLVersion = '1.4.4.0'
   object Button1: TButton
     Left = 76
     Height = 25
@@ -21,7 +21,7 @@ object Form1: TForm1
   object Button2: TButton
     Left = 76
     Height = 25
-    Top = 114
+    Top = 112
     Width = 75
     Caption = 'Stop'
     OnClick = Button2Click
@@ -29,7 +29,7 @@ object Form1: TForm1
   end
   object Edit1: TEdit
     Left = 84
-    Height = 25
+    Height = 21
     Top = 38
     Width = 56
     Alignment = taCenter
@@ -38,9 +38,9 @@ object Form1: TForm1
   end
   object Label1: TLabel
     Left = 72
-    Height = 15
+    Height = 13
     Top = 6
-    Width = 83
+    Width = 71
     Caption = 'Interval in ms'
     ParentColor = False
   end

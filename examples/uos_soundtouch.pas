@@ -22,31 +22,49 @@ type
   THandle = pointer;
 {$endif}
 
+type
+  Tt_bs2bdp = ^Tt_bs2bd;
+  Tt_bs2bd = packed record
+      level : CInt32;
+      srate : CInt32;
+      a0_lo : CDouble;
+      b1_lo : CDouble;
+      a0_hi : CDouble;
+      a1_hi : CDouble;
+      b1_hi : CDouble;
+      gain : CDouble;
+      lfs : packed record
+          asis : array[0..1] of cdouble;
+          lo : array[0..1] of cdouble;
+          hi : array[0..1] of cdouble;
+        end;
+    end;
+
 var
   soundtouch_clear: procedure(h: THandle); cdecl;
   soundtouch_createInstance: function(): THandle; cdecl;
   soundtouch_flush: procedure(h: THandle); cdecl;
-  soundtouch_getSetting: function(h: THandle; settingId: cint32): cint32; cdecl;
+  soundtouch_getSetting: function(h: THandle; settingId: integer): integer; cdecl;
   soundtouch_getVersionId: function(): cardinal; cdecl;
   soundtouch_getVersionString2: procedure(VersionString: PAnsiChar;
   bufferSize: integer); cdecl;
   soundtouch_getVersionString: function(): PAnsiChar; cdecl;
-  soundtouch_isEmpty: function(h: THandle): cint32; cdecl;
-  soundtouch_numSamples: function(h: THandle): cint32; cdecl;
-  soundtouch_numUnprocessedSamples: function(h: THandle): cint32; cdecl;
+  soundtouch_isEmpty: function(h: THandle): integer; cdecl;
+  soundtouch_numSamples: function(h: THandle): cardinal; cdecl;
+  soundtouch_numUnprocessedSamples: function(h: THandle): cardinal; cdecl;
   soundtouch_putSamples: procedure(h: THandle; const samples: pcfloat;
-  numSamples: cint32); cdecl;
+  numSamples: cardinal); cdecl;
   soundtouch_receiveSamples: function(h: THandle; outBuffer: pcfloat;
-  maxSamples: cint32): cint32; cdecl;
-  soundtouch_setChannels: procedure(h: THandle; numChannels: cint32); cdecl;
+  maxSamples: cardinal): cardinal; cdecl;
+  soundtouch_setChannels: procedure(h: THandle; numChannels: cardinal); cdecl;
   soundtouch_setPitch: procedure(h: THandle; newPitch: single); cdecl;
   soundtouch_setPitchOctaves: procedure(h: THandle; newPitch: single); cdecl;
   soundtouch_setPitchSemiTones: procedure(h: THandle; newPitch: single); cdecl;
   soundtouch_setRate: procedure(h: THandle; newRate: single); cdecl;
   soundtouch_setRateChange: procedure(h: THandle; newRate: single); cdecl;
-  soundtouch_setSampleRate: procedure(h: THandle; srate: cint32); cdecl;
+  soundtouch_setSampleRate: procedure(h: THandle; srate: cardinal); cdecl;
   soundtouch_destroyInstance: procedure(h: THandle); cdecl;
-  soundtouch_setSetting: function(h: THandle; settingId: integer; Value: cint32): boolean; cdecl;
+  soundtouch_setSetting: function(h: THandle; settingId: integer; Value: integer): boolean; cdecl;
   soundtouch_setTempo: procedure(h: THandle; newTempo: single); cdecl;
   soundtouch_setTempoChange: procedure(h: THandle; newTempo: single); cdecl;
 

@@ -1005,7 +1005,7 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,132
+ 6,129
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1032,7 +1032,7 @@ sourcefiles=13
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/examples/simpledrums_fpGUI.pas
+ ${PROJECTDIR}/simpledrums_fpGUI.pas
 relpaths=13
  simpledrums_fpGUI.pas
  main_sd.pas
@@ -1046,7 +1046,7 @@ relpaths=13
  main_sd.pas
  define.inc
  uos_flat.pas
- simpledrums_fpGUI.pas
+ ../drumspract/simpledrums_fpGUI.pas
 ismoduletexts=13
  0
  0

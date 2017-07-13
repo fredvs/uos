@@ -22,6 +22,24 @@ type
   THandle = pointer;
 {$endif}
 
+type
+  Tt_bs2bdp = ^Tt_bs2bd;
+  Tt_bs2bd = packed record
+      level : CInt32;
+      srate : CInt32;
+      a0_lo : CDouble;
+      b1_lo : CDouble;
+      a0_hi : CDouble;
+      a1_hi : CDouble;
+      b1_hi : CDouble;
+      gain : CDouble;
+      lfs : packed record
+          asis : array[0..1] of cdouble;
+          lo : array[0..1] of cdouble;
+          hi : array[0..1] of cdouble;
+        end;
+    end;
+
 var
   soundtouch_clear: procedure(h: THandle); cdecl;
   soundtouch_createInstance: function(): THandle; cdecl;

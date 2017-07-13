@@ -7,10 +7,13 @@
  Fred van Stappen / fiens@hotmail.com 
 } 
 
-{$mode objfpc}
+
 unit uos_bs2b;
 
+{$mode objfpc}{$H+}
 {$PACKRECORDS C}
+
+
 interface
 
 uses

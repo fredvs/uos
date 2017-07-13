@@ -10,6 +10,8 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, main_sd;
 
+{$R *.res}
+
 begin
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);

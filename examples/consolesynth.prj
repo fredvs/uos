@@ -777,8 +777,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=AddFromSynth
-findhistory=17
+finddtext== -1
+findhistory=19
+ = -1
+ var 
  AddFromSynth
  posLsine
  addfromSynth
@@ -799,18 +801,18 @@ findhistory=17
 findoptions=1
 editpos=17
  0,-1073741823
- 0,730
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,87
+ 29,8234
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1167
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -910,7 +912,7 @@ order=17
  3
  4
 firsttab=2
-index=3
+index=4
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -925,7 +927,7 @@ windowlayout=530
  ncy=585
  x=0
  y=0
- cx=1356
+ cx=954
  cy=694
  rcx=0
  rcy=0
@@ -945,7 +947,7 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,954,694
  focusedchild=0
  wsize=6
  active=1
@@ -1271,7 +1273,7 @@ windowlayout=530
  ncy=0
  x=0
  y=579
- cx=1356
+ cx=954
  cy=115
  rcx=0
  rcy=0
@@ -1371,7 +1373,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=954
  cy=67
  rcx=0
  rcy=0
@@ -1387,7 +1389,7 @@ windowlayout=530
  ncy=3
  x=0
  y=0
- cx=1356
+ cx=954
  cy=67
  rcx=0
  rcy=0
@@ -1403,7 +1405,7 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
+ cx=792
  cy=506
  rcx=0
  rcy=0
@@ -1439,7 +1441,7 @@ windowlayout=530
  ncy=0
  x=0
  y=70
- cx=1356
+ cx=954
  cy=506
  rcx=0
  rcy=0
