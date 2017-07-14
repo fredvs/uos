@@ -921,7 +921,7 @@ findoptions=1
 editpos=9
  0,-1073741823
  0,-1073741823
- 7,118
+ 2,100
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -940,7 +940,7 @@ bookmarks8=0
 sourcefiles=9
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/consoleplay.pas
+ ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -1003,7 +1003,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=694
+ cy=784
  rcx=0
  rcy=0
  [mainfo]
@@ -1015,14 +1015,14 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=231
- y=52
+ x=229
+ y=35
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1356,784
  focusedchild=0
  wsize=6
  active=1
@@ -1066,7 +1066,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1138,7 +1138,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=515
+ cy=582
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1230,7 +1230,7 @@ windowlayout=549
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0
@@ -1347,9 +1347,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=574
+ y=648
  cx=1356
- cy=120
+ cy=136
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1449,7 +1449,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=53
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1465,7 +1465,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=53
+ cy=60
  rcx=0
  rcy=0
  [sourcefo]
@@ -1481,14 +1481,14 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=515
+ cy=582
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1515,9 +1515,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=56
+ y=63
  cx=1356
- cy=515
+ cy=582
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

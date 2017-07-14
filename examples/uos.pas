@@ -1925,9 +1925,11 @@ function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
 {$IF DEFINED(mpg123) or DEFINED(opus) }
  var
  {$endif}
+ 
  {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  mpid3v1: Tmpg123_id3v1;
+  mpid3v1: PPmpg123_id3v1;
+  refmpid3v1: Tmpg123_id3v1;
   mpid3v2: Tmpg123_id3v2;
   {$endif}
   
@@ -1948,14 +1950,21 @@ function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
 if StreamIn[InputIndex].Data.LibOpen = 1 then // mp3
 begin
  mpg123_info(StreamIn[InputIndex].Data.HandleSt, MPinfo);
-  mpg123_id3(StreamIn[InputIndex].Data.HandleSt, @mpid3v1, @mpid3v2);
-  StreamIn[InputIndex].Data.title := trim(mpid3v1.title);
-  StreamIn[InputIndex].Data.artist := mpid3v1.artist;
-  StreamIn[InputIndex].Data.album := mpid3v1.album;
-  StreamIn[InputIndex].Data.date := mpid3v1.year;
-  StreamIn[InputIndex].Data.comment := mpid3v1.comment;
-  StreamIn[InputIndex].Data.tag := mpid3v1.tag;
-  StreamIn[InputIndex].Data.genre := mpid3v1.genre;
+  mpg123_id3(StreamIn[InputIndex].Data.HandleSt, mpid3v1, @mpid3v2);
+ 
+  if (mpid3v1 <> nil) and  (mpid3v1^ <> nil)  then
+  begin
+  
+  refmpid3v1 := mpid3v1^^;
+  
+  StreamIn[InputIndex].Data.title := trim(refmpid3v1.title);
+  StreamIn[InputIndex].Data.artist := refmpid3v1.artist;
+  StreamIn[InputIndex].Data.album := refmpid3v1.album;
+  StreamIn[InputIndex].Data.date := refmpid3v1.year;
+  StreamIn[InputIndex].Data.comment := refmpid3v1.comment;
+  StreamIn[InputIndex].Data.tag := refmpid3v1.tag;
+  StreamIn[InputIndex].Data.genre := refmpid3v1.genre;
+  end;
   Result := true;
   // ?  freeandnil(MPinfo);
 end;
@@ -4183,7 +4192,8 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   
   {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  mpid3v1: Tmpg123_id3v1;
+  mpid3v1: PPmpg123_id3v1;
+  refmpid3v1: Tmpg123_id3v1;
   mpid3v2: Tmpg123_id3v2;
   {$endif}
   
@@ -4514,7 +4524,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   StreamIn[x].Data.ratio := sizeof(int32);
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
-  mpg123_id3(StreamIn[x].Data.HandleSt, @mpid3v1, @mpid3v2);
+  mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
   
  // mpg123_icy(StreamIn[x].Data.HandleSt, pointer(icytext));
  
@@ -4523,13 +4533,20 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   writeln('===> mpg123_infos => ok');
   {$endif}
   // to do : add id3v2
-  StreamIn[x].Data.title := trim(mpid3v1.title);
-  StreamIn[x].Data.artist := mpid3v1.artist;
-  StreamIn[x].Data.album := mpid3v1.album;
-  StreamIn[x].Data.date := mpid3v1.year;
-  StreamIn[x].Data.comment := mpid3v1.comment;
-  StreamIn[x].Data.tag := mpid3v1.tag;
-  StreamIn[x].Data.genre := mpid3v1.genre;
+  
+  if (mpid3v1 <> nil) and  (mpid3v1^ <> nil)  then
+  begin
+  
+  refmpid3v1 := mpid3v1^^;
+  
+  StreamIn[x].Data.title := trim(refmpid3v1.title);
+  StreamIn[x].Data.artist := refmpid3v1.artist;
+  StreamIn[x].Data.album := refmpid3v1.album;
+  StreamIn[x].Data.date := refmpid3v1.year;
+  StreamIn[x].Data.comment := refmpid3v1.comment;
+  StreamIn[x].Data.tag := refmpid3v1.tag;
+  StreamIn[x].Data.genre := refmpid3v1.genre;
+  end;
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
   StreamIn[x].Data.hdformat := MPinfo.layer;
   StreamIn[x].Data.frames := MPinfo.framesize;
@@ -4846,9 +4863,10 @@ var
   LcommentLength: PInteger;
   {$endif}
   
-  {$IF DEFINED(mpg123)}
+ {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  mpid3v1: Tmpg123_id3v1;
+  mpid3v1: PPmpg123_id3v1;
+  refmpid3v1: Tmpg123_id3v1;
   mpid3v2: Tmpg123_id3v2;
   {$endif}
 
@@ -5052,15 +5070,22 @@ begin
   SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
-  mpg123_id3(StreamIn[x].Data.HandleSt, @mpid3v1, @mpid3v2);
+  mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
   // to do : add id2v2
-  StreamIn[x].Data.title := trim(mpid3v1.title);
-  StreamIn[x].Data.artist := mpid3v1.artist;
-  StreamIn[x].Data.album := mpid3v1.album;
-  StreamIn[x].Data.date := mpid3v1.year;
-  StreamIn[x].Data.comment := mpid3v1.comment;
-  StreamIn[x].Data.tag := mpid3v1.tag;
-  StreamIn[x].Data.genre := mpid3v1.genre;
+   if (mpid3v1 <> nil) and  (mpid3v1^ <> nil)  then
+  begin
+  
+  refmpid3v1 := mpid3v1^^;
+  
+  StreamIn[x].Data.title := trim(refmpid3v1.title);
+  StreamIn[x].Data.artist := refmpid3v1.artist;
+  StreamIn[x].Data.album := refmpid3v1.album;
+  StreamIn[x].Data.date := refmpid3v1.year;
+  StreamIn[x].Data.comment := refmpid3v1.comment;
+  StreamIn[x].Data.tag := refmpid3v1.tag;
+  StreamIn[x].Data.genre := refmpid3v1.genre;
+  end;
+  
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
   StreamIn[x].Data.hdformat := MPinfo.layer;
   StreamIn[x].Data.frames := MPinfo.framesize;
@@ -5448,7 +5473,8 @@ var
   
   {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  mpid3v1: Tmpg123_id3v1;
+  mpid3v1: PPmpg123_id3v1;
+  refmpid3v1: Tmpg123_id3v1;
   mpid3v2: Tmpg123_id3v2;
   {$endif}
 
@@ -5603,15 +5629,22 @@ begin
   SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
-  mpg123_id3(StreamIn[x].Data.HandleSt, @mpid3v1, @mpid3v2);
+  mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
   // to do : add id2v2
-  StreamIn[x].Data.title := trim(mpid3v1.title);
-  StreamIn[x].Data.artist := mpid3v1.artist;
-  StreamIn[x].Data.album := mpid3v1.album;
-  StreamIn[x].Data.date := mpid3v1.year;
-  StreamIn[x].Data.comment := mpid3v1.comment;
-  StreamIn[x].Data.tag := mpid3v1.tag;
-  StreamIn[x].Data.genre := mpid3v1.genre;
+  
+  if (mpid3v1 <> nil) and  (mpid3v1^ <> nil)  then
+  begin
+  
+  refmpid3v1 := mpid3v1^^;
+  
+  StreamIn[x].Data.title := trim(refmpid3v1.title);
+  StreamIn[x].Data.artist := refmpid3v1.artist;
+  StreamIn[x].Data.album := refmpid3v1.album;
+  StreamIn[x].Data.date := refmpid3v1.year;
+  StreamIn[x].Data.comment := refmpid3v1.comment;
+  StreamIn[x].Data.tag := refmpid3v1.tag;
+  StreamIn[x].Data.genre := refmpid3v1.genre;
+  end;
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
   StreamIn[x].Data.hdformat := MPinfo.layer;
   StreamIn[x].Data.frames := MPinfo.framesize;
