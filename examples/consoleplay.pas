@@ -28,7 +28,7 @@ type
 
 var
   res: integer;
-  ordir, opath, SoundFilename, PA_FileName, SF_FileName: string;
+  ordir, opath, SoundFilename, PA_FileName, SF_FileName, MP_FileName: string;
   PlayerIndex1 : integer;
   
   { TuosConsole }
@@ -52,11 +52,12 @@ var
     {$if defined(cpu64)}
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
+    //  MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
     {$else}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     {$endif}
-    SoundFilename := ordir + 'sound/test.flac';
+    SoundFilename := ordir + 'sound/test.ogg';
  {$ENDIF}
 
  {$IFDEF freebsd}
@@ -90,7 +91,8 @@ var
     //// Create the player.
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
-  
+    
+   
    PlayerIndex1 := 0;
   
   if uos_CreatePlayer(PlayerIndex1) then
@@ -112,7 +114,11 @@ var
 
     /////// everything is ready, here we are, lets play it...
     uos_Play(PlayerIndex1);
-   
+
+writeln;   
+writeln('Title: ' + ((uos_InputGetTagTitle(PlayerIndex1, 0))));
+writeln('Artist: ' + ((uos_InputGetTagArtist(PlayerIndex1, 0))));
+writeln;   
     sleep(2000);
    end;
    end;

@@ -796,37 +796,44 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=4
+on=5
  0
  0
  0
  0
-path=4
+ 0
+path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
  /home/fred/uos/examples/uos.pas
-line=4
- 5718
- 5042
- 104
- 1518
-address=4
- 4885271
- 4873547
- 4197920
- 4812778
-addbkpt=4
+ /home/fred/uos/examples/consoleplay.pas
+line=5
+ 5755
+ 5068
+ 106
+ 1533
+ 117
+address=5
+ 4864605
+ 4853400
+ 4197899
+ 4789592
+ 4197977
+addbkpt=5
  0
  0
  0
  0
-ignore=4
+ 0
+ignore=5
  0
  0
  0
  0
-condition=4
+ 0
+condition=5
+ 
  
  
  
@@ -888,8 +895,21 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=if uosInit.evGlobalPause
+finddtext=PPmpg123_id3v1
 findhistory=20
+ PPmpg123_id3v1
+ SF_STR_COMMENT
+ mpg123_id3
+ utf
+ Tmpg123_id3v1
+ Pmpg123_id3v1
+ mpg123_id3v1
+ mpid3v1
+ Pmpg123_string
+ album
+ artist
+ Artist
+ tag
  if uosInit.evGlobalPause
  evPause
  evglobalPause
@@ -897,29 +917,17 @@ findhistory=20
  addfrom
  addp
  outputaddd
- inputaddd
- inputadd
- addds
- addinto
- dummy
- loop
- play(
- PlayersNotFree
- PlayerNotFree
- replay
- freepla
- playex
- sleep
 findoptions=1
-editpos=8
+editpos=9
  0,-1073741823
  0,-1073741823
- 0,94
+ 7,118
+ 0,-1073741823
+ 0,5450
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,669
+ 0,658
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -928,25 +936,29 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 bookmarks7=0
-sourcefiles=8
+bookmarks8=0
+sourcefiles=9
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=8
+ ${PROJECTDIR}/uos_mpg123.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+relpaths=9
  deviceinfos_fpGUI.pas
  uos.pas
  consoleplay.pas
  uos_flat.pas
  uos.pas
  uos_flat.pas
- uos.pas
  uos_flat.pas
-ismoduletexts=8
+ uos_mpg123.pas
+ uos_libsndfile.pas
+ismoduletexts=9
+ 0
  0
  0
  0
@@ -964,15 +976,16 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=8
+order=9
  0
  1
  2
+ 3
+ 4
+ 8
+ 5
  6
  7
- 5
- 4
- 3
 firsttab=2
 index=2
 [layout]
@@ -990,7 +1003,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=781
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -1003,16 +1016,16 @@ windowlayout=549
  ncx=0
  ncy=0
  x=231
- y=53
+ y=52
  cx=939
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,781
+  basedock,0,0,1356,694
  focusedchild=0
  wsize=6
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1030,7 +1043,7 @@ windowlayout=549
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1053,7 +1066,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1125,7 +1138,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=572
+ cy=515
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1135,8 +1148,8 @@ windowlayout=549
  width1=12
  sortdescend1=0
  sorted=0
- col=-1073741823
- row=-1073741823
+ col=0
+ row=5
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1334,9 +1347,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=647
+ y=574
  cx=1356
- cy=134
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1436,7 +1449,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=69
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1452,7 +1465,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=69
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1468,7 +1481,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=572
+ cy=515
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1502,15 +1515,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=72
+ y=56
  cx=1356
- cy=572
+ cy=515
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

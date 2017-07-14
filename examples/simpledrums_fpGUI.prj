@@ -992,7 +992,7 @@ findhistory=20
  dotermina
  freeplayer(
 findoptions=1
-editpos=13
+editpos=12
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1004,8 +1004,7 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 6,129
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1018,8 +1017,7 @@ bookmarks8=0
 bookmarks9=0
 bookmarks10=0
 bookmarks11=0
-bookmarks12=0
-sourcefiles=13
+sourcefiles=12
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
@@ -1031,9 +1029,8 @@ sourcefiles=13
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
-relpaths=13
+ /home/fred/uos/examples/uos_flat.pas
+relpaths=12
  simpledrums_fpGUI.pas
  main_sd.pas
  uos.pas
@@ -1046,9 +1043,7 @@ relpaths=13
  main_sd.pas
  define.inc
  uos_flat.pas
- ../drumspract/simpledrums_fpGUI.pas
-ismoduletexts=13
- 0
+ismoduletexts=12
  0
  0
  0
@@ -1066,12 +1061,11 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=13
+order=12
  0
  1
  6
  2
- 12
  11
  7
  5
