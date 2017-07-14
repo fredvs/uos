@@ -4924,12 +4924,16 @@ begin
   StreamIn[x].Data.samplerate := SFinfo.samplerate;
   StreamIn[x].Data.samplerateroot := SFinfo.samplerate;
   StreamIn[x].Data.sections := SFinfo.sections;
-  StreamIn[x].Data.copyright :=
+   StreamIn[x].Data.copyright :=
   sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_COPYRIGHT);
   StreamIn[x].Data.software :=
   sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_SOFTWARE);
   StreamIn[x].Data.comment :=
   sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_COMMENT);
+    StreamIn[x].Data.artist :=
+  sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_ARTIST);
+    StreamIn[x].Data.title :=
+  sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_TITLE);
   StreamIn[x].Data.date := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_DATE);
   StreamIn[x].Data.Length := sfInfo.frames;
   err := 0;

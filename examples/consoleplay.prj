@@ -923,11 +923,11 @@ editpos=9
  0,-1073741823
  7,118
  0,-1073741823
- 0,5450
  0,-1073741823
  0,-1073741823
- 0,669
- 0,658
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -940,7 +940,7 @@ bookmarks8=0
 sourcefiles=9
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/consoleplay.pas
+ /home/fred/uos/examples/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
