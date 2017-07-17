@@ -10,7 +10,7 @@
 {.$DEFINE library}   // uncomment for building uos library (native and java)
 {.$DEFINE java}   // uncomment for building uos java library
 {.$DEFINE fpgui}   // uncomment if FPC version < 2.7.1 and using fpGUI widget
-{.$DEFINE mse}   // uncomment when using a mse project, msethreads and msetimers.
+{.$DEFINE mse}   // uncomment when using a mse project, use msethreads and mse system.
 
 {$DEFINE portaudio} // uncomment to enable portaudio In/Out sound port
 {$DEFINE sndfile} // uncomment to enable sndfile (wav, ogg, flac audio file)

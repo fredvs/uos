@@ -16,7 +16,7 @@ interface
 uses
 
 {$IF DEFINED(mse)}
- msegui, msethread, mseevent,
+ msegui, msethread, 
 {$endif}
 
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}

@@ -17,10 +17,6 @@ interface
 
 uses
 
- {$IF DEFINED(mse)}
- mseevent,
-{$endif}
-  
   {$IF DEFINED(Java)}
   uos_jni,
   {$endif}
