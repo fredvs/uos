@@ -16,6 +16,10 @@ unit uos_flat;
 interface
 
 uses
+
+ {$IF DEFINED(mse)}
+ mseevent,
+{$endif}
   
   {$IF DEFINED(Java)}
   uos_jni,
@@ -389,7 +393,7 @@ procedure uos_EndProc(PlayerIndex: cint32; Proc: TProc);
   // PlayerIndex : Index of a existing Player
   // InIndex : Index of a existing Input
 
-procedure uos_EndProcOnly(PlayerIndex: cint32; Proc: TProcOnly);
+procedure uos_EndProcOnly(PlayerIndex: cint32; Proc: TProconly);
   // Assign the procedure  (not of object) to execute  at end, after loop
   // PlayerIndex : Index of a existing Player
   // InIndex : Index of a existing Input
@@ -470,7 +474,7 @@ procedure uos_OutputSetDSPVolume(PlayerIndex: cint32; OutputIndex: cint32;
   // example  uos_OutputSetDSPVolume(0,outputIndex1,DSPIndex1,1,0.8,True);
   
 function uos_InputAddDSP(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc: TFunc;
-  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
+  AfterFunc: TFunc; EndedFunc: TFunc; Proc: TProc): cint32;
   // add a DSP procedure for input
   // PlayerIndex : Index of a existing Player
   // InputIndex : Input Index of a existing input
@@ -489,7 +493,7 @@ procedure uos_InputSetDSP(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: c
   // example : uos_InputSetDSP(0,InputIndex1,DSPinIndex1,True);
 
 function uos_OutputAddDSP(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFunc;
-  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;  
+  AfterFunc: TFunc; EndedFunc: TFunc; Proc: TProc): cint32;  
   // usefull if multi output
   // PlayerIndex : Index of a existing Player
   // OutputIndex : OutputIndex of a existing Output
@@ -509,7 +513,7 @@ procedure uos_OutputSetDSP(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex
 
 function uos_InputAddFilter(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
   HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
-  AlsoBuf: boolean; LoopProc: TProc): cint32 ;
+  AlsoBuf: boolean; Proc: TProc): cint32 ;
   // PlayerIndex : Index of a existing Player
   // InputIndex : InputIndex of a existing Input
   // LowFrequency : Lowest frequency of filter
@@ -524,7 +528,7 @@ function uos_InputAddFilter(PlayerIndex: cint32; InputIndex: cint32; LowFrequenc
 
 procedure uos_InputSetFilter(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
   LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; Proc: TProc);
   // PlayerIndex : Index of a existing Player
   // InputIndex : InputIndex of a existing Input
   // DSPInIndex : DSPInIndex of existing DSPIn
@@ -540,7 +544,7 @@ procedure uos_InputSetFilter(PlayerIndex: cint32; InputIndex: cint32; FilterInde
 
 function uos_OutputAddFilter(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
   HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
-  AlsoBuf: boolean; LoopProc: TProc): cint32;
+  AlsoBuf: boolean; Proc: TProc): cint32;
   // PlayerIndex : Index of a existing Player
   // OutputIndex : OutputIndex of a existing Output
   // LowFrequency : Lowest frequency of filter
@@ -555,7 +559,7 @@ function uos_OutputAddFilter(PlayerIndex: cint32; OutputIndex: cint32; LowFreque
 
 procedure uos_OutputSetFilter(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
   LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; Proc: TProc);
   // PlayerIndex : Index of a existing Player
   // OutputIndex : OutputIndex of a existing Output
   // FilterIndex : DSPOutIndex of existing DSPOut
@@ -955,7 +959,7 @@ result := uosPlayers[PlayerIndex].InputGetTagDate(InputIndex) ;
  end;
 
 function uos_InputAddDSP(PlayerIndex: cint32; InputIndex: cint32; BeforeFunc : TFunc;
-  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
+  AfterFunc: TFunc; EndedFunc: TFunc; Proc: TProc): cint32;
   // add a DSP procedure for input
   // PlayerIndex : Index of a existing Player
   // InputIndex : Input Index of a existing input
@@ -970,7 +974,7 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
-result := uosPlayers[PlayerIndex].InputAddDSP(InputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
+result := uosPlayers[PlayerIndex].InputAddDSP(InputIndex, BeforeFunc, AfterFunc, EndedFunc, Proc) ;
 end;
 
 procedure uos_InputSetDSP(PlayerIndex: cint32; InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
@@ -987,7 +991,7 @@ uosPlayers[PlayerIndex].InputSetDSP(InputIndex, DSPinIndex, Enable) ;
 end;
 
 function uos_OutputAddDSP(PlayerIndex: cint32; OutputIndex: cint32; BeforeFunc: TFunc;
-  AfterFunc: TFunc; EndedFunc : TFunc; LoopProc: TProc): cint32;  // usefull if multi output
+  AfterFunc: TFunc; EndedFunc : TFunc; Proc: TProc): cint32;  // usefull if multi output
   // PlayerIndex : Index of a existing Player
   // OutputIndex : OutputIndex of a existing Output
   // BeforeFunc : Function to do before the buffer is filled
@@ -1001,7 +1005,7 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
-result := uosPlayers[PlayerIndex].OutputAddDSP(OutputIndex, BeforeFunc, AfterFunc, EndedFunc, LoopProc) ;
+result := uosPlayers[PlayerIndex].OutputAddDSP(OutputIndex, BeforeFunc, AfterFunc, EndedFunc, Proc) ;
 end;
 
 procedure uos_OutputSetDSP(PlayerIndex: cint32; OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean);
@@ -1019,7 +1023,7 @@ end;
 
 function uos_InputAddFilter(PlayerIndex: cint32; InputIndex: cint32; LowFrequency: cint32;
   HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
-  AlsoBuf: boolean; LoopProc: TProc): cint32;
+  AlsoBuf: boolean; Proc: TProc): cint32;
   // PlayerIndex : Index of a existing Player
   // InputIndex : InputIndex of a existing Input
   // LowFrequency : Lowest frequency of filter
@@ -1037,12 +1041,12 @@ begin
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputAddFilter(InputIndex, LowFrequency, HighFrequency, Gain, TypeFilter,
-  AlsoBuf, LoopProc) ;
+  AlsoBuf, Proc) ;
 end;
 
 procedure uos_InputSetFilter(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;
   LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; Proc: TProc);
   // PlayerIndex : Index of a existing Player
   // InputIndex : InputIndex of a existing Input
   // DSPInIndex : DSPInIndex of existing DSPIn
@@ -1060,12 +1064,12 @@ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetFilter(InputIndex, FilterIndex, LowFrequency, HighFrequency, Gain,
-  TypeFilter, AlsoBuf, Enable, LoopProc);
+  TypeFilter, AlsoBuf, Enable, Proc);
 end;
 
 function uos_OutputAddFilter(PlayerIndex: cint32; OutputIndex: cint32; LowFrequency: cint32;
   HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
-  AlsoBuf: boolean; LoopProc: TProc): cint32;
+  AlsoBuf: boolean; Proc: TProc): cint32;
   // PlayerIndex : Index of a existing Player
   // OutputIndex : OutputIndex of a existing Output
   // LowFrequency : Lowest frequency of filter
@@ -1083,12 +1087,12 @@ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].OutputAddFilter(OutputIndex, LowFrequency, HighFrequency, Gain, TypeFilter,
-  AlsoBuf, LoopProc) ;
+  AlsoBuf, Proc) ;
 end;
 
 procedure uos_OutputSetFilter(PlayerIndex: cint32; OutputIndex: cint32; FilterIndex: cint32;
   LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; Proc: TProc);
   // PlayerIndex : Index of a existing Player
   // OutputIndex : OutputIndex of a existing Output
   // FilterIndex : DSPOutIndex of existing DSPOut
@@ -1106,7 +1110,7 @@ if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].OutputSetFilter(OutputIndex, FilterIndex, LowFrequency, HighFrequency, Gain,
-  TypeFilter, AlsoBuf, Enable, LoopProc);
+  TypeFilter, AlsoBuf, Enable, Proc);
 end;
 
 {$IF DEFINED(portaudio)}
@@ -1791,7 +1795,13 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
    if assigned(uosPlayers[PlayerIndex]) then
+   begin
 uosPlayers[PlayerIndex].Stop() ;
+{$IF DEFINED(mse)}
+  uosPlayers[PlayerIndex] := nil;
+  uosPlayersStat[PlayerIndex] := -1 ;
+ {$endif}
+end;
 end;
 
 procedure uos_Pause(PlayerIndex: cint32);  // Pause playing
@@ -1823,7 +1833,7 @@ begin
  uosPlayers[PlayerIndex].EndProc := Proc;
 end;
 
-procedure uos_EndProcOnly(PlayerIndex: cint32; Proc: TProcOnly );
+procedure uos_EndProcOnly(PlayerIndex: cint32; Proc: TProconly  );
   // Assign the procedure (not of object) to execute at end, after loop
   // PlayerIndex : Index of a existing Player
   // InIndex : Index of a existing Input
@@ -2047,12 +2057,20 @@ end;
 {$IF DEFINED(debug)}
  writeln('after uosPlayers[PlayerIndex] <> nil ');
 {$endif}  
-  
+
+ {$IF DEFINED(mse)}
+  uosPlayers[PlayerIndex] := Tuos_Player.Create();
+  {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   uosPlayers[PlayerIndex] := Tuos_Player.Create(true,AParent);  // for fpGUI
   {$else}
   uosPlayers[PlayerIndex] := Tuos_Player.Create(true);
   {$endif}
+  
+  {$endif}
+  
+  if uosPlayers[PlayerIndex] <> nil then result := true
+  else result := false; 
 
   uosPlayers[PlayerIndex].Index := PlayerIndex;
   uosPlayersStat[PlayerIndex] := 1 ;
@@ -2063,7 +2081,7 @@ end;
    uosPlayersStat[x] := -1 ;
    uosPlayers[x] := nil ;
    end;
- result := true;  
+
    end;
 end;
 
@@ -2079,6 +2097,7 @@ if length(uosPlayers) > 0 then
   begin
   if assigned(uosPlayers[x]) then
   begin
+   uos_stop(x);
    uos_FreePlayer(x);
   end;
   end;

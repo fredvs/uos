@@ -15,6 +15,10 @@ interface
 
 uses
 
+{$IF DEFINED(mse)}
+ msegui, msethread, mseevent,
+{$endif}
+
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
 fpg_base, fpg_main, 
 {$endif}
@@ -159,12 +163,10 @@ la5 = 1760.0;
   cMAX_PACKET_SIZE = 3 * 1276;
 {$endif}
 
-
-
 type
    TDummyThread = Class(TThread)
    public
-     procedure execute; override;
+   procedure execute; override;
    end;
   
 type
@@ -433,7 +435,7 @@ type
   AftFunc: TFunc;  // function to execute after buffer is filled
   EndFunc: TFunc;  // function to execute at end of thread;
   
-  LoopProc: TProc;  // External Procedure of object to synchronize after buffer is filled 
+ LoopProc: TProc;  // External Procedure of object to synchronize after buffer is filled 
   
   // for FFT
   fftdata: Tuos_FFT;
@@ -485,7 +487,8 @@ type
   {$IF DEFINED(portaudio)}
   PAParam: PaStreamParameters;
   {$endif}
-  LoopProc: TProc;  // external procedure of object to synchronize in loop
+ LoopProc: TProc;  // External Procedure of object to synchronize after buffer is filled 
+ 
   {$IF DEFINED(Java)}
   procedure LoopProcjava;
   {$endif}
@@ -507,7 +510,7 @@ type
   // cbits: tbytes;
   {$endif}
   FileBuffer: Tuos_FileBuffer;
-  LoopProc: TProc;  // external procedure of object to synchronize in loop
+ LoopProc: TProc;  // External Procedure of object to synchronize after buffer is filled 
   {$IF DEFINED(Java)}
   procedure LoopProcjava;
   {$endif}
@@ -519,7 +522,7 @@ type
   Enabled: boolean;
   Name: string;
   PlugHandle: THandle;
-  {$IF DEFINED(bs2b) or  DEFINED(soundtouch)}
+  {$IF DEFINED(bs2b) or DEFINED(soundtouch)}
   Abs2b : Tt_bs2bdp;
   PlugFunc: TPlugFunc;
   {$endif}
@@ -535,8 +538,13 @@ type
   end;
 
 type
+  {$IF DEFINED(mse)}
+  Tuos_Player = class(tmsethread)
+  {$else}
   Tuos_Player = class(TThread)
-  protected
+  {$endif}
+  
+   protected
   evPause: PRTLEvent;  // for pausing
   procedure ReadFile(x : integer); 
   {$IF DEFINED(webstream)}
@@ -566,7 +574,12 @@ type
   procedure DoTerminateNoFreePlayer;
   procedure DoTerminatePlayer;
   procedure DoEndProc;
-  procedure Execute; override;
+ 
+  {$IF DEFINED(mse)}
+  function execute(thread: tmsethread): integer override;
+  {$else}
+  procedure Execute; override; 
+  {$endif}
   
   public
   isAssigned: boolean ;
@@ -575,6 +588,11 @@ type
   Status: cint32;
   Index: cint32;
   
+  {$IF DEFINED(mse)}
+  hasstarted: boolean ;
+   // procedure Execute; override;
+  {$endif}
+  
   intobuf :boolean; // to check, needed for filetobuf
 
   NLooped : Integer; // -1 infinite loop; 0 no loop; > 0 n-loop
@@ -582,19 +600,24 @@ type
   NoFree : boolean;
   // Do not free the player at end of thread.
   
-  BeginProc: TProc;
+  BeginProc: TProc ;
   // External procedure of object to execute at begin of thread
 
   LoopBeginProc: TProc;
+ 
   // External procedure of object to execute at each begin of loop
 
   LoopEndProc: TProc;
+ 
   // External procedure of object to execute at each end of loop
 
   EndProc: TProc;
+ 
   // Procedure of object to execute at end of thread
 
-  EndProcOnly: TProcOnly;
+ 
+ EndProcOnly: TProcOnly ;
+ 
   // Procedure to execute at end of thread (not of object)
 
   StreamIn: array of Tuos_InStream;
@@ -609,21 +632,37 @@ type
   procedure LoopBeginProcjava;
   procedure LoopEndProcjava;
   {$endif}
+  
 
+ {$IF DEFINED(mse)}
+ {
+  constructor create(const athreadproc: threadprocty;
+                const afreeonterminate: boolean = false;
+                const astacksizekb: integer = 0); overload; virtual;
+  }              
+
+ constructor create();
+ procedure run() override;
+  {$else}
+ 
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   Refer: TObject;  // for fpGUI
   constructor Create(CreateSuspended: boolean; AParent: TObject;
-  const StackSize: SizeUInt = DefaultStackSize);
+  const StackSize: SizeUInt = DefaultStackSize); overload; virtual;
   {$else}
   constructor Create(CreateSuspended: boolean;
-  const StackSize: SizeUInt = DefaultStackSize);
+  const StackSize: SizeUInt = DefaultStackSize); overload; virtual;
+  {$endif}
   {$endif}
 
   destructor Destroy; override;
-
+  
+  {$IF DEFINED(mse)}
+  {$else}
   procedure DoTerminate; override;
+  {$endif}
 
-  function IsLooped: Boolean;  
+   function IsLooped: Boolean;  
   
    function SetGlobalEvent(isenabled : boolean) : boolean;
   // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
@@ -912,7 +951,7 @@ function InputGetTagTag(InputIndex: cint32): pchar;
   // Tag infos
 
 function InputAddDSP(InputIndex: cint32; BeforeFunc: TFunc;
-  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
+  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc ): cint32;
   // add a DSP procedure for input
   // InputIndex d: Input Index of a existing input
   // BeforeFunc : function to do before the buffer is filled
@@ -963,7 +1002,7 @@ function InputAddFilter(InputIndex: cint32; LowFrequency: cint32;
 
 procedure InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
   LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc );
   // InputIndex : InputIndex of a existing Input
   // DSPInIndex : DSPInIndex of existing DSPIn
   // LowFrequency : Lowest frequency of filter ( -1 : current LowFrequency )
@@ -978,7 +1017,7 @@ procedure InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
 
 function OutputAddFilter(OutputIndex: cint32; LowFrequency: cint32;
   HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
-  AlsoBuf: boolean; LoopProc: TProc): cint32;
+  AlsoBuf: boolean; LoopProc: TProc ): cint32;
   // OutputIndex : OutputIndex of a existing Output
   // LowFrequency : Lowest frequency of filter
   // HighFrequency : Highest frequency of filter
@@ -992,7 +1031,7 @@ function OutputAddFilter(OutputIndex: cint32; LowFrequency: cint32;
 
 procedure OutputSetFilter(OutputIndex: cint32; FilterIndex: cint32;
   LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean;LoopProc: TProc );
   // OutputIndex : OutputIndex of a existing Output
   // FilterIndex : DSPOutIndex of existing DSPOut
   // LowFrequency : Lowest frequency of filter ( -1 : current LowFrequency )
@@ -1475,10 +1514,16 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   theplayer : Tuos_Player;
   in1 : cint32; 
   begin
-  {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
+  {$IF DEFINED(mse)}
+  theplayer := Tuos_Player.Create();
+  {$else}
+  
+    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
   theplayer := Tuos_Player.Create(true);
   {$else}
   theplayer := Tuos_Player.Create(true,self);
+  {$endif}
+  
   {$endif}
   
   {$IF DEFINED(debug)}
@@ -1581,10 +1626,16 @@ var
   theplayer : Tuos_Player;
   in1 : cint32; 
   begin
+  
+  {$IF DEFINED(mse)}
+  theplayer := Tuos_Player.Create();
+  {$else}
+    
   {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
   theplayer := Tuos_Player.Create(true);
   {$else}
   theplayer := Tuos_Player.Create(true,self);
+  {$endif}
   {$endif}
   
   {$IF DEFINED(debug)}
@@ -1654,8 +1705,7 @@ var
   
   end;
   
-  isFirst := false;
- 
+   
   Status := 1;
   
   if isGlobalPause = true then
@@ -1669,7 +1719,13 @@ var
   RTLeventResetEvent(evPause);
  end;
  
- Start;  // resume;  { if fpc version <= 2.4.4}
+ {$IF DEFINED(mse)}
+  hasstarted := true;
+ if isFirst = true then run();
+  {$else}
+  Start;  // resume;  { if fpc version <= 2.4.4}
+  {$endif}
+ isFirst := false;
   end;
 
 end;     
@@ -2075,7 +2131,7 @@ begin
 end;
 
 function Tuos_Player.InputAddDSP(InputIndex: cint32; BeforeFunc: TFunc;
-  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): cint32;
+  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc ): cint32;
 begin
   SetLength(StreamIn[InputIndex].DSP, Length(StreamIn[InputIndex].DSP) + 1);
   StreamIn[InputIndex].DSP[Length(StreamIn[InputIndex].DSP) - 1] := Tuos_DSP.Create();
@@ -2096,7 +2152,7 @@ StreamOut[OutputIndex].data.Enabled := enabled;
 end;
 
 function Tuos_Player.OutputAddDSP(OutputIndex: cint32; BeforeFunc: TFunc;
-  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: Tproc): cint32;
+  AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
 begin
   SetLength(StreamOut[OutputIndex].DSP, Length(StreamOut[OutputIndex].DSP) + 1);
   StreamOut[OutputIndex].DSP[Length(StreamOut[OutputIndex].DSP) - 1] :=
@@ -2116,7 +2172,7 @@ begin
 
 procedure Tuos_Player.InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
   LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
+  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc );
 // InputIndex : InputIndex of a existing Input
 // DSPInIndex : DSPInIndex of existing DSPIn
 // LowFrequency : Lowest frequency of filter ( default = -1 : current LowFrequency )
@@ -3434,7 +3490,7 @@ end;
 
 function Tuos_Player.InputAddFilter(InputIndex: cint32; LowFrequency: cint32;
   HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32; AlsoBuf: boolean;
-  LoopProc: TProc): cint32;
+  LoopProc: TProc ): cint32;
   // InputIndex : InputIndex of a existing Input
   // LowFrequency : Lowest frequency of filter
   // HighFrequency : Highest frequency of filter
@@ -3463,7 +3519,7 @@ end;
 
 function Tuos_Player.OutputAddFilter(OutputIndex: cint32; LowFrequency: cint32;
   HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32; AlsoBuf: boolean;
-  LoopProc: TProc): cint32;
+ LoopProc: TProc): cint32;
   // OutputIndex : OutputIndex of a existing Output
   // LowFrequency : Lowest frequency of filter
   // HighFrequency : Highest frequency of filter
@@ -3970,7 +4026,7 @@ var
   x: cint32;
   wChunkSize: cint32;
   wFileSize: cint32;
-  ID: array[0..3] of char;
+  IDwav: array[0..3] of char;
   Header: Tuos_WaveHeaderChunk;
 
 begin
@@ -4034,14 +4090,14 @@ begin
   
   if StreamOut[x].FileBuffer.FileFormat = 0 then 
   begin // wav file
-  ID := 'RIFF';
-  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+  IDwav := 'RIFF';
+  StreamOut[x].FileBuffer.Data.WriteBuffer(IDwav, 4);
   wFileSize := 0;
   StreamOut[x].FileBuffer.Data.WriteBuffer(wFileSize, 4);
-  ID := 'WAVE';
-  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
-  ID := 'fmt ';
-  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+  IDwav := 'WAVE';
+  StreamOut[x].FileBuffer.Data.WriteBuffer(IDwav, 4);
+  IDwav := 'fmt ';
+  StreamOut[x].FileBuffer.Data.WriteBuffer(IDwav, 4);
   wChunkSize := SizeOf(Header);
   StreamOut[x].FileBuffer.Data.WriteBuffer(wChunkSize, 4);
   Header.wFormatTag := 1;
@@ -4056,8 +4112,8 @@ begin
   Header.wBitsPerSample := StreamOut[x].FileBuffer.wBitsPerSample;
   Header.wcbSize := 0;
   StreamOut[x].FileBuffer.Data.WriteBuffer(Header, SizeOf(Header));
-  ID := 'data';
-  StreamOut[x].FileBuffer.Data.WriteBuffer(ID, 4);
+  IDwav := 'data';
+  StreamOut[x].FileBuffer.Data.WriteBuffer(IDwav, 4);
   wChunkSize:= 0;
   StreamOut[x].FileBuffer.Data.WriteBuffer(wChunkSize, 4);
   StreamOut[x].Data.Enabled := True;
@@ -6086,7 +6142,16 @@ begin
   StreamOut[x].Data.Buffer :=
   StreamOut[x].DSP[x3].AftFunc(StreamOut[x].Data,
   StreamOut[x].DSP[x3].fftdata);
-
+  
+  {$IF DEFINED(mse)}
+    if (StreamOut[x].DSP[x3].LoopProc <> nil) then
+   begin
+    application.lock();
+    (StreamOut[x].DSP[x3].LoopProc);
+   application.unlock();
+   end;
+   {$else}
+ 
   {$IF not DEFINED(Library)}
   if (StreamOut[x].DSP[x3].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
@@ -6114,6 +6179,8 @@ begin
   synchronize(@StreamOut[x].DSP[x3].LoopProcjava);
   {$endif}
   {$endif}
+  
+   {$endif}
   end;
 end;
 
@@ -6176,7 +6243,16 @@ begin
  writeln('DSPin AfterBuffProc 2.');
  {$endif}
 
-  {$IF not DEFINED(Library)}
+  {$IF DEFINED(mse)}
+    if (StreamIn[x].DSP[x2].LoopProc <> nil) then
+   begin
+    application.lock();
+    StreamIn[x].DSP[x2].LoopProc ;
+   application.unlock();
+   end;
+   {$else}
+ 
+    {$IF not DEFINED(Library)}
   if (StreamIn[x].DSP[x2].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
   queue(StreamIn[x].DSP[x2].LoopProc);
@@ -6202,7 +6278,7 @@ begin
   synchronize(@Streamin[x].DSP[x2].LoopProcjava);
   {$endif}
   {$endif}
-
+  {$endif}
   end;
 end;
 
@@ -6251,6 +6327,15 @@ end;
 
 procedure Tuos_Player.DoLoopEndMethods;
 begin
+{$IF DEFINED(mse)}
+    if LoopEndProc <> nil then
+   begin
+    application.lock();
+   LoopEndProc;
+   application.unlock();
+   end;
+     {$else}
+
  {$IF not DEFINED(Library)}
    if LoopEndProc <> nil then
 
@@ -6278,12 +6363,21 @@ begin
    {$else}
    synchronize(@endprocjava); //  Execute EndProc procedure
    {$endif}
-
+   {$endif}
    {$endif}
 end;
 
 procedure Tuos_Player.DoEndProc;
 begin
+{$IF DEFINED(mse)}
+ if EndProc <> nil then
+   begin
+    application.lock();
+   EndProc;
+   application.unlock();
+   end;
+     {$else}
+
  {$IF not DEFINED(Library)}
   if EndProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
@@ -6303,6 +6397,8 @@ begin
   queue(@endprocjava);
   {$else}
   synchronize(@endprocjava); //  Execute EndProc procedure
+  {$endif}
+  
   {$endif}
 
   {$endif}
@@ -6342,6 +6438,16 @@ begin
   WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
   // StreamOut[x].FileBuffer.Data.Free;
   end;
+  
+ {$IF DEFINED(mse)}
+ if EndProc <> nil then
+   begin
+    application.lock();
+   EndProc;
+   application.unlock();
+   end;
+     {$else}
+  
 
   {$IF not DEFINED(Library)}
   if EndProc <> nil then
@@ -6363,6 +6469,7 @@ begin
   {$endif}
 
   {$endif}
+   {$endif}
   
    {$IF DEFINED(portaudio)} 
    for x := 0 to high(StreamOut) do 
@@ -6371,7 +6478,11 @@ begin
      Pa_StopStream(StreamOut[x].Data.HandleSt); 
    {$ENDIF}   
 
+    {$IF DEFINED(mse)}
+    if EndProcOnly <> nil then  (EndProcOnly); 
+  {$else}
    if EndProcOnly <> nil then EndProcOnly;
+   {$ENDIF}   
    
    StreamIn[x].Data.Poseek := 0; // set to begin
    doseek(x);
@@ -6546,6 +6657,15 @@ var
 msg: TfpgMessageParams;  // for fpgui
  {$endif}
 begin
+ {$IF DEFINED(mse)}
+ if StreamIn[x].LoopProc <> nil then
+   begin
+    application.lock();
+   StreamIn[x].LoopProc;
+   application.unlock();
+   end;
+     {$else}
+
 // The synchro main loop procedure
   {$IF not DEFINED(Library)}
   if StreamIn[x].LoopProc <> nil then
@@ -6574,6 +6694,7 @@ begin
   synchronize(@Streamin[x].LoopProcjava);
   {$endif}
   {$endif}
+   {$endif}
 end;
 
 procedure Tuos_Player.DoBeginMethods;
@@ -6582,6 +6703,15 @@ var
 msg: TfpgMessageParams;  // for fpgui
  {$endif}
 begin
+{$IF DEFINED(mse)}
+ if BeginProc <> nil then
+   begin
+    application.lock();
+   BeginProc;
+   application.unlock();
+   end;
+ {$else}
+     
  {$IF not DEFINED(Library)}
   if BeginProc <> nil then
   //  Execute BeginProc procedure
@@ -6608,6 +6738,7 @@ begin
   synchronize(@BeginProcjava);
   {$endif}
   {$endif}
+  {$endif}
  end;
 
  procedure Tuos_Player.DoLoopBeginMethods;
@@ -6616,6 +6747,14 @@ begin
  msg: TfpgMessageParams;  // for fpgui
  {$endif}
 begin
+{$IF DEFINED(mse)}
+ if LoopBeginProc <> nil then
+   begin
+    application.lock();
+   LoopBeginProc;
+   application.unlock();
+   end;
+ {$else}
 
   {$IF not DEFINED(Library)}
   if LoopBeginProc <> nil then
@@ -6641,6 +6780,7 @@ begin
   queue(@loopBeginProcjava);
   {$else}
   synchronize(@loopBeginProcjava);
+  {$endif}
   {$endif}
   {$endif}
 end;
@@ -7377,14 +7517,23 @@ begin
   end;
 end;
 
-procedure Tuos_Player.Execute;
+{$IF DEFINED(mse)}
+function Tuos_Player.execute(thread: tmsethread): integer;
 // The Main Loop Procedure
+  {$else}
+ procedure Tuos_Player.Execute;
+// The Main Loop Procedure
+  {$endif}
 var
   x, x2, x3 : cint32;
   plugenabled: boolean;
   curpos: cint64 = 0;
-
 begin
+
+{$IF DEFINED(mse)}
+// while hasstarted = false do sleep(10);
+//  application.lock();
+ {$endif}
  
    CheckIfPaused ; // is there a pause waiting ?
 
@@ -7694,17 +7843,31 @@ begin
 
   DoEndProc;
 
+  {$IF DEFINED(mse)}
+     if EndProcOnly <> nil then
+   begin
+    application.lock();
+    EndProcOnly; 
+    application.lock();
+    end;
+     {$else}
   if EndProcOnly <> nil then EndProcOnly;
-  
+     {$endif}
+     
   isAssigned := false ;
   
   {$IF DEFINED(debug)}
  writeln('EndProc All');
  {$endif}
   end;
-  {$IF DEFINED(debug)}
+  
+ {$IF DEFINED(debug)}
  writeln('This is the end...');
  {$endif}  
+ 
+ {$IF DEFINED(mse)} 
+ terminate();
+ {$endif}
 end;
 
 procedure Tuos_Init.unloadPlugin(PluginName: Pchar);
@@ -8241,6 +8404,51 @@ begin
   Plug_BS_FileName := nil; // Plugin bs2b
 end;
 
+{$IF DEFINED(mse)}
+procedure Tuos_Player.run();
+begin
+ inherited;
+end;
+{$endif}
+
+{$IF DEFINED(mse)}
+ {
+  constructor Tuos_Player.create(const athreadproc: threadprocty;
+                const afreeonterminate: boolean = false;
+                const astacksizekb: integer = 0); 
+ }
+ 
+ constructor Tuos_Player.create();
+begin
+ include(fstate,ts_norun);
+ hasstarted := false;
+  freeonterminate:= true;
+ inherited create(@execute);
+
+   freeonterminate:= true;
+ 
+   evPause := RTLEventCreate;
+ 
+    //  RTLeventResetEvent(evPause);  
+  
+  isAssigned := true; 
+  isFirst := true;
+  isGlobalPause := false;
+  intobuf := false;
+  NLooped:= 0; 
+  NoFree:= False;
+  status := 2;
+  BeginProc := nil;
+  EndProc := nil;
+  EndProcOnly := nil;
+  loopBeginProc := nil;
+  loopEndProc := nil;
+ 
+ end;
+          
+ 
+  {$else}
+
  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
  constructor Tuos_Player.Create(CreateSuspended: boolean; AParent: TObject;
   const StackSize: SizeUInt);
@@ -8269,7 +8477,11 @@ begin
   loopBeginProc := nil;
   loopEndProc := nil;
 end;
+ 
+  {$endif}
 
+{$IF DEFINED(mse)}
+{$else}
 procedure Tuos_Player.DoTerminate;
 begin
 if (ifflat = true) and (intobuf = false) then
@@ -8278,13 +8490,16 @@ if (ifflat = true) and (intobuf = false) then
   uosPlayersStat[Index] := -1 ;
   end; 
 end;
+ {$endif}
 
 destructor Tuos_Player.Destroy;
 var
   x: cint32;
 begin
-  RTLeventdestroy(evPause);
- 
+
+if assigned(evPause) then
+ RTLeventdestroy(evPause);
+
   if length(StreamOut) > 0 then
   for x := 0 to high(StreamOut) do
   freeandnil(StreamOut[x]);
@@ -8296,6 +8511,11 @@ begin
   if length(Plugin) > 0 then
   for x := 0 to high(Plugin) do
   freeandnil(Plugin[x]);
+  
+ {$IF DEFINED(mse)}
+// application.waitforthread(self); 
+ {$endif}
+ 
   
   inherited Destroy;
 end;
