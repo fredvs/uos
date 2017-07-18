@@ -2093,8 +2093,9 @@ if length(uosPlayers) > 0 then
   begin
   if assigned(uosPlayers[x]) then
   begin
-   uos_stop(x);
-   uos_FreePlayer(x);
+  uosPlayers[x].nofree := false;
+  uos_stop(x);
+  uos_FreePlayer(x);
   end;
   end;
 
