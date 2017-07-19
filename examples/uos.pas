@@ -5660,12 +5660,17 @@ begin
   SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
+  
+  mpid3v1 := nil;
+  
   mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
   // to do : add id2v2
-  
-  if (mpid3v1 <> nil) and  (mpid3v1^ <> nil)  then
+
+ if (mpid3v1 <> nil)  then
+ if (mpid3v1^ <> nil)   then
+
   begin
-  
+ 
   refmpid3v1 := mpid3v1^^;
   
   StreamIn[x].Data.title := trim(refmpid3v1.title);
@@ -5675,7 +5680,9 @@ begin
   StreamIn[x].Data.comment := refmpid3v1.comment;
   StreamIn[x].Data.tag := refmpid3v1.tag;
   StreamIn[x].Data.genre := refmpid3v1.genre;
+
   end;
+  
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
   StreamIn[x].Data.hdformat := MPinfo.layer;
   StreamIn[x].Data.frames := MPinfo.framesize;
@@ -5687,6 +5694,7 @@ begin
   StreamIn[x].Data.LibOpen := -1;
   end;
   end;
+
   {$endif}
   
   {$IF DEFINED(opus)}
@@ -7844,11 +7852,10 @@ begin
  {$endif}  
  
  {$IF DEFINED(mse)} 
-// thethread.terminate();
-// freeandnil(self);
+
   {$else}
-//  FreeOnTerminate:=True;
-//  terminate();
+ // FreeOnTerminate:=True;
+ // terminate();
   end;
  {$endif}
 end;
@@ -8425,14 +8432,15 @@ var
   x: cint32;
 begin
 
- {$ifdef mse}
-  if thethread <> nil then begin
-   thethread.terminate();
+if thethread <> nil then begin
+   {$ifdef mse}
+    thethread.terminate();
    application.waitforthread(thethread);
     //calls unlockall()/relockall in order to avoid possible deadlock
-   thethread.destroy();
+    thethread.destroy();
+  {$endif}
+    
   end;
- {$endif}
 
   if assigned(evPause) then RTLeventdestroy(evPause);
 

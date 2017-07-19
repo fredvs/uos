@@ -734,7 +734,7 @@ finddtext=
 findhistory=0
 findoptions=1
 editpos=3
- 0,9
+ 0,-1073741823
  0,-1073741823
  0,0
 bookmarks0=0
@@ -837,7 +837,7 @@ windowlayout=520
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1101,7 +1101,7 @@ windowlayout=520
  value=1
  [messagefo]
  splitdir=0
- useroptions=82027
+ useroptions=805388395
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1225,8 +1225,8 @@ windowlayout=520
  ncy=2
  x=0
  y=0
- cx=929
- cy=53
+ cx=1082
+ cy=38
  rcx=0
  rcy=0
  [sourcefo]
@@ -1249,7 +1249,7 @@ windowlayout=520
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

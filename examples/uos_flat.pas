@@ -1792,11 +1792,11 @@ begin
   if  uosPlayersStat[PlayerIndex] = 1 then
    if assigned(uosPlayers[PlayerIndex]) then
    begin
-uosPlayers[PlayerIndex].Stop() ;
+uosPlayers[PlayerIndex].Stop();
 {$IF DEFINED(mse)}
   freeandnil(uosPlayers[PlayerIndex]);
   uosPlayersStat[PlayerIndex] := -1 ;
- {$endif}
+{$endif}
 end;
 end;
 
@@ -2083,6 +2083,7 @@ if length(uosPlayers) > 0 then
   begin
   uosPlayers[x].nofree := false;
   uos_stop(x);
+  uos_freeplayer(x);
   end;
   end;
 
