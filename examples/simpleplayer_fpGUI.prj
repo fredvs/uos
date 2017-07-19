@@ -230,7 +230,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=339
@@ -314,7 +314,7 @@ befcommand=0
 aftcommand=0
 makeoptions=10
  -fPIC
- -l -Mobjfpc -Scghi
+ -l -Mobjfpc -Sh -Fcutf8
  -FE.
  -FUunits
  -WG
@@ -521,13 +521,13 @@ befcommandon=0
 makeoptionson=10
  0
  511
- 511
+ 509
  511
  192
  511
- 499
+ 497
  255
- 0
+ 2
  0
 compilerusedon=29
  3903
@@ -560,12 +560,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3872
+ 3874
  0
  0
  0
  0
- 223
+ 221
 exeusedon=14
  3903
  0
@@ -837,13 +837,13 @@ line=8
  536
  249
 address=8
- 5002795
+ 4946827
  0
  0
- 5125609
- 4986809
- 4972336
- 4215659
+ 5061456
+ 4932385
+ 4919773
+ 4215155
  0
 addbkpt=8
  0
@@ -954,12 +954,14 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=mpg123_id3(
+finddtext=addfromf
 findhistory=20
+ addfromf
+ id3
+ PPmpg123_id3v1
  mpg123_id3(
  mpg123_id3
  tag
- id3
  Tuos_InStream
  Tuos_InStream.c
  InputAddDSP
@@ -974,12 +976,11 @@ findhistory=20
  uos_getversion
  changecheck
  checkbox1
- .enabled := false
- .enable := false
 findoptions=1
-editpos=8
- 17,5663
- 0,643
+editpos=9
+ 9,5
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -994,7 +995,8 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 bookmarks7=0
-sourcefiles=8
+bookmarks8=0
+sourcefiles=9
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -1003,7 +1005,8 @@ sourcefiles=8
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
-relpaths=8
+ ${PROJECTDIR}/uos_mpg123.pas
+relpaths=9
  uos.pas
  simpleplayer_fpGUI.pas
  uos_flat.pas
@@ -1012,7 +1015,9 @@ relpaths=8
  uos_soundtouch.pas
  main_sp.pas
  uos_dsp_noiseremoval.pas
-ismoduletexts=8
+ uos_mpg123.pas
+ismoduletexts=9
+ 0
  0
  0
  0
@@ -1026,8 +1031,9 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=8
+order=9
  0
+ 8
  7
  4
  5
@@ -1051,8 +1057,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=689
+ cx=1350
+ cy=672
  rcx=0
  rcy=0
  [mainfo]
@@ -1067,13 +1073,13 @@ windowlayout=530
  x=3
  y=24
  cx=1360
- cy=716
+ cy=709
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,689
+  basedock,0,0,1350,672
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1093,7 +1099,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1115,7 +1121,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1187,7 +1193,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=507
+ cy=496
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1198,7 +1204,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=1
+ row=7
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1279,7 +1285,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=threadsfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1396,9 +1402,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=566
- cx=1356
- cy=123
+ y=552
+ cx=1350
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1497,8 +1503,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
- cy=53
+ cx=1350
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1513,8 +1519,8 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
- cy=53
+ cx=1350
+ cy=50
  rcx=0
  rcy=0
  [sourcefo]
@@ -1529,15 +1535,15 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
- cy=507
+ cx=1188
+ cy=496
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1564,9 +1570,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=56
- cx=1356
- cy=507
+ y=53
+ cx=1350
+ cy=496
  rcx=0
  rcy=0
 [targetconsole]

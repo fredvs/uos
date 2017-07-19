@@ -13,7 +13,7 @@ interface
 
   {$PACKENUM 4}(* use 4-byte enums *)
   {$PACKRECORDS C}(* C/C++-compatible record packing *)
-  {$MODE objfpc}
+  {$mode objfpc}{$H+}
 
 {$LONGSTRINGS ON}
 uses

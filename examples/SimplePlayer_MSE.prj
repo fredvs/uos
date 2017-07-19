@@ -257,7 +257,7 @@ options=114
  index=0
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=272
@@ -563,7 +563,7 @@ makeoptionson=6
  2559
  2559
  2557
- 0
+ 2
  2355
  2547
 compilerusedon=29
@@ -870,14 +870,16 @@ findhistory=5
  trackbar1
  sleep(80
 findoptions=1
-editpos=7
- 0,0
- 0,5674
+editpos=9
+ 0,9
  0,-1073741823
+ 0,12
  0,53
- 0,15
+ 0,3
  0,-1073741823
  0,-1073741823
+ 0,9
+ 0,9
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -885,15 +887,19 @@ bookmarks3=0
 bookmarks4=0
 bookmarks5=0
 bookmarks6=0
-sourcefiles=7
- ${PROJECTDIR}/mainmse_sp.pas
+bookmarks7=0
+bookmarks8=0
+sourcefiles=9
+ /home/fred/uos/examples/mainmse_sp.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/define.inc
+ /home/fred/uos/examples/define.inc
  /home/fred/msegui/lib/common/dialogs/msestringenter.pas
- ${PROJECTDIR}/SimplePlayer_MSE.pas
+ /home/fred/uos/examples/SimplePlayer_MSE.pas
  ${PROJECTDIR}/uos_bs2b.pas
  /home/fred/msegui/lib/common/kernel/linux/mseguiintf.pas
-relpaths=7
+ /home/fred/uos/examples/uos_soundtouch.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+relpaths=9
  mainmse_sp.pas
  uos.pas
  define.inc
@@ -901,7 +907,11 @@ relpaths=7
  SimplePlayer_MSE.pas
  uos_bs2b.pas
  msegui/lib/common/kernel/linux/mseguiintf.pas
-ismoduletexts=7
+ uos_soundtouch.pas
+ ../strumpract/src/uos_libsndfile.pas
+ismoduletexts=9
+ 0
+ 0
  0
  0
  0
@@ -922,16 +932,18 @@ nomenumodules=2
  0
  0
 [sourcefo.files_tab]
-order=7
+order=9
  0
+ 7
+ 8
  6
  1
  2
  3
  4
  5
-firsttab=0
-index=5
+firsttab=1
+index=7
 [layout]
 windowlayout=560
  [mainfo.basedock]
@@ -959,8 +971,8 @@ windowlayout=560
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
+ x=182
+ y=84
  cx=1093
  cy=621
  rcx=0
@@ -969,7 +981,7 @@ windowlayout=560
   basedock,0,0,1083,604
  focusedchild=0
  wsize=0
- active=0
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -987,8 +999,8 @@ windowlayout=560
  rcx=0
  rcy=0
  wsize=0
- active=1
- visible=1
+ active=0
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1174,7 +1186,7 @@ windowlayout=560
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=_mse_simple_player_mse_
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1424,7 +1436,7 @@ windowlayout=560
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0

@@ -9,7 +9,7 @@
 unit uos_libsndfile;
 
 {$IFDEF FPC}
-  {$MODE objfpc}
+  {$mode objfpc}{$H+}
   {$PACKENUM 4}(* use 4-byte enums *)
   {$PACKRECORDS C}(* C/C++-compatible record packing *)
   {$MACRO ON}//don't know whatfor !

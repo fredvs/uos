@@ -5505,6 +5505,7 @@ var
   {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
   mpid3v1: PPmpg123_id3v1;
+  mpid3v12: Pmpg123_id3v1;
   refmpid3v1: Tmpg123_id3v1;
   mpid3v2: Tmpg123_id3v2;
   {$endif}
@@ -5661,9 +5662,9 @@ begin
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
   
-  mpid3v1 := nil;
+//  mpid3v1^ := nil;
     
-   mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
+  mpg123_id3(StreamIn[x].Data.HandleSt, @mpid3v1, @mpid3v2);
   // to do : add id2v2
 
  if (assigned(mpid3v1)) and (assigned(mpid3v1^)) then 

@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplay.prj
-findinfiledialog=40
+findinfiledialog=41
  [findinfileadialogfo.subdirs]
  value=0
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,9 @@ findinfiledialog=40
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=endproconly
- history=2
+ value=addfromf
+ history=3
+  addfromf
   endproconly
   
  [findinfileadialogfo]
@@ -304,7 +305,7 @@ befcommand=0
 aftcommand=0
 makeoptions=8
  -fPIC
- -l -Mobjfpc -Schi
+ -l -Mobjfpc
  -FE.
  -FUunits
  -ghl
@@ -895,8 +896,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=constructor
+finddtext=addfromf
 findhistory=20
+ addfromf
  constructor
  playex
  terminatepl
@@ -916,18 +918,19 @@ findhistory=20
  PPmpg123_id3v1
  SF_STR_COMMENT
  mpg123_id3
- utf
 findoptions=1
-editpos=9
- 0,-1073741823
- 0,-1073741823
- 5,70
+editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 5,18
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -937,7 +940,9 @@ bookmarks5=0
 bookmarks6=0
 bookmarks7=0
 bookmarks8=0
-sourcefiles=9
+bookmarks9=0
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
@@ -947,17 +952,23 @@ sourcefiles=9
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_libsndfile.pas
-relpaths=9
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/define.inc
+relpaths=11
  deviceinfos_fpGUI.pas
  uos.pas
  consoleplay.pas
  uos_flat.pas
- uos.pas
+ strumpract/src/uos.pas
  uos_flat.pas
  uos_flat.pas
  uos_mpg123.pas
  uos_libsndfile.pas
-ismoduletexts=9
+ uos.pas
+ define.inc
+ismoduletexts=11
+ 0
+ 0
  0
  0
  0
@@ -976,10 +987,12 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=9
+order=11
  0
  1
  2
+ 9
+ 10
  3
  4
  8
@@ -987,7 +1000,7 @@ order=9
  6
  7
 firsttab=2
-index=2
+index=4
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1066,7 +1079,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1149,7 +1162,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=-1073741823
+ row=1
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1523,7 +1536,7 @@ windowlayout=549
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
