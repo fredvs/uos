@@ -921,9 +921,9 @@ findoptions=1
 editpos=9
  0,-1073741823
  0,-1073741823
- 0,116
+ 10,97
  0,-1073741823
- 0,8403
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -940,9 +940,9 @@ bookmarks8=0
 sourcefiles=9
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/consoleplay.pas
- /home/fred/uos/examples/uos_flat.pas
- /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/consoleplay.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_mpg123.pas
@@ -1003,7 +1003,7 @@ windowlayout=549
  x=0
  y=0
  cx=1083
- cy=675
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1015,14 +1015,14 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=89
- y=31
+ x=138
+ y=24
  cx=1093
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1083,675
+  basedock,0,0,1083,604
  focusedchild=0
  wsize=0
  active=1
@@ -1036,8 +1036,8 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=478
- y=188
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
@@ -1066,7 +1066,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1138,7 +1138,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=494
+ cy=442
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1188,14 +1188,14 @@ windowlayout=549
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1204,7 +1204,7 @@ windowlayout=549
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1230,7 +1230,7 @@ windowlayout=549
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1347,9 +1347,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=559
+ y=501
  cx=1083
- cy=116
+ cy=103
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1449,7 +1449,7 @@ windowlayout=549
  x=0
  y=0
  cx=1083
- cy=59
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1465,7 +1465,7 @@ windowlayout=549
  x=0
  y=0
  cx=1083
- cy=59
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1481,14 +1481,14 @@ windowlayout=549
  x=162
  y=0
  cx=921
- cy=494
+ cy=442
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0
@@ -1515,9 +1515,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=62
+ y=56
  cx=1083
- cy=494
+ cy=442
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

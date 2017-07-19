@@ -7844,11 +7844,11 @@ begin
  {$endif}  
  
  {$IF DEFINED(mse)} 
- thethread.terminate();
- freeandnil(self);
+// thethread.terminate();
+// freeandnil(self);
   {$else}
-  FreeOnTerminate:=True;
-  terminate();
+//  FreeOnTerminate:=True;
+//  terminate();
   end;
  {$endif}
 end;
@@ -8424,6 +8424,15 @@ destructor Tuos_Player.Destroy;
 var
   x: cint32;
 begin
+
+ {$ifdef mse}
+  if thethread <> nil then begin
+   thethread.terminate();
+   application.waitforthread(thethread);
+    //calls unlockall()/relockall in order to avoid possible deadlock
+   thethread.destroy();
+  end;
+ {$endif}
 
   if assigned(evPause) then RTLeventdestroy(evPause);
 

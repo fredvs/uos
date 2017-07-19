@@ -1794,7 +1794,7 @@ begin
    begin
 uosPlayers[PlayerIndex].Stop() ;
 {$IF DEFINED(mse)}
-  uosPlayers[PlayerIndex] := nil;
+  freeandnil(uosPlayers[PlayerIndex]);
   uosPlayersStat[PlayerIndex] := -1 ;
  {$endif}
 end;

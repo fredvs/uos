@@ -42,6 +42,7 @@
 * 27 th changes: 2017-03-02 (AddFromMemoryBuffer() input from memory buffer)      *
 * 28 th changes: 2017-03-09 (Phoenix's AddFromMemoryStream() from MemoryStream)   *
 * 29 th changes: 2017-04-16 (Main thread.execute splitted into sub-methods)       *
+* 30 th changes: 2017-07-19 (Martin MSE environement, uos_Player is a class now)  *
 *                                                                                 *
 ***********************************************************************************}
 

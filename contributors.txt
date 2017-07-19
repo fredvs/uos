@@ -14,6 +14,8 @@ KpjComp : He gives the way to link PortAudio with SndFile and shows the best way
 
 Leledumbo : Helps me with threads managing and gives courage to continue uos.
 
+Martin Schreiber : He converts me to change thread-uos_player into class-uos_player.
+
 Sandro Cumerlato : He gives the DSPLevel procedure and lot of others, did SounTouch wrapper and other perfect codes and ideas.
 
 José Mejuto : He gives the right way to record and save the data to file.
