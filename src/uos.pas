@@ -5662,16 +5662,14 @@ begin
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
   
   mpid3v1 := nil;
-  
-  mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
+    
+   mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
   // to do : add id2v2
 
- if (mpid3v1 <> nil)  then
- if (mpid3v1^ <> nil)   then
-
-  begin
+ if (assigned(mpid3v1)) and (assigned(mpid3v1^)) then 
+   begin
  
-  refmpid3v1 := mpid3v1^^;
+ refmpid3v1 := mpid3v1^^;
   
   StreamIn[x].Data.title := trim(refmpid3v1.title);
   StreamIn[x].Data.artist := refmpid3v1.artist;

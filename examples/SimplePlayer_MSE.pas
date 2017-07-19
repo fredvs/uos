@@ -13,7 +13,7 @@ uses
 begin
  application.createform(tmainfo,mainfo);
  ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
-            {$IFDEF Windows}
+     {$IFDEF Windows}
      {$if defined(cpu64)}
      mainfo.padir.value := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
      mainfo.sfdir.value := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
