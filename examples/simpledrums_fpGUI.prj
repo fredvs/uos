@@ -229,7 +229,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=339
@@ -754,7 +754,7 @@ stoponexception=1
 valuehints=1
 activateonbreak=1
 raiseonbreak=1
-showconsole=1
+showconsole=0
 externalconsole=0
 settty=1
 gdbdownload=0
@@ -992,7 +992,7 @@ findhistory=20
  dotermina
  freeplayer(
 findoptions=1
-editpos=12
+editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1004,7 +1004,8 @@ editpos=12
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
+ 0,-1073741823
+ 0,12
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1017,7 +1018,8 @@ bookmarks8=0
 bookmarks9=0
 bookmarks10=0
 bookmarks11=0
-sourcefiles=12
+bookmarks12=0
+sourcefiles=13
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/uos.pas
@@ -1029,8 +1031,9 @@ sourcefiles=12
  ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/define.inc
- /home/fred/uos/examples/uos_flat.pas
-relpaths=12
+ ${PROJECTDIR}/uos_flat.pas
+ /home/fred/uos/examples/define.inc
+relpaths=13
  simpledrums_fpGUI.pas
  main_sd.pas
  uos.pas
@@ -1043,7 +1046,9 @@ relpaths=12
  main_sd.pas
  define.inc
  uos_flat.pas
-ismoduletexts=12
+ define.inc
+ismoduletexts=13
+ 0
  0
  0
  0
@@ -1061,12 +1066,13 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=12
+order=13
  0
  1
  6
  2
  11
+ 12
  7
  5
  4
@@ -1075,7 +1081,7 @@ order=12
  9
  10
 firsttab=0
-index=4
+index=5
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1426,7 +1432,7 @@ windowlayout=530
  value=0
  [messagefo]
  splitdir=0
- useroptions=82027
+ useroptions=805388395
  parent=mainfo.basedock
  visible=1
  mdistate=0

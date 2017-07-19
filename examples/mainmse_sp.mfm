@@ -1,8 +1,8 @@
 object simple_player: tmainfo
   color = 10734762
   bounds_x = 434
-  bounds_y = 52
-  bounds_cx = 529
+  bounds_y = 51
+  bounds_cx = 481
   bounds_cy = 357
   container.optionswidget1 = []
   container.frame.localprops = []
@@ -14,7 +14,7 @@ object simple_player: tmainfo
   container.bounds = (
     0
     0
-    529
+    481
     357
   )
   options = [fo_main, fo_terminateonclose, fo_screencentered, fo_autoreadstat, fo_autowritestat, fo_savepos, fo_savezorder, fo_savestate]

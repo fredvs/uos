@@ -930,7 +930,7 @@ editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 5,18
+ 16,2
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1079,7 +1079,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1536,7 +1536,7 @@ windowlayout=549
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=threadsfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
