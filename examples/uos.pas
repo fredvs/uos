@@ -165,9 +165,24 @@ la5 = 1760.0;
 
 type
    TDummyThread = Class(TThread)
-   public
+   protected
    procedure execute; override;
    end;
+ 
+
+{$IF DEFINED(mse)}  
+{$else}
+type
+   TuosThread = Class(TThread)
+   protected
+   procedure execute; override;
+   public
+   theparent : Tobject;
+   constructor Create(CreateSuspended: boolean; AParent: TObject;
+   const StackSize: SizeUInt = DefaultStackSize); overload; virtual;
+   procedure DoTerminate; override;
+  end;   
+{$endif}
   
 type
  
@@ -538,13 +553,13 @@ type
   end;
 
 type
-  {$IF DEFINED(mse)}
-  Tuos_Player = class(tmsethread)
-  {$else}
-  Tuos_Player = class(TThread)
-  {$endif}
-  
+  Tuos_Player = class(tobject)
    protected
+   {$IF DEFINED(mse)}
+   thethread : tmsethread; 
+   {$else}
+   thethread : TuosThread;
+   {$endif} 
   evPause: PRTLEvent;  // for pausing
   procedure ReadFile(x : integer); 
   {$IF DEFINED(webstream)}
@@ -576,9 +591,7 @@ type
   procedure DoEndProc;
  
   {$IF DEFINED(mse)}
-  function execute(thread: tmsethread): integer override;
-  {$else}
-  procedure Execute; override; 
+  function execute(thread: tmsethread): integer;
   {$endif}
   
   public
@@ -587,12 +600,7 @@ type
   isFirst: boolean;
   Status: cint32;
   Index: cint32;
-  
-  {$IF DEFINED(mse)}
-  hasstarted: boolean ;
-   // procedure Execute; override;
-  {$endif}
-  
+     
   intobuf :boolean; // to check, needed for filetobuf
 
   NLooped : Integer; // -1 infinite loop; 0 no loop; > 0 n-loop
@@ -614,9 +622,8 @@ type
   EndProc: TProc;
  
   // Procedure of object to execute at end of thread
-
  
- EndProcOnly: TProcOnly ;
+  EndProcOnly: TProcOnly ;
  
   // Procedure to execute at end of thread (not of object)
 
@@ -632,37 +639,12 @@ type
   procedure LoopBeginProcjava;
   procedure LoopEndProcjava;
   {$endif}
-  
-
- {$IF DEFINED(mse)}
- {
-  constructor create(const athreadproc: threadprocty;
-                const afreeonterminate: boolean = false;
-                const astacksizekb: integer = 0); overload; virtual;
-  }              
-
- constructor create();
- procedure run() override;
-  {$else}
  
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-  Refer: TObject;  // for fpGUI
-  constructor Create(CreateSuspended: boolean; AParent: TObject;
-  const StackSize: SizeUInt = DefaultStackSize); overload; virtual;
-  {$else}
-  constructor Create(CreateSuspended: boolean;
-  const StackSize: SizeUInt = DefaultStackSize); overload; virtual;
-  {$endif}
-  {$endif}
+  constructor create(); 
 
   destructor Destroy; override;
   
-  {$IF DEFINED(mse)}
-  {$else}
-  procedure DoTerminate; override;
-  {$endif}
-
-   function IsLooped: Boolean;  
+  function IsLooped: Boolean;  
   
    function SetGlobalEvent(isenabled : boolean) : boolean;
   // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
@@ -701,7 +683,6 @@ type
   //  result :  Output Index in array  -1 = error
   // example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0);
   {$endif}
-
 
   function AddIntoFile(Filename: PChar; SampleRate: cint32;
   Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
@@ -1514,18 +1495,8 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   theplayer : Tuos_Player;
   in1 : cint32; 
   begin
-  {$IF DEFINED(mse)}
   theplayer := Tuos_Player.Create();
-  {$else}
-  
-    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
-  theplayer := Tuos_Player.Create(true);
-  {$else}
-  theplayer := Tuos_Player.Create(true,self);
-  {$endif}
-  
-  {$endif}
-  
+   
   {$IF DEFINED(debug)}
   writeln('begin Filetobuffer');
   {$endif}
@@ -1574,8 +1545,7 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   end;
   sleep(60);
   result := outmemory;
-  
-  end; 
+ end; 
 
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos ): TDArFloat;
   // Create a memory buffer of a audio file.
@@ -1627,17 +1597,8 @@ var
   in1 : cint32; 
   begin
   
-  {$IF DEFINED(mse)}
-  theplayer := Tuos_Player.Create();
-  {$else}
+   theplayer := Tuos_Player.Create();
     
-  {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
-  theplayer := Tuos_Player.Create(true);
-  {$else}
-  theplayer := Tuos_Player.Create(true,self);
-  {$endif}
-  {$endif}
-  
   {$IF DEFINED(debug)}
   writeln('begin File2file');
   {$endif}
@@ -1656,7 +1617,19 @@ var
   end;
  
   end;  
- 
+  
+   {$IF DEFINED(mse)}
+    {$else}
+ constructor TuosThread.Create(CreateSuspended: boolean; AParent: TObject;
+  const StackSize: SizeUInt);
+begin
+  theparent := AParent;
+  inherited Create(CreateSuspended, StackSize);
+  FreeOnTerminate := true;
+  Priority :=  tpTimeCritical;
+end;  
+ {$endif}
+  
 function Tuos_Player.GetStatus() : cint32 ;
   // Get the status of the player : -1 => error, 0 => has stopped, 1 => is running, 2 => is paused.
 begin
@@ -1718,16 +1691,18 @@ var
   RTLeventReSetEvent(uosInit.evGlobalPause) else   
   RTLeventResetEvent(evPause);
  end;
- 
- {$IF DEFINED(mse)}
-  hasstarted := true;
- if isFirst = true then run();
+  
+ if isFirst = true then
+ begin
+  {$IF DEFINED(mse)}
+  thethread:= tmsethread.create(@execute);
   {$else}
-  Start;  // resume;  { if fpc version <= 2.4.4}
+  thethread:= tuosthread.Create(false,self);
+  thethread.freeonterminate := true;
   {$endif}
- isFirst := false;
   end;
-
+  isFirst := false;
+ end;
 end;     
 
 Procedure Tuos_Player.PlayPaused(nloop: Integer = 0) ;  // Start play paused with loop
@@ -6155,7 +6130,7 @@ begin
   {$IF not DEFINED(Library)}
   if (StreamOut[x].DSP[x3].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  queue(StreamOut[x].DSP[x3].LoopProc);
+  thethread.queue(thethread,StreamOut[x].DSP[x3].LoopProc);
   {$else}
  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
  begin
@@ -6164,7 +6139,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
  {$else}
-  synchronize(StreamOut[x].DSP[x3].LoopProc);
+  thethread.synchronize(thethread,StreamOut[x].DSP[x3].LoopProc);
   {$endif}
   {$endif}
 
@@ -6174,9 +6149,9 @@ begin
   {$else}
   if (StreamOut[x].DSP[x3].LoopProc <> nil) then
   {$IF FPC_FULLVERSION >= 20701}
-  queue(@StreamOut[x].DSP[x3].LoopProcjava);
+  thethread.queue(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
   {$else}
-  synchronize(@StreamOut[x].DSP[x3].LoopProcjava);
+  thethread.synchronize(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
   {$endif}
   {$endif}
   
@@ -6255,7 +6230,7 @@ begin
     {$IF not DEFINED(Library)}
   if (StreamIn[x].DSP[x2].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  queue(StreamIn[x].DSP[x2].LoopProc);
+  thethread.queue(thethread,StreamIn[x].DSP[x2].LoopProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -6264,7 +6239,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
   {$else}
-  synchronize(StreamIn[x].DSP[x2].LoopProc);
+  thethread.synchronize(thethread,StreamIn[x].DSP[x2].LoopProc);
   {$endif}
   {$endif}
   {$elseif not DEFINED(java)}
@@ -6273,9 +6248,9 @@ begin
   {$else}
   if (StreamIn[x].DSP[x2].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  queue(@Streamin[x].DSP[x2].LoopProcjava);
+  thethread.queue(thethread,@Streamin[x].DSP[x2].LoopProcjava);
   {$else}
-  synchronize(@Streamin[x].DSP[x2].LoopProcjava);
+  thethread.synchronize(thethread,@Streamin[x].DSP[x2].LoopProcjava);
   {$endif}
   {$endif}
   {$endif}
@@ -6341,7 +6316,7 @@ begin
 
    //  Execute LoopEndProc procedure
    {$IF FPC_FULLVERSION>=20701}
-   queue(LoopEndProc);
+   thethread.queue(thethread,LoopEndProc);
    {$else}
    {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
    begin
@@ -6349,7 +6324,7 @@ begin
    fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
    end;
    {$else}
-   synchronize(LoopEndProc);
+   thethread.synchronize(thethread,LoopEndProc);
    {$endif}
    {$endif}
    {$elseif not DEFINED(java)}
@@ -6359,9 +6334,9 @@ begin
    if LoopEndProc <> nil then
 
    {$IF FPC_FULLVERSION>=20701}
-   queue(@endprocjava);
+   thethread.queue(thethread,@endprocjava);
    {$else}
-   synchronize(@endprocjava); //  Execute EndProc procedure
+   thethread.synchronize(thethread,@endprocjava); //  Execute EndProc procedure
    {$endif}
    {$endif}
    {$endif}
@@ -6382,10 +6357,10 @@ begin
   if EndProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
   begin
-  queue(EndProc);
+  thethread.queue(thethread,EndProc);
   end;
   {$else}
-  synchronize(EndProc); //  Execute EndProc procedure
+  thethread.synchronize(thethread,EndProc); //  Execute EndProc procedure
   {$endif}
 
   {$elseif not DEFINED(java)}
@@ -6394,9 +6369,9 @@ begin
   {$else}
   if (EndProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  queue(@endprocjava);
+  thethread.queue(thethread,@endprocjava);
   {$else}
-  synchronize(@endprocjava); //  Execute EndProc procedure
+  thethread.synchronize(thethread,@endprocjava); //  Execute EndProc procedure
   {$endif}
   
   {$endif}
@@ -6447,14 +6422,13 @@ begin
    application.unlock();
    end;
      {$else}
-  
-
+ 
   {$IF not DEFINED(Library)}
   if EndProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  queue(EndProc);
+  thethread.queue(thethread,EndProc);
   {$else}
-  synchronize(EndProc); //  Execute EndProc procedure
+  thethread.synchronize(thethread,EndProc); //  Execute EndProc procedure
   {$endif}
 
   {$elseif not DEFINED(java)}
@@ -6463,9 +6437,9 @@ begin
   {$else}
   if (EndProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  queue(@endprocjava);
+  thethread.queue(thethread,@endprocjava);
   {$else}
-  synchronize(@endprocjava); //  Execute EndProc procedure
+  thethread.synchronize(thethread,@endprocjava); //  Execute EndProc procedure
   {$endif}
 
   {$endif}
@@ -6504,6 +6478,7 @@ procedure Tuos_Player.DoTerminatePlayer;
 var
  x, x2 : integer;
 begin
+      
   if length(PlugIn) > 0 then
    begin
    for x := 0 to high(PlugIn) do
@@ -6649,6 +6624,8 @@ begin
 
 
    end;
+   
+     
 end;
 
 procedure Tuos_Player.DoMainLoopProc(x: integer);
@@ -6670,7 +6647,7 @@ begin
   {$IF not DEFINED(Library)}
   if StreamIn[x].LoopProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  queue(StreamIn[x].LoopProc);
+  thethread.queue(thethread,StreamIn[x].LoopProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -6679,7 +6656,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
   {$else}
-  synchronize(StreamIn[x].LoopProc);
+  thethread.synchronize(thethread,StreamIn[x].LoopProc);
   {$endif}
   {$endif}
 
@@ -6689,9 +6666,9 @@ begin
   {$else}
   if (StreamIn[x].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  queue(@Streamin[x].LoopProcjava);
+  thethread.queue(thethread,@Streamin[x].LoopProcjava);
   {$else}
-  synchronize(@Streamin[x].LoopProcjava);
+  thethread.synchronize(thethread,@Streamin[x].LoopProcjava);
   {$endif}
   {$endif}
    {$endif}
@@ -6716,7 +6693,7 @@ begin
   if BeginProc <> nil then
   //  Execute BeginProc procedure
   {$IF FPC_FULLVERSION>=20701}
-  queue(BeginProc);
+  thethread.queue(thethread,BeginProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -6724,7 +6701,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
   {$else}
-  synchronize(BeginProc);
+  thethread.synchronize(thethread,BeginProc);
   {$endif}
   {$endif}
   {$elseif not DEFINED(java)}
@@ -6733,9 +6710,9 @@ begin
   {$else}
   if BeginProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  queue(@BeginProcjava);
+  thethread.queue(thethread,@BeginProcjava);
   {$else}
-  synchronize(@BeginProcjava);
+  thethread.synchronize(thethread,@BeginProcjava);
   {$endif}
   {$endif}
   {$endif}
@@ -6760,7 +6737,7 @@ begin
   if LoopBeginProc <> nil then
   //  Execute BeginProc procedure
   {$IF FPC_FULLVERSION>=20701}
-  queue(LoopBeginProc);
+  thethread.queue(thethread,LoopBeginProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -6768,7 +6745,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
   {$else}
-  synchronize(LoopBeginProc);
+  thethread.synchronize(thethread,LoopBeginProc);
   {$endif}
   {$endif}
   {$elseif not DEFINED(java)}
@@ -6777,9 +6754,9 @@ begin
   {$else}
   if loopBeginProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  queue(@loopBeginProcjava);
+  thethread.queue(thethread,@loopBeginProcjava);
   {$else}
-  synchronize(@loopBeginProcjava);
+  thethread.synchronize(thethread,@loopBeginProcjava);
   {$endif}
   {$endif}
   {$endif}
@@ -7521,7 +7498,7 @@ end;
 function Tuos_Player.execute(thread: tmsethread): integer;
 // The Main Loop Procedure
   {$else}
- procedure Tuos_Player.Execute;
+ procedure TuosThread.Execute;
 // The Main Loop Procedure
   {$endif}
 var
@@ -7531,11 +7508,12 @@ var
 begin
 
 {$IF DEFINED(mse)}
-// while hasstarted = false do sleep(10);
-//  application.lock();
+ {$else}
+with  Tuos_Player(theparent) do
+begin
  {$endif}
  
-   CheckIfPaused ; // is there a pause waiting ?
+  CheckIfPaused ; // is there a pause waiting ?
 
    DoBeginMethods();
    
@@ -7866,7 +7844,12 @@ begin
  {$endif}  
  
  {$IF DEFINED(mse)} 
- terminate();
+ thethread.terminate();
+ freeandnil(self);
+  {$else}
+  FreeOnTerminate:=True;
+  terminate();
+  end;
  {$endif}
 end;
 
@@ -8345,7 +8328,6 @@ begin
 (PEnv^^).CallVoidMethod(PEnv,Obj,LoopEndProc)  ;
 end;
 
-
 procedure Tuos_DSP.LoopProcjava();
 begin
 // todo
@@ -8404,66 +8386,10 @@ begin
   Plug_BS_FileName := nil; // Plugin bs2b
 end;
 
-{$IF DEFINED(mse)}
-procedure Tuos_Player.run();
-begin
- inherited;
-end;
-{$endif}
-
-{$IF DEFINED(mse)}
- {
-  constructor Tuos_Player.create(const athreadproc: threadprocty;
-                const afreeonterminate: boolean = false;
-                const astacksizekb: integer = 0); 
- }
- 
  constructor Tuos_Player.create();
 begin
- include(fstate,ts_norun);
- hasstarted := false;
-  freeonterminate:= true;
- inherited create(@execute);
-
-   freeonterminate:= true;
- 
-   evPause := RTLEventCreate;
- 
-    //  RTLeventResetEvent(evPause);  
-  
-  isAssigned := true; 
-  isFirst := true;
-  isGlobalPause := false;
-  intobuf := false;
-  NLooped:= 0; 
-  NoFree:= False;
-  status := 2;
-  BeginProc := nil;
-  EndProc := nil;
-  EndProcOnly := nil;
-  loopBeginProc := nil;
-  loopEndProc := nil;
- 
- end;
-          
- 
-  {$else}
-
- {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
- constructor Tuos_Player.Create(CreateSuspended: boolean; AParent: TObject;
-  const StackSize: SizeUInt);
-  {$else}
-  constructor Tuos_Player.Create(CreateSuspended: boolean;
-  const StackSize: SizeUInt);
-  {$endif}
-begin
-  inherited Create(CreateSuspended, StackSize);
-  FreeOnTerminate := true;
-  Priority :=  tpTimeCritical;
   evPause := RTLEventCreate;
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-  refer := aparent; // for fpGUI
-  {$endif}
+   
   isAssigned := true; 
   isFirst := true;
   isGlobalPause := false;
@@ -8476,19 +8402,21 @@ begin
   EndProcOnly := nil;
   loopBeginProc := nil;
   loopEndProc := nil;
-end;
- 
-  {$endif}
+ end;
 
 {$IF DEFINED(mse)}
 {$else}
-procedure Tuos_Player.DoTerminate;
+procedure TuosThread.DoTerminate;
+begin
+with  Tuos_Player(theparent) do
 begin
 if (ifflat = true) and (intobuf = false) then
   begin
   uosPlayers[Index] := nil;
   uosPlayersStat[Index] := -1 ;
   end; 
+end;
+theparent.destroy;
 end;
  {$endif}
 
@@ -8497,8 +8425,7 @@ var
   x: cint32;
 begin
 
-if assigned(evPause) then
- RTLeventdestroy(evPause);
+  if assigned(evPause) then RTLeventdestroy(evPause);
 
   if length(StreamOut) > 0 then
   for x := 0 to high(StreamOut) do
@@ -8511,13 +8438,9 @@ if assigned(evPause) then
   if length(Plugin) > 0 then
   for x := 0 to high(Plugin) do
   freeandnil(Plugin[x]);
-  
- {$IF DEFINED(mse)}
-// application.waitforthread(self); 
- {$endif}
  
-  
   inherited Destroy;
+
 end;
 
 destructor Tuos_DSP.Destroy;
@@ -8601,6 +8524,7 @@ begin
 
  if assigned(uosInit) then
  begin
+  if assigned(uosInit.evGlobalPause) then
   RTLeventdestroy(uosInit.evGlobalPause);
   freeandnil(uosInit);
   end;

@@ -116,8 +116,8 @@ var
     uos_Play(PlayerIndex1);
 
 writeln;   
-writeln('Title: ' + ((uos_InputGetTagTitle(PlayerIndex1, 0))));
-writeln('Artist: ' + ((uos_InputGetTagArtist(PlayerIndex1, 0))));
+writeln('Title: ' + uos_InputGetTagTitle(PlayerIndex1, 0));
+writeln('Artist: ' + uos_InputGetTagArtist(PlayerIndex1, 0));
 writeln;   
     sleep(2000);
    end;

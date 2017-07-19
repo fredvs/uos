@@ -159,9 +159,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=142
  xprop=1
- yprop=0.32882882882883
+ yprop=0.32954545454545
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -207,7 +207,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -809,17 +809,17 @@ path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
 line=5
- 5755
- 5068
+ 5752
+ 5065
  106
- 1533
+ 1532
  117
 address=5
- 4864605
- 4853400
- 4197899
- 4789592
- 4197977
+ 4860417
+ 4849547
+ 4197848
+ 4788416
+ 4197926
 addbkpt=5
  0
  0
@@ -895,35 +895,35 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=PPmpg123_id3v1
+finddtext=constructor
 findhistory=20
+ constructor
+ playex
+ terminatepl
+ .terminate
+ terminate
+ thethread
+ evPause
+ Tuos_Player.Create
+ theparent
+ destruct
+ constru
+ creator
+ DoTerminatePlayer
+ .execute
+ TuosThread
+ destructor
  PPmpg123_id3v1
  SF_STR_COMMENT
  mpg123_id3
  utf
- Tmpg123_id3v1
- Pmpg123_id3v1
- mpg123_id3v1
- mpid3v1
- Pmpg123_string
- album
- artist
- Artist
- tag
- if uosInit.evGlobalPause
- evPause
- evglobalPause
- .create
- addfrom
- addp
- outputaddd
 findoptions=1
 editpos=9
  0,-1073741823
  0,-1073741823
- 2,100
+ 0,116
  0,-1073741823
- 0,-1073741823
+ 0,8403
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -940,9 +940,9 @@ bookmarks8=0
 sourcefiles=9
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/consoleplay.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/consoleplay.pas
+ /home/fred/uos/examples/uos_flat.pas
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_mpg123.pas
@@ -1002,8 +1002,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=784
+ cx=1083
+ cy=675
  rcx=0
  rcy=0
  [mainfo]
@@ -1015,16 +1015,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=229
- y=35
- cx=939
+ x=89
+ y=31
+ cx=1093
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,784
+  basedock,0,0,1083,675
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1036,15 +1036,15 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=478
+ y=188
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1138,7 +1138,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=582
+ cy=494
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1149,7 +1149,7 @@ windowlayout=549
  sortdescend1=0
  sorted=0
  col=0
- row=5
+ row=-1073741823
  rowheight=18
  [stackfo]
  splitdir=0
@@ -1338,7 +1338,7 @@ windowlayout=549
  value=1
  [messagefo]
  splitdir=0
- useroptions=82027
+ useroptions=805388395
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1347,9 +1347,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=648
- cx=1356
- cy=136
+ y=559
+ cx=1083
+ cy=116
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1448,8 +1448,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=60
+ cx=1083
+ cy=59
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1460,12 +1460,12 @@ windowlayout=549
  mdistate=0
  nx=0
  ny=0
- ncx=929
- ncy=2
+ ncx=1083
+ ncy=51
  x=0
  y=0
- cx=1356
- cy=60
+ cx=1083
+ cy=59
  rcx=0
  rcy=0
  [sourcefo]
@@ -1480,15 +1480,15 @@ windowlayout=549
  ncy=0
  x=162
  y=0
- cx=1194
- cy=582
+ cx=921
+ cy=494
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1515,15 +1515,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=63
- cx=1356
- cy=582
+ y=62
+ cx=1083
+ cy=494
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

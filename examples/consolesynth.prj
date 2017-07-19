@@ -79,7 +79,7 @@ replacedialog=15
  y=302
  cx=437
  cy=171
-options=108
+options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -115,8 +115,8 @@ options=108
  width4=283
  sortdescend4=0
  sorted=0
- col=0
- row=0
+ col=-1073741823
+ row=-1073741823
  rowheight=17
  [projectoptionsfo.newfile]
  firsttab=0
@@ -139,9 +139,9 @@ options=108
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=142
  xprop=1
- yprop=0.32882882882883
+ yprop=0.32954545454545
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -158,6 +158,12 @@ options=108
  sortdescend10=0
  width11=479
  sortdescend11=0
+ [projectoptionsfo.comment_1]
+ value=
+ [projectoptionsfo.comment_B]
+ value=
+ [projectoptionsfo.comment_M]
+ value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
  index=2
@@ -179,9 +185,9 @@ options=108
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=1
- [projectoptionsfo.tabwidget]
+ [projectoptionsfo.setting_tab]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -249,7 +255,14 @@ makeoptions=7
  -B
  -O2 -XX -Xs -CX
  -vewnhibq
-makeoptpurpose=0
+makeoptpurpose=7
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 compilerused=21
  ${COMPILER} (Default)
  Pascal 1
@@ -495,7 +508,7 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=
+project_date=22:46:44 18/07/2017
 project_comment=
 aftcommandon=0
 unitdirson=7
@@ -801,7 +814,7 @@ findhistory=19
 findoptions=1
 editpos=17
  0,-1073741823
- 20,18
+ 0,8
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -836,7 +849,7 @@ bookmarks15=0
 bookmarks16=0
 sourcefiles=17
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
- /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
@@ -928,7 +941,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=694
+ cy=785
  rcx=0
  rcy=0
  [mainfo]
@@ -940,14 +953,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=239
- y=63
- cx=964
- cy=620
+ x=164
+ y=60
+ cx=1093
+ cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1356,785
  focusedchild=0
  wsize=6
  active=1
@@ -961,8 +974,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=464
+ y=168
  cx=497
  cy=314
  rcx=0
@@ -991,7 +1004,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1063,7 +1076,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=506
+ cy=573
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1155,7 +1168,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1272,9 +1285,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=579
+ y=655
  cx=1356
- cy=115
+ cy=130
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1374,7 +1387,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=67
+ cy=76
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1390,7 +1403,7 @@ windowlayout=530
  x=0
  y=0
  cx=1356
- cy=67
+ cy=76
  rcx=0
  rcy=0
  [sourcefo]
@@ -1406,14 +1419,14 @@ windowlayout=530
  x=162
  y=0
  cx=1194
- cy=506
+ cy=573
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1440,9 +1453,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=70
+ y=79
  cx=1356
- cy=506
+ cy=573
  rcx=0
  rcy=0
 [targetconsole]

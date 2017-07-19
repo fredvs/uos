@@ -2010,11 +2010,8 @@ uosDefaultDeviceOut:= uos.uosDefaultDeviceOut;
 end;
 {$endif}
 
-{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-function uos_CreatePlayer(PlayerIndex : cint32 ; AParent: TObject): boolean;
-{$else}
+
 function uos_CreatePlayer(PlayerIndex : cint32): boolean;
-{$endif}
 // Create the player , PlayerIndex1 : from 0 to what your computer can do !
 // If PlayerIndex exists already, it will be overwriten...
  var
@@ -2054,16 +2051,7 @@ end;
  writeln('after uosPlayers[PlayerIndex] <> nil ');
 {$endif}  
 
- {$IF DEFINED(mse)}
-  uosPlayers[PlayerIndex] := Tuos_Player.Create();
-  {$else}
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-  uosPlayers[PlayerIndex] := Tuos_Player.Create(true,AParent);  // for fpGUI
-  {$else}
-  uosPlayers[PlayerIndex] := Tuos_Player.Create(true);
-  {$endif}
-  
-  {$endif}
+   uosPlayers[PlayerIndex] := Tuos_Player.Create();
   
   if uosPlayers[PlayerIndex] <> nil then result := true
   else result := false; 
@@ -2095,7 +2083,6 @@ if length(uosPlayers) > 0 then
   begin
   uosPlayers[x].nofree := false;
   uos_stop(x);
-  uos_FreePlayer(x);
   end;
   end;
 
@@ -2106,8 +2093,8 @@ while (PlayersNotFree = true) and (nt > 0) do
   Sleep(10); 
   Dec(nt); 
  end; 
- 
-uos.uos_free();
+ sleep(20);
+ uos.uos_free();
 end;
 
 end.
