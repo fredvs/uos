@@ -238,7 +238,7 @@ var
     fnmp := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
    FilenameEdit1.FileName := ordir + 'sound/test.mp3';
     {$ENDIF}
-    {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+    {$if defined(cpu86) and defined(linux)}
     fnsf := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     fnmp := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     FilenameEdit1.FileName := ordir + 'sound/test.mp3';

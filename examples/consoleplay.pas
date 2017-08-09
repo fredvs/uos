@@ -54,7 +54,7 @@ var
     SoundFilename := ordir + 'sound/test.ogg';
    {$ENDIF}
    
-   {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+   {$if defined(cpu86) and defined(linux)}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
    SoundFilename := ordir + 'sound/test.ogg';

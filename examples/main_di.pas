@@ -77,7 +77,7 @@ begin
   edit1.Text := application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
 {$endif}
 
-{$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+{$if defined(cpu86) and defined(linux)}
   edit1.Text := application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
 {$endif}
  

@@ -48,7 +48,7 @@ begin
     mainfo.bsdir.value := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
     mainfo.songdir.value := ordir + 'sound/test.ogg';
     {$ENDIF}
-{$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+{$if defined(cpu86) and defined(linux)}
     mainfo.padir.value := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     mainfo.sfdir.value := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     mainfo.mpdir.value := ordir + 'lib/Linux/32bit/LibMpg123-32.so';

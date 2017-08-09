@@ -596,7 +596,7 @@ var
  FilenameEdit4.FileName := ordir + 'sound/testrecord.wav';
    {$ENDIF}
      
-     {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}       
+  {$if defined(cpu86) and defined(linux)}    
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
       FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
      FilenameEdit4.FileName := ordir + 'sound/testrecord.wav';

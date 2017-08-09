@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplay.prj
-findinfiledialog=42
+findinfiledialog=44
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -50,8 +50,10 @@ findinfiledialog=42
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value={$if defined(cpu64)}
- history=4
+ value=(cpu32)
+ history=6
+  (cpu32)
+  (cpu32)}
   {$if defined(cpu64)}
   addfromf
   endproconly
@@ -920,48 +922,77 @@ findhistory=20
  destructor
  PPmpg123_id3v1
 findoptions=1
-editpos=41
- 0,-1073741823
- 0,-1073741823
- 0,66
+editpos=70
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,977
  0,-1073741823
- 0,66
- 0,69
- 0,57
- 0,277
- 0,774
- 0,1343
- 0,275
- 0,84
- 0,162
- 0,251
- 0,201
- 0,130
- 0,134
- 0,122
- 0,228
- 0,233
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 19,241
+ 0,56
+ 0,56
+ 0,59
+ 0,51
+ 0,304
+ 0,770
+ 0,267
+ 0,79
+ 0,151
+ 0,243
+ 0,183
+ 0,123
  0,125
- 0,116
- 0,182
- 0,277
- 0,531
- 0,466
- 0,87
- 0,1270
- 0,61
- 0,608
+ 0,115
+ 0,238
+ 0,246
+ 0,117
+ 0,104
+ 0,173
+ 0,259
+ 0,520
+ 0,439
+ 0,79
+ 0,1258
+ 0,1329
+ 0,50
+ 0,598
  0,941
  0,1168
- 0,250
- 67,240
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1003,7 +1034,36 @@ bookmarks37=0
 bookmarks38=0
 bookmarks39=0
 bookmarks40=0
-sourcefiles=41
+bookmarks41=0
+bookmarks42=0
+bookmarks43=0
+bookmarks44=0
+bookmarks45=0
+bookmarks46=0
+bookmarks47=0
+bookmarks48=0
+bookmarks49=0
+bookmarks50=0
+bookmarks51=0
+bookmarks52=0
+bookmarks53=0
+bookmarks54=0
+bookmarks55=0
+bookmarks56=0
+bookmarks57=0
+bookmarks58=0
+bookmarks59=0
+bookmarks60=0
+bookmarks61=0
+bookmarks62=0
+bookmarks63=0
+bookmarks64=0
+bookmarks65=0
+bookmarks66=0
+bookmarks67=0
+bookmarks68=0
+bookmarks69=0
+sourcefiles=70
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
@@ -1045,7 +1105,36 @@ sourcefiles=41
  ${PROJECTDIR}/simplewebserver_fpGUI.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/waveform_fpGUI.pas
-relpaths=41
+ ${PROJECTDIR}/consoleplay.pas
+ ${PROJECTDIR}/consoleplayloop.pas
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
+ ${PROJECTDIR}/consolesynth.pas
+ ${PROJECTDIR}/deviceinfos_fpGUI.pas
+ ${PROJECTDIR}/filterplayer_fpGUI.pas
+ ${PROJECTDIR}/librarytester_fpGUI.pas
+ ${PROJECTDIR}/main_di.pas
+ ${PROJECTDIR}/main_fp.pas
+ ${PROJECTDIR}/main_mi.pas
+ ${PROJECTDIR}/main_mp.pas
+ ${PROJECTDIR}/main_mt.pas
+ ${PROJECTDIR}/main_nr.pas
+ ${PROJECTDIR}/main_sd.pas
+ ${PROJECTDIR}/main_sp_nf.pas
+ ${PROJECTDIR}/main_sp.pas
+ ${PROJECTDIR}/main_sr.pas
+ ${PROJECTDIR}/main_wf.pas
+ ${PROJECTDIR}/main_wsp.pas
+ ${PROJECTDIR}/morseTL_fpGUI.pas
+ ${PROJECTDIR}/multiplayer_fpGUI.pas
+ ${PROJECTDIR}/noiseremover_fpGUI.pas
+ ${PROJECTDIR}/simpledrums_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/SimplePlayer_MSE.pas
+ ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ ${PROJECTDIR}/simplewebplayer_fpGUI.pas
+ ${PROJECTDIR}/simplewebserver_fpGUI.pas
+relpaths=70
  deviceinfos_fpGUI.pas
  uos.pas
  consoleplay.pas
@@ -1087,7 +1176,65 @@ relpaths=41
  simplewebserver_fpGUI.pas
  uos_mpg123.pas
  waveform_fpGUI.pas
-ismoduletexts=41
+ consoleplay.pas
+ consoleplayloop.pas
+ consoleplaymemorybuffer.pas
+ consolesynth.pas
+ deviceinfos_fpGUI.pas
+ filterplayer_fpGUI.pas
+ librarytester_fpGUI.pas
+ main_di.pas
+ main_fp.pas
+ main_mi.pas
+ main_mp.pas
+ main_mt.pas
+ main_nr.pas
+ main_sd.pas
+ main_sp_nf.pas
+ main_sp.pas
+ main_sr.pas
+ main_wf.pas
+ main_wsp.pas
+ morseTL_fpGUI.pas
+ multiplayer_fpGUI.pas
+ noiseremover_fpGUI.pas
+ simpledrums_fpGUI.pas
+ simpleplayer_fpGUI_noflat.pas
+ simpleplayer_fpGUI.pas
+ SimplePlayer_MSE.pas
+ simplerecorder_fpGUI.pas
+ simplewebplayer_fpGUI.pas
+ simplewebserver_fpGUI.pas
+ismoduletexts=70
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1138,7 +1285,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=41
+order=70
  0
  1
  2
@@ -1171,6 +1318,35 @@ order=41
  38
  39
  40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
  16
  9
  10
@@ -1180,7 +1356,7 @@ order=41
  5
  6
  7
-firsttab=26
+firsttab=31
 index=31
 [layout]
 windowlayout=549
@@ -1654,8 +1830,8 @@ windowlayout=549
  mdistate=0
  nx=0
  ny=0
- ncx=1083
- ncy=53
+ ncx=1356
+ ncy=69
  x=0
  y=0
  cx=1356

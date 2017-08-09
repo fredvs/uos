@@ -257,7 +257,7 @@ begin
   PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
  MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
  {$ENDIF}
- {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+{$if defined(cpu86) and defined(linux)}
   PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
  {$endif}

@@ -123,7 +123,7 @@ begin
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so'; 
    Edit4.Text := opath + 'sound/noisyvoice.ogg';
   {$ENDIF}
-  {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+ {$if defined(cpu86) and defined(linux)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
    Edit4.Text := opath + 'sound/noisyvoice.ogg';

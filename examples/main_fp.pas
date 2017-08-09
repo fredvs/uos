@@ -149,7 +149,7 @@ begin
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   Edit4.Text := ordir + 'sound/test.mp3';
  {$ENDIF}
-  {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+{$if defined(cpu86) and defined(linux)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';

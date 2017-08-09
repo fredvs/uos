@@ -171,7 +171,7 @@ begin
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
   Edit6.Text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
 {$ENDIF}
- {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+ {$if defined(cpu86) and defined(linux)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
   Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';

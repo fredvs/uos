@@ -939,7 +939,7 @@ end;
     FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
     {$ENDIF}
     
-     {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}   
+    {$if defined(cpu86) and defined(linux)}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
