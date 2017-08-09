@@ -431,16 +431,21 @@ nil, nil, nil, nil) = 0 then
     FilenameEdit4.FileName := opath + 'sound/noisyvoice.ogg';
             {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+   {$if defined(cpu64) and defined(linux) }
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
-       
-{$else}
+    FilenameEdit4.FileName := ordir + 'sound/noisyvoice.ogg';
+      {$ENDIF}
+
+    {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-          
-{$endif}
+    FilenameEdit4.FileName := ordir + 'sound/noisyvoice.ogg';
+    {$ENDIF}
+   
+    {$if defined(linux) and defined(cpuarm)}
+    FilenameEdit1.FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+    FilenameEdit2.FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
     FilenameEdit4.FileName := ordir + 'sound/noisyvoice.ogg';
             {$ENDIF}
 

@@ -233,17 +233,21 @@ var
     FilenameEdit1.FileName := opath + 'sound/test.mp3';
             {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+   {$if defined(cpu64) and defined(linux) }
     fnsf := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     fnmp := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-  {$else}
+   FilenameEdit1.FileName := ordir + 'sound/test.mp3';
+    {$ENDIF}
+    {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
     fnsf := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     fnmp := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
-   {$endif}
     FilenameEdit1.FileName := ordir + 'sound/test.mp3';
-            {$ENDIF}
-
+    {$ENDIF}
+    {$if defined(linux) and defined(cpuarm)}
+     fnsf := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+    fnmp := ordir + 'lib/Linux//arm_raspberrypi/libmpg123-arm.so';
+     FilenameEdit1.FileName := ordir + 'sound/test.mp3';
+    {$ENDIF}
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}

@@ -109,15 +109,18 @@ begin
          {$endif}
      {$ENDIF}
 
-     {$IFDEF linux}
-        {$if defined(cpu64)}
-       lib1 :=  ordir + 'lib/Linux/64bit/LibPortaudio-64.so'    ;
-       lib2 := ordir + 'lib/Linux/64bit/LibSndFile-64.so'   ;
-        {$else}
-        lib1 := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
-         lib2 := ordir + 'lib/Linux/32bit/LibSndFile-32.so'   ;
-        {$endif}
-      {$ENDIF}
+    {$if defined(cpu64) and defined(linux) }
+   lib1 := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
+  lib2 := ordir + 'lib/Linux/64bit/LibSndFile-64.so'; 
+  {$ENDIF}
+  {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+  lib1 := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
+  lib2 := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
+  {$ENDIF}
+   {$if defined(linux) and defined(cpuarm)}
+  lib1 := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+  lib2 := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+  {$ENDIF}
 
      {$IFDEF freebsd}
         {$if defined(cpu64)}

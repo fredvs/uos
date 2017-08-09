@@ -258,20 +258,25 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
 
             {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+     {$if defined(cpu64) and defined(linux) }
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-    FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/LibSoundTouch-64.so';
-{$else}
+    FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
+     {$ENDIF}
+
+    {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
-    FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/LibSoundTouch-32.so';
-{$endif}
-
-            {$ENDIF}
+    FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
+    {$ENDIF}
+   
+    {$if defined(linux) and defined(cpuarm)}
+    FilenameEdit1.FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+    FilenameEdit2.FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+    FilenameEdit3.FileName := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
+    {$ENDIF}
 
   {$IFDEF freebsd}
     {$if defined(cpu64)}

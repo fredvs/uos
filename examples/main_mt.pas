@@ -117,14 +117,17 @@ begin
    {$endif}
    {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+     {$if defined(cpu64) and defined(linux) }
    PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
    MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-   {$else}
+   {$ENDIF}
+   {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
    PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
    MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
    {$endif}
+    {$if defined(linux) and defined(cpuarm)}
+  PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+  MP_FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
    {$ENDIF}
 
   {$IFDEF freebsd}

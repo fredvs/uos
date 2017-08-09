@@ -252,6 +252,20 @@ begin
    MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
    {$endif}
    {$ENDIF}
+   
+   {$if defined(cpu64) and defined(linux) }
+  PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
+ MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+ {$ENDIF}
+ {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+  PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
+  MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+ {$endif}
+
+ {$if defined(linux) and defined(cpuarm)}
+  PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+  MP_FileName := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';  
+   {$ENDIF}
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}

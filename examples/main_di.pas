@@ -73,14 +73,18 @@ begin
   edit1.Text := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
             {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+    {$if defined(cpu64) and defined(linux) }
   edit1.Text := application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
-{$else}
+{$endif}
+
+{$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
   edit1.Text := application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
 {$endif}
- {$endif}
-
+ 
+  {$if defined(linux) and defined(cpuarm)}
+  edit1.Text := application.Location + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+{$endif}
+ 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
   edit1.Text := application.Location + 'lib/FreeBSD/64bit/libportaudio-64.so';

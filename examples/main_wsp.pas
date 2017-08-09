@@ -165,18 +165,23 @@ begin
   Edit5.Text := opath + '/lib/Mac/32bit/LibSoundTouch-32.dylib';
            {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+ {$if defined(cpu64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
   Edit6.Text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
-{$else}
+{$ENDIF}
+ {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
   Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
 {$endif}
-           {$ENDIF}
+
+ {$if defined(linux) and defined(cpuarm)}
+  Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+  Edit3.Text := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so'; 
+  {$ENDIF}
+         
 
 {$IFDEF freebsd}
     {$if defined(cpu64)}

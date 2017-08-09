@@ -298,14 +298,17 @@ var
  {$endif}
   {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+     {$if defined(cpu64) and defined(linux) }
     FilenameEdit1.FileName := ordir + '/lib/Linux/64bit/LibPortaudio-64.so';
-{$else}
+ {$ENDIF}
+ 
+ {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
     FilenameEdit1.FileName := ordir + '/lib/Linux/32bit/LibPortaudio-32.so';
 {$endif}
 
-            {$ENDIF}
+       {$if defined(linux) and defined(cpuarm)}
+    FilenameEdit1.FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+{$endif}
     //////////////////////////////////////////////////////////////////////////
 
     FilenameEdit1.Initialdir := ordir + 'lib';

@@ -48,15 +48,22 @@ var
     SoundFilename := ordir + 'sound\test.flac';
  {$ENDIF}
 
- {$IFDEF linux}
-    {$if defined(cpu64)}
+  {$if defined(cpu64) and if defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
-    {$else}
+    SoundFilename := ordir + 'sound/test.flac';
+   {$ENDIF}
+   
+   {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-    {$endif}
-    SoundFilename := ordir + 'sound/test.flac';
+   SoundFilename := ordir + 'sound/test.flac';
+ {$ENDIF}
+ 
+  {$if defined(linux) and defined(cpuarm)}
+    PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+    SF_FileName := ordir + ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+      SoundFilename := ordir + 'sound/test.flac';
  {$ENDIF}
 
  {$IFDEF freebsd}

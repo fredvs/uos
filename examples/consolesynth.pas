@@ -45,12 +45,16 @@ var
      {$endif}
  {$ENDIF}
 
- {$IFDEF linux}
-    {$if defined(cpu64)}
+  {$if defined(cpu64) and if defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
-    {$else}
+  {$ENDIF}
+   
+   {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
-    {$endif}
+  {$ENDIF}
+ 
+  {$if defined(linux) and defined(cpuarm)}
+    PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   {$ENDIF}
 
  {$IFDEF freebsd}

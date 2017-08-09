@@ -109,17 +109,22 @@ begin
   Edit3.Text := opath + '/sound/testrecord.wav';
             {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
-  edit1.Text := application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
-  edit2.Text := application.Location + 'lib/Linux/64bit/LibSndFile-64.so';
-{$else}
-  edit1.Text := application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
-  edit2.Text := application.Location + 'lib/Linux/32bit/LibSndFile-32.so';
-{$endif}
-  Edit3.Text := application.Location + 'sound/testrecord.wav';
-            {$ENDIF}
-
+   
+    {$if defined(cpu64) and defined(linux) }
+  Edit1.Text :=  application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
+  Edit2.Text :=  application.Location + 'lib/Linux/64bit/LibSndFile-64.so';
+   Edit3.Text := application.Location + 'sound/testrecord.wav';
+   {$ENDIF}
+  {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
+  Edit1.Text :=  application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
+  Edit2.Text :=  application.Location + 'lib/Linux/32bit/LibSndFile-32.so';
+   Edit3.Text := application.Location + 'sound/testrecord.wav';
+  {$ENDIF}
+   {$if defined(linux) and defined(cpuarm)}
+  Edit1.Text :=  application.Location + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+  Edit2.Text :=  application.Location + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+   Edit3.Text := application.Location + 'sound/testrecord.wav';
+  {$ENDIF}
 
    {$IFDEF freebsd}
    {$if defined(cpu64)}

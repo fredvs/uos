@@ -1231,7 +1231,7 @@ end;
     FilenameEdit6.FileName := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
     
   {$endif}
-    FilenameEdit4.FileName := ordir + 'sound\test.m4a';
+    FilenameEdit4.FileName := ordir + 'sound\test.mp3';
  {$ENDIF}
 
   {$IFDEF Darwin}
@@ -1244,8 +1244,7 @@ end;
     FilenameEdit4.FileName := opath + 'sound/test.mp3';
             {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+   {$if defined(cpu64) and defined(linux) }
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
@@ -1254,8 +1253,10 @@ end;
     
     FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
     FilenameEdit6.FileName := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
-    
-{$else}
+    FilenameEdit4.FileName := ordir + 'sound/test.ogg'; 
+ {$ENDIF}
+
+    {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
@@ -1264,10 +1265,15 @@ end;
     
     FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
     FilenameEdit6.FileName := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
-    
-{$endif}
-    FilenameEdit4.FileName := ordir + 'sound/test.m4a';
-            {$ENDIF}
+     FilenameEdit4.FileName := ordir + 'sound/test.ogg';
+   {$ENDIF}
+   
+    {$if defined(linux) and defined(cpuarm)}
+    FilenameEdit1.FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+    FilenameEdit2.FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+    FilenameEdit3.FileName := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
+    FilenameEdit4.FileName := ordir + 'sound/test.ogg';
+   {$ENDIF}
 
   {$IFDEF freebsd}
     {$if defined(cpu64)}

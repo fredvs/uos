@@ -174,21 +174,26 @@ begin
   Edit3.Text := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
            {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+    {$if defined(cpu64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   Edit8.text := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
   Edit9.text := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
-  {$else}
+   {$ENDIF}
+  {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
   Edit8.text := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
   Edit9.text := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
  {$endif}
-    {$ENDIF}
+   
+    {$if defined(linux) and defined(cpuarm)}
+  Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+  Edit2.Text := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+  Edit3.Text := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
+   {$ENDIF}
 
 {$IFDEF freebsd}
     {$if defined(cpu64)}

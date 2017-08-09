@@ -118,19 +118,21 @@ begin
 
   Edit4.Text := opath + 'sound/noisyvoice.ogg';
             {$ENDIF}
-
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+  {$if defined(cpu64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
-  Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
-
-{$else}
+  Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so'; 
+   Edit4.Text := opath + 'sound/noisyvoice.ogg';
+  {$ENDIF}
+  {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-
-{$endif}
-  Edit4.Text := ordir + 'sound/noisyvoice.ogg';
-            {$ENDIF}
+   Edit4.Text := opath + 'sound/noisyvoice.ogg';
+  {$ENDIF}
+   {$if defined(linux) and defined(cpuarm)}
+  Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+  Edit2.Text := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+   Edit4.Text := opath + 'sound/noisyvoice.ogg';
+  {$ENDIF}
 
   opendialog1.Initialdir := application.Location + 'sound';
 

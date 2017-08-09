@@ -32,11 +32,10 @@ begin
     mainfo.bsdir.value := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
     
   {$endif}
-    mainfo.songdir.value := ordir + 'sound\test.opus';
+    mainfo.songdir.value := ordir + 'sound\test.ogg';
  {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
+   {$if defined(cpu64) and defined(linux) }
     mainfo.padir.value := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     mainfo.sfdir.value := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     mainfo.mpdir.value := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
@@ -47,8 +46,9 @@ begin
     
     mainfo.stdir.value := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
     mainfo.bsdir.value := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
-    
-{$else}
+    mainfo.songdir.value := ordir + 'sound/test.ogg';
+    {$ENDIF}
+{$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
     mainfo.padir.value := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     mainfo.sfdir.value := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     mainfo.mpdir.value := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
@@ -57,10 +57,15 @@ begin
     
     mainfo.stdir.value := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
     mainfo.bsdir.value := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
-    
-{$endif}
     mainfo.songdir.value := ordir + 'sound/test.ogg';
-            {$ENDIF}
+   {$ENDIF}
+   
+ {$if defined(linux) and defined(cpuarm)}
+   mainfo.padir.value := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
+    mainfo.sfdir.value := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
+    mainfo.mpdir.value := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+    mainfo.songdir.value := ordir + 'sound/test.ogg';
+   {$ENDIF}    
 
   {$IFDEF freebsd}
     {$if defined(cpu64)}

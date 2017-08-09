@@ -94,7 +94,7 @@ type
 
 var
   PlayerIndex1: integer;
-  OU_FileName, ordir, opath: string;
+  ordir, opath: string;
   In1Index, Plugin1Index: integer;
   plugsoundtouch : boolean = false;
    
@@ -932,19 +932,23 @@ end;
     FilenameEdit5.FileName := opath + '/lib/Mac/32bit/plugin/LibSoundTouch-32.dylib';
             {$ENDIF}
 
-   {$IFDEF linux}
-    {$if defined(cpu64)}
-    OU_FileName := ordir + 'lib/Linux/64bit/LibOpusURL-64.so';
+    {$if defined(cpu64) and defined(linux) }
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
     FilenameEdit5.FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
-  {$else}
+    {$ENDIF}
+    
+     {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}   
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
-{$endif}
-            {$ENDIF}
+     {$endif}
+     
+     {$if defined(linux) and defined(cpuarm)}       
+    FilenameEdit1.FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+    FilenameEdit3.FileName := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
+        {$ENDIF}               
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
