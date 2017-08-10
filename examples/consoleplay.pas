@@ -48,7 +48,7 @@ var
     SoundFilename := ordir + 'sound\test.flac';
  {$ENDIF}
 
-     {$if defined(cpu64) and if defined(linux) }
+     {$if defined(cpu64) and defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     SoundFilename := ordir + 'sound/test.ogg';

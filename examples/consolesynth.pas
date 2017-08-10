@@ -45,7 +45,7 @@ var
      {$endif}
  {$ENDIF}
 
-  {$if defined(cpu64) and if defined(linux) }
+  {$if defined(cpu64) and  defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   {$ENDIF}
    

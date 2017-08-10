@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplay.prj
-findinfiledialog=44
+findinfiledialog=46
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,11 +29,11 @@ findinfiledialog=44
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=0
+ value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=1
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
@@ -50,8 +50,10 @@ findinfiledialog=44
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=(cpu32)
- history=6
+ value=defined(cpu64) and if defined(linux)
+ history=8
+  defined(cpu64) and if defined(linux)
+  defined(cpu64) and defined(linux)
   (cpu32)
   (cpu32)}
   {$if defined(cpu64)}
@@ -922,7 +924,7 @@ findhistory=20
  destructor
  PPmpg123_id3v1
 findoptions=1
-editpos=70
+editpos=74
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -963,36 +965,40 @@ editpos=70
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 19,241
- 0,56
- 0,56
- 0,59
- 0,51
- 0,304
- 0,770
- 0,267
- 0,79
- 0,151
- 0,243
- 0,183
- 0,123
- 0,125
- 0,115
- 0,238
- 0,246
- 0,117
- 0,104
- 0,173
- 0,259
- 0,520
- 0,439
- 0,79
- 0,1258
- 0,1329
+ 0,223
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,50
- 0,598
- 0,941
- 0,1168
+ 0,50
+ 0,53
+ 0,47
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1063,7 +1069,11 @@ bookmarks66=0
 bookmarks67=0
 bookmarks68=0
 bookmarks69=0
-sourcefiles=70
+bookmarks70=0
+bookmarks71=0
+bookmarks72=0
+bookmarks73=0
+sourcefiles=74
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
@@ -1134,7 +1144,11 @@ sourcefiles=70
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/simplewebplayer_fpGUI.pas
  ${PROJECTDIR}/simplewebserver_fpGUI.pas
-relpaths=70
+ ${PROJECTDIR}/consoleplay.pas
+ ${PROJECTDIR}/consoleplayloop.pas
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
+ ${PROJECTDIR}/consolesynth.pas
+relpaths=74
  deviceinfos_fpGUI.pas
  uos.pas
  consoleplay.pas
@@ -1205,7 +1219,15 @@ relpaths=70
  simplerecorder_fpGUI.pas
  simplewebplayer_fpGUI.pas
  simplewebserver_fpGUI.pas
-ismoduletexts=70
+ consoleplay.pas
+ consoleplayloop.pas
+ consoleplaymemorybuffer.pas
+ consolesynth.pas
+ismoduletexts=74
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1285,7 +1307,7 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=70
+order=74
  0
  1
  2
@@ -1318,6 +1340,10 @@ order=70
  38
  39
  40
+ 70
+ 71
+ 72
+ 73
  41
  42
  43
@@ -1357,7 +1383,7 @@ order=70
  6
  7
 firsttab=31
-index=31
+index=35
 [layout]
 windowlayout=549
  [mainfo.basedock]
@@ -1373,7 +1399,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=694
+ cy=829
  rcx=0
  rcy=0
  [mainfo]
@@ -1392,7 +1418,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1356,829
  focusedchild=0
  wsize=6
  active=1
@@ -1412,7 +1438,7 @@ windowlayout=549
  cy=314
  rcx=0
  rcy=0
- wsize=0
+ wsize=5
  active=0
  visible=0
  [threadsfo]
@@ -1508,7 +1534,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=508
+ cy=608
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1600,7 +1626,7 @@ windowlayout=549
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1717,9 +1743,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=580
+ y=693
  cx=1356
- cy=114
+ cy=136
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1819,7 +1845,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=66
+ cy=79
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1835,7 +1861,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=69
+ cy=82
  rcx=0
  rcy=0
  [sourcefo]
@@ -1851,7 +1877,7 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=508
+ cy=608
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1885,15 +1911,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=69
+ y=82
  cx=1356
- cy=508
+ cy=608
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=findinfilefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
