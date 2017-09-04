@@ -16,7 +16,17 @@ interface
 uses
   Classes, SysUtils, ctypes, math,
   dynlibs;
- 
+  
+const
+
+ {$IFDEF unix}
+libaa= 'libfaad.so.2';
+libm4= 'libmp4ff.so.0.0.0';
+  {$ELSE}
+libaa= 'Faad2.dll';
+libm4= 'mp4ff.dll';
+  {$ENDIF} 
+  
 //////////// from mcwMP4FF.pas By Franklyn A. Harlow
 type
 
@@ -675,9 +685,11 @@ begin
 end;
 
 procedure LoadNeAAC(NeAAC : AnsiString);
+var
+thelib: string; 
 Begin
-  
-  hNeAAC:= DynLibs.SafeLoadLibrary(PChar(NeAAC));
+   if Length(NeAAC) = 0 then thelib := libaa else thelib := NeAAC;
+  hNeAAC:= DynLibs.SafeLoadLibrary(PChar(thelib));
   NeAACLoaded:= hNeAAC <> dynlibs.NilHandle;
 
      Pointer(NeAACDecGetErrorMessage) :=
@@ -764,11 +776,13 @@ end;
 
 
  procedure Loadmp4ff(mp4ff : AnsiString);
+ var
+thelib: string; 
 begin
   if Mp4ffLoaded then
     Exit;
-
-  hMp4ff := DynLibs.SafeLoadLibrary(PChar(mp4ff));
+ if Length(mp4ff) = 0 then thelib := libm4 else thelib := mp4ff;
+  hMp4ff := DynLibs.SafeLoadLibrary(PChar(thelib));
   Mp4ffLoaded := hMp4ff <> dynlibs.NilHandle;
   
    // writeln('hMp4ff' + inttostr(hMp4ff));

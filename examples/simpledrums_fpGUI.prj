@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpledrums_fpGUI.prj
-findinfiledialog=58
+findinfiledialog=63
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,49 +29,54 @@ findinfiledialog=58
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=1
+ value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/uos/examples/
- filecolwidth=0
+  /home/fred/fpgui/
+ filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
+ filehistory=5
+  /home/fred/fpgui/
+  /usr/share/fpcsrc/3.0.3/packages/x11/
+  /usr/share/fpcsrc/3.0.3/
+  /home/fred/fpGUI-master/
+  /usr/share/fpcsrc/3.0.3/packages/libc/
  filefilterindex=0
- filefilter=
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=uos_playpausedn
+ value=xrender
  history=20
-  uos_playpausedn
-  writeln
-  outputinput
-  inputoutput
-  AddDSP2ChanTo1Chanout
-  AddDSP2ChanTo1ChanIn
-  Removalin
-  Removalout
-  DSPNoiseRemovalout
-  DSPNoiseRemovalin
-  DSPNoiseRemoval
-  setDSPVolumeout
-  setDSPVolumein
-  AddDSPVolumein
-  AddDSPVolume
-  dspvolume
-  adddspin
-  adddspout
-  setdspout
-  setdspin
+  xrender
+  fpg_xft_x11
+  Xft
+  XftListFonts
+  XftFontOpenName
+  XftDrawCreate
+  Xlib.
+  xrenderfree
+  XdbeQueryExtension
+  XmbLookupString
+  XRenderSetPictureClipRectangles
+  Unknown KeySym
+  fpGFX
+  event key
+  XCreateIC
+  TKeySym
+  keysym
+  XAllocClassHint
+  XOpenIM
+  Xutf8LookupString
  [findinfileadialogfo]
  stackedunder=
  x=615
@@ -93,8 +98,11 @@ replacedialog=33
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=AddIntoFile
+ value=var X
  history=20
+  var X
+  var 
+  cdecl;
   AddIntoFile
   AddIntoFileWAV
   InputAddDSP2ChanTo1Chan
@@ -112,9 +120,6 @@ replacedialog=33
   OutputAddDSP
   cint32
   shhandle
-  unix
-  BeginFunc
-  FreeBSD
  [replacedialogfo]
  stackedunder=
  x=260
@@ -181,9 +186,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=142
+ y=143
  xprop=1
- yprop=0.32954545454545
+ yprop=0.33031674208145
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -208,7 +213,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -229,7 +234,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=339
@@ -291,7 +296,7 @@ targetfile=${PROJECTDIR}/simpledrums_fpGUI
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=7
+unitdirs=8
  ${FPGUIDIR}/lib/${TargetCPU}-${TargetOS}
  ${FPGUIDIR}
  ${FPGUIDIR}/src/corelib/gdi
@@ -299,6 +304,7 @@ unitdirs=7
  ${FPGUIDIR}/src/corelib/x11
  ${FPGUIDIR}/src/gui
  ${FPGUIDIR}/src/corelib
+ /home/fred/fpgui/src/corelib/x11/dyn_x11
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -518,10 +524,10 @@ makeoptionson=10
  511
  511
  192
- 511
+ 510
  511
  255
- 2
+ 3
  0
 compilerusedon=29
  3891
@@ -595,7 +601,7 @@ project_time=
 project_date=02:01:00 20/01/2017
 project_comment=
 aftcommandon=0
-unitdirson=7
+unitdirson=8
  197119
  197119
  196800
@@ -603,6 +609,7 @@ unitdirson=7
  196927
  197119
  197119
+ 196608
 macroon=5
  1
  3
@@ -754,7 +761,7 @@ stoponexception=1
 valuehints=1
 activateonbreak=1
 raiseonbreak=1
-showconsole=0
+showconsole=1
 externalconsole=0
 settty=1
 gdbdownload=0
@@ -803,10 +810,7 @@ sigsettings=27
  30,30,T,F
 defaultmake=32
 [breakpoints]
-on=11
- 0
- 0
- -1
+on=16
  0
  0
  0
@@ -815,7 +819,15 @@ on=11
  0
  0
  0
-path=11
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+path=16
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/paio_channelhelper.pas
  /home/fred/uos_aac_new/examples/uos_aac.pas
@@ -827,11 +839,16 @@ path=11
  /home/fred/uos/examples/simpledrums_fpGUI.pas
  /home/fred/uos/examples/uos_flat.pas
  /home/fred/uos/examples/simpledrums_fpGUI.pas
-line=11
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xlib.pp
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xlib.pp
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xlib.pp
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xlib.pas
+ /home/fred/uos/examples/uos_aac.pas
+line=16
  3967
  33
  913
- 764
+ 776
  2767
  2080
  620
@@ -839,32 +856,29 @@ line=11
  312
  356
  163
-address=11
- 5002412
+ 2069
+ 1963
+ 2862
+ 2271
+ 21
+address=16
+ 4900888
  0
  0
- 5092489
- 4984300
- 4973483
+ 5018000
+ 4885882
+ 4872928
  0
- 0
- 0
- 0
- 0
-addbkpt=11
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ 4200517
+ 4201224
+ 4372688
+ 4198715
  0
  0
  0
+ 5206992
  0
-ignore=11
- 0
+addbkpt=16
  0
  0
  0
@@ -875,7 +889,35 @@ ignore=11
  0
  0
  0
-condition=11
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ignore=16
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+condition=16
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -969,30 +1011,34 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=uos_InputSetDSPVolume
+finddtext=bs_Load
 findhistory=20
- uos_InputSetDSPVolume
- InputSetDSPVolume
- isFirst
- SetGlobalEvent
- isGlobalPause
- isfirst
- setg
- paused
- terminate
- .crea
- isassign
- DoTerminateNoFreePlaye
- readendl
- AddFromEndlessMuted
- readsynt
- TypePut
- AddFromSynth
- addfrom
- dotermina
- freeplayer(
+ bs_Load
+ PA_FileName
+ Pa_Load
+ XBufferOverflow
+ XSetWMProtocols
+ XSendEvent
+ XGetWMProtocols
+ XChangeProperty
+ XGetWindowProperty
+ XFree
+ XInternAtom
+ XDefaultRootWindow
+ tbool
+ XftFontOpenName
+ XftTextExtentsUTF8
+ DYNLOAD
+ PrintKeyEvent
+ xlookupstring
+ writeln
+ dynload
 findoptions=1
-editpos=13
+editpos=25
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,30
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1003,9 +1049,17 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,360
  0,-1073741823
  0,-1073741823
- 0,12
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,6
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1019,35 +1073,83 @@ bookmarks9=0
 bookmarks10=0
 bookmarks11=0
 bookmarks12=0
-sourcefiles=13
+bookmarks13=0
+bookmarks14=0
+bookmarks15=0
+bookmarks16=0
+bookmarks17=0
+bookmarks18=0
+bookmarks19=0
+bookmarks20=0
+bookmarks21=0
+bookmarks22=0
+bookmarks23=0
+bookmarks24=0
+sourcefiles=25
  ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/main_sd.pas
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xftlib.pas
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xutil.pp
+ /home/fred/fpgui/src/corelib/x11/fpg_x11.pas
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xrender.pp
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xatom.pp
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xlib.pas
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/x.pp
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xutilori.pas
+ /home/fred/fpgui/src/corelib/x11/fpg_netlayer_x11.pas
+ /home/fred/fpgui/src/corelib/fpg_dynload.pas
+ /home/fred/fpgui/src/corelib/x11/fpg_xft_x11.pas
+ /home/fred/sak/sak/sak_mse/src/sak_mse.pas
+ /home/fred/fpgui/src/corelib/x11/dyn_x11/xrender.pas
+ ${PROJECTDIR}/simpledrums_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/src/uos.pas
- ${PROJECTDIR}/uos_opus.pas
- ${PROJECTDIR}/main_mi.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+ ${PROJECTDIR}/uos_aac.pas
+ ${PROJECTDIR}/uos_opusfile.pas
+ ${PROJECTDIR}/uos_soundtouch.pas
+ ${PROJECTDIR}/uos_bs2b.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/main_sd.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/examples/define.inc
-relpaths=13
+relpaths=25
  simpledrums_fpGUI.pas
- main_sd.pas
+ fpgui/src/corelib/x11/dyn_x11/xftlib.pas
+ fpgui/src/corelib/x11/dyn_x11/xutil.pp
+ ../fpgui/src/corelib/x11/fpg_x11.pas
+ fpgui/src/corelib/x11/dyn_x11/xrender.pp
+ fpgui/src/corelib/x11/dyn_x11/xatom.pp
+ fpgui/src/corelib/x11/dyn_x11/xlib.pas
+ fpgui/src/corelib/x11/dyn_x11/x.pp
+ fpgui/src/corelib/x11/dyn_x11/xutilori.pas
+ fpgui/src/corelib/x11/fpg_netlayer_x11.pas
+ fpgui/src/corelib/fpg_dynload.pas
+ fpgui/src/corelib/x11/fpg_xft_x11.pas
+ sak/sak/sak_mse/src/sak_mse.pas
+ fpgui/src/corelib/x11/dyn_x11/xrender.pas
+ simpledrums_fpGUI.pas
  uos.pas
- uos_flat.pas
- src/uos.pas
- uos_opus.pas
- main_mi.pas
+ uos_portaudio.pas
+ uos_libsndfile.pas
+ uos_mpg123.pas
+ uos_aac.pas
+ uos_opusfile.pas
+ uos_soundtouch.pas
+ uos_bs2b.pas
+ uos.pas
  define.inc
- simpledrums_fpGUI.pas
- main_sd.pas
- define.inc
- uos_flat.pas
- define.inc
-ismoduletexts=13
+ismoduletexts=25
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1066,22 +1168,34 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=13
+order=25
  0
+ 13
  1
  6
- 2
  11
- 12
- 7
- 5
- 4
- 3
- 8
- 9
  10
-firsttab=0
-index=5
+ 12
+ 2
+ 3
+ 14
+ 23
+ 24
+ 15
+ 19
+ 21
+ 22
+ 20
+ 16
+ 17
+ 18
+ 9
+ 4
+ 5
+ 7
+ 8
+firsttab=6
+index=11
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1096,8 +1210,8 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1350
- cy=692
+ cx=1113
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1109,14 +1223,14 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=3
- y=24
- cx=1360
- cy=709
+ x=125
+ y=46
+ cx=1123
+ cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1350,692
+  basedock,0,0,1113,604
  focusedchild=0
  wsize=0
  active=1
@@ -1138,7 +1252,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1231,20 +1345,20 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=159
- cy=505
+ cx=205
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
- propcolwidthref=18
- width0=141
+ propcolwidthref=88
+ width0=117
  sortdescend0=0
- width1=12
+ width1=82
  sortdescend1=0
  sorted=0
- col=1
- row=12
- rowheight=18
+ col=0
+ row=1
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1331,8 +1445,8 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=670
- y=179
+ x=316
+ y=249
  cx=316
  cy=484
  rcx=0
@@ -1342,9 +1456,9 @@ windowlayout=530
  visible=0
  [objectinspectorfo.grid]
  propcolwidthref=306
- width0=73
+ width0=136
  sortdescend0=0
- width1=227
+ width1=164
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1441,9 +1555,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=572
- cx=1350
- cy=120
+ y=512
+ cx=1113
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1542,24 +1656,24 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1350
- cy=61
+ cx=1113
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
  splitdir=2
- useroptions=146563
+ useroptions=805452931
  parent=debuggerfo.container
  visible=1
  mdistate=0
  nx=0
  ny=0
- ncx=929
- ncy=2
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1350
- cy=61
+ cx=1113
+ cy=53
  rcx=0
  rcy=0
  [sourcefo]
@@ -1572,17 +1686,17 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=162
+ x=208
  y=0
- cx=1188
- cy=505
+ cx=905
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1609,14 +1723,15 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=64
- cx=1350
- cy=505
+ y=54
+ cx=1113
+ cy=455
  rcx=0
  rcy=0
 [targetconsole]
-finddtext=Length(BufferplugFL) =
-findhistory=4
+finddtext=xlookupstring
+findhistory=5
+ xlookupstring
  Length(BufferplugFL) =
  MP4OpenFile
  dsp_vol

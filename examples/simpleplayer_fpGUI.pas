@@ -251,11 +251,11 @@ loadok : boolean = false;
  
     // Load the libraries
 // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName : PChar) : LongInt;
+
  if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
  Pchar(FilenameEdit3.FileName), Pchar(FilenameEdit7.FileName), Pchar(FilenameEdit8.FileName),
   Pchar(FilenameEdit31.FileName)) = 0 then
- 
-    begin
+     begin
       hide;
       loadok := true;
       Height := 208; 
@@ -1327,7 +1327,7 @@ end;
     FilenameEdit4.FileName := ordir + 'sound/test.ogg'; 
  {$ENDIF}
 
-   {$if defined(cpu86) and defined(linux)}
+    {$if defined(cpu32) and defined(linux) and not defined(cpuarm)}
     FilenameEdit1.FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';

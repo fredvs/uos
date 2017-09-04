@@ -19,6 +19,14 @@ type
   TOpusFile = ^OpusFile;
   OpusFile = record
   end;
+  
+const
+libop=
+ {$IFDEF unix}
+ 'libopusfile.so.0';
+  {$ELSE}
+ 'opusfile.dll';
+  {$ENDIF}  
 
 // Error Codes
 const
@@ -301,9 +309,21 @@ begin
  result:=true {is it already there ?}
 end  else 
 begin {go & load the library}
-    if Length(libfilename) = 0 then exit;
-    
- {$IFDEF windows} 
+  if Length(libfilename) = 0 then
+  begin
+   {$IFDEF windows} 
+ wt_Handle:= DynLibs.SafeLoadLibrary('libwinpthread-1.dll');
+ lc_Handle:= DynLibs.SafeLoadLibrary('libgcc_s_sjlj-1.dll');
+ og_Handle:= DynLibs.SafeLoadLibrary('libogg-0.dll'); 
+ op_Handle:= DynLibs.SafeLoadLibrary('libopus-0.dll');
+   {$else}
+  op_Handle:= DynLibs.SafeLoadLibrary('libopus.so');
+ {$endif}
+  of_Handle:=DynLibs.SafeLoadLibrary(libop); 
+   end
+    else
+   begin
+  {$IFDEF windows} 
  wt_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libwinpthread-1.dll');
  lc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_sjlj-1.dll');
  og_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libogg-0.dll'); 
@@ -311,8 +331,10 @@ begin {go & load the library}
    {$else}
   op_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libopus.so');
  {$endif}
+  of_Handle:=DynLibs.SafeLoadLibrary(libfilename); 
+  end;
     
-    of_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
+ 
   	if of_Handle <> DynLibs.NilHandle then
 begin {now we tie the functions to the VARs from above}
 Pointer(op_fopen):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_fopen'));

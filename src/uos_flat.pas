@@ -160,8 +160,11 @@ function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
   // Mp4ff and Faad => needed for dealing with acc, m4a audio-files
   // opusfile => needed for dealing with opus audio-files
 
-  // If some libraries are not needed, replace it by "nil", for example : uos_loadlib(PortAudioFileName, SndFileFileName, nil, nil, nil, nil, nil)
-
+  // If you want to load libraries from system, replace it by "'system'"
+  // If some libraries are not needed, replace it by "nil", 
+ 
+  // for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName)
+  
 procedure uos_unloadlib();
   // Unload all libraries... Do not forget to call it before close application...
 

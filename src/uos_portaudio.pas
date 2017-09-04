@@ -15,6 +15,14 @@ interface
 
 uses
   dynlibs, CTypes;
+  
+const
+libpa=
+ {$IFDEF unix}
+ 'libportaudio.so.2';
+  {$ELSE}
+ 'portaudio.dll';
+  {$ENDIF}  
 
 type
   PaError = CInt32;
@@ -299,6 +307,8 @@ begin
 end;
 
 Function Pa_Load (const libfilename:string) :boolean;
+var
+thelib: string; 
 begin
   Result := False;
   if Pa_Handle<>0 then 
@@ -307,8 +317,8 @@ begin
  result:=true {is it already there ?}
 end  else 
 begin {go & load the library}
-    if Length(libfilename) = 0 then exit;
-    Pa_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
+   if Length(libfilename) = 0 then thelib := libpa else thelib := libfilename;
+    Pa_Handle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
   	if Pa_Handle <> DynLibs.NilHandle then
 begin {now we tie the functions to the VARs from above}
 

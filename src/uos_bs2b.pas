@@ -18,8 +18,14 @@ interface
 
 uses
   SysUtils, dynlibs, ctypes;
-
+  
 const
+libsb=
+ {$IFDEF unix}
+ 'libbs2b.so.0';
+  {$ELSE}
+ 'bs2b.dll';
+  {$ENDIF}    
 
 { Minimum/maximum sample rate (Hz)  }
   BS2B_MINSRATE = 2000;  
@@ -318,13 +324,21 @@ begin
  Inc(ReferenceCounter);
 result:=true {is it already there ?}
 end  else begin {go & load the library}
-    if Length(libfilename) = 0 then exit;
-   
+    if Length(libfilename) = 0 then 
+    begin
+    {$IFDEF windows} 
+    gc_Handle:= DynLibs.SafeLoadLibrary('libgcc_s_dw2-1.dll');
+    {$endif}
+    bs_Handle:=DynLibs.SafeLoadLibrary(libsb);
+    end
+    else
+    begin
     {$IFDEF windows} 
     gc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_dw2-1.dll');
     {$endif}
    
-    bs_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
+    bs_Handle:=DynLibs.SafeLoadLibrary(libfilename);
+    end;
  
  	if bs_Handle <> DynLibs.NilHandle then
        begin {now we tie the functions to the VARs from above}

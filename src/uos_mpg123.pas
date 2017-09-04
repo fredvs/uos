@@ -13,11 +13,19 @@ interface
 
   {$PACKENUM 4}(* use 4-byte enums *)
   {$PACKRECORDS C}(* C/C++-compatible record packing *)
-  {$MODE objfpc}
+  {$mode objfpc}{$H+}
 
 {$LONGSTRINGS ON}
 uses
  ctypes, dynlibs;
+ 
+const
+libmp=
+ {$IFDEF unix}
+ 'libmpg123.so.0';
+  {$ELSE}
+ 'mpg123.dll';
+  {$ENDIF}     
 
 type
   Tmpg123_handle = Pointer;
@@ -905,7 +913,8 @@ result := false;
 end;
 
 function Mp_Load(const libfilename: string): boolean;
-
+var
+thelib: string; 
 begin
   Result := False;
   if Mp_Handle <> 0 then
@@ -915,9 +924,8 @@ begin
   end
   else
   begin {go & load the library}
-    if Length(libfilename) = 0 then
-      exit;
-    Mp_Handle := DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
+    if Length(libfilename) = 0 then thelib := libmp else thelib := libfilename;
+    Mp_Handle := DynLibs.SafeLoadLibrary(libmp); // obtain the handle we want
     if Mp_Handle <> DynLibs.NilHandle then
 
     begin

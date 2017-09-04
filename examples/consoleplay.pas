@@ -29,7 +29,7 @@ type
 var
   res: integer;
   ordir, opath, SoundFilename, PA_FileName, SF_FileName, MP_FileName: string;
-  PlayerIndex1 : integer;
+  PlayerIndex1, InputIndex1, OutputIndex1 : integer;
   
   { TuosConsole }
 
@@ -66,9 +66,6 @@ var
       SoundFilename := ordir + 'sound/test.ogg';
  {$ENDIF}
  
- 
-
-
  {$IFDEF freebsd}
     {$if defined(cpu64)}
     PA_FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
@@ -92,8 +89,12 @@ var
    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
 
    res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil, nil) ;
-
-    writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
+     
+    writeln;
+    if res = 0 then
+     writeln('Libraries are loaded.')
+     else
+    writeln('Libraries did not load.');
 
    if res = 0 then begin
 
@@ -101,8 +102,7 @@ var
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
     
-   
-   PlayerIndex1 := 0;
+  PlayerIndex1 := 0;
   
   if uos_CreatePlayer(PlayerIndex1) then
   
@@ -112,27 +112,34 @@ var
     //////////// PlayerIndex : Index of a existing Player
     ////////// FileName : filename of audio file
     //  result : -1 nothing created, otherwise Input Index in array
-    
-   if uos_AddFromFile(PlayerIndex1,(pchar(SoundFilename))) > -1 then
 
+    InputIndex1 := uos_AddFromFile(PlayerIndex1,(pchar(SoundFilename)));
+    if InputIndex1 > -1 then
+  
     //// add a Output into device with default parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
-
-   if uos_AddIntoDevOut(PlayerIndex1) > -1 then
+    
+    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1);
+    if OutputIndex1 > -1 then 
+    begin
 
     /////// everything is ready, here we are, lets play it...
     uos_Play(PlayerIndex1);
-
-writeln;   
-writeln('Title: ' + uos_InputGetTagTitle(PlayerIndex1, 0));
-writeln('Artist: ' + uos_InputGetTagArtist(PlayerIndex1, 0));
-writeln;   
-    sleep(2000);
+    sleep(1000);
+    writeln;   
+    writeln('Title: ' + uos_InputGetTagTitle(PlayerIndex1, InputIndex1));
+    sleep(1500);
+    writeln; 
+    writeln('Artist: ' + uos_InputGetTagArtist(PlayerIndex1, InputIndex1));
+    writeln;  
+ 
+    sleep(3000);
    end;
-   end;
-
  end;
+end;
+
+end;
 
   procedure TuosConsole.doRun;
   begin
@@ -140,7 +147,7 @@ writeln;
     writeln('Press a key to exit...');
     readln;
     Terminate;
-    uos_free();
+    uos_free(); // Do not forget this !
   end;
 
 constructor TuosConsole.Create(TheOwner: TComponent);

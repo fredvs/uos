@@ -9,7 +9,7 @@
 unit uos_libsndfile;
 
 {$IFDEF FPC}
-  {$MODE objfpc}
+  {$mode objfpc}{$H+}
   {$PACKENUM 4}(* use 4-byte enums *)
   {$PACKRECORDS C}(* C/C++-compatible record packing *)
   {$MACRO ON}//don't know whatfor !
@@ -35,6 +35,14 @@ uses
   ctypes;
 
   {$ENDIF}
+  
+const
+libsf=
+ {$IFDEF unix}
+ 'libsndfile.so.1';
+  {$ELSE}
+ 'sndfile.dll';
+  {$ENDIF}    
   
 type   
 PMemoryStream = ^TMemoryStream;
@@ -664,6 +672,8 @@ var
   ReferenceCounter: cardinal = 0;  // Reference counter
 
 function sf_Load(const libfilename: string): boolean;
+var
+thelib: string; 
 begin
   Result := False;
   if sf_Handle <> 0 then
@@ -674,9 +684,8 @@ begin
   end
   else
   begin {go & load the library}
-    if Length(libfilename) = 0 then
-      exit;
-    sf_Handle := DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
+   if Length(libfilename) = 0 then thelib := libsf else thelib := libfilename;
+    sf_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
     if sf_Handle <> DynLibs.NilHandle then
     begin {now we tie the functions to the VARs from above}
 

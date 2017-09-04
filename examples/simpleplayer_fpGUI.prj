@@ -182,9 +182,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=142
+ y=143
  xprop=1
- yprop=0.32954545454545
+ yprop=0.33031674208145
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -230,7 +230,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=339
@@ -560,12 +560,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3874
+ 3872
  0
  0
  0
  0
- 221
+ 223
 exeusedon=14
  3903
  0
@@ -828,22 +828,22 @@ path=8
  /home/fred/uos/examples/simpleplayer_fpGUI.pas
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=8
- 3848
+ 3851
  33
  913
  764
- 2703
- 2023
- 536
+ 2706
+ 2026
+ 541
  249
 address=8
- 4946827
+ 4980075
  0
  0
- 5061456
- 4932385
- 4919773
- 4215155
+ 5101716
+ 4963104
+ 4944602
+ 4215225
  0
 addbkpt=8
  0
@@ -954,8 +954,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=addfromf
+finddtext=uos_load
 findhistory=20
+ uos_load
  addfromf
  id3
  PPmpg123_id3v1
@@ -975,10 +976,11 @@ findhistory=20
  icy
  uos_getversion
  changecheck
- checkbox1
 findoptions=1
-editpos=9
- 9,5
+editpos=11
+ 0,-1073741823
+ 0,257
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -996,7 +998,9 @@ bookmarks5=0
 bookmarks6=0
 bookmarks7=0
 bookmarks8=0
-sourcefiles=9
+bookmarks9=0
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -1006,7 +1010,9 @@ sourcefiles=9
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/uos_mpg123.pas
-relpaths=9
+ /home/fred/fpgui/src/corelib/fpg_main.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=11
  uos.pas
  simpleplayer_fpGUI.pas
  uos_flat.pas
@@ -1016,7 +1022,11 @@ relpaths=9
  main_sp.pas
  uos_dsp_noiseremoval.pas
  uos_mpg123.pas
-ismoduletexts=9
+ fpgui/src/corelib/fpg_main.pas
+ uos_flat.pas
+ismoduletexts=11
+ 0
+ 0
  0
  0
  0
@@ -1031,18 +1041,20 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=9
+order=11
  0
+ 10
  8
  7
  4
  5
  1
+ 9
  6
  2
  3
 firsttab=0
-index=0
+index=6
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1058,7 +1070,7 @@ windowlayout=530
  x=0
  y=0
  cx=1350
- cy=672
+ cy=692
  rcx=0
  rcy=0
  [mainfo]
@@ -1077,7 +1089,7 @@ windowlayout=530
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1350,672
+  basedock,0,0,1350,692
  focusedchild=0
  wsize=0
  active=1
@@ -1121,7 +1133,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1193,7 +1205,7 @@ windowlayout=530
  x=0
  y=0
  cx=159
- cy=496
+ cy=510
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1204,8 +1216,8 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=7
- rowheight=18
+ row=5
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1402,9 +1414,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=552
+ y=568
  cx=1350
- cy=120
+ cy=124
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1504,23 +1516,23 @@ windowlayout=530
  x=0
  y=0
  cx=1350
- cy=50
+ cy=52
  rcx=0
  rcy=0
  [debuggerfo.basedock]
  splitdir=2
- useroptions=146563
+ useroptions=805452931
  parent=debuggerfo.container
  visible=1
  mdistate=0
  nx=0
  ny=0
- ncx=929
- ncy=2
+ ncx=1350
+ ncy=52
  x=0
  y=0
  cx=1350
- cy=50
+ cy=52
  rcx=0
  rcy=0
  [sourcefo]
@@ -1536,14 +1548,14 @@ windowlayout=530
  x=162
  y=0
  cx=1188
- cy=496
+ cy=510
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1570,9 +1582,9 @@ windowlayout=530
  ncx=0
  ncy=0
  x=0
- y=53
+ y=55
  cx=1350
- cy=496
+ cy=510
  rcx=0
  rcy=0
 [targetconsole]

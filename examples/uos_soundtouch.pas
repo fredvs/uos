@@ -16,6 +16,14 @@ interface
 
 uses
  ctypes, DynLibs;
+ 
+const
+libst=
+ {$IFDEF unix}
+ 'libSoundTouch.so.0';
+  {$ELSE}
+ 'soundtouch.dll';
+  {$ENDIF}     
 
 {$IF not DEFINED(windows)}
 type
@@ -83,6 +91,8 @@ begin
 end;
 
 function ST_Load(const libfilename: string): boolean;
+var
+thelib: string; 
 begin
    Result := False;
   if LibHandle<>0 then 
@@ -90,7 +100,7 @@ begin
  Inc(ReferenceCounter);
 result:=true 
 end  else begin 
-    if Length(libfilename) = 0 then exit;
+      if Length(libfilename) = 0 then thelib := libst else thelib := libfilename;
     LibHandle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want.
   	if LibHandle <> DynLibs.NilHandle then
        begin
