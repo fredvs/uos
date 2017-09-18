@@ -421,7 +421,7 @@ var
                           // 0 => no calcul
                           // 1 => calcul position.
 
-    uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
+   uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
     ///// Assign the procedure of object to execute inside the loop
     //////////// PlayerIndex : Index of a existing Player
     //////////// InputIndex1 : Index of a existing Input
@@ -434,8 +434,7 @@ var
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
 
-     uos_InputSetDSPVolume(PlayerIndex1, InputIndex1,
-      TrackBar2.value, TrackBar3.value, True);
+     uos_InputSetDSPVolume(PlayerIndex1, InputIndex1,TrackBar2.value, TrackBar3.value, True);
      /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// InputIndex1 : InputIndex of a existing Input
@@ -457,8 +456,8 @@ var
    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.value);
     
    // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)  
-    DSPIndex2 := uos_InputAddDSP(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
-    uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.value); 
+  //  DSPIndex2 := uos_InputAddDSP(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
+  //  uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.value); 
    
    ///// add bs2b plugin with samplerate_of_input1 / default channels (2 = stereo)
   if plugbs2b = true then
@@ -474,7 +473,7 @@ var
   begin
     PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', 
     uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
-    ChangePlugSetSoundTouch(self); //// custom procedure to Change plugin settings
+     ChangePlugSetSoundTouch(self); //// custom procedure to Change plugin settings
    end;    
          
     inputlength := uos_InputLength(PlayerIndex1, InputIndex1);

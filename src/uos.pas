@@ -2811,7 +2811,7 @@ end;
 function uos_DSPVolume(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 var
   x, ratio: cint32;
-  vleft, vright: double;
+  vleft, vright: cfloat;
   
  // volumearray : array of double;
 
@@ -2837,8 +2837,8 @@ begin
   ps^[x] := trunc(ps^[x] * vleft);
   end;
   // This to avoid distortion
-  if ps^[x] < (-32760) then ps^[x] := -32760 ;
-  if ps^[x] > (32760) then ps^[x] := 32760 ;
+  // if ps^[x] < (-32760) then ps^[x] := -32760 ;
+  // if ps^[x] > (32760) then ps^[x] := 32760 ;
 
   end;
 
@@ -2857,8 +2857,8 @@ begin
   end;
 
   // This to avoid distortion
-  if pl^[x] < (-2147000000) then pl^[x] := -2147000000 ;
-  if pl^[x] > (2147000000) then pl^[x] := 2147000000 ;
+  // if pl^[x] < (-2147000000) then pl^[x] := -2147000000 ;
+  // if pl^[x] > (2147000000) then pl^[x] := 2147000000 ;
 
   end;
 
@@ -2874,7 +2874,8 @@ begin
   end;
 
   pf := @Data.Buffer;
-  for x := 0 to (Data.OutFrames div ratio) do
+   
+  for x := 0 to (Data.OutFrames div ratio) -1 do
   begin
   if (Data.VLeft <> 1)  or (Data.Vright <> 1) then
   begin
@@ -2883,9 +2884,10 @@ begin
   else
   pf^[x] := pf^[x] * vleft;
   end;
+
   // This to avoid distortion
-  if pf^[x] < (-1) then pf^[x] := -1 ;
-  if pf^[x] > 1 then pf^[x] := 1 ;
+  // if pf^[x] < -1 then pf^[x] := -1;
+  // if pf^[x] > 1 then pf^[x] := 1 ;
 
   end;
 

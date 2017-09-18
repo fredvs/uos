@@ -521,7 +521,7 @@ befcommandon=0
 makeoptionson=10
  0
  511
- 509
+ 511
  511
  192
  511
@@ -876,66 +876,66 @@ panels=1
  panel1
 units=
  (
- a=0,4149,6,Pascal Units
+ a=0,8245,6,Pascal Units
  c=10
   (
   file=define.inc
   kind=1
-  a=0,4100,0,define.inc
+  a=0,8196,0,define.inc
   )
   (
   file=simpleplayer_fpGUI.pas
   kind=1
-  a=0,4100,0,simpleplayer_fpGUI.pas
+  a=0,8196,0,simpleplayer_fpGUI.pas
   )
   (
   file=st2bi.pas
   kind=1
-  a=0,4100,0,st2bi.pas
+  a=0,8196,0,st2bi.pas
   )
   (
   file=uos_bs2b.pas
   kind=1
-  a=0,4100,0,uos_bs2b.pas
+  a=0,8196,0,uos_bs2b.pas
   )
   (
   file=uos_flat.pas
   kind=1
-  a=0,4100,0,uos_flat.pas
+  a=0,8196,0,uos_flat.pas
   )
   (
   file=uos_libsndfile.pas
   kind=1
-  a=0,4100,0,uos_libsndfile.pas
+  a=0,8196,0,uos_libsndfile.pas
   )
   (
   file=uos_mpg123.pas
   kind=1
-  a=0,4101,0,uos_mpg123.pas
+  a=0,8197,0,uos_mpg123.pas
   )
   (
   file=uos_portaudio.pas
   kind=1
-  a=0,4100,0,uos_portaudio.pas
+  a=0,8196,0,uos_portaudio.pas
   )
   (
   file=uos_soundtouch.pas
   kind=1
-  a=0,4100,0,uos_soundtouch.pas
+  a=0,8196,0,uos_soundtouch.pas
   )
   (
   file=uos.pas
   kind=1
-  a=0,4100,0,uos.pas
+  a=0,8196,0,uos.pas
   )
  )
 cmodules=
  (
- a=0,4132,6,C Modules
+ a=0,8228,6,C Modules
  )
 files=
  (
- a=0,4133,6,Text Files
+ a=0,8229,6,Text Files
  )
 [componentstore]
 storedir=/home/fred/msegui/apps/ide/compstore/
@@ -978,8 +978,8 @@ findhistory=20
  changecheck
 findoptions=1
 editpos=11
+ 0,7649
  0,-1073741823
- 0,257
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1054,7 +1054,7 @@ order=11
  2
  3
 firsttab=0
-index=6
+index=0
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1111,7 +1111,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1297,7 +1297,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1555,7 +1555,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0

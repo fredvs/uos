@@ -872,7 +872,7 @@ editpos=27
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 23,35
+ 0,22
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -927,7 +927,7 @@ sourcefiles=27
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ /home/fred/uos/examples/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/consoleplaymemory.pas
  /home/fred/fpgui/src/corelib/fpg_main.pas
  ${PROJECTDIR}/uos_opus.pas
@@ -1041,7 +1041,7 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1113
  cy=694
  rcx=0
  rcy=0
@@ -1054,16 +1054,16 @@ windowlayout=530
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
- cx=939
+ x=126
+ y=62
+ cx=1123
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1113,694
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1189,7 +1189,7 @@ windowlayout=530
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=18
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1387,7 +1387,7 @@ windowlayout=530
  ncy=0
  x=0
  y=575
- cx=1356
+ cx=1113
  cy=119
  rcx=0
  rcy=0
@@ -1487,13 +1487,13 @@ windowlayout=530
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1113
  cy=61
  rcx=0
  rcy=0
  [debuggerfo.basedock]
  splitdir=2
- useroptions=146563
+ useroptions=805452931
  parent=debuggerfo.container
  visible=1
  mdistate=0
@@ -1503,7 +1503,7 @@ windowlayout=530
  ncy=2
  x=0
  y=0
- cx=1356
+ cx=1113
  cy=61
  rcx=0
  rcy=0
@@ -1519,7 +1519,7 @@ windowlayout=530
  ncy=0
  x=162
  y=0
- cx=1194
+ cx=951
  cy=508
  rcx=0
  rcy=0
@@ -1555,7 +1555,7 @@ windowlayout=530
  ncy=0
  x=0
  y=64
- cx=1356
+ cx=1113
  cy=508
  rcx=0
  rcy=0

@@ -933,66 +933,66 @@ panels=1
  panel1
 units=
  (
- a=0,4149,6,Pascal Units
+ a=0,8245,6,Pascal Units
  c=10
   (
   file=define.inc
   kind=1
-  a=0,4100,0,define.inc
+  a=0,8196,0,define.inc
   )
   (
   file=simpledrums_fpGUI.pas
   kind=1
-  a=0,4100,0,simpledrums_fpGUI.pas
+  a=0,8196,0,simpledrums_fpGUI.pas
   )
   (
   file=st2bi.pas
   kind=1
-  a=0,4100,0,st2bi.pas
+  a=0,8196,0,st2bi.pas
   )
   (
   file=uos_bs2b.pas
   kind=1
-  a=0,4100,0,uos_bs2b.pas
+  a=0,8196,0,uos_bs2b.pas
   )
   (
   file=uos_flat.pas
   kind=1
-  a=0,4100,0,uos_flat.pas
+  a=0,8196,0,uos_flat.pas
   )
   (
   file=uos_libsndfile.pas
   kind=1
-  a=0,4100,0,uos_libsndfile.pas
+  a=0,8196,0,uos_libsndfile.pas
   )
   (
   file=uos_mpg123.pas
   kind=1
-  a=0,4100,0,uos_mpg123.pas
+  a=0,8196,0,uos_mpg123.pas
   )
   (
   file=uos_portaudio.pas
   kind=1
-  a=0,4100,0,uos_portaudio.pas
+  a=0,8196,0,uos_portaudio.pas
   )
   (
   file=uos_soundtouch.pas
   kind=1
-  a=0,4100,0,uos_soundtouch.pas
+  a=0,8196,0,uos_soundtouch.pas
   )
   (
   file=uos.pas
   kind=1
-  a=0,4100,0,uos.pas
+  a=0,8196,0,uos.pas
   )
  )
 cmodules=
  (
- a=0,4132,6,C Modules
+ a=0,8228,6,C Modules
  )
 files=
  (
- a=0,4133,6,Text Files
+ a=0,8229,6,Text Files
  )
 [componentstore]
 storedir=/home/fred/msegui/apps/ide/compstore/
@@ -1038,7 +1038,6 @@ editpos=25
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,30
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1049,17 +1048,18 @@ editpos=25
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,360
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,6
  0,0
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1100,7 +1100,7 @@ sourcefiles=25
  /home/fred/fpgui/src/corelib/x11/fpg_xft_x11.pas
  /home/fred/sak/sak/sak_mse/src/sak_mse.pas
  /home/fred/fpgui/src/corelib/x11/dyn_x11/xrender.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
+ /home/fred/uos/examples/simpledrums_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_libsndfile.pas
@@ -1115,7 +1115,7 @@ relpaths=25
  simpledrums_fpGUI.pas
  fpgui/src/corelib/x11/dyn_x11/xftlib.pas
  fpgui/src/corelib/x11/dyn_x11/xutil.pp
- ../fpgui/src/corelib/x11/fpg_x11.pas
+ fpgui/src/corelib/x11/fpg_x11.pas
  fpgui/src/corelib/x11/dyn_x11/xrender.pp
  fpgui/src/corelib/x11/dyn_x11/xatom.pp
  fpgui/src/corelib/x11/dyn_x11/xlib.pas
@@ -1195,7 +1195,7 @@ order=25
  7
  8
 firsttab=6
-index=11
+index=9
 [layout]
 windowlayout=530
  [mainfo.basedock]
@@ -1668,8 +1668,8 @@ windowlayout=530
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1113
+ ncy=53
  x=0
  y=0
  cx=1113
@@ -1696,7 +1696,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
