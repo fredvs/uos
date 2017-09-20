@@ -168,7 +168,6 @@ type
    protected
    procedure execute; override;
    end;
- 
 
 {$IF DEFINED(mse)}  
 {$else}
@@ -1962,9 +1961,9 @@ function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
  
  {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  mpid3v1: PPmpg123_id3v1;
-  refmpid3v1: Tmpg123_id3v1;
-  mpid3v2: Tmpg123_id3v2;
+  BufferTag: array[1..128] of char; 
+  F: file; 
+   mpid3v2: Tmpg123_id3v2;
   {$endif}
   
   {$IF DEFINED(opus)}
@@ -1984,21 +1983,22 @@ function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
 if StreamIn[InputIndex].Data.LibOpen = 1 then // mp3
 begin
  mpg123_info(StreamIn[InputIndex].Data.HandleSt, MPinfo);
-  mpg123_id3(StreamIn[InputIndex].Data.HandleSt, mpid3v1, @mpid3v2);
- 
-  if (mpid3v1 <> nil) and  (mpid3v1^ <> nil)  then
-  begin
+ // custom code for reading ID3Tag ---> problems with  mpg123_id3() 
+
+   AssignFile(F, StreamIn[InputIndex].Data.Filename); 
+   Reset(F, 1); 
+   Seek(F, FileSize(F) - 128); 
+   BlockRead(F, BufferTag, SizeOf(BufferTag)); 
+   CloseFile(F); 
+
+  StreamIn[InputIndex].Data.title := copy(BufferTag, 4, 30); 
+  StreamIn[InputIndex].Data.artist := copy(BufferTag, 34, 30); 
+  StreamIn[InputIndex].Data.album := copy(BufferTag, 64, 30); 
+  StreamIn[InputIndex].Data.date :=  copy(BufferTag, 94, 4);
+  StreamIn[InputIndex].Data.comment := copy(BufferTag, 98, 30); 
+  StreamIn[InputIndex].Data.tag :=  copy(BufferTag, 1, 3); 
+  StreamIn[InputIndex].Data.genre := ord(BufferTag[128]);
   
-  refmpid3v1 := mpid3v1^^;
-  
-  StreamIn[InputIndex].Data.title := trim(refmpid3v1.title);
-  StreamIn[InputIndex].Data.artist := refmpid3v1.artist;
-  StreamIn[InputIndex].Data.album := refmpid3v1.album;
-  StreamIn[InputIndex].Data.date := refmpid3v1.year;
-  StreamIn[InputIndex].Data.comment := refmpid3v1.comment;
-  StreamIn[InputIndex].Data.tag := refmpid3v1.tag;
-  StreamIn[InputIndex].Data.genre := refmpid3v1.genre;
-  end;
   Result := true;
   // ?  freeandnil(MPinfo);
 end;
@@ -4228,8 +4228,8 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   
   {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  mpid3v1: PPmpg123_id3v1;
-  refmpid3v1: Tmpg123_id3v1;
+  BufferTag: array[1..128] of char; 
+  F: file; 
   mpid3v2: Tmpg123_id3v2;
   {$endif}
   
@@ -4560,29 +4560,12 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   StreamIn[x].Data.ratio := sizeof(int32);
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
-  mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
-  
- // mpg123_icy(StreamIn[x].Data.HandleSt, pointer(icytext));
  
-  {$IF DEFINED(debug)}
- //  writeln('icy =' + icytext);
-  writeln('===> mpg123_infos => ok');
-  {$endif}
-  // to do : add id3v2
+  // mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
   
-  if (mpid3v1 <> nil) and  (mpid3v1^ <> nil)  then
-  begin
+  // mpg123_icy(StreamIn[x].Data.HandleSt, pointer(icytext));
+ 
   
-  refmpid3v1 := mpid3v1^^;
-  
-  StreamIn[x].Data.title := trim(refmpid3v1.title);
-  StreamIn[x].Data.artist := refmpid3v1.artist;
-  StreamIn[x].Data.album := refmpid3v1.album;
-  StreamIn[x].Data.date := refmpid3v1.year;
-  StreamIn[x].Data.comment := refmpid3v1.comment;
-  StreamIn[x].Data.tag := refmpid3v1.tag;
-  StreamIn[x].Data.genre := refmpid3v1.genre;
-  end;
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
   StreamIn[x].Data.hdformat := MPinfo.layer;
   StreamIn[x].Data.frames := MPinfo.framesize;
@@ -5509,9 +5492,8 @@ var
   
   {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  mpid3v1: PPmpg123_id3v1;
-  mpid3v12: Pmpg123_id3v1;
-  refmpid3v1: Tmpg123_id3v1;
+  BufferTag: array[1..128] of char; 
+  F: file; 
   mpid3v2: Tmpg123_id3v2;
   {$endif}
 
@@ -5667,26 +5649,22 @@ begin
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
   
-//  mpid3v1^ := nil;
-    
-  mpg123_id3(StreamIn[x].Data.HandleSt, @mpid3v1, @mpid3v2);
-  // to do : add id2v2
+// custom code for reading ID3Tag ---> problems with  mpg123_id3() 
 
- if (assigned(mpid3v1)) and (assigned(mpid3v1^)) then 
-   begin
- 
- refmpid3v1 := mpid3v1^^;
-  
-  StreamIn[x].Data.title := trim(refmpid3v1.title);
-  StreamIn[x].Data.artist := refmpid3v1.artist;
-  StreamIn[x].Data.album := refmpid3v1.album;
-  StreamIn[x].Data.date := refmpid3v1.year;
-  StreamIn[x].Data.comment := refmpid3v1.comment;
-  StreamIn[x].Data.tag := refmpid3v1.tag;
-  StreamIn[x].Data.genre := refmpid3v1.genre;
+   AssignFile(F, Filename); 
+   Reset(F, 1); 
+   Seek(F, FileSize(F) - 128); 
+   BlockRead(F, BufferTag, SizeOf(BufferTag)); 
+   CloseFile(F); 
 
-  end;
-  
+  StreamIn[x].Data.title := copy(BufferTag, 4, 30); 
+  StreamIn[x].Data.artist := copy(BufferTag, 34, 30); 
+  StreamIn[x].Data.album := copy(BufferTag, 64, 30); 
+  StreamIn[x].Data.date :=  copy(BufferTag, 94, 4);
+  StreamIn[x].Data.comment := copy(BufferTag, 98, 30); 
+  StreamIn[x].Data.tag := copy(BufferTag, 1, 3); 
+  StreamIn[x].Data.genre := ord(BufferTag[128]);
+
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
   StreamIn[x].Data.hdformat := MPinfo.layer;
   StreamIn[x].Data.frames := MPinfo.framesize;
