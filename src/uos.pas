@@ -1963,7 +1963,8 @@ function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
   mpinfo: Tmpg123_frameinfo;
   BufferTag: array[1..128] of char; 
   F: file; 
-   mpid3v2: Tmpg123_id3v2;
+  // problems with mpg123 
+  // mpid3v2: Tmpg123_id3v2;
   {$endif}
   
   {$IF DEFINED(opus)}
@@ -4230,7 +4231,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   mpinfo: Tmpg123_frameinfo;
   BufferTag: array[1..128] of char; 
   F: file; 
-  mpid3v2: Tmpg123_id3v2;
+ // mpid3v2: Tmpg123_id3v2;
   {$endif}
   
   {$IF DEFINED(opus)}
@@ -4561,11 +4562,11 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
  
-  // mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
-  
-  // mpg123_icy(StreamIn[x].Data.HandleSt, pointer(icytext));
  
-  
+  // problems with mpg123 
+  // mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
+  // mpg123_icy(StreamIn[x].Data.HandleSt, pointer(icytext));
+   
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
   StreamIn[x].Data.hdformat := MPinfo.layer;
   StreamIn[x].Data.frames := MPinfo.framesize;
@@ -4884,9 +4885,10 @@ var
   
  {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  mpid3v1: PPmpg123_id3v1;
-  refmpid3v1: Tmpg123_id3v1;
-  mpid3v2: Tmpg123_id3v2;
+ // problems with mpg123 
+ // mpid3v1: PPmpg123_id3v1;
+ // refmpid3v1: Tmpg123_id3v1;
+ // mpid3v2: Tmpg123_id3v2;
   {$endif}
 
 begin
@@ -5089,6 +5091,9 @@ begin
   SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
+  
+  { // problems with mpg123 library
+   
   mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
   // to do : add id2v2
    if (mpid3v1 <> nil) and  (mpid3v1^ <> nil)  then
@@ -5104,6 +5109,7 @@ begin
   StreamIn[x].Data.tag := refmpid3v1.tag;
   StreamIn[x].Data.genre := refmpid3v1.genre;
   end;
+  }
   
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
   StreamIn[x].Data.hdformat := MPinfo.layer;
@@ -5494,7 +5500,8 @@ var
   mpinfo: Tmpg123_frameinfo;
   BufferTag: array[1..128] of char; 
   F: file; 
-  mpid3v2: Tmpg123_id3v2;
+  // problems with mpg123  
+  //  mpid3v2: Tmpg123_id3v2;
   {$endif}
 
 begin

@@ -882,7 +882,7 @@ findhistory=11
 findoptions=1
 editpos=13
  0,-1073741823
- 0,5649
+ 0,-1073741823
  0,0
  0,-1073741823
  0,-1073741823
@@ -910,7 +910,7 @@ bookmarks12=0
 sourcefiles=13
  ${PROJECTDIR}/mainmse_sp.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/define.inc
+ /home/fred/uos/examples/define.inc
  ${PROJECTDIR}/SimplePlayer_MSE.pas
  ${PROJECTDIR}/uos_bs2b.pas
  ${PROJECTDIR}/uos_soundtouch.pas
