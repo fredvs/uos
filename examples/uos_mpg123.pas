@@ -925,7 +925,7 @@ begin
   else
   begin {go & load the library}
     if Length(libfilename) = 0 then thelib := libmp else thelib := libfilename;
-    Mp_Handle := DynLibs.SafeLoadLibrary(libmp); // obtain the handle we want
+    Mp_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
     if Mp_Handle <> DynLibs.NilHandle then
 
     begin
