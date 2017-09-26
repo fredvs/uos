@@ -92,6 +92,7 @@ var
 
     //// determine how much frame will be designed
     framewanted := filelength div custom1.Width;
+       
     uos_InputSetFrameCount(PlayerIndex1, In1Index, framewanted);
 
      ///// Assign the procedure of object to execute at end of stream
@@ -124,6 +125,7 @@ var
 
           Custom1.Canvas.drawLine(poswav, Custom1.Height div 2, poswav, ((Custom1.Height div 2) - 1) - round(
             (waveformdata[poswav * 2]) * (Custom1.Height / 2) - 1));
+         
           Custom1.Canvas.setcolor(clred);
           Custom1.Canvas.drawLine(poswav, (Custom1.Height div 2) + 2, poswav, ((Custom1.Height div 2) + 1) + round(
             (waveformdata[(poswav * 2) + 1]) * (Custom1.Height / 2) + 1));
@@ -204,6 +206,7 @@ var
     begin
       Name := 'Custom1';
       SetPosition(2, 68, 836, 404);
+    //  SetPosition(2, 68, 338, 26);
       OnPaint := @drawwave;
     end;
 

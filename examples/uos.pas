@@ -6118,10 +6118,8 @@ begin
   {$IF DEFINED(mse)}
     if (StreamOut[x].DSP[x3].LoopProc <> nil) then
    begin
-    application.lock();
-    (StreamOut[x].DSP[x3].LoopProc);
-   application.unlock();
-   end;
+     application.queueasynccall(StreamOut[x].DSP[x3].LoopProc);
+     end;
    {$else}
  
   {$IF not DEFINED(Library)}
@@ -6218,9 +6216,7 @@ begin
   {$IF DEFINED(mse)}
     if (StreamIn[x].DSP[x2].LoopProc <> nil) then
    begin
-    application.lock();
-    StreamIn[x].DSP[x2].LoopProc ;
-   application.unlock();
+   application.queueasynccall(StreamIn[x].DSP[x2].LoopProc) ;
    end;
    {$else}
  
@@ -6302,9 +6298,7 @@ begin
 {$IF DEFINED(mse)}
     if LoopEndProc <> nil then
    begin
-    application.lock();
-   LoopEndProc;
-   application.unlock();
+   application.queueasynccall(LoopEndProc);
    end;
      {$else}
 
@@ -6344,9 +6338,7 @@ begin
 {$IF DEFINED(mse)}
  if EndProc <> nil then
    begin
-    application.lock();
-   EndProc;
-   application.unlock();
+   application.queueasynccall(EndProc);
    end;
      {$else}
 
@@ -6414,9 +6406,7 @@ begin
  {$IF DEFINED(mse)}
  if EndProc <> nil then
    begin
-    application.lock();
-   EndProc;
-   application.unlock();
+   application.queueasynccall(EndProc);
    end;
      {$else}
  
@@ -6449,12 +6439,8 @@ begin
      Pa_StopStream(StreamOut[x].Data.HandleSt); 
    {$ENDIF}   
 
-    {$IF DEFINED(mse)}
-    if EndProcOnly <> nil then  (EndProcOnly); 
-  {$else}
    if EndProcOnly <> nil then EndProcOnly;
-   {$ENDIF}   
-   
+      
    StreamIn[x].Data.Poseek := 0; // set to begin
    doseek(x);
    
@@ -6631,12 +6617,11 @@ var
 msg: TfpgMessageParams;  // for fpgui
  {$endif}
 begin
+
  {$IF DEFINED(mse)}
  if StreamIn[x].LoopProc <> nil then
    begin
-    application.lock();
-   StreamIn[x].LoopProc;
-   application.unlock();
+   application.queueasynccall(StreamIn[x].LoopProc);
    end;
      {$else}
 
@@ -6680,9 +6665,7 @@ begin
 {$IF DEFINED(mse)}
  if BeginProc <> nil then
    begin
-    application.lock();
-   BeginProc;
-   application.unlock();
+   application.queueasynccall(BeginProc);
    end;
  {$else}
      
@@ -6724,9 +6707,7 @@ begin
 {$IF DEFINED(mse)}
  if LoopBeginProc <> nil then
    begin
-    application.lock();
-   LoopBeginProc;
-   application.unlock();
+   application.queueasynccall(LoopBeginProc);
    end;
  {$else}
 
@@ -7512,9 +7493,9 @@ begin
  
   CheckIfPaused ; // is there a pause waiting ?
 
-   DoBeginMethods();
+  DoBeginMethods();
    
-   CheckIfPaused ; // is there a pause waiting ?
+  CheckIfPaused ; // is there a pause waiting ?
 
  repeat
 
@@ -7588,8 +7569,7 @@ begin
   ReadEndless(x);
 
   end; //case StreamIn[x].Data.TypePut of
-
- 
+  
   if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
 
   if (StreamIn[x].Data.Seekable = True) then if StreamIn[x].Data.OutFrames < 100 then
@@ -7764,13 +7744,14 @@ begin
   plugenabled := True;
   end;
   ///////////////////////////////////////////
+ 
   if plugenabled = True then
   WriteOutPlug(x, x2)
   else  // No plugin
   WriteOut(x, x2);
   end;
   end;
-  
+ 
    {$IF DEFINED(debug)}
    WriteLn('Before LoopEndProc ------------------------------');
   {$endif}
@@ -7818,17 +7799,8 @@ begin
 
   DoEndProc;
 
-  {$IF DEFINED(mse)}
-     if EndProcOnly <> nil then
-   begin
-    application.lock();
-    EndProcOnly; 
-    application.lock();
-    end;
-     {$else}
-  if EndProcOnly <> nil then EndProcOnly;
-     {$endif}
-     
+ if EndProcOnly <> nil then EndProcOnly;
+         
   isAssigned := false ;
   
   {$IF DEFINED(debug)}
