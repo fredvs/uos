@@ -138,10 +138,10 @@ var
         Inc(poswav);
       end;
       Custom1.Canvas.TextColor := clBlack;
-    //  Custom1.Canvas.DrawText(60, 20, 'Right Channel');
+      Custom1.Canvas.DrawText(60, 20, 'Right Channel');
 
       Custom1.Canvas.TextColor := clWhite;
-    //  Custom1.Canvas.DrawText(60, Custom1.Height - 40, 'Left Channel');
+      Custom1.Canvas.DrawText(60, Custom1.Height - 40, 'Left Channel');
 
     end;
 
@@ -205,8 +205,7 @@ var
     with Custom1 do
     begin
       Name := 'Custom1';
-    //  SetPosition(2, 68, 836, 404);
-      SetPosition(2, 68, 340, 41);
+      SetPosition(2, 68, 836, 404);
       OnPaint := @drawwave;
     end;
 

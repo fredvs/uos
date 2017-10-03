@@ -882,42 +882,42 @@ findhistory=11
  sleep(80
 findoptions=1
 editpos=36
- 0,408
- 0,0
- 0,125
- 0,65
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,115
  0,-1073741823
  0,-1073741823
- 0,119
- 0,431
- 0,124
- 0,109
- 0,122
- 0,201
- 0,319
- 0,431
- 0,304
- 0,60
- 0,234
- 0,186
- 0,284
- 0,261
- 0,347
- 0,73
- 0,926
- 0,201
- 0,170
- 0,490
- 0,499
- 0,239
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  3,343
- 0,456
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1237,7 +1237,7 @@ windowlayout=552
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1577,8 +1577,8 @@ windowlayout=552
  mdistate=0
  nx=0
  ny=0
- ncx=1113
- ncy=53
+ ncx=1356
+ ncy=61
  x=0
  y=0
  cx=1356
@@ -1616,7 +1616,7 @@ windowlayout=552
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0
@@ -1651,7 +1651,7 @@ windowlayout=552
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=findinfilefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
