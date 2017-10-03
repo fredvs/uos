@@ -111,10 +111,14 @@ var
     //// add a Output into device with default parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
+    
+     {$if defined(cpuarm)}  // need a lower latency
+       if uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, -1, -1, -1, -1) > -1 then
+       {$else}
+        if uos_AddIntoDevOut(PlayerIndex1) > -1 then
+       {$endif}
 
-   if uos_AddIntoDevOut(PlayerIndex1) > -1 then
-
-    /////// everything is ready, here we are, lets play it 3 times...
+      /////// everything is ready, here we are, lets play it 3 times...
     uos_Play(PlayerIndex1, 3);
    
     sleep(5000);

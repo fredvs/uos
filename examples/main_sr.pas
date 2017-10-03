@@ -205,9 +205,18 @@ begin
     //////////// SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)  (only int16 and int32 are implemented)
     //////////// FramesCount : -1 default : 65536
 
-  // if checkbox1.Checked = True then
-   out1index := uos_AddIntoDevOut(PlayerIndex1);  //// add a Output into OUT device with default parameters
+     //// add a Output into OUT device with default parameters
+  
+  
+  {$if defined(cpuarm)} // needs lower latency
+      out1index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1) ;
+       {$else}
+      out1index := uos_AddIntoDevOut(PlayerIndex1);
+       {$endif}
+  
+  
     uos_outputsetenable(PlayerIndex1,out1index,checkbox1.checked);
+
 
    // uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536 );   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
@@ -282,9 +291,15 @@ begin
 
 //  uos_AddIntoDevOut(PlayerIndex1); //// add a Output into OUT device with default parameters
 
-  uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+{$if defined(cpuarm)} // needs lower latency
+       uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index),
     uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1);
-    //// add a Output into device with custom parameters
+       {$else}
+        uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+    uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1);
+       {$endif}
+
+     //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
   //////////// Latency  ( -1 is latency suggested ) )

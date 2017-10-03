@@ -94,7 +94,12 @@ var
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
-   uos_AddIntoDevOut(PlayerIndex1); //// add a Output into OUT device with default parameters
+   {$if defined(cpuarm)} // needs lower latency
+       uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1) ;
+       {$else}
+       uos_AddIntoDevOut(PlayerIndex1);
+       {$endif}
+   
     //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 0,-1);   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -232,8 +237,12 @@ var
     //////////// FramesCount : -1 default : 65536
     //////////// FileFormat : -1 default : wav (0:wav, 1:pcm, 2:uos, 3:custom)
     
-   //  if checkbox1.Checked then
+    {$if defined(cpuarm)} // needs lower latency
+    out1Index :=  uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1) ;
+       {$else}
      out1Index := uos_AddIntoDevOut(PlayerIndex1);
+       {$endif}
+   
      uos_outputsetenable(PlayerIndex1,out1Index,checkbox1.checked);
    
     //// add a Output into OUT device with default parameters

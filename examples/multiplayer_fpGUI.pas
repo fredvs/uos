@@ -684,8 +684,12 @@ var
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
+{$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1);
+      {$else}
+  uos_AddIntoDevOut(PlayerIndex0, -1, -1, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1);
+       {$endif}
 
-   uos_AddIntoDevOut(PlayerIndex0, -1, -1, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1);
  //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
@@ -763,8 +767,11 @@ var
   //  result : -1 nothing created, otherwise Input Index in array
 
 
+ {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1);
+      {$else}
   uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1);
-   
+       {$endif}  
  //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
@@ -837,7 +844,11 @@ var
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
-   uos_AddIntoDevOut(PlayerIndex2, -1, -1, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1);
+{$if defined(cpuarm)} // needs lower latency
+    uos_AddIntoDevOut(PlayerIndex2, -1, 0.3, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1);
+        {$else}
+     uos_AddIntoDevOut(PlayerIndex2, -1, -1, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1);
+        {$endif}
  //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
@@ -912,6 +923,11 @@ var
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
+{$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex3, -1, 0.3, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1);
+      {$else}
+    uos_AddIntoDevOut(PlayerIndex3, -1, -1, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1);
+      {$endif}
 
    uos_AddIntoDevOut(PlayerIndex3, -1, -1, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1);
  //// add a Output into device with custom parameters

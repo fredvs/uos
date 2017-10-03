@@ -252,8 +252,12 @@ begin
     In1Index := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text));
 
          //// add a Output into device
-     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, -1, -1);
-
+    
+   {$if defined(cpuarm)} // needs lower latency
+      uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, -1, -1);
+   {$else}
+      uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, -1, -1);
+    {$endif}
 
     uos_InputSetPositionEnable(PlayerIndex1, In1Index, 1);
      ///////// set position calculation (default is 0)

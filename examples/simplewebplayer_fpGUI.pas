@@ -340,8 +340,14 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), nil, Pchar(FilenameEdit3.FileName)
          //  result : -1 nothing created, otherwise Input Index in array
    if In1Index > -1 then 
    begin
+   
+    {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+    uos_InputGetChannels(PlayerIndex1, In1Index), samformat, 1024);
+       {$else}
     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
     uos_InputGetChannels(PlayerIndex1, In1Index), samformat, 1024);
+       {$endif}
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )

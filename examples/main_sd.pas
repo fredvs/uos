@@ -183,7 +183,12 @@ posi := 1;
    if uos_AddFromEndlessMuted(i, channels, 256) > -1 then 
  // this for a dummy endless input, must be last input
  
-  if uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256) > -1 then // stereo output
+   {$if defined(cpuarm)} // needs lower latency
+    if uos_AddIntoDevOut(i, -1, 0.08, -1, -1, 0, 256) > -1 then // stereo output
+       {$else}
+   if uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256) > -1 then // stereo output
+       {$endif}
+  
  begin
   uos_PlayNoFree(i);
   sleep(250);

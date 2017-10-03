@@ -60,8 +60,13 @@ if odd(i) then player := 0 else player := 1;  ///// to switch between player1 <>
     if chara <> ' ' then
    begin
    uos_CreatePlayer(player);
-  uos_AddIntoDevOut(player);
-
+   
+      {$if defined(cpuarm)} // needs lower latency
+       uos_AddIntoDevOut(player, -1, 0.08, -1, -1, -1, -1) ;
+       {$else}
+       uos_AddIntoDevOut(player);
+       {$endif}
+ 
   filetoplay := ordir + 'sound' + directoryseparator + 'morse_audio'+  directoryseparator + lowercase(chara) + '.mp3' ;
 
        if fileexists(pchar(filetoplay)) then

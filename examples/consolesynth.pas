@@ -104,7 +104,13 @@ var
   // example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
    
  if inindex1 > -1 then
- if uos_AddIntoDevOut(PlayerIndex1,-1,-1,-1,-1, 0,-1) > - 1 then
+ 
+ 
+    {$if defined(cpuarm)} // needs lower latency
+        if uos_AddIntoDevOut(PlayerIndex1,-1,0.3,-1,-1, 0,-1) > - 1 then
+       {$else}
+        if uos_AddIntoDevOut(PlayerIndex1,-1,-1,-1,-1, 0,-1) > - 1 then
+       {$endif}
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array

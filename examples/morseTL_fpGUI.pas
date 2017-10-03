@@ -71,7 +71,11 @@ chara := copy(Memo1.Text,i,1);
     uos_CreatePlayer(player,AParent);
     {$endif}
 
-  uos_AddIntoDevOut(player);
+   {$if defined(cpuarm)} // needs lower latency
+       uos_AddIntoDevOut(player, -1, 0.08, -1, -1, -1, -1) ;
+       {$else}
+       uos_AddIntoDevOut(player);
+       {$endif}
 
   filetoplay := ordir + 'sound' + directoryseparator + 'morse_audio'+  directoryseparator + lowercase(chara) + '.mp3' ;
 

@@ -45,7 +45,7 @@ var
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     SF_FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
      {$endif}
-    SoundFilename := ordir + 'sound\test.flac';
+    SoundFilename := ordir + 'sound\test.ogg';
  {$ENDIF}
 
      {$if defined(cpu64) and defined(linux) }
@@ -74,7 +74,7 @@ var
     PA_FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     SF_FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
     {$endif}
-    SoundFilename := ordir + 'sound/test.flac';
+    SoundFilename := ordir + 'sound/test.ogg';
  {$ENDIF}
 
  {$IFDEF Darwin}
@@ -82,7 +82,7 @@ var
     opath := copy(opath, 1, Pos('/UOS', opath) - 1);
     PA_FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     SF_FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
-    SoundFilename := opath + '/sound/test.flac';
+    SoundFilename := opath + '/sound/test.ogg';
  {$ENDIF}
  
     // Load the libraries
@@ -120,7 +120,12 @@ var
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
     
-    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1);
+    {$if defined(cpuarm)}  // need a lower latency
+        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, -1, -1, -1, -1) ;
+       {$else}
+       OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1);
+       {$endif}
+    
     if OutputIndex1 > -1 then 
     begin
 

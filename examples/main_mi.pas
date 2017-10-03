@@ -426,7 +426,13 @@ begin
     ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
     ////////// VolRight : Right volume
 
+
+ {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, -1, -1, 0, 1024);
+     {$else}
   uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, 1024);
+  {$endif}
+
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player

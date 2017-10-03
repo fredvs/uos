@@ -61,9 +61,9 @@ begin
    {$ENDIF}
    
  {$if defined(linux) and defined(cpuarm)}
-   mainfo.padir.value := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
-    mainfo.sfdir.value := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-    mainfo.mpdir.value := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+   mainfo.padir.value := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+    mainfo.sfdir.value := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+    mainfo.mpdir.value := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
     mainfo.songdir.value := ordir + 'sound/test.ogg';
    {$ENDIF}    
 

@@ -122,8 +122,14 @@ var
    writeln('uos_inputlength = ' + inttostr(uos_inputlength(0,0))); 
 
    // add a Output into device with custom parameters
-     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), 0, -1);
+   
+  {$if defined(cpuarm)} // needs lower latency
+        uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,input1), 
+  uos_inputgetChannels(PlayerIndex1,input1) , 0, -1);
+       {$else}
+     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,input1), 
+  uos_inputgetChannels(PlayerIndex1,input1) , 0, -1);
+       {$endif}   
 
   /////// everything is ready, here we are, lets play it...
 

@@ -110,8 +110,14 @@ var
   input1 := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024);
 
    // add a Output into device with default parameters
-  uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,input1), 
+    
+  {$if defined(cpuarm)} // needs lower latency
+        uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,input1), 
   uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024);
+       {$else}
+     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,input1), 
+  uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024);
+       {$endif}
  
     /////// everything is ready, here we are, lets play it...
 

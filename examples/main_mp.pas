@@ -301,7 +301,11 @@ begin
 
   uos_CreatePlayer(PlayerIndex3);
 
-  uos_AddIntoDevOut(PlayerIndex3, -1, -1, -1, -1, 0, -1);
+  {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex3, -1, 0.3, -1, -1, 0, 1024);
+     {$else}
+  uos_AddIntoDevOut(PlayerIndex3, -1, -1, -1, -1, 0, 1024);
+  {$endif}
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -399,7 +403,11 @@ begin
 
   uos_CreatePlayer(PlayerIndex0);
 
-  uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, -1);
+  {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, -1, -1, 0, 1024);
+     {$else}
+  uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, 1024);
+  {$endif}
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -453,7 +461,11 @@ begin
 
   uos_CreatePlayer(PlayerIndex1);
 
-  uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0, -1);
+ {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, -1, -1, 0, 1024);
+     {$else}
+  uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0, 1024);
+  {$endif}
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -505,7 +517,11 @@ begin
 
   uos_CreatePlayer(PlayerIndex2);
 
-  uos_AddIntoDevOut(PlayerIndex2, -1, -1, -1, -1, 0, -1);
+ {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex2, -1, 0.3, -1, -1, 0, 1024);
+     {$else}
+  uos_AddIntoDevOut(PlayerIndex2, -1, -1, -1, -1, 0, 1024);
+  {$endif}
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player

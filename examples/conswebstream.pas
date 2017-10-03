@@ -110,7 +110,12 @@ writeln('Try to connect to ' + theurl);
        writeln('===> uos_AddFromURL => OK :' + inttostr(res)) ;
      
      //// add a Output  => change framecount => 1024
-   res2 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, res), -1, -1, 1024);
+  
+   {$if defined(cpuarm)} // needs lower latency
+    res2 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, res), -1, -1, 1024);
+      {$else}
+     res2 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, res), -1, -1, 1024);
+     {$endif}
    
     ////// Add a Output into Device Output
     //////////// Device ( -1 is default device )

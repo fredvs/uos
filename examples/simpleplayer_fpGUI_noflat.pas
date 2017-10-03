@@ -487,7 +487,12 @@ if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),
       // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
 
+    {$if defined(cpuarm)} // needs lower latency
+    OutputIndex1 := PlayerIndex1.AddIntoDevOut(-1, 0.3, PlayerIndex1.StreamIn[InputIndex1].Data.SampleRate, -1, samformat, -1);
+     {$else}
     OutputIndex1 := PlayerIndex1.AddIntoDevOut(-1, -1, PlayerIndex1.StreamIn[InputIndex1].Data.SampleRate, -1, samformat, -1);
+    {$endif}
+    
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
