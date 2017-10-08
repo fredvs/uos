@@ -2838,8 +2838,8 @@ begin
   ps^[x] := trunc(ps^[x] * vleft);
   end;
   // This to avoid distortion
-  // if ps^[x] < (-32760) then ps^[x] := -32760 ;
-  // if ps^[x] > (32760) then ps^[x] := 32760 ;
+   if ps^[x] < (-32760) then ps^[x] := -32760 ;
+   if ps^[x] > (32760) then ps^[x] := 32760 ;
 
   end;
 
@@ -2858,8 +2858,8 @@ begin
   end;
 
   // This to avoid distortion
-  // if pl^[x] < (-2147000000) then pl^[x] := -2147000000 ;
-  // if pl^[x] > (2147000000) then pl^[x] := 2147000000 ;
+  if pl^[x] < (-2147000000) then pl^[x] := -2147000000 ;
+  if pl^[x] > (2147000000) then pl^[x] := 2147000000 ;
 
   end;
 
@@ -2887,8 +2887,8 @@ begin
   end;
 
   // This to avoid distortion
-  // if pf^[x] < -1 then pf^[x] := -1;
-  // if pf^[x] > 1 then pf^[x] := 1 ;
+   if pf^[x] < -1 then pf^[x] := -1;
+   if pf^[x] > 1 then pf^[x] := 1 ;
 
   end;
 
