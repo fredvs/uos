@@ -843,41 +843,41 @@ panels=1
  panel1
 units=
  (
- a=0,4149,6,Pascal Units
+ a=0,8245,6,Pascal Units
  c=5
   (
   file=define.inc
   kind=1
-  a=0,4100,0,define.inc
+  a=0,8196,0,define.inc
   )
   (
   file=sak_fpGUI_test.lpr
   kind=1
-  a=0,4100,0,simpleplayer_fpGUI.pas
+  a=0,8196,0,simpleplayer_fpGUI.pas
   )
   (
   file=uos_flat.pas
   kind=1
-  a=0,4100,0,uos_flat.pas
+  a=0,8196,0,uos_flat.pas
   )
   (
   file=uos_portaudio.pas
   kind=1
-  a=0,4100,0,uos_portaudio.pas
+  a=0,8196,0,uos_portaudio.pas
   )
   (
   file=uos.pas
   kind=1
-  a=0,4100,0,uos.pas
+  a=0,8196,0,uos.pas
   )
  )
 cmodules=
  (
- a=0,4132,6,C Modules
+ a=0,8228,6,C Modules
  )
 files=
  (
- a=0,4133,6,Text Files
+ a=0,8229,6,Text Files
  )
 [componentstore]
 storedir=/home/fred/msegui/apps/ide/compstore/
@@ -936,7 +936,7 @@ editpos=20
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 24,105
+ 3,105
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -977,7 +977,7 @@ sourcefiles=20
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/define.inc
- /home/fred/uos/examples/consoleplaymemorybuffer.pas
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos.pas
@@ -1035,7 +1035,7 @@ nomenumodules=1
 firsttab=14
 index=16
 [layout]
-windowlayout=549
+windowlayout=560
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1049,7 +1049,7 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=694
+ cy=784
  rcx=0
  rcy=0
  [mainfo]
@@ -1068,7 +1068,7 @@ windowlayout=549
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1356,784
  focusedchild=0
  wsize=6
  active=1
@@ -1112,7 +1112,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1158,7 +1158,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1184,7 +1184,7 @@ windowlayout=549
  x=0
  y=0
  cx=159
- cy=508
+ cy=574
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1196,7 +1196,7 @@ windowlayout=549
  sorted=0
  col=0
  row=-1073741823
- rowheight=18
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1276,7 +1276,7 @@ windowlayout=549
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0
@@ -1384,7 +1384,7 @@ windowlayout=549
  value=1
  [messagefo]
  splitdir=0
- useroptions=82027
+ useroptions=805388395
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1393,9 +1393,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=575
+ y=649
  cx=1356
- cy=119
+ cy=135
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1495,12 +1495,12 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=61
+ cy=69
  rcx=0
  rcy=0
  [debuggerfo.basedock]
  splitdir=2
- useroptions=146563
+ useroptions=805452931
  parent=debuggerfo.container
  visible=1
  mdistate=0
@@ -1511,9 +1511,20 @@ windowlayout=549
  x=0
  y=0
  cx=1356
- cy=61
+ cy=69
  rcx=0
  rcy=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.edit_options]
+ value=X
+ [debuggerfo.edit_compilernum]
+ value=0
+ [debuggerfo.edit_compiler]
+ value=Pascal
+ [debuggerfo.file_history]
+ value=/home/fred/uos/examples/consoleplaymemorybuffer.pas
+ history=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1527,14 +1538,14 @@ windowlayout=549
  x=162
  y=0
  cx=1194
- cy=508
+ cy=574
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1561,15 +1572,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=64
+ y=72
  cx=1356
- cy=508
+ cy=574
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

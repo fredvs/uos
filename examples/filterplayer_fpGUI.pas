@@ -210,7 +210,7 @@ var
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (= 65536)
 
-       EQIndex1 := uos_AddFilterIn(PlayerIndex1, In1Index, 1, 1000, 1, 1, True, nil);
+       EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 1000, 1, 1, True, nil);
       //////////// PlayerIndex : Index of a existing Player
       ////////// In1Index : InputIndex of a existing Input
       ////////// LowFrequency : Lowest frequency of filter
@@ -222,8 +222,8 @@ var
       ////////// LoopProc : External procedure to execute after filter
       //  result : -1 nothing created, otherwise index of DSPIn in array
 
-      EQIndex2 := uos_AddFilterIn(PlayerIndex1, In1Index, 1000, 8000, 1, 1, True, nil);
-      EQIndex3 := uos_AddFilterIn(PlayerIndex1, In1Index, 8000, 22000, 1, 1, True, nil);
+      EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1000, 8000, 1, 1, True, nil);
+      EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 8000, 22000, 1, 1, True, nil);
 
     if radiobutton1.Checked = True then
       typfilt := 2;
@@ -234,10 +234,10 @@ var
     if radiobutton4.Checked = True then
       typfilt := 5;
 
-    FTIndex1 := uos_AddFilterIn(PlayerIndex1, In1Index, StrToInt(edit2.Text), StrToInt(edit1.Text),
+    FTIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, StrToInt(edit2.Text), StrToInt(edit1.Text),
     1, typfilt, True, nil);
 
-    uos_InputSetFilterIn(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1, True, checkbox2.Checked, nil);
+    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1, True, checkbox2.Checked, nil);
   //////////// PlayerIndex : Index of a existing Player
   ////////// InputIndex : InputIndex of a existing Input
   ////////// DSPInIndex : DSPInIndex of existing DSPIn

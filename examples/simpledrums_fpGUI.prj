@@ -1034,170 +1034,24 @@ findhistory=20
  writeln
  dynload
 findoptions=1
-editpos=25
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+editpos=1
  0,0
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
 bookmarks0=0
-bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-bookmarks23=0
-bookmarks24=0
-sourcefiles=25
+sourcefiles=1
  ${PROJECTDIR}/simpledrums_fpGUI.pas
- /home/fred/fpgui/src/corelib/x11/dyn_x11/xftlib.pas
- /home/fred/fpgui/src/corelib/x11/dyn_x11/xutil.pp
- /home/fred/fpgui/src/corelib/x11/fpg_x11.pas
- /home/fred/fpgui/src/corelib/x11/dyn_x11/xrender.pp
- /home/fred/fpgui/src/corelib/x11/dyn_x11/xatom.pp
- /home/fred/fpgui/src/corelib/x11/dyn_x11/xlib.pas
- /home/fred/fpgui/src/corelib/x11/dyn_x11/x.pp
- /home/fred/fpgui/src/corelib/x11/dyn_x11/xutilori.pas
- /home/fred/fpgui/src/corelib/x11/fpg_netlayer_x11.pas
- /home/fred/fpgui/src/corelib/fpg_dynload.pas
- /home/fred/fpgui/src/corelib/x11/fpg_xft_x11.pas
- /home/fred/sak/sak/sak_mse/src/sak_mse.pas
- /home/fred/fpgui/src/corelib/x11/dyn_x11/xrender.pas
- /home/fred/uos/examples/simpledrums_fpGUI.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/uos_aac.pas
- ${PROJECTDIR}/uos_opusfile.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/uos_bs2b.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/define.inc
-relpaths=25
+relpaths=1
  simpledrums_fpGUI.pas
- fpgui/src/corelib/x11/dyn_x11/xftlib.pas
- fpgui/src/corelib/x11/dyn_x11/xutil.pp
- fpgui/src/corelib/x11/fpg_x11.pas
- fpgui/src/corelib/x11/dyn_x11/xrender.pp
- fpgui/src/corelib/x11/dyn_x11/xatom.pp
- fpgui/src/corelib/x11/dyn_x11/xlib.pas
- fpgui/src/corelib/x11/dyn_x11/x.pp
- fpgui/src/corelib/x11/dyn_x11/xutilori.pas
- fpgui/src/corelib/x11/fpg_netlayer_x11.pas
- fpgui/src/corelib/fpg_dynload.pas
- fpgui/src/corelib/x11/fpg_xft_x11.pas
- sak/sak/sak_mse/src/sak_mse.pas
- fpgui/src/corelib/x11/dyn_x11/xrender.pas
- simpledrums_fpGUI.pas
- uos.pas
- uos_portaudio.pas
- uos_libsndfile.pas
- uos_mpg123.pas
- uos_aac.pas
- uos_opusfile.pas
- uos_soundtouch.pas
- uos_bs2b.pas
- uos.pas
- define.inc
-ismoduletexts=25
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=1
  0
 modules=0
 moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=25
- 0
- 13
- 1
- 6
- 11
- 10
- 12
- 2
- 3
- 14
- 23
- 24
- 15
- 19
- 21
- 22
- 20
- 16
- 17
- 18
- 9
- 4
- 5
- 7
- 8
-firsttab=6
-index=9
+firsttab=0
+index=0
 [layout]
-windowlayout=530
+windowlayout=541
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1252,7 +1106,7 @@ windowlayout=530
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1274,7 +1128,7 @@ windowlayout=530
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1320,7 +1174,7 @@ windowlayout=530
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1357,7 +1211,7 @@ windowlayout=530
  sortdescend1=0
  sorted=0
  col=0
- row=1
+ row=2
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1438,7 +1292,7 @@ windowlayout=530
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1518,7 +1372,7 @@ windowlayout=530
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=121
+ propcolwidthref=111
  values0=2
   0
   0
@@ -1626,7 +1480,7 @@ windowlayout=530
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1668,14 +1522,25 @@ windowlayout=530
  mdistate=0
  nx=0
  ny=0
- ncx=1113
- ncy=53
+ ncx=1111
+ ncy=52
  x=0
  y=0
  cx=1113
  cy=53
  rcx=0
  rcy=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.edit_options]
+ value=X
+ [debuggerfo.edit_compilernum]
+ value=0
+ [debuggerfo.edit_compiler]
+ value=Pascal
+ [debuggerfo.file_history]
+ value=/home/fred/uos/examples/simpledrums_fpGUI.pas
+ history=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1696,7 +1561,7 @@ windowlayout=530
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0

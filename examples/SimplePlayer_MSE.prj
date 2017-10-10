@@ -69,7 +69,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/SimplePlayer_MSE.prj
-findinfiledialog=53
+findinfiledialog=55
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -103,8 +103,10 @@ findinfiledialog=53
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc" "*.mfm"
  [findinfileadialogfo.findtext]
- value=uos_AddIntoDevOut
- history=12
+ value=uos_InputSetFilter
+ history=14
+  uos_InputSetFilter
+  uos_AddFilterIn
   uos_AddIntoDevOut
   Tt_bs2bdp
   ***running***
@@ -881,189 +883,14 @@ findhistory=11
  trackbar1
  sleep(80
 findoptions=1
-editpos=36
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 3,343
- 0,-1073741823
+editpos=1
+ 0,0
 bookmarks0=0
-bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-bookmarks16=0
-bookmarks17=0
-bookmarks18=0
-bookmarks19=0
-bookmarks20=0
-bookmarks21=0
-bookmarks22=0
-bookmarks23=0
-bookmarks24=0
-bookmarks25=0
-bookmarks26=0
-bookmarks27=0
-bookmarks28=0
-bookmarks29=0
-bookmarks30=0
-bookmarks31=0
-bookmarks32=0
-bookmarks33=0
-bookmarks34=0
-bookmarks35=0
-sourcefiles=36
+sourcefiles=1
  ${PROJECTDIR}/mainmse_sp.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/consoleplay.pas
- ${PROJECTDIR}/SimplePlayer_MSE.pas
- ${PROJECTDIR}/uos_bs2b.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/uos_dsp_noiseremoval.pas
- /home/fred/msegui/lib/common/kernel/linux/mseguiintf.pas
- /home/fred/msegui/lib/common/graphics/msegraphics.pas
- ${PROJECTDIR}/consoleplayloop.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/consoleplaymemorybuffer.pas
- ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/consoleplaymemorystream.pas
- ${PROJECTDIR}/consolesynth.pas
- ${PROJECTDIR}/conswebstream.pas
- ${PROJECTDIR}/filterplayer_fpGUI.pas
- ${PROJECTDIR}/main_fp.pas
- ${PROJECTDIR}/main_mi.pas
- ${PROJECTDIR}/main_mp.pas
- ${PROJECTDIR}/main_mt.pas
- ${PROJECTDIR}/main_nr.pas
- ${PROJECTDIR}/main_sd.pas
- ${PROJECTDIR}/main_sr.pas
- ${PROJECTDIR}/main_wf.pas
- ${PROJECTDIR}/main_wsp.pas
- ${PROJECTDIR}/morseTL_fpGUI.pas
- ${PROJECTDIR}/multiplayer_fpGUI.pas
- ${PROJECTDIR}/noiseremover_fpGUI.pas
- ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
- ${PROJECTDIR}/simplewebplayer_fpGUI.pas
- ${PROJECTDIR}/simplewebserver_fpGUI.pas
-relpaths=36
+relpaths=1
  mainmse_sp.pas
- uos.pas
- consoleplay.pas
- SimplePlayer_MSE.pas
- uos_bs2b.pas
- uos_soundtouch.pas
- uos_dsp_noiseremoval.pas
- msegui/lib/common/kernel/linux/mseguiintf.pas
- msegui/lib/common/graphics/msegraphics.pas
- consoleplayloop.pas
- uos.pas
- uos_mpg123.pas
- consoleplaymemorybuffer.pas
- main_sp.pas
- consoleplaymemorystream.pas
- consolesynth.pas
- conswebstream.pas
- filterplayer_fpGUI.pas
- main_fp.pas
- main_mi.pas
- main_mp.pas
- main_mt.pas
- main_nr.pas
- main_sd.pas
- main_sr.pas
- main_wf.pas
- main_wsp.pas
- morseTL_fpGUI.pas
- multiplayer_fpGUI.pas
- noiseremover_fpGUI.pas
- simpledrums_fpGUI.pas
- simpleplayer_fpGUI_noflat.pas
- simpleplayer_fpGUI.pas
- simplerecorder_fpGUI.pas
- simplewebplayer_fpGUI.pas
- simplewebserver_fpGUI.pas
-ismoduletexts=36
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=1
  0
 modules=1
  /home/fred/uos/examples/mainmse_sp.mfm
@@ -1074,45 +901,8 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=36
- 0
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 10
- 11
- 1
- 3
- 2
- 9
- 13
- 24
- 25
- 26
- 12
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 7
- 8
- 4
- 5
- 6
-firsttab=4
-index=8
+firsttab=0
+index=0
 [layout]
 windowlayout=552
  [mainfo.basedock]
@@ -1127,8 +917,8 @@ windowlayout=552
  ncy=0
  x=0
  y=0
- cx=1356
- cy=694
+ cx=1113
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1140,16 +930,16 @@ windowlayout=552
  ny=0
  ncx=0
  ncy=0
- x=124
- y=45
+ x=125
+ y=46
  cx=1123
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1113,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1191,7 +981,7 @@ windowlayout=552
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1237,7 +1027,7 @@ windowlayout=552
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0
@@ -1263,7 +1053,7 @@ windowlayout=552
  x=0
  y=0
  cx=205
- cy=523
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1355,7 +1145,7 @@ windowlayout=552
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1464,9 +1254,9 @@ windowlayout=552
  ncx=0
  ncy=0
  x=0
- y=588
- cx=1356
- cy=106
+ y=512
+ cx=1113
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1535,7 +1325,7 @@ windowlayout=552
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1565,8 +1355,8 @@ windowlayout=552
  ncy=0
  x=0
  y=0
- cx=1356
- cy=59
+ cx=1113
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1577,12 +1367,12 @@ windowlayout=552
  mdistate=0
  nx=0
  ny=0
- ncx=1356
- ncy=61
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1356
- cy=61
+ cx=1113
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.project_options]
@@ -1594,7 +1384,7 @@ windowlayout=552
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simplewebplayer_fpGUI.pas
+ value=/home/fred/uos/examples/mainmse_sp.pas
  history=0
  [sourcefo]
  splitdir=0
@@ -1608,15 +1398,15 @@ windowlayout=552
  ncy=0
  x=208
  y=0
- cx=1148
- cy=523
+ cx=905
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1643,9 +1433,9 @@ windowlayout=552
  ncx=0
  ncy=0
  x=0
- y=62
- cx=1356
- cy=523
+ y=54
+ cx=1113
+ cy=455
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]

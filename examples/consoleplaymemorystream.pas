@@ -124,11 +124,11 @@ var
    // add a Output into device with custom parameters
    
   {$if defined(cpuarm)} // needs lower latency
-        uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,input1), 
+        uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,InputIndex1), 
   uos_inputgetChannels(PlayerIndex1,input1) , 0, -1);
        {$else}
-     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,input1), 
-  uos_inputgetChannels(PlayerIndex1,input1) , 0, -1);
+     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,InputIndex1), 
+  uos_inputgetChannels(PlayerIndex1,InputIndex1) , 0, -1);
        {$endif}   
 
   /////// everything is ready, here we are, lets play it...

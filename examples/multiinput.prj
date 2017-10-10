@@ -712,15 +712,15 @@ panels=1
  panel1
 units=
  (
- a=0,4132,6,Pascal Units
+ a=0,8228,6,Pascal Units
  )
 cmodules=
  (
- a=0,4132,6,C Modules
+ a=0,8228,6,C Modules
  )
 files=
  (
- a=0,4132,6,Text Files
+ a=0,8228,6,Text Files
  )
 [componentstore]
 storedir=/home/fred/msegui/apps/ide/compstore/
@@ -814,7 +814,7 @@ order=9
 firsttab=1
 index=6
 [layout]
-windowlayout=520
+windowlayout=531
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -827,8 +827,8 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
- cy=694
+ cx=1113
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -840,16 +840,16 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=338
- y=111
- cx=939
+ x=125
+ y=46
+ cx=1123
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1113,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -891,7 +891,7 @@ windowlayout=520
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -937,7 +937,7 @@ windowlayout=520
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -962,20 +962,20 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=159
- cy=507
+ cx=205
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
- propcolwidthref=18
- width0=141
+ propcolwidthref=88
+ width0=117
  sortdescend0=0
- width1=12
+ width1=82
  sortdescend1=0
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=18
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1055,15 +1055,15 @@ windowlayout=520
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=670
- y=179
+ x=316
+ y=249
  cx=316
  cy=484
  rcx=0
@@ -1073,9 +1073,9 @@ windowlayout=520
  visible=0
  [objectinspectorfo.grid]
  propcolwidthref=306
- width0=73
+ width0=136
  sortdescend0=0
- width1=227
+ width1=164
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1135,7 +1135,7 @@ windowlayout=520
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=121
+ propcolwidthref=111
  values0=0
  values0_ci=-1
  sortdescend0=0
@@ -1155,7 +1155,7 @@ windowlayout=520
  value=1
  [messagefo]
  splitdir=0
- useroptions=82027
+ useroptions=805388395
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1164,9 +1164,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=574
- cx=1356
- cy=120
+ y=512
+ cx=1113
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1233,7 +1233,7 @@ windowlayout=520
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1263,26 +1263,37 @@ windowlayout=520
  ncy=0
  x=0
  y=0
- cx=1356
- cy=61
+ cx=1113
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
  splitdir=2
- useroptions=146563
+ useroptions=805452931
  parent=debuggerfo.container
  visible=1
  mdistate=0
  nx=0
  ny=0
- ncx=929
- ncy=2
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1356
- cy=61
+ cx=1113
+ cy=53
  rcx=0
  rcy=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.edit_options]
+ value=X
+ [debuggerfo.edit_compilernum]
+ value=0
+ [debuggerfo.edit_compiler]
+ value=Pascal
+ [debuggerfo.file_history]
+ value=/home/fred/uos/examples/uos.pas
+ history=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1293,17 +1304,17 @@ windowlayout=520
  ny=0
  ncx=0
  ncy=0
- x=162
+ x=208
  y=0
- cx=1194
- cy=507
+ cx=905
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1330,9 +1341,9 @@ windowlayout=520
  ncx=0
  ncy=0
  x=0
- y=64
- cx=1356
- cy=507
+ y=54
+ cx=1113
+ cy=455
  rcx=0
  rcy=0
 [targetconsole]
