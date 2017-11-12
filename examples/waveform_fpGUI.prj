@@ -697,7 +697,7 @@ bookmarks3=0
 bookmarks4=0
 sourcefiles=5
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/waveform_fpGUI.pas
+ /home/fred/uos/examples/waveform_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_opus.pas
  ${PROJECTDIR}/define.inc
@@ -798,7 +798,7 @@ windowlayout=533
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -844,7 +844,7 @@ windowlayout=533
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -962,7 +962,7 @@ windowlayout=533
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1142,7 +1142,7 @@ windowlayout=533
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1184,8 +1184,8 @@ windowlayout=533
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1113
+ ncy=53
  x=0
  y=0
  cx=1113
@@ -1223,7 +1223,7 @@ windowlayout=533
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

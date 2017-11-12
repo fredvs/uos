@@ -351,8 +351,9 @@ type
   LevelLeft, LevelRight: cfloat;
   levelArrayEnable : integer;
   
+  lensine: cfloat;
+   
   freqsine: cfloat;
-  lensine: cint32;
   dursine, posdursine: cint32;
   posLsine, posRsine: cint32;
   
@@ -3709,12 +3710,12 @@ begin
   if Frequency = -1 then 
   begin
   StreamIn[x].Data.freqsine := 440 ;
-  StreamIn[x].Data.lensine :=  (StreamIn[x].Data.SampleRate div 440) ;
+  StreamIn[x].Data.lensine :=  (StreamIn[x].Data.SampleRate / 440) ;
   end
   else
   begin
   StreamIn[x].Data.freqsine := Frequency ;
-  StreamIn[x].Data.lensine := trunc(StreamIn[x].Data.SampleRate / Frequency) ;
+  StreamIn[x].Data.lensine := (StreamIn[x].Data.SampleRate / Frequency) ;
   end;
   
   StreamIn[x].Data.posLsine := 0 ;
@@ -3763,7 +3764,7 @@ begin
  begin
  StreamIn[InputIndex].Data.Enabled := Enable;
  StreamIn[InputIndex].Data.freqsine := Frequency ;
- StreamIn[InputIndex].Data.lensine := trunc(StreamIn[InputIndex].Data.SampleRate / Frequency) ;
+ StreamIn[InputIndex].Data.lensine := (StreamIn[InputIndex].Data.SampleRate / Frequency) ;
  end;
  if VolumeL <> -1 then StreamIn[InputIndex].Data.VLeft := VolumeL;
   
