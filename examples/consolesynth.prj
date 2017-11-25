@@ -445,11 +445,11 @@ makeoptionson=7
  63
  63
  34
- 48
+ 53
  63
 compilerusedon=21
- 4095
- 0
+ 4091
+ 4
  0
  0
  0
@@ -815,12 +815,12 @@ findhistory=20
 findoptions=1
 editpos=17
  0,-1073741823
- 0,353
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 68,132
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -926,9 +926,9 @@ order=17
  3
  4
 firsttab=2
-index=4
+index=3
 [layout]
-windowlayout=530
+windowlayout=541
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1087,8 +1087,8 @@ windowlayout=530
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=3
+ col=1
+ row=0
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1127,14 +1127,14 @@ windowlayout=530
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1143,7 +1143,7 @@ windowlayout=530
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1407,6 +1407,17 @@ windowlayout=530
  cy=53
  rcx=0
  rcy=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.edit_options]
+ value=X
+ [debuggerfo.edit_compilernum]
+ value=0
+ [debuggerfo.edit_compiler]
+ value=Pascal
+ [debuggerfo.file_history]
+ value=/home/fred/uos/examples/consolesynth.pas
+ history=0
  [sourcefo]
  splitdir=0
  useroptions=16489

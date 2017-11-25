@@ -1,7 +1,10 @@
 {This unit is part of United Openlibraries of Sound (uos)}
 
-{This is the Dynamic loading version of SoundTouch Pascal Wrapper
+{This is the Dynamic loading + Unix compatible version of SoundTouch Pascal Wrapper
  from Sandro Cumerlato <sandro.cumerlato@gmail.com>.
+ of the original C version of Olli Parviainen <oparviai@iki.fi>.
+
+ Added BPMdetect method too.
  Load library with St_load() and release with St_unload().
  License : modified LGPL.
  Fred van Stappen / fiens@hotmail.com}
@@ -49,6 +52,12 @@ type
     end;
 
 var
+  bpm_createInstance: function(chan: CInt32; sampleRate : CInt32): THandle; cdecl;
+  bpm_destroyInstance: procedure(h: THandle); cdecl;
+  bpm_getBpm: function(h: THandle): cfloat; cdecl;
+  bpm_putSamples: procedure(h: THandle; const samples: pcfloat;
+  numSamples: cardinal); cdecl;
+
   soundtouch_clear: procedure(h: THandle); cdecl;
   soundtouch_createInstance: function(): THandle; cdecl;
   soundtouch_flush: procedure(h: THandle); cdecl;
@@ -157,6 +166,15 @@ end  else begin
         GetProcAddress(LibHandle, 'soundtouch_setTempo');
       Pointer(soundtouch_setTempoChange) :=
         GetProcAddress(LibHandle, 'soundtouch_setTempoChange');
+
+       Pointer(bpm_createInstance) :=
+        GetProcAddress(LibHandle, 'bpm_createInstance');
+      Pointer(bpm_destroyInstance) :=
+        GetProcAddress(LibHandle, 'bpm_destroyInstance');
+      Pointer(bpm_getBpm) :=
+        GetProcAddress(LibHandle, 'bpm_getBpm');
+      Pointer(bpm_putSamples) :=
+        GetProcAddress(LibHandle, 'bpm_putSamples');
 
     Result := St_IsLoaded;
     ReferenceCounter:=1;

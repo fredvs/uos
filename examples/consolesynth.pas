@@ -128,7 +128,7 @@ var
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
      // Duration : duration in msec (-1 = do not change)
      //////////// Enabled : true or false ;
-   
+  
     sleep(300) ;
      uos_InputSetSynth(PlayerIndex1,inindex1, 620, 0.2,1, -1, true);
       sleep(300) ;
@@ -141,9 +141,19 @@ var
      uos_InputSetSynth(PlayerIndex1,inindex1, 360, 0.2,1, -1, true);
      sleep(300) ; 
      uos_InputSetSynth(PlayerIndex1,inindex1, 280, 1,0.2, -1, true);
-      sleep(300) ; 
-     uos_InputSetSynth(PlayerIndex1,inindex1, 440, 1, 1, -1, true);
       sleep(1200) ; 
+    {      
+     uos_InputSetSynth(PlayerIndex1,inindex1, 884, 1, 1, -1, true);
+          sleep(800); 
+       uos_InputSetSynth(PlayerIndex1,inindex1, 889,1,1, -1,true);
+     sleep(800) ; 
+     uos_InputSetSynth(PlayerIndex1,inindex1, 884, 1,1, -1, true);
+     sleep(800) ; 
+     uos_InputSetSynth(PlayerIndex1,inindex1, 889, 1,1, -1, true);
+      sleep(300) ; 
+      sleep(1200) ; 
+    // } 
+      
       
    end;
    end;

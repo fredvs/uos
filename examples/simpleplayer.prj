@@ -119,7 +119,7 @@ options=114
  x=0
  y=120
  xprop=1
- yprop=0.24070450097847
+ yprop=0.23976608187135
  [projectoptionsfo.macrogrid]
  propcolwidthref=481
  sortdescend0=0
@@ -144,7 +144,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=3
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -837,7 +837,7 @@ windowlayout=531
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -883,7 +883,7 @@ windowlayout=531
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1001,7 +1001,7 @@ windowlayout=531
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1179,7 +1179,7 @@ windowlayout=531
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1230,7 +1230,7 @@ windowlayout=531
  rcx=0
  rcy=0
  [debuggerfo.project_options]
- value=1
+ value=3
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1260,7 +1260,7 @@ windowlayout=531
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
