@@ -919,18 +919,23 @@ findhistory=20
  frommem
  index
 findoptions=1
-editpos=2
- 0,117
+editpos=3
+ 0,-1073741823
  0,6891
+ 0,96
 bookmarks0=0
 bookmarks1=0
-sourcefiles=2
+bookmarks2=0
+sourcefiles=3
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos.pas
-relpaths=2
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
+relpaths=3
  consoleplaymemorybuffer.pas
  uos.pas
-ismoduletexts=2
+ consoleplaymemorybuffer.pas
+ismoduletexts=3
+ 0
  0
  0
 modules=1
@@ -943,7 +948,7 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=610
  [mainfo.basedock]
@@ -1433,7 +1438,7 @@ windowlayout=610
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/consoleplaymemorybuffer.pas
  history=50
   /home/fred/uos/src/uos_soundtouch.pas
   /home/fred/uos/examples/uos_soundtouch.pas

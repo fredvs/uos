@@ -721,11 +721,10 @@ function uos_SetGlobalEvent(PlayerIndex: cint32; isenabled : boolean) : boolean;
 function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
   // From SoundTouch plugin  
 
-function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos ; numbuf : cint ): TDArFloat;
+function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; numbuf : cint ): TDArFloat;
   // Create a memory buffer of a audio file.
   // FileName : filename of audio file  
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-  // Outmemory : the buffer to store data.
   // bufferinfos : the infos of the buffer.
   // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers) 
   //  result :  The memory buffer
@@ -1891,18 +1890,17 @@ begin
  uosPlayers[PlayerIndex].StreamOut[OutIndex].LoopProc := Proc;
 end;
 
-function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos ; numbuf : cint ): TDArFloat;
+function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; numbuf : cint ): TDArFloat;
   // Create a memory buffer of a audio file.
   // FileName : filename of audio file  
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-  // Outmemory : the buffer to store data.
   // bufferinfos : the infos of the buffer.
   // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers) 
   //  result :  The memory buffer
   // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos, -1);
  begin
   ifflat := true;
-result := uos.uos_File2Buffer(Filename, SampleFormat, outmemory, bufferinfos, numbuf )  ;
+result := uos.uos_File2Buffer(Filename, SampleFormat, bufferinfos, numbuf )  ;
   end;
   
 function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;

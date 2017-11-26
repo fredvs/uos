@@ -99,7 +99,7 @@ var
        PlayerIndex1 := 0;
 
     // Create a memory buffer from a audio file
-    thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebuffer, thebufferinfos, -1);
+    thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebufferinfos, -1);
   
     // You may store that buffer into ressource...
     // ... and when you get the buffer from bressource....

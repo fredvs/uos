@@ -1147,15 +1147,14 @@ procedure uos_Free();
   
 function uos_GetVersion() : cint32 ;  // version of uos
 
-function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos ; numbuf : cint ): TDArFloat;
+function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; numbuf : cint ): TDArFloat;
   // Create a memory buffer of a audio file.
   // FileName : filename of audio file  
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-  // Outmemory : the buffer to store data.
   // bufferinfos : the infos of the buffer.
   // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers) 
   //  result :  The memory buffer
-  // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos, -1);
+  // example : buffmem := uos_File2buffer(edit5.Text,0, buffinfos, -1);
   
 procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32 ; typeout: cint32 );
   // Create a audio file from a audio file.
@@ -1598,50 +1597,34 @@ function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32)
   end;
    
 
-function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos ; numbuf : cint ): TDArFloat;
+function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; numbuf : cint ): TDArFloat;
   // Create a memory buffer of a audio file.
   // FileName : filename of audio file  
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-  // Outmemory : the buffer to store data.
   // bufferinfos : the infos of the buffer.
   // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers) 
   //  result :  The memory buffer
-  // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos, -1);
+  // example : buffmem := uos_File2buffer(edit5.Text,0,buffinfos, -1);
   var
   i : integer;
   st : string;
   begin
-//   for i := 0 to length(tempoutmemory) -1 do
-//  tempoutmemory[i] := 0.0;
-  
-//  setlength(tempoutmemory, 0);
-   
-  Filetobuffer(Filename,-1, SampleFormat, 1024, tempoutmemory, bufferinfos, numbuf);
-  //Filetobuffer(Filename,-1, SampleFormat, 1024, tempoutmemory);
-
+    
+ result :=  Filetobuffer(Filename,-1, SampleFormat, 1024, tempoutmemory, bufferinfos, numbuf);
+ 
 // writeln('tempoutmemory = '+ inttostr(length(tempoutmemory)));
  
- {
-   setlength(outmemory, length(tempoutmemory));
-  for i := 0 to length(tempoutmemory) -1 do
-  outmemory[i] := tempoutmemory[i];
-}
-
-// outmemory := tempoutmemory;
-
   {$IF DEFINED(debug)} 
   writeln('After Filetobuffer');
-  writeln('length(tempoutmemory) =' +inttostr(length(outmemory)));
+  writeln('length(tempoutmemory) =' +inttostr(length(tempoutmemory)));
   st := '';
   for i := 0 to length(outmemory) -1 do
-  st := st + '|' + inttostr(i) + '=' + floattostr(outmemory[i]);  
+  st := st + '|' + inttostr(i) + '=' + floattostr(tempoutmemory[i]);  
   WriteLn('OUTPUT DATA into portaudio------------------------------');
   WriteLn(st);
   {$endif}
- // sleep(5000);
- // result := outmemory;
-  
-   result := tempoutmemory;
+
+// result := tempoutmemory;
   end;
 
 procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32 ; typeout: cint32 );
@@ -7557,6 +7540,8 @@ var
   plugenabled: boolean;
   curpos: cint64 = 0;
 begin
+
+theinc := 0;
 
 {$IF DEFINED(mse)}
  {$else}
