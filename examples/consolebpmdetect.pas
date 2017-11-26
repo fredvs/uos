@@ -12,7 +12,6 @@ uses
   ctypes,
   SysUtils,
   CustApp,
-  uos_soundtouch,
   uos_flat;
 
 type
