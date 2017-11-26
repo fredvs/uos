@@ -1,4 +1,4 @@
-program consoleplaymemorybuffer;
+program consolebpmdetect;
 
 ///WARNING : if FPC version < 2.7.1 => Do not forget to uncoment {$DEFINE consoleapp} in define.inc !
 
@@ -12,6 +12,7 @@ uses
   ctypes,
   SysUtils,
   CustApp,
+  uos_soundtouch,
   uos_flat;
 
 type
@@ -28,9 +29,10 @@ type
   end;
 
 var
-  res, i: integer;
-  ordir, opath, st, SoundFilename, PA_FileName, SF_FileName: string;
+  res, res2, i: integer;
+  ordir, opath, st, SoundFilename, PA_FileName, SF_FileName, MP_FileName, ST_FileName: string;
   PlayerIndex1, input1 : integer;
+ // BPMhandle, SThandle : THandle;
   thebuffer : array of cfloat;
   thebufferinfos : TuosF_BufferInfos;
 
@@ -44,40 +46,50 @@ var
      {$if defined(cpu64)}
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     SF_FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
+    MP_FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
+    ST_FileName := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
      {$else}
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     SF_FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
+    ST_FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
+    MP_FileName := 
      {$endif}
-    SoundFilename := ordir + 'sound\test.flac';
+    SoundFilename := ordir + 'sound\test.mp3';
  {$ENDIF}
 
  {$if defined(cpu64) and defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
-    SoundFilename := ordir + 'sound/test.flac';
+    ST_FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
+    MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+     SoundFilename := ordir + 'sound/test.wav';
    {$ENDIF}
    
   {$if defined(cpu86) and defined(linux)}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-   SoundFilename := ordir + 'sound/test.flac';
+    
+   ST_FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
+   SoundFilename := ordir + 'sound/test.wav';
  {$ENDIF}
  
   {$if defined(linux) and defined(cpuarm)}
     PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
     SF_FileName := ordir + ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
-      SoundFilename := ordir + 'sound/test.flac';
+      SoundFilename := ordir + 'sound/test.mp3';
  {$ENDIF}
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
     PA_FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
     SF_FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    ST_FileName := '' ;
     {$else}
     PA_FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     SF_FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
+    ST_FileName := '';
     {$endif}
-    SoundFilename := ordir + 'sound/test.flac';
+    SoundFilename := ordir + 'sound/test.mp3';
  {$ENDIF}
 
  {$IFDEF Darwin}
@@ -85,46 +97,33 @@ var
     opath := copy(opath, 1, Pos('/UOS', opath) - 1);
     PA_FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     SF_FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
-    SoundFilename := opath + '/sound/test.flac';
+    ST_FileName := := opath + '/lib/Mac/32bit/plugin/libSoundTouch-32.dylib';
+    SoundFilename := opath + '/sound/test.mp3';
  {$ENDIF}
-
-  // Load the libraries
+ 
+  // SoundFilename := ordir + 'sound/testbpm.ogg';
+ 
+    // Load the libraries
    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
-   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil, nil) ;
+   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), Pchar(MP_FileName), nil, nil, nil) ;
 
-    writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
-
-   if res = 0 then begin
-
-       PlayerIndex1 := 0;
-
-    // Create a memory buffer from a audio file
-    thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebuffer, thebufferinfos, -1);
-  
-    // You may store that buffer into ressource...
-    // ... and when you get the buffer from bressource....
+    writeln('Result of loading libraries (if 0 => ok ) : ' + IntToStr(res));
+    
+    res2 := uos_LoadPlugin('soundtouch', Pchar(ST_FileName));
    
-    uos_CreatePlayer(PlayerIndex1);
-    
-    // Add a input from memory buffer with custom parameters
-  input1 := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024);
+    writeln('Result of loading SoundTouch plugin (if 0 => ok ) : ' + IntToStr(res2));
 
-   // add a Output into device with default parameters
-    
-  {$if defined(cpuarm)} // needs lower latency
-        uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,input1), 
-  uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024);
-       {$else}
-     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,input1), 
-  uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024);
-       {$endif}
- 
-    /////// everything is ready, here we are, lets play it...
+   if (res = 0) and (res2 = 0) then begin
 
- uos_Play(PlayerIndex1);
- 
-    sleep(2000);
-    end;
+     // Create a memory buffer from a audio file with 1024 buffers.
+    thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebuffer, thebufferinfos, 1024);
+        
+    writeln('length(thebuffer) = ' + inttostr(length(thebuffer))); 
+    
+   writeln('BPM = ' + floattostr(uos_GetBPM(thebuffer,thebufferinfos.channels,thebufferinfos.samplerate)));
+    
+    end else writeln('Libraries did not load... ;-(');
+
 
  end;
 
@@ -133,7 +132,6 @@ var
     ConsolePlay;
     writeln('Press a key to exit...');
     readln;
-    uos_Stop(PlayerIndex1);
     Terminate;
     uos_free();
   end;

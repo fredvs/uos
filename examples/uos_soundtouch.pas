@@ -23,9 +23,13 @@ uses
 const
 libst=
  {$IFDEF unix}
- 'libSoundTouch.so.0';
+ 'SoundTouchDll.so';
   {$ELSE}
- 'soundtouch.dll';
+  {$if defined(cpu64)}
+   'SoundTouch_x64.dll';
+     {$else}
+   'SoundTouch.dll';
+     {$endif}
   {$ENDIF}     
 
 {$IF not DEFINED(windows)}
