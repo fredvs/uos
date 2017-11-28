@@ -139,7 +139,7 @@ var
     writeln('Artist: ' + uos_InputGetTagArtist(PlayerIndex1, InputIndex1));
     writeln;  
  
-    sleep(3000);
+    sleep(2000);
    end;
  end;
 end;
@@ -149,10 +149,11 @@ end;
   procedure TuosConsole.doRun;
   begin
     ConsolePlay;
-    writeln('Press a key to exit...');
-    readln;
-    Terminate;
-    uos_free(); // Do not forget this !
+ //   writeln('Press a key to exit...');
+ //   readln;
+   writeln('Ciao...');
+     uos_free(); // Do not forget this !
+    Terminate;   
   end;
 
 constructor TuosConsole.Create(TheOwner: TComponent);

@@ -120,41 +120,42 @@ var
     
     uos_Play(PlayerIndex1);
    
-    sleep(200) ;
+    sleep(150) ;
     
-    uos_InputSetSynth(PlayerIndex1,inindex1, 550, -1,0.2, -1,true);
+    uos_InputSetSynth(PlayerIndex1,inindex1, 880, -1,-1, -1,true);
        ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
      // Duration : duration in msec (-1 = do not change)
      //////////// Enabled : true or false ;
-  
-    sleep(300) ;
+     //{
+    sleep(175) ;
      uos_InputSetSynth(PlayerIndex1,inindex1, 620, 0.2,1, -1, true);
       sleep(300) ;
      uos_InputSetSynth(PlayerIndex1,inindex1, la1, 1,0.2, -1,true);
-    sleep(300) ;
+    sleep(150) ;
     uos_InputSetSynth(PlayerIndex1,inindex1, 220, 0.2,1, -1 ,true);
      sleep(300) ; 
      uos_InputSetSynth(PlayerIndex1,inindex1, 320,1,0.2, -1,true);
-     sleep(300) ; 
+     sleep(150) ; 
      uos_InputSetSynth(PlayerIndex1,inindex1, 360, 0.2,1, -1, true);
      sleep(300) ; 
      uos_InputSetSynth(PlayerIndex1,inindex1, 280, 1,0.2, -1, true);
-      sleep(1200) ; 
+     
+    //}
     {      
      uos_InputSetSynth(PlayerIndex1,inindex1, 884, 1, 1, -1, true);
-          sleep(800); 
+          sleep(2000); 
        uos_InputSetSynth(PlayerIndex1,inindex1, 889,1,1, -1,true);
-     sleep(800) ; 
+     sleep(2000) ; 
      uos_InputSetSynth(PlayerIndex1,inindex1, 884, 1,1, -1, true);
-     sleep(800) ; 
-     uos_InputSetSynth(PlayerIndex1,inindex1, 889, 1,1, -1, true);
-      sleep(300) ; 
-      sleep(1200) ; 
+     sleep(2000) ; 
+     uos_InputSetSynth(PlayerIndex1,inindex1, 889, 1,1, 1, true);
     // } 
-      
-      
+     
+     sleep(300);
+      uos_stop(PlayerIndex1);
+  
    end;
    end;
 
@@ -163,10 +164,6 @@ var
   procedure TuosConsole.doRun;
   begin
     ConsolePlay;
-    writeln('Press a key to exit...');
-    readln;
-    uos_stop(PlayerIndex1);
-    sleep(200);
     uos_free;
     Terminate;
   end;

@@ -514,13 +514,13 @@ makeoptionson=8
  63
  63
  3
- 34
- 52
+ 42
+ 60
  63
 compilerusedon=29
- 4094
+ 4086
  1
- 0
+ 8
  0
  0
  0
@@ -919,9 +919,10 @@ findhistory=20
  uos_unloadlib()
  play()
 findoptions=1
-editpos=5
+editpos=6
  0,-1073741823
- 0,14
+ 64,98
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -930,19 +931,23 @@ bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+sourcefiles=6
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consolebpmdetect.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/uos_shout.pas
-relpaths=5
+ ${PROJECTDIR}/uos.pas
+relpaths=6
  uos.pas
  consolebpmdetect.pas
  uos_flat.pas
  uos_soundtouch.pas
  uos_shout.pas
-ismoduletexts=5
+ uos.pas
+ismoduletexts=6
+ 0
  0
  0
  0
@@ -957,12 +962,13 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=5
+order=6
  0
  4
  1
  2
  3
+ 5
 firsttab=0
 index=2
 [layout]
@@ -1437,8 +1443,8 @@ windowlayout=560
  mdistate=0
  nx=0
  ny=0
- ncx=1113
- ncy=53
+ ncx=1111
+ ncy=52
  x=0
  y=0
  cx=1113
@@ -1446,7 +1452,7 @@ windowlayout=560
  rcx=0
  rcy=0
  [debuggerfo.project_options]
- value=1
+ value=2
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]

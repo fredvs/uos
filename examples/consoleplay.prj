@@ -925,7 +925,7 @@ findhistory=20
  PPmpg123_id3v1
 findoptions=1
 editpos=1
- 0,0
+ 0,131
 bookmarks0=0
 sourcefiles=1
  ${PROJECTDIR}/consoleplay.pas
@@ -1000,7 +1000,7 @@ windowlayout=560
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1022,7 +1022,7 @@ windowlayout=560
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1068,7 +1068,7 @@ windowlayout=560
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1186,7 +1186,7 @@ windowlayout=560
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1455,7 +1455,7 @@ windowlayout=560
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0

@@ -131,13 +131,10 @@ var
   procedure TuosConsole.doRun;
   begin
     ConsolePlay;
-    writeln('Press a key to exit...');
-    readln;
-    uos_Stop(PlayerIndex1);
-    Terminate;
     uos_free();
-  end;
-
+    Terminate;
+    end;
+    
 constructor TuosConsole.Create(TheOwner: TComponent);
   begin
     inherited Create(TheOwner);

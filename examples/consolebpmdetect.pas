@@ -12,6 +12,7 @@ uses
   ctypes,
   SysUtils,
   CustApp,
+  uos_soundtouch,
   uos_flat;
 
 type
@@ -100,13 +101,12 @@ var
     SoundFilename := opath + '/sound/test.mp3';
  {$ENDIF}
  
-  // SoundFilename := ordir + 'sound/testbpm.ogg';
- 
-    // Load the libraries
+     // Load the libraries
    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
    res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), Pchar(MP_FileName), nil, nil, nil) ;
 
     writeln('Result of loading libraries (if 0 => ok ) : ' + IntToStr(res));
+    
     
     res2 := uos_LoadPlugin('soundtouch', Pchar(ST_FileName));
    
@@ -114,13 +114,18 @@ var
 
    if (res = 0) and (res2 = 0) then begin
 
-     // Create a memory buffer from a audio file with 1024 buffers.
+  writeln('soundtouch_getVersionId = ' + inttostr(soundtouch_getVersionId())); 
+
+  writeln('soundtouch_getVersionString = ' + (soundtouch_getVersionString())); 
+
+ // {
+     // Create a memory buffer from a audio file with 1024 frames.
     thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebufferinfos, 1024);
         
     writeln('length(thebuffer) = ' + inttostr(length(thebuffer))); 
     
    writeln('BPM = ' + floattostr(uos_GetBPM(thebuffer,thebufferinfos.channels,thebufferinfos.samplerate)));
-    
+ //  } 
     end else writeln('Libraries did not load... ;-(');
 
 
@@ -129,10 +134,11 @@ var
   procedure TuosConsole.doRun;
   begin
     ConsolePlay;
-    writeln('Press a key to exit...');
-    readln;
-    Terminate;
-    uos_free();
+  //  writeln('Press a key to exit...');
+  //  readln;
+     uos_free();  
+      Terminate;
+ 
   end;
 
 constructor TuosConsole.Create(TheOwner: TComponent);
@@ -145,7 +151,7 @@ var
   Application: TUOSConsole;
 begin
   Application := TUOSConsole.Create(nil);
-  Application.Title := 'Console Player from Buffer-Memory';
+  Application.Title := 'Console BPM finder Buffer-Memory';
   Application.Run;
   Application.Free;
 end.

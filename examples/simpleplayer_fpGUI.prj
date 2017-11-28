@@ -209,7 +209,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -525,9 +525,9 @@ makeoptionson=10
  2
  0
 compilerusedon=29
- 3899
+ 3891
  4
- 0
+ 8
  128
  64
  0
@@ -994,7 +994,7 @@ findhistory=20
  mpg123_feature
 findoptions=1
 editpos=4
- 0,5639
+ 58,5625
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1505,7 +1505,7 @@ windowlayout=541
  rcx=0
  rcy=0
  [debuggerfo.project_options]
- value=1
+ value=2
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
