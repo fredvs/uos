@@ -62,7 +62,7 @@ var
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     ST_FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
     MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-     SoundFilename := ordir + 'sound/test.wav';
+     SoundFilename := ordir + 'sound/test.mp3';
    {$ENDIF}
    
   {$if defined(cpu86) and defined(linux)}
@@ -70,7 +70,7 @@ var
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     
    ST_FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
-   SoundFilename := ordir + 'sound/test.wav';
+   SoundFilename := ordir + 'sound/test.mp3';
  {$ENDIF}
  
   {$if defined(linux) and defined(cpuarm)}
@@ -106,8 +106,7 @@ var
    res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), Pchar(MP_FileName), nil, nil, nil) ;
 
     writeln('Result of loading libraries (if 0 => ok ) : ' + IntToStr(res));
-    
-    
+        
     res2 := uos_LoadPlugin('soundtouch', Pchar(ST_FileName));
    
     writeln('Result of loading SoundTouch plugin (if 0 => ok ) : ' + IntToStr(res2));
@@ -118,16 +117,15 @@ var
 
   writeln('soundtouch_getVersionString = ' + (soundtouch_getVersionString())); 
 
- // {
+ 
      // Create a memory buffer from a audio file with 1024 frames.
     thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebufferinfos, 1024);
-        
+  
     writeln('length(thebuffer) = ' + inttostr(length(thebuffer))); 
     
    writeln('BPM = ' + floattostr(uos_GetBPM(thebuffer,thebufferinfos.channels,thebufferinfos.samplerate)));
  //  } 
     end else writeln('Libraries did not load... ;-(');
-
 
  end;
 

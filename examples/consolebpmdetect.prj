@@ -810,11 +810,11 @@ path=5
  /home/fred/uos/examples/uos_libsndfile.pas
  /home/fred/uos/examples/uos_flat.pas
 line=5
- 5757
- 5073
+ 5760
+ 5076
  410
  41
- 1740
+ 1751
 address=5
  4862239
  4851858
@@ -896,33 +896,38 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=getbpm
+finddtext=stream2buf
 findhistory=20
- getbpm
+ stream2buf
+ streamtobuf
+ File2Buffer
+ BufferOut
  theinc
+ wantframestemp
+ tempoutmemory
+ AddIntoMemoryBuffer
  uos_File2Buffer
+ File2buffer
  Filetobuffer
+ addintomem
+ numbuf
+ getbpm
  getstatus
  filetobuf
  Filetobuffe
  createInstance
- AddIntoMemoryBuffer
  file2buff
  samplerate
- detect
- filenameedit5
- PlayerNotFree
- PlayersNotFree
- playersnotfree
- create
- doter
- uos_unloadlib()
- play()
 findoptions=1
-editpos=6
+editpos=11
  0,-1073741823
- 64,98
+ 0,128
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,1746
+ 0,-1073741823
+ 0,723
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -932,21 +937,41 @@ bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-sourcefiles=6
+bookmarks6=0
+bookmarks7=0
+bookmarks8=0
+bookmarks9=0
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consolebpmdetect.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/uos_shout.pas
  ${PROJECTDIR}/uos.pas
-relpaths=6
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/consolebpmdetect.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=11
  uos.pas
  consolebpmdetect.pas
  uos_flat.pas
  uos_soundtouch.pas
  uos_shout.pas
  uos.pas
-ismoduletexts=6
+ uos_flat.pas
+ uos_flat.pas
+ consolebpmdetect.pas
+ uos_flat.pas
+ uos_flat.pas
+ismoduletexts=11
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -962,14 +987,19 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=6
+order=11
  0
  4
  1
+ 5
+ 7
+ 10
  2
  3
- 5
-firsttab=0
+ 8
+ 9
+ 6
+firsttab=2
 index=2
 [layout]
 windowlayout=560
@@ -985,8 +1015,8 @@ windowlayout=560
  ncy=0
  x=0
  y=0
- cx=1113
- cy=604
+ cx=1356
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -998,16 +1028,16 @@ windowlayout=560
  ny=0
  ncx=0
  ncy=0
- x=125
+ x=124
  y=46
  cx=1123
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,604
+  basedock,0,0,1356,694
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1121,7 +1151,7 @@ windowlayout=560
  x=0
  y=0
  cx=205
- cy=455
+ cy=523
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1330,9 +1360,9 @@ windowlayout=560
  ncx=0
  ncy=0
  x=0
- y=512
- cx=1113
- cy=92
+ y=588
+ cx=1356
+ cy=106
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1431,8 +1461,8 @@ windowlayout=560
  ncy=0
  x=0
  y=0
- cx=1113
- cy=51
+ cx=1356
+ cy=59
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1443,16 +1473,16 @@ windowlayout=560
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1113
+ ncy=53
  x=0
  y=0
- cx=1113
- cy=53
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.project_options]
- value=2
+ value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1474,8 +1504,8 @@ windowlayout=560
  ncy=0
  x=208
  y=0
- cx=905
- cy=455
+ cx=1148
+ cy=523
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1509,9 +1539,9 @@ windowlayout=560
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1113
- cy=455
+ y=62
+ cx=1356
+ cy=523
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
