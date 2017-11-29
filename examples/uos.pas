@@ -6862,7 +6862,6 @@ begin
    application.queueasynccall(LoopBeginProc);
    end;
  {$else}
-
   {$IF not DEFINED(Library)}
   if LoopBeginProc <> nil then
   //  Execute BeginProc procedure
