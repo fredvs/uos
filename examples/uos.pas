@@ -541,6 +541,7 @@ type
   Enabled: boolean;
   Name: string;
   PlugHandle: THandle;
+  
   {$IF DEFINED(bs2b) or DEFINED(soundtouch)}
   Abs2b : Tt_bs2bdp;
   PlugFunc: TPlugFunc;
@@ -846,6 +847,10 @@ function AddPlugin(PlugName: Pchar; SampleRate: cint32;
 procedure SetPluginSoundTouch(PluginIndex: cint32; Tempo: cfloat;
   Pitch: cfloat; Enable: boolean);
   // PluginIndex : PluginIndex Index of a existing Plugin.
+  
+procedure SetPluginGetBPM(PluginIndex: cint32; Tempo: cfloat;
+  Pitch: cfloat; Enable: boolean);
+  // PluginIndex : PluginIndex Index of a existing Plugin.  
 {$endif}
   
 {$IF DEFINED(bs2b)}
@@ -2761,6 +2766,117 @@ var
   Result := bufferin; 
 end;
 end;
+
+function GetBPMPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; inputData: Tuos_Data;
+  notused1: float; notused2: float; notused3: float;  notused4: float;
+  notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
+var
+ ratio : integer;
+ numoutbuf, x1, x2: cint32;
+  BufferplugFLTMP: TDArFloat;
+  BufferplugFL: TDArFloat;
+ begin
+ 
+ case inputData.LibOpen of
+  0: ratio := 1; // sndfile
+  1:begin  // mpg123
+  case inputData.SampleFormat of
+  0: ratio := 2; // float32
+  1: ratio := 2; // int32
+  2: ratio := 1; // int16
+  end;  
+  end;
+  2: ratio := 1;
+  3: ratio := 1; // cdrom
+  4: ratio := 1; // opus
+  end;
+  
+  if inputData.LibOpen <> 4 then //not working yet for opus files
+  begin
+  {$IF DEFINED(debug)}
+  writeln(); 
+  writeln('_____Begin Sound touch_____'); 
+  writeln('soundtouch_putSamples: Length(bufferin)  = ' + inttostr(length(bufferin))); 
+  writeln('outframes  = ' + inttostr(inputData.outframes)+
+  ' ratio  = ' + inttostr(ratio)+' channels  = ' + inttostr(inputData.Channels)); 
+  {$endif}
+  
+  if inputData.outframes > 0 then
+  begin 
+  soundtouch_putSamples(plugHandle, pcfloat(bufferin),
+  inputData.outframes div cint(inputData.Channels * ratio));
+  
+  {$IF DEFINED(debug)}
+  writeln('inputData.outframes div trunc(inputData.Channels * ratio) = '
+  + inttostr(inputData.outframes div inputData.Channels * ratio)); 
+  {$endif}
+  
+  SetLength(BufferplugFL, 0);
+  SetLength(BufferplugFLTMP, 0);
+  
+  {$IF DEFINED(debug)}
+  writeln('Length(BufferplugFL) = '
+  + inttostr(Length(BufferplugFL))); 
+   writeln('Length(Bufferin) = '
+  + inttostr(Length(Bufferin))); 
+   writeln('Length(BufferplugFLTMP) = '
+  + inttostr(Length(BufferplugFLTMP))); 
+  {$endif} 
+
+  SetLength(BufferplugFLTMP,(Length(Bufferin)));
+  
+  {$IF DEFINED(debug)}
+  writeln('2_Length(BufferplugFLTMP) = '
+  + inttostr(Length(BufferplugFLTMP))); 
+  {$endif} 
+  
+  numoutbuf := 1;
+  
+  while numoutbuf > 0 do
+  begin
+  
+  numoutbuf := soundtouch_receiveSamples(PlugHandle,
+  pcfloat(BufferplugFLTMP), inputData.outframes); 
+  
+  {$IF DEFINED(debug)}
+  writeln('numoutbuf = '  + inttostr(numoutbuf)); 
+  {$endif}
+  
+  if numoutbuf > 0 then begin
+  {$IF DEFINED(debug)}
+  writeln('SetLength(BufferplugFL) = '  + inttostr(length(BufferplugFL) + trunc(numoutbuf * inputData.Channels))); 
+  {$endif}
+  
+  //  SetLength(BufferplugFL, length(BufferplugFL) + trunc(numoutbuf * inputData.Channels));
+  SetLength(BufferplugFL, length(BufferplugFL) + trunc(numoutbuf * 2));
+  
+  x2 := Length(BufferplugFL) - (numoutbuf * inputData.Channels);
+
+  for x1 := 0 to trunc(numoutbuf * inputData.Channels) -1 do
+  begin
+  BufferplugFL[x1 + x2] := BufferplugFLTMP[x1];
+  end;
+  end;
+  end;
+  end;
+  
+  {$IF DEFINED(debug)}
+  writeln('inputData.outframes = Length(BufferplugFL) = ' + inttostr(inputData.outframes)); 
+  writeln('_____End Sound touch_____'); 
+  {$endif}
+ 
+  inputData.outframes := Length(BufferplugFL) div inputData.Channels;
+ 
+  Result := BufferplugFL;
+  end
+  else 
+  begin
+  SetLength(bufferin, inputData.outframes);
+  Result := bufferin; 
+end;
+end;
+
+
 {$endif}
 
 {$IF DEFINED(bs2b)}
@@ -2806,6 +2922,7 @@ function Tuos_Player.AddPlugin(PlugName: PChar; SampleRate: cint32;
   // Result is PluginIndex
 var
   x: cint32;
+  chan, sr : integer;
 begin
 x := -1 ;
  {$IF DEFINED(soundtouch)}
@@ -2825,6 +2942,7 @@ x := -1 ;
   Plugin[x].param7 := -1;
   Plugin[x].param8 := -1;
   Plugin[x].PlugHandle := soundtouch_createInstance();
+  // Plugin[x].PlugHandle2 := bpm_createInstance();
   if SampleRate = -1 then
   soundtouch_setSampleRate(Plugin[x].PlugHandle, 44100)
   else
@@ -2837,6 +2955,36 @@ x := -1 ;
   soundtouch_setTempo(Plugin[x].PlugHandle, 1);
   soundtouch_clear(Plugin[x].PlugHandle);
   Plugin[x].PlugFunc := @soundtouchplug;
+  end;
+  
+   if lowercase(PlugName) = 'getbpm' then
+  begin // 
+  SetLength(Plugin, Length(Plugin) + 1);
+  x := Length(Plugin) - 1;
+  Plugin[x] := Tuos_Plugin.Create();
+  Plugin[x].Enabled := false;
+  Plugin[x].Name := lowercase(PlugName);
+  Plugin[x].param1 := -1;
+  Plugin[x].param2 := -1;
+  Plugin[x].param3 := -1;
+  Plugin[x].param4 := -1;
+  Plugin[x].param5 := -1;
+  Plugin[x].param6 := -1;
+  Plugin[x].param7 := -1;
+  Plugin[x].param8 := -1;
+  
+   if SampleRate = -1 then
+  sr := 44100
+  else
+  sr := SampleRate;
+  if Channels = -1 then
+  chan := 2
+  else
+  chan := Channels;
+  
+  Plugin[x].PlugHandle := bpm_createInstance(chan,sr);
+  
+  Plugin[x].PlugFunc := @getbpmplug;
   end;
   {$endif}
   
@@ -2873,6 +3021,16 @@ x := -1 ;
 
 {$IF DEFINED(soundtouch)}
 procedure Tuos_Player.SetPluginSoundTouch(PluginIndex: cint32;
+  Tempo: cfloat; Pitch: cfloat; Enable: boolean);
+begin
+  soundtouch_setRate(Plugin[PluginIndex].PlugHandle, Pitch);
+  soundtouch_setTempo(Plugin[PluginIndex].PlugHandle, Tempo);
+  Plugin[PluginIndex].Enabled := Enable;
+  Plugin[PluginIndex].param1 := Tempo;
+  Plugin[PluginIndex].param2 := Pitch;
+end;
+
+procedure Tuos_Player.SetPluginGetBPM(PluginIndex: cint32;
   Tempo: cfloat; Pitch: cfloat; Enable: boolean);
 begin
   soundtouch_setRate(Plugin[PluginIndex].PlugHandle, Pitch);
@@ -6623,6 +6781,11 @@ begin
    begin
    soundtouch_clear(Plugin[x].PlugHandle);
    soundtouch_destroyInstance(Plugin[x].PlugHandle);
+   end;
+   
+   if Plugin[x].Name = 'getbpm' then
+   begin
+   bpm_destroyInstance(Plugin[x].PlugHandle);
    end;
    {$endif}
 

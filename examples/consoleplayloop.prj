@@ -913,7 +913,7 @@ findoptions=1
 editpos=5
  0,-1073741823
  0,-1073741823
- 0,133
+ 0,12
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -924,7 +924,7 @@ bookmarks4=0
 sourcefiles=5
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/consoleplayloop.pas
+ /home/fred/uos/examples/consoleplayloop.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
 relpaths=5
@@ -1034,7 +1034,7 @@ windowlayout=560
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1386,7 +1386,7 @@ windowlayout=560
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1428,8 +1428,8 @@ windowlayout=560
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1113
+ ncy=53
  x=0
  y=0
  cx=1113
@@ -1467,7 +1467,7 @@ windowlayout=560
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=componentpalettefo
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0

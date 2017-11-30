@@ -993,26 +993,31 @@ findhistory=20
  addfromu
  mpg123_feature
 findoptions=1
-editpos=4
- 58,5625
+editpos=5
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 22,14
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
- /home/fred/uos/examples/uos.pas
+bookmarks4=0
+sourcefiles=5
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_flat.pas
-relpaths=4
+ /home/fred/uos/examples/uos_httpgetthread.pas
+relpaths=5
  uos.pas
  uos_mpg123.pas
  define.inc
  uos_flat.pas
-ismoduletexts=4
+ uos_httpgetthread.pas
+ismoduletexts=5
+ 0
  0
  0
  0
@@ -1022,8 +1027,14 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=5
+ 0
+ 4
+ 1
+ 2
+ 3
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=541
  [mainfo.basedock]
@@ -1505,7 +1516,7 @@ windowlayout=541
  rcx=0
  rcy=0
  [debuggerfo.project_options]
- value=2
+ value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1513,7 +1524,7 @@ windowlayout=541
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/uos_httpgetthread.pas
  history=0
  [sourcefo]
  splitdir=0

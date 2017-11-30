@@ -62,15 +62,15 @@ var
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     ST_FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
     MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
-     SoundFilename := ordir + 'sound/test.mp3';
+    SoundFilename := ordir + 'sound/test.mp3';
    {$ENDIF}
    
   {$if defined(cpu86) and defined(linux)}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-    
-   ST_FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
-   SoundFilename := ordir + 'sound/test.mp3';
+    MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+    ST_FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
+    SoundFilename := ordir + 'sound/test.mp3';
  {$ENDIF}
  
   {$if defined(linux) and defined(cpuarm)}

@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consolebpmdetect.prj
-findinfiledialog=42
+findinfiledialog=45
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,29 +29,32 @@ findinfiledialog=42
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=1
+ value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
- value="*.pas" "*.pp" "*.inc"
- history=1
+ value="*.pas" "*.pp" "*.inc" "*.*"
+ history=2
+  "*.pas" "*.pp" "*.inc" "*.*"
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/uos/examples/
- filecolwidth=0
+  /home/fred/soundtouch-trunk/
+ filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
- filefilterindex=0
- filefilter=
+ filehistory=1
+  /home/fred/soundtouch-trunk/
+ filefilterindex=-1
+ filefilter=*.*
  [findinfileadialogfo.findtext]
- value=StreamIn[x].Data.SampleRate =
- history=4
+ value=putSamples
+ history=5
+  putSamples
   StreamIn[x].Data.SampleRate =
   TMemoryStream
   samplerate
@@ -60,8 +63,8 @@ findinfiledialog=42
  stackedunder=
  x=386
  y=189
- cx=339
- cy=251
+ cx=343
+ cy=266
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -208,7 +211,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -509,12 +512,12 @@ modulefiles=1
  /home/fred/ideu/src/guitemplates.mfm
 befcommandon=0
 makeoptionson=8
- 0
+ 8
  63
  63
  63
- 3
- 42
+ 11
+ 46
  60
  63
 compilerusedon=29
@@ -548,12 +551,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 4082
+ 4090
  0
  0
  0
  0
- 13
+ 5
 exeusedon=14
  4095
  0
@@ -810,8 +813,8 @@ path=5
  /home/fred/uos/examples/uos_libsndfile.pas
  /home/fred/uos/examples/uos_flat.pas
 line=5
- 5760
- 5076
+ 5918
+ 5234
  410
  41
  1751
@@ -896,8 +899,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=stream2buf
+finddtext=SetPluginSoundTouch
 findhistory=20
+ SetPluginSoundTouch
+ bpm_createInstance
+ PlugHandle
+ plugin
  stream2buf
  streamtobuf
  File2Buffer
@@ -914,21 +921,12 @@ findhistory=20
  getbpm
  getstatus
  filetobuf
- Filetobuffe
- createInstance
- file2buff
- samplerate
 findoptions=1
-editpos=11
- 0,-1073741823
- 0,128
+editpos=6
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1746
- 0,-1073741823
- 0,723
- 0,-1073741823
+ 11,65
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -937,41 +935,21 @@ bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-sourcefiles=11
+sourcefiles=6
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consolebpmdetect.pas
- ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/uos_shout.pas
+ /home/fred/uos/examples/consolebpmdetect.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/consolebpmdetect.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
-relpaths=11
+relpaths=6
  uos.pas
  consolebpmdetect.pas
- uos_flat.pas
  uos_soundtouch.pas
- uos_shout.pas
+ consolebpmdetect.pas
  uos.pas
  uos_flat.pas
- uos_flat.pas
- consolebpmdetect.pas
- uos_flat.pas
- uos_flat.pas
-ismoduletexts=11
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=6
  0
  0
  0
@@ -987,22 +965,17 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=11
+order=6
  0
- 4
  1
- 5
- 7
- 10
  2
+ 4
  3
- 8
- 9
- 6
+ 5
 firsttab=2
-index=2
+index=4
 [layout]
-windowlayout=560
+windowlayout=610
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1015,8 +988,8 @@ windowlayout=560
  ncy=0
  x=0
  y=0
- cx=1356
- cy=694
+ cx=1113
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1028,16 +1001,16 @@ windowlayout=560
  ny=0
  ncx=0
  ncy=0
- x=124
+ x=125
  y=46
  cx=1123
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1113,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1151,7 +1124,7 @@ windowlayout=560
  x=0
  y=0
  cx=205
- cy=523
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1161,8 +1134,8 @@ windowlayout=560
  width1=82
  sortdescend1=0
  sorted=0
- col=1
- row=0
+ col=0
+ row=3
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1201,14 +1174,14 @@ windowlayout=560
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1217,7 +1190,7 @@ windowlayout=560
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1360,9 +1333,9 @@ windowlayout=560
  ncx=0
  ncy=0
  x=0
- y=588
- cx=1356
- cy=106
+ y=512
+ cx=1113
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1461,8 +1434,8 @@ windowlayout=560
  ncy=0
  x=0
  y=0
- cx=1356
- cy=59
+ cx=1113
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1477,12 +1450,12 @@ windowlayout=560
  ncy=53
  x=0
  y=0
- cx=1356
- cy=61
+ cx=1113
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.project_options]
- value=1
+ value=2
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1491,7 +1464,57 @@ windowlayout=560
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consolebpmdetect.pas
- history=0
+ history=50
+  /home/fred/strumpract/src/songplayer2.pas
+  /home/fred/strumpract/src/drums.pas
+  /home/fred/uos/examples/consolebpmdetect.pas
+  /home/fred/strumpract/src/infos.pas
+  /home/fred/uos/examples/uos.pas
+  /home/fred/uos/src/uos_soundtouch.pas
+  /home/fred/uos/examples/uos_soundtouch.pas
+  /home/fred/strumpract/src/uos.pas
+  /home/fred/uos/examples/consoleplaymemorybuffer.pas
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/strumpract/src/main.pas
+  /home/fred/strumpract/src/filelistform.pas
+  /home/fred/strumpract/src/songplayer.pas
+  /home/fred/strumpract/src/commander.pas
+  /home/fred/ideu/src/dialogfiles.pas
+  /home/fred/ideu/src/confmsegui.pas
+  /home/fred/ideu/src/conffpgui.pas
+  /home/fred/ideu/src/confdebugger.pas
+  /home/fred/ideu/src/confcompiler.pas
+  /home/fred/ideu/src/confideu.pas
+  /home/fred/ideu/src/aboutform.pas
+  /home/fred/ideu_15_7_17/src/msedesigner.pas
+  /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
+  /home/fred/ideu/src/msedesigner.pas
+  /home/fred/strumpract/src/define.inc
+  /home/fred/strumpract/src/config.pas
+  /home/fred/strumpract/src/recorder.pas
+  /home/fred/strumpract/src/uos_soundtouch.pas
+  /home/fred/strumpract/src/uos_portaudio.pas
+  /home/fred/strumpract/src/msefiledialog.pas
+  /home/fred/uos/examples/simplerecorder_fpGUI.pas
+  /home/fred/uos/examples/mainmse_sp.pas
+  /home/fred/uos/examples/main_sd.pas
+  /home/fred/uos/examples/consoleplaymemorystream.pas
+  /home/fred/uos/examples/consoleplay.pas
+  /home/fred/uos/examples/filterplayer_fpGUI.pas
+  /home/fred/strumpract/src/dialogfiles.pas
+  /home/fred/strumpract/src/aboutform.pas
+  /home/fred/uos/examples/deviceinfos_fpGUI.pas
+  /home/fred/strumpract/src/strumpract.pas
+  /home/fred/uos/examples/main_sp.pas
+  /home/fred/ideu/src/msefiledialog.pas
+  /home/fred/test_mse_muti/grid/main.mfm
+  /home/fred/test_mse_muti/grid/main.pas
+  /home/fred/sak/sak/sak_mse/examples/main.pas
+  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/recordfieldedit/main.pas
+  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/recordfieldedit/recordfieldedit.pas
+  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/coloredit/main.pas
+  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/db/gridcolorlines/main.pas
+  /home/fred/strumpract/src/guitars.pas
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1504,8 +1527,8 @@ windowlayout=560
  ncy=0
  x=208
  y=0
- cx=1148
- cy=523
+ cx=905
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1539,9 +1562,9 @@ windowlayout=560
  ncx=0
  ncy=0
  x=0
- y=62
- cx=1356
- cy=523
+ y=54
+ cx=1113
+ cy=455
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
