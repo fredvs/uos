@@ -117,7 +117,7 @@ type
 var
   PlayerIndex1: integer;
   ordir, opath: string;
-  OutputIndex1, InputIndex1, DSPIndex1, DSPIndex2, PluginIndex1, PluginIndex2: integer;
+  OutputIndex1, InputIndex1, DSPIndex1, DSPIndex2, PluginIndex1, PluginIndex2, PluginIndex3: integer;
   plugsoundtouch : boolean = false;
   plugbs2b : boolean = false;
   
@@ -231,6 +231,7 @@ var
     vuRight.top := 96 - vuRight.Height;
     vuright.UpdateWindowPosition;
     vuLeft.UpdateWindowPosition;
+    writeln('BPM ' + floattostr(uos_InputGetBPM(PlayerIndex1, InputIndex1)));
   end;
 
   procedure TSimpleplayer.btnCloseClick(Sender: TObject);
@@ -576,13 +577,18 @@ loadok : boolean = false;
   uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1 , -1, -1, chkst2b.checked);
   end; 
   
-  /// add SoundTouch plugin with samplerate of input1 / default channels (2 = stereo)
-  /// SoundTouch plugin should be the last added.
-    if plugsoundtouch = true then
+   if plugsoundtouch = true then
   begin
+ PluginIndex3 := uos_AddPlugin(PlayerIndex1, 'getbpm', 
+  uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
+  uos_SetPluginGetBPM(PlayerIndex1, PluginIndex3, 20, true, checkbox2.Checked);
+  
+   /// add SoundTouch plugin with samplerate of input1 / default channels (2 = stereo)
+  /// SoundTouch plugin should be the last added.
    PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', 
    uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
    ChangePlugSetSoundTouch(self); //// custom procedure to Change plugin settings
+
    end;    
          
    trackbar1.Max := uos_InputLength(PlayerIndex1, InputIndex1);

@@ -586,6 +586,13 @@ procedure uos_SetPluginSoundTouch(PlayerIndex: cint32; PluginIndex: cint32; Temp
   Pitch: cfloat; Enable: boolean);
   // PluginIndex : PluginIndex Index of a existing Plugin.
   // PlayerIndex : Index of a existing Player
+  
+procedure uos_SetPluginGetBPM(PlayerIndex: cint32; PluginIndex: cint32; numofframes: integer; loop : boolean;
+   Enable: boolean);
+  // PluginIndex : PluginIndex Index of a existing Plugin.  
+  // numofframes: number of frames to analyse (-1 = 512 x frames)
+  // loop: do new detection after previous.  
+  
 {$endif}
 
 {$IF DEFINED(bs2b)}
@@ -660,6 +667,12 @@ function uos_InputGetLevelLeft(PlayerIndex: cint32; InputIndex: cint32): double;
 function uos_InputGetLevelRight(PlayerIndex: cint32; InputIndex: cint32): double;
   // InputIndex : InputIndex of existing input
   // result : right level(volume) from 0 to 1
+  
+{$IF DEFINED(soundtouch)}
+function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): float;
+  // InputIndex : InputIndex of existing input
+  // result : Beats per minuts
+{$endif}     
 
 function uos_InputPositionSeconds(PlayerIndex: cint32; InputIndex: cint32): float;
   // InputIndex : InputIndex of existing input
@@ -1493,6 +1506,16 @@ begin
   if assigned(uosPlayers[PlayerIndex]) then
    uosPlayers[PlayerIndex].SetPluginSoundTouch(PluginIndex, Tempo, Pitch, Enable);
 end;
+
+procedure uos_SetPluginGetBPM(PlayerIndex: cint32; PluginIndex: cint32; numofframes: integer; loop : boolean;
+   Enable: boolean);
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
+   uosPlayers[PlayerIndex].SetPluginGetBPM(PluginIndex, numofframes, loop, Enable);
+end;
+
 {$endif}
 
 {$IF DEFINED(bs2b)}
@@ -1706,6 +1729,19 @@ begin
   if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputGetLevelRight(InputIndex) ;
 end;
+
+{$IF DEFINED(soundtouch)}
+function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): float;
+  // InputIndex : InputIndex of existing input
+  // result : Beats per minuts
+begin
+  result := 0;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
+ result := uosPlayers[PlayerIndex].InputGetBPM(InputIndex) ;
+end;  
+{$endif}
 
 function uos_InputPositionSeconds(PlayerIndex: cint32; InputIndex: cint32): float;
   // InputIndex : InputIndex of existing input

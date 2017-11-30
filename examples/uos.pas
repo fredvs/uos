@@ -261,7 +261,7 @@ type
   M4_FileName : PChar; // Mp4ff
   OF_FileName : PChar; // opusfile
 
-  Plug_ST_FileName: pchar; // Plugin SoundTouch
+  Plug_ST_FileName: pchar; // Plugin SoundTouch + GetBMP
   Plug_BS_FileName: pchar; // Plugin bs2b
 
 {$IF DEFINED(portaudio)}
@@ -441,7 +441,7 @@ type
   TProcOnly = procedure;
 
   {$IF DEFINED(bs2b) or  DEFINED(soundtouch)}
-  TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; Abs2bd : Tt_bs2bdp; inputData: Tuos_Data;
+  TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; Abs2bd : Tt_bs2bdp; var inputData: Tuos_Data;
   param1: float; param2: float; param3: float; param4: float;
   param5: float; param6: float;  param7: float; param8: float): TDArFloat;
   {$endif}
@@ -841,16 +841,18 @@ function AddPlugin(PlugName: Pchar; SampleRate: cint32;
   // Add a plugin , result is PluginIndex
   // SampleRate : delault : -1 (44100)
   // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
-  // 'soundtouch' and 'bs2b' PlugName are registred.
+  // 'soundtouch' 'getbpm' and 'bs2b' PlugName are registred.
 
 {$IF DEFINED(soundtouch)}
 procedure SetPluginSoundTouch(PluginIndex: cint32; Tempo: cfloat;
   Pitch: cfloat; Enable: boolean);
   // PluginIndex : PluginIndex Index of a existing Plugin.
   
-procedure SetPluginGetBPM(PluginIndex: cint32; Tempo: cfloat;
-  Pitch: cfloat; Enable: boolean);
+procedure SetPluginGetBPM(PluginIndex: cint32; numofframes: integer; loop : boolean;
+   Enable: boolean);
   // PluginIndex : PluginIndex Index of a existing Plugin.  
+  // numofframes: number of frames to analyse (-1 = 512 x frames)
+  // loop: do new detection after previous.
 {$endif}
   
 {$IF DEFINED(bs2b)}
@@ -918,6 +920,12 @@ function InputGetLevelLeft(InputIndex: cint32): double;
 function InputGetLevelRight(InputIndex: cint32): double;
   // InputIndex : InputIndex of existing input
   // result : right level from 0 to 1
+
+{$IF DEFINED(soundtouch)}
+function InputGetBPM(InputIndex: cint32): float;
+  // InputIndex : InputIndex of existing input
+  // result : left level from 0 to 1
+{$endif}   
 
 function InputPositionSeconds(InputIndex: cint32): float;
   // InputIndex : InputIndex of existing input
@@ -1215,6 +1223,7 @@ const
 
 var
   theinc : integer = 0;
+  theincbpm : integer = 0;
   tempload : boolean = false;
   tempSamplerate, tempSampleFormat, tempchan, tempratio, tempLibOpen, tempLength : cint32; 
   tempoutmemory: TDArFloat;
@@ -2067,6 +2076,16 @@ Result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelRight;
 end;
 
+{$IF DEFINED(soundtouch)}
+function Tuos_Player.InputGetBPM(InputIndex: cint32): float;
+  // InputIndex : InputIndex of existing input
+  // result : Beat per minuts
+  begin
+Result := 0;
+  if (isAssigned = True) then Result := StreamIn[InputIndex].Data.BPM;
+end;
+{$endif}   
+
 function Tuos_Player.InputPositionSeconds(InputIndex: cint32): float;
 begin
 Result := 0;
@@ -2653,7 +2672,7 @@ end;
 end;
 
 {$IF DEFINED(soundtouch)}
-function SoundTouchPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; inputData: Tuos_Data;
+function SoundTouchPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; var inputData: Tuos_Data;
   notused1: float; notused2: float; notused3: float;  notused4: float;
   notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
@@ -2762,14 +2781,11 @@ var
 end;
 end;
 
-function GetBPMPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; inputData: Tuos_Data;
-  notused1: float; notused2: float; notused3: float;  notused4: float;
+function GetBPMPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; var inputData: Tuos_Data;
+  numframes: float; loop: float; notused3: float;  notused4: float;
   notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
  ratio : integer;
- numoutbuf, x1, x2: cint32;
-  BufferplugFLTMP: TDArFloat;
-  BufferplugFL: TDArFloat;
  begin
  
  case inputData.LibOpen of
@@ -2788,85 +2804,24 @@ var
   
   if inputData.LibOpen <> 4 then //not working yet for opus files
   begin
-  {$IF DEFINED(debug)}
-  writeln(); 
-  writeln('_____Begin Sound touch_____'); 
-  writeln('soundtouch_putSamples: Length(bufferin)  = ' + inttostr(length(bufferin))); 
-  writeln('outframes  = ' + inttostr(inputData.outframes)+
-  ' ratio  = ' + inttostr(ratio)+' channels  = ' + inttostr(inputData.Channels)); 
-  {$endif}
-  
-  if inputData.outframes > 0 then
-  begin 
-  soundtouch_putSamples(plugHandle, pcfloat(bufferin),
-  inputData.outframes div cint(inputData.Channels * ratio));
-  
-  {$IF DEFINED(debug)}
-  writeln('inputData.outframes div trunc(inputData.Channels * ratio) = '
-  + inttostr(inputData.outframes div inputData.Channels * ratio)); 
-  {$endif}
-  
-  SetLength(BufferplugFL, 0);
-  SetLength(BufferplugFLTMP, 0);
-  
-  {$IF DEFINED(debug)}
-  writeln('Length(BufferplugFL) = '
-  + inttostr(Length(BufferplugFL))); 
-   writeln('Length(Bufferin) = '
-  + inttostr(Length(Bufferin))); 
-   writeln('Length(BufferplugFLTMP) = '
-  + inttostr(Length(BufferplugFLTMP))); 
-  {$endif} 
-
-  SetLength(BufferplugFLTMP,(Length(Bufferin)));
-  
-  {$IF DEFINED(debug)}
-  writeln('2_Length(BufferplugFLTMP) = '
-  + inttostr(Length(BufferplugFLTMP))); 
-  {$endif} 
-  
-  numoutbuf := 1;
-  
-  while numoutbuf > 0 do
+  // writeln('getBPM init ');
+  if (theincbpm < numframes) and (theincbpm > -1) then  
   begin
-  
-  numoutbuf := soundtouch_receiveSamples(PlugHandle,
-  pcfloat(BufferplugFLTMP), inputData.outframes); 
-  
-  {$IF DEFINED(debug)}
-  writeln('numoutbuf = '  + inttostr(numoutbuf)); 
-  {$endif}
-  
-  if numoutbuf > 0 then begin
-  {$IF DEFINED(debug)}
-  writeln('SetLength(BufferplugFL) = '  + inttostr(length(BufferplugFL) + trunc(numoutbuf * inputData.Channels))); 
-  {$endif}
-  
-  //  SetLength(BufferplugFL, length(BufferplugFL) + trunc(numoutbuf * inputData.Channels));
-  SetLength(BufferplugFL, length(BufferplugFL) + trunc(numoutbuf * 2));
-  
-  x2 := Length(BufferplugFL) - (numoutbuf * inputData.Channels);
-
-  for x1 := 0 to trunc(numoutbuf * inputData.Channels) -1 do
+  bpm_putSamples(plugHandle,  pcfloat(bufferin),  length(bufferin) div inputData.channels);
+   end else
   begin
-  BufferplugFL[x1 + x2] := BufferplugFLTMP[x1];
-  end;
-  end;
+  if theincbpm > -1 then
+  begin
+   inputData.BPM := bpm_getBpm(plugHandle); 
+ //  writeln('inputData.BPM := ' + floattostr(inputData.BPM));
+   if loop = 1 then theincbpm := 0 else theincbpm := -1;
+  
   end;
   end;
   
-  {$IF DEFINED(debug)}
-  writeln('inputData.outframes = Length(BufferplugFL) = ' + inttostr(inputData.outframes)); 
-  writeln('_____End Sound touch_____'); 
-  {$endif}
+  if theincbpm > -1 then inc(theincbpm);
  
-  inputData.outframes := Length(BufferplugFL) div inputData.Channels;
- 
-  Result := BufferplugFL;
-  end
-  else 
-  begin
-  SetLength(bufferin, inputData.outframes);
+ SetLength(bufferin, inputData.outframes div ratio);
   Result := bufferin; 
 end;
 end;
@@ -2875,7 +2830,7 @@ end;
 {$endif}
 
 {$IF DEFINED(bs2b)}
-function bs2bPlug(bufferin: TDArFloat; notneeded: THandle; Abs2bd : Tt_bs2bdp; inputData: Tuos_Data;
+function bs2bPlug(bufferin: TDArFloat; notneeded: THandle; Abs2bd : Tt_bs2bdp; var inputData: Tuos_Data;
  notused1: float; notused2: float; notused3: float;  notused4: float;
   notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
@@ -2937,7 +2892,6 @@ x := -1 ;
   Plugin[x].param7 := -1;
   Plugin[x].param8 := -1;
   Plugin[x].PlugHandle := soundtouch_createInstance();
-  // Plugin[x].PlugHandle2 := bpm_createInstance();
   if SampleRate = -1 then
   soundtouch_setSampleRate(Plugin[x].PlugHandle, 44100)
   else
@@ -2957,7 +2911,7 @@ x := -1 ;
   SetLength(Plugin, Length(Plugin) + 1);
   x := Length(Plugin) - 1;
   Plugin[x] := Tuos_Plugin.Create();
-  Plugin[x].Enabled := false;
+  Plugin[x].Enabled := true;
   Plugin[x].Name := lowercase(PlugName);
   Plugin[x].param1 := -1;
   Plugin[x].param2 := -1;
@@ -3025,14 +2979,19 @@ begin
   Plugin[PluginIndex].param2 := Pitch;
 end;
 
-procedure Tuos_Player.SetPluginGetBPM(PluginIndex: cint32;
-  Tempo: cfloat; Pitch: cfloat; Enable: boolean);
+procedure Tuos_Player.SetPluginGetBPM(PluginIndex: cint32; numofframes: integer; loop : boolean;
+   Enable: boolean);
+  // PluginIndex : PluginIndex Index of a existing Plugin.  
+  // numofframes: number of frames to analyse (-1 = 512 frames)
+  // loop: do new detection after previous.
 begin
-  soundtouch_setRate(Plugin[PluginIndex].PlugHandle, Pitch);
-  soundtouch_setTempo(Plugin[PluginIndex].PlugHandle, Tempo);
+
   Plugin[PluginIndex].Enabled := Enable;
-  Plugin[PluginIndex].param1 := Tempo;
-  Plugin[PluginIndex].param2 := Pitch;
+  
+  Plugin[PluginIndex].param1 := numofframes;
+  
+  if (loop = true) then
+  Plugin[PluginIndex].param2 := 1 else Plugin[PluginIndex].param2 := 0; ;
 end;
 {$endif}
 
@@ -8339,7 +8298,7 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
   begin
  Result := -1; 
   {$IF DEFINED(soundtouch)}
-  if (lowercase(PluginName) = 'soundtouch') and (PluginFileName <> nil) and (PluginFileName <>  '')  then
+  if ((lowercase(PluginName) = 'soundtouch') or (lowercase(PluginName) = 'getbpm')) and (PluginFileName <> nil) and (PluginFileName <>  '')  then
   begin
   if PluginFileName =  'system' then PluginFileName :=  '' ;
   if ST_Load(PluginFileName) then
