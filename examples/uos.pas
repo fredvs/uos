@@ -1656,8 +1656,8 @@ function Streamtobuffer(AudioFile:TMemoryStream; OutputIndex: cint32;SampleForma
   // example : InputIndex1 := Filetobuffer(edit5.Text,-1,0,-1, buffmem, buffinfos, -1);
   var theplayer : Tuos_Player;
       in1, maxsleep : cint32;
-      pollo : TDArFloat;
-begin
+     
+     begin
    theplayer := Tuos_Player.Create();
    {$IF DEFINED(debug)}
    writeln('begin Filetobuffer');
@@ -1671,14 +1671,9 @@ begin
       writeln('in1 = ' + inttostr(in1));
       writeln('theplayer.InputLength(In1) = ' + inttostr(theplayer.InputLength(In1)));
       {$endif}
-      //theplayer.InputSetArrayLevelEnable(In1, 1);
+     
       SetLength(outmemory, 0);
-      //if numbuf = -1 then
-      //   setlength(outmemory, theplayer.StreamIn[in1].Data.Length)
-      //else  setlength(outmemory, FramesCount * numbuf * theplayer.StreamIn[in1].Data.Channels);
-
-      //   writeln('length(outmemory) = ' + inttostr(length(outmemory)));
-
+    
       tempchan := theplayer.StreamIn[in1].Data.Channels;
       tempratio := theplayer.StreamIn[in1].Data.ratio;
       tempSampleFormat := theplayer.StreamIn[in1].Data.SampleFormat;

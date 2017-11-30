@@ -1931,7 +1931,7 @@ function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32)
   // From SoundTouch plugin  
 begin
   ifflat := true;
-  uos.uos_GetBPM(TheBuffer, Channels, SampleRate);
+  result := uos.uos_GetBPM(TheBuffer, Channels, SampleRate);
   end;  
   
 procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32 ; typeout: cint32 );
