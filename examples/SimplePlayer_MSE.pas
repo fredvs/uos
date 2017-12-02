@@ -64,6 +64,7 @@ begin
    mainfo.padir.value := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
     mainfo.sfdir.value := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
     mainfo.mpdir.value := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
+    mainfo.stdir.value := ordir + 'lib/Linux/arm_raspberrypi/plugin/soundtouch-arm.so';
     mainfo.songdir.value := ordir + 'sound/test.ogg';
    {$ENDIF}    
 

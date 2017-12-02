@@ -260,6 +260,7 @@ begin
   Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit2.Text := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
   Edit3.Text := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
+  Edit5.Text := ordir + 'lib/Linux/arm_raspberrypi/plugin/libsoundtouch-32.so';
   Edit4.Text := ordir + 'sound/test.ogg';
   {$ENDIF}
 

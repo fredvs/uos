@@ -47,13 +47,16 @@ var
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     SF_FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
     MP_FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
-    ST_FileName := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
+  //  ST_FileName := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
      {$else}
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     SF_FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
-    ST_FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
-    MP_FileName := 
+  //  ST_FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
+    MP_FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
      {$endif}
+     
+     // new soundtouch.dll not yet compiled for Windows
+    SF_FileName := ''; 
     SoundFilename := ordir + 'sound\test.mp3';
  {$ENDIF}
 
@@ -75,7 +78,9 @@ var
  
   {$if defined(linux) and defined(cpuarm)}
     PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
-    SF_FileName := ordir + ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+    SF_FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+    MP_FileName := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
+    ST_FileName := ordir + 'lib/Linux/arm_raspberrypi/plugin/libsoundtouch-arm.so';
       SoundFilename := ordir + 'sound/test.mp3';
  {$ENDIF}
 
@@ -83,10 +88,14 @@ var
     {$if defined(cpu64)}
     PA_FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
     SF_FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    ST_FileName := ordir + 'lib/FreeBSD/64bit/plugin/LibSoundTouch-64.so';
+    MP_FileName := ordir + 'lib/FreeBSD/64bit/LibMpg123-64.so';
     ST_FileName := '' ;
     {$else}
     PA_FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     SF_FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
+    ST_FileName := ordir + 'lib/FreeBSD/32bit/plugin/LibSoundTouch-32.so';
+    MP_FileName := ordir + 'lib/FreeBSD/32bit/LibMpg123-32.so';
     ST_FileName := '';
     {$endif}
     SoundFilename := ordir + 'sound/test.mp3';
@@ -97,6 +106,7 @@ var
     opath := copy(opath, 1, Pos('/UOS', opath) - 1);
     PA_FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     SF_FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
+    MP_FileName := opath + '/lib/Mac/32bit/LibMpg123.dylib';
     ST_FileName := := opath + '/lib/Mac/32bit/plugin/libSoundTouch-32.dylib';
     SoundFilename := opath + '/sound/test.mp3';
  {$ENDIF}

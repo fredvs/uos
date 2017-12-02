@@ -883,14 +883,19 @@ findhistory=11
  trackbar1
  sleep(80
 findoptions=1
-editpos=1
+editpos=2
  0,0
+ 85,66
 bookmarks0=0
-sourcefiles=1
+bookmarks1=0
+sourcefiles=2
  ${PROJECTDIR}/mainmse_sp.pas
-relpaths=1
+ ${PROJECTDIR}/SimplePlayer_MSE.pas
+relpaths=2
  mainmse_sp.pas
-ismoduletexts=1
+ SimplePlayer_MSE.pas
+ismoduletexts=2
+ 0
  0
 modules=1
  /home/fred/uos/examples/mainmse_sp.mfm
@@ -902,9 +907,9 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=1
 [layout]
-windowlayout=552
+windowlayout=602
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -917,7 +922,7 @@ windowlayout=552
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1145
  cy=604
  rcx=0
  rcy=0
@@ -932,12 +937,12 @@ windowlayout=552
  ncy=0
  x=125
  y=46
- cx=1123
+ cx=1155
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,604
+  basedock,0,0,1145,604
  focusedchild=0
  wsize=0
  active=1
@@ -981,7 +986,7 @@ windowlayout=552
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1027,7 +1032,7 @@ windowlayout=552
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1145,7 +1150,7 @@ windowlayout=552
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1255,7 +1260,7 @@ windowlayout=552
  ncy=0
  x=0
  y=512
- cx=1113
+ cx=1145
  cy=92
  rcx=0
  rcy=0
@@ -1325,7 +1330,7 @@ windowlayout=552
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1355,7 +1360,7 @@ windowlayout=552
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1145
  cy=51
  rcx=0
  rcy=0
@@ -1371,12 +1376,10 @@ windowlayout=552
  ncy=52
  x=0
  y=0
- cx=1113
- cy=53
+ cx=1145
+ cy=54
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1384,8 +1387,60 @@ windowlayout=552
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/mainmse_sp.pas
- history=0
+ value=/home/fred/uos/examples/SimplePlayer_MSE.pas
+ history=50
+  /home/fred/uos/examples/consolebpmdetect.pas
+  /home/fred/strumpract/src/songplayer2.pas
+  /home/fred/strumpract/src/drums.pas
+  /home/fred/strumpract/src/infos.pas
+  /home/fred/uos/examples/uos.pas
+  /home/fred/uos/src/uos_soundtouch.pas
+  /home/fred/uos/examples/uos_soundtouch.pas
+  /home/fred/strumpract/src/uos.pas
+  /home/fred/uos/examples/consoleplaymemorybuffer.pas
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/strumpract/src/main.pas
+  /home/fred/strumpract/src/filelistform.pas
+  /home/fred/strumpract/src/songplayer.pas
+  /home/fred/strumpract/src/commander.pas
+  /home/fred/ideu/src/dialogfiles.pas
+  /home/fred/ideu/src/confmsegui.pas
+  /home/fred/ideu/src/conffpgui.pas
+  /home/fred/ideu/src/confdebugger.pas
+  /home/fred/ideu/src/confcompiler.pas
+  /home/fred/ideu/src/confideu.pas
+  /home/fred/ideu/src/aboutform.pas
+  /home/fred/ideu_15_7_17/src/msedesigner.pas
+  /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
+  /home/fred/ideu/src/msedesigner.pas
+  /home/fred/strumpract/src/define.inc
+  /home/fred/strumpract/src/config.pas
+  /home/fred/strumpract/src/recorder.pas
+  /home/fred/strumpract/src/uos_soundtouch.pas
+  /home/fred/strumpract/src/uos_portaudio.pas
+  /home/fred/strumpract/src/msefiledialog.pas
+  /home/fred/uos/examples/simplerecorder_fpGUI.pas
+  /home/fred/uos/examples/mainmse_sp.pas
+  /home/fred/uos/examples/main_sd.pas
+  /home/fred/uos/examples/consoleplaymemorystream.pas
+  /home/fred/uos/examples/consoleplay.pas
+  /home/fred/uos/examples/filterplayer_fpGUI.pas
+  /home/fred/strumpract/src/dialogfiles.pas
+  /home/fred/strumpract/src/aboutform.pas
+  /home/fred/uos/examples/deviceinfos_fpGUI.pas
+  /home/fred/strumpract/src/strumpract.pas
+  /home/fred/uos/examples/main_sp.pas
+  /home/fred/ideu/src/msefiledialog.pas
+  /home/fred/test_mse_muti/grid/main.mfm
+  /home/fred/test_mse_muti/grid/main.pas
+  /home/fred/sak/sak/sak_mse/examples/main.pas
+  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/recordfieldedit/main.pas
+  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/recordfieldedit/recordfieldedit.pas
+  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/coloredit/main.pas
+  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/db/gridcolorlines/main.pas
+  /home/fred/strumpract/src/guitars.pas
+ [debuggerfo.project_options]
+ value=1
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1398,7 +1453,7 @@ windowlayout=552
  ncy=0
  x=208
  y=0
- cx=905
+ cx=937
  cy=455
  rcx=0
  rcy=0
@@ -1406,7 +1461,7 @@ windowlayout=552
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1434,7 +1489,7 @@ windowlayout=552
  ncy=0
  x=0
  y=54
- cx=1113
+ cx=1145
  cy=455
  rcx=0
  rcy=0

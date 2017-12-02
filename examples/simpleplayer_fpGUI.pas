@@ -231,7 +231,7 @@ var
     vuRight.top := 96 - vuRight.Height;
     vuright.UpdateWindowPosition;
     vuLeft.UpdateWindowPosition;
-    writeln('BPM ' + floattostr(uos_InputGetBPM(PlayerIndex1, InputIndex1)));
+   // writeln('BPM ' + floattostr(uos_InputGetBPM(PlayerIndex1, InputIndex1)));
   end;
 
   procedure TSimpleplayer.btnCloseClick(Sender: TObject);
@@ -579,10 +579,11 @@ loadok : boolean = false;
   
    if plugsoundtouch = true then
   begin
+  {
  PluginIndex3 := uos_AddPlugin(PlayerIndex1, 'getbpm', 
   uos_InputGetSampleRate(PlayerIndex1, InputIndex1) , -1);
   uos_SetPluginGetBPM(PlayerIndex1, PluginIndex3, 20, true, checkbox2.Checked);
-  
+  }
    /// add SoundTouch plugin with samplerate of input1 / default channels (2 = stereo)
   /// SoundTouch plugin should be the last added.
    PlugInIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', 
@@ -1356,6 +1357,7 @@ end;
     FilenameEdit1.FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
+    FilenameEdit3.FileName := ordir + 'lib/Linux/arm_raspberrypi/plugin/soundtouch-arm.so';
     FilenameEdit4.FileName := ordir + 'sound/test.ogg';
    {$ENDIF}
 
