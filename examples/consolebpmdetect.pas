@@ -129,7 +129,7 @@ var
 
  
      // Create a memory buffer from a audio file with 1024 frames.
-    thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebufferinfos, 1024);
+    thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebufferinfos, -1, 1024);
   
     writeln('length(thebuffer) = ' + inttostr(length(thebuffer))); 
     

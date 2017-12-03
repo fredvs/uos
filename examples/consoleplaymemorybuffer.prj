@@ -810,11 +810,11 @@ path=5
  /home/fred/uos/examples/uos_libsndfile.pas
  /home/fred/uos/examples/uos_flat.pas
 line=5
- 5739
- 5055
+ 5754
+ 5070
  406
  41
- 1735
+ 1736
 address=5
  4859606
  4849191
@@ -896,57 +896,62 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=tempoutmemory
+finddtext=FiletoBuffer
 findhistory=20
+ FiletoBuffer
+ uos_file2
+ StreamtoBuffer(
+ uos_stream2Buffer
+ uos_File2Buffer
+ stream2buffer
+ uos_Stream2Buffer(
+ stream2b
+ theplayer.Play(0)
+ File2Buffer
  tempoutmemory
  wantframestemp
  outmemory
- FiletoBuffer
  MemoryBuffer
- File2Buffer
  BufferOut
  filenameedit5
  PlayerNotFree
  PlayersNotFree
  playersnotfree
  create
- doter
- uos_unloadlib()
- play()
- intobuf
- frombuf
- addintomem
- uos_File2Buffer
- AddFromMemoryBuffer
 findoptions=1
-editpos=6
- 0,100
+editpos=7
+ 0,102
+ 0,1182
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,1965
+ 0,1170
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-sourcefiles=6
+bookmarks6=0
+sourcefiles=7
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=6
+ ${PROJECTDIR}/uos.pas
+relpaths=7
  consoleplaymemorybuffer.pas
  uos.pas
  consoleplaymemorybuffer.pas
  consoleplaymemorybuffer.pas
  uos_flat.pas
  uos_flat.pas
-ismoduletexts=6
+ uos.pas
+ismoduletexts=7
+ 0
  0
  0
  0
@@ -962,9 +967,10 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=6
+order=7
  0
  1
+ 6
  5
  4
  3
@@ -985,8 +991,8 @@ windowlayout=610
  ncy=0
  x=0
  y=0
- cx=1113
- cy=604
+ cx=1356
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -1000,14 +1006,14 @@ windowlayout=610
  ncy=0
  x=168
  y=47
- cx=1123
+ cx=1154
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,604
+  basedock,0,0,1356,694
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1121,7 +1127,7 @@ windowlayout=610
  x=0
  y=0
  cx=205
- cy=455
+ cy=523
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1330,9 +1336,9 @@ windowlayout=610
  ncx=0
  ncy=0
  x=0
- y=512
- cx=1113
- cy=92
+ y=588
+ cx=1356
+ cy=106
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1431,8 +1437,8 @@ windowlayout=610
  ncy=0
  x=0
  y=0
- cx=1113
- cy=51
+ cx=1356
+ cy=59
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1447,12 +1453,10 @@ windowlayout=610
  ncy=53
  x=0
  y=0
- cx=1113
- cy=53
+ cx=1356
+ cy=62
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=2
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1462,11 +1466,16 @@ windowlayout=610
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consoleplaymemorybuffer.pas
  history=50
+  /home/fred/uos/examples/SimplePlayer_MSE.pas
+  /home/fred/uos/examples/consolebpmdetect.pas
+  /home/fred/strumpract/src/songplayer2.pas
+  /home/fred/strumpract/src/drums.pas
+  /home/fred/strumpract/src/infos.pas
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/src/uos_soundtouch.pas
   /home/fred/uos/examples/uos_soundtouch.pas
   /home/fred/strumpract/src/uos.pas
   /home/fred/uos/examples/consoleplaymemorybuffer.pas
-  /home/fred/uos/examples/consolebpmdetect.pas
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/strumpract/src/main.pas
   /home/fred/strumpract/src/filelistform.pas
@@ -1479,15 +1488,12 @@ windowlayout=610
   /home/fred/ideu/src/confcompiler.pas
   /home/fred/ideu/src/confideu.pas
   /home/fred/ideu/src/aboutform.pas
-  /home/fred/strumpract/src/songplayer2.pas
   /home/fred/ideu_15_7_17/src/msedesigner.pas
   /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
   /home/fred/ideu/src/msedesigner.pas
   /home/fred/strumpract/src/define.inc
   /home/fred/strumpract/src/config.pas
   /home/fred/strumpract/src/recorder.pas
-  /home/fred/strumpract/src/infos.pas
-  /home/fred/strumpract/src/drums.pas
   /home/fred/strumpract/src/uos_soundtouch.pas
   /home/fred/strumpract/src/uos_portaudio.pas
   /home/fred/strumpract/src/msefiledialog.pas
@@ -1510,8 +1516,8 @@ windowlayout=610
   /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/recordfieldedit/recordfieldedit.pas
   /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/coloredit/main.pas
   /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/db/gridcolorlines/main.pas
-  /home/fred/strumpract/src/guitars.pas
-  /home/fred/uos/examples/waveform_fpGUI.pas
+ [debuggerfo.project_options]
+ value=1
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1524,8 +1530,8 @@ windowlayout=610
  ncy=0
  x=208
  y=0
- cx=905
- cy=455
+ cx=1148
+ cy=523
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1559,9 +1565,9 @@ windowlayout=610
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1113
- cy=455
+ y=62
+ cx=1356
+ cy=523
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
