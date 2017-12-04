@@ -1553,13 +1553,7 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   {$endif}
 
   SetLength(outmemory, 0);
-   //if numbuf = -1 then
-  //setlength(outmemory, theplayer.StreamIn[in1].Data.Length)
-  //else  setlength(outmemory, FramesCount * numbuf * theplayer.StreamIn[in1].Data.Channels);
-  
  
- //   writeln('length(outmemory) = ' + inttostr(length(outmemory)));
-  
   tempchan := theplayer.StreamIn[in1].Data.Channels; 
   tempratio := theplayer.StreamIn[in1].Data.ratio;
   tempSampleFormat := theplayer.StreamIn[in1].Data.SampleFormat; 
@@ -1600,7 +1594,10 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   sleep(100);
  // maxsleep := maxsleep +1 ;
   end;
-   result := outmemory;
+  {$IF DEFINED(mse)}
+  theplayer.destroy; 
+  {$endif}
+  result := outmemory;
  end; 
  
 function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
@@ -1731,6 +1728,9 @@ var outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos; frompos: cint; numb
       sleep(100);
       // maxsleep := maxsleep +1 ;
    end;
+  {$IF DEFINED(mse)}
+  theplayer.destroy; 
+  {$endif}
    result := outmemory;
 end;
 

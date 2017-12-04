@@ -187,7 +187,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -208,7 +208,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -816,11 +816,11 @@ line=5
  41
  1736
 address=5
- 4859606
- 4849191
- 4783757
- 4902829
- 4714902
+ 4858757
+ 4849477
+ 4784269
+ 4906701
+ 4714447
 addbkpt=5
  0
  0
@@ -896,8 +896,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=FiletoBuffer
+finddtext=freeandnil(theplayer
 findhistory=20
+ freeandnil(theplayer
+ theplayer.free
  FiletoBuffer
  uos_file2
  StreamtoBuffer(
@@ -916,17 +918,15 @@ findhistory=20
  filenameedit5
  PlayerNotFree
  PlayersNotFree
- playersnotfree
- create
 findoptions=1
 editpos=7
- 0,102
- 0,1182
+ 0,5
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1965
- 0,1170
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -978,7 +978,7 @@ order=7
 firsttab=0
 index=0
 [layout]
-windowlayout=610
+windowlayout=562
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -991,8 +991,8 @@ windowlayout=610
  ncy=0
  x=0
  y=0
- cx=1356
- cy=694
+ cx=1147
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -1004,16 +1004,16 @@ windowlayout=610
  ny=0
  ncx=0
  ncy=0
- x=168
- y=47
- cx=1154
+ x=125
+ y=46
+ cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1147,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1055,7 +1055,7 @@ windowlayout=610
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1101,7 +1101,7 @@ windowlayout=610
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1127,7 +1127,7 @@ windowlayout=610
  x=0
  y=0
  cx=205
- cy=523
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1137,8 +1137,8 @@ windowlayout=610
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=3
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1336,9 +1336,9 @@ windowlayout=610
  ncx=0
  ncy=0
  x=0
- y=588
- cx=1356
- cy=106
+ y=512
+ cx=1147
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1437,8 +1437,8 @@ windowlayout=610
  ncy=0
  x=0
  y=0
- cx=1356
- cy=59
+ cx=1147
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1449,12 +1449,12 @@ windowlayout=610
  mdistate=0
  nx=0
  ny=0
- ncx=1113
- ncy=53
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1356
- cy=62
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1465,59 +1465,11 @@ windowlayout=610
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consoleplaymemorybuffer.pas
- history=50
-  /home/fred/uos/examples/SimplePlayer_MSE.pas
-  /home/fred/uos/examples/consolebpmdetect.pas
-  /home/fred/strumpract/src/songplayer2.pas
-  /home/fred/strumpract/src/drums.pas
-  /home/fred/strumpract/src/infos.pas
-  /home/fred/uos/examples/uos.pas
-  /home/fred/uos/src/uos_soundtouch.pas
-  /home/fred/uos/examples/uos_soundtouch.pas
-  /home/fred/strumpract/src/uos.pas
-  /home/fred/uos/examples/consoleplaymemorybuffer.pas
-  /home/fred/uos/examples/simpleplayer_fpGUI.pas
-  /home/fred/strumpract/src/main.pas
-  /home/fred/strumpract/src/filelistform.pas
-  /home/fred/strumpract/src/songplayer.pas
-  /home/fred/strumpract/src/commander.pas
-  /home/fred/ideu/src/dialogfiles.pas
-  /home/fred/ideu/src/confmsegui.pas
-  /home/fred/ideu/src/conffpgui.pas
-  /home/fred/ideu/src/confdebugger.pas
-  /home/fred/ideu/src/confcompiler.pas
-  /home/fred/ideu/src/confideu.pas
-  /home/fred/ideu/src/aboutform.pas
-  /home/fred/ideu_15_7_17/src/msedesigner.pas
-  /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
-  /home/fred/ideu/src/msedesigner.pas
-  /home/fred/strumpract/src/define.inc
-  /home/fred/strumpract/src/config.pas
-  /home/fred/strumpract/src/recorder.pas
-  /home/fred/strumpract/src/uos_soundtouch.pas
-  /home/fred/strumpract/src/uos_portaudio.pas
-  /home/fred/strumpract/src/msefiledialog.pas
-  /home/fred/uos/examples/simplerecorder_fpGUI.pas
-  /home/fred/uos/examples/mainmse_sp.pas
-  /home/fred/uos/examples/main_sd.pas
-  /home/fred/uos/examples/consoleplaymemorystream.pas
-  /home/fred/uos/examples/consoleplay.pas
-  /home/fred/uos/examples/filterplayer_fpGUI.pas
-  /home/fred/strumpract/src/dialogfiles.pas
-  /home/fred/strumpract/src/aboutform.pas
-  /home/fred/uos/examples/deviceinfos_fpGUI.pas
-  /home/fred/strumpract/src/strumpract.pas
-  /home/fred/uos/examples/main_sp.pas
-  /home/fred/ideu/src/msefiledialog.pas
-  /home/fred/test_mse_muti/grid/main.mfm
-  /home/fred/test_mse_muti/grid/main.pas
-  /home/fred/sak/sak/sak_mse/examples/main.pas
-  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/recordfieldedit/main.pas
-  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/recordfieldedit/recordfieldedit.pas
-  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/widgets/grids/coloredit/main.pas
-  /home/fred/mseuniverse-master-47c3668ae84b7a664f9dc5c76179814930e8f3ed/samples/db/gridcolorlines/main.pas
+ history=0
  [debuggerfo.project_options]
- value=1
+ value=B
+ [debuggerfo.hints]
+ value=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1530,8 +1482,8 @@ windowlayout=610
  ncy=0
  x=208
  y=0
- cx=1148
- cy=523
+ cx=939
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1565,15 +1517,15 @@ windowlayout=610
  ncx=0
  ncy=0
  x=0
- y=62
- cx=1356
- cy=523
+ y=54
+ cx=1147
+ cy=455
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

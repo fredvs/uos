@@ -90,7 +90,6 @@ var
     SF_FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
     ST_FileName := ordir + 'lib/FreeBSD/64bit/plugin/LibSoundTouch-64.so';
     MP_FileName := ordir + 'lib/FreeBSD/64bit/LibMpg123-64.so';
-    ST_FileName := '' ;
     {$else}
     PA_FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
     SF_FileName := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
@@ -128,7 +127,7 @@ var
   writeln('soundtouch_getVersionString = ' + (soundtouch_getVersionString())); 
 
  
-     // Create a memory buffer from a audio file with 1024 frames.
+     // Create a memory buffer from a audio file from begining with 1024 frames.
     thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebufferinfos, -1, 1024);
   
     writeln('length(thebuffer) = ' + inttostr(length(thebuffer))); 
