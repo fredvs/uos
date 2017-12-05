@@ -114,7 +114,7 @@ begin
 result:=true 
 end  else begin 
       if Length(libfilename) = 0 then thelib := libst else thelib := libfilename;
-    LibHandle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want.
+    LibHandle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want.
   	if LibHandle <> DynLibs.NilHandle then
        begin
     try

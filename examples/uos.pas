@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 171009;
+  uos_version : cint32 = 171205;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -1535,7 +1535,7 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   // example : InputIndex1 := Filetobuffer(edit5.Text,-1,0,-1, buffmem, buffinfos, -1);
   var
   theplayer : Tuos_Player;
-  in1, maxsleep : cint32; 
+  in1 : cint32; 
   begin
   theplayer := Tuos_Player.Create();
    
@@ -1586,14 +1586,14 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   
   theplayer.AddIntoMemoryBuffer( @outmemory );
   theplayer.Play(0); 
+  
    if frompos > 0 then theplayer.inputseek(in1,frompos);
-  end;
-  maxsleep := 0;
+  
   while (theplayer.getstatus > 0)  do 
-  begin
-  sleep(100);
- // maxsleep := maxsleep +1 ;
-  end;
+   sleep(100);
+ 
+ end;
+ 
   {$IF DEFINED(mse)}
   theplayer.destroy; 
   {$endif}
@@ -1670,7 +1670,7 @@ var outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos; frompos: cint; numb
   // example : InputIndex1 := streamtobuffer(edit5.Text,-1,0,-1, buffmem, buffinfos, -1);
  
   var theplayer : Tuos_Player;
-      in1, maxsleep : cint32;
+      in1 : cint32;
      
      begin
    theplayer := Tuos_Player.Create();
@@ -1722,11 +1722,9 @@ var outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos; frompos: cint; numb
       theplayer.AddIntoMemoryBuffer( @outmemory );
       theplayer.Play(0);
        if frompos > 0 then theplayer.inputseek(in1,frompos);
-   end;
-   maxsleep := 0;
-   while (theplayer.getstatus > 0) do begin
-      sleep(100);
-      // maxsleep := maxsleep +1 ;
+  
+     while (theplayer.getstatus > 0) do  sleep(100);
+    
    end;
   {$IF DEFINED(mse)}
   theplayer.destroy; 
@@ -1777,8 +1775,12 @@ var
   theplayer.StreamIn[0].data.channels, SampleFormat, -1 , typeout);
   
     theplayer.Play(0); 
-  end;
- 
+    
+      while (theplayer.getstatus > 0) do sleep(100);
+   end;
+  {$IF DEFINED(mse)}
+  theplayer.destroy; 
+  {$endif}
   end;  
   
    {$IF DEFINED(mse)}
@@ -4493,8 +4495,8 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   
   {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  BufferTag: array[1..128] of char; 
-  F: file; 
+  // BufferTag: array[1..128] of char; 
+  // F: file; 
  // mpid3v2: Tmpg123_id3v2;
   {$endif}
   
@@ -4825,8 +4827,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   StreamIn[x].Data.ratio := sizeof(int32);
 
   mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
- 
- 
+  
   // problems with mpg123 
   // mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
   // mpg123_icy(StreamIn[x].Data.HandleSt, pointer(icytext));
@@ -7021,7 +7022,7 @@ end;
 procedure Tuos_Player.WriteOut(x:integer;  x2 : integer);  
  var
  err, rat, wantframestemp: integer;
-  pollo : float;
+
  {$IF DEFINED(debug)}
  st : string;
  i : integer;
