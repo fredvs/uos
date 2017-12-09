@@ -9,12 +9,21 @@
 
 unit uos_dsp_utils;
 
-{$mode objfpc}{$H+}
-{$interfaces corba}
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$interfaces corba}
+{$endif}
 
 interface
 
+{$IFNDEF FPC}
+  {$POINTERMATH ON}
+{$endif}
+
 uses
+  {$IFNDEF FPC}
+  dialogs,
+  {$endif}
   Classes, SysUtils;
 
 const
@@ -47,21 +56,25 @@ type
   end;
 
 type
-  IPAIODataIOInterface = interface
-  ['IPAIODataIOInterface']
-    procedure WriteDataIO(ASender: IPAIODataIOInterface; AData: PSingle; ASamples: Integer);
+  {$IFNDEF FPC}
+  IPAIODataIOInterface = interface ['{5f539cd3-d167-4782-aae4-c0a6aa8c515f}']
+  {$else}
+  IPAIODataIOInterface = interface ['IPAIODataIOInterface']
+  {$endif}
+    //procedure WriteDataIO(ASender: IPAIODataIOInterface; AData: PSingle; ASamples: Integer);
+    procedure WriteDataIO(ASender: TObject; AData: PSingle; ASamples: Integer);
   end;
 
   { TPAIOChannelHelper }
 
-  TPAIOChannelHelper = class(IPAIODataIOInterface)
+  TPAIOChannelHelper = class(TInterfacedObject, IPAIODataIOInterface)
   private
     FOutputs: TList;
     FTarget: IPAIODataIOInterface; // where we will send plexed data.
     FBuffers: TChannelArray;
     FPos: array of Integer;
     // called by the individual channel objects.
-    procedure WriteDataIO(ASender: IPAIODataIOInterface; AData: PSingle; ASamples: Integer);
+    procedure WriteDataIO(ASender: TObject; AData: PSingle; ASamples: Integer);
     procedure AllocateBuffers;
     procedure SendDataToTarget;
   public
@@ -73,8 +86,14 @@ type
 
 function NewChannelArray(AChannels: Integer; ASamplesPerChannel: Integer): TChannelArray;
 function SplitChannels(AData: PSingle; ASamples: Integer; AChannels: Integer): TChannelArray;
+{$IFNDEF FPC}
+function JoinChannels(AChannelData: TChannelArray; ASamples: Integer = -1): TSingleArray; Overload
+function JoinChannels(AChannelData: PPSingle; AChannels: Integer; ASamples: Integer): TSingleArray; Overload
+{$else}
 function JoinChannels(AChannelData: TChannelArray; ASamples: Integer = -1): TSingleArray;
 function JoinChannels(AChannelData: PPSingle; AChannels: Integer; ASamples: Integer): TSingleArray;
+{$endif}
+
 
 function Min(A,B: Integer): Integer;
 function Max(A,B: Integer): Integer;
@@ -83,32 +102,31 @@ implementation
 
 { TPAIOChannelHelper }
 
-procedure TPAIOChannelHelper.WriteDataIO(ASender: IPAIODataIOInterface; AData: PSingle; ASamples: Integer);
-var
-  BufIndex: Integer;
-  BufSize, WCount: Integer;
-  Written: Integer = 0;
+procedure TPAIOChannelHelper.WriteDataIO(ASender: TObject; AData: PSingle; ASamples: Integer);
+  var BufIndex: Integer;
+      BufSize, WCount: Integer;
+      Written: Integer;
 begin
-  BufIndex := FOutputs.IndexOf(Pointer(ASender));
+   Written := 0;
+   BufIndex := FOutputs.IndexOf(Pointer(ASender));
 
-  if BufIndex = -1 then
+   if BufIndex = -1 then
     raise Exception.Create('Trying to write data from an unknown instance');
 
-  AllocateBuffers;
+   AllocateBuffers;
 
-  BufSize := Length(FBuffers[0]);
+   BufSize := Length(FBuffers[0]);
 
-  While ASamples > 0 do
-  begin
-    WCount := Min(BufSize-FPos[BufIndex], ASamples);
-    Move(AData[Written], FBuffers[BufIndex][0], WCount*SizeOf(Single));
-    Inc(Written, WCount);
-    Dec(ASamples, WCount);
-    Inc(FPos[BufIndex], WCount);
+   While ASamples > 0 do begin
+      WCount := Min(BufSize-FPos[BufIndex], ASamples);
+      Move(AData[Written], FBuffers[BufIndex][0], WCount*SizeOf(Single));
+      Inc(Written, WCount);
+      Dec(ASamples, WCount);
+      Inc(FPos[BufIndex], WCount);
 
-    if BufIndex = High(FBuffers) then
-      SendDataToTarget;
-  end;
+      if BufIndex = High(FBuffers) then
+         SendDataToTarget;
+   end;
 end;
 
 procedure TPAIOChannelHelper.AllocateBuffers;
@@ -124,18 +142,19 @@ end;
 procedure TPAIOChannelHelper.SendDataToTarget;
 var
   Plexed: TSingleArray;
-  HighestCount: Integer = 0;
+  HighestCount: Integer;
   i: Integer;
 begin
-  for i := 0 to High(FPos) do
-    if FPos[i] > HighestCount then
-      HighestCount:=FPos[i];
-  Plexed := JoinChannels(FBuffers, HighestCount);
+   HighestCount:= 0;
+   for i := 0 to High(FPos) do
+      if FPos[i] > HighestCount then
+         HighestCount:=FPos[i];
+   Plexed := JoinChannels(FBuffers, HighestCount);
 
-  FTarget.WriteDataIO(Self, @Plexed[0], Length(Plexed));
+   FTarget.WriteDataIO(Self, @Plexed[0], Length(Plexed));
 
-  for i := 0 to High(FPos) do
-    Dec(FPos[i], HighestCount);
+   for i := 0 to High(FPos) do
+      Dec(FPos[i], HighestCount);
 end;
 
 constructor TPAIOChannelHelper.Create(APlexedTarget: IPAIODataIOInterface);
@@ -154,21 +173,20 @@ procedure TPAIOChannelHelper.Write(AData: PSingle; ASamples: Integer);
 var
   Channels: TChannelArray;
   i: Integer;
-  Pos: Integer = 0;
+  Pos: Integer;
   WCount: Integer;
 begin
-  AllocateBuffers;
-  Channels := SplitChannels(AData, ASamples, Outputs.Count);
-  while ASamples > 0 do
-  begin
-    WCount := Min(1024, ASamples div Outputs.Count);
-    for i := 0 to Outputs.Count-1 do
-    begin
-      IPAIODataIOInterface(Outputs.Items[i]).WriteDataIO(Self, @Channels[i][Pos], WCount);
-    end;
-    Dec(ASamples, WCount * Outputs.Count);
-    Inc(Pos, WCount);
-  end;
+   pos := 0;
+   AllocateBuffers;
+   Channels := SplitChannels(AData, ASamples, Outputs.Count);
+   while ASamples > 0 do begin
+      WCount := Min(1024, ASamples div Outputs.Count);
+      for i := 0 to Outputs.Count-1 do begin
+         IPAIODataIOInterface(Outputs.Items[i]).WriteDataIO(Self, @Channels[i][Pos], WCount);
+      end;
+      Dec(ASamples, WCount * Outputs.Count);
+      Inc(Pos, WCount);
+   end;
 end;
 
 { TRingBuffer }
@@ -180,8 +198,12 @@ end;
 
 constructor TRingBuffer.Create(ASize: Integer);
 begin
-  FMem:=Getmem(ASize);
-  FTotalSpace:=ASize;
+   {$IFNDEF FPC}
+   Getmem(fmem,ASize);
+   {$else}
+   FMem:=Getmem(ASize);
+   {$endif}
+   FTotalSpace:=ASize;
 end;
 
 destructor TRingBuffer.Destroy;
@@ -194,37 +216,37 @@ function TRingBuffer.Write(const ASource; ASize: Integer): Integer;
 var
   EOB: Integer; // end of buffer
   WSize: Integer;
-  WTotal: Integer = 0;
+  WTotal: Integer;
 begin
-  if FUsedSpace = 0 then
-  begin
-    // give the best chance of not splitting the data at buffer end.
-    FWritePos:=0;
-    FReadPos:=0;
-  end;
-  if ASize > FreeSpace then
-    raise Exception.Create('Ring buffer overflow');
-  Result := ASize;
-  Inc(FUsedSpace, ASize);
-  while ASize > 0 do
-  begin
-    EOB := FTotalSpace - FWritePos;
-    WSize := Min(ASize, EOB);
-    Move(PByte(@ASource)[WTotal], FMem[FWritePos], WSize);
-    Inc(FWritePos, WSize);
-    Dec(ASize, WSize);
+   WTotal:=0;
+   if FUsedSpace = 0 then begin
+      // give the best chance of not splitting the data at buffer end.
+      FWritePos:=0;
+      FReadPos:=0;
+   end;
+   if ASize > FreeSpace then
+      raise Exception.Create('Ring buffer overflow');
+   Result := ASize;
+   Inc(FUsedSpace, ASize);
+   while ASize > 0 do begin
+      EOB := FTotalSpace - FWritePos;
+      WSize := Min(ASize, EOB);
+      Move(PByte(@ASource)[WTotal], FMem[FWritePos], WSize);
+      Inc(FWritePos, WSize);
+      Dec(ASize, WSize);
 
-    if FWritePos >= FTotalSpace then
-      FWritePos:= 0;
-  end;
+      if FWritePos >= FTotalSpace then
+         FWritePos:= 0;
+   end;
 end;
 
 function TRingBuffer.Read(var ADest; ASize: Integer): Integer;
 var
   EOB: Integer; // end of buffer
   RSize: Integer;
-  RTotal: Integer = 0;
+  RTotal: Integer;
 begin
+   RTotal:=0;
   if ASize > UsedSpace then
     raise Exception.Create('Ring buffer underflow');
   ASize := Min(ASize, UsedSpace);

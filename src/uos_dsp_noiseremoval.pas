@@ -9,13 +9,22 @@
 
 unit uos_dsp_noiseremoval;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+{$endif}
+
 
 interface
+{$IFNDEF FPC}
+   {$POINTERMATH ON}
+{$endif}
 
 uses
-  Classes, SysUtils, uos_dsp_utils ;
-
+  Classes,
+  {$IFNDEF FPC}
+  DELPHIctypes, dialogs,
+  {$endif}
+  SysUtils, uos_dsp_utils ;
 type
   PFFT = ^TFFT;
 
@@ -26,12 +35,12 @@ type
     SinTable: PSingle;
     Points: Integer;
     FPCSinTable: array of Single;
-    function  InitializeFFT(FFTLen: Integer): PFFT; static;
+    function  InitializeFFT(FFTLen: Integer): PFFT; //static;
     procedure EndFFT;
-    function  GetFFT(FFTLen: Integer): PFFT; static;
+    function  GetFFT(FFTLen: Integer): PFFT; //static;
     procedure ReleaseFFT;
     procedure InverseRealFFTf(buffer: PSingle);
-    procedure CleanupFFT; static; // ???
+    procedure CleanupFFT; //static; // ???
     procedure RealFFTf(buffer: PSingle);
     procedure ReorderToTime(Buffer: PSingle; TimeOut: PSingle);
     procedure ReorderToFreq(Buffer: PSingle; RealOut: PSingle; ImagOut: PSingle);
@@ -46,7 +55,7 @@ type
 
   { TNoiseRemoval }
 
-  TNoiseRemoval = class
+  TNoiseRemoval = class  (TInterfacedObject )
   private
     FDoProfile: Boolean;
     FHasProfile: Boolean;
@@ -139,16 +148,19 @@ type
 type
 
   { TNoiseRemovalChannel }
-
-  TNoiseRemovalChannel = class(TNoiseRemoval, IPAIODataIOInterface)
+   TNoiseRemovalChannel = class(TNoiseRemoval, IPAIODataIOInterface)
     HasProfile: Boolean;
     ProfileComplete: Boolean;
-    procedure WriteDataIO(ASender: IPAIODataIOInterface; AData: PSingle; ASamples: Integer);
+    procedure WriteDataIO(ASender: TObject; AData: PSingle; ASamples: Integer);
   end;
 
   { TNoiseRemovalMultiChannel }
 
+  {$IFNDEF FPC}
+  TNoiseRemovalMultiChannel = class(TInterfacedObject, IPAIODataIOInterface)
+  {$else}
   TNoiseRemovalMultiChannel = class(IPAIODataIOInterface)
+  {$endif}
   private
     FChannels,
     FSampleRate: Integer;
@@ -156,17 +168,18 @@ type
     FNoise: array of TNoiseRemovalChannel;
     FWriteProc: TNoiseWriteProc;
     //IPAIODataIOInterface
-    procedure WriteDataIO(ASender: IPAIODataIOInterface; AData: PSingle; ASamples: Integer);
+    procedure WriteDataIO(ASender: TObject; AData: PSingle; ASamples: Integer);
     procedure DataWrite(ASender: TObject; AData: PSingle; ASampleCount: Integer);
+
   public
     constructor Create(AChannels: Integer; ASampleRate: Integer);
     destructor Destroy; override;
     procedure ReadNoiseProfile(AData: PSingle; ASamples: Integer);
     procedure ProcessNoise(AData: PSingle; ASamples: Integer);
     procedure Flush;
-    property WriteProc: TNoiseWriteProc read FWriteProc write FWriteProc;
+     property WriteProc: TNoiseWriteProc read FWriteProc write FWriteProc;
   end;
-  
+
 { TuosNoiseRemoval }
  type
    TuosNoiseRemoval = class(TNoiseRemovalMultiChannel)
@@ -190,8 +203,7 @@ var
   FFTLockCount: array[0..MAX_HFFT-1] of Integer;
 
 { TMultiChannelNoiseRemoval }
-
-procedure TNoiseRemovalMultiChannel.WriteDataIO(ASender: IPAIODataIOInterface; AData: PSingle; ASamples: Integer);
+procedure TNoiseRemovalMultiChannel.WriteDataIO(ASender: TObject; AData: PSingle; ASamples: Integer);
 begin
   if Assigned(FWriteProc) then
     FWriteProc(Self, AData, ASamples);
@@ -199,7 +211,7 @@ end;
 
 procedure TNoiseRemovalMultiChannel.DataWrite(ASender: TObject; AData: PSingle; ASampleCount: Integer);
 begin
-  (FHelper as IPAIODataIOInterface).WriteDataIO(ASender as IPAIODataIOInterface, AData, ASampleCount);
+  (FHelper as IPAIODataIOInterface).WriteDataIO(ASender, AData, ASampleCount);
 end;
 
 constructor TNoiseRemovalMultiChannel.Create(AChannels: Integer;
@@ -214,7 +226,11 @@ begin
   for i := 0 to High(FNoise) do
   begin
     FNoise[i] := TNoiseRemovalChannel.Create;
+    {$IFNDEF FPC}
+    FNoise[i].WriteProc:=DataWrite;
+    {$else}
     FNoise[i].WriteProc:=@DataWrite;
+    {$endif}
     FNoise[i].Init(ASampleRate);
     FHelper.Outputs.Add(FNoise[i] as IPAIODataIOInterface);
   end;
@@ -261,16 +277,14 @@ begin
     FNoise[i].Flush;
 end;
 
-procedure TNoiseRemovalChannel.WriteDataIO(ASender: IPAIODataIOInterface;
-  AData: PSingle; ASamples: Integer);
+procedure TNoiseRemovalChannel.WriteDataIO(ASender: TObject; AData: PSingle; ASamples: Integer);
 begin
   Process(AData, ASamples, not HasProfile, not HasProfile);
 end;
 
 { TuosNoiseRemoval }
- 
-procedure TuosNoiseRemoval.WriteData(ASender: TObject; AData: PSingle;
-  ASampleCount: Integer);
+
+procedure TuosNoiseRemoval.WriteData(ASender: TObject; AData: PSingle; ASampleCount: Integer);
 begin
   OutStream.Write(AData^, ASampleCount*SizeOf(Single));
 end; 
@@ -294,8 +308,13 @@ var
    Result := nil;
      
    ProcessNoise(PSingle(MNoisyAudio.Memory), MNoisyAudio.Size div SizeOf(Single));
-  
+
+   {$IFNDEF FPC}
+   GetMem(result, OutStream.Size);
+   {$else}
    Result:=GetMem(OutStream.Size);
+   {$endif}
+
    Samples := OutStream.Size div SizeOf(Single);
    OutStream.Position:=0;
    OutStream.Read(Result^, OutStream.Size);
@@ -310,12 +329,20 @@ var
 
 function NewFloatArray(ALength: Integer): PSingle; inline;
 begin
-  Result := Getmem(ALength*SizeOf(Single));
+   {$IFNDEF FPC}
+   Getmem(Result, ALength*SizeOf(Single));
+   {$else}
+   Result := Getmem(ALength*SizeOf(Single));
+   {$endif}
 end;
 
 procedure TNoiseRemoval.Initialize;
 var
   i: Integer;
+  {$IFNDEF FPC}
+  WorkAroundObject :TFFT;
+  {$endif}
+
 begin
   FFreqSmoothingBins := Trunc(FFreqSmoothingHz * FWindowSize / FSampleRate);
   FAttackDecayBlocks := 1 + Trunc(FAttackDecayTime * FSampleRate / (FWindowSize / 2));
@@ -348,7 +375,11 @@ begin
   end;
 
    // Initialize the FFT
+   {$IFNDEF FPC}
+   FFFT := WorkAroundObject.InitializeFFT(FWindowSize);
+   {$else}
    FFFT := TFFT.InitializeFFT(FWindowSize);
+   {$endif}
 
    FFFTBuffer        := NewFloatArray(FWindowSize);
    FInWaveBuffer     := NewFloatArray(FWindowSize);
@@ -409,9 +440,9 @@ begin
     avail := Min(len, FWindowSize - FInputPos);
     for i := 0 to avail-1 do
       FInWaveBuffer[FInputPos + i] := buffer[i];
-    buffer += avail;
-    len -= avail;
-    FInputPos += avail;
+    buffer := buffer + avail;
+    len := len - avail;
+    FInputPos := FInputPos+avail;
 
     if (FInputPos = FWindowSize) then
     begin
@@ -476,7 +507,7 @@ begin
       //for(j = j0; j <= j1; j++)
       for j := j0 to j1-1 do
       begin
-         tmp[i] += Aspec[j];
+         tmp[i] := tmp[i] + Aspec[j];
       end;
       tmp[i] := tmp[i] / (j1 - j0 + 1);
    end;
@@ -514,7 +545,7 @@ begin
       FNoiseThreshold[j] := min;
   end;
 
-  FOutSampleCount += FWindowSize div 2; // what is this for?  Not used when we are getting the profile?
+  FOutSampleCount := FOutSampleCount + FWindowSize div 2; // what is this for?  Not used when we are getting the profile?
 end;
 
 procedure TNoiseRemoval.RemoveNoise;
@@ -597,8 +628,8 @@ begin
    // Overlap-add
    for j := 0 to FSpectrumSize-2 do
    begin
-      FOutOverlapBuffer[j*2  ] += FFFTBuffer[FFFT^.BitReversed[j]  ] * FWindow[j*2  ];
-      FOutOverlapBuffer[j*2+1] += FFFTBuffer[FFFT^.BitReversed[j]+1] * FWindow[j*2+1];
+      FOutOverlapBuffer[j*2  ] := FOutOverlapBuffer[j*2  ] + FFFTBuffer[FFFT^.BitReversed[j]  ] * FWindow[j*2  ];
+      FOutOverlapBuffer[j*2+1] := FOutOverlapBuffer[j*2+1] + FFFTBuffer[FFFT^.BitReversed[j]+1] * FWindow[j*2+1];
    end;
 
    // Output the first half of the overlap buffer, they're done -
@@ -611,7 +642,7 @@ begin
    end;
 
 
-   FOutSampleCount += FWindowSize div 2;
+   FOutSampleCount := FOutSampleCount + FWindowSize div 2;
    //for(j = 0; j < mWindowSize / 2; j++)
    for j := 0 to FWindowSize div 2 -1 do
    begin
@@ -919,9 +950,10 @@ end;
 
 function TFFT.GetFFT(FFTLen: Integer): PFFT;
 var
-  h: Integer = 0;
+  h: Integer;
   n: Integer;
 begin
+  h := 0;
   n := fftlen div 2;
 
   while (h<MAX_HFFT) and (FFTArray[h] <> nil) and (n <> FFTArray[h]^.Points) do
@@ -946,9 +978,9 @@ end;
 
 procedure TFFT.ReleaseFFT;
 var
-  h: Integer = 0;
+  h: Integer ;
 begin
-
+   h:= 0;
    while (h<MAX_HFFT) and (FFTArray[h] <> @Self) do
    begin
      if(h<MAX_HFFT) then
@@ -999,8 +1031,8 @@ begin
       A[1] := (HIminus - v2) * single(0.5);
       B[1] := A[1] - HIminus;
 
-      A+=2;
-      B-=2;
+      A:=A+2;
+      B:=B-2;
       Inc(br1);
    end;
    //* Handle center bin (just need conjugate) */
@@ -1156,7 +1188,7 @@ begin
    ///* Handle DC and Fs/2 bins separately */
    ///* Put the Fs/2 value into the imaginary part of the DC bin */
    v1:=buffer[0]-buffer[1];
-   buffer[0]+=buffer[1];
+   buffer[0]:=buffer[0]+buffer[1];
    buffer[1]:=v1;
 
 end;

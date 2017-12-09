@@ -7,8 +7,10 @@
 
 unit uos_flat;
 
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
+{$IFDEF FPC)}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$ENDIF}
 
 // For custom configuration of directive to compiler --->  define.inc
 {$I define.inc}
@@ -21,11 +23,17 @@ uses
   uos_jni,
   {$endif}
 
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-  fpg_base,
-  {$ENDIF}
+{$IFDEF FPC)}
+   {$IFDEF fpcGUI}
+      fpg_base,
+   {$IFEND}
 
-  ctypes, classes, math, SysUtils, uos;
+   ctypes,
+{$else}
+   DELPHIctypes,
+{$ENDIF}
+
+   classes, math, SysUtils, uos;
  
   {$IF DEFINED(bs2b)}
   const

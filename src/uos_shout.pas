@@ -6,14 +6,19 @@
  Fred van Stappen / fiens@hotmail.com }
 
 unit uos_shout;
-
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
-
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$endif}
 interface
 
 uses
-  dynlibs, CTypes, sysutils;
+  {$IFNDEF FPC}
+  DELPHIctypes, windows,
+  {$else}
+  dynlibs, CTypes,
+  {$endif}
+  sysutils;
 
     const
     SHOUT_THREADSAFE = 1;
@@ -142,7 +147,11 @@ var
   shout_metadata_free: procedure(var shhandle:shout_metadata_t);cdecl;
   shout_metadata_add: function(var shhandle:shout_metadata_t; name:pchar; value:pchar):cint;cdecl;
 
+  {$IFNDEF FPC}
+  sh_Handle:THandle=NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
+  {$else}
   sh_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
+  {$endif}
 
   ReferenceCounter : cardinal = 0;  // Reference counter
 
@@ -157,92 +166,152 @@ implementation
 
 function sh_IsLoaded: boolean;
 begin
- Result := (sh_Handle <> dynlibs.NilHandle);
+ Result := (sh_Handle <> NilHandle);
 end;
 
 Function sh_Load (const libfilename:string) :boolean;
 begin
-  Result := False;
-  if sh_Handle<>0 then
-begin
- Inc(ReferenceCounter);
- result:=true {is it already there ?}
-end  else
-begin {go & load the library}
-    if Length(libfilename) = 0 then exit;
-    sh_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
-  	if sh_Handle <> DynLibs.NilHandle then
-begin {now we tie the functions to the VARs from above}
-
-Pointer(shout_init):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_init'));
-Pointer(shout_shutdown):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_shutdown'));
-Pointer(shout_version):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_version'));
-Pointer(shout_new):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_new'));
-Pointer(shout_free):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_free'));
-Pointer(shout_get_error):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_error'));
-Pointer(shout_get_errno):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_errno'));
-Pointer(shout_get_connected):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_connected'));
-Pointer(shout_set_host):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_host'));
-Pointer(shout_get_host):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_host'));
-Pointer(shout_set_port):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_port'));
-Pointer(shout_get_port):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_port'));
-Pointer(shout_set_agent):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_agent'));
-Pointer(shout_get_agent):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_agent'));
-Pointer(shout_set_tls):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_tls'));
-Pointer(shout_get_tls):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_tls'));
-Pointer(shout_set_ca_directory):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_ca_directory'));
-Pointer(shout_get_ca_directory):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_ca_directory'));
-Pointer(shout_set_ca_file):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_ca_file'));
-Pointer(shout_get_ca_file):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_ca_file'));
-Pointer(shout_set_allowed_ciphers):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_allowed_ciphers'));
-Pointer(shout_get_allowed_ciphers):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_allowed_ciphers'));
-Pointer(shout_set_user):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_user'));
-Pointer(shout_get_user):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_user'));
-Pointer(shout_set_password):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_password'));
-Pointer(shout_get_password):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_password'));
-Pointer(shout_set_client_certificate):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_client_certificate'));
-Pointer(shout_get_client_certificate):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_client_certificate'));
-Pointer(shout_set_mount):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_mount'));
-Pointer(shout_get_mount):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_mount'));
-Pointer(shout_set_name):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_name'));
-Pointer(shout_get_name):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_name'));
-Pointer(shout_set_url):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_url'));
-Pointer(shout_get_url):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_url'));
-Pointer(shout_set_genre):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_genre'));
-Pointer(shout_get_genre):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_genre'));
-Pointer(shout_set_description):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_description'));
-Pointer(shout_get_description):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_description'));
-Pointer(shout_set_dumpfile):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_dumpfile'));
-Pointer(shout_get_dumpfile):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_dumpfile'));
-Pointer(shout_set_audio_info):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_audio_info'));
-Pointer(shout_get_audio_info):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_audio_info'));
-Pointer(shout_set_meta):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_meta'));
-Pointer(shout_get_meta):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_meta'));
-Pointer(shout_set_public):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_public'));
-Pointer(shout_get_public):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_public'));
-Pointer(shout_set_format):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_format'));
-Pointer(shout_get_format):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_format'));
-Pointer(shout_set_protocol):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_protocol'));
-Pointer(shout_get_protocol):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_protocol'));
-Pointer(shout_set_nonblocking):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_nonblocking'));
-Pointer(shout_get_nonblocking):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_nonblocking'));
-Pointer(shout_open):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_open'));
-Pointer(shout_close):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_close'));
-Pointer(shout_send):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_send'));
-Pointer(shout_send_raw):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_send_raw'));
-Pointer(shout_queuelen):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_queuelen'));
-Pointer(shout_sync):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_sync'));
-Pointer(shout_delay):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_delay'));
-Pointer(shout_set_metadata):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_metadata'));
-Pointer(shout_metadata_new):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_metadata_new'));
-Pointer(shout_metadata_free):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_metadata_free'));
-Pointer(shout_metadata_add):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_metadata_add'));
-
-end;
-   Result := sh_IsLoaded;
-   ReferenceCounter:=1;
-end;
-
+   Result := False;
+   if sh_Handle<>0 then begin
+      Inc(ReferenceCounter);
+      result:=true {is it already there ?}
+   end else begin {go & load the library}
+      if Length(libfilename) = 0 then exit;
+      sh_Handle:=SafeLoadLibrary(libfilename); // obtain the handle we want
+  	  if sh_Handle <> NilHandle then begin {now we tie the functions to the VARs from above}
+         {$IFNDEF FPC}
+         shout_init:=GetProcAddress(sh_Handle,PChar('shout_init'));
+         shout_shutdown:=GetProcAddress(sh_Handle,PChar('shout_shutdown'));
+         shout_version:=GetProcAddress(sh_Handle,PChar('shout_version'));
+         shout_new:=GetProcAddress(sh_Handle,PChar('shout_new'));
+         shout_free:=GetProcAddress(sh_Handle,PChar('shout_free'));
+         shout_get_error:=GetProcAddress(sh_Handle,PChar('shout_get_error'));
+         shout_get_errno:=GetProcAddress(sh_Handle,PChar('shout_get_errno'));
+         shout_get_connected:=GetProcAddress(sh_Handle,PChar('shout_get_connected'));
+         shout_set_host:=GetProcAddress(sh_Handle,PChar('shout_set_host'));
+         shout_get_host:=GetProcAddress(sh_Handle,PChar('shout_get_host'));
+         shout_set_port:=GetProcAddress(sh_Handle,PChar('shout_set_port'));
+         shout_get_port:=GetProcAddress(sh_Handle,PChar('shout_get_port'));
+         shout_set_agent:=GetProcAddress(sh_Handle,PChar('shout_set_agent'));
+         shout_get_agent:=GetProcAddress(sh_Handle,PChar('shout_get_agent'));
+         shout_set_tls:=GetProcAddress(sh_Handle,PChar('shout_set_tls'));
+         shout_get_tls:=GetProcAddress(sh_Handle,PChar('shout_get_tls'));
+         shout_set_ca_directory:=GetProcAddress(sh_Handle,PChar('shout_set_ca_directory'));
+         shout_get_ca_directory:=GetProcAddress(sh_Handle,PChar('shout_get_ca_directory'));
+         shout_set_ca_file:=GetProcAddress(sh_Handle,PChar('shout_set_ca_file'));
+         shout_get_ca_file:=GetProcAddress(sh_Handle,PChar('shout_get_ca_file'));
+         shout_set_allowed_ciphers:=GetProcAddress(sh_Handle,PChar('shout_set_allowed_ciphers'));
+         shout_get_allowed_ciphers:=GetProcAddress(sh_Handle,PChar('shout_get_allowed_ciphers'));
+         shout_set_user:=GetProcAddress(sh_Handle,PChar('shout_set_user'));
+         shout_get_user:=GetProcAddress(sh_Handle,PChar('shout_get_user'));
+         shout_set_password:=GetProcAddress(sh_Handle,PChar('shout_set_password'));
+         shout_get_password:=GetProcAddress(sh_Handle,PChar('shout_get_password'));
+         shout_set_client_certificate:=GetProcAddress(sh_Handle,PChar('shout_client_certificate'));
+         shout_get_client_certificate:=GetProcAddress(sh_Handle,PChar('shout_get_client_certificate'));
+         shout_set_mount:=GetProcAddress(sh_Handle,PChar('shout_set_mount'));
+         shout_get_mount:=GetProcAddress(sh_Handle,PChar('shout_get_mount'));
+         shout_set_name:=GetProcAddress(sh_Handle,PChar('shout_set_name'));
+         shout_get_name:=GetProcAddress(sh_Handle,PChar('shout_get_name'));
+         shout_set_url:=GetProcAddress(sh_Handle,PChar('shout_set_url'));
+         shout_get_url:=GetProcAddress(sh_Handle,PChar('shout_get_url'));
+         shout_set_genre:=GetProcAddress(sh_Handle,PChar('shout_set_genre'));
+         shout_get_genre:=GetProcAddress(sh_Handle,PChar('shout_get_genre'));
+         shout_set_description:=GetProcAddress(sh_Handle,PChar('shout_set_description'));
+         shout_get_description:=GetProcAddress(sh_Handle,PChar('shout_get_description'));
+         shout_set_dumpfile:=GetProcAddress(sh_Handle,PChar('shout_set_dumpfile'));
+         shout_get_dumpfile:=GetProcAddress(sh_Handle,PChar('shout_get_dumpfile'));
+         shout_set_audio_info:=GetProcAddress(sh_Handle,PChar('shout_set_audio_info'));
+         shout_get_audio_info:=GetProcAddress(sh_Handle,PChar('shout_get_audio_info'));
+         shout_set_meta:=GetProcAddress(sh_Handle,PChar('shout_set_meta'));
+         shout_get_meta:=GetProcAddress(sh_Handle,PChar('shout_get_meta'));
+         shout_set_public:=GetProcAddress(sh_Handle,PChar('shout_set_public'));
+         shout_get_public:=GetProcAddress(sh_Handle,PChar('shout_get_public'));
+         shout_set_format:=GetProcAddress(sh_Handle,PChar('shout_set_format'));
+         shout_get_format:=GetProcAddress(sh_Handle,PChar('shout_get_format'));
+         shout_set_protocol:=GetProcAddress(sh_Handle,PChar('shout_set_protocol'));
+         shout_get_protocol:=GetProcAddress(sh_Handle,PChar('shout_get_protocol'));
+         shout_set_nonblocking:=GetProcAddress(sh_Handle,PChar('shout_set_nonblocking'));
+         shout_get_nonblocking:=GetProcAddress(sh_Handle,PChar('shout_get_nonblocking'));
+         shout_open:=GetProcAddress(sh_Handle,PChar('shout_open'));
+         shout_close:=GetProcAddress(sh_Handle,PChar('shout_close'));
+         shout_send:=GetProcAddress(sh_Handle,PChar('shout_send'));
+         shout_send_raw:=GetProcAddress(sh_Handle,PChar('shout_send_raw'));
+         shout_queuelen:=GetProcAddress(sh_Handle,PChar('shout_queuelen'));
+         shout_sync:=GetProcAddress(sh_Handle,PChar('shout_sync'));
+         shout_delay:=GetProcAddress(sh_Handle,PChar('shout_delay'));
+         shout_set_metadata:=GetProcAddress(sh_Handle,PChar('shout_set_metadata'));
+         shout_metadata_new:=GetProcAddress(sh_Handle,PChar('shout_metadata_new'));
+         shout_metadata_free:=GetProcAddress(sh_Handle,PChar('shout_metadata_free'));
+         shout_metadata_add:=GetProcAddress(sh_Handle,PChar('shout_metadata_add'));
+         {$else}
+         Pointer(shout_init):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_init'));
+         Pointer(shout_shutdown):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_shutdown'));
+         Pointer(shout_version):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_version'));
+         Pointer(shout_new):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_new'));
+         Pointer(shout_free):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_free'));
+         Pointer(shout_get_error):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_error'));
+         Pointer(shout_get_errno):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_errno'));
+         Pointer(shout_get_connected):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_connected'));
+         Pointer(shout_set_host):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_host'));
+         Pointer(shout_get_host):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_host'));
+         Pointer(shout_set_port):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_port'));
+         Pointer(shout_get_port):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_port'));
+         Pointer(shout_set_agent):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_agent'));
+         Pointer(shout_get_agent):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_agent'));
+         Pointer(shout_set_tls):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_tls'));
+         Pointer(shout_get_tls):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_tls'));
+         Pointer(shout_set_ca_directory):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_ca_directory'));
+         Pointer(shout_get_ca_directory):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_ca_directory'));
+         Pointer(shout_set_ca_file):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_ca_file'));
+         Pointer(shout_get_ca_file):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_ca_file'));
+         Pointer(shout_set_allowed_ciphers):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_allowed_ciphers'));
+         Pointer(shout_get_allowed_ciphers):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_allowed_ciphers'));
+         Pointer(shout_set_user):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_user'));
+         Pointer(shout_get_user):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_user'));
+         Pointer(shout_set_password):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_password'));
+         Pointer(shout_get_password):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_password'));
+         Pointer(shout_set_client_certificate):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_client_certificate'));
+         Pointer(shout_get_client_certificate):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_client_certificate'));
+         Pointer(shout_set_mount):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_mount'));
+         Pointer(shout_get_mount):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_mount'));
+         Pointer(shout_set_name):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_name'));
+         Pointer(shout_get_name):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_name'));
+         Pointer(shout_set_url):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_url'));
+         Pointer(shout_get_url):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_url'));
+         Pointer(shout_set_genre):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_genre'));
+         Pointer(shout_get_genre):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_genre'));
+         Pointer(shout_set_description):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_description'));
+         Pointer(shout_get_description):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_description'));
+         Pointer(shout_set_dumpfile):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_dumpfile'));
+         Pointer(shout_get_dumpfile):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_dumpfile'));
+         Pointer(shout_set_audio_info):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_audio_info'));
+         Pointer(shout_get_audio_info):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_audio_info'));
+         Pointer(shout_set_meta):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_meta'));
+         Pointer(shout_get_meta):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_meta'));
+         Pointer(shout_set_public):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_public'));
+         Pointer(shout_get_public):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_public'));
+         Pointer(shout_set_format):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_format'));
+         Pointer(shout_get_format):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_format'));
+         Pointer(shout_set_protocol):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_protocol'));
+         Pointer(shout_get_protocol):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_protocol'));
+         Pointer(shout_set_nonblocking):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_nonblocking'));
+         Pointer(shout_get_nonblocking):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_get_nonblocking'));
+         Pointer(shout_open):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_open'));
+         Pointer(shout_close):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_close'));
+         Pointer(shout_send):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_send'));
+         Pointer(shout_send_raw):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_send_raw'));
+         Pointer(shout_queuelen):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_queuelen'));
+         Pointer(shout_sync):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_sync'));
+         Pointer(shout_delay):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_delay'));
+         Pointer(shout_set_metadata):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_set_metadata'));
+         Pointer(shout_metadata_new):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_metadata_new'));
+         Pointer(shout_metadata_free):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_metadata_free'));
+         Pointer(shout_metadata_add):=DynLibs.GetProcedureAddress(sh_Handle,PChar('shout_metadata_add'));
+         {$endif}
+      end;
+      Result := sh_IsLoaded;
+      ReferenceCounter:=1;
+   end;
 end;
 
 Procedure sh_Unload;
@@ -256,8 +325,13 @@ begin
   if sh_IsLoaded then
   begin
     shout_shutdown();
+    {$IFNDEF FPC}
+    FreeLibrary(sh_Handle);
+    {$else}
     DynLibs.UnloadLibrary(sh_Handle);
-    sh_Handle:=DynLibs.NilHandle;
+    {$endif}
+
+    sh_Handle:=NilHandle;
   end;
 end;
 

@@ -7,13 +7,20 @@
 
 unit uos_opus;
 
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$endif}
 
 interface
 
 uses
-   dynlibs, CTypes, SysUtils;
+   {$IFNDEF FPC}
+   windows, DELPHIctypes,
+   {$else}
+   dynlibs, CTypes,
+   {$endif}
+   SysUtils;
 
 const
   OPUS_OK = 0;
@@ -241,8 +248,12 @@ function OPUS_SET_GAIN(x: cint): TOpusCTLRequestRecord; inline;
 function OPUS_MULTISTREAM_GET_DECODER_STATE(x: cint; var y: cint): TOpusCTLRequestRecord; inline;
 function OPUS_MULTISTREAM_GET_ENCODER_STATE(x: cint; var y: cint): TOpusCTLRequestRecord; inline;
 
- var op_Handle:TLibHandle=dynlibs.NilHandle; 
- 
+ {$IFNDEF FPC}
+ var op_Handle:THandle=NilHandle;
+ {$else}
+ var op_Handle:TLibHandle=dynlibs.NilHandle;
+ {$endif}
+
  var ReferenceCounter : cardinal = 0;  
          
 function op_IsLoaded : boolean; inline; 
@@ -255,7 +266,7 @@ implementation
 
 function op_IsLoaded: boolean;
 begin
- Result := (op_Handle <> dynlibs.NilHandle);
+ Result := (op_Handle <> NilHandle);
 end;
 
 Procedure op_Unload;
@@ -268,103 +279,179 @@ begin
   // >
   if op_IsLoaded then
   begin
+    {$IFNDEF FPC}
+    FreeLibrary(op_Handle);
+    {$else}
     DynLibs.UnloadLibrary(op_Handle);
-    op_Handle:=DynLibs.NilHandle;
+    {$endif}
+
+    op_Handle:=NilHandle;
   end;
 end;
 
 Function op_Load (const libfilename:string) :boolean;
 begin
-  Result := False;
-  if op_Handle<>0 then 
-begin
- Inc(ReferenceCounter);
- result:=true {is it already there ?}
-end  else 
-begin {go & load the library}
-    if Length(libfilename) = 0 then exit;
-    op_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
-  	if op_Handle <> DynLibs.NilHandle then
-begin {now we tie the functions to the VARs from above}
-Pointer(opus_get_version_string):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_get_version_string'));
-Pointer(opus_strerror):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_strerror'));
-Pointer(opus_encode):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encode'));
-Pointer(opus_encode_float):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encode_float'));
-Pointer(opus_encoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_create'));
+   Result := False;
+   if op_Handle<>0 then begin
+      Inc(ReferenceCounter);
+      result:=true {is it already there ?}
+   end else begin {go & load the library}
+      if Length(libfilename) = 0 then exit;
+      op_Handle:=SafeLoadLibrary(libfilename); // obtain the handle we want
+  	  if op_Handle <> NilHandle then begin {now we tie the functions to the VARs from above}
+         {$IFNDEF FPC}
+         opus_get_version_string:=GetProcAddress(OP_Handle,PChar('opus_get_version_string'));
+         opus_strerror:=GetProcAddress(OP_Handle,PChar('opus_strerror'));
+         opus_encode:=GetProcAddress(OP_Handle,PChar('opus_encode'));
+         opus_encode_float:=GetProcAddress(OP_Handle,PChar('opus_encode_float'));
+         opus_encoder_create:=GetProcAddress(OP_Handle,PChar('opus_encoder_create'));
 
-Pointer(opus_encoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
-Pointer(opus_encoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
-Pointer(opus_encoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
-Pointer(opus_encoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
+         opus_encoder_ctli:=GetProcAddress(OP_Handle,PChar('opus_encoder_ctl'));
+         opus_encoder_ctlp:=GetProcAddress(OP_Handle,PChar('opus_encoder_ctl'));
+         opus_encoder_ctlxy:=GetProcAddress(OP_Handle,PChar('opus_encoder_ctl'));
+         opus_encoder_ctln:=GetProcAddress(OP_Handle,PChar('opus_encoder_ctl'));
 
-Pointer(opus_encoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_destroy'));
-Pointer(opus_encoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_get_size'));
-Pointer(opus_encoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_init'));
-Pointer(opus_decode):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decode'));
-Pointer(opus_decode_float):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decode_float'));
-Pointer(opus_decoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_create'));
+         opus_encoder_destroy:=GetProcAddress(OP_Handle,PChar('opus_encoder_destroy'));
+         opus_encoder_get_size:=GetProcAddress(OP_Handle,PChar('opus_encoder_get_size'));
+         opus_encoder_init:=GetProcAddress(OP_Handle,PChar('opus_encoder_init'));
+         opus_decode:=GetProcAddress(OP_Handle,PChar('opus_decode'));
+         opus_decode_float:=GetProcAddress(OP_Handle,PChar('opus_decode_float'));
+         opus_decoder_create:=GetProcAddress(OP_Handle,PChar('opus_decoder_create'));
 
-Pointer(opus_decoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
-Pointer(opus_decoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
-Pointer(opus_decoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
-Pointer(opus_decoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
+         opus_decoder_ctli:=GetProcAddress(OP_Handle,PChar('opus_decoder_ctl'));
+         opus_decoder_ctlp:=GetProcAddress(OP_Handle,PChar('opus_decoder_ctl'));
+         opus_decoder_ctlxy:=GetProcAddress(OP_Handle,PChar('opus_decoder_ctl'));
+         opus_decoder_ctln:=GetProcAddress(OP_Handle,PChar('opus_decoder_ctl'));
 
-Pointer(opus_decoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_destroy'));
-Pointer(opus_decoder_get_nb_samples):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_get_nb_samples'));
-Pointer(opus_decoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_get_size'));
-Pointer(opus_decoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_init'));
-Pointer(opus_packet_get_bandwidth):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_bandwidth'));
-Pointer(opus_packet_get_nb_channels):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_nb_channels'));
-Pointer(opus_packet_get_nb_frames):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_nb_frames'));
-Pointer(opus_packet_get_nb_samples):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_nb_samples'));
-Pointer(opus_packet_get_samples_per_frame):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_samples_per_frame'));
-Pointer( opus_packet_parse):=DynLibs.GetProcedureAddress(OP_Handle,PChar(' opus_packet_parse'));
-Pointer(opus_pcm_soft_clip):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_pcm_soft_clip'));
-Pointer(opus_multistream_packet_pad):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_packet_pad'));
-Pointer(opus_multistream_packet_unpad):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_packet_unpad'));
-Pointer(opus_packet_pad):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_pad'));
-Pointer(opus_packet_unpad):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_unpad'));
-Pointer(opus_repacketizer_cat):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_cat'));
-Pointer(opus_repacketizer_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_create'));
-Pointer(opus_repacketizer_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('oopus_repacketizer_destroy'));
-Pointer(opus_repacketizer_get_nb_frames):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_get_nb_frames'));
-Pointer(opus_repacketizer_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_get_size'));
-Pointer(opus_repacketizer_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_init'));
-Pointer(opus_repacketizer_out):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_out'));
-Pointer(opus_repacketizer_out_range):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_out_range'));
-Pointer(opus_multistream_decode):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decode'));
-Pointer(opus_multistream_decode_float):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decode_float'));
-Pointer(opus_multistream_decoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_create'));
+         opus_decoder_destroy:=GetProcAddress(OP_Handle,PChar('opus_decoder_destroy'));
+         opus_decoder_get_nb_samples:=GetProcAddress(OP_Handle,PChar('opus_decoder_get_nb_samples'));
+         opus_decoder_get_size:=GetProcAddress(OP_Handle,PChar('opus_decoder_get_size'));
+         opus_decoder_init:=GetProcAddress(OP_Handle,PChar('opus_decoder_init'));
+         opus_packet_get_bandwidth:=GetProcAddress(OP_Handle,PChar('opus_packet_get_bandwidth'));
+         opus_packet_get_nb_channels:=GetProcAddress(OP_Handle,PChar('opus_packet_get_nb_channels'));
+         opus_packet_get_nb_frames:=GetProcAddress(OP_Handle,PChar('opus_packet_get_nb_frames'));
+         opus_packet_get_nb_samples:=GetProcAddress(OP_Handle,PChar('opus_packet_get_nb_samples'));
+         opus_packet_get_samples_per_frame:=GetProcAddress(OP_Handle,PChar('opus_packet_get_samples_per_frame'));
+         opus_packet_parse:=GetProcAddress(OP_Handle,PChar(' opus_packet_parse'));
+         opus_pcm_soft_clip:=GetProcAddress(OP_Handle,PChar('opus_pcm_soft_clip'));
+         opus_multistream_packet_pad:=GetProcAddress(OP_Handle,PChar('opus_multistream_packet_pad'));
+         opus_multistream_packet_unpad:=GetProcAddress(OP_Handle,PChar('opus_multistream_packet_unpad'));
+         opus_packet_pad:=GetProcAddress(OP_Handle,PChar('opus_packet_pad'));
+         opus_packet_unpad:=GetProcAddress(OP_Handle,PChar('opus_packet_unpad'));
+         opus_repacketizer_cat:=GetProcAddress(OP_Handle,PChar('opus_repacketizer_cat'));
+         opus_repacketizer_create:=GetProcAddress(OP_Handle,PChar('opus_repacketizer_create'));
+         opus_repacketizer_destroy:=GetProcAddress(OP_Handle,PChar('oopus_repacketizer_destroy'));
+         opus_repacketizer_get_nb_frames:=GetProcAddress(OP_Handle,PChar('opus_repacketizer_get_nb_frames'));
+         opus_repacketizer_get_size:=GetProcAddress(OP_Handle,PChar('opus_repacketizer_get_size'));
+         opus_repacketizer_init:=GetProcAddress(OP_Handle,PChar('opus_repacketizer_init'));
+         opus_repacketizer_out:=GetProcAddress(OP_Handle,PChar('opus_repacketizer_out'));
+         opus_repacketizer_out_range:=GetProcAddress(OP_Handle,PChar('opus_repacketizer_out_range'));
+         opus_multistream_decode:=GetProcAddress(OP_Handle,PChar('opus_multistream_decode'));
+         opus_multistream_decode_float:=GetProcAddress(OP_Handle,PChar('opus_multistream_decode_float'));
+         opus_multistream_decoder_create:=GetProcAddress(OP_Handle,PChar('opus_multistream_decoder_create'));
 
-Pointer(opus_multistream_decoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
-Pointer(opus_multistream_decoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
-Pointer(opus_multistream_decoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
-Pointer(opus_multistream_decoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
+         opus_multistream_decoder_ctli:=GetProcAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
+         opus_multistream_decoder_ctlp:=GetProcAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
+         opus_multistream_decoder_ctlxy:=GetProcAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
+         opus_multistream_decoder_ctln:=GetProcAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
 
-Pointer(opus_multistream_decoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_destroy'));
-Pointer(opus_multistream_decoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_get_size'));
-Pointer(opus_multistream_decoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_init'));
-Pointer(opus_multistream_encode):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encode'));
-Pointer(opus_multistream_encode_float):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encode_float'));
-Pointer(opus_multistream_encoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_create'));
+         opus_multistream_decoder_destroy:=GetProcAddress(OP_Handle,PChar('opus_multistream_decoder_destroy'));
+         opus_multistream_decoder_get_size:=GetProcAddress(OP_Handle,PChar('opus_multistream_decoder_get_size'));
+         opus_multistream_decoder_init:=GetProcAddress(OP_Handle,PChar('opus_multistream_decoder_init'));
+         opus_multistream_encode:=GetProcAddress(OP_Handle,PChar('opus_multistream_encode'));
+         opus_multistream_encode_float:=GetProcAddress(OP_Handle,PChar('opus_multistream_encode_float'));
+         opus_multistream_encoder_create:=GetProcAddress(OP_Handle,PChar('opus_multistream_encoder_create'));
 
-Pointer(opus_multistream_encoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
-Pointer(opus_multistream_encoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
-Pointer(opus_multistream_encoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
-Pointer(opus_multistream_encoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
+         opus_multistream_encoder_ctli:=GetProcAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
+         opus_multistream_encoder_ctlp:=GetProcAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
+         opus_multistream_encoder_ctlxy:=GetProcAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
+         opus_multistream_encoder_ctln:=GetProcAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
 
-Pointer(opus_multistream_encoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_destroy'));
-Pointer(opus_multistream_encoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_get_size'));
-Pointer(opus_multistream_encoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_init'));
-Pointer(opus_multistream_surround_encoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_surround_encoder_create'));
-Pointer(opus_multistream_surround_encoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_surround_encoder_get_size'));
-Pointer(opus_multistream_surround_encoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_surround_encoder_init'));
+         opus_multistream_encoder_destroy:=GetProcAddress(OP_Handle,PChar('opus_multistream_encoder_destroy'));
+         opus_multistream_encoder_get_size:=GetProcAddress(OP_Handle,PChar('opus_multistream_encoder_get_size'));
+         opus_multistream_encoder_init:=GetProcAddress(OP_Handle,PChar('opus_multistream_encoder_init'));
+         opus_multistream_surround_encoder_create:=GetProcAddress(OP_Handle,PChar('opus_multistream_surround_encoder_create'));
+         opus_multistream_surround_encoder_get_size:=GetProcAddress(OP_Handle,PChar('opus_multistream_surround_encoder_get_size'));
+         opus_multistream_surround_encoder_init:=GetProcAddress(OP_Handle,PChar('opus_multistream_surround_encoder_init'));
+         {$else}
+         Pointer(opus_get_version_string):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_get_version_string'));
+         Pointer(opus_strerror):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_strerror'));
+         Pointer(opus_encode):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encode'));
+         Pointer(opus_encode_float):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encode_float'));
+         Pointer(opus_encoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_create'));
 
-end;
-   Result := op_IsLoaded;
-   ReferenceCounter:=1;   
-end;
+         Pointer(opus_encoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
+         Pointer(opus_encoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
+         Pointer(opus_encoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
+         Pointer(opus_encoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_ctl'));
 
+         Pointer(opus_encoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_destroy'));
+         Pointer(opus_encoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_get_size'));
+         Pointer(opus_encoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_encoder_init'));
+         Pointer(opus_decode):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decode'));
+         Pointer(opus_decode_float):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decode_float'));
+         Pointer(opus_decoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_create'));
+
+         Pointer(opus_decoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
+         Pointer(opus_decoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
+         Pointer(opus_decoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
+         Pointer(opus_decoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_ctl'));
+
+         Pointer(opus_decoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_destroy'));
+         Pointer(opus_decoder_get_nb_samples):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_get_nb_samples'));
+         Pointer(opus_decoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_get_size'));
+         Pointer(opus_decoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_decoder_init'));
+         Pointer(opus_packet_get_bandwidth):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_bandwidth'));
+         Pointer(opus_packet_get_nb_channels):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_nb_channels'));
+         Pointer(opus_packet_get_nb_frames):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_nb_frames'));
+         Pointer(opus_packet_get_nb_samples):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_nb_samples'));
+         Pointer(opus_packet_get_samples_per_frame):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_get_samples_per_frame'));
+         Pointer( opus_packet_parse):=DynLibs.GetProcedureAddress(OP_Handle,PChar(' opus_packet_parse'));
+         Pointer(opus_pcm_soft_clip):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_pcm_soft_clip'));
+         Pointer(opus_multistream_packet_pad):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_packet_pad'));
+         Pointer(opus_multistream_packet_unpad):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_packet_unpad'));
+         Pointer(opus_packet_pad):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_pad'));
+         Pointer(opus_packet_unpad):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_packet_unpad'));
+         Pointer(opus_repacketizer_cat):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_cat'));
+         Pointer(opus_repacketizer_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_create'));
+         Pointer(opus_repacketizer_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('oopus_repacketizer_destroy'));
+         Pointer(opus_repacketizer_get_nb_frames):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_get_nb_frames'));
+         Pointer(opus_repacketizer_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_get_size'));
+         Pointer(opus_repacketizer_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_init'));
+         Pointer(opus_repacketizer_out):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_out'));
+         Pointer(opus_repacketizer_out_range):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_repacketizer_out_range'));
+         Pointer(opus_multistream_decode):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decode'));
+         Pointer(opus_multistream_decode_float):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decode_float'));
+         Pointer(opus_multistream_decoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_create'));
+
+         Pointer(opus_multistream_decoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
+         Pointer(opus_multistream_decoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
+         Pointer(opus_multistream_decoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
+         Pointer(opus_multistream_decoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_ctl'));
+
+         Pointer(opus_multistream_decoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_destroy'));
+         Pointer(opus_multistream_decoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_get_size'));
+         Pointer(opus_multistream_decoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_decoder_init'));
+         Pointer(opus_multistream_encode):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encode'));
+         Pointer(opus_multistream_encode_float):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encode_float'));
+         Pointer(opus_multistream_encoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_create'));
+
+         Pointer(opus_multistream_encoder_ctli):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
+         Pointer(opus_multistream_encoder_ctlp):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
+         Pointer(opus_multistream_encoder_ctlxy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
+         Pointer(opus_multistream_encoder_ctln):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_ctl'));
+
+         Pointer(opus_multistream_encoder_destroy):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_destroy'));
+         Pointer(opus_multistream_encoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_get_size'));
+         Pointer(opus_multistream_encoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_encoder_init'));
+         Pointer(opus_multistream_surround_encoder_create):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_surround_encoder_create'));
+         Pointer(opus_multistream_surround_encoder_get_size):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_surround_encoder_get_size'));
+         Pointer(opus_multistream_surround_encoder_init):=DynLibs.GetProcedureAddress(OP_Handle,PChar('opus_multistream_surround_encoder_init'));
+         {$endif}
+      end;
+      Result := op_IsLoaded;
+      ReferenceCounter:=1;
+   end;
 end;
 
 

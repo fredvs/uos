@@ -5,11 +5,17 @@
 
 unit uos;
 
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
+{$ifdef FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$endif}
 
 // For custom configuration of directive to compiler --->  define.inc
 {$I define.inc}
+
+{$ifndef FPC}
+   {$POINTERMATH ON}
+{$endif}
 
 interface
 
@@ -19,8 +25,10 @@ uses
  msegui, msethread, 
 {$endif}
 
-{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-fpg_base, fpg_main, 
+{$ifdef FPC}
+   {$IFDEF fpcGUI}
+      fpg_base, fpg_main,
+   {$IFEND}
 {$endif}
 
 {$IF DEFINED(Java)}
@@ -28,7 +36,13 @@ uos_jni,
 {$endif}
 
 {$IF DEFINED(webstream)}
-uos_httpgetthread,  Pipes,
+   uos_httpgetthread,
+
+   {$IFNDEF FPC}
+   PipesDelphi,
+   {$else}
+   Pipes,
+   {$endif}
 {$ENDIF}
 
 {$IF DEFINED(portaudio)}
@@ -71,7 +85,13 @@ uos_shout, uos_opus,
 uos_cdrom,
 {$endif}
 
-Classes, ctypes, Math, sysutils;
+{$IFNDEF FPC}
+   DELPHIctypes, System.SyncObjs,
+{$else}
+   ctypes,
+{$endif}
+
+Classes, Math, sysutils;
 
 const
   uos_version : cint32 = 171205;
@@ -196,9 +216,11 @@ type
   PDArShort = ^TDArShort;
   PDArLong = ^TDArLong;
 
-{$IF not DEFINED(windows)}
-  THandle = pointer;
-  TArray = single;
+{$IFDEF FPC}
+   {$IF not DEFINED(windows)}
+   THandle = pointer;
+   TArray = single;
+   {$endif}
 {$endif}
 
 type
@@ -250,7 +272,11 @@ end;
 type
   Tuos_Init = class(TObject)
   public
+  {$IFNDEF FPC}
+  evGlobalPause: tEvent;   // for global pausing
+  {$else}
   evGlobalPause: PRTLEvent;  // for global pausing
+  {$endif}
   constructor Create;
   private
 
@@ -442,8 +468,8 @@ type
 
   {$IF DEFINED(bs2b) or  DEFINED(soundtouch)}
   TPlugFunc = function(bufferin: TDArFloat; plugHandle: THandle; Abs2bd : Tt_bs2bdp; var inputData: Tuos_Data;
-  param1: float; param2: float; param3: float; param4: float;
-  param5: float; param6: float;  param7: float; param8: float): TDArFloat;
+  param1: cfloat; param2: cfloat; param3: cfloat; param4: cfloat;
+  param5: cfloat; param6: cfloat;  param7: cfloat; param8: cfloat): TDArFloat;
   {$endif}
 
 type
@@ -497,8 +523,8 @@ type
   OutHandle: longword;
   {$ENDIF}
   {$else}
-  InHandle : cint32;
-  OutHandle: cint32;
+  InHandle : THandle; //cint32;
+  OutHandle: THandle; //cint32;
   {$endif}
   InPipe: TInputPipeStream;
   OutPipe: TOutputPipeStream;
@@ -546,14 +572,14 @@ type
   Abs2b : Tt_bs2bdp;
   PlugFunc: TPlugFunc;
   {$endif}
-  param1: float;
-  param2: float;
-  param3: float;
-  param4: float;
-  param5: float;
-  param6: float;
-  param7: float;
-  param8: float;
+  param1: cfloat;
+  param2: cfloat;
+  param3: cfloat;
+  param4: cfloat;
+  param5: cfloat;
+  param6: cfloat;
+  param7: cfloat;
+  param8: cfloat;
   Buffer: TDArFloat;
   end;
 
@@ -564,9 +590,15 @@ type
    thethread : tmsethread; 
    {$else}
    thethread : TuosThread;
-   {$endif} 
-  evPause: PRTLEvent;  // for pausing
-  procedure ReadFile(x : integer); 
+   {$endif}
+
+   {$IFNDEF FPC}
+   evPause: TEvent; //PRTLEvent;  // for pausing
+   {$else}
+   evPause: PRTLEvent;  // for pausing
+   {$endif}
+
+  procedure ReadFile(x : integer);
   {$IF DEFINED(webstream)}
   procedure ReadUrl(x : integer); 
   {$endif}
@@ -578,7 +610,7 @@ type
   {$IF DEFINED(portaudio)}
   procedure ReadDevice(x : integer); 
   {$endif}
-  procedure WriteOutPlug(x:integer;  x2 : integer);  
+  procedure WriteOutPlug(x:integer;  x2 : integer);
   procedure WriteOut(x:integer;  x2 : integer); 
   Procedure CheckIfPaused ;  
   procedure DoBeginMethods;  
@@ -653,7 +685,7 @@ type
   
    function SetGlobalEvent(isenabled : boolean) : boolean;
   // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
-  // result : true if set ok. 
+  // result : true if set ok.
    
   // Audio methods
   
@@ -703,7 +735,7 @@ type
   // example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1, -1);
 
   function AddIntoFileFromMem(Filename: PChar; SampleRate: LongInt;  
-      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt;  
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt;
     /////// Add a Output into audio wav file with custom parameters from TMemoryStream
      ////////// FileName : filename of saved audio wav file
     //////////// SampleRate : delault : -1 (44100)
@@ -755,7 +787,7 @@ function AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
   // Channels = Channels of input-to-follow.
 
 {$IF DEFINED(synthesizer)}
-function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; Duration: cint32; OutputIndex: cint32;
+function AddFromSynth(Frequency: cfloat; VolumeL: cfloat; VolumeR: cfloat; Duration: cint32; OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
   // Frequency : default : -1 (440 htz)
@@ -769,7 +801,7 @@ function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; Duration
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := AddFromSynth(880,-1,-1,-1,-1,-1,-1, -1);
   
-procedure InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;  Duration: cint32; Enable : boolean);
+procedure InputSetSynth(InputIndex: cint32; Frequency: cfloat; VolumeL: cfloat; VolumeR: cfloat;  Duration: cint32; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
   // VolumeL :  from 0 to 1 (-1 = do not change)
   // VolumeR :  from 0 to 1 (-1 = do not change)
@@ -786,7 +818,7 @@ function AddFromFile(Filename: Pchar; OutputIndex: cint32;
   // FramesCount : default : -1 (4096)
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := AddFromFile(edit5.Text,-1,0,-1);
-  
+
 function AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   SampleFormat: cint32 ; FramesCount: cint32 ; numbuf : cint): cint32;
   // Add a input from audio file and store it into memory with custom parameters
@@ -794,7 +826,7 @@ function AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (4096)
-  // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers) 
+  // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers)
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := AddFromFileIntoMemory(edit5.Text,-1,0,-1, -1);
  
@@ -922,12 +954,12 @@ function InputGetLevelRight(InputIndex: cint32): double;
   // result : right level from 0 to 1
 
 {$IF DEFINED(soundtouch)}
-function InputGetBPM(InputIndex: cint32): float;
+function InputGetBPM(InputIndex: cint32): cfloat;
   // InputIndex : InputIndex of existing input
   // result : left level from 0 to 1
-{$endif}   
+{$endif}
 
-function InputPositionSeconds(InputIndex: cint32): float;
+function InputPositionSeconds(InputIndex: cint32): cfloat;
   // InputIndex : InputIndex of existing input
   //  result : current postion of Input in seconds
 
@@ -1153,7 +1185,7 @@ function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32)
   
 procedure uos_unloadPlugin(PluginName: PChar);
   // Unload Plugin...
-  
+
 procedure uos_Free();
   // To call at end of application.
   // If uos_flat.pas was used, it will free all the uos_player created.
@@ -1220,7 +1252,8 @@ const
   fBandPass = 3;
   fHighPass = 4;
   fLowPass = 5;
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+  {$IFDEF fpcGUI}
+  //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   MSG_CUSTOM1 = FPGM_USER + 1;
   {$endif}
 
@@ -1466,7 +1499,11 @@ var
   ID: array[0..3] of char;
 begin
   Data.data.Position:= 42;//(after 'data')
+  {$IFNDEF FPC}
+  Data.data.Write(Data.data, 4);
+  {$else}
   Data.data.Write(Data.data.Size, 4);
+  {$endif}
   ID := 'RIFF';
   Data.data.Seek(SizeOf(ID), soFromBeginning);
   wFileSize := Data.data.Size - SizeOf(ID) - SizeOf(wFileSize);
@@ -1571,7 +1608,8 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   bufferinfos.Artist := theplayer.StreamIn[in1].Data.Artist;
   bufferinfos.Comment := theplayer.StreamIn[in1].Data.Comment;
   bufferinfos.Date := theplayer.StreamIn[in1].Data.Date;
-  bufferinfos.Tag := theplayer.StreamIn[in1].Data.Tag;
+  move(theplayer.StreamIn[in1].Data.Tag[0], bufferinfos.Tag[0], 3 * sizeof(char));
+  //bufferinfos.Tag := theplayer.StreamIn[in1].Data.Tag;
   bufferinfos.Album := theplayer.StreamIn[in1].Data.Album;
   bufferinfos.Genre := theplayer.StreamIn[in1].Data.Genre;
   bufferinfos.HDFormat := theplayer.StreamIn[in1].Data.HDFormat;
@@ -1609,28 +1647,28 @@ function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32)
   
   if SampleRate = -1 then sr := 44100 else sr := SampleRate;
   if Channels = -1 then ch := 2 else ch := Channels;
-  
-    BPMhandle := bpm_createInstance(ch,sr);
-   
+
+  BPMhandle := bpm_createInstance(ch,sr);
+
    // writeln('BPMhandle = ok'); 
   
-   bpm_putSamples(BPMhandle,  pcfloat(thebuffer),  length(thebuffer) div Channels);
-   
-   result := bpm_getBpm(BPMhandle); 
+   bpm_putSamples(cardinal(BPMhandle),  pcfloat(thebuffer),  length(thebuffer) div Channels);
+
+   result := bpm_getBpm(cardinal(BPMhandle));
+
+  // writeln('Detected BPM = ' + inttostr(round(result)));
   
-  // writeln('Detected BPM = ' + inttostr(round(result)));  
-  
-   bpm_destroyInstance(BPMhandle);
-  
+   bpm_destroyInstance(cardinal(BPMhandle));
+
   end;
- 
+
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint ): TDArFloat;
   // Create a memory buffer of a audio file.
-  // FileName : filename of audio file  
+  // FileName : filename of audio file
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // bufferinfos : the infos of the buffer.
-  // frompos : from position (default : -1 = from begining, otherwise position in song) 
-  // numbuf : number of frames to add to outmemory (default : -1 = all, otherwise number max of frames) 
+  // frompos : from position (default : -1 = from begining, otherwise position in song)
+  // numbuf : number of frames to add to outmemory (default : -1 = all, otherwise number max of frames)
   //  result :  The memory buffer
   // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos, -1, -1);
   var
@@ -1668,7 +1706,7 @@ var outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos; frompos: cint; numb
   // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers)
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := streamtobuffer(edit5.Text,-1,0,-1, buffmem, buffinfos, -1);
- 
+
   var theplayer : Tuos_Player;
       in1 : cint32;
      
@@ -1706,7 +1744,8 @@ var outmemory: TDArFloat; var bufferinfos: Tuos_BufferInfos; frompos: cint; numb
       bufferinfos.Artist := theplayer.StreamIn[in1].Data.Artist;
       bufferinfos.Comment := theplayer.StreamIn[in1].Data.Comment;
       bufferinfos.Date := theplayer.StreamIn[in1].Data.Date;
-      bufferinfos.Tag := theplayer.StreamIn[in1].Data.Tag;
+      move(theplayer.StreamIn[in1].Data.Tag[0], bufferinfos.Tag[0], 3 * sizeof(char));
+      //bufferinfos.Tag := theplayer.StreamIn[in1].Data.Tag;
       bufferinfos.Album := theplayer.StreamIn[in1].Data.Album;
       bufferinfos.Genre := theplayer.StreamIn[in1].Data.Genre;
       bufferinfos.HDFormat := theplayer.StreamIn[in1].Data.HDFormat;
@@ -1789,7 +1828,11 @@ var
   const StackSize: SizeUInt);
 begin
   theparent := AParent;
+  {$IFNDEF FPC}
+  inherited Create(CreateSuspended);
+  {$else}
   inherited Create(CreateSuspended, StackSize);
+  {$endif}
   FreeOnTerminate := true;
   Priority :=  tpTimeCritical;
 end;  
@@ -1838,7 +1881,7 @@ var
    if (no_free = true) and (StreamIn[x].Data.HandleSt <> nil) 
   and ((StreamIn[x].Data.TypePut = 0) or (StreamIn[x].Data.TypePut = 4)) then
       InputSeek(x, 0); 
-  
+
    StreamIn[x].Data.status  := 1 ;
   
   end;
@@ -1888,7 +1931,7 @@ end;
 procedure Tuos_Player.PlayNoFree(nloop: Integer = 0) ;
 begin
  PlayEx(True,nloop);
-end; 
+end;
 
 Procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
 begin
@@ -2089,7 +2132,7 @@ Result := 0;
 end;
 
 {$IF DEFINED(soundtouch)}
-function Tuos_Player.InputGetBPM(InputIndex: cint32): float;
+function Tuos_Player.InputGetBPM(InputIndex: cint32): cfloat;
   // InputIndex : InputIndex of existing input
   // result : Beat per minuts
   begin
@@ -2098,7 +2141,7 @@ Result := 0;
 end;
 {$endif}   
 
-function Tuos_Player.InputPositionSeconds(InputIndex: cint32): float;
+function Tuos_Player.InputPositionSeconds(InputIndex: cint32): cfloat;
 begin
 Result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.Position / StreamIn[InputIndex].Data.SampleRate;
@@ -2106,7 +2149,7 @@ end;
 
 function Tuos_Player.InputPositionTime(InputIndex: cint32): TTime;
 var
-  tmp: float;
+  tmp: cfloat;
   h, m, s, ms: word;
 begin
 Result := sysutils.EncodeTime(0, 0, 0, 0);
@@ -2131,15 +2174,15 @@ function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
 {$IF DEFINED(mpg123) or DEFINED(opus) }
  var
  {$endif}
- 
+
  {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
-  BufferTag: array[1..128] of char; 
-  F: file; 
-  // problems with mpg123 
+  BufferTag: array[1..128] of char;
+  F: file;
+  // problems with mpg123
   // mpid3v2: Tmpg123_id3v2;
   {$endif}
-  
+
   {$IF DEFINED(opus)}
   s: UTF8String;
   j: Integer;
@@ -2147,72 +2190,67 @@ function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
   LComment: PPAnsiChar;
   LcommentLength: PInteger;
   {$endif}
-  
-  begin
 
- Result := false;
-  if (isAssigned = True) then
- begin
- {$IF DEFINED(mpg123)}
-if StreamIn[InputIndex].Data.LibOpen = 1 then // mp3
 begin
- mpg123_info(StreamIn[InputIndex].Data.HandleSt, MPinfo);
- // custom code for reading ID3Tag ---> problems with  mpg123_id3() 
+   Result := false;
+   if (isAssigned = True) then begin
+      {$IF DEFINED(mpg123)}
+      if StreamIn[InputIndex].Data.LibOpen = 1 then begin // mp3
+         mpg123_info(StreamIn[InputIndex].Data.HandleSt, MPinfo);
+         // custom code for reading ID3Tag ---> problems with  mpg123_id3()
+         AssignFile(F, StreamIn[InputIndex].Data.Filename);
+         Reset(F, 1);
+         Seek(F, FileSize(F) - 128);
+         BlockRead(F, BufferTag, SizeOf(BufferTag));
+         CloseFile(F);
 
-   AssignFile(F, StreamIn[InputIndex].Data.Filename); 
-   Reset(F, 1); 
-   Seek(F, FileSize(F) - 128); 
-   BlockRead(F, BufferTag, SizeOf(BufferTag)); 
-   CloseFile(F); 
+         StreamIn[InputIndex].Data.title := copy(BufferTag, 4, 30);
+         StreamIn[InputIndex].Data.artist := copy(BufferTag, 34, 30);
+         StreamIn[InputIndex].Data.album := copy(BufferTag, 64, 30);
+         StreamIn[InputIndex].Data.date :=  copy(BufferTag, 94, 4);
+         StreamIn[InputIndex].Data.comment := copy(BufferTag, 98, 30);
+         move(BufferTag[1], StreamIn[InputIndex].Data.tag[0], length(BufferTag) * sizeof(char));
+         //StreamIn[InputIndex].Data.tag :=  copy(BufferTag, 1, 3);
+         StreamIn[InputIndex].Data.genre := ord(BufferTag[128]);
 
-  StreamIn[InputIndex].Data.title := copy(BufferTag, 4, 30); 
-  StreamIn[InputIndex].Data.artist := copy(BufferTag, 34, 30); 
-  StreamIn[InputIndex].Data.album := copy(BufferTag, 64, 30); 
-  StreamIn[InputIndex].Data.date :=  copy(BufferTag, 94, 4);
-  StreamIn[InputIndex].Data.comment := copy(BufferTag, 98, 30); 
-  StreamIn[InputIndex].Data.tag :=  copy(BufferTag, 1, 3); 
-  StreamIn[InputIndex].Data.genre := ord(BufferTag[128]);
-  
-  Result := true;
-  // ?  freeandnil(MPinfo);
-end;
-{$endif}
+         Result := true;
+         // ?  freeandnil(MPinfo);
+      end;
+      {$endif}
 
-{$IF DEFINED(opus)}
-if StreamIn[InputIndex].Data.LibOpen = 4 then // opus
-begin
- OpusTag := op_tags(StreamIn[InputIndex].Data.HandleOP, nil);
-  
-  if OpusTag<>nil
-  
-  then begin
-  
-  if OpusTag^.comments>0
-  then begin
+      {$IF DEFINED(opus)}
+      if StreamIn[InputIndex].Data.LibOpen = 4 then begin // opus
+         OpusTag := op_tags(StreamIn[InputIndex].Data.HandleOP, nil);
+         if OpusTag<>nil then begin
+            if OpusTag^.comments>0 then begin
+               LComment := OpusTag^.user_comments;
+               LcommentLength := pointer(OpusTag^.comment_lengths);
+               for j := 0 to OpusTag^.comments - 1 do begin
+                  {$IFNDEF FPC}
+                  SetLength(s, integer(LcommentLength^));
+                  move(Pointer(LComment^)^, Pointer(s)^, integer(LcommentLength^));
+                  {$else}
+                  SetLength(s, LcommentLength^);
+                  move(Pointer(LComment^)^, Pointer(s)^, LcommentLength^);
+                  {$endif}
 
-  LComment := OpusTag^.user_comments;
-  LcommentLength := OpusTag^.comment_lengths;
-  for j := 0 to OpusTag^.comments - 1 do
-  begin
-  SetLength(s, LcommentLength^);
-  move(Pointer(LComment^)^, Pointer(s)^, LcommentLength^);
- 
-  if j = 1 then StreamIn[InputIndex].Data.title := s;
-  if j = 2 then StreamIn[InputIndex].Data.artist := s;
-  if j = 3 then StreamIn[InputIndex].Data.album := s;
-  if j = 4 then StreamIn[InputIndex].Data.date := s;
-  if j = 5 then StreamIn[InputIndex].Data.comment := s;
-  if j = 6 then StreamIn[InputIndex].Data.tag := s;
-  
-  inc(LComment);
-  inc(LcommentLength);
-  end;
-  result := true;
-  end;
-  end;
- end;
- {$endif}
- end;
+                  if j = 1 then StreamIn[InputIndex].Data.title := s;
+                  if j = 2 then StreamIn[InputIndex].Data.artist := s;
+                  if j = 3 then StreamIn[InputIndex].Data.album := s;
+                  if j = 4 then StreamIn[InputIndex].Data.date := s;
+                  if j = 5 then StreamIn[InputIndex].Data.comment := s;
+                  if j = 6 then   move(s[1], StreamIn[InputIndex].Data.tag[0], 3 * sizeof(char)); //StreamIn[InputIndex].Data.tag := s;
+                  //if j = 6 then StreamIn[InputIndex].Data.tag := s;
+
+                  inc(LComment);
+                  inc(LcommentLength);
+               end;
+               result := true;
+            end;
+         end;
+      end;
+      {$endif}
+    end;
  end;
 
 {$IF DEFINED(webstream)}
@@ -2261,7 +2299,9 @@ function Tuos_Player.InputGetTagComment(InputIndex: cint32): pchar;
 function Tuos_Player.InputGetTagTag(InputIndex: cint32): pchar;
  begin
  Result := nil;
-  if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.tag);
+  //if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.tag);
+  if (isAssigned = True) then Result := PChar(@StreamIn[InputIndex].Data.tag[0]); //Result :=  pchar(StreamIn[InputIndex].Data.tag) ;
+
  end;
  
 function Tuos_Player.InputGetTagDate(InputIndex: cint32): pchar;
@@ -2685,8 +2725,8 @@ end;
 
 {$IF DEFINED(soundtouch)}
 function SoundTouchPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; var inputData: Tuos_Data;
-  notused1: float; notused2: float; notused3: float;  notused4: float;
-  notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
+  notused1: cfloat; notused2: cfloat; notused3: cfloat;  notused4: cfloat;
+  notused5: cfloat; notused6: cfloat; notused7: cfloat;  notused8: cfloat): TDArFloat;
 var
  ratio : integer;
  numoutbuf, x1, x2: cint32;
@@ -2794,8 +2834,8 @@ end;
 end;
 
 function GetBPMPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; var inputData: Tuos_Data;
-  numframes: float; loop: float; notused3: float;  notused4: float;
-  notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
+  numframes: cfloat; loop: cfloat; notused3: cfloat;  notused4: cfloat;
+  notused5: cfloat; notused6: cfloat; notused7: cfloat;  notused8: cfloat): TDArFloat;
 var
  ratio : integer;
  begin
@@ -2843,21 +2883,21 @@ end;
 
 {$IF DEFINED(bs2b)}
 function bs2bPlug(bufferin: TDArFloat; notneeded: THandle; Abs2bd : Tt_bs2bdp; var inputData: Tuos_Data;
- notused1: float; notused2: float; notused3: float;  notused4: float;
-  notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
+ notused1: cfloat; notused2: cfloat; notused3: cfloat;  notused4: cfloat;
+  notused5: cfloat; notused6: cfloat; notused7: cfloat;  notused8: cfloat): TDArFloat;
 var
   x, x2: cint32;
   Bufferplug: TDArFloat;
  begin
  
   if (inputData.libopen = 0) or (inputData.libopen = 2)  or (inputData.libopen = 3) or (inputData.libopen = 4) then
-  x2 := trunc(inputData.ratio * (inputData.outframes div trunc(inputData.channels))) ;
+  x2 := (inputData.ratio * (inputData.outframes div trunc(inputData.channels))) ;
   
   if (inputData.libopen = 1)  then
   begin
   if inputData.SampleFormat < 2 then 
-  x2 := trunc((inputData.outframes div trunc(inputData.channels)))
-  else x2 := trunc(inputData.ratio * (inputData.outframes div trunc(inputData.channels))) ;
+  x2 := ((inputData.outframes div trunc(inputData.channels)))
+  else x2 := (inputData.ratio * (inputData.outframes div trunc(inputData.channels))) ;
   end;
   
   SetLength(Bufferplug,x2);
@@ -3620,8 +3660,13 @@ function ConvertSampleFormat(Data: Tuos_Data): TDArFloat;
 StreamIn[InputIndex].DSP[result].fftdata.FNoise.samprate :=
 StreamIn[InputIndex].data.SampleRate;
 
-StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteProc:=
-@StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteData; 
+{$IFNDEF FPC}
+StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteProc:= StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteData;
+{$else}
+StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteProc:= @StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteData;
+{$endif}
+
+
 
 StreamIn[InputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
  
@@ -3652,8 +3697,11 @@ function Tuos_Player.OutputAddDSPNoiseRemoval(OutputIndex: cint32): cint32;
 StreamOut[OutputIndex].DSP[result].fftdata.FNoise.samprate :=
 StreamOut[OutputIndex].data.SampleRate;
 
-StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteProc:=
-@StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteData; 
+{$IFNDEF FPC}
+StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteProc:=StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteData;
+{$else}
+StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteProc:=@StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteData;
+{$endif}
 
 StreamOut[OutputIndex].DSP[result].fftdata.FNoise.isprofiled := false;
  
@@ -3934,7 +3982,7 @@ begin
 end;
 
 {$IF DEFINED(synthesizer)}
-function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; duration : cint32; OutputIndex: cint32;
+function Tuos_Player.AddFromSynth(Frequency: cfloat; VolumeL: cfloat; VolumeR: cfloat; duration : cint32; OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
   // Frequency : default : -1 (440 htz)
@@ -4017,7 +4065,7 @@ begin
   Result := x;
 end;
 
-procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;  Duration: cint32; Enable : boolean);
+procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: cfloat; VolumeL: cfloat; VolumeR: cfloat;  Duration: cint32; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
   // VolumeL :  from 0 to 1 (-1 = do not change)
   // VolumeR :  from 0 to 1 (-1 = do not change)
@@ -4056,10 +4104,10 @@ function Tuos_Player.AddIntoIceServer(SampleRate : cint; Channels: cint; SampleF
 
 var
   x, typeenc : cint32;
-  err : integer = -1;
- 
+  err : integer;
+
  begin
- 
+ err := -1;
  result := -1 ;
   x := 0;
   err := -1;
@@ -4629,7 +4677,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   WriteLn((Format('OpusTag.comments = %d', [OpusTag^.comments])));  
  {$endif}
   LComment := OpusTag^.user_comments;
-  LcommentLength := OpusTag^.comment_lengths; 
+  LcommentLength := pointer(OpusTag^.comment_lengths);
   
   for j := 0 to OpusTag^.comments - 1 do
   begin
@@ -4644,7 +4692,8 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
   if j = 3 then StreamIn[x].Data.album := s;
   if j = 4 then StreamIn[x].Data.date := s;
   if j = 5 then StreamIn[x].Data.comment := s;
-  if j = 6 then StreamIn[x].Data.tag := s;
+  if j = 6 then   move(s[1], StreamIn[x].Data.tag[0], 3 * sizeof(char)); //StreamIn[InputIndex].Data.tag := s;
+
   if j > 6 then StreamIn[x].Data.comment := StreamIn[x].Data.comment + ' ' + s;
   
   inc(LComment);
@@ -4959,7 +5008,7 @@ var
   StreamIn[x].Data.Artist := BufferInfos.Artist;
   StreamIn[x].Data.Comment := BufferInfos.Comment;
   StreamIn[x].Data.Date := BufferInfos.Date;
-  StreamIn[x].Data.Tag := BufferInfos.Tag;
+  move(BufferInfos.Tag[0], StreamIn[x].Data.Tag[0], 3 * sizeof(char)); //StreamIn[x].Data.Tag := BufferInfos.Tag;
   StreamIn[x].Data.Album := BufferInfos.Album;
   StreamIn[x].Data.Genre := BufferInfos.Genre;
   StreamIn[x].Data.HDFormat := BufferInfos.HDFormat;
@@ -5077,7 +5126,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   StreamIn[x].Data.Artist := BufferInfos.Artist;
   StreamIn[x].Data.Comment := BufferInfos.Comment;
   StreamIn[x].Data.Date := BufferInfos.Date;
-  StreamIn[x].Data.Tag := BufferInfos.Tag;
+  move(BufferInfos.Tag[0], StreamIn[x].Data.Tag[0], 3 * sizeof(char)); //StreamIn[x].Data.Tag := BufferInfos.Tag;
   StreamIn[x].Data.Album := BufferInfos.Album;
   StreamIn[x].Data.Genre := BufferInfos.Genre;
   StreamIn[x].Data.HDFormat := BufferInfos.HDFormat;
@@ -5459,7 +5508,7 @@ begin
                      WriteLn((Format('OpusTag.comments = %d', [OpusTag^.comments])));
                      {$endif}
                      LComment := OpusTag^.user_comments;
-                     LcommentLength := OpusTag^.comment_lengths;
+                     LcommentLength := pointer(OpusTag^.comment_lengths);
                      for j := 0 to OpusTag^.comments - 1 do begin
                         SetLength(s, LcommentLength^);
                         move(Pointer(LComment^)^, Pointer(s)^, LcommentLength^);
@@ -5473,7 +5522,7 @@ begin
                         if j = 3 then StreamIn[x].Data.album := s;
                         if j = 4 then StreamIn[x].Data.date := s;
                         if j = 5 then StreamIn[x].Data.comment := s;
-                        if j = 6 then StreamIn[x].Data.tag := s;
+                        if j = 6 then  move(s[1], StreamIn[x].Data.Tag[0], 3 * sizeof(char)); //if j = 6 then StreamIn[x].Data.tag := s;
 
                         inc(LComment);
                         inc(LcommentLength);
@@ -5878,8 +5927,8 @@ begin
   StreamIn[x].Data.artist := copy(BufferTag, 34, 30); 
   StreamIn[x].Data.album := copy(BufferTag, 64, 30); 
   StreamIn[x].Data.date :=  copy(BufferTag, 94, 4);
-  StreamIn[x].Data.comment := copy(BufferTag, 98, 30); 
-  StreamIn[x].Data.tag := copy(BufferTag, 1, 3); 
+  StreamIn[x].Data.comment := copy(BufferTag, 98, 30);
+  move(BufferTag[1], StreamIn[x].Data.tag[0], length(BufferTag) * sizeof(char)); //StreamIn[x].Data.tag := copy(BufferTag, 1, 3);
   StreamIn[x].Data.genre := ord(BufferTag[128]);
 
   StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
@@ -5906,7 +5955,7 @@ begin
  {$endif}  
   
   StreamIn[x].Data.HandleSt := pchar('opus');
-  StreamIn[x].Data.HandleOP := op_test_file(PChar(FileName), Err);
+  StreamIn[x].Data.HandleOP := op_test_file(PAnsiChar(FileName), Err);
  
  {$IF DEFINED(debug)}
   WriteLn('op_test_file error = '+ inttostr(Err));  
@@ -5938,7 +5987,7 @@ begin
  WriteLn((Format('OpusTag.comments = %d', [OpusTag^.comments])));
  {$endif}  
   LComment := OpusTag^.user_comments;
-  LcommentLength := OpusTag^.comment_lengths;
+  LcommentLength := pointer(OpusTag^.comment_lengths);
   for j := 0 to OpusTag^.comments - 1 do
   begin
   SetLength(s, LcommentLength^);
@@ -5953,8 +6002,8 @@ begin
   if j = 3 then StreamIn[x].Data.album := s;
   if j = 4 then StreamIn[x].Data.date := s;
   if j = 5 then StreamIn[x].Data.comment := s;
-  if j = 6 then StreamIn[x].Data.tag := s;
-  
+  if j = 6 then move(s[1], StreamIn[x].Data.Tag[0], 3 * sizeof(char)); //if j = 6 then StreamIn[x].Data.tag := s;
+
   inc(LComment);
   inc(LcommentLength);
   end;
@@ -6309,59 +6358,52 @@ begin
   end;
 end;
 
-procedure Tuos_Player.DoDSPOutAfterBufProc(x: integer);  
-var
-x3 : integer;
-{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-msg: TfpgMessageParams;  // for fpgui
- {$endif}
+procedure Tuos_Player.DoDSPOutAfterBufProc(x: integer);
+   var x3 : integer;
+       {$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+       msg: TfpgMessageParams;  // for fpgui
+       {$endif}
 begin
-
-  for x3 := 0 to high(StreamOut[x].DSP) do
-  if (StreamOut[x].DSP[x3].Enabled = True) then
-  begin
-  if (StreamOut[x].DSP[x3].AftFunc <> nil) then
-  StreamOut[x].Data.Buffer :=
-  StreamOut[x].DSP[x3].AftFunc(StreamOut[x].Data,
-  StreamOut[x].DSP[x3].fftdata);
+   for x3 := 0 to high(StreamOut[x].DSP) do if (StreamOut[x].DSP[x3].Enabled = True) then begin
+      if (assigned(StreamOut[x].DSP[x3].AftFunc)) then
+         StreamOut[x].Data.Buffer :=
+      StreamOut[x].DSP[x3].AftFunc(StreamOut[x].Data, StreamOut[x].DSP[x3].fftdata);
   
-  {$IF DEFINED(mse)}
-    if (StreamOut[x].DSP[x3].LoopProc <> nil) then
-   begin
-     application.queueasynccall(StreamOut[x].DSP[x3].LoopProc);
-     end;
-   {$else}
- 
-  {$IF not DEFINED(Library)}
-  if (StreamOut[x].DSP[x3].LoopProc <> nil) then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,StreamOut[x].DSP[x3].LoopProc);
-  {$else}
- {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
- begin
-  msg.user.Param1 := x3 ;  // the index of the dsp
-  msg.user.Param2 := 1;  // it is a OUT DSP
-  fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
-  end;
- {$else}
-  thethread.synchronize(thethread,StreamOut[x].DSP[x3].LoopProc);
-  {$endif}
-  {$endif}
-
-  {$elseif not DEFINED(java)}
-  if (StreamOut[x].DSP[x3].LoopProc <> nil) then
-  StreamOut[x].DSP[x3].LoopProc;
-  {$else}
-  if (StreamOut[x].DSP[x3].LoopProc <> nil) then
-  {$IF FPC_FULLVERSION >= 20701}
-  thethread.queue(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
-  {$else}
-  thethread.synchronize(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
-  {$endif}
-  {$endif}
-  
-   {$endif}
-  end;
+      {$IF DEFINED(mse)}
+      if (StreamOut[x].DSP[x3].LoopProc <> nil) then begin
+         application.queueasynccall(StreamOut[x].DSP[x3].LoopProc);
+      end;
+      {$else}
+         {$IFNDEF Library}
+         if (Assigned(StreamOut[x].DSP[x3].LoopProc)) then
+            {$IFNDEF FPCPRE20701} //  {$IF FPC_FULLVERSION>=20701}
+            thethread.queue(thethread,StreamOut[x].DSP[x3].LoopProc);
+            {$else}
+               {$IFDEF fpcGUI}// {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+               begin
+                  msg.user.Param1 := x3 ;  // the index of the dsp
+                  msg.user.Param2 := 1;  // it is a OUT DSP
+                 fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
+               end;
+               {$else}
+               thethread.synchronize(thethread,StreamOut[x].DSP[x3].LoopProc);
+               {$endif}
+            {$endif}
+         {$else}
+            {$if not DEFINED(java)}
+            if (StreamOut[x].DSP[x3].LoopProc <> nil) then
+               StreamOut[x].DSP[x3].LoopProc;
+            {$else}
+            if (StreamOut[x].DSP[x3].LoopProc <> nil) then
+               {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION >= 20701}
+               thethread.queue(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
+               {$else}
+               thethread.synchronize(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
+               {$endif}
+            {$endif}
+         {$endif}
+      {$endif}
+   end;
 end;
 
 procedure Tuos_Player.DoArrayLevel(x: integer);
@@ -6396,75 +6438,69 @@ x2 : integer;
 begin
   for x2 := 0 to high(StreamIn[x].DSP) do
   if (StreamIn[x].DSP[x2].Enabled = True) and
-  (StreamIn[x].DSP[x2].BefFunc <> nil) then
+  (assigned(StreamIn[x].DSP[x2].BefFunc)) then
   StreamIn[x].DSP[x2].BefFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
 end;
 
 procedure Tuos_Player.DoDSPinAfterBufProc(x: integer);  
-var
-x2 : integer;
-{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-msg: TfpgMessageParams;  // for fpgui
- {$endif}
+  var x2 : integer;
+      {$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+      msg: TfpgMessageParams;  // for fpgui
+      {$endif}
 begin
-  for x2 := 0 to high(StreamIn[x].DSP) do
-  if (StreamIn[x].DSP[x2].Enabled = True) then
-  begin
+   for x2 := 0 to high(StreamIn[x].DSP) do if (StreamIn[x].DSP[x2].Enabled = True) then begin
+      {$IF DEFINED(debug)}
+      writeln('DSPin AfterBuffProc 1.');
+      {$endif}
+      if (Assigned(StreamIn[x].DSP[x2].AftFunc)) then
+         StreamIn[x].Data.Buffer := StreamIn[x].DSP[x2].AftFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
 
- {$IF DEFINED(debug)}
- writeln('DSPin AfterBuffProc 1.');
- {$endif}
-  if (StreamIn[x].DSP[x2].AftFunc <> nil) then
-  StreamIn[x].Data.Buffer :=
-  StreamIn[x].DSP[x2].AftFunc(StreamIn[x].Data,
-  StreamIn[x].DSP[x2].fftdata);
+      {$IF DEFINED(debug)}
+      writeln('DSPin AfterBuffProc 2.');
+      {$endif}
 
- {$IF DEFINED(debug)}
- writeln('DSPin AfterBuffProc 2.');
- {$endif}
-
-  {$IF DEFINED(mse)}
-    if (StreamIn[x].DSP[x2].LoopProc <> nil) then
-   begin
-   application.queueasynccall(StreamIn[x].DSP[x2].LoopProc) ;
+      {$IF DEFINED(mse)}
+      if (StreamIn[x].DSP[x2].LoopProc <> nil) then begin
+         application.queueasynccall(StreamIn[x].DSP[x2].LoopProc) ;
+      end;
+      {$else}
+         {$IFNDEF Library}  //{$IF not DEFINED(Library)}
+         if (assigned(StreamIn[x].DSP[x2].LoopProc)) then
+            {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+            thethread.queue(thethread,StreamIn[x].DSP[x2].LoopProc);
+            {$else}
+               {$IFDEF fpcGUI} // {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+               begin
+                  msg.user.Param1 := x2 ; // the index of the dsp
+                  msg.user.Param2 := 0;  //  it is a In DSP
+                  fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
+               end;
+               {$else}
+               thethread.synchronize(thethread,StreamIn[x].DSP[x2].LoopProc);
+               {$endif}
+            {$endif}
+         {$else}
+            {$if not DEFINED(java)}  //{$elseif not DEFINED(java)}
+               if (StreamIn[x].DSP[x2].LoopProc <> nil) then
+                  StreamIn[x].DSP[x2].LoopProc;
+            {$else}
+            if (StreamIn[x].DSP[x2].LoopProc <> nil) then
+               {$IFNDEF FPCPRE20701}  //{$IF FPC_FULLVERSION>=20701}
+               thethread.queue(thethread,@Streamin[x].DSP[x2].LoopProcjava);
+               {$else}
+               thethread.synchronize(thethread,@Streamin[x].DSP[x2].LoopProcjava);
+               {$endif}
+            {$endif}
+         {$endif}
+      {$endif}
    end;
-   {$else}
- 
-    {$IF not DEFINED(Library)}
-  if (StreamIn[x].DSP[x2].LoopProc <> nil) then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,StreamIn[x].DSP[x2].LoopProc);
-  {$else}
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-  begin
-  msg.user.Param1 := x2 ; // the index of the dsp
-  msg.user.Param2 := 0;  //  it is a In DSP
-  fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
-  end;
-  {$else}
-  thethread.synchronize(thethread,StreamIn[x].DSP[x2].LoopProc);
-  {$endif}
-  {$endif}
-  {$elseif not DEFINED(java)}
-  if (StreamIn[x].DSP[x2].LoopProc <> nil) then
-  StreamIn[x].DSP[x2].LoopProc;
-  {$else}
-  if (StreamIn[x].DSP[x2].LoopProc <> nil) then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@Streamin[x].DSP[x2].LoopProcjava);
-  {$else}
-  thethread.synchronize(thethread,@Streamin[x].DSP[x2].LoopProcjava);
-  {$endif}
-  {$endif}
-  {$endif}
-  end;
 end;
 
 procedure Tuos_Player.SeekIfTerminated;
 var
 x, statustemp : integer;
 begin
- 
+
   statustemp := 0 ;
   for x := 0 to high(StreamIn) do
   begin
@@ -6505,165 +6541,144 @@ end;
 
 procedure Tuos_Player.DoLoopEndMethods;
 begin
-{$IF DEFINED(mse)}
-    if LoopEndProc <> nil then
-   begin
-   application.queueasynccall(LoopEndProc);
-   end;
-     {$else}
-
- {$IF not DEFINED(Library)}
-   if LoopEndProc <> nil then
-
-   //  Execute LoopEndProc procedure
-   {$IF FPC_FULLVERSION>=20701}
-   thethread.queue(thethread,LoopEndProc);
-   {$else}
-   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-   begin
-   msg.user.Param1 := -2 ;  // it is the first proc
-   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
+   {$IF DEFINED(mse)}
+   if LoopEndProc <> nil then begin
+      application.queueasynccall(LoopEndProc);
    end;
    {$else}
-   thethread.synchronize(thethread,LoopEndProc);
-   {$endif}
-   {$endif}
-   {$elseif not DEFINED(java)}
-   if LoopEndProc <> nil then
-   LoopEndProc;
-   {$else}
-   if LoopEndProc <> nil then
-
-   {$IF FPC_FULLVERSION>=20701}
-   thethread.queue(thethread,@endprocjava);
-   {$else}
-   thethread.synchronize(thethread,@endprocjava); //  Execute EndProc procedure
-   {$endif}
-   {$endif}
+      {$IFNDEF Library}
+      if assigned(LoopEndProc) then
+         //  Execute LoopEndProc procedure
+         {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+         thethread.queue(thethread,LoopEndProc);
+         {$else}
+            {$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+            begin
+               msg.user.Param1 := -2 ;  // it is the first proc
+               fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
+            end;
+            {$else}
+            thethread.synchronize(thethread,LoopEndProc);
+            {$endif}
+         {$endif}
+      {$else}
+         {$if not DEFINED(java)}
+         if Assigned(LoopEndProc) then
+            LoopEndProc;
+         {$else}
+         if LoopEndProc <> nil then
+            {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+            thethread.queue(thethread,@endprocjava);
+            {$else}
+            thethread.synchronize(thethread,@endprocjava); //  Execute EndProc procedure
+            {$endif}
+         {$endif}
+      {$endif}
    {$endif}
 end;
 
 procedure Tuos_Player.DoEndProc;
 begin
-{$IF DEFINED(mse)}
- if EndProc <> nil then
-   begin
-   application.queueasynccall(EndProc);
-   end;
-     {$else}
-
- {$IF not DEFINED(Library)}
-  if EndProc <> nil then
-  {$IF FPC_FULLVERSION>=20701}
-  begin
-  thethread.queue(thethread,EndProc);
-  end;
-  {$else}
-  thethread.synchronize(thethread,EndProc); //  Execute EndProc procedure
-  {$endif}
-
-  {$elseif not DEFINED(java)}
-  if (EndProc <> nil) then
-  EndProc;
-  {$else}
-  if (EndProc <> nil) then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@endprocjava);
-  {$else}
-  thethread.synchronize(thethread,@endprocjava); //  Execute EndProc procedure
-  {$endif}
-  
-  {$endif}
-
-  {$endif}
+   {$IF DEFINED(mse)}
+      if EndProc <> nil then begin
+         application.queueasynccall(EndProc);
+      end;
+   {$else}
+      {$IFNDEF Library}
+      if assigned(EndProc) then Begin
+         {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+            thethread.queue(thethread,EndProc);
+         {$else}
+            thethread.synchronize(thethread,EndProc); //  Execute EndProc procedure
+         {$endif}
+      end;
+      {$else}
+         {$if not DEFINED(java)}
+         if (EndProc <> nil) then
+            EndProc;
+         {$else}
+         if (EndProc <> nil) then
+            {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+            thethread.queue(thethread,@endprocjava);
+            {$else}
+            thethread.synchronize(thethread,@endprocjava); //  Execute EndProc procedure
+            {$endif}
+         {$endif}
+      {$endif}
+   {$endif}
 end;
 
 procedure Tuos_Player.DoTerminateNoFreePlayer;
-var
-x, x2 : integer;
+  var x, x2 : integer;
 begin
-
-  isFirst := true;
- 
-  for x := 0 to high(StreamIn) do
-  begin
-  if (length(StreamIn[x].DSP) > 0) then
-  for x2 := 0 to high(StreamIn[x].DSP) do
-  if (StreamIn[x].DSP[x2].EndFunc <> nil) then
-  StreamIn[x].DSP[x2].EndFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
-  end;
-
-  for x := 0 to high(StreamOut) do
-  begin
-  if (length(StreamOut[x].DSP) > 0) then
-  for x2 := 0 to high(StreamOut[x].DSP) do
-  if (StreamOut[x].DSP[x2].EndFunc <> nil) then
-  StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
-  end;
-
-  if (StreamOut[x].Data.TypePut = 0) then
-  begin
-  WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
-  // StreamOut[x].FileBuffer.Data.Free;
-  end;
-
-  if (StreamOut[x].Data.TypePut = 4) then
-  begin
-  WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
-  // StreamOut[x].FileBuffer.Data.Free;
-  end;
-  
- {$IF DEFINED(mse)}
- if EndProc <> nil then
-   begin
-   application.queueasynccall(EndProc);
+   isFirst := true;
+   for x := 0 to high(StreamIn) do begin
+      if (length(StreamIn[x].DSP) > 0) then
+         for x2 := 0 to high(StreamIn[x].DSP) do
+            if (assigned(StreamIn[x].DSP[x2].EndFunc)) then
+               StreamIn[x].DSP[x2].EndFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
    end;
+
+   for x := 0 to high(StreamOut) do begin
+      if (length(StreamOut[x].DSP) > 0) then
+         for x2 := 0 to high(StreamOut[x].DSP) do
+            if (assigned(StreamOut[x].DSP[x2].EndFunc)) then
+               StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
+   end;
+
+   if (StreamOut[x].Data.TypePut = 0) then begin
+      WriteWave(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
+      // StreamOut[x].FileBuffer.Data.Free;
+   end;
+
+   if (StreamOut[x].Data.TypePut = 4) then begin
+      WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
+      // StreamOut[x].FileBuffer.Data.Free;
+   end;
+
+   {$IF DEFINED(mse)}
+   if assigned(EndProc) then begin
+      application.queueasynccall(EndProc);
+   end;
+   {$else}
+      {$IFNDEF Library)}
+      if assigned(EndProc) then
+         {$IFNDEF FPCPRE20701}
+            thethread.queue(thethread,EndProc);
+         {$else}
+            thethread.synchronize(thethread,EndProc); //  Execute EndProc procedure
+         {$endif}
      {$else}
- 
-  {$IF not DEFINED(Library)}
-  if EndProc <> nil then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,EndProc);
-  {$else}
-  thethread.synchronize(thethread,EndProc); //  Execute EndProc procedure
-  {$endif}
-
-  {$elseif not DEFINED(java)}
-  if (EndProc <> nil) then
-  EndProc;
-  {$else}
-  if (EndProc <> nil) then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@endprocjava);
-  {$else}
-  thethread.synchronize(thethread,@endprocjava); //  Execute EndProc procedure
-  {$endif}
-
-  {$endif}
+        {$if not DEFINED(java)}
+           if (EndProc <> nil) then EndProc;
+        {$else}
+           if (EndProc <> nil) then
+           {$IFNDEF FPCPRE20701}
+              thethread.queue(thethread,@endprocjava);
+           {$else}
+              thethread.synchronize(thethread,@endprocjava); //  Execute EndProc procedure
+           {$endif}
+        {$endif}
+     {$endif}
    {$endif}
-  
-   {$IF DEFINED(portaudio)} 
-   for x := 0 to high(StreamOut) do 
-    if (StreamOut[x].Data.HandleSt <> nil) and 
-       (StreamOut[x].Data.TypePut = 1) then 
-     Pa_StopStream(StreamOut[x].Data.HandleSt); 
-   {$ENDIF}   
+   {$IF DEFINED(portaudio)}
+   for x := 0 to high(StreamOut) do
+      if (StreamOut[x].Data.HandleSt <> nil) and (StreamOut[x].Data.TypePut = 1) then
+         Pa_StopStream(StreamOut[x].Data.HandleSt);
+   {$ENDIF}
 
-   if EndProcOnly <> nil then EndProcOnly;
-      
+   if assigned(EndProcOnly) then EndProcOnly;
+
    StreamIn[x].Data.Poseek := 0; // set to begin
    doseek(x);
-   
+
    Status := 2;
 
-    if isGlobalPause = true then
-  begin
-  RTLeventReSetEvent(uosInit.evGlobalPause)
-  end
-   else
-  begin
-  RTLeventReSetEvent(evPause);
-  end;
+   if isGlobalPause = true then begin
+      RTLeventReSetEvent(uosInit.evGlobalPause)
+   end else begin
+      RTLeventReSetEvent(evPause);
+   end;
 
 end;
 
@@ -6706,7 +6721,7 @@ begin
    begin
    if (length(StreamIn[x].DSP) > 0) then
    for x2 := 0 to high(StreamIn[x].DSP) do
-   if (StreamIn[x].DSP[x2].EndFunc <> nil) then
+   if (assigned(StreamIn[x].DSP[x2].EndFunc)) then
    StreamIn[x].DSP[x2].EndFunc(StreamIn[x].Data, StreamIn[x].DSP[x2].fftdata);
    end;
 
@@ -6718,7 +6733,7 @@ begin
    begin
    if (assigned(StreamOut[x].DSP)) and  (assigned(StreamOut[x]))  then if  (length(StreamOut[x].DSP) > 0) then
    for x2 := 0 to high(StreamOut[x].DSP) do
-   if (StreamOut[x].DSP[x2].EndFunc <> nil) then
+   if (assigned(StreamOut[x].DSP[x2].EndFunc)) then
    StreamOut[x].DSP[x2].EndFunc(StreamOut[x].Data, StreamOut[x].DSP[x2].fftdata);
    end;
 
@@ -6827,131 +6842,127 @@ begin
 end;
 
 procedure Tuos_Player.DoMainLoopProc(x: integer);
-{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-var
-msg: TfpgMessageParams;  // for fpgui
- {$endif}
+  {$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+  var msg: TfpgMessageParams;  // for fpgui
+  {$endif}
 begin
-
- {$IF DEFINED(mse)}
- if StreamIn[x].LoopProc <> nil then
-   begin
-   application.queueasynccall(StreamIn[x].LoopProc);
-   end;
-     {$else}
-
-// The synchro main loop procedure
-  {$IF not DEFINED(Library)}
-  if StreamIn[x].LoopProc <> nil then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,StreamIn[x].LoopProc);
+   {$IF DEFINED(mse)}
+      if assigned(StreamIn[x].LoopProc) then begin
+         application.queueasynccall(StreamIn[x].LoopProc);
+      end;
   {$else}
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-  begin
-  msg.user.Param1 := -1 ;  // it is the main loop procedure
-  msg.user.Param2 := 0 ;//  it is a INput procedure
-  fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
-  end;
-  {$else}
-  thethread.synchronize(thethread,StreamIn[x].LoopProc);
-  {$endif}
-  {$endif}
-
-  {$elseif not DEFINED(java)}
-  if (StreamIn[x].LoopProc <> nil) then
-  StreamIn[x].LoopProc;
-  {$else}
-  if (StreamIn[x].LoopProc <> nil) then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@Streamin[x].LoopProcjava);
-  {$else}
-  thethread.synchronize(thethread,@Streamin[x].LoopProcjava);
-  {$endif}
-  {$endif}
+     // The synchro main loop procedure
+     {$IFNDEF Library}
+        if assigned(StreamIn[x].LoopProc) then
+           {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+              thethread.queue(thethread,StreamIn[x].LoopProc);
+           {$else}
+              {$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+              begin
+                 msg.user.Param1 := -1 ;  // it is the main loop procedure
+                 msg.user.Param2 := 0 ;//  it is a INput procedure
+                 fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
+              end;
+              {$else}
+              thethread.synchronize(thethread,StreamIn[x].LoopProc);
+              {$endif}
+           {$endif}
+   {$else}
+      {$if not DEFINED(java)}
+      if (StreamIn[x].LoopProc <> nil) then
+         StreamIn[x].LoopProc;
+      {$else}
+         if (StreamIn[x].LoopProc <> nil) then
+            {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+            thethread.queue(thethread,@Streamin[x].LoopProcjava);
+            {$else}
+            thethread.synchronize(thethread,@Streamin[x].LoopProcjava);
+            {$endif}
+         {$endif}
+      {$endif}
    {$endif}
 end;
 
 procedure Tuos_Player.DoBeginMethods;
-{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-var
-msg: TfpgMessageParams;  // for fpgui
- {$endif}
+  {$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+  var msg: TfpgMessageParams;  // for fpgui
+  {$endif}
 begin
-{$IF DEFINED(mse)}
- if BeginProc <> nil then
-   begin
-   application.queueasynccall(BeginProc);
+   {$IF DEFINED(mse)}
+   if BeginProc <> nil then begin
+      application.queueasynccall(BeginProc);
    end;
- {$else}
-     
- {$IF not DEFINED(Library)}
-  if BeginProc <> nil then
-  //  Execute BeginProc procedure
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,BeginProc);
-  {$else}
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-  begin
-  msg.user.Param1 := -2 ;  // it is the first proc
-  fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
-  end;
-  {$else}
-  thethread.synchronize(thethread,BeginProc);
-  {$endif}
-  {$endif}
-  {$elseif not DEFINED(java)}
-  if BeginProc <> nil then
-  BeginProc;
-  {$else}
-  if BeginProc <> nil then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@BeginProcjava);
-  {$else}
-  thethread.synchronize(thethread,@BeginProcjava);
-  {$endif}
-  {$endif}
-  {$endif}
+   {$else}
+      {$IFNDEF Library}
+      if assigned(BeginProc) then
+         //  Execute BeginProc procedure
+         {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+         thethread.queue(thethread,BeginProc);
+         {$else}
+            {$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+            begin
+               msg.user.Param1 := -2 ;  // it is the first proc
+               fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
+            end;
+            {$else}
+            thethread.synchronize(thethread,BeginProc);
+            {$endif}
+         {$endif}
+      {$else}
+         {$if not DEFINED(java)}
+            if assigned(BeginProc) then
+            BeginProc;
+         {$else}
+         if assigned(BeginProc) then
+            {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+            thethread.queue(thethread,@BeginProcjava);
+            {$else}
+            thethread.synchronize(thethread,@BeginProcjava);
+            {$endif}
+         {$endif}
+      {$endif}
+   {$endif}
  end;
 
  procedure Tuos_Player.DoLoopBeginMethods;
-{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
- var
- msg: TfpgMessageParams;  // for fpgui
- {$endif}
+  {$IFDEF fpcGUI}  //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+  var msg: TfpgMessageParams;  // for fpgui
+  {$endif}
 begin
-{$IF DEFINED(mse)}
- if LoopBeginProc <> nil then
-   begin
-   application.queueasynccall(LoopBeginProc);
-   end;
- {$else}
-  {$IF not DEFINED(Library)}
-  if LoopBeginProc <> nil then
-  //  Execute BeginProc procedure
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,LoopBeginProc);
-  {$else}
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-  begin
-  msg.user.Param1 := -2 ;  // it is the first proc
-  fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
-  end;
-  {$else}
-  thethread.synchronize(thethread,LoopBeginProc);
-  {$endif}
-  {$endif}
-  {$elseif not DEFINED(java)}
-  if loopBeginProc <> nil then
-  loopBeginProc;
-  {$else}
-  if loopBeginProc <> nil then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@loopBeginProcjava);
-  {$else}
-  thethread.synchronize(thethread,@loopBeginProcjava);
-  {$endif}
-  {$endif}
-  {$endif}
+   {$IF DEFINED(mse)}
+      if LoopBeginProc <> nil then begin
+         application.queueasynccall(LoopBeginProc);
+      end;
+   {$else}
+      {$IFNDEF Library}
+         if assigned(LoopBeginProc) then
+            //  Execute BeginProc procedure
+            {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+               thethread.queue(thethread,LoopBeginProc);
+            {$else}
+               {$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+                  begin
+                     msg.user.Param1 := -2 ;  // it is the first proc
+                     fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
+                  end;
+               {$else}
+                  thethread.synchronize(thethread,LoopBeginProc);
+               {$endif}
+           {$endif}
+      {$else}
+         {$if not DEFINED(java)}
+            if assigned(loopBeginProc) then
+               loopBeginProc;
+         {$else}
+            if assigned(loopBeginProc) then
+               {$IFNDEF FPCPRE20701} //{$IF FPC_FULLVERSION>=20701}
+                  thethread.queue(thethread,@loopBeginProcjava);
+               {$else}
+                  thethread.synchronize(thethread,@loopBeginProcjava);
+               {$endif}
+         {$endif}
+      {$endif}
+   {$endif}
 end;
 
 procedure Tuos_Player.WriteOut(x:integer;  x2 : integer);  
@@ -7055,8 +7066,7 @@ begin
   {$endif}
 
 if err > 0 then
-
- err := shout_send_raw(StreamOut[x].Data.HandleSt, StreamOut[x].cbits, StreamOut[x].data.outframes);
+ err := shout_send_raw(StreamOut[x].Data.HandleSt, @StreamOut[x].cbits, StreamOut[x].data.outframes);
 
 {$IF DEFINED(debug)}
 		 if err = SHOUTERR_SUCCESS then
@@ -7334,7 +7344,12 @@ begin
 
 if err > 0 then
 
+ {$IFNDEF FPC}
+ err := shout_send_raw(StreamOut[x].Data.HandleSt, @StreamOut[x].cbits, StreamOut[x].data.outframes);
+ {$else}
  err := shout_send(StreamOut[x].Data.HandleSt, StreamOut[x].cbits, StreamOut[x].data.outframes);
+ {$endif}
+
 
 {$IF DEFINED(debug)}
 		 if err = SHOUTERR_SUCCESS then
@@ -7420,9 +7435,8 @@ case StreamIn[x].Data.LibOpen of
 {$IF DEFINED(debug)}
 writeln('===> Before mpg123_read') ;
 {$endif}
-err :=
-mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
-StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
+
+err := mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0], longword(StreamIn[x].Data.wantframes), longword(StreamIn[x].Data.outframes));
 
 {$IF DEFINED(debug)}
 writeln('===> mpg123_read error => ' + inttostr(err)) ;
@@ -7550,9 +7564,8 @@ begin
  {$IF DEFINED(mpg123)}
  1:
  begin
-
- mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0],
- StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
+ mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.wantframes, longword(StreamIn[x].Data.outframes));
+// mpg123_read(StreamIn[x].Data.HandleSt, @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.wantframes, StreamIn[x].Data.outframes);
 
  if  StreamIn[x].Data.outframes < 0 then  StreamIn[x].Data.outframes := 0 ;
 
