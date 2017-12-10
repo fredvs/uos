@@ -7,8 +7,10 @@
 
 unit uos_flat;
 
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
+{$IFDEF FPC)}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$ENDIF}
 
 // For custom configuration of directive to compiler --->  define.inc
 {$I define.inc}
@@ -21,11 +23,17 @@ uses
   uos_jni,
   {$endif}
 
-  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
-  fpg_base,
-  {$ENDIF}
+{$IFDEF FPC)}
+   {$IFDEF fpcGUI}
+      fpg_base,
+   {$IFEND}
 
-  ctypes, classes, math, SysUtils, uos;
+   ctypes,
+{$else}
+   DELPHIctypes,
+{$ENDIF}
+
+   classes, math, SysUtils, uos;
  
   {$IF DEFINED(bs2b)}
   const
@@ -106,18 +114,18 @@ sol4_d = 1661.2;
 la5 = 1760.0;
 {$endif}
 
-  type
-  TDArFloat = array of cfloat;
+  //type
+  //TDArFloat = array of cfloat;
 
-  TDArShort = array of cInt16;
-  TDArLong = array of cInt32;
+  //TDArShort = array of cInt16;
+  //TDArLong = array of cInt32;
 
-  TDArPARFloat = array of TDArFloat;
-  TDArIARFloat = array of TDArPARFloat;
+  //TDArPARFloat = array of TDArFloat;
+  //TDArIARFloat = array of TDArPARFloat;
 
-  PDArFloat = ^TDArFloat;
-  PDArShort = ^TDArShort;
-  PDArLong = ^TDArLong;
+  //PDArFloat = ^TDArFloat;
+  //PDArShort = ^TDArShort;
+  //PDArLong = ^TDArLong;
 
  type
 
@@ -139,7 +147,7 @@ la5 = 1760.0;
   TuosF_FFT = Tuos_FFT ;
   TuosF_BufferInfos = Tuos_BufferInfos;
 
-{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+  {$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   const
   MSG_CUSTOM1 = FPGM_USER + 1;
   {$ENDIF}
@@ -189,20 +197,20 @@ procedure uos_unloadServerLib();
   
 procedure uos_UnloadPlugin(PluginName: PChar);
 
-{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
+{$IFDEF fpcGUI} //{$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
 function uos_CreatePlayer(PlayerIndex: cint32; AParent: TObject) : boolean;
 {$else}
 function uos_CreatePlayer(PlayerIndex: cint32): boolean;
 {$endif}
 
 {$IF DEFINED(portaudio)}
-function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
+function uos_AddIntoDevOut(PlayerIndex: cint32): cint32; {$IFNDEF FPC} overload;{$endif}
   // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, soundcard, ...)
   // If PlayerIndex already exists, it will be overwriten...
 
   // Add a Output into Device Output with custom parameters
 function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ): cint32;
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ): cint32; {$IFNDEF FPC} overload;{$endif}
   // Add a Output into Device Output with default parameters
   // PlayerIndex : Index of a existing Player
   // Device ( -1 is default device )
@@ -215,11 +223,11 @@ function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble
   // example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1, -1, 0,-1);
  {$endif}
  
-function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar): cint32;
+function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar): cint32; {$IFNDEF FPC} overload;{$endif}
   // Add a input from audio file with default parameters
 
 function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint32;
-  SampleFormat: cint32 ; FramesCount: cint32): cint32;
+  SampleFormat: cint32 ; FramesCount: cint32): cint32; {$IFNDEF FPC} overload;{$endif}
   // Add a input from audio file with custom parameters
   // PlayerIndex : Index of a existing Player
   // FileName : filename of audio file
@@ -253,11 +261,11 @@ function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStrea
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := AddFromMemoryStream(0, mymemorystream,-1,-1,0,1024);
 
-function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar): cint32;
+function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar): cint32; {$IFNDEF FPC} overload;{$endif}
   // Add a input from audio file with default parameters
   
 function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar; OutputIndex: cint32;
-  SampleFormat: cint32 ; FramesCount: cint32 ; numbuf : cint): cint32;
+  SampleFormat: cint32 ; FramesCount: cint32 ; numbuf : cint): cint32;  {$IFNDEF FPC} overload;{$endif}
   // Add a input from audio file and store it into memory with custom parameters
   // PlayerIndex : Index of a existing Player
   // FileName : filename of audio file
@@ -284,11 +292,11 @@ function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: 
   {$endif}
 
 {$IF DEFINED(webstream)}
-function uos_AddFromURL(PlayerIndex: cint32; URL: PChar): cint32;
+function uos_AddFromURL(PlayerIndex: cint32; URL: PChar): cint32; {$IFNDEF FPC} overload;{$endif}
   // Add a Input from Audio URL with default parameters
 
 function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
-  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32 ; ICYon : boolean): cint32;
+  SampleFormat: cint32 ; FramesCount: cint32; AudioFormat: cint32 ; ICYon : boolean): cint32; {$IFNDEF FPC} overload;{$endif}
   // Add a Input from Audio URL with custom parameters
   // URL : URL of audio file 
   // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other cint32 : existing Output
@@ -299,7 +307,7 @@ function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
 {$ENDIF}
 
 function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
-  Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
+  Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;  {$IFNDEF FPC} overload;{$endif}
   // Add a Output into audio wav file with custom parameters from TFileStream
   // PlayerIndex : Index of a existing Player
   // FileName : filename of saved audio wav file
@@ -311,13 +319,13 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint3
   //  result :Output Index in array  -1 = error
   // example : OutputIndex1 := uos_AddIntoFile(0,edit5.Text,-1,-1, 0, 1);
 
-function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar): cint32;
+function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar): cint32; {$IFNDEF FPC} overload;{$endif}
   // Add a Output into audio wav file with Default parameters from TFileStream
   // PlayerIndex : Index of a existing Player
   // FileName : filename of saved audio wav file
 
 function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate: LongInt;  
-      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt;  
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt; {$IFNDEF FPC} overload;{$endif}
     // Add a Output into audio wav file with Custom parameters
   // FileName : filename of saved audio wav file
   // SampleRate : delault : -1 (44100)
@@ -328,7 +336,7 @@ function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate
   //  result :  Output Index in array    -1 = error
   // example : OutputIndex1 := AddIntoFileFromMem(0, edit5.Text,-1,-1,0, -1);
 
-function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
+function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;  {$IFNDEF FPC} overload;{$endif}
   // Add a Output into audio wav file with Default parameters from TMemoryStream
   // PlayerIndex : Index of a existing Player
   // FileName : filename of saved audio wav file
@@ -336,7 +344,7 @@ function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
 {$IF DEFINED(portaudio)}
 function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
   SampleRate: cint32; OutputIndex: cint32;
-  SampleFormat: cint32; FramesCount : cint32): cint32;
+  SampleFormat: cint32; FramesCount : cint32): cint32;  {$IFNDEF FPC} overload;{$endif}
   // Add a Input from Device Input with custom parameters
   // PlayerIndex : Index of a existing Player
   // Device ( -1 is default Input device )
@@ -348,7 +356,7 @@ function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
   //  result :  Output Index in array
   // example : OutputIndex1 := uos_AddFromDevIn(0,-1,-1,-1,-1,-1);
 
-function uos_AddFromDevIn(PlayerIndex: cint32): cint32;
+function uos_AddFromDevIn(PlayerIndex: cint32): cint32;   {$IFNDEF FPC} overload;{$endif}
   // Add a Input from Device Input with default parameters
   // PlayerIndex : Index of a existing Player
 {$endif}
@@ -359,7 +367,7 @@ function uos_AddFromEndlessMuted(PlayerIndex: cint32; Channels : cint32; FramesC
   // Channels = Channels of input-to-follow.
  
 {$IF DEFINED(synthesizer)}
-function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: cfloat; VolumeL: cfloat; VolumeR: cfloat;
 Duration : cint32;  OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
@@ -374,8 +382,8 @@ Duration : cint32;  OutputIndex: cint32;
   //  result :  Input Index in array  -1 = error
   // example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
   
-procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: float;
- VolumeL: float; VolumeR: float; Duration: cint32; Enable : boolean);
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: cfloat;
+ VolumeL: cfloat; VolumeR: cfloat; Duration: cint32; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
   // VolumeL :  from 0 to 1 (-1 = do not change)
   // VolumeR :  from 0 to 1 (-1 = do not change)
@@ -669,12 +677,12 @@ function uos_InputGetLevelRight(PlayerIndex: cint32; InputIndex: cint32): double
   // result : right level(volume) from 0 to 1
   
 {$IF DEFINED(soundtouch)}
-function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): float;
+function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): cfloat;
   // InputIndex : InputIndex of existing input
   // result : Beats per minuts
 {$endif}     
 
-function uos_InputPositionSeconds(PlayerIndex: cint32; InputIndex: cint32): float;
+function uos_InputPositionSeconds(PlayerIndex: cint32; InputIndex: cint32): cfloat;
   // InputIndex : InputIndex of existing input
   //  result : current postion of Input in seconds
 
@@ -764,7 +772,7 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
   // example : InputIndex1 := uos_File2File(edit5.Text,0,buffmem); 
 
 var
-  uosDeviceInfos: array of Tuos_DeviceInfos;
+  //uosDeviceInfos: array of Tuos_DeviceInfos;
   uosLoadResult: Tuos_LoadResult;
   uosDeviceCount: cint32;
   uosDefaultDeviceIn: cint32;
@@ -1190,7 +1198,7 @@ function uos_AddFromEndlessMuted(PlayerIndex: cint32; Channels : cint32; FramesC
 end; 
 
 {$IF DEFINED(synthesizer)}
-function uos_AddFromSynth(PlayerIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;
+function uos_AddFromSynth(PlayerIndex: cint32; Frequency: cfloat; VolumeL: cfloat; VolumeR: cfloat;
 Duration : cint32;  OutputIndex: cint32;
   SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
   // Add a input from Synthesizer with custom parameters
@@ -1213,8 +1221,8 @@ Duration : cint32;  OutputIndex: cint32;
   SampleFormat, SampleRate,  FramesCount) ;
 end;
 
-procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: float;
- VolumeL: float; VolumeR: float; Duration: cint32; Enable : boolean);
+procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; Frequency: cfloat;
+ VolumeL: cfloat; VolumeR: cfloat; Duration: cint32; Enable : boolean);
   // Frequency : in Hertz (-1 = do not change)
   // VolumeL :  from 0 to 1 (-1 = do not change)
   // VolumeR :  from 0 to 1 (-1 = do not change)
@@ -1733,7 +1741,7 @@ begin
 end;
 
 {$IF DEFINED(soundtouch)}
-function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): float;
+function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): cfloat;
   // InputIndex : InputIndex of existing input
   // result : Beats per minuts
 begin
@@ -1745,7 +1753,7 @@ begin
 end;  
 {$endif}
 
-function uos_InputPositionSeconds(PlayerIndex: cint32; InputIndex: cint32): float;
+function uos_InputPositionSeconds(PlayerIndex: cint32; InputIndex: cint32): cfloat;
   // InputIndex : InputIndex of existing input
   //  result : current postion of Input in seconds
 begin
@@ -2025,8 +2033,9 @@ end;
 procedure uos_unloadlib() ;
   var
   x: cint32;
-  nt : integer = 300;
+  nt : integer;
   begin
+  nt := 300;
   if assigned(uosPlayers) then
   begin
   if (length(uosPlayers) > 0) then
@@ -2069,23 +2078,23 @@ end;
 {$IF DEFINED(portaudio)}
 procedure uos_GetInfoDevice();
 begin
-uos.uos_GetInfoDevice();
-setlength(uosDeviceInfos,length(uos.uosDeviceInfos));
+   uos.uos_GetInfoDevice();
+   setlength(uosDeviceInfos,length(uos.uosDeviceInfos));
 
-uosDeviceInfos := uos.uosDeviceInfos;
+   uosDeviceInfos := uos.uosDeviceInfos;
 
-uosDeviceCount:= uos.uosDeviceCount;
-uosDefaultDeviceIn:= uos.uosDefaultDeviceIn;
-uosDefaultDeviceOut:= uos.uosDefaultDeviceOut;
+   uosDeviceCount:= uos.uosDeviceCount;
+   uosDefaultDeviceIn:= uos.uosDefaultDeviceIn;
+   uosDefaultDeviceOut:= uos.uosDefaultDeviceOut;
 end;
 
-function uos_GetInfoDeviceStr() : PChar ;
+function uos_GetInfoDeviceStr() : PAnsiChar ;
 begin
-result := uos.uos_GetInfoDeviceStr();
-uosDeviceCount:= uos.uosDeviceCount;
-uosDefaultDeviceIn:= uos.uosDefaultDeviceIn;
-uosDefaultDeviceOut:= uos.uosDefaultDeviceOut;
-end;
+   result := uos.uos_GetInfoDeviceStr();
+   uosDeviceCount:= uos.uosDeviceCount;
+   uosDefaultDeviceIn:= uos.uosDefaultDeviceIn;
+   uosDefaultDeviceOut:= uos.uosDefaultDeviceOut;
+   end;
 {$endif}
 
 
@@ -2094,8 +2103,9 @@ function uos_CreatePlayer(PlayerIndex : cint32): boolean;
 // If PlayerIndex exists already, it will be overwriten...
  var
 x : cint32;
-nt : integer = 200;
+nt : integer ;
 begin
+nt := 200;
 result := false;
 
 if PlayerIndex >= 0 then 
@@ -2150,9 +2160,9 @@ end;
 procedure uos_Free();
 var
 x : integer;
-nt : integer = 200;
+nt : integer ;
 begin
-
+nt := 200;
 if assigned(uosPlayers) then
 if length(uosPlayers) > 0 then
  for x := 0 to length(uosPlayers) -1 do

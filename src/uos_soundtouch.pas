@@ -11,15 +11,24 @@
 
 unit uos_soundtouch;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$endif}
 
-{$PACKRECORDS C}
+
 
 interface
 
 uses
- ctypes, DynLibs;
- 
+  {$IFNDEF FPC}
+  DELPHIctypes, windows, sysutils;
+  {$else}
+  ctypes, DynLibs;
+  {$endif}
+
+
+
 const
 libst=
  {$IFDEF unix}
@@ -32,9 +41,12 @@ libst=
      {$endif}
   {$ENDIF}     
 
-{$IF not DEFINED(windows)}
-type
-  THandle = pointer;
+
+{$IFDEF FPC}
+   {$IF not DEFINED(windows)}
+   type
+     THandle = pointer;
+   {$endif}
 {$endif}
 
 type
@@ -89,7 +101,12 @@ var
   soundtouch_setTempo: procedure(h: THandle; newTempo: single); cdecl;
   soundtouch_setTempoChange: procedure(h: THandle; newTempo: single); cdecl;
 
- LibHandle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib
+  {$IFNDEF FPC}
+  LibHandle:THandle=NilHandle; // this will hold our handle for the lib
+  {$else}
+  LibHandle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib
+  {$endif}
+
  ReferenceCounter : cardinal = 0;  // Reference counter
          
 function ST_IsLoaded : boolean; inline; 
@@ -100,112 +117,126 @@ implementation
 
 function ST_IsLoaded: boolean;
 begin
- Result := (LibHandle <> dynlibs.NilHandle);
+ Result := (LibHandle <> NilHandle);
 end;
 
 function ST_Load(const libfilename: string): boolean;
-var
-thelib: string; 
+  var thelib: string;
 begin
    Result := False;
-  if LibHandle<>0 then 
-begin
- Inc(ReferenceCounter);
-result:=true 
-end  else begin 
-      if Length(libfilename) = 0 then thelib := libst else thelib := libfilename;
-    LibHandle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want.
-  	if LibHandle <> DynLibs.NilHandle then
-       begin
-    try
-    Pointer(soundtouch_createInstance) :=
-        GetProcAddress(LibHandle, 'soundtouch_createInstance');
-      if   Pointer(soundtouch_createInstance) = nil then  // not the SoundTouchDLL library.
-      begin
-        ST_Unload;
-       result := false end
-      else
-       begin
-         Pointer(soundtouch_clear) :=
-        GetProcAddress(LibHandle, 'soundtouch_clear');
-         Pointer(soundtouch_destroyInstance) :=
-        GetProcAddress(LibHandle, 'soundtouch_destroyInstance');
-      Pointer(soundtouch_flush) :=
-        GetProcAddress(LibHandle, 'soundtouch_flush');
-      Pointer(soundtouch_getSetting) :=
-        GetProcAddress(LibHandle, 'soundtouch_getSetting');
-      Pointer(soundtouch_getVersionId) :=
-        GetProcAddress(LibHandle, 'soundtouch_getVersionId');
-      Pointer(soundtouch_getVersionString2) :=
-        GetProcAddress(LibHandle, 'soundtouch_getVersionString2');
-      Pointer(soundtouch_getVersionString) :=
-        GetProcAddress(LibHandle, 'soundtouch_getVersionString');
-      Pointer(soundtouch_isEmpty) :=
-        GetProcAddress(LibHandle, 'soundtouch_isEmpty');
-      Pointer(soundtouch_numSamples) :=
-        GetProcAddress(LibHandle, 'soundtouch_numSamples');
-      Pointer(soundtouch_numUnprocessedSamples) :=
-        GetProcAddress(LibHandle, 'soundtouch_numUnprocessedSamples');
-      Pointer(soundtouch_putSamples) :=
-        GetProcAddress(LibHandle, 'soundtouch_putSamples');
-      Pointer(soundtouch_receiveSamples) :=
-        GetProcAddress(LibHandle, 'soundtouch_receiveSamples');
-      Pointer(soundtouch_setChannels) :=
-        GetProcAddress(LibHandle, 'soundtouch_setChannels');
-      Pointer(soundtouch_setPitch) :=
-        GetProcAddress(LibHandle, 'soundtouch_setPitch');
-      Pointer(soundtouch_setPitchOctaves) :=
-        GetProcAddress(LibHandle, 'soundtouch_setPitchOctaves');
-      Pointer(soundtouch_setPitchSemiTones) :=
-        GetProcAddress(LibHandle, 'soundtouch_setPitchSemiTones');
-      Pointer(soundtouch_setRate) :=
-        GetProcAddress(LibHandle, 'soundtouch_setRate');
-      Pointer(soundtouch_setRateChange) :=
-        GetProcAddress(LibHandle, 'soundtouch_setRateChange');
-      Pointer(soundtouch_setSampleRate) :=
-        GetProcAddress(LibHandle, 'soundtouch_setSampleRate');
-      Pointer(soundtouch_setSetting) :=
-        GetProcAddress(LibHandle, 'soundtouch_setSetting');
-      Pointer(soundtouch_setTempo) :=
-        GetProcAddress(LibHandle, 'soundtouch_setTempo');
-      Pointer(soundtouch_setTempoChange) :=
-        GetProcAddress(LibHandle, 'soundtouch_setTempoChange');
+   if LibHandle<>0 then begin
+      Inc(ReferenceCounter);
+      result:=true
+   end else begin
+      if Length(libfilename) = 0 then
+         thelib := libst
+      else thelib := libfilename;
+      {$IFNDEF FPC}
+      LibHandle:=SafeLoadLibrary(libfilename); // obtain the handle we want.
+      {$else}
+      LibHandle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want.
+      {$endif}
 
-       Pointer(bpm_createInstance) :=
-        GetProcAddress(LibHandle, 'bpm_createInstance');
-      Pointer(bpm_destroyInstance) :=
-        GetProcAddress(LibHandle, 'bpm_destroyInstance');
-      Pointer(bpm_getBpm) :=
-        GetProcAddress(LibHandle, 'bpm_getBpm');
-      Pointer(bpm_putSamples) :=
-        GetProcAddress(LibHandle, 'bpm_putSamples');
+  	  if LibHandle <> NilHandle then begin
+         try
+            {$IFNDEF FPC}
+            soundtouch_createInstance := GetProcAddress(LibHandle, 'soundtouch_createInstance');
+            if Pointer(soundtouch_createInstance) = nil then begin // not the SoundTouchDLL library.
+               ST_Unload;
+               result := false
+            end else begin
+               soundtouch_clear := GetProcAddress(LibHandle, 'soundtouch_clear');
+               soundtouch_destroyInstance := GetProcAddress(LibHandle, 'soundtouch_destroyInstance');
+               soundtouch_flush := GetProcAddress(LibHandle, 'soundtouch_flush');
+               soundtouch_getSetting := GetProcAddress(LibHandle, 'soundtouch_getSetting');
+               soundtouch_getVersionId := GetProcAddress(LibHandle, 'soundtouch_getVersionId');
+               soundtouch_getVersionString2 := GetProcAddress(LibHandle, 'soundtouch_getVersionString2');
+               soundtouch_getVersionString := GetProcAddress(LibHandle, 'soundtouch_getVersionString');
+               soundtouch_isEmpty := GetProcAddress(LibHandle, 'soundtouch_isEmpty');
+               soundtouch_numSamples := GetProcAddress(LibHandle, 'soundtouch_numSamples');
+               soundtouch_numUnprocessedSamples := GetProcAddress(LibHandle, 'soundtouch_numUnprocessedSamples');
+               soundtouch_putSamples := GetProcAddress(LibHandle, 'soundtouch_putSamples');
+               soundtouch_receiveSamples := GetProcAddress(LibHandle, 'soundtouch_receiveSamples');
+               soundtouch_setChannels := GetProcAddress(LibHandle, 'soundtouch_setChannels');
+               soundtouch_setPitch := GetProcAddress(LibHandle, 'soundtouch_setPitch');
+               soundtouch_setPitchOctaves := GetProcAddress(LibHandle, 'soundtouch_setPitchOctaves');
+               soundtouch_setPitchSemiTones := GetProcAddress(LibHandle, 'soundtouch_setPitchSemiTones');
+               soundtouch_setRate := GetProcAddress(LibHandle, 'soundtouch_setRate');
+               soundtouch_setRateChange := GetProcAddress(LibHandle, 'soundtouch_setRateChange');
+               soundtouch_setSampleRate := GetProcAddress(LibHandle, 'soundtouch_setSampleRate');
+               soundtouch_setSetting := GetProcAddress(LibHandle, 'soundtouch_setSetting');
+               soundtouch_setTempo := GetProcAddress(LibHandle, 'soundtouch_setTempo');
+               soundtouch_setTempoChange := GetProcAddress(LibHandle, 'soundtouch_setTempoChange');
+               bpm_createInstance := GetProcAddress(LibHandle, 'bpm_createInstance');
+               bpm_destroyInstance := GetProcAddress(LibHandle, 'bpm_destroyInstance');
+               bpm_getBpm := GetProcAddress(LibHandle, 'bpm_getBpm');
+               bpm_putSamples := GetProcAddress(LibHandle, 'bpm_putSamples');
 
-    Result := St_IsLoaded;
-    ReferenceCounter:=1;
+               Result := St_IsLoaded;
+               ReferenceCounter:=1;
+            end;
+            {$else}
+            Pointer(soundtouch_createInstance) := GetProcAddress(LibHandle, 'soundtouch_createInstance');
+            if Pointer(soundtouch_createInstance) = nil then begin // not the SoundTouchDLL library.
+               ST_Unload;
+               result := false
+            end else begin
+               Pointer(soundtouch_clear) := GetProcAddress(LibHandle, 'soundtouch_clear');
+               Pointer(soundtouch_destroyInstance) := GetProcAddress(LibHandle, 'soundtouch_destroyInstance');
+               Pointer(soundtouch_flush) := GetProcAddress(LibHandle, 'soundtouch_flush');
+               Pointer(soundtouch_getSetting) := GetProcAddress(LibHandle, 'soundtouch_getSetting');
+               Pointer(soundtouch_getVersionId) := GetProcAddress(LibHandle, 'soundtouch_getVersionId');
+               Pointer(soundtouch_getVersionString2) := GetProcAddress(LibHandle, 'soundtouch_getVersionString2');
+               Pointer(soundtouch_getVersionString) := GetProcAddress(LibHandle, 'soundtouch_getVersionString');
+               Pointer(soundtouch_isEmpty) := GetProcAddress(LibHandle, 'soundtouch_isEmpty');
+               Pointer(soundtouch_numSamples) := GetProcAddress(LibHandle, 'soundtouch_numSamples');
+               Pointer(soundtouch_numUnprocessedSamples) := GetProcAddress(LibHandle, 'soundtouch_numUnprocessedSamples');
+               Pointer(soundtouch_putSamples) := GetProcAddress(LibHandle, 'soundtouch_putSamples');
+               Pointer(soundtouch_receiveSamples) := GetProcAddress(LibHandle, 'soundtouch_receiveSamples');
+               Pointer(soundtouch_setChannels) := GetProcAddress(LibHandle, 'soundtouch_setChannels');
+               Pointer(soundtouch_setPitch) := GetProcAddress(LibHandle, 'soundtouch_setPitch');
+               Pointer(soundtouch_setPitchOctaves) := GetProcAddress(LibHandle, 'soundtouch_setPitchOctaves');
+               Pointer(soundtouch_setPitchSemiTones) := GetProcAddress(LibHandle, 'soundtouch_setPitchSemiTones');
+               Pointer(soundtouch_setRate) := GetProcAddress(LibHandle, 'soundtouch_setRate');
+               Pointer(soundtouch_setRateChange) := GetProcAddress(LibHandle, 'soundtouch_setRateChange');
+               Pointer(soundtouch_setSampleRate) := GetProcAddress(LibHandle, 'soundtouch_setSampleRate');
+               Pointer(soundtouch_setSetting) := GetProcAddress(LibHandle, 'soundtouch_setSetting');
+               Pointer(soundtouch_setTempo) := GetProcAddress(LibHandle, 'soundtouch_setTempo');
+               Pointer(soundtouch_setTempoChange) := GetProcAddress(LibHandle, 'soundtouch_setTempoChange');
+               Pointer(bpm_createInstance) := GetProcAddress(LibHandle, 'bpm_createInstance');
+               Pointer(bpm_destroyInstance) := GetProcAddress(LibHandle, 'bpm_destroyInstance');
+               Pointer(bpm_getBpm) := GetProcAddress(LibHandle, 'bpm_getBpm');
+               Pointer(bpm_putSamples) := GetProcAddress(LibHandle, 'bpm_putSamples');
 
-       end;
-
-      except
-      ST_Unload;
-    end;
-  end;
-end;
+               Result := St_IsLoaded;
+               ReferenceCounter:=1;
+            end;
+            {$endif}
+         except
+            ST_Unload;
+         end;
+      end;
+   end;
 end;
 
 procedure ST_Unload;
 begin
-// < Reference counting
-  if ReferenceCounter > 0 then
-    dec(ReferenceCounter);
-  if ReferenceCounter > 0 then
-    exit;
-  // >
+   // < Reference counting
+   if ReferenceCounter > 0 then
+      dec(ReferenceCounter);
+   if ReferenceCounter > 0 then
+      exit;
+   // >
 
-  if LibHandle <> DynLibs.NilHandle then
-  begin
-    DynLibs.UnloadLibrary(LibHandle);
-    LibHandle := DynLibs.NilHandle;
-  end;
+   if LibHandle <> NilHandle then begin
+      {$IFNDEF FPC}
+      FreeLibrary(LibHandle);
+      {$else}
+      DynLibs.UnloadLibrary(LibHandle);
+      {$endif}
+
+      LibHandle := NilHandle;
+   end;
 end;
 
 end.

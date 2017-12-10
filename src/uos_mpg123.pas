@@ -11,14 +11,24 @@ interface
 
   {$DEFINE newversion}   // uncomment for mpg123 new version
 
-  {$PACKENUM 4}(* use 4-byte enums *)
-  {$PACKRECORDS C}(* C/C++-compatible record packing *)
-  {$mode objfpc}{$H+}
+  {$IFDEF FPC}
+     {$PACKENUM 4}(* use 4-byte enums *)
+     {$PACKRECORDS C}(* C/C++-compatible record packing *)
+     {$mode objfpc}{$H+}
+  {$endif}
 
 {$LONGSTRINGS ON}
 uses
- ctypes, dynlibs;
- 
+  {$IFNDEF FPC}
+  windows, DELPHIctypes,
+  {$else}
+  ctypes,
+  dynlibs,
+  {$endif}
+  sysutils;
+
+
+
 const
 libmp=
  {$IFDEF unix}
@@ -273,7 +283,8 @@ type
 
   PLong = Pointer;
   pplong = array of PLong;
-  PInteger = Pointer;
+  //PInteger = Pointer;
+  PInteger = ^integer ;
   PPInteger = array of PInteger;
 
 type
@@ -877,7 +888,12 @@ var
 {Special function for dynamic loading of lib ...}
 
 var
+  {$IFNDEF FPC}
+  Mp_Handle: THandle;
+  {$else}
   Mp_Handle: TLibHandle;
+  {$endif}
+
   // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
   ReferenceCounter: cardinal = 0;  // Reference counter
 
@@ -891,156 +907,118 @@ implementation
 
 function mp_IsLoaded: boolean;
 begin
-  Result := (Mp_Handle <> dynlibs.NilHandle);
+   Result := (Mp_Handle <> NilHandle);
 end;
 
 function mp_unload(): boolean;
 begin
-result := false;
-  // < Reference counting
-  if ReferenceCounter > 0 then
-    Dec(ReferenceCounter);
-  if ReferenceCounter > 0 then
-    exit;
-  // >
-  if mp_IsLoaded then
-  begin
-    mpg123_exit ;
-    DynLibs.UnloadLibrary(mp_Handle);
-    mp_Handle := DynLibs.NilHandle;
-    result := true;
-  end;
+   result := false;
+   // < Reference counting
+   if ReferenceCounter > 0 then
+      Dec(ReferenceCounter);
+   if ReferenceCounter > 0 then
+      exit;
+   // >
+   if mp_IsLoaded then begin
+      mpg123_exit ;
+     {$IFNDEF FPC}
+     FreeLibrary(mp_Handle);
+     {$else}
+     DynLibs.UnloadLibrary(mp_Handle);
+     {$endif}
+     mp_Handle := NilHandle;
+     result := true;
+   end;
 end;
 
 function Mp_Load(const libfilename: string): boolean;
-var
-thelib: string; 
+  var thelib: string;
 begin
-  Result := False;
-  if Mp_Handle <> 0 then
-  begin
-    Result := True; {is it already there ?}
-    Inc(ReferenceCounter);
-  end
-  else
-  begin {go & load the library}
-    if Length(libfilename) = 0 then thelib := libmp else thelib := libfilename;
-    Mp_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
-    if Mp_Handle <> DynLibs.NilHandle then
-
-    begin
-      mpg123_init := Tmpg123_init(GetProcAddress(Mp_Handle, 'mpg123_init'));
-      mpg123_exit := Tmpg123_exit(GetProcAddress(Mp_Handle, 'mpg123_exit'));
-      mpg123_new := Tmpg123_new(GetProcAddress(Mp_Handle, 'mpg123_new'));
-      mpg123_delete := Tmpg123_delete(GetProcAddress(Mp_Handle, 'mpg123_delete'));
-      mpg123_param := Tmpg123_param(GetProcAddress(Mp_Handle, 'mpg123_param'));
-      mpg123_getparam := Tmpg123_getparam(
-        GetProcAddress(Mp_Handle, 'mpg123_getparam'));
-      mpg123_plain_strerror := Tmpg123_plain_strerror(
-        GetProcAddress(Mp_Handle, 'mpg123_plain_strerror'));
-      mpg123_strerror := Tmpg123_strerror(
-        GetProcAddress(Mp_Handle, 'mpg123_strerror'));
-      mpg123_errcode := Tmpg123_errcode(GetProcAddress(Mp_Handle, 'mpg123_errcode'));
-      mpg123_decoders := Tmpg123_decoders(
-        GetProcAddress(Mp_Handle, 'mpg123_decoders'));
-      mpg123_supported_decoders :=
-        Tmpg123_supported_decoders(GetProcAddress(Mp_Handle, 'mpg123_supported_decoders'));
-      mpg123_decoder := Tmpg123_decoder(GetProcAddress(Mp_Handle, 'mpg123_decoder'));
-      mpg123_rates := Tmpg123_rates(GetProcAddress(Mp_Handle, 'mpg123_rates'));
-      mpg123_encodings := Tmpg123_encodings(
-        GetProcAddress(Mp_Handle, 'mpg123_encodings'));
-      mpg123_format_none := Tmpg123_format_none(
-        GetProcAddress(Mp_Handle, 'mpg123_format_none'));
-      mpg123_format_all := Tmpg123_format_all(
-        GetProcAddress(Mp_Handle, 'mpg123_format_all'));
-      mpg123_format := Tmpg123_format(GetProcAddress(Mp_Handle, 'mpg123_format'));
-      mpg123_format_support := Tmpg123_format_support(
-        GetProcAddress(Mp_Handle, 'mpg123_format_support'));
-      mpg123_getformat := Tmpg123_getformat(
-        GetProcAddress(Mp_Handle, 'mpg123_getformat'));
-      mpg123_open := Tmpg123_open(GetProcAddress(Mp_Handle, 'mpg123_open'));
-      mpg123_open_fd := Tmpg123_open_fd(GetProcAddress(Mp_Handle, 'mpg123_open_fd'));
-
-     {$IF DEFINED(newversion)}
-      mpg123_open_handle := Tmpg123_open_handle(GetProcAddress(Mp_Handle, 'mpg123_open_handle'));
-     mpg123_replace_reader_handle := Tmpg123_replace_reader_handle(GetProcAddress(Mp_Handle,
-     'mpg123_replace_reader_handle'));
-     {$endif}
-
-      mpg123_open_feed := Tmpg123_open_feed(
-        GetProcAddress(Mp_Handle, 'mpg123_open_feed'));
-      mpg123_close := Tmpg123_close(GetProcAddress(Mp_Handle, 'mpg123_close'));
-      mpg123_read := Tmpg123_read(GetProcAddress(Mp_Handle, 'mpg123_read'));
-      mpg123_decode := Tmpg123_decode(GetProcAddress(Mp_Handle, 'mpg123_decode'));
-      mpg123_decode_frame := Tmpg123_decode_frame(
-        GetProcAddress(Mp_Handle, 'mpg123_decode_frame'));
-      mpg123_tell := Tmpg123_tell(GetProcAddress(Mp_Handle, 'mpg123_tell'));
-      mpg123_tellframe := Tmpg123_tellframe(
-        GetProcAddress(Mp_Handle, 'mpg123_tellframe'));
-      mpg123_seek := Tmpg123_seek(GetProcAddress(Mp_Handle, 'mpg123_seek'));
-      mpg123_feedseek := Tmpg123_feedseek(
-        GetProcAddress(Mp_Handle, 'mpg123_feedseek'));
-      mpg123_seek_frame := Tmpg123_seek_frame(
-        GetProcAddress(Mp_Handle, 'mpg123_seek_frame'));
-      mpg123_timeframe := Tmpg123_timeframe(
-        GetProcAddress(Mp_Handle, 'mpg123_timeframe'));
-      mpg123_index := Tmpg123_index(GetProcAddress(Mp_Handle, 'mpg123_index'));
-      mpg123_position := Tmpg123_position(
-        GetProcAddress(Mp_Handle, 'mpg123_position'));
-      mpg123_eq := Tmpg123_eq(GetProcAddress(Mp_Handle, 'mpg123_eq'));
-      mpg123_reset_eq := Tmpg123_reset_eq(
-        GetProcAddress(Mp_Handle, 'mpg123_reset_eq'));
-      mpg123_volume := Tmpg123_volume(GetProcAddress(Mp_Handle, 'mpg123_volume'));
-      mpg123_volume_change := Tmpg123_volume_change(
-        GetProcAddress(Mp_Handle, 'mpg123_volume_change'));
-      mpg123_getvolume := Tmpg123_getvolume(
-        GetProcAddress(Mp_Handle, 'mpg123_getvolume'));
-      mpg123_info := Tmpg123_info(GetProcAddress(Mp_Handle, 'mpg123_info'));
-      mpg123_safe_buffer := Tmpg123_safe_buffer(
-        GetProcAddress(Mp_Handle, 'mpg123_safe_buffer'));
-      mpg123_scan := Tmpg123_scan(GetProcAddress(Mp_Handle, 'mpg123_scan'));
-      mpg123_length := Tmpg123_length(GetProcAddress(Mp_Handle, 'mpg123_length'));
-      mpg123_tpf := Tmpg123_tpf(GetProcAddress(Mp_Handle, 'mpg123_tpf'));
-      mpg123_clip := Tmpg123_clip(GetProcAddress(Mp_Handle, 'mpg123_clip'));
-      mpg123_init_string := Tmpg123_init_string(
-        GetProcAddress(Mp_Handle, 'mpg123_init_string'));
-      mpg123_free_string := Tmpg123_free_string(
-        GetProcAddress(Mp_Handle, 'mpg123_free_string'));
-      mpg123_resize_string := Tmpg123_resize_string(
-        GetProcAddress(Mp_Handle, 'mpg123_resize_string'));
-      mpg123_copy_string := Tmpg123_copy_string(
-        GetProcAddress(Mp_Handle, 'mpg123_copy_string'));
-      mpg123_add_string := Tmpg123_add_string(
-        GetProcAddress(Mp_Handle, 'mpg123_add_string'));
-      mpg123_set_string := Tmpg123_set_string(
-        GetProcAddress(Mp_Handle, 'mpg123_set_string'));
-      mpg123_meta_check := Tmpg123_meta_check(
-        GetProcAddress(Mp_Handle, 'mpg123_meta_check'));
-      mpg123_id3 := Tmpg123_id3(GetProcAddress(Mp_Handle, 'mpg123_id3'));
-      mpg123_icy := Tmpg123_icy(GetProcAddress(Mp_Handle, 'mpg123_icy'));
-      mpg123_parnew := Tmpg123_parnew(GetProcAddress(Mp_Handle, 'mpg123_parnew'));
-      mpg123_new_pars := Tmpg123_new_pars(
-        GetProcAddress(Mp_Handle, 'mpg123_new_pars'));
-      mpg123_delete_pars := Tmpg123_delete_pars(
-        GetProcAddress(Mp_Handle, 'mpg123_delete_pars'));
-      mpg123_fmt_none := Tmpg123_fmt_none(
-        GetProcAddress(Mp_Handle, 'mpg123_fmt_none'));
-      mpg123_fmt_all := Tmpg123_fmt_all(GetProcAddress(Mp_Handle, 'mpg123_fmt_all'));
-      mpg123_fmt := Tmpg123_fmt(GetProcAddress(Mp_Handle, 'mpg123_fmt'));
-      mpg123_fmt_support := Tmpg123_fmt_support(
-        GetProcAddress(Mp_Handle, 'mpg123_fmt_support'));
-      mpg123_par := Tmpg123_par(GetProcAddress(Mp_Handle, 'mpg123_par'));
-      mpg123_getpar := Tmpg123_getpar(GetProcAddress(Mp_Handle, 'mpg123_getpar'));
-      mpg123_replace_buffer := Tmpg123_replace_buffer(
-        GetProcAddress(Mp_Handle, 'mpg123_replace_buffer'));
-      mpg123_outblock := Tmpg123_outblock(
-        GetProcAddress(Mp_Handle, 'mpg123_outblock'));
-
-    end;
-    Result := mp_IsLoaded;
-    ReferenceCounter := 1;
-
-  end;
+   Result := False;
+   if Mp_Handle <> 0 then begin
+      Result := True; {is it already there ?}
+      Inc(ReferenceCounter);
+   end else begin {go & load the library}
+      if Length(libfilename) = 0 then thelib := libmp else thelib := libfilename;
+      {$IFNDEF FPC}
+      Mp_Handle := SafeLoadLibrary(thelib); // obtain the handle we want
+      {$else}
+      Mp_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
+      {$endif}
+      if Mp_Handle <> NilHandle then begin
+         mpg123_init := Tmpg123_init(GetProcAddress(Mp_Handle, 'mpg123_init'));
+         mpg123_exit := Tmpg123_exit(GetProcAddress(Mp_Handle, 'mpg123_exit'));
+         mpg123_new := Tmpg123_new(GetProcAddress(Mp_Handle, 'mpg123_new'));
+         mpg123_delete := Tmpg123_delete(GetProcAddress(Mp_Handle, 'mpg123_delete'));
+         mpg123_param := Tmpg123_param(GetProcAddress(Mp_Handle, 'mpg123_param'));
+         mpg123_getparam := Tmpg123_getparam( GetProcAddress(Mp_Handle, 'mpg123_getparam'));
+         mpg123_plain_strerror := Tmpg123_plain_strerror( GetProcAddress(Mp_Handle, 'mpg123_plain_strerror'));
+         mpg123_strerror := Tmpg123_strerror( GetProcAddress(Mp_Handle, 'mpg123_strerror'));
+         mpg123_errcode := Tmpg123_errcode(GetProcAddress(Mp_Handle, 'mpg123_errcode'));
+         mpg123_decoders := Tmpg123_decoders( GetProcAddress(Mp_Handle, 'mpg123_decoders'));
+         mpg123_supported_decoders := Tmpg123_supported_decoders(GetProcAddress(Mp_Handle, 'mpg123_supported_decoders'));
+         mpg123_decoder := Tmpg123_decoder(GetProcAddress(Mp_Handle, 'mpg123_decoder'));
+         mpg123_rates := Tmpg123_rates(GetProcAddress(Mp_Handle, 'mpg123_rates'));
+         mpg123_encodings := Tmpg123_encodings( GetProcAddress(Mp_Handle, 'mpg123_encodings'));
+         mpg123_format_none := Tmpg123_format_none( GetProcAddress(Mp_Handle, 'mpg123_format_none'));
+         mpg123_format_all := Tmpg123_format_all( GetProcAddress(Mp_Handle, 'mpg123_format_all'));
+         mpg123_format := Tmpg123_format(GetProcAddress(Mp_Handle, 'mpg123_format'));
+         mpg123_format_support := Tmpg123_format_support( GetProcAddress(Mp_Handle, 'mpg123_format_support'));
+         mpg123_getformat := Tmpg123_getformat( GetProcAddress(Mp_Handle, 'mpg123_getformat'));
+         mpg123_open := Tmpg123_open(GetProcAddress(Mp_Handle, 'mpg123_open'));
+         mpg123_open_fd := Tmpg123_open_fd(GetProcAddress(Mp_Handle, 'mpg123_open_fd'));
+         {$IF DEFINED(newversion)}
+         mpg123_open_handle := Tmpg123_open_handle(GetProcAddress(Mp_Handle, 'mpg123_open_handle'));
+         mpg123_replace_reader_handle := Tmpg123_replace_reader_handle(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_handle'));
+         {$endif}
+         mpg123_open_feed := Tmpg123_open_feed( GetProcAddress(Mp_Handle, 'mpg123_open_feed'));
+         mpg123_close := Tmpg123_close(GetProcAddress(Mp_Handle, 'mpg123_close'));
+         mpg123_read := Tmpg123_read(GetProcAddress(Mp_Handle, 'mpg123_read'));
+         mpg123_decode := Tmpg123_decode(GetProcAddress(Mp_Handle, 'mpg123_decode'));
+         mpg123_decode_frame := Tmpg123_decode_frame( GetProcAddress(Mp_Handle, 'mpg123_decode_frame'));
+         mpg123_tell := Tmpg123_tell(GetProcAddress(Mp_Handle, 'mpg123_tell'));
+         mpg123_tellframe := Tmpg123_tellframe( GetProcAddress(Mp_Handle, 'mpg123_tellframe'));
+         mpg123_seek := Tmpg123_seek(GetProcAddress(Mp_Handle, 'mpg123_seek'));
+         mpg123_feedseek := Tmpg123_feedseek( GetProcAddress(Mp_Handle, 'mpg123_feedseek'));
+         mpg123_seek_frame := Tmpg123_seek_frame( GetProcAddress(Mp_Handle, 'mpg123_seek_frame'));
+         mpg123_timeframe := Tmpg123_timeframe( GetProcAddress(Mp_Handle, 'mpg123_timeframe'));
+         mpg123_index := Tmpg123_index(GetProcAddress(Mp_Handle, 'mpg123_index'));
+         mpg123_position := Tmpg123_position( GetProcAddress(Mp_Handle, 'mpg123_position'));
+         mpg123_eq := Tmpg123_eq(GetProcAddress(Mp_Handle, 'mpg123_eq'));
+         mpg123_reset_eq := Tmpg123_reset_eq( GetProcAddress(Mp_Handle, 'mpg123_reset_eq'));
+         mpg123_volume := Tmpg123_volume(GetProcAddress(Mp_Handle, 'mpg123_volume'));
+         mpg123_volume_change := Tmpg123_volume_change( GetProcAddress(Mp_Handle, 'mpg123_volume_change'));
+         mpg123_getvolume := Tmpg123_getvolume( GetProcAddress(Mp_Handle, 'mpg123_getvolume'));
+         mpg123_info := Tmpg123_info(GetProcAddress(Mp_Handle, 'mpg123_info'));
+         mpg123_safe_buffer := Tmpg123_safe_buffer( GetProcAddress(Mp_Handle, 'mpg123_safe_buffer'));
+         mpg123_scan := Tmpg123_scan(GetProcAddress(Mp_Handle, 'mpg123_scan'));
+         mpg123_length := Tmpg123_length(GetProcAddress(Mp_Handle, 'mpg123_length'));
+         mpg123_tpf := Tmpg123_tpf(GetProcAddress(Mp_Handle, 'mpg123_tpf'));
+         mpg123_clip := Tmpg123_clip(GetProcAddress(Mp_Handle, 'mpg123_clip'));
+         mpg123_init_string := Tmpg123_init_string( GetProcAddress(Mp_Handle, 'mpg123_init_string'));
+         mpg123_free_string := Tmpg123_free_string( GetProcAddress(Mp_Handle, 'mpg123_free_string'));
+         mpg123_resize_string := Tmpg123_resize_string(GetProcAddress(Mp_Handle, 'mpg123_resize_string'));
+         mpg123_copy_string := Tmpg123_copy_string( GetProcAddress(Mp_Handle, 'mpg123_copy_string'));
+         mpg123_add_string := Tmpg123_add_string( GetProcAddress(Mp_Handle, 'mpg123_add_string'));
+         mpg123_set_string := Tmpg123_set_string( GetProcAddress(Mp_Handle, 'mpg123_set_string'));
+         mpg123_meta_check := Tmpg123_meta_check( GetProcAddress(Mp_Handle, 'mpg123_meta_check'));
+         mpg123_id3 := Tmpg123_id3(GetProcAddress(Mp_Handle, 'mpg123_id3'));
+         mpg123_icy := Tmpg123_icy(GetProcAddress(Mp_Handle, 'mpg123_icy'));
+         mpg123_parnew := Tmpg123_parnew(GetProcAddress(Mp_Handle, 'mpg123_parnew'));
+         mpg123_new_pars := Tmpg123_new_pars( GetProcAddress(Mp_Handle, 'mpg123_new_pars'));
+         mpg123_delete_pars := Tmpg123_delete_pars( GetProcAddress(Mp_Handle, 'mpg123_delete_pars'));
+         mpg123_fmt_none := Tmpg123_fmt_none( GetProcAddress(Mp_Handle, 'mpg123_fmt_none'));
+         mpg123_fmt_all := Tmpg123_fmt_all(GetProcAddress(Mp_Handle, 'mpg123_fmt_all'));
+         mpg123_fmt := Tmpg123_fmt(GetProcAddress(Mp_Handle, 'mpg123_fmt'));
+         mpg123_fmt_support := Tmpg123_fmt_support( GetProcAddress(Mp_Handle, 'mpg123_fmt_support'));
+         mpg123_par := Tmpg123_par(GetProcAddress(Mp_Handle, 'mpg123_par'));
+         mpg123_getpar := Tmpg123_getpar(GetProcAddress(Mp_Handle, 'mpg123_getpar'));
+         mpg123_replace_buffer := Tmpg123_replace_buffer( GetProcAddress(Mp_Handle, 'mpg123_replace_buffer'));
+         mpg123_outblock := Tmpg123_outblock( GetProcAddress(Mp_Handle, 'mpg123_outblock'));
+      end;
+      Result := mp_IsLoaded;
+      ReferenceCounter := 1;
+   end;
 end;
 
 end.

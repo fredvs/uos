@@ -30,3 +30,6 @@
 
 {$DEFINE synthesizer} // uncomment to enable Synthesizer
 
+{$IFDEF FPC}
+   {$I definefpc.inc}
+{$endif}

@@ -7,15 +7,23 @@
 
 unit uos_httpgetthread;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$endif}
+
 
 interface
 
 uses
-  Classes, SysUtils,  Pipes;
+  Classes, SysUtils,
+  {$IFNDEF FPC}
+  PipesDelphi;
+  {$else}
+  Pipes;
+  {$endif}
 
 type
-  
+
  { TThreadHttpGetter }
 
   TThreadHttpGetter = class(TThread)
@@ -39,6 +47,27 @@ type
    end;
 
 implementation
+{$IFNDEF FPC}
+function TThreadHttpGetter.GetRedirectURL(AResponseStrings: TStrings): String;
+begin
+end;
+
+procedure TThreadHttpGetter.DoIcyMetaInt;
+begin
+end;
+
+procedure TThreadHttpGetter.Headers(Sender: TObject );
+begin
+end;
+
+procedure TThreadHttpGetter.Execute;
+begin
+end;
+
+constructor TThreadHttpGetter.Create(AWantedURL: String; AOutputStream: TOutputPipeStream);
+begin
+end;
+{$else}
 uses
   fphttpclient;
 
@@ -64,17 +93,17 @@ begin
   end;
 end;
 
-procedure TThreadHttpGetter.DoIcyMetaInt; 
-begin 
-  if Assigned(FOnIcyMetaInt) then 
-    FOnIcyMetaInt(Self); 
-end; 
+procedure TThreadHttpGetter.DoIcyMetaInt;
+begin
+  if Assigned(FOnIcyMetaInt) then
+    FOnIcyMetaInt(Self);
+end;
 
-procedure TThreadHttpGetter.Headers(Sender: TObject ); 
-begin 
-  FIcyMetaInt := StrToInt64Def(TFPHTTPClient(Sender).GetHeader(TFPHTTPClient(Sender).ResponseHeaders, 'icy-metaint'),0); 
-  if (FIcyMetaInt>0) and (FOnIcyMetaInt<>nil) then 
-       Synchronize(@DoIcyMetaInt); 
+procedure TThreadHttpGetter.Headers(Sender: TObject );
+begin
+  FIcyMetaInt := StrToInt64Def(TFPHTTPClient(Sender).GetHeader(TFPHTTPClient(Sender).ResponseHeaders, 'icy-metaint'),0);
+  if (FIcyMetaInt>0) and (FOnIcyMetaInt<>nil) then
+       Synchronize(@DoIcyMetaInt);
 end;
 
 procedure TThreadHttpGetter.Execute;
@@ -88,7 +117,7 @@ begin
   try
     Http.RequestHeaders.Clear;
     if ICYenabled = true then
-    Http.OnHeaders := @Headers; 
+    Http.OnHeaders := @Headers;
     Http.Get(URL, FOutStream);
   except
     on e: EHTTPClient do
@@ -122,7 +151,7 @@ begin
     FIsRunning:=False;
   end;
 end;
- 
+
 constructor TThreadHttpGetter.Create(AWantedURL: String; AOutputStream: TOutputPipeStream);
 begin
   inherited Create(True);
@@ -132,6 +161,7 @@ begin
   FOutStream:=AOutputStream;
   // Start;
 end;
+{$endif}
 
 end.
 
