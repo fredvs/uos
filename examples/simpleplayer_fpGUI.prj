@@ -999,7 +999,7 @@ editpos=6
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,577
+ 0,548
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1012,7 +1012,7 @@ sourcefiles=6
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_httpgetthread.pas
- /home/fred/uos/examples/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
 relpaths=6
  uos.pas
  uos_mpg123.pas
@@ -1513,8 +1513,8 @@ windowlayout=543
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1147
+ ncy=54
  x=0
  y=0
  cx=1147

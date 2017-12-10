@@ -930,7 +930,7 @@ findhistory=20
  uos_inputlength
 findoptions=1
 editpos=1
- 0,144
+ 17,34
 bookmarks0=0
 sourcefiles=1
  ${PROJECTDIR}/consoleplaymemorystream.pas
@@ -950,7 +950,7 @@ nomenumodules=1
 firsttab=0
 index=0
 [layout]
-windowlayout=560
+windowlayout=562
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1005,7 +1005,7 @@ windowlayout=560
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1425,12 +1425,10 @@ windowlayout=560
  ncy=52
  x=0
  y=0
- cx=1113
+ cx=1140
  cy=53
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1440,6 +1438,10 @@ windowlayout=560
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consoleplaymemorystream.pas
  history=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.hints]
+ value=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1495,7 +1497,7 @@ windowlayout=560
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

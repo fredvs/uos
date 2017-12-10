@@ -936,7 +936,7 @@ editpos=9
  0,-1073741823
  0,-1073741823
  0,123
- 0,-1073741823
+ 0,0
  0,-1073741823
  0,4873
  0,117
@@ -954,12 +954,12 @@ sourcefiles=9
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consolebpmdetect.pas
  ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/consolebpmdetect.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/consolebpmdetect.pas
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_soundtouch.pas
- ${PROJECTDIR}/uos_httpgetthread.pas
+ /home/fred/uos/examples/uos.pas
+ /home/fred/uos/examples/uos_soundtouch.pas
+ /home/fred/uos/examples/uos_httpgetthread.pas
 relpaths=9
  uos.pas
  consolebpmdetect.pas
@@ -1000,7 +1000,7 @@ order=9
  7
  5
 firsttab=2
-index=6
+index=3
 [layout]
 windowlayout=562
  [mainfo.basedock]
@@ -1488,7 +1488,7 @@ windowlayout=562
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_httpgetthread.pas
+ value=/home/fred/uos/examples/uos.pas
  history=0
  [debuggerfo.project_options]
  value=B
