@@ -8611,7 +8611,9 @@ destructor Tuos_DSP.Destroy;
   if assigned(fftdata) then
   begin
   {$IF DEFINED(noiseremoval)}
-  if assigned(fftdata.FNoise) then FreeAndNil(fftdata.FNoise);
+ // if assigned(fftdata.FNoise) then FreeAndNil(fftdata.FNoise);
+  
+ fftdata.FNoise.destroy;
   {$endif}
   FreeandNil(fftdata);
   end;

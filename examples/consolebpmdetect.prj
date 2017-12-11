@@ -935,12 +935,12 @@ editpos=9
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,123
+ 0,68
  0,0
  0,-1073741823
- 0,4873
- 0,117
- 0,26
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -954,12 +954,12 @@ sourcefiles=9
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consolebpmdetect.pas
  ${PROJECTDIR}/uos_soundtouch.pas
- /home/fred/uos/examples/consolebpmdetect.pas
- /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/consolebpmdetect.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/examples/uos.pas
- /home/fred/uos/examples/uos_soundtouch.pas
- /home/fred/uos/examples/uos_httpgetthread.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_soundtouch.pas
+ ${PROJECTDIR}/uos_httpgetthread.pas
 relpaths=9
  uos.pas
  consolebpmdetect.pas
@@ -1000,7 +1000,7 @@ order=9
  7
  5
 firsttab=2
-index=3
+index=4
 [layout]
 windowlayout=562
  [mainfo.basedock]
@@ -1125,7 +1125,7 @@ windowlayout=562
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1488,7 +1488,7 @@ windowlayout=562
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/consolebpmdetect.pas
  history=0
  [debuggerfo.project_options]
  value=B

@@ -4,16 +4,16 @@ program noiseremove_fpGUI;
   {$DEFINE UseCThreads}
 
 uses
-  {$IFDEF UNIX} {$IFDEF UseCThreads}
-  cthreads, 
+ {$IFDEF UNIX} {$IFDEF UseCThreads}
+  cthreads,
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
   uos_flat,
-  ctypes, 
-  //Math,
-  Classes,
-  fpg_stylemanager,
   fpg_style_chrome_silver_flatmenu,
+  fpg_stylemanager,
+  ctypes,
+  Math,
+  Classes,
   fpg_button,
   fpg_widget,
   fpg_label,
@@ -21,7 +21,6 @@ uses
   fpg_RadioButton,
   fpg_trackbar,
   fpg_CheckBox,
-  fpg_Panel,
   fpg_base,
   fpg_main,
   fpg_form { you can add units after this };
@@ -70,7 +69,6 @@ var
   ordir, opath: string;
   OutputIndex1, InputIndex1 : integer;
   
-
   procedure TSimpleplayer.ChangeNoise(Sender: TObject);
   begin
    if btnStart.Enabled = False then   /// player1 was created
@@ -93,9 +91,7 @@ var
     btnStop.Enabled := True;
     btnPause.Enabled := False;
     btnresume.Enabled := True;
-   
-  end;
-
+   end;
   
   procedure TSimpleplayer.btnCloseClick(Sender: TObject);
   begin
@@ -138,14 +134,12 @@ nil, nil, nil, nil) = 0 then
      
     end;
 
-
   procedure TSimpleplayer.ClosePlayer1;
   begin
     btnStart.Enabled := True;
     btnStop.Enabled := False;
     btnPause.Enabled := False;
     btnresume.Enabled := False;
-  
   end;
 
   procedure TSimpleplayer.btnStopClick(Sender: TObject);
@@ -160,9 +154,7 @@ nil, nil, nil, nil) = 0 then
   var
     samformat: shortint;
     
-  begin
-
-   
+  begin   
       samformat := 0;
    
     PlayerIndex1 := 0;
@@ -209,7 +201,6 @@ nil, nil, nil, nil) = 0 then
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (65536)
     //  result : -1 nothing created, otherwise Output Index in array
-
  
   uos_InputAddDSPNoiseRemoval(PlayerIndex1, InputIndex1);
   uos_InputSetDSPNoiseRemoval(PlayerIndex1, InputIndex1, chknoise.Checked);
@@ -493,7 +484,7 @@ nil, nil, nil, nil) = 0 then
      frm.Show;
       fpgApplication.Run;
     finally
-      uos_free; // do not forget this...
+     uos_free; // do not forget this...
       frm.Free;
     end;
   end;

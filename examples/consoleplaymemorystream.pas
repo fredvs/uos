@@ -88,8 +88,8 @@ var
     SF_FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
     SoundFilename := opath + '/sound/test.flac';
  {$ENDIF}
-
-   // Load the libraries
+ 
+    // Load the libraries
    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
    res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), Pchar(MP_FileName), nil, nil, nil) ;
 
@@ -106,7 +106,7 @@ var
     
     if uos_CreatePlayer(PlayerIndex1) then
    
-    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,0,-1,0,-1);
+    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,1,-1,0,-1);
   // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of encoded audio.
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)

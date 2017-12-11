@@ -47,11 +47,11 @@ var
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     SF_FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
     MP_FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
-  //  ST_FileName := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
+    ST_FileName := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
      {$else}
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     SF_FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
-  //  ST_FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
+    ST_FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
     MP_FileName := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
      {$endif}
      

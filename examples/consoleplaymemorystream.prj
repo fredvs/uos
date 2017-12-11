@@ -163,9 +163,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=142
  xprop=1
- yprop=0.32882882882883
+ yprop=0.32805429864253
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -906,13 +906,16 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=ratio
+finddtext=BufferTag
 findhistory=20
+ BufferTag
+ mpinfo: Tmpg123_frameinfo
+ mpinfo
+ AddFromMemoryStream
  ratio
  addfromf
  FreePlayer
  mpg_seek_stream
- AddFromMemoryStream
  nofree
  setlength
  ddFromurl
@@ -925,18 +928,20 @@ findhistory=20
  addfromfil
  mpg123_length
  coff_t
- AddFromurl
- inputlength
- uos_inputlength
 findoptions=1
-editpos=1
- 17,34
+editpos=2
+ 0,91
+ 0,809
 bookmarks0=0
-sourcefiles=1
+bookmarks1=0
+sourcefiles=2
  ${PROJECTDIR}/consoleplaymemorystream.pas
-relpaths=1
+ ${PROJECTDIR}/uos.pas
+relpaths=2
  consoleplaymemorystream.pas
-ismoduletexts=1
+ uos.pas
+ismoduletexts=2
+ 0
  0
 modules=1
  /home/fred/ideu/src/guitemplates.mfm
@@ -963,7 +968,7 @@ windowlayout=562
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1150
  cy=604
  rcx=0
  rcy=0
@@ -978,12 +983,12 @@ windowlayout=562
  ncy=0
  x=125
  y=46
- cx=1123
+ cx=1160
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,604
+  basedock,0,0,1150,604
  focusedchild=0
  wsize=0
  active=1
@@ -1110,7 +1115,7 @@ windowlayout=562
  sortdescend1=0
  sorted=0
  col=0
- row=3
+ row=5
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1309,7 +1314,7 @@ windowlayout=562
  ncy=0
  x=0
  y=512
- cx=1113
+ cx=1150
  cy=92
  rcx=0
  rcy=0
@@ -1409,7 +1414,7 @@ windowlayout=562
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1150
  cy=51
  rcx=0
  rcy=0
@@ -1421,12 +1426,12 @@ windowlayout=562
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1150
+ ncy=54
  x=0
  y=0
- cx=1140
- cy=53
+ cx=1150
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1439,7 +1444,7 @@ windowlayout=562
  value=/home/fred/uos/examples/consoleplaymemorystream.pas
  history=0
  [debuggerfo.project_options]
- value=1
+ value=B
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1454,7 +1459,7 @@ windowlayout=562
  ncy=0
  x=208
  y=0
- cx=905
+ cx=942
  cy=455
  rcx=0
  rcy=0
@@ -1490,7 +1495,7 @@ windowlayout=562
  ncy=0
  x=0
  y=54
- cx=1113
+ cx=1150
  cy=455
  rcx=0
  rcy=0

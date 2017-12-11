@@ -226,7 +226,7 @@ var
 begin
   for i := 0 to High(FNoise) do
   begin
-    FNoise[i].Free;
+   FNoise[i].Free;
   end;
   SetLength(FNoise, 0);
   FHelper.Free;
@@ -778,6 +778,7 @@ end;
 destructor TNoiseRemoval.Destroy;
 begin
   SetLength(FNoiseThreshold, 0);
+  
   inherited Destroy;
 end;
 
