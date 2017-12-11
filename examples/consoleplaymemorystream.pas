@@ -106,7 +106,7 @@ var
     
     if uos_CreatePlayer(PlayerIndex1) then
    
-    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,1,-1,0,-1);
+    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,-1,-1,0,-1);
   // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of encoded audio.
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)

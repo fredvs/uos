@@ -930,8 +930,8 @@ findhistory=20
  coff_t
 findoptions=1
 editpos=2
- 0,91
- 0,809
+ 67,121
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 sourcefiles=2
@@ -1010,7 +1010,7 @@ windowlayout=562
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1502,7 +1502,7 @@ windowlayout=562
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

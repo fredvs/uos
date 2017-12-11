@@ -929,7 +929,7 @@ findoptions=1
 editpos=9
  0,204
  0,-1073741823
- 0,780
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -946,7 +946,7 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 sourcefiles=9
- ${PROJECTDIR}/noiseremover_fpGUI.pas
+ /home/fred/uos/examples/noiseremover_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_dsp_noiseremoval.pas
  ${PROJECTDIR}/uos.pas
@@ -1007,7 +1007,7 @@ windowlayout=593
  x=0
  y=0
  cx=1356
- cy=784
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -1026,7 +1026,7 @@ windowlayout=593
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,784
+  basedock,0,0,1356,694
  focusedchild=0
  wsize=6
  active=1
@@ -1142,7 +1142,7 @@ windowlayout=593
  x=0
  y=0
  cx=205
- cy=591
+ cy=523
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1351,9 +1351,9 @@ windowlayout=593
  ncx=0
  ncy=0
  x=0
- y=664
+ y=588
  cx=1356
- cy=120
+ cy=106
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1453,7 +1453,7 @@ windowlayout=593
  x=0
  y=0
  cx=1356
- cy=67
+ cy=59
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1464,12 +1464,12 @@ windowlayout=593
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1356
+ ncy=70
  x=0
  y=0
  cx=1356
- cy=70
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1548,14 +1548,14 @@ windowlayout=593
  x=208
  y=0
  cx=1148
- cy=591
+ cy=523
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=stackfo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1582,9 +1582,9 @@ windowlayout=593
  ncx=0
  ncy=0
  x=0
- y=70
+ y=62
  cx=1356
- cy=591
+ cy=523
  rcx=0
  rcy=0
 [targetconsole]
