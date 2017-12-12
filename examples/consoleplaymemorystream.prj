@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplaymemorystream.prj
-findinfiledialog=43
+findinfiledialog=45
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,29 +29,31 @@ findinfiledialog=43
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=1
+ value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/uos/examples/
- filecolwidth=0
+  /home/fred/msegui/
+ filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
+ filehistory=1
+  /home/fred/msegui/
  filefilterindex=0
- filefilter=
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=mpg_seek_stream
- history=5
+ value=ppoll
+ history=6
+  ppoll
   mpg_seek_stream
   ProcessMessages
   TMemoryStream
@@ -61,8 +63,8 @@ findinfiledialog=43
  stackedunder=
  x=386
  y=189
- cx=339
- cy=251
+ cx=365
+ cy=270
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -1078,7 +1080,7 @@ windowlayout=562
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
