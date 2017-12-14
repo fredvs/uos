@@ -1285,7 +1285,7 @@ end;
     FilenameEdit1.FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
      FilenameEdit2.FileName := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
     FilenameEdit3.FileName := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
-    FilenameEdit5.FileName := '';
+    FilenameEdit5.FileName := ordir + 'lib/FreeBSD/64bit/plugin/libsoundtouch-64.so';
     FilenameEdit6.FileName := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
     {$else}
     FilenameEdit1.FileName := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';

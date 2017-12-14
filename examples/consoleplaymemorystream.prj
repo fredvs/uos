@@ -937,7 +937,7 @@ editpos=2
 bookmarks0=0
 bookmarks1=0
 sourcefiles=2
- ${PROJECTDIR}/consoleplaymemorystream.pas
+ /home/fred/uos/examples/consoleplaymemorystream.pas
  ${PROJECTDIR}/uos.pas
 relpaths=2
  consoleplaymemorystream.pas
@@ -1080,7 +1080,7 @@ windowlayout=562
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0

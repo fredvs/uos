@@ -204,7 +204,7 @@ begin
     Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
      Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
     Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
-    Edit5.Text := '' ;
+    Edit5.text := ordir + 'lib/FreeBSD/64bit/plugin/libsoundtouch-64.so';
     Edit6.text := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
   
     {$else}

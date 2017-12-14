@@ -76,6 +76,7 @@ begin
     mainfo.m4dir.value := ordir + 'lib/FreeBSD/64bit/libmp4ff-64.so';
     mainfo.fadir.value := ordir + 'lib/FreeBSD/64bit/libfaad2-64.so';
     mainfo.bsdir.value := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
+    mainfo.stdir.value  := ordir + 'lib/FreeBSD/64bit/plugin/libsoundtouch-64.so';
    
     mainfo.opdir.value := ordir + 'lib/FreeBSD/64bit/libopus-64.so';
    
