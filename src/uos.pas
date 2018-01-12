@@ -8698,4 +8698,12 @@ begin
   end;
 end;
 
+initialization
+  SetLength(tempoutmemory,0);
+  SetLength(uosPlayers,0);
+  SetLength(uosPlayersStat,0);
+  SetLength(uosLevelArray,0);
+  SetLength(uosDeviceInfos,0);
+  uosInit:= nil;
+  
 end.
