@@ -1789,8 +1789,8 @@ var
   const StackSize: SizeUInt);
 begin
   theparent := AParent;
-  inherited Create(CreateSuspended, StackSize);
   FreeOnTerminate := true;
+  inherited Create(CreateSuspended, StackSize);
   Priority :=  tpTimeCritical;
 end;  
  {$endif}
@@ -1857,17 +1857,16 @@ var
   RTLeventResetEvent(evPause);
  end;
   
- if isFirst = true then
+ //protect from multiple instances of thread
+ if thethread = nil then
  begin
   {$IF DEFINED(mse)}
   thethread:= tmsethread.create(@execute);
   {$else}
   thethread:= tuosthread.Create(false,self);
-  thethread.freeonterminate := true;
   {$endif}
   end;
-  isFirst := false;
- end;
+ end;  
 end;     
 
 Procedure Tuos_Player.PlayPaused(nloop: Integer = 0) ;  // Start play paused with loop
@@ -8555,6 +8554,11 @@ begin
   EndProcOnly := nil;
   loopBeginProc := nil;
   loopEndProc := nil;
+  
+  thethread:= nil;
+  SetLength(StreamIn,0);
+  SetLength(StreamOut,0);
+  SetLength(PlugIn,0);
  end;
 
 {$IF DEFINED(mse)}
@@ -8568,8 +8572,9 @@ if (ifflat = true) and (intobuf = false) then
   uosPlayers[Index] := nil;
   uosPlayersStat[Index] := -1 ;
   end; 
+ thethread:= nil;//notice that is no longer valid
 end;
-theparent.destroy;
+FreeAndNil(theparent);
 end;
  {$endif}
 
@@ -8611,9 +8616,7 @@ destructor Tuos_DSP.Destroy;
   if assigned(fftdata) then
   begin
   {$IF DEFINED(noiseremoval)}
- // if assigned(fftdata.FNoise) then FreeAndNil(fftdata.FNoise);
-  
- fftdata.FNoise.destroy;
+  if assigned(fftdata.FNoise) then FreeAndNil(fftdata.FNoise);
   {$endif}
   FreeandNil(fftdata);
   end;
