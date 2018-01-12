@@ -1889,16 +1889,18 @@ begin
  PlayEx(True,nloop);
 end; 
 
-Procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
+procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
 begin
- if (isAssigned = True) then
+  if isAssigned then
   begin
-  NLooped:= 0;
-  NoFree := false;
-  play(0);
-  stop;
+    NLooped := 0;
+    NoFree := False;
+    //if it has never been put into play (= there is no thread for free)..
+    if thethread = nil then
+      Play();
+    Stop;
   end;
-end;
+end; 
 
 procedure Tuos_Player.RePlay();  // Resume Playing after Pause
 begin
