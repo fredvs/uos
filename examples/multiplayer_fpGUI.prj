@@ -846,7 +846,7 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,142
+ 0,130
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -873,7 +873,7 @@ sourcefiles=13
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/multiplayer_fpGUI.pas
- /home/fred/uos/examples/multiplayer_fpGUI.pas
+ ${PROJECTDIR}/multiplayer_fpGUI.pas
 relpaths=13
  uos.pas
  uos_flat.pas

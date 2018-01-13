@@ -295,17 +295,29 @@ begin
 end;
 
 procedure TForm1.Button11Click(Sender: TObject);
-
+ var
+  InIndex : integer ;
 begin
   PlayerIndex3 := 3;
 
   uos_CreatePlayer(PlayerIndex3);
+  
+ InIndex := uos_AddFromFile(PlayerIndex3, pchar(Edit7.Text), -1, 0, -1);
+  //// add input from audio file with custom parameters
+  ////////// FileName : filename of audio file
+  //////////// PlayerIndex : Index of a existing Player
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+  //////////// FramesCount : default : -1 (65536)
+  //  result : -1 nothing created, otherwise Input Index in array
 
-  {$if defined(cpuarm)} // needs lower latency
-   uos_AddIntoDevOut(PlayerIndex3, -1, 0.3, -1, -1, 0, 1024);
-     {$else}
-  uos_AddIntoDevOut(PlayerIndex3, -1, -1, -1, -1, 0, 1024);
-  {$endif}
+
+   {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex3, -1, 0.3, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1);
+      {$else}
+  uos_AddIntoDevOut(PlayerIndex3, -1, -1, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1);
+       {$endif}
+  
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -318,16 +330,7 @@ begin
   //  result : -1 nothing created, otherwise Output Index in array
 
 
-  uos_AddFromFile(PlayerIndex3, pchar(Edit7.Text), -1, 0, -1);
-  //// add input from audio file with custom parameters
-  ////////// FileName : filename of audio file
-  //////////// PlayerIndex : Index of a existing Player
-  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-  //////////// FramesCount : default : -1 (65536)
-  //  result : -1 nothing created, otherwise Input Index in array
-
-  /////// procedure to execute when stream is terminated
+   /////// procedure to execute when stream is terminated
   uos_EndProc(PlayerIndex3, @ClosePlayer3);
   ///// Assign the procedure of object to execute at end
   //////////// PlayerIndex : Index of a existing Player
@@ -397,17 +400,28 @@ begin
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
-
+var
+  InIndex : integer ;
 begin
   PlayerIndex0 := 0;
 
   uos_CreatePlayer(PlayerIndex0);
+  
+   InIndex := uos_AddFromFile(PlayerIndex0, pchar(Edit4.Text), -1, 0, -1);
+  //// add input from audio file with custom parameters
+  ////////// FileName : filename of audio file
+  //////////// PlayerIndex : Index of a existing Player
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+  //////////// FramesCount : default : -1 (65536)
+  //  result : -1 nothing created, otherwise Input Index in array
 
-  {$if defined(cpuarm)} // needs lower latency
-   uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, -1, -1, 0, 1024);
-     {$else}
-  uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, 1024);
-  {$endif}
+   {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1);
+      {$else}
+  uos_AddIntoDevOut(PlayerIndex0, -1, -1, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1);
+       {$endif}
+  
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -419,15 +433,6 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
 
-
-  uos_AddFromFile(PlayerIndex0, pchar(Edit4.Text), -1, 0, -1);
-  //// add input from audio file with custom parameters
-  ////////// FileName : filename of audio file
-  //////////// PlayerIndex : Index of a existing Player
-  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-  //////////// FramesCount : default : -1 (65536)
-  //  result : -1 nothing created, otherwise Input Index in array
 
   /////// procedure to execute when stream is terminated
   uos_EndProc(PlayerIndex0, @ClosePlayer0);
@@ -455,17 +460,29 @@ begin
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
+var
+InIndex : integer ;
 
 begin
   PlayerIndex1 := 1;
 
   uos_CreatePlayer(PlayerIndex1);
 
- {$if defined(cpuarm)} // needs lower latency
-   uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, -1, -1, 0, 1024);
-     {$else}
-  uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0, 1024);
-  {$endif}
+ InIndex := uos_AddFromFile(PlayerIndex1, pchar(Edit5.Text), -1, 0, -1);
+  //// add input from audio file with custom parameters
+  ////////// FileName : filename of audio file
+  //////////// PlayerIndex : Index of a existing Player
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+  //////////// FramesCount : default : -1 (65536)
+  //  result : -1 nothing created, otherwise Input Index in array
+
+   {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1);
+      {$else}
+  uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1);
+       {$endif}
+  
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -476,18 +493,8 @@ begin
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
-
-
-  uos_AddFromFile(PlayerIndex1, pchar(Edit5.Text), -1, 0, -1);
-  //// add input from audio file with custom parameters
-  ////////// FileName : filename of audio file
-  //////////// PlayerIndex : Index of a existing Player
-  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-  //////////// FramesCount : default : -1 (65536)
-  //  result : -1 nothing created, otherwise Input Index in array
-
   /////// procedure to execute when stream is terminated
+  
   uos_EndProc(PlayerIndex1, @ClosePlayer1);
   ///// Assign the procedure of object to execute at end
   //////////// PlayerIndex : Index of a existing Player
@@ -512,16 +519,28 @@ begin
 end;
 
 procedure TForm1.Button8Click(Sender: TObject);
+ var
+  InIndex : integer ;
 begin
   PlayerIndex2 := 2;
 
   uos_CreatePlayer(PlayerIndex2);
 
- {$if defined(cpuarm)} // needs lower latency
-   uos_AddIntoDevOut(PlayerIndex2, -1, 0.3, -1, -1, 0, 1024);
-     {$else}
-  uos_AddIntoDevOut(PlayerIndex2, -1, -1, -1, -1, 0, 1024);
-  {$endif}
+InIndex := uos_AddFromFile(PlayerIndex2, pchar(Edit6.Text), -1, 0, -1);
+  //// add input from audio file with custom parameters
+  ////////// FileName : filename of audio file
+  //////////// PlayerIndex : Index of a existing Player
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+  //////////// FramesCount : default : -1 (65536)
+  //  result : -1 nothing created, otherwise Input Index in array
+
+   {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex2, -1, 0.3, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1);
+      {$else}
+  uos_AddIntoDevOut(PlayerIndex2, -1, -1, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1);
+       {$endif}
+  
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -532,17 +551,7 @@ begin
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
-
-
-  uos_AddFromFile(PlayerIndex2, pchar(Edit6.Text), -1, 0, -1);
-  //// add input from audio file with custom parameters
-  ////////// FileName : filename of audio file
-  //////////// PlayerIndex : Index of a existing Player
-  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-  //////////// FramesCount : default : -1 (65536)
-  //  result : -1 nothing created, otherwise Input Index in array
-
+  
   /////// procedure to execute when stream is terminated
   uos_EndProc(PlayerIndex2, @ClosePlayer2);
   ///// Assign the procedure of object to execute at end
@@ -633,6 +642,7 @@ begin
     uos_Stop(PlayerIndex3);
   if button1.Enabled = False then
   uos_free;
+  BufferBMP.free;
 end;
 
 end.
