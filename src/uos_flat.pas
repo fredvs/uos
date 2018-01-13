@@ -2115,8 +2115,7 @@ end;
   
   if (uosPlayers[PlayerIndex] <> nil) then
   begin
-   uosPlayers[PlayerIndex].nofree := false;
-   uosPlayers[PlayerIndex].Stop();
+   uosPlayers[PlayerIndex].FreePlayer;
    Sleep(20); 
   while (PlayerNotFree(PlayerIndex) = true) and (nt > 0) do 
   begin 
@@ -2154,17 +2153,10 @@ x : integer;
 nt : integer = 200;
 begin
 
-if assigned(uosPlayers) then
 if length(uosPlayers) > 0 then
  for x := 0 to length(uosPlayers) -1 do
-  begin
   if assigned(uosPlayers[x]) then
-  begin
-  uosPlayers[x].nofree := false;
-  uos_stop(x);
-  uos_freeplayer(x);
-  end;
-  end;
+   uosPlayers[x].FreePlayer;
 
 Sleep(40);
 
