@@ -602,7 +602,6 @@ type
   public
   isAssigned: boolean ;
   isGlobalPause: boolean ;
-  isFirst: boolean;
   Status: cint32;
   Index: cint32;
      
@@ -1818,7 +1817,6 @@ var
   NoFree:= no_free;
    
   {$IF DEFINED(portaudio)}
-  if ((isFirst = true) and (NoFree = true)) or (NoFree = false) then
   for x := 0 to high(StreamOut) do
   if StreamOut[x].Data.HandleSt <> nil then
    Pa_StartStream(StreamOut[x].Data.HandleSt);
@@ -6584,8 +6582,6 @@ var
 x, x2 : integer;
 begin
 
-  isFirst := true;
- 
   for x := 0 to high(StreamIn) do
   begin
   if (length(StreamIn[x].DSP) > 0) then
@@ -8545,7 +8541,6 @@ begin
   evPause := RTLEventCreate;
    
   isAssigned := true; 
-  isFirst := true;
   isGlobalPause := false;
   intobuf := false;
   NLooped:= 0; 
