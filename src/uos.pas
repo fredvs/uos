@@ -602,7 +602,6 @@ type
   public
   isAssigned: boolean ;
   isGlobalPause: boolean ;
-  isFirst: boolean;
   Status: cint32;
   Index: cint32;
      
@@ -1818,7 +1817,6 @@ var
   NoFree:= no_free;
    
   {$IF DEFINED(portaudio)}
-  if ((isFirst = true) and (NoFree = true)) or (NoFree = false) then
   for x := 0 to high(StreamOut) do
   if StreamOut[x].Data.HandleSt <> nil then
    Pa_StartStream(StreamOut[x].Data.HandleSt);
@@ -1889,16 +1887,18 @@ begin
  PlayEx(True,nloop);
 end; 
 
-Procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
+procedure Tuos_Player.FreePlayer();  // Works only when PlayNoFree() was used: free the player
 begin
- if (isAssigned = True) then
+  if isAssigned then
   begin
-  NLooped:= 0;
-  NoFree := false;
-  play(0);
-  stop;
+    NLooped := 0;
+    NoFree := False;
+    //if it has never been put into play (= there is no thread for free)..
+    if thethread = nil then
+      Play();
+    Stop;
   end;
-end;
+end; 
 
 procedure Tuos_Player.RePlay();  // Resume Playing after Pause
 begin
@@ -6582,8 +6582,6 @@ var
 x, x2 : integer;
 begin
 
-  isFirst := true;
- 
   for x := 0 to high(StreamIn) do
   begin
   if (length(StreamIn[x].DSP) > 0) then
@@ -8543,7 +8541,6 @@ begin
   evPause := RTLEventCreate;
    
   isAssigned := true; 
-  isFirst := true;
   isGlobalPause := false;
   intobuf := false;
   NLooped:= 0; 
@@ -8698,4 +8695,12 @@ begin
   end;
 end;
 
+initialization
+  SetLength(tempoutmemory,0);
+  SetLength(uosPlayers,0);
+  SetLength(uosPlayersStat,0);
+  SetLength(uosLevelArray,0);
+  SetLength(uosDeviceInfos,0);
+  uosInit:= nil;
+  
 end.
