@@ -8506,7 +8506,15 @@ end;
 
 constructor Tuos_Init.Create;
 begin
-
+  {$IF DEFINED(portaudio)}
+  DefDevOut:= -1;
+  DefDevOutInfo:= nil;
+  DefDevOutAPIInfo:= nil;
+  DefDevIn:= -1;
+  DefDevInInfo:= nil;
+  DefDevInAPIInfo:= nil;
+  {$endif} 
+  
   TDummyThread.Create(false);
   evGlobalPause := RTLEventCreate;
 
