@@ -8560,6 +8560,10 @@ begin
 {$else}
 procedure TuosThread.DoTerminate;
 begin
+ {$IF FPC_FULLVERSION>=20701}
+ //Terminate the thread the calls places into the queuelist will be removed
+ RemoveQueuedEvents(Self);
+ {$ENDIF}  
 with  Tuos_Player(theparent) do
 begin
 if (ifflat = true) and (intobuf = false) then
