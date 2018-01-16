@@ -1987,7 +1987,6 @@ result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
   // load plugin...
 begin
-result := -1;
 result := uos.uos_loadPlugin(PluginName, PluginFilename)  ;
 end;
 
@@ -1996,7 +1995,6 @@ function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : cint32;
   // Shout => needed for dealing with IceCast server
   // Opus => needed for dealing with encoding opus stream
 begin
-result := -1;
 result := uos.uos_LoadServerLib(ShoutFileName, OpusFileName)  ;
  end;
   
@@ -2120,10 +2118,10 @@ end;
 
    uosPlayers[PlayerIndex] := Tuos_Player.Create();
   
-  if uosPlayers[PlayerIndex] <> nil then result := true
-  else result := false; 
+  result:= True;
 
   uosPlayers[PlayerIndex].Index := PlayerIndex;
+  //notice player is created
   uosPlayersStat[PlayerIndex] := 1 ;
  
   for x := 0 to length(uosPlayersStat) -1 do
