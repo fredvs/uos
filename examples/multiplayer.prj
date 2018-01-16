@@ -755,9 +755,9 @@ findoptions=1
 editpos=6
  0,-1073741823
  0,520
+ 0,0
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,2131
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -767,10 +767,10 @@ bookmarks4=0
 bookmarks5=0
 sourcefiles=6
  ${PROJECTDIR}/multiplayer.lpr
- ${PROJECTDIR}/main_mp.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/main_mp.pas
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_flat.pas
+ /home/fred/uos/examples/uos_flat.pas
  ${PROJECTDIR}/multiplayer_fpGUI.pas
 relpaths=6
  multiplayer.lpr
@@ -799,7 +799,7 @@ order=6
  5
  4
 firsttab=0
-index=3
+index=5
 [layout]
 windowlayout=583
  [mainfo.basedock]
@@ -815,7 +815,7 @@ windowlayout=583
  x=0
  y=0
  cx=1356
- cy=784
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -834,7 +834,7 @@ windowlayout=583
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,784
+  basedock,0,0,1356,694
  focusedchild=0
  wsize=6
  active=1
@@ -950,7 +950,7 @@ windowlayout=583
  x=0
  y=0
  cx=205
- cy=588
+ cy=520
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1151,9 +1151,9 @@ windowlayout=583
  ncx=0
  ncy=0
  x=0
- y=664
+ y=588
  cx=1356
- cy=120
+ cy=106
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1251,7 +1251,7 @@ windowlayout=583
  x=0
  y=0
  cx=1356
- cy=70
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1263,11 +1263,11 @@ windowlayout=583
  nx=0
  ny=0
  ncx=1356
- ncy=65
+ ncy=73
  x=0
  y=0
  cx=1356
- cy=73
+ cy=65
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1277,7 +1277,7 @@ windowlayout=583
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/main_mp.pas
+ value=/home/fred/uos/examples/uos_flat.pas
  history=50
   /home/fred/uos/examples/uos_dsp_utils.pas
   /home/fred/uos/src/uos_flat.pas
@@ -1346,7 +1346,7 @@ windowlayout=583
  x=208
  y=0
  cx=1148
- cy=588
+ cy=520
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1380,9 +1380,9 @@ windowlayout=583
  ncx=0
  ncy=0
  x=0
- y=73
+ y=65
  cx=1356
- cy=588
+ cy=520
  rcx=0
  rcy=0
 [targetconsole]
