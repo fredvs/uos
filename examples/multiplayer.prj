@@ -815,7 +815,7 @@ windowlayout=583
  x=0
  y=0
  cx=1356
- cy=694
+ cy=784
  rcx=0
  rcy=0
  [mainfo]
@@ -834,7 +834,7 @@ windowlayout=583
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1356,784
  focusedchild=0
  wsize=6
  active=1
@@ -950,7 +950,7 @@ windowlayout=583
  x=0
  y=0
  cx=205
- cy=520
+ cy=588
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1151,9 +1151,9 @@ windowlayout=583
  ncx=0
  ncy=0
  x=0
- y=588
+ y=664
  cx=1356
- cy=106
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1251,7 +1251,7 @@ windowlayout=583
  x=0
  y=0
  cx=1356
- cy=62
+ cy=70
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1267,7 +1267,7 @@ windowlayout=583
  x=0
  y=0
  cx=1356
- cy=65
+ cy=73
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1346,7 +1346,7 @@ windowlayout=583
  x=208
  y=0
  cx=1148
- cy=520
+ cy=588
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1380,9 +1380,9 @@ windowlayout=583
  ncx=0
  ncy=0
  x=0
- y=65
+ y=73
  cx=1356
- cy=520
+ cy=588
  rcx=0
  rcy=0
 [targetconsole]

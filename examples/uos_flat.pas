@@ -2140,10 +2140,17 @@ x : integer;
 nt : integer = 200;
 begin
 
+if assigned(uosPlayers) then
 if length(uosPlayers) > 0 then
  for x := 0 to length(uosPlayers) -1 do
+  begin
   if assigned(uosPlayers[x]) then
-   uosPlayers[x].FreePlayer;
+  begin
+  uosPlayers[x].nofree := false;
+  uos_stop(x);
+  uos_freeplayer(x);
+  end;
+  end;
 
 Sleep(40);
 
