@@ -603,6 +603,8 @@ type
   isAssigned: boolean ;
   isGlobalPause: boolean ;
   Status: cint32;
+  
+  //if use -1 value (default) -> not alterate uosPlayers[],..
   Index: cint32;
      
   intobuf :boolean; // to check, needed for filetobuf
@@ -1232,13 +1234,12 @@ var
   uosPlayers: array of Tuos_Player;
   uosPlayersStat : array of cint32;
   uosLevelArray : TDArIARFloat ;
-  ifflat : boolean = false;
   uosDeviceInfos: array of Tuos_DeviceInfos;
   uosLoadResult: Tuos_LoadResult;
-  uosDeviceCount: cint32;
-  uosDefaultDeviceIn: cint32;
-  uosDefaultDeviceOut: cint32;
-  uosInit: Tuos_Init;
+  uosDeviceCount: cint32 = 0;
+  uosDefaultDeviceIn: cint32 = -1;
+  uosDefaultDeviceOut: cint32 = -1;
+  uosInit: Tuos_Init = nil;
 
  {$IF DEFINED(windows)}
   old8087cw: word;
@@ -4927,7 +4928,7 @@ var
   
    StreamIn[x].Data.memorybuffer := MemoryBuffer;
   
-  sleep(50);
+  sleep(50); //TODO: it is necessary?
    
  {$IF DEFINED(debug)}
   WriteLn('AddFromMemoryBuffer Before all.');  
@@ -8521,11 +8522,6 @@ begin
   uosLoadResult.PAinitError := -1;
   uosLoadResult.MPinitError := -1;
   
-  if ifflat = true then
-  begin
-  setlength(uosPlayers,0) ;
-  setlength(uosPlayersStat,0) ;
-  end;
   PA_FileName := nil; // PortAudio
   SF_FileName := nil; // SndFile
   MP_FileName := nil; // Mpg123
@@ -8539,6 +8535,8 @@ end;
  constructor Tuos_Player.create();
 begin
   evPause := RTLEventCreate;
+  
+  Index:= -1;//default for indipendent instance
    
   isAssigned := true; 
   isGlobalPause := false;
@@ -8556,22 +8554,25 @@ begin
   SetLength(StreamIn,0);
   SetLength(StreamOut,0);
   SetLength(PlugIn,0);
+  
+  {$IF DEFINED(Java)}
+  PEnv:= nil;
+  Obj:= nil;
+  {$endif} 
  end;
 
 {$IF DEFINED(mse)}
 {$else}
 procedure TuosThread.DoTerminate;
 begin
-with  Tuos_Player(theparent) do
-begin
-if (ifflat = true) and (intobuf = false) then
-  begin
-  uosPlayers[Index] := nil;
-  uosPlayersStat[Index] := -1 ;
-  end; 
- thethread:= nil;//notice that is no longer valid
-end;
-FreeAndNil(theparent);
+ {$IF FPC_FULLVERSION>=20701}
+ //Terminate the thread the calls places into the queuelist will be removed
+ RemoveQueuedEvents(Self);
+ {$ENDIF}  
+ //notice that is no longer valid (for safe destroy event of theparent)
+ Tuos_Player(theparent).thethread:= nil;
+ //execute player destroy
+ FreeAndNil(theparent);
 end;
  {$endif}
 
@@ -8603,6 +8604,14 @@ if thethread <> nil then begin
   if length(Plugin) > 0 then
   for x := 0 to high(Plugin) do
   freeandnil(Plugin[x]);
+  
+  //Note: if Index = -1 is a indipendent instance
+  if Index <> -1 then
+  begin
+   //now notice that player is really free
+   uosPlayersStat[Index] := -1 ;
+   uosPlayers[Index] := nil;
+  end; 
  
   inherited Destroy;
 
