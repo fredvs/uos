@@ -8564,16 +8564,10 @@ begin
  //Terminate the thread the calls places into the queuelist will be removed
  RemoveQueuedEvents(Self);
  {$ENDIF}  
-with  Tuos_Player(theparent) do
-begin
-if (ifflat = true) and (intobuf = false) then
-  begin
-  uosPlayers[Index] := nil;
-  uosPlayersStat[Index] := -1 ;
-  end; 
- thethread:= nil;//notice that is no longer valid
-end;
-FreeAndNil(theparent);
+ //notice that is no longer valid (for safe destroy event of theparent)
+ Tuos_Player(theparent).thethread:= nil;
+ //execute player destroy
+ FreeAndNil(theparent);
 end;
  {$endif}
 
@@ -8605,6 +8599,14 @@ if thethread <> nil then begin
   if length(Plugin) > 0 then
   for x := 0 to high(Plugin) do
   freeandnil(Plugin[x]);
+  
+  //Note: if Index = -1 is a indipendent instance
+  if Index <> -1 then
+  begin
+   //now notice that player is really free
+   uosPlayersStat[Index] := -1 ;
+   uosPlayers[Index] := nil;
+  end; 
  
   inherited Destroy;
 
