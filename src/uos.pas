@@ -1236,10 +1236,10 @@ var
   uosLevelArray : TDArIARFloat ;
   uosDeviceInfos: array of Tuos_DeviceInfos;
   uosLoadResult: Tuos_LoadResult;
-  uosDeviceCount: cint32;
-  uosDefaultDeviceIn: cint32;
-  uosDefaultDeviceOut: cint32;
-  uosInit: Tuos_Init;
+  uosDeviceCount: cint32 = 0;
+  uosDefaultDeviceIn: cint32 = -1;
+  uosDefaultDeviceOut: cint32 = -1;
+  uosInit: Tuos_Init = nil;
 
  {$IF DEFINED(windows)}
   old8087cw: word;
@@ -4928,7 +4928,7 @@ var
   
    StreamIn[x].Data.memorybuffer := MemoryBuffer;
   
-  sleep(50);
+  sleep(50); //TODO: it is necessary?
    
  {$IF DEFINED(debug)}
   WriteLn('AddFromMemoryBuffer Before all.');  
@@ -8554,6 +8554,11 @@ begin
   SetLength(StreamIn,0);
   SetLength(StreamOut,0);
   SetLength(PlugIn,0);
+  
+  {$IF DEFINED(Java)}
+  PEnv:= nil;
+  Obj:= nil;
+  {$endif} 
  end;
 
 {$IF DEFINED(mse)}
