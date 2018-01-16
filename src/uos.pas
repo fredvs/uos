@@ -603,6 +603,8 @@ type
   isAssigned: boolean ;
   isGlobalPause: boolean ;
   Status: cint32;
+  
+  //if use -1 value (default) -> not alterate uosPlayers[],..
   Index: cint32;
      
   intobuf :boolean; // to check, needed for filetobuf
@@ -1232,7 +1234,6 @@ var
   uosPlayers: array of Tuos_Player;
   uosPlayersStat : array of cint32;
   uosLevelArray : TDArIARFloat ;
-  ifflat : boolean = false;
   uosDeviceInfos: array of Tuos_DeviceInfos;
   uosLoadResult: Tuos_LoadResult;
   uosDeviceCount: cint32;
@@ -8521,11 +8522,6 @@ begin
   uosLoadResult.PAinitError := -1;
   uosLoadResult.MPinitError := -1;
   
-  if ifflat = true then
-  begin
-  setlength(uosPlayers,0) ;
-  setlength(uosPlayersStat,0) ;
-  end;
   PA_FileName := nil; // PortAudio
   SF_FileName := nil; // SndFile
   MP_FileName := nil; // Mpg123
@@ -8539,6 +8535,8 @@ end;
  constructor Tuos_Player.create();
 begin
   evPause := RTLEventCreate;
+  
+  Index:= -1;//default for indipendent instance
    
   isAssigned := true; 
   isGlobalPause := false;
