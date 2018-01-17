@@ -415,18 +415,21 @@ type
    end;
 
 type
+  TArray01 = array[0..1] of cfloat;
+  
   Tuos_FFT = class(TObject)
   public
   TypeFilter: integer;
   LowFrequency, HighFrequency: cint32;
   AlsoBuf: boolean;
   a3, a32: array[0..2] of cfloat;
-  b2, x0, x1, y0, y1, b22, x02, x12, y02, y12: array[0..1] of cfloat;
+  b2, x0, x1, y0, y1, b22, x02, x12, y02, y12: TArray01;
   C, D, C2, D2, Gain, LeftResult, RightResult: cfloat;
  
   {$IF DEFINED(noiseremoval)}
   FNoise : TuosNoiseRemoval;
   {$endif} 
+  constructor Create;
   end;
 
 type
@@ -463,6 +466,7 @@ type
   procedure LoopProcjava;
   {$endif}
  
+  constructor Create;
   destructor Destroy; override;
 
   end;
@@ -511,6 +515,7 @@ type
   {$IF DEFINED(Java)}
   procedure LoopProcjava;
   {$endif}
+  constructor Create;
   destructor Destroy; override;
   end;
 
@@ -533,6 +538,7 @@ type
   {$IF DEFINED(Java)}
   procedure LoopProcjava;
   {$endif}
+  constructor Create;
   destructor Destroy; override;
   end;
 
@@ -555,6 +561,7 @@ type
   param7: float;
   param8: float;
   Buffer: TDArFloat;
+  constructor Create;
   end;
 
 type
@@ -602,8 +609,9 @@ type
   public
   isAssigned: boolean ;
   isGlobalPause: boolean ;
-  isFirst: boolean;
   Status: cint32;
+  
+  //if use -1 value (default) -> not alterate uosPlayers[],..
   Index: cint32;
      
   intobuf :boolean; // to check, needed for filetobuf
@@ -1233,13 +1241,12 @@ var
   uosPlayers: array of Tuos_Player;
   uosPlayersStat : array of cint32;
   uosLevelArray : TDArIARFloat ;
-  ifflat : boolean = false;
   uosDeviceInfos: array of Tuos_DeviceInfos;
   uosLoadResult: Tuos_LoadResult;
-  uosDeviceCount: cint32;
-  uosDefaultDeviceIn: cint32;
-  uosDefaultDeviceOut: cint32;
-  uosInit: Tuos_Init;
+  uosDeviceCount: cint32 = 0;
+  uosDefaultDeviceIn: cint32 = -1;
+  uosDefaultDeviceOut: cint32 = -1;
+  uosInit: Tuos_Init = nil;
 
  {$IF DEFINED(windows)}
   old8087cw: word;
@@ -1818,7 +1825,6 @@ var
   NoFree:= no_free;
    
   {$IF DEFINED(portaudio)}
-  if ((isFirst = true) and (NoFree = true)) or (NoFree = false) then
   for x := 0 to high(StreamOut) do
   if StreamOut[x].Data.HandleSt <> nil then
    Pa_StartStream(StreamOut[x].Data.HandleSt);
@@ -4929,7 +4935,7 @@ var
   
    StreamIn[x].Data.memorybuffer := MemoryBuffer;
   
-  sleep(50);
+  sleep(50); //TODO: it is necessary?
    
  {$IF DEFINED(debug)}
   WriteLn('AddFromMemoryBuffer Before all.');  
@@ -6584,8 +6590,6 @@ var
 x, x2 : integer;
 begin
 
-  isFirst := true;
- 
   for x := 0 to high(StreamIn) do
   begin
   if (length(StreamIn[x].DSP) > 0) then
@@ -8507,9 +8511,288 @@ begin
 end;
 {$endif}
 
+function AssignDefaultForUOSData: Tuos_Data;
+var
+  i: Integer;
+begin
+ with Result do
+ begin
+  Enabled:= False;
+  TypePut:= -1;//nothing
+  Seekable:= False;
+  Status:= 0; // no data
+
+  SetLength(Buffer,0);
+  SetLength(MemoryBuffer,0);
+  MemoryStream:= nil;
+  posmem:= 0;
+
+  {$IF DEFINED(opus)}
+  SetLength(BufferTMP,0);
+  {$endif}
+
+  DSPVolumeIndex:= -1;
+  DSPNoiseIndex:= -1;
+  VLeft:= 0;
+  VRight:= 0;
+
+  PositionEnable:= 0;
+  LevelEnable:= 0;
+  LevelLeft:= 0;
+  LevelRight:= 0;
+  levelArrayEnable:= 0;
+
+  //----------------------------//
+  SampleRate:= 44100;
+  freqsine:= 440;
+  lensine:= SampleRate / freqsine;
+  dursine:= SampleRate;
+  posdursine:= 0;
+  posLsine:= 0;
+  posRsine:= 0;
+  SamplerateRoot:= SampleRate;
+  //----------------------------//
+
+  Wantframes:= 0;
+  OutFrames:= 0;
+
+  SampleFormat:= -1; // default
+  Channels:= -1; // default
+
+  HandleSt:= nil;
+  {$IF DEFINED(opus)}
+  HandleOP:= nil;
+  {$endif}
+
+  Filename:= '';
+  Title:= '';
+  Copyright:= '';
+  Software:= '';
+  Artist:= '';
+  Comment:= '';
+  Date:= '';
+  for i:= 0 to High(Tag) do
+   Tag[i]:= #0;
+  Album:= '';
+  Genre:= 0;
+  HDFormat:= 0;
+  Frames:= 0;
+  Sections:= 0;
+  Encoding:= -1; // unknow
+  bitrate:= -1; // unknow
+  Length:= 0;
+  LibOpen:= -1; // nothing open
+  Ratio:= 0;
+
+  BPM:= 0;
+
+  numbuf:= -1; //default
+
+  Output:= -1; //error
+
+  Position:= 0;
+  Poseek:= 0;
+ end;
+end;   
+
+constructor Tuos_FFT.Create;
+var
+  i: Integer;
+begin
+  inherited;
+
+  TypeFilter:= 0;
+  LowFrequency:= 0;
+  HighFrequency:= 0;
+  AlsoBuf:= False;
+
+  for i:= 0 to High(a3) do
+    a3[i]:= 0;
+  for i:= 0 to High(a32) do
+    a32[i]:= 0;
+
+  for i:= 0 to High(TArray01) do
+  begin
+    b2[i]:= 0;
+    x0[i]:= 0;
+    x1[i]:= 0;
+    y0[i]:= 0;
+    y1[i]:= 0;
+    b22[i]:= 0;
+    x02[i]:= 0;
+    x12[i]:= 0;
+    y02[i]:= 0;
+    y12[i]:= 0;
+  end;
+
+  C:= 0;
+  D:= 0;
+  C2:= 0;
+  D2:= 0;
+  Gain:= 0;
+  LeftResult:= 0;
+  RightResult:= 0;
+
+  {$IF DEFINED(noiseremoval)}
+  FNoise:= nil;
+  {$endif}
+end;        
+
+constructor Tuos_DSP.Create;
+begin
+  inherited;
+
+  Enabled:= False;
+  BefFunc:= nil;
+  AftFunc:= nil;
+  EndFunc:= nil;
+  LoopProc:= nil;
+  fftdata:= nil;
+end;       
+
+constructor Tuos_InStream.Create;
+begin
+  inherited;
+
+  Data:= AssignDefaultForUOSData;
+  SetLength(DSP,0);
+
+  {$IF DEFINED(neaac)}
+  AACI:= nil;
+  {$endif}
+
+  {$IF DEFINED(cdrom)}
+  pCD:= nil;
+  {$endif}
+
+  {$IF DEFINED(webstream)}
+    httpget:= nil;
+
+    //TODO: check this block
+    {$IF DEFINED(windows)}
+      {$if defined(cpu64)}
+      InHandle:= 0;//qword
+      OutHandle:= 0;
+      {$else}
+      InHandle:= 0;//longword
+      OutHandle:= 0;
+      {$ENDIF}
+    {$else}
+    InHandle:= -1;//cint32
+    OutHandle:= -1;
+    {$endif}
+
+    InPipe:= nil;
+    OutPipe:= nil;
+  {$ENDIF}
+
+  {$IF DEFINED(portaudio)}
+  with PAParam do
+  begin
+   //TODO: check if the default settings are ok
+   device:= 0;
+   channelCount:= 0;
+   sampleFormat:= nil;
+   suggestedLatency:= 0;
+   hostApiSpecificStreamInfo:= nil;
+  end;
+  {$endif}
+
+  LoopProc:= nil;
+end;    
+
+constructor Tuos_OutStream.Create;
+{$IF DEFINED(shout)}
+var
+  i: integer;
+{$endif}
+begin
+  inherited;
+
+  Data:= AssignDefaultForUOSData;
+  BufferOut:= nil;
+  SetLength(DSP,0);
+
+  {$IF DEFINED(portaudio)}
+  with PAParam do
+  begin
+   //TODO: check if the default settings are ok
+   device:= 0;
+   channelCount:= 0;
+   sampleFormat:= nil;
+   suggestedLatency:= 0;
+   hostApiSpecificStreamInfo:= nil;
+  end;
+  {$endif}
+
+  {$IF DEFINED(shout)}
+  encoder:= nil;
+  for i:= 0 to High(cbits) do
+   cbits[i]:= 0;//byte
+  {$endif}
+
+  with FileBuffer do
+  begin
+   ERROR:= 0;
+   wSamplesPerSec:= 44100;
+   wBitsPerSample:= 32;
+   wChannels:= 2;
+   FileFormat:= -1;
+   Data:= nil;
+   DataMS:= nil;
+  end;
+  LoopProc:= nil;
+
+  {$IF DEFINED(Java)}
+  procedure LoopProcjava;
+  {$endif}
+end; 
+
+constructor Tuos_Plugin.Create;
+begin
+  inherited;
+
+  Enabled:= False;
+  Name:= '';
+
+  //TODO: check this block
+  {$IF DEFINED(windows)}
+   {$if defined(cpu64)}
+   PlugHandle:= 0;
+   {$else}
+   PlugHandle:= -1;
+   {$ENDIF}
+  {$else}
+  PlugHandle:= nil; //<- I see in uos: if not windows = "THandle = pointer"
+  {$endif}
+
+  {$IF DEFINED(bs2b) or DEFINED(soundtouch)}
+  Abs2b:= nil;
+  PlugFunc:= nil;
+  {$endif}
+  param1:= -1;
+  param2:= -1;
+  param3:= -1;
+  param4:= -1;
+  param5:= -1;
+  param6:= -1;
+  param7:= -1;
+  param8:= -1;
+
+  SetLength(Buffer,0);
+end;  
+
 constructor Tuos_Init.Create;
 begin
-
+  {$IF DEFINED(portaudio)}
+  DefDevOut:= -1;
+  DefDevOutInfo:= nil;
+  DefDevOutAPIInfo:= nil;
+  DefDevIn:= -1;
+  DefDevInInfo:= nil;
+  DefDevInAPIInfo:= nil;
+  {$endif} 
+  
   TDummyThread.Create(false);
   evGlobalPause := RTLEventCreate;
 
@@ -8525,11 +8808,6 @@ begin
   uosLoadResult.PAinitError := -1;
   uosLoadResult.MPinitError := -1;
   
-  if ifflat = true then
-  begin
-  setlength(uosPlayers,0) ;
-  setlength(uosPlayersStat,0) ;
-  end;
   PA_FileName := nil; // PortAudio
   SF_FileName := nil; // SndFile
   MP_FileName := nil; // Mpg123
@@ -8543,9 +8821,10 @@ end;
  constructor Tuos_Player.create();
 begin
   evPause := RTLEventCreate;
+  
+  Index:= -1;//default for indipendent instance
    
   isAssigned := true; 
-  isFirst := true;
   isGlobalPause := false;
   intobuf := false;
   NLooped:= 0; 
@@ -8561,22 +8840,25 @@ begin
   SetLength(StreamIn,0);
   SetLength(StreamOut,0);
   SetLength(PlugIn,0);
+  
+  {$IF DEFINED(Java)}
+  PEnv:= nil;
+  Obj:= nil;
+  {$endif} 
  end;
 
 {$IF DEFINED(mse)}
 {$else}
 procedure TuosThread.DoTerminate;
 begin
-with  Tuos_Player(theparent) do
-begin
-if (ifflat = true) and (intobuf = false) then
-  begin
-  uosPlayers[Index] := nil;
-  uosPlayersStat[Index] := -1 ;
-  end; 
- thethread:= nil;//notice that is no longer valid
-end;
-FreeAndNil(theparent);
+ {$IF FPC_FULLVERSION>=20701}
+ //Terminate the thread the calls places into the queuelist will be removed
+ RemoveQueuedEvents(Self);
+ {$ENDIF}  
+ //notice that is no longer valid (for safe destroy event of theparent)
+ Tuos_Player(theparent).thethread:= nil;
+ //execute player destroy
+ FreeAndNil(theparent);
 end;
  {$endif}
 
@@ -8608,6 +8890,14 @@ if thethread <> nil then begin
   if length(Plugin) > 0 then
   for x := 0 to high(Plugin) do
   freeandnil(Plugin[x]);
+  
+  //Note: if Index = -1 is a indipendent instance
+  if Index <> -1 then
+  begin
+   //now notice that player is really free
+   uosPlayersStat[Index] := -1 ;
+   uosPlayers[Index] := nil;
+  end; 
  
   inherited Destroy;
 
