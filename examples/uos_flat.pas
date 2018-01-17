@@ -2140,21 +2140,14 @@ x : integer;
 nt : integer = 200;
 begin
 
-
-{$IF DEFINED(mse)}
+// needed for MSE and if some players are still playing
 if length(uosPlayers) > 0 then
  for x := 0 to length(uosPlayers) -1 do
-  begin
   if assigned(uosPlayers[x]) then
   begin
   uosPlayers[x].nofree := false;
   uos_stop(x);
-  uos_freeplayer(x);
   end;
-  end;
-sleep(40);
-{$endif}
-
 
 while (PlayersNotFree = true) and (nt > 0) do 
  begin 
