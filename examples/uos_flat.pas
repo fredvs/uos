@@ -2140,7 +2140,8 @@ x : integer;
 nt : integer = 200;
 begin
 
-if assigned(uosPlayers) then
+
+{$IF DEFINED(mse)}
 if length(uosPlayers) > 0 then
  for x := 0 to length(uosPlayers) -1 do
   begin
@@ -2151,8 +2152,9 @@ if length(uosPlayers) > 0 then
   uos_freeplayer(x);
   end;
   end;
+sleep(40);
+{$endif}
 
-Sleep(40);
 
 while (PlayersNotFree = true) and (nt > 0) do 
  begin 
