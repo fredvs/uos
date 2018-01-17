@@ -2143,7 +2143,6 @@ begin
 // needed for MSE and if some players are still playing
 if length(uosPlayers) > 0 then
  for x := 0 to length(uosPlayers) -1 do
-  if assigned(uosPlayers[x]) then
   begin
   uosPlayers[x].nofree := false;
   uos_stop(x);
