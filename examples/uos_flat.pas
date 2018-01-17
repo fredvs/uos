@@ -1827,8 +1827,10 @@ Procedure uos_FreePlayer(PlayerIndex: cint32) ;
 begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
-  if assigned(uosPlayers[PlayerIndex]) then
+begin
 uosPlayers[PlayerIndex].FreePlayer() ;
+uosPlayers[PlayerIndex] := nil;
+end;
 end;
 
 procedure uos_RePlay(PlayerIndex: cint32);  // Resume playing after pause
@@ -1946,6 +1948,7 @@ function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos
   //  result :  The memory buffer
   // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos, -1, -1);
  begin
+  ifflat := true;
 result := uos.uos_File2Buffer(Filename, SampleFormat, bufferinfos, frompos, numbuf )  ;
   end;
   
@@ -1960,12 +1963,14 @@ function uos_Stream2Buffer(AudioFile: TMemoryStream; SampleFormat: int32 ; var o
     //  result :  The memory buffer
   // example : buffmem := uos_Stream2Buffer(edit5.Text,0,buffmem, buffinfos, -1, -1);
  begin
+  ifflat := true;
 result := uos.uos_Stream2Buffer(AudioFile, SampleFormat, outmemory, bufferinfos, frompos, numbuf )  ;
   end; 
   
 function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
   // From SoundTouch plugin  
 begin
+  ifflat := true;
   result := uos.uos_GetBPM(TheBuffer, Channels, SampleRate);
   end;  
   
@@ -1976,17 +1981,21 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
   // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
   // typeout : Type of out file (-1:default=wav, 0:wav, 1:pcm, 2:custom)  // example : InputIndex1 := uos_File2File(edit5.Text,0,buffmem);   
  begin
+  ifflat := true;
   uos.uos_File2File(FilenameIN, FilenameOUT, SampleFormat, typeout);
   end;
   
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   begin
+  ifflat := true;
 result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName)  ;
   end;
   
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
   // load plugin...
 begin
+result := -1;
+  ifflat := true;
 result := uos.uos_loadPlugin(PluginName, PluginFilename)  ;
 end;
 
@@ -1995,12 +2004,15 @@ function uos_LoadServerLib(ShoutFileName, OpusFileName : PChar) : cint32;
   // Shout => needed for dealing with IceCast server
   // Opus => needed for dealing with encoding opus stream
 begin
+result := -1;
+  ifflat := true;
 result := uos.uos_LoadServerLib(ShoutFileName, OpusFileName)  ;
  end;
   
 procedure uos_unloadServerLib();
   // Unload server libraries... Do not forget to call it before close application...
  begin
+ ifflat := true;
  uos.uos_unloadServerLib()  ;
  end;  
 {$endif}
@@ -2102,7 +2114,8 @@ end;
   
   if (uosPlayers[PlayerIndex] <> nil) then
   begin
-   uosPlayers[PlayerIndex].FreePlayer;
+   uosPlayers[PlayerIndex].nofree := false;
+   uosPlayers[PlayerIndex].Stop();
    Sleep(20); 
   while (PlayerNotFree(PlayerIndex) = true) and (nt > 0) do 
   begin 
@@ -2118,10 +2131,10 @@ end;
 
    uosPlayers[PlayerIndex] := Tuos_Player.Create();
   
-  result:= True;
+  if uosPlayers[PlayerIndex] <> nil then result := true
+  else result := false; 
 
   uosPlayers[PlayerIndex].Index := PlayerIndex;
-  //notice player is created
   uosPlayersStat[PlayerIndex] := 1 ;
  
   for x := 0 to length(uosPlayersStat) -1 do
@@ -2140,13 +2153,19 @@ x : integer;
 nt : integer = 200;
 begin
 
-// needed for MSE and if some players are still playing
+if assigned(uosPlayers) then
 if length(uosPlayers) > 0 then
  for x := 0 to length(uosPlayers) -1 do
   begin
+  if assigned(uosPlayers[x]) then
+  begin
   uosPlayers[x].nofree := false;
   uos_stop(x);
+  uos_freeplayer(x);
   end;
+  end;
+
+Sleep(40);
 
 while (PlayersNotFree = true) and (nt > 0) do 
  begin 
