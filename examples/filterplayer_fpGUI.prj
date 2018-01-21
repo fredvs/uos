@@ -924,14 +924,19 @@ findhistory=20
  destructor
  PPmpg123_id3v1
 findoptions=1
-editpos=1
- 0,10
+editpos=2
+ 0,-1073741823
+ 50,525
 bookmarks0=0
-sourcefiles=1
+bookmarks1=0
+sourcefiles=2
  ${PROJECTDIR}/filterplayer_fpGUI.pas
-relpaths=1
+ /home/fred/uos/examples/uos_flat.pas
+relpaths=2
  filterplayer_fpGUI.pas
-ismoduletexts=1
+ uos_flat.pas
+ismoduletexts=2
+ 0
  0
 modules=1
  /home/fred/ideu/src/guitemplates.mfm
@@ -943,9 +948,9 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=1
 [layout]
-windowlayout=560
+windowlayout=562
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -958,7 +963,7 @@ windowlayout=560
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=604
  rcx=0
  rcy=0
@@ -973,12 +978,12 @@ windowlayout=560
  ncy=0
  x=125
  y=46
- cx=1123
+ cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,604
+  basedock,0,0,1147,604
  focusedchild=0
  wsize=0
  active=1
@@ -992,8 +997,8 @@ windowlayout=560
  ny=0
  ncx=0
  ncy=0
- x=541
- y=156
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
@@ -1022,7 +1027,7 @@ windowlayout=560
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1068,7 +1073,7 @@ windowlayout=560
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1104,8 +1109,8 @@ windowlayout=560
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=3
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1186,7 +1191,7 @@ windowlayout=560
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1304,7 +1309,7 @@ windowlayout=560
  ncy=0
  x=0
  y=512
- cx=1113
+ cx=1147
  cy=92
  rcx=0
  rcy=0
@@ -1404,7 +1409,7 @@ windowlayout=560
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=51
  rcx=0
  rcy=0
@@ -1416,16 +1421,14 @@ windowlayout=560
  mdistate=0
  nx=0
  ny=0
- ncx=1113
- ncy=53
+ ncx=1147
+ ncy=54
  x=0
  y=0
- cx=1113
- cy=53
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1433,8 +1436,12 @@ windowlayout=560
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/filterplayer_fpGUI.pas
+ value=/home/fred/uos/examples/uos_flat.pas
  history=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.hints]
+ value=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1447,7 +1454,7 @@ windowlayout=560
  ncy=0
  x=208
  y=0
- cx=905
+ cx=939
  cy=455
  rcx=0
  rcy=0
@@ -1455,7 +1462,7 @@ windowlayout=560
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0
@@ -1483,14 +1490,14 @@ windowlayout=560
  ncy=0
  x=0
  y=54
- cx=1113
+ cx=1147
  cy=455
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=findinfilefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

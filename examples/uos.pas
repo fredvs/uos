@@ -1155,9 +1155,11 @@ procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
  // load plugin...
- 
+
+{$IF DEFINED(soundtouch)}
 function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
   // From SoundTouch plugin
+{$endif}  
   
 procedure uos_unloadPlugin(PluginName: PChar);
   // Unload Plugin...
@@ -1607,6 +1609,7 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   result := outmemory;
  end; 
  
+ {$IF DEFINED(soundtouch)}
 function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
   // From SoundTouch plugin
   var
@@ -1630,6 +1633,7 @@ function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32)
    bpm_destroyInstance(BPMhandle);
   
   end;
+ {$endif}
  
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint ): TDArFloat;
   // Create a memory buffer of a audio file.
@@ -8744,7 +8748,7 @@ begin
   LoopProc:= nil;
 
   {$IF DEFINED(Java)}
-  procedure LoopProcjava;
+//  procedure LoopProcjava;
   {$endif}
 end; 
 

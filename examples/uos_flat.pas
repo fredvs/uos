@@ -730,9 +730,11 @@ function uos_GetVersion() : cint32 ;  // version of uos
 function uos_SetGlobalEvent(PlayerIndex: cint32; isenabled : boolean) : boolean;
   // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
   // result : true if set ok.
-  
+ 
+ {$IF DEFINED(soundtouch)}
 function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
   // From SoundTouch plugin  
+{$endif}
 
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint ): TDArFloat;
   // Create a memory buffer of a audio file.
@@ -1963,11 +1965,13 @@ function uos_Stream2Buffer(AudioFile: TMemoryStream; SampleFormat: int32 ; var o
 result := uos.uos_Stream2Buffer(AudioFile, SampleFormat, outmemory, bufferinfos, frompos, numbuf )  ;
   end; 
   
+{$IF DEFINED(soundtouch)}
 function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
   // From SoundTouch plugin  
 begin
   result := uos.uos_GetBPM(TheBuffer, Channels, SampleRate);
-  end;  
+  end; 
+{$endif}  
   
 procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32 ; typeout: cint32 );
   // Create a audio file from a audio file.

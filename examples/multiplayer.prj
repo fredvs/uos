@@ -153,7 +153,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -185,8 +185,8 @@ settings=8
  [settings_form]
  x=447
  y=148
- cx=471
- cy=446
+ cx=467
+ cy=493
  wsize=0
  active=1
  visible=1
@@ -196,16 +196,16 @@ messageoutputfile=
 makecommand=${COMPILER}
 makedir=
 unitdirs=10
- ${lazarus}*
- ${lazarus}/components/*
- ${lazarus}/*
- ${lazarus}/lcl/*
- ${lazarus}/lcl/interfaces/qt
- ${lazarus}/lcl/interfaces/win32
- ${lazarus}/lcl/interfaces/gtk2
- ${lazarus}/lcl/components/*
- ${lazarus}/lcl/include
- ${lazarus}/lcl
+ ${lcldir}*
+ ${lcldir}/components/*
+ ${lcldir}/*
+ ${lcldir}/lcl/*
+ ${lcldir}/lcl/interfaces/qt
+ ${lcldir}/lcl/interfaces/win32
+ ${lcldir}/lcl/interfaces/gtk2
+ ${lcldir}/lcl/components/*
+ ${lcldir}/lcl/include
+ ${lcldir}/lcl
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -529,7 +529,7 @@ unitdirson=10
  987135
  987135
  987135
- 987087
+ 987072
  983088
  983040
  987135
@@ -752,34 +752,39 @@ findhistory=5
  playnofr
  Pa_StopStream
 findoptions=1
-editpos=6
+editpos=7
  0,-1073741823
- 0,520
- 0,0
  0,-1073741823
- 0,2131
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,1143
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-sourcefiles=6
+bookmarks6=0
+sourcefiles=7
  ${PROJECTDIR}/multiplayer.lpr
- /home/fred/uos/examples/main_mp.pas
- /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/main_mp.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_portaudio.pas
- /home/fred/uos/examples/uos_flat.pas
+ ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/multiplayer_fpGUI.pas
-relpaths=6
+ /home/fred/msegui/lib/common/fpccompatibility/mclasses.pas
+relpaths=7
  multiplayer.lpr
  main_mp.pas
  uos.pas
  uos_portaudio.pas
  uos_flat.pas
  multiplayer_fpGUI.pas
-ismoduletexts=6
+ ../msegui/lib/common/fpccompatibility/mclasses.pas
+ismoduletexts=7
+ 0
  0
  0
  0
@@ -791,17 +796,18 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=6
+order=7
  0
  2
  3
  1
  5
  4
+ 6
 firsttab=0
-index=5
+index=6
 [layout]
-windowlayout=583
+windowlayout=533
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -814,8 +820,8 @@ windowlayout=583
  ncy=0
  x=0
  y=0
- cx=1356
- cy=694
+ cx=1147
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -829,14 +835,14 @@ windowlayout=583
  ncy=0
  x=125
  y=46
- cx=1123
+ cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1147,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -878,7 +884,7 @@ windowlayout=583
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -950,7 +956,7 @@ windowlayout=583
  x=0
  y=0
  cx=205
- cy=520
+ cy=456
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -960,7 +966,7 @@ windowlayout=583
  width1=82
  sortdescend1=0
  sorted=0
- col=-1073741823
+ col=1
  row=-1073741823
  rowheight=17
  [stackfo]
@@ -1151,9 +1157,9 @@ windowlayout=583
  ncx=0
  ncy=0
  x=0
- y=588
- cx=1356
- cy=106
+ y=512
+ cx=1147
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1250,8 +1256,8 @@ windowlayout=583
  ncy=0
  x=0
  y=0
- cx=1356
- cy=62
+ cx=1147
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1262,12 +1268,12 @@ windowlayout=583
  mdistate=0
  nx=0
  ny=0
- ncx=1356
- ncy=73
+ ncx=1147
+ ncy=53
  x=0
  y=0
- cx=1356
- cy=65
+ cx=1147
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1277,58 +1283,8 @@ windowlayout=583
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
- history=50
-  /home/fred/uos/examples/uos_dsp_utils.pas
-  /home/fred/uos/src/uos_flat.pas
-  /home/fred/uos/src/uos_mpg123.pas
-  /home/fred/uos/src/uos.pas
-  /home/fred/uos/src/uos_aac.pas
-  /home/fred/strumpract/src/define.inc
-  /home/fred/strumpract/src/strumpract.pas
-  /home/fred/strumpract/src/config.pas
-  /home/fred/uos/examples/uos.pas
-  /home/fred/uos/examples/SimplePlayer_MSE.pas
-  /home/fred/uos/examples/consolebpmdetect.pas
-  /home/fred/strumpract/src/songplayer2.pas
-  /home/fred/strumpract/src/drums.pas
-  /home/fred/strumpract/src/infos.pas
-  /home/fred/uos/src/uos_soundtouch.pas
-  /home/fred/uos/examples/uos_soundtouch.pas
-  /home/fred/strumpract/src/uos.pas
-  /home/fred/uos/examples/consoleplaymemorybuffer.pas
-  /home/fred/uos/examples/simpleplayer_fpGUI.pas
-  /home/fred/strumpract/src/main.pas
-  /home/fred/strumpract/src/filelistform.pas
-  /home/fred/strumpract/src/songplayer.pas
-  /home/fred/strumpract/src/commander.pas
-  /home/fred/ideu/src/dialogfiles.pas
-  /home/fred/ideu/src/confmsegui.pas
-  /home/fred/ideu/src/conffpgui.pas
-  /home/fred/ideu/src/confdebugger.pas
-  /home/fred/ideu/src/confcompiler.pas
-  /home/fred/ideu/src/confideu.pas
-  /home/fred/ideu/src/aboutform.pas
-  /home/fred/ideu_15_7_17/src/msedesigner.pas
-  /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
-  /home/fred/ideu/src/msedesigner.pas
-  /home/fred/strumpract/src/recorder.pas
-  /home/fred/strumpract/src/uos_soundtouch.pas
-  /home/fred/strumpract/src/uos_portaudio.pas
-  /home/fred/strumpract/src/msefiledialog.pas
-  /home/fred/uos/examples/simplerecorder_fpGUI.pas
-  /home/fred/uos/examples/mainmse_sp.pas
-  /home/fred/uos/examples/main_sd.pas
-  /home/fred/uos/examples/consoleplaymemorystream.pas
-  /home/fred/uos/examples/consoleplay.pas
-  /home/fred/uos/examples/filterplayer_fpGUI.pas
-  /home/fred/strumpract/src/dialogfiles.pas
-  /home/fred/strumpract/src/aboutform.pas
-  /home/fred/uos/examples/deviceinfos_fpGUI.pas
-  /home/fred/uos/examples/main_sp.pas
-  /home/fred/ideu/src/msefiledialog.pas
-  /home/fred/test_mse_muti/grid/main.mfm
-  /home/fred/test_mse_muti/grid/main.pas
+ value=/home/fred/msegui/lib/common/fpccompatibility/mclasses.pas
+ history=0
  [debuggerfo.project_options]
  value=B
  [debuggerfo.hints]
@@ -1345,8 +1301,8 @@ windowlayout=583
  ncy=0
  x=208
  y=0
- cx=1148
- cy=520
+ cx=939
+ cy=456
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1380,9 +1336,9 @@ windowlayout=583
  ncx=0
  ncy=0
  x=0
- y=65
- cx=1356
- cy=520
+ y=53
+ cx=1147
+ cy=456
  rcx=0
  rcy=0
 [targetconsole]

@@ -230,7 +230,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=339
@@ -314,7 +314,7 @@ makeoptions=10
  -FUunits
  -WG
  -B
- -O3 -XX -CX -Xs
+ -O2 -XX -CX -Xs
  -vewnbq
  -ghl
  -CX -Cg  -g -gl -Xg -vewnhibq 
