@@ -323,7 +323,7 @@ makeoptpurpose=10
  
  
  
- 
+ For Windows only
  
  
  
@@ -970,8 +970,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=bpm
+finddtext=getbpm
 findhistory=20
+ getbpm
  bpm
  getbpmplug
  soundtouchplug
@@ -985,7 +986,6 @@ findhistory=20
  WriteOutPlug
  soundtouch
  getbpm'
- getbpm
  GetBPMPlug
  theinc
  mpg123_id3(StreamIn[x].Data.Handle
@@ -994,12 +994,12 @@ findhistory=20
  try
 findoptions=1
 editpos=6
+ 0,931
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,548
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1040,7 +1040,7 @@ order=6
  1
  2
 firsttab=0
-index=2
+index=0
 [layout]
 windowlayout=543
  [mainfo.basedock]
@@ -1528,7 +1528,7 @@ windowlayout=543
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
+ value=/home/fred/uos/examples/uos.pas
  history=0
  [debuggerfo.project_options]
  value=1
