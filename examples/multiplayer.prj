@@ -195,9 +195,8 @@ targetfile=${PROJECTNAME}${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=10
+unitdirs=9
  ${lcldir}*
- ${lcldir}/components/*
  ${lcldir}/*
  ${lcldir}/lcl/*
  ${lcldir}/lcl/interfaces/qt
@@ -524,8 +523,7 @@ project_time=
 project_date=15:21:42 26/03/2017
 project_comment=
 aftcommandon=0
-unitdirson=10
- 987135
+unitdirson=9
  987135
  987135
  987135
@@ -759,7 +757,7 @@ editpos=7
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1143
+ 0,1134
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0

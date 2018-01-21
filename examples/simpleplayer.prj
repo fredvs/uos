@@ -737,7 +737,7 @@ editpos=4
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 21,8
+ 0,8
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -847,7 +847,7 @@ windowlayout=533
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1272,7 +1272,7 @@ windowlayout=533
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

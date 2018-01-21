@@ -149,7 +149,7 @@ options=114
  x=0
  y=120
  xprop=1
- yprop=0.24070450097847
+ yprop=0.23976608187135
  [projectoptionsfo.macrogrid]
  propcolwidthref=481
  sortdescend0=0
@@ -174,7 +174,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -198,8 +198,8 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=278
- y=87
+ x=292
+ y=99
  cx=759
  cy=568
 settings=8
@@ -216,22 +216,17 @@ targetfile=${PROJECTNAME}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=15
- ${lazarus}*
- ${lazarus}/components/*
- ${lazarus}/*
- ${lazarus}/lcl/*
- ${lazarus}/lcl/images
- ${lazarus}/lcl/include
- ${lazarus}/lcl/forms
- ${lazarus}/lcl/interfaces
- ${lazarus}/lcl/interfaces/qt
- ${lazarus}/lcl/widgetset
- ${lazarus}/lcl/interfaces/win32
- ${lazarus}/lcl/interfaces/gtk2
- ${lazarus}/lcl/components/*
- ${lazarus}/lcl/include
- ${lazarus}/lcl
+unitdirs=10
+ ${lcldir}*
+ ${lcldir}/*
+ ${lcldir}/components/*
+ ${lcldir}/lcl/*
+ ${lcldir}/lcl/interfaces/qt
+ ${lcldir}/lcl/interfaces/win32
+ ${lcldir}/lcl/interfaces/gtk2
+ ${lcldir}/lcl/components/*
+ ${lcldir}/lcl/include
+ ${lcldir}/lcl
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -474,9 +469,9 @@ makeoptionson=9
  0
  4095
  240
- 250
+ 254
  2
- 509
+ 511
  255
 compilerusedon=29
  4035
@@ -550,17 +545,12 @@ project_time=
 project_date=15:21:42 26/03/2017
 project_comment=
 aftcommandon=0
-unitdirson=15
+unitdirson=10
  987135
  987135
  987135
+ 987083
  987087
- 987135
- 987135
- 987135
- 987135
- 987087
- 987135
  983088
  983040
  987135
@@ -803,14 +793,19 @@ findhistory=18
  status
  playerno
 findoptions=1
-editpos=1
- 0,0
+editpos=2
+ 0,-1073741823
+ 0,12
 bookmarks0=0
-sourcefiles=1
+bookmarks1=0
+sourcefiles=2
  ${PROJECTDIR}/main_sd.pas
-relpaths=1
+ ${PROJECTDIR}/simpledrums.lpr
+relpaths=2
  main_sd.pas
-ismoduletexts=1
+ simpledrums.lpr
+ismoduletexts=2
+ 0
  0
 modules=0
 moduleoptions=0
@@ -818,9 +813,9 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=1
 [layout]
-windowlayout=531
+windowlayout=533
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -833,8 +828,8 @@ windowlayout=531
  ncy=0
  x=0
  y=0
- cx=1356
- cy=784
+ cx=1147
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -846,16 +841,16 @@ windowlayout=531
  ny=0
  ncx=0
  ncy=0
- x=231
- y=53
- cx=939
+ x=3
+ y=24
+ cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,784
+  basedock,0,0,1147,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -943,7 +938,7 @@ windowlayout=531
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -968,19 +963,19 @@ windowlayout=531
  ncy=0
  x=0
  y=0
- cx=159
- cy=574
+ cx=205
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
- propcolwidthref=18
- width0=141
+ propcolwidthref=88
+ width0=117
  sortdescend0=0
- width1=12
+ width1=82
  sortdescend1=0
  sorted=0
  col=1
- row=2
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1061,15 +1056,15 @@ windowlayout=531
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=670
- y=179
+ x=316
+ y=249
  cx=316
  cy=484
  rcx=0
@@ -1079,9 +1074,9 @@ windowlayout=531
  visible=0
  [objectinspectorfo.grid]
  propcolwidthref=306
- width0=73
+ width0=136
  sortdescend0=0
- width1=227
+ width1=164
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1141,7 +1136,7 @@ windowlayout=531
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=121
+ propcolwidthref=111
  values0=0
  values0_ci=-1
  sortdescend0=0
@@ -1170,9 +1165,9 @@ windowlayout=531
  ncx=0
  ncy=0
  x=0
- y=649
- cx=1356
- cy=135
+ y=512
+ cx=1147
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1239,7 +1234,7 @@ windowlayout=531
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1269,8 +1264,8 @@ windowlayout=531
  ncy=0
  x=0
  y=0
- cx=1356
- cy=69
+ cx=1147
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1281,16 +1276,14 @@ windowlayout=531
  mdistate=0
  nx=0
  ny=0
- ncx=929
- ncy=2
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1356
- cy=80
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1298,8 +1291,12 @@ windowlayout=531
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/main_sd.pas
+ value=/home/fred/uos/examples/simpledrums.lpr
  history=0
+ [debuggerfo.project_options]
+ value=B
+ [debuggerfo.hints]
+ value=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1310,17 +1307,17 @@ windowlayout=531
  ny=0
  ncx=0
  ncy=0
- x=162
+ x=208
  y=0
- cx=1194
- cy=574
+ cx=939
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1347,9 +1344,9 @@ windowlayout=531
  ncx=0
  ncy=0
  x=0
- y=72
- cx=1356
- cy=574
+ y=54
+ cx=1147
+ cy=455
  rcx=0
  rcy=0
 [targetconsole]

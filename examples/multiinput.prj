@@ -128,7 +128,7 @@ options=114
  x=0
  y=120
  xprop=1
- yprop=0.24070450097847
+ yprop=0.23976608187135
  [projectoptionsfo.macrogrid]
  propcolwidthref=481
  sortdescend0=0
@@ -153,7 +153,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -196,15 +196,15 @@ messageoutputfile=
 makecommand=${COMPILER}
 makedir=
 unitdirs=9
- ${lazarus}*
- ${lazarus}/components/*
- ${lazarus}/*
- ${lazarus}/lcl/*
- ${lazarus}/lcl/interfaces/qt
- ${lazarus}/lcl/interfaces/gtk2
- ${lazarus}/lcl/components/*
- ${lazarus}/lcl/include
- ${lazarus}/lcl
+ ${lcldir}*
+ ${lcldir}/components/*
+ ${lcldir}/*
+ ${lcldir}/lcl/*
+ ${lcldir}/lcl/interfaces/qt
+ ${lcldir}/lcl/interfaces/gtk2
+ ${lcldir}/lcl/components/*
+ ${lcldir}/lcl/include
+ ${lcldir}/lcl
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -753,7 +753,7 @@ editpos=9
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,3605
+ 0,3594
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -814,7 +814,7 @@ order=9
 firsttab=1
 index=6
 [layout]
-windowlayout=531
+windowlayout=533
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -827,7 +827,7 @@ windowlayout=531
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=604
  rcx=0
  rcy=0
@@ -842,12 +842,12 @@ windowlayout=531
  ncy=0
  x=125
  y=46
- cx=1123
+ cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,604
+  basedock,0,0,1147,604
  focusedchild=0
  wsize=0
  active=1
@@ -937,7 +937,7 @@ windowlayout=531
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -973,7 +973,7 @@ windowlayout=531
  width1=82
  sortdescend1=0
  sorted=0
- col=-1073741823
+ col=1
  row=-1073741823
  rowheight=17
  [stackfo]
@@ -1055,7 +1055,7 @@ windowlayout=531
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1165,7 +1165,7 @@ windowlayout=531
  ncy=0
  x=0
  y=512
- cx=1113
+ cx=1147
  cy=92
  rcx=0
  rcy=0
@@ -1233,7 +1233,7 @@ windowlayout=531
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1263,7 +1263,7 @@ windowlayout=531
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=51
  rcx=0
  rcy=0
@@ -1279,12 +1279,10 @@ windowlayout=531
  ncy=52
  x=0
  y=0
- cx=1113
- cy=53
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1294,6 +1292,10 @@ windowlayout=531
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos.pas
  history=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.hints]
+ value=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1306,7 +1308,7 @@ windowlayout=531
  ncy=0
  x=208
  y=0
- cx=905
+ cx=939
  cy=455
  rcx=0
  rcy=0
@@ -1314,7 +1316,7 @@ windowlayout=531
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1342,7 +1344,7 @@ windowlayout=531
  ncy=0
  x=0
  y=54
- cx=1113
+ cx=1147
  cy=455
  rcx=0
  rcy=0
