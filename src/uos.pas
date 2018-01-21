@@ -924,6 +924,16 @@ procedure InputSetArrayLevelEnable(InputIndex: cint32 ; levelcalc : cint32);
 function InputGetLevelLeft(InputIndex: cint32): double;
   // InputIndex : InputIndex of existing input
   // result : left level from 0 to 1
+  
+ function InputFilterGetLevelLeft(InputIndex: cint32; filterIndex: cint32): double;
+  // InputIndex : InputIndex of existing input
+  // filterIndex : Filterindex of existing filter
+  // result : left level from 0 to 1
+  
+ function InputFilterGetLevelRight(InputIndex: cint32; filterIndex: cint32): double;
+  // InputIndex : InputIndex of existing input
+  // filterIndex : Filterindex of existing filter
+  // result : right level from 0 to 1 
 
 function InputGetLevelRight(InputIndex: cint32): double;
   // InputIndex : InputIndex of existing input
@@ -2097,6 +2107,24 @@ function Tuos_Player.InputGetLevelRight(InputIndex: cint32): double;
 begin
 Result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelRight;
+end;
+
+function Tuos_Player.InputFilterGetLevelLeft(InputIndex: cint32; filterIndex: cint32): double;
+  // InputIndex : InputIndex of existing input
+  // filterIndex : Filterindex of existing filter
+  // result : left level from 0 to 1
+ begin
+Result := 0;
+  if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].DSP[FilterIndex].fftdata.RightResult;
+end;
+ 
+ function Tuos_Player.InputFilterGetLevelRight(InputIndex: cint32; filterIndex: cint32): double;
+  // InputIndex : InputIndex of existing input
+  // filterIndex : Filterindex of existing filter
+  // result : right level from 0 to 1 
+begin
+Result := 0;
+  if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].DSP[FilterIndex].fftdata.LeftResult;
 end;
 
 {$IF DEFINED(soundtouch)}
@@ -3758,7 +3786,7 @@ function Tuos_Player.InputAddFilter(InputIndex: cint32; LowFrequency: cint32;
   // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
   // LoopProc : external procedure of object to synchronize after DSP done
   //  result : index of DSPIn in array
-  // example :FilterInIndex1 := InputAddFilter(InputIndex1,6000,16000,1,1,True);
+  // example :FilterInIndex1 := InputAddFilter(InputIndex1,6000,16000,1,1,True,nil);
 var
   FilterIndex: cint32;
 begin

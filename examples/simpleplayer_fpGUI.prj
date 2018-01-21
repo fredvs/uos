@@ -129,33 +129,33 @@ options=114
   70
   70
  [projectoptionsfo.twidgetgrid3]
- propcolwidthref=740
+ propcolwidthref=786
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
  sortdescend3=0
- width4=345
+ width4=366
  sortdescend4=0
- width5=186
+ width5=198
  sortdescend5=0
- width6=158
+ width6=168
  sortdescend6=0
- width7=51
+ width7=54
  sortdescend7=0
  width8=1
  sortdescend8=0
- width9=302
+ width9=321
  sortdescend9=0
  [projectoptionsfo.twidgetgrid4]
- propcolwidthref=564
+ propcolwidthref=610
  width0=96
  sortdescend0=0
  sortdescend1=0
  width2=73
  sortdescend2=0
- width3=271
+ width3=293
  sortdescend3=0
- width4=283
+ width4=307
  sortdescend4=0
  sorted=0
  col=-1073741823
@@ -165,10 +165,10 @@ options=114
  firsttab=0
  index=0
  [projectoptionsfo.fontaliasgrid]
- propcolwidthref=423
+ propcolwidthref=469
  width0=98
  sortdescend0=0
- width1=412
+ width1=458
  sortdescend1=0
  width2=30
  sortdescend2=0
@@ -182,11 +182,11 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=162
  xprop=1
  yprop=0.33031674208145
  [projectoptionsfo.macrogrid]
- propcolwidthref=495
+ propcolwidthref=541
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
@@ -199,7 +199,7 @@ options=114
  sortdescend9=0
  width10=146
  sortdescend10=0
- width11=479
+ width11=525
  sortdescend11=0
  [projectoptionsfo.comment_1]
  value=
@@ -209,34 +209,34 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo.exceptionsgrid]
- propcolwidthref=724
+ propcolwidthref=795
  width0=47
  sortdescend0=0
- width1=718
+ width1=789
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
  index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=632
+ propcolwidthref=678
  width0=112
  sortdescend0=0
- width1=625
+ width1=671
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo]
  stackedunder=
- x=339
- y=127
- cx=773
- cy=497
+ x=356
+ y=113
+ cx=819
+ cy=554
 programparameters=18
  [programparametersfo.grid]
  propcolwidthref=304
@@ -994,12 +994,12 @@ findhistory=20
  try
 findoptions=1
 editpos=6
- 0,931
+ 0,0
  0,-1073741823
  0,-1073741823
+ 0,0
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,531
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1040,7 +1040,7 @@ order=6
  1
  2
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=543
  [mainfo.basedock]
@@ -1068,8 +1068,8 @@ windowlayout=543
  ny=0
  ncx=0
  ncy=0
- x=125
- y=46
+ x=92
+ y=24
  cx=1157
  cy=621
  rcx=0
@@ -1095,9 +1095,9 @@ windowlayout=543
  cy=314
  rcx=0
  rcy=0
- wsize=0
+ wsize=5
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1528,7 +1528,7 @@ windowlayout=543
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/uos_flat.pas
  history=0
  [debuggerfo.project_options]
  value=1
@@ -1554,7 +1554,7 @@ windowlayout=543
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
