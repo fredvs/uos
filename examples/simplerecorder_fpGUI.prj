@@ -854,10 +854,10 @@ findhistory=20
  AddDSPin
 findoptions=1
 editpos=1
- 0,0
+ 36,6
 bookmarks0=0
 sourcefiles=1
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ /home/fred/uos/examples/simplerecorder_fpGUI.pas
 relpaths=1
  simplerecorder_fpGUI.pas
 ismoduletexts=1
@@ -870,7 +870,7 @@ nomenumodules=0
 firsttab=0
 index=0
 [layout]
-windowlayout=541
+windowlayout=543
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -883,8 +883,8 @@ windowlayout=541
  ncy=0
  x=0
  y=0
- cx=1113
- cy=694
+ cx=1147
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -896,14 +896,14 @@ windowlayout=541
  ny=0
  ncx=0
  ncy=0
- x=126
- y=62
- cx=1123
+ x=125
+ y=46
+ cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,694
+  basedock,0,0,1147,604
  focusedchild=0
  wsize=0
  active=1
@@ -947,7 +947,7 @@ windowlayout=541
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -993,7 +993,7 @@ windowlayout=541
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1018,18 +1018,18 @@ windowlayout=541
  ncy=0
  x=0
  y=0
- cx=159
- cy=508
+ cx=205
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
- propcolwidthref=18
- width0=141
+ propcolwidthref=88
+ width0=117
  sortdescend0=0
- width1=12
+ width1=82
  sortdescend1=0
  sorted=0
- col=-1073741823
+ col=1
  row=-1073741823
  rowheight=17
  [stackfo]
@@ -1111,15 +1111,15 @@ windowlayout=541
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=componentpalettefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=670
- y=179
+ x=316
+ y=249
  cx=316
  cy=484
  rcx=0
@@ -1129,9 +1129,9 @@ windowlayout=541
  visible=0
  [objectinspectorfo.grid]
  propcolwidthref=306
- width0=73
+ width0=136
  sortdescend0=0
- width1=227
+ width1=164
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1228,9 +1228,9 @@ windowlayout=541
  ncx=0
  ncy=0
  x=0
- y=575
- cx=1113
- cy=119
+ y=512
+ cx=1147
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1299,7 +1299,7 @@ windowlayout=541
  [componentpalettefo]
  splitdir=0
  useroptions=805331051
- stackedunder=findinfilefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1329,8 +1329,8 @@ windowlayout=541
  ncy=0
  x=0
  y=0
- cx=1113
- cy=61
+ cx=1147
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1341,16 +1341,14 @@ windowlayout=541
  mdistate=0
  nx=0
  ny=0
- ncx=929
- ncy=2
+ ncx=1147
+ ncy=54
  x=0
  y=0
- cx=1113
- cy=61
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1360,6 +1358,10 @@ windowlayout=541
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/simplerecorder_fpGUI.pas
  history=0
+ [debuggerfo.project_options]
+ value=B
+ [debuggerfo.hints]
+ value=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1370,17 +1372,17 @@ windowlayout=541
  ny=0
  ncx=0
  ncy=0
- x=162
+ x=208
  y=0
- cx=951
- cy=508
+ cx=939
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1407,9 +1409,9 @@ windowlayout=541
  ncx=0
  ncy=0
  x=0
- y=64
- cx=1113
- cy=508
+ y=54
+ cx=1147
+ cy=455
  rcx=0
  rcy=0
 [targetconsole]

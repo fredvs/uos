@@ -925,14 +925,14 @@ findhistory=20
  theparent
 findoptions=1
 editpos=3
- 24,262
- 0,1755
- 0,3793
+ 56,255
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 sourcefiles=3
- ${PROJECTDIR}/filterplayer_fpGUI.pas
+ /home/fred/uos/examples/filterplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
 relpaths=3
@@ -969,7 +969,7 @@ windowlayout=612
  x=0
  y=0
  cx=1356
- cy=784
+ cy=694
  rcx=0
  rcy=0
  [mainfo]
@@ -988,7 +988,7 @@ windowlayout=612
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,784
+  basedock,0,0,1356,694
  focusedchild=0
  wsize=6
  active=1
@@ -1008,7 +1008,7 @@ windowlayout=612
  cy=314
  rcx=0
  rcy=0
- wsize=5
+ wsize=0
  active=0
  visible=0
  [threadsfo]
@@ -1104,7 +1104,7 @@ windowlayout=612
  x=0
  y=0
  cx=205
- cy=591
+ cy=523
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1313,9 +1313,9 @@ windowlayout=612
  ncx=0
  ncy=0
  x=0
- y=664
+ y=588
  cx=1356
- cy=120
+ cy=106
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1415,7 +1415,7 @@ windowlayout=612
  x=0
  y=0
  cx=1356
- cy=67
+ cy=59
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1426,12 +1426,12 @@ windowlayout=612
  mdistate=0
  nx=0
  ny=0
- ncx=1147
- ncy=54
+ ncx=1356
+ ncy=62
  x=0
  y=0
  cx=1356
- cy=70
+ cy=62
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1510,7 +1510,7 @@ windowlayout=612
  x=208
  y=0
  cx=1148
- cy=591
+ cy=523
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1544,9 +1544,9 @@ windowlayout=612
  ncx=0
  ncy=0
  x=0
- y=70
+ y=62
  cx=1356
- cy=591
+ cy=523
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

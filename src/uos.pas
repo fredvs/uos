@@ -4323,7 +4323,7 @@ begin
   x := Length(StreamOut) - 1;
    StreamOut[x].Data.Enabled := false;
   StreamOut[x].FileBuffer.ERROR := 0;
-  
+  StreamOut[x].Data.TypePut := 0 ;
   StreamOut[x].Data.Filename := filename;
   if (FileFormat = -1) or (FileFormat = 0) then 
   StreamOut[x].FileBuffer.FileFormat := 0 else StreamOut[x].FileBuffer.FileFormat := FileFormat;
