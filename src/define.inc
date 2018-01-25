@@ -24,7 +24,7 @@
 
 {$DEFINE webstream} // uncomment to enable Internet Audio Streaming
 
-{$DEFINE shout} // uncomment to enable IceCast-Shout audio web server.
+{.$DEFINE shout} // uncomment to enable IceCast-Shout audio web server.
 
 {$DEFINE noiseremoval} // uncomment to enable Noise Removal DSP
 

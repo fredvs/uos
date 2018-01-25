@@ -150,9 +150,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=142
  xprop=1
- yprop=0.32882882882883
+ yprop=0.32805429864253
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -177,7 +177,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=3
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -461,7 +461,7 @@ makeoptionson=8
  511
  511
  192
- 0
+ 2
  511
  511
 compilerusedon=29
@@ -830,8 +830,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=out1Index
+finddtext=StreamOut[x].Data.TypePut
 findhistory=20
+ StreamOut[x].Data.TypePut
+ Data.TypePut
+ addintofile
  out1Index
  TFileStream
  tfile
@@ -842,7 +845,6 @@ findhistory=20
  AddIntoFile
  file2buffer
  getsa
- addintofile
  filetobuffer
  uos_AddIntoFile
  freeon
@@ -850,17 +852,20 @@ findhistory=20
  AftFunc
  FileBuffer
  Tuos_FileBuffer
- player2
- AddDSPin
 findoptions=1
-editpos=1
- 36,6
+editpos=2
+ 0,-1073741823
+ 40,6637
 bookmarks0=0
-sourcefiles=1
- /home/fred/uos/examples/simplerecorder_fpGUI.pas
-relpaths=1
+bookmarks1=0
+sourcefiles=2
+ ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ ${PROJECTDIR}/uos.pas
+relpaths=2
  simplerecorder_fpGUI.pas
-ismoduletexts=1
+ uos.pas
+ismoduletexts=2
+ 0
  0
 modules=0
 moduleoptions=0
@@ -868,7 +873,7 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=543
  [mainfo.basedock]
@@ -1029,8 +1034,8 @@ windowlayout=543
  width1=82
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=8
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1356,7 +1361,7 @@ windowlayout=543
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simplerecorder_fpGUI.pas
+ value=/home/fred/uos/examples/uos.pas
  history=0
  [debuggerfo.project_options]
  value=B

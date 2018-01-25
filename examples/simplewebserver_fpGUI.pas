@@ -1,3 +1,6 @@
+// WARNING: in development. For Unix only (Not yet for Windows)
+// Please uncomment {$DEFINE shout} in define.inc
+
 program simplewebserver_fpGUI;
 
 {$mode objfpc}{$H+}
@@ -1140,8 +1143,7 @@ end;
     FilenameEdit7.FileName := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
     FilenameEdit8.FileName := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
     
-    // FilenameEdit31.FileName := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
-    FilenameEdit5.FileName := ordir + 'lib\Windows\32bit\plugin\libSoundTouch-32.dll';
+     FilenameEdit31.FileName := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
     FilenameEdit6.FileName := ordir + 'lib\Windows\32bit\plugin\LibBs2b-32.dll';
     
   {$endif}
