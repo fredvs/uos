@@ -168,7 +168,7 @@ function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
 procedure uos_unloadlib();
   // Unload all libraries... Do not forget to call it before close application...
 
-procedure uos_free;  
+procedure uos_free();  
   // Free uos;
   // To use when program terminate.
 
@@ -667,16 +667,6 @@ function uos_InputGetLevelLeft(PlayerIndex: cint32; InputIndex: cint32): double;
 function uos_InputGetLevelRight(PlayerIndex: cint32; InputIndex: cint32): double;
   // InputIndex : InputIndex of existing input
   // result : right level(volume) from 0 to 1
-  
-function uos_InputFilterGetLevelLeft(PlayerIndex: cint32; InputIndex: cint32; filterIndex: cint32): double;
-  // InputIndex : InputIndex of existing input
-  // filterIndex : Filterindex of existing filter
-  // result : left level from 0 to 1
-  
- function uos_InputFilterGetLevelRight(PlayerIndex: cint32; InputIndex: cint32; filterIndex: cint32): double;
-  // InputIndex : InputIndex of existing input
-  // filterIndex : Filterindex of existing filter
-  // result : right level from 0 to 1   
   
 {$IF DEFINED(soundtouch)}
 function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): float;
@@ -1743,30 +1733,6 @@ begin
   if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputGetLevelRight(InputIndex) ;
 end;
-
-function uos_InputFilterGetLevelLeft(PlayerIndex: cint32; InputIndex: cint32; filterIndex: cint32): double;
-  // InputIndex : InputIndex of existing input
-  // filterIndex : Filterindex of existing filter
-  // result : left level from 0 to 1
-begin
-  result := 0;
-  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
-  if  uosPlayersStat[PlayerIndex] = 1 then
-  if assigned(uosPlayers[PlayerIndex]) then
- result := uosPlayers[PlayerIndex].InputFilterGetLevelLeft(InputIndex, filterindex) ;
-end;  
-  
- function uos_InputFilterGetLevelRight(PlayerIndex: cint32; InputIndex: cint32; filterIndex: cint32): double;
-  // InputIndex : InputIndex of existing input
-  // filterIndex : Filterindex of existing filter
-  // result : right level from 0 to 1  
-begin
-  result := 0;
-  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
-  if  uosPlayersStat[PlayerIndex] = 1 then
-  if assigned(uosPlayers[PlayerIndex]) then
- result := uosPlayers[PlayerIndex].InputFilterGetLevelRight(InputIndex, filterindex) ;
-end;  
 
 {$IF DEFINED(soundtouch)}
 function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): float;

@@ -860,7 +860,7 @@ bookmarks0=0
 bookmarks1=0
 sourcefiles=2
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/uos.pas
 relpaths=2
  simplerecorder_fpGUI.pas
  uos.pas

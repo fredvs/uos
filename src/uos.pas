@@ -1518,6 +1518,7 @@ begin
  end; 
 end; 
 
+{$IF DEFINED(webstream)}
 // should use this for pipes vs memorystream ?
 function mpg_seek_url(ahandle: Pointer; aoffset: Integer): Integer; cdecl; 
 var
@@ -1532,6 +1533,7 @@ begin
     Result := 0;
   end;
 end;
+{$endif}
 
 procedure mpg_close_stream(ahandle: Pointer); // not used, uos does it...
 begin
