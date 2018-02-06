@@ -215,7 +215,7 @@ begin
     filelength := uos_InputLength(PlayerIndex1,In1Index) ;
 
       ///// set calculation of level/volume into array (usefull for wave form procedure)
-    uos_InputSetArrayLevelEnable(PlayerIndex1, In1Index, 2) ;
+    uos_InputSetLevelArrayEnable(PlayerIndex1, In1Index, 2) ;
                           ///////// set level calculation (default is 0)
                           // 0 => no calcul
                           // 1 => calcul before all DSP procedures.
