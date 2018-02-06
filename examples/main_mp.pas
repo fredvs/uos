@@ -313,9 +313,9 @@ begin
 
 
    {$if defined(cpuarm)} // needs lower latency
-   uos_AddIntoDevOut(PlayerIndex3, -1, 0.3, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1);
+   uos_AddIntoDevOut(PlayerIndex3, -1, 0.3, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1, -1,);
       {$else}
-  uos_AddIntoDevOut(PlayerIndex3, -1, -1, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1);
+  uos_AddIntoDevOut(PlayerIndex3, -1, -1, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1, -1);
        {$endif}
   
   //// add a Output with custom parameters
@@ -327,6 +327,7 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
+    // ChunkCount : default : -1 (= 512)
   //  result : -1 nothing created, otherwise Output Index in array
 
 
@@ -417,9 +418,9 @@ begin
   //  result : -1 nothing created, otherwise Input Index in array
 
    {$if defined(cpuarm)} // needs lower latency
-   uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1);
+   uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1, -1);
       {$else}
-  uos_AddIntoDevOut(PlayerIndex0, -1, -1, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1);
+  uos_AddIntoDevOut(PlayerIndex0, -1, -1, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1, -1);
        {$endif}
   
   //// add a Output with custom parameters
@@ -431,6 +432,7 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
+    // ChunkCount : default : -1 (= 512)
   //  result : -1 nothing created, otherwise Output Index in array
 
 
@@ -478,9 +480,9 @@ begin
   //  result : -1 nothing created, otherwise Input Index in array
 
    {$if defined(cpuarm)} // needs lower latency
-   uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1);
+   uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0,-1, -1);
       {$else}
-  uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1);
+  uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1, -1);
        {$endif}
   
   //// add a Output with custom parameters
@@ -536,9 +538,9 @@ InIndex := uos_AddFromFile(PlayerIndex2, pchar(Edit6.Text), -1, 0, -1);
   //  result : -1 nothing created, otherwise Input Index in array
 
    {$if defined(cpuarm)} // needs lower latency
-   uos_AddIntoDevOut(PlayerIndex2, -1, 0.3, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1);
+   uos_AddIntoDevOut(PlayerIndex2, -1, 0.3, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1, -1);
       {$else}
-  uos_AddIntoDevOut(PlayerIndex2, -1, -1, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1);
+  uos_AddIntoDevOut(PlayerIndex2, -1, -1, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1, -1);
        {$endif}
   
   //// add a Output with custom parameters
@@ -550,6 +552,7 @@ InIndex := uos_AddFromFile(PlayerIndex2, pchar(Edit6.Text), -1, 0, -1);
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
+  // ChunkCount : default : -1 (= 512)
   //  result : -1 nothing created, otherwise Output Index in array
   
   /////// procedure to execute when stream is terminated

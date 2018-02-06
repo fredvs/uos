@@ -95,12 +95,12 @@ var
   //// If PlayerIndex exists already, it will be overwriten...
 
    {$if defined(cpuarm)} // needs lower latency
-       uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1) ;
+       uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1, -1) ;
        {$else}
        uos_AddIntoDevOut(PlayerIndex1);
        {$endif}
    
-    //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 0,-1);   //// add a Output into device with custom parameters
+    //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 0,-1, -1);   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -108,6 +108,7 @@ var
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
+          // ChunkCount : default : -1 (= 512)
 
   In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
   //// add input from audio file with default parameters
@@ -238,7 +239,7 @@ var
     //////////// FileFormat : -1 default : wav (0:wav, 1:pcm, 2:uos, 3:custom)
     
     {$if defined(cpuarm)} // needs lower latency
-    out1Index :=  uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1) ;
+    out1Index :=  uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1, -1) ;
        {$else}
      out1Index := uos_AddIntoDevOut(PlayerIndex1);
        {$endif}
@@ -247,7 +248,7 @@ var
    
     //// add a Output into OUT device with default parameters
     
-    //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 1,-1); 
+    //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 1,-1, -1); 
      //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
@@ -256,11 +257,13 @@ var
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
+      // ChunkCount : default : -1 (= 512)
+    // ChunkCount : default : -1 (= 512)
 
    In1Index := uos_AddFromDevIn(PlayerIndex1);
    /// add Input from mic/aux into IN device with default parameters
     
-   //    In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, 1, -1);   
+   //    In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, 1, -1, -1);   
     /// add Input from mic/aux into IN device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Input device )

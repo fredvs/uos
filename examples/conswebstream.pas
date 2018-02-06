@@ -112,9 +112,9 @@ writeln('Try to connect to ' + theurl);
      //// add a Output  => change framecount => 1024
   
    {$if defined(cpuarm)} // needs lower latency
-    res2 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, res), -1, -1, 1024);
+    res2 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, res), -1, -1, 1024, -1);
       {$else}
-     res2 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, res), -1, -1, 1024);
+     res2 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, res), -1, -1, 1024, -1);
      {$endif}
    
     ////// Add a Output into Device Output
@@ -124,6 +124,7 @@ writeln('Try to connect to ' + theurl);
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (= 4096)
+      // ChunkCount : default : -1 (= 512)
     
   if res2 <> -1 then  writeln('===> uos_AddIntoDevOut => ok :' + inttostr(res2)) else
   

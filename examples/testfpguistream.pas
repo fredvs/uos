@@ -138,7 +138,7 @@ procedure Ttest.btnCloseClick(Sender: TObject);
    //   writeln('===> uos_AddFromURL => ok');
 
     //// add a Output  => change framecount => 1024
-     uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, 1024);
+     uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, 1024, -1);
    //  writeln('===> uos_AddIntoDevOut => ok');
 
      uos_Play(PlayerIndex1);

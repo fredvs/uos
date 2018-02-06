@@ -449,6 +449,9 @@ var
   mode: ctypes.cint; sfinfo: PSF_INFO): TSNDFILE_HANDLE; cdecl;
 
 var
+sf_version_string: function(): PChar; cdecl;
+
+var
   sf_open_fd: function(fd: ctypes.cint; mode: ctypes.cint; sfinfo: PSF_INFO;
   close_desc: ctypes.cint): TSNDFILE_HANDLE; cdecl;
 
@@ -688,7 +691,8 @@ begin
     sf_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
     if sf_Handle <> DynLibs.NilHandle then
     begin {now we tie the functions to the VARs from above}
-
+      
+      Pointer(sf_version_string) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_version_string'));
       Pointer(sf_open_native) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_open'));
       Pointer(sf_open_fd) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_open_fd'));
       Pointer(sf_open_virtual) := DynLibs.GetProcedureAddress(

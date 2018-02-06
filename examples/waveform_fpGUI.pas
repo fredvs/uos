@@ -50,7 +50,7 @@ var
 
   procedure Twaveform.DrawWaveForm;
   begin
-     waveformdata := uos_InputGetArrayLevel(PlayerIndex1, In1Index);
+     waveformdata := uos_InputGetLevelArray(PlayerIndex1, In1Index);
     fpgapplication.ProcessMessages;
     button1.tag := 1;
     custom1.Visible := True;
@@ -84,7 +84,7 @@ var
    //  writeln('filelength = ' + inttostr(filelength));
 
     ///// set calculation of level/volume into array (usefull for wave form procedure)
-    uos_InputSetArrayLevelEnable(PlayerIndex1, In1Index, 2);
+    uos_InputSetLevelArrayEnable(PlayerIndex1, In1Index, 2);
     ///////// set level calculation (default is 0)
     // 0 => no calcul
     // 1 => calcul before all DSP procedures.

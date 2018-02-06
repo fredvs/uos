@@ -772,8 +772,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=.create
-findhistory=13
+finddtext=devcount
+findhistory=14
+ devcount
  .create
  unloadlib
  uos_unloadlib()
@@ -788,8 +789,7 @@ findhistory=13
  sort
  uses
 findoptions=1
-editpos=9
- 13,5
+editpos=10
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -798,6 +798,8 @@ editpos=9
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 25,336
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -807,8 +809,9 @@ bookmarks5=0
 bookmarks6=0
 bookmarks7=0
 bookmarks8=0
-sourcefiles=9
- /home/fred/uos/examples/deviceinfos_fpGUI.pas
+bookmarks9=0
+sourcefiles=10
+ ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
@@ -817,7 +820,8 @@ sourcefiles=9
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplayloop.pas
-relpaths=9
+ ${PROJECTDIR}/uos_portaudio.pas
+relpaths=10
  deviceinfos_fpGUI.pas
  uos.pas
  uos_flat.pas
@@ -827,7 +831,9 @@ relpaths=9
  uos.pas
  uos.pas
  consoleplayloop.pas
-ismoduletexts=9
+ uos_portaudio.pas
+ismoduletexts=10
+ 0
  0
  0
  0
@@ -842,20 +848,21 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=9
+order=10
  0
  8
  5
  1
+ 9
  2
  7
  3
  6
  4
 firsttab=0
-index=0
+index=4
 [layout]
-windowlayout=541
+windowlayout=543
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -868,7 +875,7 @@ windowlayout=541
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=604
  rcx=0
  rcy=0
@@ -883,12 +890,12 @@ windowlayout=541
  ncy=0
  x=125
  y=46
- cx=1123
+ cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,604
+  basedock,0,0,1147,604
  focusedchild=0
  wsize=0
  active=1
@@ -932,7 +939,7 @@ windowlayout=541
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -978,7 +985,7 @@ windowlayout=541
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1014,8 +1021,8 @@ windowlayout=541
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=3
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1176,7 +1183,7 @@ windowlayout=541
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=121
+ propcolwidthref=111
  values0=2
   -1
   -1
@@ -1214,7 +1221,7 @@ windowlayout=541
  ncy=0
  x=0
  y=512
- cx=1113
+ cx=1147
  cy=92
  rcx=0
  rcy=0
@@ -1314,7 +1321,7 @@ windowlayout=541
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=51
  rcx=0
  rcy=0
@@ -1326,16 +1333,14 @@ windowlayout=541
  mdistate=0
  nx=0
  ny=0
- ncx=1113
- ncy=53
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1113
- cy=53
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1343,8 +1348,12 @@ windowlayout=541
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/deviceinfos_fpGUI.pas
+ value=/home/fred/uos/examples/uos_portaudio.pas
  history=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.hints]
+ value=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1357,7 +1366,7 @@ windowlayout=541
  ncy=0
  x=208
  y=0
- cx=905
+ cx=939
  cy=455
  rcx=0
  rcy=0
@@ -1365,7 +1374,7 @@ windowlayout=541
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1393,7 +1402,7 @@ windowlayout=541
  ncy=0
  x=0
  y=54
- cx=1113
+ cx=1147
  cy=455
  rcx=0
  rcy=0

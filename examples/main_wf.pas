@@ -254,9 +254,9 @@ begin
          //// add a Output into device
     
    {$if defined(cpuarm)} // needs lower latency
-      uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, -1, -1);
+      uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, -1, -1, -1);
    {$else}
-      uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, -1, -1);
+      uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, -1, -1,-1);
     {$endif}
 
     uos_InputSetPositionEnable(PlayerIndex1, In1Index, 1);
@@ -377,7 +377,7 @@ begin
   sleep(250);
   poswav := 0;
 
-  waveformdata:= uos_InputGetArrayLevel(PlayerIndex1, In1Index) ;
+  waveformdata:= uos_InputGetLevelArray(PlayerIndex1, In1Index) ;
 
    while poswav < length(waveformdata) div chan
       do begin

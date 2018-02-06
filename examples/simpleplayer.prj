@@ -19,17 +19,21 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpleplayer.prj
-findinfiledialog=37
+findinfiledialog=42
  [findinfileadialogfo.subdirs]
  value=1
+ [findinfileadialogfo.incurrentfile]
+ value=0
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
  value=0
+ [findinfileadialogfo.inprojectdir]
+ value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=1
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
@@ -37,26 +41,27 @@ findinfiledialog=37
  [findinfileadialogfo.dir]
  filenames=1
   /home/graemeg/devel/
- filehistory=1
-  /home/graemeg/devel/
- filefilterindex=0
- filefilter="*.pas" "*.pp" "*.inc"
  filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
+ filehistory=1
+  /home/graemeg/devel/
+ filefilterindex=0
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=lapAutoAdjustForDPI
- history=2
+ value=uos_AddIntoDevOut
+ history=3
+  uos_AddIntoDevOut
   lapAutoAdjustForDPI
   
  [findinfileadialogfo]
  stackedunder=
- x=268
- y=415
- cx=339
- cy=251
+ x=241
+ y=281
+ cx=341
+ cy=276
 options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -144,7 +149,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=3
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -733,26 +738,66 @@ hintheight=0
 finddtext=
 findhistory=0
 findoptions=1
-editpos=4
+editpos=12
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,8
+ 0,-1073741823
+ 0,12
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,341
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+bookmarks5=0
+bookmarks6=0
+bookmarks7=0
+bookmarks8=0
+bookmarks9=0
+bookmarks10=0
+bookmarks11=0
+sourcefiles=12
  ${PROJECTDIR}/simpleplayer.lpr
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/simpleplayer.lpr
  ${PROJECTDIR}/simpleplayer.lpr
-relpaths=4
+ /home/fred/msegui/lib/common/kernel/msetypes.pas
+ ${PROJECTDIR}/main_sp.pas
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
+ ${PROJECTDIR}/consoleplay.pas
+ ${PROJECTDIR}/main_mp.pas
+ ${PROJECTDIR}/uoslib.pas
+ ${PROJECTDIR}/simplewebserver_fpGUI.pas
+ ${PROJECTDIR}/simplewebplayer_fpGUI.pas
+relpaths=12
  simpleplayer.lpr
  main_sp.pas
  simpleplayer.lpr
  simpleplayer.lpr
-ismoduletexts=4
+ ../msegui/lib/common/kernel/msetypes.pas
+ main_sp.pas
+ consoleplaymemorybuffer.pas
+ consoleplay.pas
+ main_mp.pas
+ uoslib.pas
+ simplewebserver_fpGUI.pas
+ simplewebplayer_fpGUI.pas
+ismoduletexts=12
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -762,13 +807,21 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=4
+order=12
  0
  1
  3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+ 10
+ 11
  2
-firsttab=0
-index=2
+firsttab=3
+index=3
 [layout]
 windowlayout=533
  [mainfo.basedock]
@@ -797,7 +850,7 @@ windowlayout=533
  ncx=0
  ncy=0
  x=125
- y=46
+ y=47
  cx=1157
  cy=621
  rcx=0
@@ -847,7 +900,7 @@ windowlayout=533
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -893,7 +946,7 @@ windowlayout=533
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -901,7 +954,7 @@ windowlayout=533
  ncx=0
  ncy=0
  x=239
- y=115
+ y=114
  cx=678
  cy=414
  rcx=0
@@ -1246,10 +1299,10 @@ windowlayout=533
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simpleplayer.lpr
+ value=/home/fred/msegui/lib/common/kernel/msetypes.pas
  history=0
  [debuggerfo.project_options]
- value=B
+ value=1
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1272,7 +1325,7 @@ windowlayout=533
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

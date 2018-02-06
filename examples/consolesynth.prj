@@ -187,7 +187,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -470,12 +470,12 @@ compilerusedon=21
  0
  0
 debuggerusedon=6
- 4080
+ 4082
  0
  0
  0
  0
- 15
+ 13
 exeusedon=14
  4095
  0
@@ -724,7 +724,7 @@ on=1
 path=1
  /home/fred/uos/examples/consolesynth.pas
 line=1
- 89
+ 91
 address=1
  0
 addbkpt=1
@@ -790,37 +790,30 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=lensine
+finddtext=PAParam.SampleFormat
 findhistory=20
- lensine
- Data.lensine
- = -1
- var 
+ PAParam.SampleFormat
+ readsynt
+ PAParam.SampleFormat 
+ defrate
+ init
+ paversion
+ UTF8
+ UTF8Decode
+ getinfo
+ DeviceName
+ getinfos
+ Pa_getinfo
+ Pa_WriteStream(Str
+ Pa_Initialize()
  AddFromSynth
- posLsine
- addfromSynth
- InputSetSynth
-  uos_InputSetSynth
- addfrome
- synth
- writeln
- HandleSt
- typeput
- res=
- 30005
- NewView
- images
- Sort
- sort
+ uos_AddFromSynth
+ Pa_WriteStream(Str 
+ writeout
+ AddIntoDevOut
+ OpenStream
 findoptions=1
-editpos=17
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 7,159
+editpos=21
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -828,6 +821,17 @@ editpos=17
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,4510
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -848,25 +852,33 @@ bookmarks13=0
 bookmarks14=0
 bookmarks15=0
 bookmarks16=0
-sourcefiles=17
+bookmarks17=0
+bookmarks18=0
+bookmarks19=0
+bookmarks20=0
+sourcefiles=21
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
- /home/fred/uos/examples/consolesynth.pas
+ ${PROJECTDIR}/consolesynth.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/consolesynth.pas
+ ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/consolesynth.pas
  ${PROJECTDIR}/uos_libsndfile.pas
  /home/fred/ideu_bin/ideu_1.1.0_linux64/syntaxdefs/pascal_ideu.sdef
  ${PROJECTDIR}/define.inc
-relpaths=17
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+relpaths=21
  deviceinfos_fpGUI.pas
  uos.pas
  uos_flat.pas
@@ -878,13 +890,21 @@ relpaths=17
  uos_libsndfile.pas
  uos_flat.pas
  define.inc
- consolesynth.pas
+ uos_flat.pas
  uos_flat.pas
  consolesynth.pas
  uos_libsndfile.pas
  ideu_bin/ideu_1.1.0_linux64/syntaxdefs/pascal_ideu.sdef
  define.inc
-ismoduletexts=17
+ uos.pas
+ uos_portaudio.pas
+ uos_libsndfile.pas
+ uos_portaudio.pas
+ismoduletexts=21
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -907,8 +927,13 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=17
+order=21
+ 13
  11
+ 17
+ 20
+ 19
+ 18
  0
  5
  6
@@ -916,7 +941,6 @@ order=17
  12
  16
  14
- 13
  9
  10
  7
@@ -925,10 +949,10 @@ order=17
  2
  3
  4
-firsttab=2
-index=3
+firsttab=0
+index=2
 [layout]
-windowlayout=541
+windowlayout=543
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -941,7 +965,7 @@ windowlayout=541
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=604
  rcx=0
  rcy=0
@@ -956,12 +980,12 @@ windowlayout=541
  ncy=0
  x=125
  y=46
- cx=1123
+ cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,604
+  basedock,0,0,1147,604
  focusedchild=0
  wsize=0
  active=1
@@ -1005,7 +1029,7 @@ windowlayout=541
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1051,7 +1075,7 @@ windowlayout=541
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1088,7 +1112,7 @@ windowlayout=541
  sortdescend1=0
  sorted=0
  col=1
- row=0
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1127,14 +1151,14 @@ windowlayout=541
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1143,7 +1167,7 @@ windowlayout=541
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1249,7 +1273,7 @@ windowlayout=541
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=121
+ propcolwidthref=111
  values0=2
   -1
   -1
@@ -1287,7 +1311,7 @@ windowlayout=541
  ncy=0
  x=0
  y=512
- cx=1113
+ cx=1147
  cy=92
  rcx=0
  rcy=0
@@ -1387,7 +1411,7 @@ windowlayout=541
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=51
  rcx=0
  rcy=0
@@ -1399,16 +1423,14 @@ windowlayout=541
  mdistate=0
  nx=0
  ny=0
- ncx=1113
- ncy=53
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1113
- cy=53
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1416,8 +1438,12 @@ windowlayout=541
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/consolesynth.pas
+ value=/home/fred/uos/examples/uos.pas
  history=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.hints]
+ value=1
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1430,7 +1456,7 @@ windowlayout=541
  ncy=0
  x=208
  y=0
- cx=905
+ cx=939
  cy=455
  rcx=0
  rcy=0
@@ -1438,7 +1464,7 @@ windowlayout=541
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1466,7 +1492,7 @@ windowlayout=541
  ncy=0
  x=0
  y=54
- cx=1113
+ cx=1147
  cy=455
  rcx=0
  rcy=0

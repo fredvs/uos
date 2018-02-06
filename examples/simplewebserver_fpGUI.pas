@@ -292,7 +292,7 @@ loadok : boolean = false;
 
   ///// example how to do custom dsp
   
-  function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+  function DSPReverseBefore(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
   begin
    
     if (Data.position > Data.OutFrames div Data.channels) then
@@ -453,10 +453,10 @@ loadok : boolean = false;
 
    {$if defined(cpuarm)} // needs lower latency
    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-    uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat,960*4);
+    uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat,960*4, -1);
         {$else}
       OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-    uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat,960*4);
+    uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat,960*4, -1);
         {$endif}
     
     //// add a Output into device with custom parameters

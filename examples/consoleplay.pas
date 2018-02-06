@@ -27,7 +27,7 @@ type
   end;
 
 var
-  res: integer;
+  res, x, y,z: integer;
   ordir, opath, SoundFilename, PA_FileName, SF_FileName, MP_FileName: string;
   PlayerIndex1, InputIndex1, OutputIndex1 : integer;
   
@@ -97,6 +97,8 @@ var
     writeln('Libraries did not load.');
 
    if res = 0 then begin
+    writeln();
+  //  writeln('Libraries version: '+ uos_GetInfoLibraries());
 
     //// Create the player.
     //// PlayerIndex : from 0 to what your computer can do !
@@ -104,7 +106,7 @@ var
     
   PlayerIndex1 := 0;
   
-  if uos_CreatePlayer(PlayerIndex1) then
+   if uos_CreatePlayer(PlayerIndex1) then
   
   begin
   
@@ -114,17 +116,20 @@ var
     //  result : -1 nothing created, otherwise Input Index in array
 
     InputIndex1 := uos_AddFromFile(PlayerIndex1,(pchar(SoundFilename)));
-    if InputIndex1 > -1 then
+    
+      if InputIndex1 > -1 then
   
     //// add a Output into device with default parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
     
     {$if defined(cpuarm)}  // need a lower latency
-        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, -1, -1, -1, -1) ;
+        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, -1, -1, -1, -1, -1) ;
        {$else}
        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1);
        {$endif}
+       
+    //   z := 0;  writeln(inttostr(3 div z));   
     
     if OutputIndex1 > -1 then 
     begin
@@ -135,7 +140,9 @@ var
     writeln;   
     writeln('Title: ' + uos_InputGetTagTitle(PlayerIndex1, InputIndex1));
     sleep(1500);
-    writeln; 
+    writeln(); 
+    y := 0;
+   // x := 1 div y;
     writeln('Artist: ' + uos_InputGetTagArtist(PlayerIndex1, InputIndex1));
     writeln;  
  

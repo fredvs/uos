@@ -341,14 +341,14 @@ loadok : boolean = false;
 
   ///// example how to do custom dsp
   
-  function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+  function DSPReverseBefore(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
   begin
    
     if (Data.position > Data.OutFrames div Data.channels) then
      uos_InputSeek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
    end;
 
-  function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+  function DSPReverseAfter(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
   var
     x: integer = 0;
     arfl: TDArFloat;
@@ -370,7 +370,7 @@ loadok : boolean = false;
   
   /// WARNING: This is only to show a DSP effect, it is not the best reverb it exists ;-)
 {
-  function DSPReverb(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+  function DSPReverb(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
   var
     x: integer = 0;
     arfl: TDArFloat;
@@ -393,7 +393,7 @@ loadok : boolean = false;
   end;
 }
   
-  function DSPStereo2Mono(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+  function DSPStereo2Mono(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
   var
     x: integer = 0;
     ps: PDArShort;     //////// if input is Int16 format
@@ -499,10 +499,10 @@ loadok : boolean = false;
    
    {$if defined(cpuarm)} // needs lower latency
        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
        {$else}
        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
        {$endif}
    
     //// add a Output into device with custom parameters
@@ -513,6 +513,7 @@ loadok : boolean = false;
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (65536)
+    // ChunkCount : default : -1 (= 512)
     //  result : -1 nothing created, otherwise Output Index in array
 
      uos_InputSetLevelEnable(PlayerIndex1, InputIndex1, 2) ;

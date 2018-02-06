@@ -99,10 +99,10 @@ type
   end;
 
 ////// This is the "standart" DSP procedure look.
-function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
-function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+function DSPReverseBefore(var Data: TuosF_Data; var  fft: TuosF_FFT): TDArFloat;
+function DSPReverseAfter(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
 
-function DSPStereo2Mono(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+function DSPStereo2Mono(var Data: TuosF_Data;var  fft: TuosF_FFT): TDArFloat;
 
 procedure uos_logo();
 
@@ -426,10 +426,10 @@ begin
 
      {$if defined(cpuarm)} // needs lower latency
     OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
        {$else}
      OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
       {$endif}
     
     //// add a Output into device with custom parameters
@@ -662,14 +662,14 @@ begin
  ShowPosition;
  ShowLevel ;
 end;
-function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+function DSPReverseBefore(var Data: TuosF_Data;var  fft: TuosF_FFT): TDArFloat;
  begin
 
    if (Data.position > Data.OutFrames div Data.channels) then
     uos_InputSeek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
   end;
 
- function DSPReverseAfter(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+ function DSPReverseAfter(var Data: TuosF_Data;var  fft: TuosF_FFT): TDArFloat;
  var
    x: integer = 0;
    arfl: TDArFloat;
@@ -689,7 +689,7 @@ function DSPReverseBefore(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
    end else Result := Data.Buffer;
  end;
 
-function DSPStereo2Mono(Data: TuosF_Data; fft: TuosF_FFT): TDArFloat;
+function DSPStereo2Mono(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
 var
   x: integer = 0;
   ps: PDArShort;     //////// if input is Int16 format

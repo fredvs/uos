@@ -94,10 +94,10 @@ type
   end;
 
 ////// This is the "standart" DSP procedure look.
-function DSPReverseBefore(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
-function DSPReverseAfter(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+function DSPReverseBefore(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
+function DSPReverseAfter(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
 
-function DSPStereo2Mono(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+function DSPStereo2Mono(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
 
 procedure uos_logo();
 
@@ -649,7 +649,7 @@ begin
     PlayerIndex1.InputSeek(InputIndex1, Data.position - (Data.OutFrames div (Data.Ratio)));
 end;
 
-function DSPReverseAfter(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+function DSPReverseAfter(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
 var
   x: integer;
   arfl: TDArFloat;

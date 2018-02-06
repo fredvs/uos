@@ -935,8 +935,8 @@ editpos=9
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,68
- 0,0
+ 0,54
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1125,7 +1125,7 @@ windowlayout=562
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1549,7 +1549,7 @@ windowlayout=562
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

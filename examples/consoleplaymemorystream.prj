@@ -937,7 +937,7 @@ editpos=2
 bookmarks0=0
 bookmarks1=0
 sourcefiles=2
- /home/fred/uos/examples/consoleplaymemorystream.pas
+ ${PROJECTDIR}/consoleplaymemorystream.pas
  ${PROJECTDIR}/uos.pas
 relpaths=2
  consoleplaymemorystream.pas
@@ -1034,7 +1034,7 @@ windowlayout=562
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1080,7 +1080,7 @@ windowlayout=562
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1504,7 +1504,7 @@ windowlayout=562
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

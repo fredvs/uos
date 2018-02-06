@@ -195,12 +195,11 @@ var
     //  result : -1 nothing created, otherwise Input Index in array
 
    {$if defined(cpuarm)} // needs lower latency
-     Out1Index :=uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, 0, -1);
+     Out1Index :=uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, 0, -1, -1);
         {$else}
-      Out1Index :=uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, 0, -1);
+      Out1Index :=uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, 0, -1, -1);
     {$endif}
-  
-  
+   
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
@@ -209,8 +208,9 @@ var
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (= 65536)
-
-       EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 1000, 1, 1, True, nil);
+  // ChunkCount : default : -1 (= 512)
+  
+       EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 1000, 1, 1, true, nil);
       //////////// PlayerIndex : Index of a existing Player
       ////////// In1Index : InputIndex of a existing Input
       ////////// LowFrequency : Lowest frequency of filter
@@ -222,8 +222,8 @@ var
       ////////// LoopProc : External procedure to execute after filter
       //  result : -1 nothing created, otherwise index of DSPIn in array
 
-      EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1000, 8000, 1, 1, True, nil);
-      EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 8000, 22000, 1, 1, True, nil);
+      EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1000, 8000, 1, 1, true, nil);
+      EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 8000, 22000, 1, 1, true, nil);
 
     if radiobutton1.Checked = True then
       typfilt := 2;
@@ -235,9 +235,9 @@ var
       typfilt := 5;
 
     FTIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, StrToInt(edit2.Text), StrToInt(edit1.Text),
-    1, typfilt, True, nil);
+    1, typfilt, true, nil);
 
-    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1, True, checkbox2.Checked, nil);
+    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1, true, checkbox2.Checked, nil);
   //////////// PlayerIndex : Index of a existing Player
   ////////// InputIndex : InputIndex of a existing Input
   ////////// DSPInIndex : DSPInIndex of existing DSPIn
@@ -256,8 +256,8 @@ var
   /////// procedure to execute when stream is terminated
 
   uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
-
-  btnStart.Enabled := False;
+  
+    btnStart.Enabled := False;
     btnPause.Enabled := True;
     btnResume.Enabled := False;
     btnStop.Enabled := True;
@@ -271,9 +271,9 @@ var
   begin
     if (btnstart.Enabled = False) then
     begin
-      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, -1, -1, True, checkbox1.Checked, nil);
-      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, -1, -1, True, checkbox1.Checked, nil);
-      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, -1, -1, True, checkbox1.Checked, nil);
+      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, -1, -1, true, checkbox1.Checked, nil);
+      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, -1, -1, true, checkbox1.Checked, nil);
+      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, -1, -1, true, checkbox1.Checked, nil);
     end;
   end;
 

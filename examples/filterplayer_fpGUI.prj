@@ -75,14 +75,16 @@ finddialog=8
  y=209
  cx=331
  cy=116
-replacedialog=29
+replacedialog=31
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=if uosInit.isGlobalPause
- history=16
+ value=InputSetLevelArrayEnable
+ history=18
+  InputSetLevelArrayEnable
+  InputSetLeveArrayEnable
   if uosInit.isGlobalPause
   uosPlayers
   uosInit.uosDeviceCount
@@ -815,10 +817,10 @@ path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/filterplayer_fpGUI.pas
 line=5
- 5780
- 5093
+ 5805
+ 5118
  110
- 1542
+ 1549
  121
 address=5
  4860417
@@ -901,13 +903,21 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=InputSetFilter
+finddtext=InputSetLeve
 findhistory=20
+ InputSetLeve
+ InputSetLeveArrayEnable
+ InputSetArrayLevelEnable
+ InputFiltersGetLevel
+ uos_BandFilter
+ levelfilters
+ Levelfilters
+ buffervi
+ InputAddFilter
+ inputgetlevel
  InputSetFilter
  dsp
  Inputsetfilter
- InputAddFilter
- inputgetlevel
  inputget
  ifbuf
  alsobuf
@@ -915,31 +925,28 @@ findhistory=20
  filter
  addfromf
  constructor
- playex
- terminatepl
- .terminate
- terminate
- thethread
- evPause
- Tuos_Player.Create
- theparent
 findoptions=1
-editpos=3
- 56,255
+editpos=4
+ 0,259
+ 0,0
  0,-1073741823
- 0,-1073741823
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
- /home/fred/uos/examples/filterplayer_fpGUI.pas
+bookmarks3=0
+sourcefiles=4
+ ${PROJECTDIR}/filterplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
-relpaths=3
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=4
  filterplayer_fpGUI.pas
  uos_flat.pas
  uos.pas
-ismoduletexts=3
+ uos_flat.pas
+ismoduletexts=4
+ 0
  0
  0
  0
@@ -952,10 +959,15 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
+order=4
+ 0
+ 3
+ 1
+ 2
 firsttab=0
 index=0
 [layout]
-windowlayout=612
+windowlayout=562
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -968,8 +980,8 @@ windowlayout=612
  ncy=0
  x=0
  y=0
- cx=1356
- cy=694
+ cx=1147
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -981,16 +993,16 @@ windowlayout=612
  ny=0
  ncx=0
  ncy=0
- x=0
- y=147
+ x=125
+ y=46
  cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1147,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -1002,15 +1014,15 @@ windowlayout=612
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=677
+ y=174
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1104,7 +1116,7 @@ windowlayout=612
  x=0
  y=0
  cx=205
- cy=523
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1114,8 +1126,8 @@ windowlayout=612
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=5
+ col=1
+ row=-1073741823
  rowheight=17
  [stackfo]
  splitdir=0
@@ -1313,9 +1325,9 @@ windowlayout=612
  ncx=0
  ncy=0
  x=0
- y=588
- cx=1356
- cy=106
+ y=512
+ cx=1147
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1414,8 +1426,8 @@ windowlayout=612
  ncy=0
  x=0
  y=0
- cx=1356
- cy=59
+ cx=1147
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1426,12 +1438,12 @@ windowlayout=612
  mdistate=0
  nx=0
  ny=0
- ncx=1356
- ncy=62
+ ncx=1147
+ ncy=54
  x=0
  y=0
- cx=1356
- cy=62
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1442,57 +1454,7 @@ windowlayout=612
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/filterplayer_fpGUI.pas
- history=50
-  /home/fred/ideu/src/ideusettings.pas
-  /home/fred/ideu/src/confideu.pas
-  /home/fred/uoslib/src/uoslib.pas
-  /home/fred/strumpract/src/define.inc
-  /home/fred/strumpract/src/uos.pas
-  /home/fred/mseconsts.pas
-  /home/fred/ideu/src/mseconsts.pas
-  /home/fred/msegui/lib/common/kernel/mseconsts.pas
-  /home/fred/uos/examples/multiplayer_fpGUI.pas
-  /home/fred/uos/examples/uos_dsp_utils.pas
-  /home/fred/uos/src/uos_flat.pas
-  /home/fred/uos/src/uos_mpg123.pas
-  /home/fred/uos/src/uos.pas
-  /home/fred/uos/src/uos_aac.pas
-  /home/fred/strumpract/src/strumpract.pas
-  /home/fred/strumpract/src/config.pas
-  /home/fred/uos/examples/uos.pas
-  /home/fred/uos/examples/SimplePlayer_MSE.pas
-  /home/fred/uos/examples/consolebpmdetect.pas
-  /home/fred/strumpract/src/songplayer2.pas
-  /home/fred/strumpract/src/drums.pas
-  /home/fred/strumpract/src/infos.pas
-  /home/fred/uos/src/uos_soundtouch.pas
-  /home/fred/uos/examples/uos_soundtouch.pas
-  /home/fred/uos/examples/consoleplaymemorybuffer.pas
-  /home/fred/uos/examples/simpleplayer_fpGUI.pas
-  /home/fred/strumpract/src/main.pas
-  /home/fred/strumpract/src/filelistform.pas
-  /home/fred/strumpract/src/songplayer.pas
-  /home/fred/strumpract/src/commander.pas
-  /home/fred/ideu/src/dialogfiles.pas
-  /home/fred/ideu/src/confmsegui.pas
-  /home/fred/ideu/src/conffpgui.pas
-  /home/fred/ideu/src/confdebugger.pas
-  /home/fred/ideu/src/confcompiler.pas
-  /home/fred/ideu/src/aboutform.pas
-  /home/fred/ideu_15_7_17/src/msedesigner.pas
-  /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
-  /home/fred/ideu/src/msedesigner.pas
-  /home/fred/strumpract/src/recorder.pas
-  /home/fred/strumpract/src/uos_soundtouch.pas
-  /home/fred/strumpract/src/uos_portaudio.pas
-  /home/fred/strumpract/src/msefiledialog.pas
-  /home/fred/uos/examples/simplerecorder_fpGUI.pas
-  /home/fred/uos/examples/mainmse_sp.pas
-  /home/fred/uos/examples/main_sd.pas
-  /home/fred/uos/examples/consoleplaymemorystream.pas
-  /home/fred/uos/examples/consoleplay.pas
-  /home/fred/uos/examples/filterplayer_fpGUI.pas
-  /home/fred/strumpract/src/dialogfiles.pas
+ history=0
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1509,8 +1471,8 @@ windowlayout=612
  ncy=0
  x=208
  y=0
- cx=1148
- cy=523
+ cx=939
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1544,15 +1506,15 @@ windowlayout=612
  ncx=0
  ncy=0
  x=0
- y=62
- cx=1356
- cy=523
+ y=54
+ cx=1147
+ cy=455
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

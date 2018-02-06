@@ -72,7 +72,7 @@ chara := copy(Memo1.Text,i,1);
     {$endif}
 
    {$if defined(cpuarm)} // needs lower latency
-       uos_AddIntoDevOut(player, -1, 0.08, -1, -1, -1, -1) ;
+       uos_AddIntoDevOut(player, -1, 0.08, -1, -1, -1, -1, -1) ;
        {$else}
        uos_AddIntoDevOut(player);
        {$endif}

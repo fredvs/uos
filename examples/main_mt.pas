@@ -62,7 +62,7 @@ if odd(i) then player := 0 else player := 1;  ///// to switch between player1 <>
    uos_CreatePlayer(player);
    
       {$if defined(cpuarm)} // needs lower latency
-       uos_AddIntoDevOut(player, -1, 0.08, -1, -1, -1, -1) ;
+       uos_AddIntoDevOut(player, -1, 0.08, -1, -1, -1, -1, -1) ;
        {$else}
        uos_AddIntoDevOut(player);
        {$endif}

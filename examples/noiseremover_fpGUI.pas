@@ -186,10 +186,10 @@ nil, nil, nil, nil) = 0 then
     //// add a Output into device with default parameters
    {$if defined(cpuarm)} // needs lower latency
         OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
         {$else}
         OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
         {$endif}
    
      //// add a Output into device with custom parameters
@@ -200,6 +200,7 @@ nil, nil, nil, nil) = 0 then
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (65536)
+    // ChunkCount : default : -1 (= 512)
     //  result : -1 nothing created, otherwise Output Index in array
  
   uos_InputAddDSPNoiseRemoval(PlayerIndex1, InputIndex1);

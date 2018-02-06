@@ -184,9 +184,9 @@ posi := 1;
  // this for a dummy endless input, must be last input
  
    {$if defined(cpuarm)} // needs lower latency
-    if uos_AddIntoDevOut(i, -1, 0.08, -1, -1, 0, 256) > -1 then // stereo output
+    if uos_AddIntoDevOut(i, -1, 0.08, -1, -1, 0, 256, -1) > -1 then // stereo output
        {$else}
-   if uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256) > -1 then // stereo output
+   if uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256, -1) > -1 then // stereo output
        {$endif}
   
  begin

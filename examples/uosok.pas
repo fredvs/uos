@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 180206;
+  uos_version : cint32 = 171205;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -345,10 +345,6 @@ type
   DSPNoiseIndex : cint32;
   
   VLeft, VRight: double;
-  
-  levelfilters : string;
-  
-  levelfiltersar : TDArFloat;
 
   PositionEnable : integer;
   LevelEnable : integer;
@@ -428,10 +424,8 @@ type
   AlsoBuf: boolean;
   a3, a32: array[0..2] of cfloat;
   b2, x0, x1, y0, y1, b22, x02, x12, y02, y12: TArray01;
-  C, D, C2, D2, Gain, Leftlevel, Rightlevel: cfloat;
-  VirtualBuffer: TDArFloat;
-  levelstring : string;
-   
+  C, D, C2, D2, Gain, LeftResult, RightResult: cfloat;
+ 
   {$IF DEFINED(noiseremoval)}
   FNoise : TuosNoiseRemoval;
   {$endif} 
@@ -439,7 +433,7 @@ type
   end;
 
 type
-  TFunc = function(var Data: Tuos_Data; var FFT: Tuos_FFT): TDArFloat;
+  TFunc = function(Data: Tuos_Data; FFT: Tuos_FFT): TDArFloat;
 
   {$if DEFINED(java)}
   TProc = JMethodID ;
@@ -752,7 +746,7 @@ type
  {$IF DEFINED(portaudio)}
   function AddFromDevIn(Device: cint32; Latency: CDouble;
   SampleRate: cint32; OutputIndex: cint32;
-  SampleFormat: cint32; FramesCount : cint32 ; ChunkCount: cint32): cint32;
+  SampleFormat: cint32; FramesCount : cint32): cint32;
 // Add a Input from Device Input with custom parameters
 // Device ( -1 is default Input device )
 // Latency  ( -1 is latency suggested ) )
@@ -760,9 +754,8 @@ type
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (4096)
-// ChunkCount : default : -1 (= 512)
 //  result :  otherwise Output Index in array  -1 = error
-// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1, -1);
+// example : OutputIndex1 := AddFromDevice(-1,-1,-1,-1,-1);
 {$endif}
 
 function AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
@@ -923,7 +916,7 @@ procedure InputSetPositionEnable(InputIndex: cint32 ; poscalc : cint32);
 // 0 => no calcul
 // 1 => calcul of position.
 
-procedure InputSetLevelArrayEnable(InputIndex: cint32 ; levelcalc : cint32);
+procedure InputSetArrayLevelEnable(InputIndex: cint32 ; levelcalc : cint32);
 // set add level calculation in level-array (default is 0)
 // 0 => no calcul
 // 1 => calcul before all DSP procedures.
@@ -933,20 +926,20 @@ function InputGetLevelLeft(InputIndex: cint32): double;
 // InputIndex : InputIndex of existing input
 // result : left level from 0 to 1
   
+ function InputFilterGetLevelLeft(InputIndex: cint32; filterIndex: cint32): double;
+// InputIndex : InputIndex of existing input
+// filterIndex : Filterindex of existing filter
+// result : left level from 0 to 1
+  
+ function InputFilterGetLevelRight(InputIndex: cint32; filterIndex: cint32): double;
+// InputIndex : InputIndex of existing input
+// filterIndex : Filterindex of existing filter
+// result : right level from 0 to 1 
+
 function InputGetLevelRight(InputIndex: cint32): double;
 // InputIndex : InputIndex of existing input
 // result : right level from 0 to 1
 
-function InputFiltersGetLevelString(InputIndex: cint32): string;
-// InputIndex : InputIndex of existing input
-// filterIndex : Filterindex of existing filter
-// result : list of left|right levels separed by $ character
-
-function InputFiltersGetLevelArray(InputIndex: cint32): TDArFloat;
-// InputIndex : InputIndex of existing input
-// result : array of float of each filter. 
-         //in format levelfilter0left,levelfilter0right,levelfilter1left,levelfilter2right,...
- 
 {$IF DEFINED(soundtouch)}
 function InputGetBPM(InputIndex: cint32): float;
 // InputIndex : InputIndex of existing input
@@ -1234,13 +1227,7 @@ const
 // uos Audio
   Stereo = 2;
   Mono = 1;
-
-  {$IF DEFINED(android)}
-  DefRate = 48000;
-  {$else}
   DefRate = 44100;
-  {$endif}
-
 // Write wav file
   ReadError = 1;
   HeaderError = 2;
@@ -1264,9 +1251,9 @@ var
   theinc : integer = 0;
   theincbpm : integer = 0;
   tempload : boolean = false;
-  paversion : UTF8String = '';
-  sfversion : UTF8String = '';
-  mpversion : UTF8String = '';
+  paversion : string;
+  sfversion : string;
+  mpversion : string;  
   tempSamplerate, tempSampleFormat, tempchan, tempratio, tempLibOpen, tempLength : cint32; 
   tempoutmemory: TDArFloat;
   uosPlayers: array of Tuos_Player;
@@ -2076,7 +2063,7 @@ end;
 
 end;
 
-procedure Tuos_Player.InputSetLevelArrayEnable(InputIndex: cint32 ; levelcalc : cint32);
+procedure Tuos_Player.InputSetArrayLevelEnable(InputIndex: cint32 ; levelcalc : cint32);
 // set add level calculation in level-array (default is 0)
 // 0 => no calcul
 // 1 => calcul before all DSP procedures.
@@ -2130,22 +2117,24 @@ Result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelRight;
 end;
 
-function Tuos_Player.InputFiltersGetLevelString(InputIndex: cint32): string;
+function Tuos_Player.InputFilterGetLevelLeft(InputIndex: cint32; filterIndex: cint32): double;
 // InputIndex : InputIndex of existing input
-// result : list of left|right levels separed by $ character
+// filterIndex : Filterindex of existing filter
+// result : left level from 0 to 1
  begin
-Result := '';
-  if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].data.Levelfilters;
-end;
-
-function Tuos_Player.InputFiltersGetLevelArray(InputIndex: cint32): TDArFloat;
-// InputIndex : InputIndex of existing input
-// result : array of float of each filter. 
-         //in format levelfilter0left,levelfilter0right,levelfilter1left,levelfilter2right,...
- begin
-  if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].data.Levelfiltersar;
+Result := 0;
+  if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].DSP[FilterIndex].fftdata.RightResult;
 end;
  
+ function Tuos_Player.InputFilterGetLevelRight(InputIndex: cint32; filterIndex: cint32): double;
+// InputIndex : InputIndex of existing input
+// filterIndex : Filterindex of existing filter
+// result : right level from 0 to 1 
+begin
+Result := 0;
+  if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].DSP[FilterIndex].fftdata.LeftResult;
+end;
+
 {$IF DEFINED(soundtouch)}
 function Tuos_Player.InputGetBPM(InputIndex: cint32): float;
 // InputIndex : InputIndex of existing input
@@ -3096,7 +3085,7 @@ begin
 end;
   
 {$IF DEFINED(noiseremoval)}
-function uos_NoiseRemoval(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
+function uos_NoiseRemoval(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 var
  ratio, x: cint32;
  Outfr : cint32;
@@ -3133,7 +3122,7 @@ end else result := Data.Buffer;// TODO for Array of integer.
 end;
  {$endif}
 
-function uos_DSPVolume(var Data: Tuos_Data;var fft: Tuos_FFT): TDArFloat;
+function uos_DSPVolume(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 var
   x, ratio: cint32;
   vleft, vright: cfloat;
@@ -3355,166 +3344,22 @@ begin
   Result := Data;
 end;
 
-function DSPLevelString(Buffer: TDArFloat; SampleFormat, Ratio : cint32; var resfloatleft : cfloat; var resfloatright : cfloat): string;
-var
-  x, OutFrames: cint32;
-  LevelLeft, Levelright : cfloat;
-  ps: PDArShort;// if input is Int16 format
-  pl: PDArLong;// if input is Int32 format
-  pf: PDArFloat;// if input is Float32 format
-  mins, maxs: array[0..1] of cInt16;// if input is Int16 format
-  minl, maxl: array[0..1] of cInt32;// if input is Int32 format
-  minf, maxf: array[0..1] of cfloat;// if input is Float32 format
-begin
-
-OutFrames := length(buffer);
-
-  case SampleFormat of
-  2:
-  begin
-  mins[0] := 32767;
-  mins[1] := 32767;
-  maxs[0] := -32768;
-  maxs[1] := -32768;
-  ps := @Buffer;
-  x := 0;
-  while x < OutFrames do
-  begin
-  if ps^[x] < mins[0] then
-  mins[0] := ps^[x];
-  if ps^[x] > maxs[0] then
-  maxs[0] := ps^[x];
-
-  Inc(x, 1);
-
-  if ps^[x] < mins[1] then
-  mins[1] := ps^[x];
-  if ps^[x] > maxs[1] then
-  maxs[1] := ps^[x];
-
-  Inc(x, 1);
-  end;
-
-  if Abs(mins[0]) > Abs(maxs[0]) then
-  LevelLeft := Sqrt(Abs(mins[0]) / 32768)
-  else
-  LevelLeft := Sqrt(Abs(maxs[0]) / 32768);
-
-  if Abs(mins[1]) > Abs(maxs[1]) then
-  Levelright := Sqrt(Abs(mins[1]) / 32768)
-  else
-  Levelright := Sqrt(Abs(maxs[1]) / 32768);
-
-  end;
-
-  1:
-  begin
-  minl[0] := 2147483647;
-  minl[1] := 2147483647;
-  maxl[0] := -2147483648;
-  maxl[1] := -2147483648;
-  pl := @Buffer;
-  x := 0;
-  while x < OutFrames do
-  begin
-  if pl^[x] < minl[0] then
-  minl[0] := pl^[x];
-  if pl^[x] > maxl[0] then
-  maxl[0] := pl^[x];
-
-  Inc(x, 1);
-
-  if pl^[x] < minl[1] then
-  minl[1] := pl^[x];
-  if pl^[x] > maxl[1] then
-  maxl[1] := pl^[x];
-
-  Inc(x, 1);
-  end;
-
-  if Abs(minl[0]) > Abs(maxl[0]) then
-  LevelLeft := Sqrt(Abs(minl[0]) / 2147483648)
-  else
-  LevelLeft := Sqrt(Abs(maxl[0]) / 2147483648);
-
-  if Abs(minl[1]) > Abs(maxl[1]) then
-  Levelright := Sqrt(Abs(minl[1]) / 2147483648)
-  else
-  Levelright := Sqrt(Abs(maxl[1]) / 2147483648);
-  end;
-
-  0:
-  begin
-  
-  minf[0] := 1;
-  minf[1] := 1;
-  maxf[0] := -1;
-  maxf[1] := -1;
-  pf := @Buffer;
-  x := 0;
-  while x < (OutFrames div ratio) do
-  begin
-  if pf^[x] < minf[0] then
-  minf[0] := pf^[x];
-  if pf^[x] > maxf[0] then
-  maxf[0] := pf^[x];
-
-  Inc(x, 1);
-
-  if pf^[x] < minf[1] then
-  minf[1] := pf^[x];
-  if pf^[x] > maxf[1] then
-  maxf[1] := pf^[x];
-
-  Inc(x, 1);
-  end;
-
-  if Abs(minf[0]) > Abs(maxf[0]) then
-  LevelLeft := Sqrt(Abs(minf[0]))
-  else
-  LevelLeft := Sqrt(Abs(maxf[0]));
-
-  if Abs(minf[1]) > Abs(maxf[1]) then
-  Levelright := Sqrt(Abs(minf[1]))
-  else
-  Levelright := Sqrt(Abs(maxf[1]));
-  end;
-  end;
-  
-  resfloatright := Levelright;
-  resfloatleft := Levelleft;
-// writeln(floattostr(Levelleft) + '|' + floattostr(Levelright));
-  Result := floattostr(Levelleft) + '|' + floattostr(Levelright);
-end;
-
-
-function uos_BandFilter(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
+function uos_BandFilter(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 var
   i, ratio: cint32;
   ifbuf: boolean;
   arg, res, res2: cfloat;
-  Levelright : cfloat;
-  Levelleft : cfloat;
-
-  ps, ps2: PDArShort;// if input is Int16 format
-  pl, pl2: PDArLong;// if input is Int32 format
-  pf, pf2: PDArFloat;// if input is Float32 format
+  ps: PDArShort;// if input is Int16 format
+  pl: PDArLong;// if input is Int32 format
+  pf: PDArFloat;// if input is Float32 format
 begin
 
   ratio := 1;
   ifbuf := fft.AlsoBuf;
 
   case Data.SampleFormat of
-  2:
-  begin
-  ps := @Data.Buffer;
-  ps2 := @fft.VirtualBuffer;
-  end;  
-  1:
-  begin
-  pl := @Data.Buffer;
-  pl2 := @fft.VirtualBuffer;
-  end;
+  2: ps := @Data.Buffer;
+  1: pl := @Data.Buffer;
   0:
   begin
   case Data.LibOpen of
@@ -3525,7 +3370,6 @@ begin
   4: ratio := 2;// opus
   end;
   pf := @Data.Buffer;
-  pf2 := @fft.VirtualBuffer;
   end;
   end;
   i := 0;
@@ -3540,7 +3384,6 @@ begin
 
   res := fft.a3[0] * arg + fft.a3[1] * fft.x0[0] + fft.a3[2] *
   fft.x1[0] - fft.b2[0] * fft.y0[0] - fft.b2[1] * fft.y1[0];
- 
   if fft.typefilter = 1 then
   begin
   res2 := fft.a32[0] * arg + fft.a32[1] * fft.x02[0] + fft.a32[2] *
@@ -3549,19 +3392,19 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  ps2^[i] := trunc((res * 1) + (res2 * fft.gain));
+  fft.RightResult := trunc((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
-  ps^[i] := trunc((res * 1) + (res2 * fft.gain)) ;
+  ps^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   1:
   begin
-  pl2^[i] := trunc((res * 1) + (res2 * fft.gain));
+  fft.RightResult := trunc((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
   pl^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   0:
   begin
-  pf2^[i] := ((res * 1) + (res2 * fft.gain));
+  fft.RightResult := ((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
   pf^[i] := ((res * 1) + (res2 * fft.gain));
   end;
@@ -3572,19 +3415,19 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  ps2^[i] := trunc(res * fft.gain);
+  fft.RightResult := trunc(res * fft.gain);
   if ifbuf = True then
   ps^[i] := trunc((res * fft.gain));
   end;
   1:
   begin
-  pl2^[i] := trunc((res * fft.gain));
+  fft.RightResult := trunc((res * fft.gain));
   if ifbuf = True then
   pl^[i] := trunc((res * fft.gain));
   end;
   0:
   begin
-  pf2^[i] := ((res * fft.gain));
+  fft.RightResult := ((res * fft.gain));
   if ifbuf = True then
   pf^[i] := ((res * fft.gain));
   end;
@@ -3623,20 +3466,20 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  ps2^[i] := trunc((res * 1) + (res2 * fft.gain));
+  fft.LeftResult := trunc((res * 1) + (res2 * fft.gain));
 
   if ifbuf = True then
   ps^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   1:
   begin
-  pl2^[i] := trunc((res * 1) + (res2 * fft.gain));
+  fft.LeftResult := trunc((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
   pl^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   0:
   begin
-  pf2^[i] := ((res * 1) + (res2 * fft.gain));
+  fft.LeftResult := ((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
   pf^[i] := ((res * 1) + (res2 * fft.gain));
   end;
@@ -3647,19 +3490,19 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  ps2^[i] := trunc((res * fft.gain));
+  fft.LeftResult := trunc((res * fft.gain));
   if ifbuf = True then
   ps^[i] := trunc((res * fft.gain));
   end;
   1:
   begin
-  pl2^[i] := trunc((res * fft.gain));
+  fft.LeftResult := trunc((res * fft.gain));
   if ifbuf = True then
   pl^[i] := trunc((res * fft.gain));
   end;
   0:
   begin
-  pf2^[i] := ((res * fft.gain));
+  fft.LeftResult := ((res * fft.gain));
   if ifbuf = True then
   pf^[i] := ((res * fft.gain));
   end;
@@ -3681,21 +3524,12 @@ begin
   end;
   Inc(i);
   end;
-  
-  if ifbuf = false then
-  begin
-  data.levelfilters  := data.levelfilters + '%'+ DSPLevelString(fft.VirtualBuffer, Data.SampleFormat, data.Ratio, levelleft, levelright) ;
-  setlength(Data.levelfiltersar,length(Data.levelfiltersar)+1);
-  Data.levelfiltersar[length(Data.levelfiltersar)-1] := levelleft;
-  setlength(Data.levelfiltersar,length(Data.levelfiltersar)+1);
-  Data.levelfiltersar[length(Data.levelfiltersar)-1] := levelright;
-  end;
- 
+
   Result := Data.Buffer;
 
 end;
 
-function uos_InputAddDSP1ChanTo2Chan(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
+function uos_InputAddDSP1ChanTo2Chan(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
 //  Convert mono 1 chan input into stereo 2 channels input.
 // Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
 // InputIndex : InputIndex of a existing Input
@@ -3969,8 +3803,6 @@ begin
   StreamIn[InputIndex].DSP[FilterIndex].fftdata :=
   Tuos_FFT.Create();
   
-  setlength(StreamIn[InputIndex].DSP[FilterIndex].fftdata.Virtualbuffer, length(StreamIn[InputIndex].data.buffer));
-   
   if TypeFilter = -1 then
   TypeFilter := 1;
   InputSetFilter(InputIndex, FilterIndex, LowFrequency, HighFrequency,
@@ -4010,7 +3842,7 @@ end;
 {$IF DEFINED(portaudio)}
 function Tuos_Player.AddFromDevIn(Device: cint32; Latency: CDouble;
   SampleRate: cint32; OutputIndex: cint32;
-  SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
+  SampleFormat: cint32; FramesCount : cint32): cint32;
 // Add Input from IN device with custom parameters
 // Device ( -1 is default Input device )
 // Latency  ( -1 is latency suggested ) )
@@ -4019,7 +3851,6 @@ function Tuos_Player.AddFromDevIn(Device: cint32; Latency: CDouble;
 // (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : -1 default : 4096
-// ChunkCount : default : -1 (= 512)
 // example : AddFromDevIn(-1,-1,-1,-1);
 var
   x, err: cint32;
@@ -4072,8 +3903,6 @@ begin
 
   if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=  4096 else
   StreamIn[x].Data.Wantframes := (FramesCount) ;
-  
-   if ChunkCount = -1 then  ChunkCount := 512;
 
   SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
 
@@ -4087,9 +3916,8 @@ begin
   StreamIn[x].Data.seekable := False;
   StreamIn[x].Data.LibOpen := 2;
   StreamIn[x].LoopProc := nil;
-  
   err := Pa_OpenStream(@StreamIn[x].Data.HandleSt, @StreamIn[x].PAParam,
-  nil, CDouble(StreamIn[x].Data.SampleRate), CULong(ChunkCount), paClipOff, nil, nil);
+  nil, StreamIn[x].Data.SampleRate, (512), paClipOff, nil, nil);
 
   if err <> 0 then
   else
@@ -4192,11 +4020,16 @@ begin
   StreamIn[x].Data.Wantframes := FramesCount ;
  
   if Frequency = -1 then 
-  StreamIn[x].Data.freqsine := 440  else
+  begin
+  StreamIn[x].Data.freqsine := 440 ;
+  StreamIn[x].Data.lensine :=  (StreamIn[x].Data.SampleRate / 440) ;
+  end
+  else
+  begin
   StreamIn[x].Data.freqsine := Frequency ;
-
-  StreamIn[x].Data.lensine := (StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqsine) ;
-
+  StreamIn[x].Data.lensine := (StreamIn[x].Data.SampleRate / Frequency) ;
+  end;
+  
   StreamIn[x].Data.posLsine := 0 ;
   StreamIn[x].Data.posRsine := 0 ;
   
@@ -4623,7 +4456,7 @@ function Tuos_Player.AddIntoDevOut(Device: cint32; Latency: CDouble;
 // example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1);
 var
   x, err: cint32;
-
+astream : PPPaStream;
 begin
   result := -1 ;
   x := 0;
@@ -4635,27 +4468,23 @@ begin
    StreamOut[x].Data.Enabled := false;
 
   StreamOut[x].PAParam.hostApiSpecificStreamInfo := nil;
-
   if device = -1 then
   StreamOut[x].PAParam.device := Pa_GetDefaultOutputDevice()
   else
   StreamOut[x].PAParam.device := device;
-
   if SampleRate = -1 then
   StreamOut[x].Data.SampleRate := DefRate
   else
   StreamOut[x].Data.SampleRate := SampleRate;
-
   if Latency = -1 then
-    StreamOut[x].PAParam.SuggestedLatency :=    CDouble((Pa_GetDeviceInfo(StreamOut[x].PAParam.device)^.   defaultHighOutputLatency)) * 1
- else   StreamOut[x].PAParam.SuggestedLatency := CDouble(Latency);
 
-  {$IF DEFINED(android)}
-  StreamOut[x].PAParam.SampleFormat := paFloat32;
-  {$else}
+  StreamOut[x].PAParam.SuggestedLatency :=
+  ((Pa_GetDeviceInfo(StreamOut[x].PAParam.device)^.
+  defaultHighOutputLatency)) * 1
+  else
+  StreamOut[x].PAParam.SuggestedLatency := CDouble(Latency);
+
   StreamOut[x].PAParam.SampleFormat := paInt16;
-  {$endif}
-
   case SampleFormat of
   0: StreamOut[x].PAParam.SampleFormat := paFloat32;
   1: StreamOut[x].PAParam.SampleFormat := paInt32;
@@ -4676,23 +4505,23 @@ begin
   end;
 
   if FramesCount = -1 then  StreamOut[x].Data.Wantframes :=
-
-  {$IF DEFINED(android)}
-  1024 * 64 else
-  {$else}
   65536 div StreamOut[x].Data.Channels else
-  {$endif}
   StreamOut[x].Data.Wantframes := FramesCount ;
 
-  if ChunkCount = -1 then  ChunkCount := 512;
+  if ChunkCount = -1 then  ChunkCount :=   512;
 
   SetLength(StreamOut[x].Data.Buffer, StreamOut[x].Data.Wantframes*StreamOut[x].Data.Channels);
 
   StreamOut[x].Data.TypePut := 1;
 
- err := Pa_OpenStream(@StreamOut[x].Data.HandleSt, nil, @StreamOut[x].PAParam, CDouble(StreamOut[x].Data.SampleRate), CULong(ChunkCount), paClipOff, nil, nil);
+ {$IF DEFINED(android)}
+   StreamOut[x].Data.Wantframes := length(StreamOut[x].Data.Buffer) div 2;// otherwise => crash ??????
+     {$else}
+   StreamOut[x].Data.Wantframes := length(StreamOut[x].Data.Buffer) div StreamOut[x].Data.channels;
+     {$endif}
+ err := Pa_OpenStream(@StreamOut[x].Data.HandleSt, nil, @StreamOut[x].PAParam, StreamOut[x].Data.SampleRate, ChunkCount, paClipOff, nil, nil);
 
-//   err := Pa_OpenDefaultStream(@StreamOut[x].Data.HandleSt, 2, 2, paFloat32, DefRate, 512, nil, nil);
+//   err := Pa_OpenDefaultStream(stream, 2, 2, paInt16, DefRate, 512, nil, nil);
 
   StreamOut[x].LoopProc := nil;
   if err <> 0 then
@@ -5300,7 +5129,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   StreamIn[x].Data.Poseek := -1;
   StreamIn[x].Data.seekable := true;
   StreamIn[x].LoopProc := nil;
-  StreamIn[x].Data.Samplerate := bufferinfos.SampleRate;
+   StreamIn[x].Data.Samplerate := bufferinfos.SampleRate; 
   StreamIn[x].Data.SampleRateRoot := Bufferinfos.Samplerate;
   StreamIn[x].Data.SampleFormat := Bufferinfos.SampleFormat;
   StreamIn[x].Data.Filename := BufferInfos.Filename;
@@ -6429,10 +6258,10 @@ x2 : integer;
   begin
 
   x2 := 0 ;
-
-   StreamIn[x].Data.posdursine := StreamIn[x].Data.posdursine + (StreamIn[x].Data.WantFrames div StreamIn[x].Data.Channels);
-
-    if (StreamIn[x].Data.posdursine <= StreamIn[x].Data.dursine) or (StreamIn[x].Data.dursine = 0) then
+  
+  StreamIn[x].Data.posdursine := StreamIn[x].Data.posdursine + ( StreamIn[x].Data.WantFrames div StreamIn[x].Data.Channels);
+  
+  if (StreamIn[x].Data.posdursine <= StreamIn[x].Data.dursine) or (StreamIn[x].Data.dursine = 0) then
   
   begin
 
@@ -6469,7 +6298,7 @@ x2 : integer;
   end;
   end;
 
-  StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames;
+  StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames ;
   end else StreamIn[x].Data.OutFrames :=  0 ;
   
   end;
@@ -7971,9 +7800,6 @@ begin
     if (StreamIn[x].Data.Status > 0) and
   (StreamIn[x].Data.Enabled = True) then
   begin
-  
-  StreamIn[x].Data.levelfilters := '';
-  setlength(StreamIn[x].Data.levelfiltersar,0);
 
   {$IF DEFINED(debug)}
    WriteLn('Before StreamIn[x].Data.Seekable = True');
@@ -8323,7 +8149,7 @@ begin
   if (uosLoadResult.MPloadERROR = 0) then
   if mpg123_init() = MPG123_OK then
   begin
-  mpversion := UTF8Decode(mpg123_decoders()^);
+  mpversion := mpg123_decoders()^;
   uosLoadResult.MPinitError := 0;
   Result := 0;
   end
@@ -8338,7 +8164,7 @@ begin
   if (uosLoadResult.PAloadERROR = 0) then
   begin
   uosLoadResult.PAinitError := Pa_Initialize();
-  paversion := UTF8Decode(Pa_GetVersionText());
+  paversion := Pa_GetVersionText();
   if uosLoadResult.PAinitError = 0 then
   begin
   Result := 0;
@@ -8362,7 +8188,7 @@ begin
   {$endif}
   
    {$IF DEFINED(sndfile)}
-  if (uosLoadResult.SFloadERROR = 0) then sfversion := UTF8Decode(sf_version_string());
+  if (uosLoadResult.SFloadERROR = 0) then sfversion := sf_version_string();
    {$endif}
    
    if (Result = -1) and (uosLoadResult.SFloadERROR = 0) then
@@ -8624,7 +8450,8 @@ end;
 
 function uos_GetInfoLibraries() : PansiChar ;
 begin
- result := pchar(paversion  + ' | Sndfile: ' + sfversion  + ' | Mpg123: ' + mpversion);
+ result := pchar(paversion);  
+  //  + sfversion  + ' | Mpg123: ' + mpversion + ' | PortAudio: ' + paversion );
 end; 
 
 {$IF DEFINED(portaudio)}
@@ -8893,9 +8720,9 @@ begin
   C2:= 0;
   D2:= 0;
   Gain:= 0;
-  
-  levelstring := '';
- 
+  LeftResult:= 0;
+  RightResult:= 0;
+
   {$IF DEFINED(noiseremoval)}
   FNoise:= nil;
   {$endif}

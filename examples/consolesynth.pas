@@ -77,6 +77,8 @@ var
    res := uos_LoadLib(Pchar(PA_FileName), nil, nil, nil, nil, nil) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
+    
+      writeln((uos_getinfolibraries()));
 
    if res = 0 then begin
 
@@ -89,7 +91,7 @@ var
    
    if uos_CreatePlayer(PlayerIndex1) then
 
-    inindex1 := uos_AddFromSynth(PlayerIndex1,440,-1,-1, 0, -1, -1, -1, -1 );  
+    inindex1 := uos_AddFromSynth(PlayerIndex1,220,-1,-1, 0, -1, -1, -1, -1 );  
       
    // Add a input from Synthesizer with custom parameters
   // Frequency : default : -1 (440 htz)
@@ -107,9 +109,10 @@ var
  
  
     {$if defined(cpuarm)} // needs lower latency
-        if uos_AddIntoDevOut(PlayerIndex1,-1,0.3,-1,-1, 0,-1) > - 1 then
+        if uos_AddIntoDevOut(PlayerIndex1,-1,0.3,-1,-1, 0,-1,-1) > - 1 then
        {$else}
-        if uos_AddIntoDevOut(PlayerIndex1,-1,-1,-1,-1, 0,-1) > - 1 then
+        if uos_AddIntoDevOut(PlayerIndex1,-1,-1,-1,-1, 0,-1, -1) > - 1 then
+       
        {$endif}
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
@@ -119,10 +122,10 @@ var
  /////// everything is ready, here we are, lets play it...
     
     uos_Play(PlayerIndex1);
-   
-    sleep(150) ;
+
+      sleep(150) ;
     
-    uos_InputSetSynth(PlayerIndex1,inindex1, 880, -1,-1, -1,true);
+   uos_InputSetSynth(PlayerIndex1,inindex1, 880, -1,-1, -1,true);
        ////////// Frequency : in Hertz (-1 = do not change)
      ////////// VolumeL :  from 0 to 1 (-1 = do not change)
      ////////// VolumeR :  from 0 to 1 (-1 = do not change)
@@ -141,8 +144,7 @@ var
      uos_InputSetSynth(PlayerIndex1,inindex1, 360, 0.2,1, -1, true);
      sleep(300) ; 
      uos_InputSetSynth(PlayerIndex1,inindex1, 280, 1,0.2, -1, true);
-     
-    //}
+     //}
     {      
      uos_InputSetSynth(PlayerIndex1,inindex1, 884, 1, 1, -1, true);
           sleep(2000); 
@@ -152,8 +154,8 @@ var
      sleep(2000) ; 
      uos_InputSetSynth(PlayerIndex1,inindex1, 889, 1,1, 1, true);
     // } 
-     
-     sleep(300);
+    
+         sleep(300);
       uos_stop(PlayerIndex1);
   
    end;

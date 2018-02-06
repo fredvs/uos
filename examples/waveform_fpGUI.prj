@@ -19,6 +19,44 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/waveform_fpGUI.prj
+findinfiledialog=37
+ [findinfileadialogfo.subdirs]
+ value=0
+ [findinfileadialogfo.incurrentfile]
+ value=0
+ [findinfileadialogfo.inopenfiles]
+ value=0
+ [findinfileadialogfo.wholeword]
+ value=0
+ [findinfileadialogfo.inprojectdir]
+ value=1
+ [findinfileadialogfo.casesensitive]
+ value=0
+ [findinfileadialogfo.indirectories]
+ value=0
+ [findinfileadialogfo.mask]
+ value="*.pas" "*.pp" "*.inc"
+ history=0
+ [findinfileadialogfo.dir]
+ filenames=0
+ filecolwidth=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ filehistory=0
+ filefilterindex=0
+ filefilter=
+ [findinfileadialogfo.findtext]
+ value=InputGetArrayLevel
+ history=1
+  InputGetArrayLevel
+ [findinfileadialogfo]
+ stackedunder=
+ x=268
+ y=415
+ cx=339
+ cy=275
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -90,7 +128,7 @@ options=114
  x=0
  y=120
  xprop=1
- yprop=0.24070450097847
+ yprop=0.23976608187135
  [projectoptionsfo.macrogrid]
  propcolwidthref=478
  sortdescend0=0
@@ -381,7 +419,7 @@ befcommandon=0
 makeoptionson=6
  63
  24
- 39
+ 35
  39
  4095
  4034
@@ -674,8 +712,12 @@ envvarons=0
 [edit]
 hintwidth=314
 hintheight=214
-finddtext=InputAddDSP
-findhistory=7
+finddtext=InputSetLevel
+findhistory=11
+ InputSetLevel
+ learray
+ array
+ uos_InputSet
  InputAddDSP
  uosLevelArray
  writeln
@@ -684,30 +726,50 @@ findhistory=7
  freeo
  DrawWaveForm
 findoptions=1
-editpos=5
+editpos=9
  0,-1073741823
- 0,143
+ 0,86
+ 0,650
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 0,379
+ 0,3092
+ 0,875
+ 0,3081
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+bookmarks6=0
+bookmarks7=0
+bookmarks8=0
+sourcefiles=9
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/waveform_fpGUI.pas
+ ${PROJECTDIR}/waveform_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_opus.pas
  ${PROJECTDIR}/define.inc
-relpaths=5
+ ${PROJECTDIR}/main_wf.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uoslib.pas
+ ${PROJECTDIR}/uosok.pas
+relpaths=9
  uos.pas
  waveform_fpGUI.pas
  uos_flat.pas
  uos_opus.pas
  define.inc
-ismoduletexts=5
+ main_wf.pas
+ uos.pas
+ uoslib.pas
+ uosok.pas
+ismoduletexts=9
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -718,10 +780,20 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=9
+ 0
+ 1
+ 2
+ 6
+ 7
+ 8
+ 5
+ 3
+ 4
 firsttab=0
-index=1
+index=2
 [layout]
-windowlayout=533
+windowlayout=535
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -734,7 +806,7 @@ windowlayout=533
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=604
  rcx=0
  rcy=0
@@ -749,12 +821,12 @@ windowlayout=533
  ncy=0
  x=125
  y=46
- cx=1123
+ cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1113,604
+  basedock,0,0,1147,604
  focusedchild=0
  wsize=0
  active=1
@@ -774,7 +846,7 @@ windowlayout=533
  cy=314
  rcx=0
  rcy=0
- wsize=0
+ wsize=5
  active=0
  visible=0
  [threadsfo]
@@ -798,7 +870,7 @@ windowlayout=533
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -844,15 +916,15 @@ windowlayout=533
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=239
- y=115
+ x=403
+ y=306
  cx=678
  cy=414
  rcx=0
@@ -880,7 +952,7 @@ windowlayout=533
  width1=82
  sortdescend1=0
  sorted=0
- col=-1073741823
+ col=1
  row=-1073741823
  rowheight=17
  [stackfo]
@@ -920,14 +992,14 @@ windowlayout=533
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -936,7 +1008,7 @@ windowlayout=533
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1042,7 +1114,7 @@ windowlayout=533
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=111
+ propcolwidthref=121
  values0=0
  values0_ci=-1
  sortdescend0=0
@@ -1072,7 +1144,7 @@ windowlayout=533
  ncy=0
  x=0
  y=512
- cx=1113
+ cx=1147
  cy=92
  rcx=0
  rcy=0
@@ -1172,7 +1244,7 @@ windowlayout=533
  ncy=0
  x=0
  y=0
- cx=1113
+ cx=1147
  cy=51
  rcx=0
  rcy=0
@@ -1184,16 +1256,14 @@ windowlayout=533
  mdistate=0
  nx=0
  ny=0
- ncx=1113
- ncy=53
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1113
- cy=53
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
- [debuggerfo.project_options]
- value=1
  [debuggerfo.edit_options]
  value=X
  [debuggerfo.edit_compilernum]
@@ -1201,8 +1271,12 @@ windowlayout=533
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/waveform_fpGUI.pas
+ value=/home/fred/uos/examples/uos_flat.pas
  history=0
+ [debuggerfo.project_options]
+ value=1
+ [debuggerfo.hints]
+ value=0
  [sourcefo]
  splitdir=0
  useroptions=16489
@@ -1215,7 +1289,7 @@ windowlayout=533
  ncy=0
  x=208
  y=0
- cx=905
+ cx=939
  cy=455
  rcx=0
  rcy=0
@@ -1223,7 +1297,7 @@ windowlayout=533
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1251,7 +1325,7 @@ windowlayout=533
  ncy=0
  x=0
  y=54
- cx=1113
+ cx=1147
  cy=455
  rcx=0
  rcy=0

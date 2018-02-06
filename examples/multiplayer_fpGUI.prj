@@ -846,7 +846,7 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,130
+ 0,910
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1047,7 +1047,7 @@ windowlayout=543
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1436,7 +1436,7 @@ windowlayout=543
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

@@ -328,10 +328,10 @@ var
 
     {$if defined(cpuarm)} // needs lower latency
         Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-    uos_InputGetChannels(PlayerIndex1, In1Index),samformat, -1);
+    uos_InputGetChannels(PlayerIndex1, In1Index),samformat, -1, -1);
        {$else}
         Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-    uos_InputGetChannels(PlayerIndex1, In1Index),samformat, -1);
+    uos_InputGetChannels(PlayerIndex1, In1Index),samformat, -1, -1);
        {$endif}
    
     //// add a Output into device with custom parameters
@@ -342,6 +342,7 @@ var
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (65536)
+    // ChunkCount : default : -1 (= 512)
     //  result : -1 nothing created, otherwise Output Index in array
 
     uos_InputSetLevelEnable(PlayerIndex1, In1Index, 2) ;

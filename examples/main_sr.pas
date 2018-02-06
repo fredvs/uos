@@ -218,7 +218,7 @@ begin
     uos_outputsetenable(PlayerIndex1,out1index,checkbox1.checked);
 
 
-   // uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536 );   //// add a Output into device with custom parameters
+   // uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536, -1);   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -226,6 +226,7 @@ begin
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
+      // ChunkCount : default : -1 (= 512)
 
    In1Index := uos_AddFromDevIn(PlayerIndex1);  /// add Input from mic into IN device with default parameters
 
@@ -293,10 +294,10 @@ begin
 
 {$if defined(cpuarm)} // needs lower latency
        uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-    uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1);
+    uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1, -1);
        {$else}
         uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-    uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1);
+    uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1, -1);
        {$endif}
 
      //// add a Output into device with custom parameters
@@ -307,6 +308,7 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : -1 default : 65536
+  // ChunkCount : default : -1 (= 512)
 
    uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, In1Index);
    /////  Convert mono channel to stereo channels.
