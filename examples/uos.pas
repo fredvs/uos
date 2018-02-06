@@ -3557,7 +3557,7 @@ begin
   begin
   if ifbuf = True then
   pl^[i] := trunc((res * 1) + (res2 * fft.gain)) else
-  ps2^[i] := trunc((res * 1) + (res2 * fft.gain));
+  pl2^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   0:
   begin

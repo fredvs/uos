@@ -3549,21 +3549,22 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  ps2^[i] := trunc((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
-  ps^[i] := trunc((res * 1) + (res2 * fft.gain)) ;
+  ps^[i] := trunc((res * 1) + (res2 * fft.gain)) else
+  ps2^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   1:
   begin
-  pl2^[i] := trunc((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
-  pl^[i] := trunc((res * 1) + (res2 * fft.gain));
+  pl^[i] := trunc((res * 1) + (res2 * fft.gain)) else
+  pl2^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   0:
   begin
-  pf2^[i] := ((res * 1) + (res2 * fft.gain));
+  
   if ifbuf = True then
-  pf^[i] := ((res * 1) + (res2 * fft.gain));
+  pf^[i] := ((res * 1) + (res2 * fft.gain)) else
+  pf2^[i] := ((res * 1) + (res2 * fft.gain));
   end;
   end;
 
@@ -3572,21 +3573,22 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  ps2^[i] := trunc(res * fft.gain);
+  
   if ifbuf = True then
-  ps^[i] := trunc((res * fft.gain));
+  ps^[i] := trunc((res * fft.gain)) else
+  ps2^[i] := trunc(res * fft.gain);
   end;
   1:
   begin
-  pl2^[i] := trunc((res * fft.gain));
   if ifbuf = True then
-  pl^[i] := trunc((res * fft.gain));
+  pl^[i] := trunc((res * fft.gain)) else
+  pl2^[i] := trunc(res * fft.gain);
   end;
   0:
   begin
-  pf2^[i] := ((res * fft.gain));
   if ifbuf = True then
-  pf^[i] := ((res * fft.gain));
+  pf^[i] := ((res * fft.gain)) else
+  pf2^[i] := ((res * fft.gain));
   end;
   end;
 
@@ -3623,22 +3625,21 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  ps2^[i] := trunc((res * 1) + (res2 * fft.gain));
-
   if ifbuf = True then
-  ps^[i] := trunc((res * 1) + (res2 * fft.gain));
+  ps^[i] := trunc((res * 1) + (res2 * fft.gain)) else
+  ps2^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   1:
   begin
-  pl2^[i] := trunc((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
-  pl^[i] := trunc((res * 1) + (res2 * fft.gain));
+  pl^[i] := trunc((res * 1) + (res2 * fft.gain)) else
+  pl2^[i] := trunc((res * 1) + (res2 * fft.gain));
   end;
   0:
   begin
-  pf2^[i] := ((res * 1) + (res2 * fft.gain));
   if ifbuf = True then
-  pf^[i] := ((res * 1) + (res2 * fft.gain));
+  pf^[i] := ((res * 1) + (res2 * fft.gain)) else
+  pf2^[i] := ((res * 1) + (res2 * fft.gain));
   end;
   end;
 
@@ -3647,21 +3648,21 @@ begin
   case Data.SampleFormat of
   2:
   begin
-  ps2^[i] := trunc((res * fft.gain));
   if ifbuf = True then
-  ps^[i] := trunc((res * fft.gain));
+  ps^[i] := trunc((res * fft.gain)) else
+  ps2^[i] := trunc((res * fft.gain));
   end;
   1:
   begin
-  pl2^[i] := trunc((res * fft.gain));
   if ifbuf = True then
-  pl^[i] := trunc((res * fft.gain));
+  pl^[i] := trunc((res * fft.gain)) else
+  pl2^[i] := trunc((res * fft.gain));
   end;
   0:
   begin
-  pf2^[i] := ((res * fft.gain));
   if ifbuf = True then
-  pf^[i] := ((res * fft.gain));
+  pf^[i] := ((res * fft.gain)) else
+  pf2^[i] := ((res * fft.gain));
   end;
   end;
 
