@@ -3242,7 +3242,7 @@ begin
   maxs[1] := -32768;
   ps := @Data.Buffer;
   x := 0;
-  while x < Data.OutFrames do
+  while x < Data.OutFrames -1 do
   begin
   if ps^[x] < mins[0] then
   mins[0] := ps^[x];
@@ -3279,7 +3279,7 @@ begin
   maxl[1] := -2147483648;
   pl := @Data.Buffer;
   x := 0;
-  while x < Data.OutFrames do
+  while x < Data.OutFrames -1 do
   begin
   if pl^[x] < minl[0] then
   minl[0] := pl^[x];
@@ -3323,7 +3323,7 @@ begin
   maxf[1] := -1;
   pf := @Data.Buffer;
   x := 0;
-  while x < (Data.OutFrames div ratio) do
+  while x < (Data.OutFrames div ratio)-1 do
   begin
   if pf^[x] < minf[0] then
   minf[0] := pf^[x];
@@ -3378,7 +3378,7 @@ OutFrames := length(buffer);
   maxs[1] := -32768;
   ps := @Buffer;
   x := 0;
-  while x < OutFrames do
+  while x < OutFrames -1 do
   begin
   if ps^[x] < mins[0] then
   mins[0] := ps^[x];
@@ -3415,7 +3415,7 @@ OutFrames := length(buffer);
   maxl[1] := -2147483648;
   pl := @Buffer;
   x := 0;
-  while x < OutFrames do
+  while x < OutFrames -1 do
   begin
   if pl^[x] < minl[0] then
   minl[0] := pl^[x];
@@ -3452,7 +3452,7 @@ OutFrames := length(buffer);
   maxf[1] := -1;
   pf := @Buffer;
   x := 0;
-  while x < (OutFrames div ratio) do
+  while x < (OutFrames div ratio) -1 do
   begin
   if pf^[x] < minf[0] then
   minf[0] := pf^[x];
