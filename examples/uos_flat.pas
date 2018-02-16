@@ -168,14 +168,13 @@ function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
 // for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName)
   
 procedure uos_unloadlib();
-// Unload all libraries... Do not forget to call it before close application...
-
+// Unload all libraries...
 procedure uos_free();  
 // Free uos;
-// To use when program terminate.
+// To use when program terminate. Do not forget to call it before close application...
 
 procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
-// Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
+// Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
 // load plugin...
@@ -191,6 +190,8 @@ procedure uos_unloadServerLib();
   
 procedure uos_UnloadPlugin(PluginName: PChar);
 
+// PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, soundcard, ...)
+// If PlayerIndex already exists, it will be overwriten...
 {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
 function uos_CreatePlayer(PlayerIndex: cint32; AParent: TObject) : boolean;
 {$else}
@@ -199,8 +200,6 @@ function uos_CreatePlayer(PlayerIndex: cint32): boolean;
 
 {$IF DEFINED(portaudio)}
 function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
-// PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, soundcard, ...)
-// If PlayerIndex already exists, it will be overwriten...
 
 // Add a Output into Device Output with custom parameters
 function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
@@ -596,7 +595,6 @@ procedure uos_SetPluginGetBPM(PlayerIndex: cint32; PluginIndex: cint32; numoffra
 // PluginIndex : PluginIndex Index of a existing Plugin.  
 // numofframes: number of frames to analyse (-1 = 512 x frames)
 // loop: do new detection after previous.  
-  
 {$endif}
 
 {$IF DEFINED(bs2b)}

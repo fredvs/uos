@@ -8847,7 +8847,7 @@ begin
 //----------------------------//
   SampleRate:= 44100;
   freqsine:= 440;
-  lensine:= SampleRate / freqsine;
+  lensine:= SampleRate / freqsine *2;
   dursine:= SampleRate;
   posdursine:= 0;
   posLsine:= 0;

@@ -790,8 +790,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=readsynt
+finddtext=lensine
 findhistory=20
+ lensine
  readsynt
  AddFromSynth
  dspvo
@@ -811,7 +812,6 @@ findhistory=20
  Pa_Initialize()
  uos_AddFromSynth
  Pa_WriteStream(Str 
- writeout
 findoptions=1
 editpos=23
  0,-1073741823
@@ -827,16 +827,16 @@ editpos=23
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,97
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,6501
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,205
+ 1,9239
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1018,7 +1018,7 @@ windowlayout=543
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1041,7 +1041,7 @@ windowlayout=543
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1068,7 +1068,7 @@ windowlayout=543
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=stackfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1285,7 +1285,7 @@ windowlayout=543
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=111
+ propcolwidthref=121
  values0=2
   -1
   -1
@@ -1435,8 +1435,8 @@ windowlayout=543
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1356
+ ncy=62
  x=0
  y=0
  cx=1356
@@ -1453,7 +1453,7 @@ windowlayout=543
  value=/home/fred/uos/examples/uos.pas
  history=0
  [debuggerfo.project_options]
- value=B
+ value=1
  [debuggerfo.hints]
  value=1
  [sourcefo]
@@ -1476,7 +1476,7 @@ windowlayout=543
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
