@@ -831,7 +831,7 @@ editpos=23
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,6517
+ 0,6501
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1000,7 +1000,7 @@ windowlayout=543
   basedock,0,0,1356,694
  focusedchild=0
  wsize=6
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1018,7 +1018,7 @@ windowlayout=543
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0

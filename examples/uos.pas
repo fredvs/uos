@@ -6446,7 +6446,7 @@ pf: PDArFloat;// if input is Float32 format
   
   begin
 
-  while x2 < StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels do
+  while x2 < (StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels) - (StreamIn[x].Data.Channels -1)  do
 
   begin
 
@@ -6457,13 +6457,13 @@ pf: PDArFloat;// if input is Float32 format
   case StreamIn[x].Data.SampleFormat of
   2:// int16
   begin
-  ps^[x2] := trunc(sf1 * 32760);
-  ps^[x2+1] := trunc(sf2 * 32760);
+  ps^[x2] := trunc(sf1 * 32768);
+  ps^[x2+1] := trunc(sf2 * 32768);
   end;
   1:// int32
   begin
-  pl^[x2] := trunc(sf1 * 2147000000);
-  pl^[x2+1] := trunc(sf2 * 2147000000);
+  pl^[x2] := trunc(sf1 * 2147483648);
+  pl^[x2+1] := trunc(sf2 * 2147483648);
   end;
   0:// float32
   begin
@@ -6488,11 +6488,11 @@ pf: PDArFloat;// if input is Float32 format
   case StreamIn[x].Data.SampleFormat of
   2:// int16
   begin
-  ps^[x2] := trunc(sf1 * 32760);
+  ps^[x2] := trunc(sf1 * 32768);
    end;
   1:// int32
   begin
-  pl^[x2] := trunc(sf1 * 2147000000);
+  pl^[x2] := trunc(sf1 * 2147483648);
   end;
   0:// float32
   begin
