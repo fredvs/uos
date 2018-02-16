@@ -78,7 +78,7 @@ var
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
     
-      writeln((uos_getinfolibraries()));
+    writeln((uos_getinfolibraries()));
 
    if res = 0 then begin
 
@@ -91,7 +91,7 @@ var
    
    if uos_CreatePlayer(PlayerIndex1) then
 
-    inindex1 := uos_AddFromSynth(PlayerIndex1,220,-1,-1, 0, -1, -1, -1, -1 );  
+    inindex1 := uos_AddFromSynth(PlayerIndex1,420,-1,-1, 0, -1, 0, -1, -1 );  
       
    // Add a input from Synthesizer with custom parameters
   // Frequency : default : -1 (440 htz)
@@ -133,17 +133,17 @@ var
      //////////// Enabled : true or false ;
      //{
     sleep(175) ;
-     uos_InputSetSynth(PlayerIndex1,inindex1, 620, 0.2,1, -1, true);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 610, 0.2,1, -1, true);
       sleep(300) ;
      uos_InputSetSynth(PlayerIndex1,inindex1, la1, 1,0.2, -1,true);
     sleep(150) ;
-    uos_InputSetSynth(PlayerIndex1,inindex1, 220, 0.2,1, -1 ,true);
+    uos_InputSetSynth(PlayerIndex1,inindex1, 440, 0.2,1, -1 ,true);
      sleep(300) ; 
      uos_InputSetSynth(PlayerIndex1,inindex1, 320,1,0.2, -1,true);
      sleep(150) ; 
-     uos_InputSetSynth(PlayerIndex1,inindex1, 360, 0.2,1, -1, true);
+     uos_InputSetSynth(PlayerIndex1,inindex1, 660, 0.2,1, -1, true);
      sleep(300) ; 
-     uos_InputSetSynth(PlayerIndex1,inindex1, 280, 1,0.2, -1, true);
+     uos_InputSetSynth(PlayerIndex1,inindex1, la3, 1,0.2, -1, true);
      //}
     {      
      uos_InputSetSynth(PlayerIndex1,inindex1, 884, 1, 1, -1, true);
@@ -155,7 +155,7 @@ var
      uos_InputSetSynth(PlayerIndex1,inindex1, 889, 1,1, 1, true);
     // } 
     
-         sleep(300);
+        sleep(1500);
       uos_stop(PlayerIndex1);
   
    end;

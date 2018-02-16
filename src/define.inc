@@ -9,8 +9,9 @@
 {.$DEFINE consoleapp} // if FPC version < 2.7.1 uncomment for console application
 {.$DEFINE library}   // uncomment for building uos library (native and java)
 {.$DEFINE java}   // uncomment for building uos java library
+
 {.$DEFINE fpgui}   // uncomment if FPC version < 2.7.1 and using fpGUI widget
-{.$DEFINE mse}   // uncomment when using a mse project, use mse mseThread in place of fpc TThread.
+{.$DEFINE mse}   // uncomment when using a mse project, use mseThread in place of fpc TThread.
 
 {$DEFINE portaudio} // uncomment to enable portaudio In/Out sound port
 {$DEFINE sndfile} // uncomment to enable sndfile (wav, ogg, flac audio file)

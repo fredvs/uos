@@ -908,8 +908,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=BufferTag
+finddtext=PlayerIndex1 
 findhistory=20
+ PlayerIndex1 
  BufferTag
  mpinfo: Tmpg123_frameinfo
  mpinfo
@@ -929,15 +930,14 @@ findhistory=20
  op_test_callbacks
  addfromfil
  mpg123_length
- coff_t
 findoptions=1
 editpos=2
- 67,121
+ 71,111
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
 sourcefiles=2
- ${PROJECTDIR}/consoleplaymemorystream.pas
+ /home/fred/uos/examples/consoleplaymemorystream.pas
  ${PROJECTDIR}/uos.pas
 relpaths=2
  consoleplaymemorystream.pas
@@ -1034,7 +1034,7 @@ windowlayout=562
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1080,7 +1080,7 @@ windowlayout=562
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1504,7 +1504,7 @@ windowlayout=562
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

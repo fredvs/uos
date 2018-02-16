@@ -4196,7 +4196,7 @@ begin
   StreamIn[x].Data.freqsine := 440  else
   StreamIn[x].Data.freqsine := Frequency ;
 
-  StreamIn[x].Data.lensine := (StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqsine) ;
+  StreamIn[x].Data.lensine := StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqsine*2 ;
 
   StreamIn[x].Data.posLsine := 0 ;
   StreamIn[x].Data.posRsine := 0 ;
@@ -4244,7 +4244,7 @@ begin
  begin
  StreamIn[InputIndex].Data.Enabled := Enable;
  StreamIn[InputIndex].Data.freqsine := Frequency ;
- StreamIn[InputIndex].Data.lensine := (StreamIn[InputIndex].Data.SampleRate / Frequency) ;
+ StreamIn[InputIndex].Data.lensine := (StreamIn[InputIndex].Data.SampleRate / Frequency*2) ;
  end;
  if VolumeL <> -1 then StreamIn[InputIndex].Data.VLeft := VolumeL;
   
@@ -5325,7 +5325,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   setlength(StreamIn[x].Data.buffer,StreamIn[x].Data.wantframes*StreamIn[x].Data.Channels);
   StreamIn[x].Data.Enabled := True;
   result := x; 
-  end; 
+  end else  result := -2;  
    
   end; 
   
@@ -6412,7 +6412,7 @@ begin
   end;
   StreamIn[x].Data.Enabled := True;
   end;
-  end;
+  end else result := -2;
 end;
 
 procedure Tuos_Player.ReadEndless(x : integer);
@@ -6427,7 +6427,16 @@ procedure Tuos_Player.ReadEndless(x : integer);
 procedure Tuos_Player.ReadSynth(x :integer);  
 var
 x2 : integer;
+sf1, sf2 : cfloat;
+ps: PDArShort;// if input is Int16 format
+pl: PDArLong;// if input is Int32 format
+pf: PDArFloat;// if input is Float32 format
+
   begin
+  
+  if StreamIn[x].Data.SampleFormat =  2 then ps := @StreamIn[x].Data.Buffer else
+  if StreamIn[x].Data.SampleFormat =  1 then pl := @StreamIn[x].Data.Buffer else
+  if StreamIn[x].Data.SampleFormat =  0 then pf := @StreamIn[x].Data.Buffer;
 
   x2 := 0 ;
 
@@ -6443,10 +6452,26 @@ x2 : integer;
 
   if StreamIn[x].Data.Channels = 2 then
   begin
-  StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat((x2 div 2)+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
-  StreamIn[x].Data.Buffer[x2+1] := StreamIn[x].Data.VRight * CFloat((Sin( ( CFloat((x2 div 2) + StreamIn[x].Data.posRsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
-
-  if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine -1 then
+  sf1 := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat((x2 div 2)+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+  sf2 := StreamIn[x].Data.VRight * CFloat((Sin( ( CFloat((x2 div 2) + StreamIn[x].Data.posRsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+  case StreamIn[x].Data.SampleFormat of
+  2:// int16
+  begin
+  ps^[x2] := trunc(sf1 * 32760);
+  ps^[x2+1] := trunc(sf2 * 32760);
+  end;
+  1:// int32
+  begin
+  pl^[x2] := trunc(sf1 * 2147000000);
+  pl^[x2+1] := trunc(sf2 * 2147000000);
+  end;
+  0:// float32
+  begin
+  pf^[x2] := sf1;
+  pf^[x2+1] := sf2 ;
+  end;
+  end;  
+   if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine -1 then
   StreamIn[x].Data.posLsine := 0 else
   StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
 
@@ -6459,9 +6484,22 @@ x2 : integer;
 
   if StreamIn[x].Data.Channels = 1 then
   begin
-
-  StreamIn[x].Data.Buffer[x2] := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
-
+   sf1 := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+  case StreamIn[x].Data.SampleFormat of
+  2:// int16
+  begin
+  ps^[x2] := trunc(sf1 * 32760);
+   end;
+  1:// int32
+  begin
+  pl^[x2] := trunc(sf1 * 2147000000);
+  end;
+  0:// float32
+  begin
+  pf^[x2] := sf1;
+  end;
+  end;  
+  
   if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine - 1  then
   StreamIn[x].Data.posLsine := 0 else
   StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
