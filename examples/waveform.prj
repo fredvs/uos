@@ -18,57 +18,45 @@ order15=0
 order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/waveform_fpGUI.prj
-findinfiledialog=40
+projectfilename=/home/fred/uos/examples/waveform.prj
+findinfiledialog=37
  [findinfileadialogfo.subdirs]
- value=0
- [findinfileadialogfo.incurrentfile]
- value=0
+ value=1
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
- value=0
- [findinfileadialogfo.inprojectdir]
  value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
  value=1
  [findinfileadialogfo.mask]
- value="*.pas" "*.pp" "*.inc" "*.*"
+ value="*.pas" "*.pp" "*.inc"
  history=1
-  "*.pas" "*.pp" "*.inc" "*.*"
+  "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/Bureau/Téléchargements/Borland.Delphi.v7.Studio.Enterprise/Borland.Delphi.v7.Studio.Enterprise/
- filecolwidth=0
+  /home/graemeg/devel/
+ filehistory=1
+  /home/graemeg/devel/
+ filefilterindex=0
+ filefilter="*.pas" "*.pp" "*.inc"
+ filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
- filefilterindex=0
- filefilter=
  [findinfileadialogfo.findtext]
- value=linux
+ value=lapAutoAdjustForDPI
  history=2
-  linux
-  InputGetArrayLevel
+  lapAutoAdjustForDPI
+  
  [findinfileadialogfo]
  stackedunder=
  x=268
  y=415
  cx=339
- cy=275
-finddialog=8
- [finddialogfo.selectedonly]
- value=0
- [finddialogfo]
- stackedunder=
- x=319
- y=205
- cx=312
- cy=114
+ cy=251
 options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -76,33 +64,33 @@ options=114
   70
   70
  [projectoptionsfo.twidgetgrid3]
- propcolwidthref=723
+ propcolwidthref=726
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
  sortdescend3=0
- width4=97
+ width4=128
  sortdescend4=0
- width5=78
+ width5=251
  sortdescend5=0
- width6=51
+ width6=296
  sortdescend6=0
- width7=51
+ width7=50
  sortdescend7=0
- width8=97
+ width8=1
  sortdescend8=0
- width9=295
+ width9=297
  sortdescend9=0
  [projectoptionsfo.twidgetgrid4]
- propcolwidthref=547
+ propcolwidthref=550
  width0=96
  sortdescend0=0
  sortdescend1=0
  width2=73
  sortdescend2=0
- width3=262
+ width3=263
  sortdescend3=0
- width4=275
+ width4=277
  sortdescend4=0
  sorted=0
  col=-1073741823
@@ -112,10 +100,10 @@ options=114
  firsttab=0
  index=0
  [projectoptionsfo.fontaliasgrid]
- propcolwidthref=386
+ propcolwidthref=389
  width0=98
  sortdescend0=0
- width1=375
+ width1=378
  sortdescend1=0
  width2=50
  sortdescend2=0
@@ -131,9 +119,9 @@ options=114
  x=0
  y=120
  xprop=1
- yprop=0.23976608187135
+ yprop=0.24070450097847
  [projectoptionsfo.macrogrid]
- propcolwidthref=478
+ propcolwidthref=481
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
@@ -146,7 +134,7 @@ options=114
  sortdescend9=0
  width10=146
  sortdescend10=0
- width11=462
+ width11=465
  sortdescend11=0
  [projectoptionsfo.comment_1]
  value=
@@ -156,16 +144,16 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=3
  [projectoptionsfo.exceptionsgrid]
- propcolwidthref=707
+ propcolwidthref=710
  width0=47
  sortdescend0=0
- width1=701
+ width1=704
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=0
+ index=5
  [projectoptionsfo.filefiltergrid]
  propcolwidthref=621
  width0=112
@@ -180,23 +168,36 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=356
- y=37
- cx=756
+ x=278
+ y=87
+ cx=759
  cy=568
-mainfile=${PROJECTDIR}waveform_fpGUI.pas
-targetfile=${PROJECTDIR}waveform_fpGUI
+settings=8
+ [settings_form]
+ x=447
+ y=148
+ cx=471
+ cy=446
+ wsize=0
+ active=1
+ visible=1
+mainfile=${PROJECTNAME}.lpr
+targetfile=${PROJECTNAME}${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=7
- ${FPGUIDIR}/lib/${TargetCPU}-${TargetOS}
- ${FPGUIDIR}
- ${FPGUIDIR}/src/corelib/gdi
- ${FPGUIDIR}/src
- ${FPGUIDIR}/src/corelib/x11
- ${FPGUIDIR}/src/gui
- ${FPGUIDIR}/src/corelib
+unitdirs=11
+ ${lcldir}*
+ ${lcldir}/components/*
+ ${lcldir}/*
+ ${lcldir}/lcl/*
+ ${lcldir}/interfaces/*
+ ${lcldir}/lcl/interfaces/gtk2
+ ${lcldir}/lcl/interfaces/qt
+ ${lcldir}/lcl/interfaces/win32
+ ${lcldir}/lcl/components/*
+ ${lcldir}/lcl/include
+ ${lcldir}/lcl
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -204,30 +205,42 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=6
- -l -Mobjfpc -Sh -Fcutf8
- -gl -O-
- -B
- -O2 -XX -CX -Xs
- -FUunits
+makeoptions=8
+ -l -Mobjfpc -Sh
+ -gl
  -ghl
-makeoptpurpose=6
+ -B
+ -O-
+ -O3 -XX -CX -Xs
+ -vi
+ -FUunits/
+makeoptpurpose=8
  
  
  
  
  
  
-compilerused=21
+ 
+ 
+compilerused=29
  ${COMPILER} (Default)
  Pascal 1
  Pascal 2
  Pascal 3
  Pascal 4
+ Pascal 5
+ Pascal 6
+ Pascal 7
+ Pascal 8
  C 1
  C 2
  C 3
  C 4
+ C 5
+ C 6
+ C 7
+ C 8
  Java 1
  Java 2
  Java 3
@@ -409,9 +422,9 @@ usercolorcomment=30
 formatmacronames=0
 formatmacrovalues=0
 settingsfile=
-settingseditor=0
-settingsdebugger=0
-settingsstorage=0
+settingseditor=1
+settingsdebugger=1
+settingsstorage=1
 settingsprojecttree=0
 settingsautoload=0
 settingsautosave=0
@@ -419,17 +432,27 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=6
+makeoptionson=8
  63
- 24
- 35
- 39
+ 2
+ 0
+ 2
+ 2
+ 61
  4095
- 4032
-compilerusedon=21
- 4083
- 4
- 8
+ 63
+compilerusedon=29
+ 4095
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -487,14 +510,18 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=04:14:21 27/02/2017
+project_date=15:21:42 26/03/2017
 project_comment=
 aftcommandon=0
-unitdirson=7
- 69631
- 69631
- 983040
+unitdirson=11
  987135
+ 987135
+ 987135
+ 987135
+ 987135
+ 987135
+ 0
+ 0
  987135
  987135
  987135
@@ -563,17 +590,17 @@ componenthints=1
 gridsizex=8
 gridsizey=8
 autoindent=1
-blockindent=1
+blockindent=4
 linenumberson=1
 rightmarginon=1
 rightmarginchars=80
 scrollheight=0
 tabstops=4
-spacetabs=0
+spacetabs=1
 showtabs=0
 tabindent=0
 editfontname=mseide_source
-editfontheight=0
+editfontheight=16
 editfontwidth=0
 editfontextraspace=0
 editfontcolor=-1879048183
@@ -584,7 +611,7 @@ editfontantialiased=1
 editmarkbrackets=1
 editmarkpairwords=1
 fpgdesigner=1
-backupfilecount=2
+backupfilecount=0
 encoding=1
 eolstyle=1
 trimtrailingwhitespace=0
@@ -606,11 +633,9 @@ beforeload=
 afterload=
 beforerun=
 sourcebase=
-sourcedirs=5
- ${FPGUIDIR}/src/gui/
- ${FPGUIDIR}/src/corelib/gdi/X/
- ${FPGUIDIR}/src/corelib/x11/
- ${FPGUIDIR}/src/corelib/
+sourcedirs=3
+ ${MSELIBDIR}kernel/$TARGETOSDIR/
+ ${MSELIBDIR}*/
  ./
 defines=0
 progparameters=
@@ -622,7 +647,7 @@ stoponexception=0
 valuehints=1
 activateonbreak=1
 raiseonbreak=1
-showconsole=1
+showconsole=0
 externalconsole=0
 settty=1
 gdbdownload=0
@@ -682,13 +707,7 @@ panels=1
  panel1
 units=
  (
- a=0,8244,6,Pascal Units
- c=1
-  (
-  file=uos.pas
-  kind=1
-  a=0,8196,0,uos.pas
-  )
+ a=0,8228,6,Pascal Units
  )
 cmodules=
  (
@@ -713,69 +732,23 @@ progparamhistory=0
 workdirparamhistory=0
 envvarons=0
 [edit]
-hintwidth=314
-hintheight=214
-finddtext=InputSetLevel
-findhistory=11
- InputSetLevel
- learray
- array
- uos_InputSet
- InputAddDSP
- uosLevelArray
- writeln
- uos_InputGetArrayLevel
- InputGetArrayLevel
- freeo
- DrawWaveForm
+hintwidth=0
+hintheight=0
+finddtext=
+findhistory=0
 findoptions=1
-editpos=9
+editpos=2
  0,-1073741823
- 0,-1073741823
- 0,625
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,64
 bookmarks0=0
 bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-sourcefiles=9
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/waveform_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_opus.pas
- ${PROJECTDIR}/define.inc
+sourcefiles=2
+ ${PROJECTDIR}/waveform.lpr
  ${PROJECTDIR}/main_wf.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uoslib.pas
- ${PROJECTDIR}/uosok.pas
-relpaths=9
- uos.pas
- waveform_fpGUI.pas
- uos_flat.pas
- uos_opus.pas
- define.inc
+relpaths=2
+ waveform.lpr
  main_wf.pas
- uos.pas
- uoslib.pas
- uosok.pas
-ismoduletexts=9
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=2
  0
  0
 modules=0
@@ -783,20 +756,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=9
- 0
- 1
- 2
- 6
- 7
- 8
- 5
- 3
- 4
 firsttab=0
-index=2
+index=1
 [layout]
-windowlayout=535
+windowlayout=583
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -822,8 +785,8 @@ windowlayout=535
  ny=0
  ncx=0
  ncy=0
- x=126
- y=45
+ x=125
+ y=46
  cx=1157
  cy=621
  rcx=0
@@ -851,7 +814,7 @@ windowlayout=535
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -926,10 +889,10 @@ windowlayout=535
  ny=0
  ncx=0
  ncy=0
- x=3
- y=24
- cx=1360
- cy=709
+ x=239
+ y=115
+ cx=678
+ cy=414
  rcx=0
  rcy=0
  [projecttreefo]
@@ -1180,26 +1143,24 @@ windowlayout=535
  width3=185
  sortdescend3=0
  [componentstorefo.storefiledialog]
- filenames=1
-  /home/fred/msegui/apps/ide/compstore/
+ filenames=0
  filecolwidth=0
  x=0
  y=0
  cx=0
  cy=0
- lastdir=/home/fred/msegui/apps/ide/compstore/
+ lastdir=
  filehistory=0
  filefilterindex=0
  filefilter=
  [componentstorefo.groupfiledialog]
- filenames=1
-  /home/fred/msegui/apps/ide/compstore/
+ filenames=0
  filecolwidth=0
  x=0
  y=0
  cx=0
  cy=0
- lastdir=/home/fred/msegui/apps/ide/compstore/
+ lastdir=
  filehistory=0
  filefilterindex=0
  filefilter=
@@ -1274,10 +1235,60 @@ windowlayout=535
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
- history=0
+ value=/home/fred/uos/examples/main_wf.pas
+ history=50
+  /home/fred/ideu/src/confideu.pas
+  /home/fred/ideu/src/ideusettings.pas
+  /home/fred/ideu/src/msewidgets.pas
+  /home/fred/strumpract/src/aboutform.pas
+  /home/fred/strumpract/src/main.pas
+  /home/fred/strumpract/src/config.pas
+  /home/fred/uos/examples/uoslib.pas
+  /home/fred/uos/examples/uos_libsndfile.pas
+  /home/fred/uos/examples/consoleplay.pas
+  /home/fred/uos/examples/uos.pas
+  /home/fred/uoslib/src/uos_mpg123.pas
+  /home/fred/uoslib/src/uos_libsndfile.pas
+  /home/fred/uoslib/src/uos_portaudio.pas
+  /home/fred/uoslib/examples/demos/java/ReadMe.txt
+  /home/fred/lib_namesh.inc
+  /home/fred/msewidgets.pas
+  /home/fred/uoslib/src/uoslib.pas
+  /home/fred/strumpract/src/define.inc
+  /home/fred/strumpract/src/uos.pas
+  /home/fred/mseconsts.pas
+  /home/fred/ideu/src/mseconsts.pas
+  /home/fred/msegui/lib/common/kernel/mseconsts.pas
+  /home/fred/uos/examples/multiplayer_fpGUI.pas
+  /home/fred/uos/examples/uos_dsp_utils.pas
+  /home/fred/uos/src/uos_flat.pas
+  /home/fred/uos/src/uos_mpg123.pas
+  /home/fred/uos/src/uos.pas
+  /home/fred/uos/src/uos_aac.pas
+  /home/fred/strumpract/src/strumpract.pas
+  /home/fred/uos/examples/SimplePlayer_MSE.pas
+  /home/fred/uos/examples/consolebpmdetect.pas
+  /home/fred/strumpract/src/songplayer2.pas
+  /home/fred/strumpract/src/drums.pas
+  /home/fred/strumpract/src/infos.pas
+  /home/fred/uos/src/uos_soundtouch.pas
+  /home/fred/uos/examples/uos_soundtouch.pas
+  /home/fred/uos/examples/consoleplaymemorybuffer.pas
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/strumpract/src/filelistform.pas
+  /home/fred/strumpract/src/songplayer.pas
+  /home/fred/strumpract/src/commander.pas
+  /home/fred/ideu/src/dialogfiles.pas
+  /home/fred/ideu/src/confmsegui.pas
+  /home/fred/ideu/src/conffpgui.pas
+  /home/fred/ideu/src/confdebugger.pas
+  /home/fred/ideu/src/confcompiler.pas
+  /home/fred/ideu/src/aboutform.pas
+  /home/fred/ideu_15_7_17/src/msedesigner.pas
+  /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
+  /home/fred/ideu/src/msedesigner.pas
  [debuggerfo.project_options]
- value=B
+ value=1
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1300,7 +1311,7 @@ windowlayout=535
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

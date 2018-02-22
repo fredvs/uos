@@ -11,7 +11,6 @@ uses
   Forms,
   main_wf { you can add units after this };
 
-{$R *.res}
 
 begin
   Application.Title := 'WaveForm';

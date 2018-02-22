@@ -126,11 +126,12 @@ install:
         <PackageName Value="adLCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="9">
       <Unit0>
         <Filename Value="waveform.ppr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
+        <TopLine Value="2"/>
         <CursorPos X="2" Y="7"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -141,24 +142,22 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="209"/>
-        <CursorPos X="27" Y="218"/>
+        <TopLine Value="269"/>
+        <CursorPos X="74" Y="284"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="uos.pas"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="3069"/>
-        <CursorPos X="2" Y="3087"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="8356"/>
+        <CursorPos X="16" Y="8365"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="uos_flat.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="13"/>
         <CursorPos X="3" Y="28"/>
         <UsageCount Value="19"/>
@@ -175,133 +174,157 @@ install:
       </Unit4>
       <Unit5>
         <Filename Value="simpleplayer_fpGUI.pas"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="353"/>
         <CursorPos X="2" Y="361"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="simpleplayer.ppr"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="60" Y="3"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="/usr/local/codetyphon/typhon/packager/registration/fcllaz.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="2"/>
+        <CursorPos X="3" Y="11"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="fpcct.cfg"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="135"/>
+        <CursorPos X="34" Y="156"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit8>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="uos.pas"/>
-        <Caret Line="1040" Column="22" TopLine="1029"/>
-      </Position1>
-      <Position2>
-        <Filename Value="uos.pas"/>
-        <Caret Line="1454" Column="53" TopLine="1443"/>
-      </Position2>
-      <Position3>
-        <Filename Value="uos.pas"/>
-        <Caret Line="1984" Column="57" TopLine="1974"/>
-      </Position3>
-      <Position4>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2060" Column="60" TopLine="2050"/>
-      </Position4>
-      <Position5>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2067" Column="60" TopLine="2057"/>
-      </Position5>
-      <Position6>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2125" Column="60" TopLine="2115"/>
-      </Position6>
-      <Position7>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2200" Column="59" TopLine="2190"/>
-      </Position7>
-      <Position8>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="1112" Column="45" TopLine="1107"/>
-      </Position8>
-      <Position9>
         <Filename Value="uos_flat.pas"/>
         <Caret Line="1110" Column="2" TopLine="1100"/>
-      </Position9>
-      <Position10>
+      </Position1>
+      <Position2>
         <Filename Value="uos_flat.pas"/>
         <Caret Line="397" Column="32" TopLine="391"/>
+      </Position2>
+      <Position3>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="355" Column="94" TopLine="173"/>
+      </Position3>
+      <Position4>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="79" Column="27" TopLine="68"/>
+      </Position4>
+      <Position5>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="81" Column="27" TopLine="68"/>
+      </Position5>
+      <Position6>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="1090" Column="10" TopLine="1086"/>
+      </Position6>
+      <Position7>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="51" Column="6" TopLine="36"/>
+      </Position7>
+      <Position8>
+        <Filename Value="uos.pas"/>
+        <Caret Line="3174" Column="62" TopLine="97"/>
+      </Position8>
+      <Position9>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="376" Column="30" TopLine="355"/>
+      </Position9>
+      <Position10>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="112" Column="32" TopLine="108"/>
       </Position10>
       <Position11>
         <Filename Value="main_wf.pas"/>
-        <Caret Line="355" Column="94" TopLine="173"/>
+        <Caret Line="175" Column="27" TopLine="167"/>
       </Position11>
       <Position12>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="79" Column="27" TopLine="68"/>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="397" Column="15" TopLine="361"/>
       </Position12>
       <Position13>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="81" Column="27" TopLine="68"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="71" Column="2" TopLine="59"/>
       </Position13>
       <Position14>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="1090" Column="10" TopLine="1086"/>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="246" Column="5" TopLine="227"/>
       </Position14>
       <Position15>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="51" Column="6" TopLine="36"/>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="216" Column="74" TopLine="194"/>
       </Position15>
       <Position16>
         <Filename Value="uos.pas"/>
-        <Caret Line="3174" Column="62" TopLine="97"/>
+        <Caret Line="6105" Column="26" TopLine="6075"/>
       </Position16>
       <Position17>
-        <Filename Value="main_wf.pas"/>
-        <Caret Line="376" Column="30" TopLine="355"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="717" Column="35" TopLine="701"/>
       </Position17>
       <Position18>
         <Filename Value="main_wf.pas"/>
-        <Caret Line="112" Column="32" TopLine="108"/>
+        <Caret Line="238" Column="32" TopLine="238"/>
       </Position18>
       <Position19>
-        <Filename Value="main_wf.pas"/>
-        <Caret Line="175" Column="27" TopLine="167"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="5927" Column="35" TopLine="5910"/>
       </Position19>
       <Position20>
-        <Filename Value="main_wf.pas"/>
-        <Caret Line="397" Column="15" TopLine="361"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="4264" Column="90" TopLine="4245"/>
       </Position20>
       <Position21>
         <Filename Value="uos.pas"/>
-        <Caret Line="71" Column="2" TopLine="59"/>
+        <Caret Line="3087" Column="2" TopLine="3069"/>
       </Position21>
       <Position22>
-        <Filename Value="main_wf.pas"/>
-        <Caret Line="246" Column="5" TopLine="227"/>
+        <Filename Value="uos_flat.pas"/>
+        <Caret Line="28" Column="3" TopLine="13"/>
       </Position22>
       <Position23>
         <Filename Value="main_wf.pas"/>
-        <Caret Line="216" Column="74" TopLine="194"/>
+        <Caret Line="409" TopLine="395"/>
       </Position23>
       <Position24>
-        <Filename Value="uos.pas"/>
-        <Caret Line="6105" Column="26" TopLine="6075"/>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="101" Column="80" TopLine="86"/>
       </Position24>
       <Position25>
         <Filename Value="uos.pas"/>
-        <Caret Line="717" Column="35" TopLine="701"/>
+        <Caret Line="8365" Column="16" TopLine="8356"/>
       </Position25>
       <Position26>
         <Filename Value="main_wf.pas"/>
-        <Caret Line="238" Column="32" TopLine="238"/>
+        <Caret Line="409" TopLine="395"/>
       </Position26>
       <Position27>
-        <Filename Value="uos.pas"/>
-        <Caret Line="5927" Column="35" TopLine="5910"/>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="284" Column="74" TopLine="121"/>
       </Position27>
       <Position28>
-        <Filename Value="uos.pas"/>
-        <Caret Line="4264" Column="90" TopLine="4245"/>
+        <Filename Value="waveform.ppr"/>
+        <Caret Line="7" Column="2" TopLine="2"/>
       </Position28>
       <Position29>
-        <Filename Value="uos.pas"/>
-        <Caret Line="3087" Column="2" TopLine="3069"/>
+        <Filename Value="main_wf.pas"/>
+        <Caret Line="284" Column="74" TopLine="269"/>
       </Position29>
       <Position30>
-        <Filename Value="uos_flat.pas"/>
-        <Caret Line="28" Column="3" TopLine="13"/>
+        <Filename Value="fpcct.cfg"/>
+        <Caret Line="156" Column="34" TopLine="135"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -316,6 +339,9 @@ install:
     </SearchPaths>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
+      <Optimizations>
+        <OptimizationLevel Value="2"/>
+      </Optimizations>
       <SmallerCode Value="True"/>
     </CodeGeneration>
     <Linking>
@@ -324,11 +350,6 @@ install:
         <UseExternalDbgSyms Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
     </Linking>
     <Other>
       <WriteFPCLogo Value="False"/>

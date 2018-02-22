@@ -127,11 +127,12 @@ install:
         <PackageName Value="adLCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="72">
+    <Units Count="74">
       <Unit0>
         <Filename Value="simpleplayer.ppr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="3"/>
+        <TopLine Value="6"/>
         <CursorPos Y="22"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -145,7 +146,6 @@ install:
         <CursorPos X="36"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="lazdyn_portaudio.pas"/>
@@ -270,8 +270,7 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="4810"/>
         <CursorPos X="19" Y="4817"/>
         <UsageCount Value="100"/>
@@ -473,7 +472,8 @@ install:
       </Unit55>
       <Unit56>
         <Filename Value="define.inc"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="3"/>
         <CursorPos X="3" Y="19"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -535,7 +535,7 @@ install:
       </Unit65>
       <Unit66>
         <Filename Value="uos_httpgetthread.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="18"/>
         <CursorPos X="14" Y="27"/>
         <UsageCount Value="14"/>
@@ -549,7 +549,7 @@ install:
       </Unit67>
       <Unit68>
         <Filename Value="uos_dsp_noiseremoval.pas"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="168"/>
         <CursorPos X="26" Y="177"/>
         <UsageCount Value="14"/>
@@ -575,127 +575,145 @@ install:
         <CursorPos X="5" Y="29"/>
         <UsageCount Value="10"/>
       </Unit71>
+      <Unit72>
+        <Filename Value="/usr/local/codetyphon/typhon/packager/registration/fcllaz.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="3"/>
+        <CursorPos X="3" Y="11"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit72>
+      <Unit73>
+        <Filename Value="fpcct.cfg"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="147"/>
+        <CursorPos X="45" Y="158"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit73>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="uos.pas"/>
-        <Caret Line="4531" Column="3" TopLine="4523"/>
+        <Caret Line="6" Column="151"/>
       </Position1>
       <Position2>
         <Filename Value="uos.pas"/>
-        <Caret Line="4435" Column="3" TopLine="4426"/>
+        <Caret Line="547" Column="38" TopLine="516"/>
       </Position2>
       <Position3>
         <Filename Value="uos.pas"/>
-        <Caret Line="4686" Column="69" TopLine="4669"/>
+        <Caret Line="549" Column="20" TopLine="517"/>
       </Position3>
       <Position4>
         <Filename Value="uos.pas"/>
-        <Caret Line="5908" Column="30" TopLine="5876"/>
+        <Caret Line="5897" Column="88" TopLine="5878"/>
       </Position4>
       <Position5>
         <Filename Value="uos.pas"/>
-        <Caret Line="6" Column="151"/>
+        <Caret Line="5918" Column="30" TopLine="5886"/>
       </Position5>
       <Position6>
         <Filename Value="uos.pas"/>
-        <Caret Line="547" Column="38" TopLine="516"/>
+        <Caret Line="4" Column="165"/>
       </Position6>
       <Position7>
         <Filename Value="uos.pas"/>
-        <Caret Line="549" Column="20" TopLine="517"/>
+        <Caret Line="541" Column="38" TopLine="517"/>
       </Position7>
       <Position8>
         <Filename Value="uos.pas"/>
-        <Caret Line="5897" Column="88" TopLine="5878"/>
+        <Caret Line="550" Column="20" TopLine="518"/>
       </Position8>
       <Position9>
         <Filename Value="uos.pas"/>
-        <Caret Line="5918" Column="30" TopLine="5886"/>
+        <Caret Line="5938" Column="4" TopLine="5899"/>
       </Position9>
       <Position10>
         <Filename Value="uos.pas"/>
-        <Caret Line="4" Column="165"/>
+        <Caret Line="1379" Column="19" TopLine="1362"/>
       </Position10>
       <Position11>
         <Filename Value="uos.pas"/>
-        <Caret Line="541" Column="38" TopLine="517"/>
+        <Caret Line="5934" Column="30" TopLine="5902"/>
       </Position11>
       <Position12>
-        <Filename Value="uos.pas"/>
-        <Caret Line="550" Column="20" TopLine="518"/>
+        <Filename Value="main_sp.pas"/>
+        <Caret Line="138" Column="96" TopLine="123"/>
       </Position12>
       <Position13>
         <Filename Value="uos.pas"/>
-        <Caret Line="5938" Column="4" TopLine="5899"/>
+        <Caret Line="13" Column="104"/>
       </Position13>
       <Position14>
         <Filename Value="uos.pas"/>
-        <Caret Line="1379" Column="19" TopLine="1362"/>
+        <Caret Line="559" Column="3" TopLine="545"/>
       </Position14>
       <Position15>
         <Filename Value="uos.pas"/>
-        <Caret Line="5934" Column="30" TopLine="5902"/>
+        <Caret Line="560" Column="30" TopLine="545"/>
       </Position15>
       <Position16>
-        <Filename Value="main_sp.pas"/>
-        <Caret Line="138" Column="96" TopLine="123"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="68" Column="110" TopLine="57"/>
       </Position16>
       <Position17>
         <Filename Value="uos.pas"/>
-        <Caret Line="13" Column="104"/>
+        <Caret Line="560" Column="30" TopLine="528"/>
       </Position17>
       <Position18>
         <Filename Value="uos.pas"/>
-        <Caret Line="559" Column="3" TopLine="545"/>
+        <Caret Line="6155" Column="23" TopLine="6142"/>
       </Position18>
       <Position19>
         <Filename Value="uos.pas"/>
-        <Caret Line="560" Column="30" TopLine="545"/>
+        <Caret Line="6232" Column="40" TopLine="6200"/>
       </Position19>
       <Position20>
-        <Filename Value="uos.pas"/>
-        <Caret Line="68" Column="110" TopLine="57"/>
+        <Filename Value="uos_httpgetthread.pas"/>
+        <Caret Line="16" Column="78"/>
       </Position20>
       <Position21>
-        <Filename Value="uos.pas"/>
-        <Caret Line="560" Column="30" TopLine="528"/>
+        <Filename Value="uos_httpgetthread.pas"/>
+        <Caret Line="27" Column="14" TopLine="18"/>
       </Position21>
       <Position22>
-        <Filename Value="uos.pas"/>
-        <Caret Line="6155" Column="23" TopLine="6142"/>
+        <Filename Value="uos_dsp_noiseremoval.pas"/>
+        <Caret Line="6" Column="9"/>
       </Position22>
       <Position23>
         <Filename Value="uos.pas"/>
-        <Caret Line="6232" Column="40" TopLine="6200"/>
+        <Caret Line="7339" Column="57" TopLine="7322"/>
       </Position23>
       <Position24>
-        <Filename Value="uos_httpgetthread.pas"/>
-        <Caret Line="16" Column="78"/>
+        <Filename Value="uos_dsp_noiseremoval.pas"/>
+        <Caret Line="146" Column="27" TopLine="137"/>
       </Position24>
       <Position25>
-        <Filename Value="uos_httpgetthread.pas"/>
-        <Caret Line="27" Column="14" TopLine="18"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="990" Column="58" TopLine="983"/>
       </Position25>
       <Position26>
-        <Filename Value="uos_dsp_noiseremoval.pas"/>
-        <Caret Line="6" Column="9"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="545" Column="25" TopLine="538"/>
       </Position26>
       <Position27>
         <Filename Value="uos.pas"/>
-        <Caret Line="7339" Column="57" TopLine="7322"/>
+        <Caret Line="4817" Column="19" TopLine="4810"/>
       </Position27>
       <Position28>
-        <Filename Value="uos_dsp_noiseremoval.pas"/>
-        <Caret Line="146" Column="27" TopLine="137"/>
+        <Filename Value="/usr/local/codetyphon/typhon/packager/registration/fcllaz.pas"/>
+        <Caret Line="11" Column="3" TopLine="2"/>
       </Position28>
       <Position29>
-        <Filename Value="uos.pas"/>
-        <Caret Line="990" Column="58" TopLine="983"/>
+        <Filename Value="fpcct.cfg"/>
+        <Caret Line="158" Column="45" TopLine="147"/>
       </Position29>
       <Position30>
-        <Filename Value="uos.pas"/>
-        <Caret Line="545" Column="25" TopLine="538"/>
+        <Filename Value="/usr/local/codetyphon/typhon/packager/registration/fcllaz.pas"/>
+        <Caret Line="11" Column="3" TopLine="3"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -718,11 +736,6 @@ install:
         <DebugInfoType Value="dsDwarf3"/>
         <UseExternalDbgSyms Value="True"/>
       </Debugging>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
     </Linking>
     <Other>
       <WriteFPCLogo Value="False"/>
