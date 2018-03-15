@@ -11,6 +11,7 @@ uses
   Forms,
   main_wf { you can add units after this };
 
+
 begin
   Application.Title := 'WaveForm';
   Application.Initialize;

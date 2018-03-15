@@ -119,7 +119,7 @@ options=114
  x=0
  y=120
  xprop=1
- yprop=0.24070450097847
+ yprop=0.23976608187135
  [projectoptionsfo.macrogrid]
  propcolwidthref=481
  sortdescend0=0
@@ -168,8 +168,8 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=278
- y=87
+ x=479
+ y=24
  cx=759
  cy=568
 settings=8
@@ -737,18 +737,23 @@ hintheight=0
 finddtext=
 findhistory=0
 findoptions=1
-editpos=2
+editpos=3
  0,-1073741823
- 0,64
+ 0,-1073741823
+ 0,162
 bookmarks0=0
 bookmarks1=0
-sourcefiles=2
+bookmarks2=0
+sourcefiles=3
  ${PROJECTDIR}/waveform.lpr
  ${PROJECTDIR}/main_wf.pas
-relpaths=2
+ ${PROJECTDIR}/fpc_ct.cfg
+relpaths=3
  waveform.lpr
  main_wf.pas
-ismoduletexts=2
+ fpc_ct.cfg
+ismoduletexts=3
+ 0
  0
  0
 modules=0
@@ -757,7 +762,7 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=583
  [mainfo.basedock]
@@ -1235,8 +1240,9 @@ windowlayout=583
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/main_wf.pas
+ value=/home/fred/uos/examples/fpc_ct.cfg
  history=50
+  /home/fred/uos/examples/main_wf.pas
   /home/fred/ideu/src/confideu.pas
   /home/fred/ideu/src/ideusettings.pas
   /home/fred/ideu/src/msewidgets.pas
@@ -1286,7 +1292,6 @@ windowlayout=583
   /home/fred/ideu/src/aboutform.pas
   /home/fred/ideu_15_7_17/src/msedesigner.pas
   /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
-  /home/fred/ideu/src/msedesigner.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]

@@ -147,7 +147,7 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="440"/>
+        <TopLine Value="435"/>
         <CursorPos X="12" Y="458"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -393,9 +393,6 @@ install:
     </Linking>
     <Other>
       <WriteFPCLogo Value="False"/>
-      <ConfigFile>
-        <ConfigFilePath Value="fpcct.cfg"/>
-      </ConfigFile>
     </Other>
   </CompilerOptions>
   <Debugging>

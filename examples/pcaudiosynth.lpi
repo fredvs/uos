@@ -9,7 +9,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="consolespectrum"/>
+      <Title Value="pcaudiosynth"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -32,7 +32,7 @@
     </RunParams>
     <Units Count="1">
       <Unit0>
-        <Filename Value="consolespectrum.pas"/>
+        <Filename Value="pcaudiosynth.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
     </Units>
@@ -40,7 +40,7 @@
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="consolespectrum"/>
+      <Filename Value="pcaudiosynth"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

@@ -154,9 +154,10 @@ procedure uos_GetInfoDevice();
 function uos_GetInfoDeviceStr() : Pansichar ;
 {$endif}
 
-function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
+function uos_LoadLib(PortAudioFileName, PCAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
 // load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...  
-// PortAudio => needed for dealing with audio-device
+// PortAudio => needed for dealing with audio-device input/output
+// PCAudio => needed for dealing with audio-device output (alternative to Portaudio)
 // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
 // Mpg123 => needed for dealing with mp* audio-files
 // Mp4ff and Faad => needed for dealing with acc, m4a audio-files
@@ -166,6 +167,10 @@ function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
 // If some libraries are not needed, replace it by "nil", 
  
 // for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName)
+
+function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
+// for compatibility with previous uos version
+
   
 procedure uos_unloadlib();
 // Unload all libraries...
@@ -173,7 +178,7 @@ procedure uos_free();
 // Free uos;
 // To use when program terminate. Do not forget to call it before close application...
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
+procedure uos_unloadlibCust(PortAudio, Pcaudio, SndFile, Mpg123, AAC, opus: boolean);
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
@@ -198,23 +203,31 @@ function uos_CreatePlayer(PlayerIndex: cint32; AParent: TObject) : boolean;
 function uos_CreatePlayer(PlayerIndex: cint32): boolean;
 {$endif}
 
-{$IF DEFINED(portaudio)}
+{$IF DEFINED(portaudio) or DEFINED(pcaudio)}
 function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
 
 // Add a Output into Device Output with custom parameters
-function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32 ): cint32;
-// Add a Output into Device Output with default parameters
-// PlayerIndex : Index of a existing Player
+ function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+   FramesCount: cint32 ; ChunkCount: cint32 ; TypeLibrary : cint8): cint32;
+// Add a Output into Device Output
 // Device ( -1 is default device )
-// Latency  ( -1 is latency suggested ) )
+// Latency  ( -1 is latency suggested )
 // SampleRate : delault : -1 (44100)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 65536)
 // ChunkCount : default : -1 (= 512)
-//  result : Output Index in array  , -1 = error
-// example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1, -1, 0,-1,-1);
+// TypeLibrary : default : -1 (default = Portaudio) (Portaudio = 0, PCaudio = 1)
+//  result :  Output Index in array  -1 = error
+// example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
+
+
+ function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+   FramesCount: cint32 ; ChunkCount: cint32): cint32;
+// for compatibility with earlier version of uos
+  
  {$endif}
  
 function uos_AddFromFile(PlayerIndex: cint32; Filename: PChar): cint32;
@@ -782,6 +795,7 @@ var
   uosDeviceCount: cint32;
   uosDefaultDeviceIn: cint32;
   uosDefaultDeviceOut: cint32;
+  //firstload : boolean = true;
  
 implementation
 
@@ -1328,27 +1342,30 @@ function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: 
 end;
   {$endif}
 
-{$IF DEFINED(portaudio)}
+{$IF DEFINED(portaudio) or DEFINED(pcaudio)}
  function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32 ): cint32;
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+   FramesCount: cint32 ; ChunkCount: cint32 ; TypeLibrary : cint8): cint32;
 // Add a Output into Device Output with custom parameters
 begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
-  Result :=  uosPlayers[PlayerIndex].AddIntoDevOut(Device, Latency, SampleRate, Channels, SampleFormat , FramesCount, ChunkCount);
+  Result :=  uosPlayers[PlayerIndex].AddIntoDevOut(Device, Latency, SampleRate, Channels, SampleFormat , FramesCount, ChunkCount, TypeLibrary);
 end;
-// PlayerIndex : Index of a existing Player
-// Device ( -1 is default device )
-// Latency  ( -1 is latency suggested ) )
-// SampleRate : delault : -1 (44100)
-// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-// FramesCount : default : -1 (= 65536)
-// ChunkCount : default : -1 (= 512)
-//  result : -1 nothing created, otherwise Output Index in array
-// example : OutputIndex1 := uos_AddIntoDevOut(0,-1,-1,-1,-1,0,-1,-1);
+
+ function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+   FramesCount: cint32 ; ChunkCount: cint32 ): cint32;
+// Add a Output into Device Output with custom parameters
+begin
+  result := -1 ;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
+  Result :=  uosPlayers[PlayerIndex].AddIntoDevOut(Device, Latency, SampleRate, Channels, SampleFormat , FramesCount, ChunkCount, -1);
+end;
 
 function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
 // Add a Output into Device Output with default parameters
@@ -1357,7 +1374,7 @@ begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
-  Result :=  uosPlayers[PlayerIndex].AddIntoDevOut(-1, -1, -1, -1, -1 ,-1, -1);
+  Result :=  uosPlayers[PlayerIndex].AddIntoDevOut(-1, -1, -1, -1, -1 ,-1, -1, -1);
 end;
 {$endif}
 
@@ -2019,9 +2036,14 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
   uos.uos_File2File(FilenameIN, FilenameOUT, SampleFormat, typeout);
   end;
   
+function uos_loadlib(PortAudioFileName, PcaudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
+  begin
+result := uos.uos_loadlib(PortAudioFileName, PcaudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName)  ;
+  end;  
+  
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   begin
-result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName)  ;
+result := uos.uos_loadlib(PortAudioFileName, nil,  SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName)  ;
   end;
   
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
@@ -2081,10 +2103,10 @@ procedure uos_unloadlib() ;
  uos.uos_unloadlib() ;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus : boolean);
+procedure uos_unloadlibCust(PortAudio, PcAudio, SndFile, Mpg123, AAC, opus : boolean);
 // Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 begin
-uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus) ;
+uos.uos_unloadlibcust(PortAudio, PcAudio, SndFile, Mpg123, AAC, opus) ;
 uosLoadResult:= uos.uosLoadResult;
 end;
 
@@ -2121,7 +2143,6 @@ uosDefaultDeviceOut:= uos.uosDefaultDeviceOut;
 end;
 {$endif}
 
-
 function uos_CreatePlayer(PlayerIndex : cint32): boolean;
 // Create the player , PlayerIndex1 : from 0 to what your computer can do !
 // If PlayerIndex exists already, it will be overwriten...
@@ -2130,6 +2151,8 @@ x : cint32;
 nt : integer = 200;
 begin
 result := false;
+
+uos_stop(PlayerIndex); // cannot hurt !
 
 if PlayerIndex >= 0 then 
 begin

@@ -1110,7 +1110,7 @@ order=15
 firsttab=0
 index=0
 [layout]
-windowlayout=593
+windowlayout=597
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1146,7 +1146,7 @@ windowlayout=593
   basedock,0,0,1147,604
  focusedchild=0
  wsize=0
- active=1
+ active=0
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1164,7 +1164,7 @@ windowlayout=593
  rcx=0
  rcy=0
  wsize=0
- active=0
+ active=1
  visible=1
  [threadsfo]
  splitdir=0
@@ -1187,7 +1187,7 @@ windowlayout=593
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1394,7 +1394,11 @@ windowlayout=593
  visible=0
  [symbolfo.grid]
  propcolwidthref=207
- values0=14
+ values0=18
+  
+  
+  
+  
   
   
   
@@ -1672,7 +1676,7 @@ windowlayout=593
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0

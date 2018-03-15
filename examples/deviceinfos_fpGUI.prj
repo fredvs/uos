@@ -789,7 +789,7 @@ findhistory=14
  sort
  uses
 findoptions=1
-editpos=10
+editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -800,6 +800,7 @@ editpos=10
  0,-1073741823
  0,-1073741823
  25,336
+ 0,342
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -810,7 +811,8 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 bookmarks9=0
-sourcefiles=10
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -820,8 +822,9 @@ sourcefiles=10
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplayloop.pas
- ${PROJECTDIR}/uos_portaudio.pas
-relpaths=10
+ /home/fred/uos/examples/uos_portaudio.pas
+ /home/fred/uos/examples/uos_mpg123.pas
+relpaths=11
  deviceinfos_fpGUI.pas
  uos.pas
  uos_flat.pas
@@ -832,7 +835,9 @@ relpaths=10
  uos.pas
  consoleplayloop.pas
  uos_portaudio.pas
-ismoduletexts=10
+ uos_mpg123.pas
+ismoduletexts=11
+ 0
  0
  0
  0
@@ -848,21 +853,22 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=10
+order=11
  0
  8
  5
  1
  9
+ 10
  2
  7
  3
  6
  4
 firsttab=0
-index=4
+index=5
 [layout]
-windowlayout=543
+windowlayout=547
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -939,7 +945,7 @@ windowlayout=543
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -985,7 +991,7 @@ windowlayout=543
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1146,7 +1152,11 @@ windowlayout=543
  visible=0
  [symbolfo.grid]
  propcolwidthref=207
- values0=14
+ values0=18
+  
+  
+  
+  
   
   
   
@@ -1183,7 +1193,7 @@ windowlayout=543
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=111
+ propcolwidthref=121
  values0=2
   -1
   -1
@@ -1348,7 +1358,7 @@ windowlayout=543
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_portaudio.pas
+ value=/home/fred/uos/examples/uos_mpg123.pas
  history=0
  [debuggerfo.project_options]
  value=1
@@ -1374,7 +1384,7 @@ windowlayout=543
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

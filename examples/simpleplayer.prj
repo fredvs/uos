@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpleplayer.prj
-findinfiledialog=42
+findinfiledialog=59
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,30 +29,47 @@ findinfiledialog=42
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=1
+ value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
- value="*.pas" "*.pp" "*.inc"
- history=1
+ value="*.pas" "*.pp" "*.inc" "*.*"
+ history=2
+  "*.pas" "*.pp" "*.inc" "*.*"
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/graemeg/devel/
+  /home/fred/espeak-ng-master/
  filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=1
+ filehistory=4
+  /home/fred/espeak-ng-master/
+  /home/fred/espeak-1.48.04-source/
+  /usr/local/codetyphon/
   /home/graemeg/devel/
  filefilterindex=0
- filefilter="*.pas" "*.pp" "*.inc"
+ filefilter="*.pas" "*.pp" "*.inc" "*.*"
  [findinfileadialogfo.findtext]
- value=uos_AddIntoDevOut
- history=3
+ value=application_name
+ history=16
+  application_name
+  create_audio_device_object
+  option_device
+  loadlib
+  loadlibrary
+  portaudio
+  if (out_samplerate != 0)
+  out_samplerate
+  Jonathan Duddington
+  pcaudiolib
+  windres
+  resbin
+  fpcres
   uos_AddIntoDevOut
   lapAutoAdjustForDPI
   
@@ -62,6 +79,15 @@ findinfiledialog=42
  y=281
  cx=341
  cy=276
+finddialog=8
+ [finddialogfo.selectedonly]
+ value=0
+ [finddialogfo]
+ stackedunder=
+ x=319
+ y=205
+ cx=312
+ cy=114
 options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -173,8 +199,8 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=445
- y=114
+ x=341
+ y=68
  cx=759
  cy=568
 settings=8
@@ -436,21 +462,21 @@ moduletypes=0
 modulefiles=0
 befcommandon=0
 makeoptionson=8
- 63
+ 127
  2
  0
- 7
+ 71
  2
  61
  4095
- 63
+ 127
 compilerusedon=29
- 4080
+ 4016
  15
  0
  0
  0
- 0
+ 64
  0
  0
  0
@@ -521,7 +547,7 @@ unitdirson=9
  987135
  987135
  987135
- 987104
+ 987008
  987079
  987135
  987135
@@ -735,67 +761,44 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=
-findhistory=0
+finddtext=application_name
+findhistory=7
+ application_name
+ option_device
+ HAVE_PCAUDIOLIB_AUDIO_H
+ init
+ pa_
+ PCAUDIOLIB
+ my_audio
 findoptions=1
-editpos=12
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,12
+editpos=6
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-sourcefiles=12
+sourcefiles=6
  ${PROJECTDIR}/simpleplayer.lpr
  ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/simpleplayer.lpr
  ${PROJECTDIR}/simpleplayer.lpr
  /home/fred/msegui/lib/common/kernel/msetypes.pas
  ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/consoleplaymemorybuffer.pas
- ${PROJECTDIR}/consoleplay.pas
- ${PROJECTDIR}/main_mp.pas
- ${PROJECTDIR}/uoslib.pas
- ${PROJECTDIR}/simplewebserver_fpGUI.pas
- ${PROJECTDIR}/simplewebplayer_fpGUI.pas
-relpaths=12
+ ${PROJECTDIR}/main_sp.pas
+relpaths=6
  simpleplayer.lpr
  main_sp.pas
  simpleplayer.lpr
- simpleplayer.lpr
- ../msegui/lib/common/kernel/msetypes.pas
+ msegui/lib/common/kernel/msetypes.pas
  main_sp.pas
- consoleplaymemorybuffer.pas
- consoleplay.pas
- main_mp.pas
- uoslib.pas
- simplewebserver_fpGUI.pas
- simplewebplayer_fpGUI.pas
-ismoduletexts=12
- 0
- 0
- 0
- 0
- 0
- 0
+ main_sp.pas
+ismoduletexts=6
  0
  0
  0
@@ -807,23 +810,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=12
- 0
- 1
- 3
- 4
- 5
- 6
- 7
- 8
- 9
- 10
- 11
- 2
-firsttab=3
-index=3
+firsttab=0
+index=5
 [layout]
-windowlayout=533
+windowlayout=587
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -836,8 +826,8 @@ windowlayout=533
  ncy=0
  x=0
  y=0
- cx=1147
- cy=604
+ cx=1356
+ cy=784
  rcx=0
  rcy=0
  [mainfo]
@@ -856,9 +846,9 @@ windowlayout=533
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1147,604
+  basedock,0,0,1356,784
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -900,7 +890,7 @@ windowlayout=533
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -953,9 +943,9 @@ windowlayout=533
  ny=0
  ncx=0
  ncy=0
- x=239
- y=114
- cx=678
+ x=240
+ y=111
+ cx=948
  cy=414
  rcx=0
  rcy=0
@@ -972,7 +962,7 @@ windowlayout=533
  x=0
  y=0
  cx=205
- cy=455
+ cy=450
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1107,7 +1097,11 @@ windowlayout=533
  visible=0
  [symbolfo.grid]
  propcolwidthref=207
- values0=14
+ values0=18
+  
+  
+  
+  
   
   
   
@@ -1173,9 +1167,9 @@ windowlayout=533
  ncx=0
  ncy=0
  x=0
- y=512
- cx=1147
- cy=92
+ y=523
+ cx=1356
+ cy=261
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1272,8 +1266,8 @@ windowlayout=533
  ncy=0
  x=0
  y=0
- cx=1147
- cy=51
+ cx=1356
+ cy=67
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1284,12 +1278,12 @@ windowlayout=533
  mdistate=0
  nx=0
  ny=0
- ncx=1147
- ncy=54
+ ncx=1356
+ ncy=62
  x=0
  y=0
- cx=1147
- cy=54
+ cx=1356
+ cy=70
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1299,8 +1293,58 @@ windowlayout=533
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/msegui/lib/common/kernel/msetypes.pas
- history=0
+ value=/home/fred/uos/examples/main_sp.pas
+ history=50
+  /home/fred/uos/examples/fpc_ct.cfg
+  /home/fred/uoslibCT/src/fpcct_android.cfg
+  /home/fred/uos/examples/main_wf.pas
+  /home/fred/ideu/src/confideu.pas
+  /home/fred/ideu/src/ideusettings.pas
+  /home/fred/ideu/src/msewidgets.pas
+  /home/fred/strumpract/src/aboutform.pas
+  /home/fred/strumpract/src/main.pas
+  /home/fred/strumpract/src/config.pas
+  /home/fred/uos/examples/uoslib.pas
+  /home/fred/uos/examples/uos_libsndfile.pas
+  /home/fred/uos/examples/consoleplay.pas
+  /home/fred/uos/examples/uos.pas
+  /home/fred/uoslib/src/uos_mpg123.pas
+  /home/fred/uoslib/src/uos_libsndfile.pas
+  /home/fred/uoslib/src/uos_portaudio.pas
+  /home/fred/uoslib/examples/demos/java/ReadMe.txt
+  /home/fred/lib_namesh.inc
+  /home/fred/msewidgets.pas
+  /home/fred/uoslib/src/uoslib.pas
+  /home/fred/strumpract/src/define.inc
+  /home/fred/strumpract/src/uos.pas
+  /home/fred/mseconsts.pas
+  /home/fred/ideu/src/mseconsts.pas
+  /home/fred/msegui/lib/common/kernel/mseconsts.pas
+  /home/fred/uos/examples/multiplayer_fpGUI.pas
+  /home/fred/uos/examples/uos_dsp_utils.pas
+  /home/fred/uos/src/uos_flat.pas
+  /home/fred/uos/src/uos_mpg123.pas
+  /home/fred/uos/src/uos.pas
+  /home/fred/uos/src/uos_aac.pas
+  /home/fred/strumpract/src/strumpract.pas
+  /home/fred/uos/examples/SimplePlayer_MSE.pas
+  /home/fred/uos/examples/consolebpmdetect.pas
+  /home/fred/strumpract/src/songplayer2.pas
+  /home/fred/strumpract/src/drums.pas
+  /home/fred/strumpract/src/infos.pas
+  /home/fred/uos/src/uos_soundtouch.pas
+  /home/fred/uos/examples/uos_soundtouch.pas
+  /home/fred/uos/examples/consoleplaymemorybuffer.pas
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/strumpract/src/filelistform.pas
+  /home/fred/strumpract/src/songplayer.pas
+  /home/fred/strumpract/src/commander.pas
+  /home/fred/ideu/src/dialogfiles.pas
+  /home/fred/ideu/src/confmsegui.pas
+  /home/fred/ideu/src/conffpgui.pas
+  /home/fred/ideu/src/confdebugger.pas
+  /home/fred/ideu/src/confcompiler.pas
+  /home/fred/ideu/src/aboutform.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1317,8 +1361,8 @@ windowlayout=533
  ncy=0
  x=208
  y=0
- cx=939
- cy=455
+ cx=1148
+ cy=450
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1352,9 +1396,9 @@ windowlayout=533
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1147
- cy=455
+ y=70
+ cx=1356
+ cy=450
  rcx=0
  rcy=0
 [targetconsole]

@@ -8,6 +8,10 @@ Here are the open source libraries used by uos:
    Copyright (c) Ross Bencina and Phil Burk
    http://www.portaudio.com/
 
+=> PCAudio Cross-Platform Audio API.
+   Copyright (c) Reece H. Dunn
+   https://github.com/espeak-ng/pcaudiolib
+
 => SndFile audio processing library.
    Copyright (c) Erik de Castro Lopo <erikd@mega-nerd.com>
    http://www.mega-nerd.com/libsndfile/
