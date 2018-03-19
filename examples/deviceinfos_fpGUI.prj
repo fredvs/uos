@@ -19,41 +19,51 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/deviceinfos_fpGUI.prj
-findinfiledialog=34
+findinfiledialog=44
  [findinfileadialogfo.subdirs]
+ value=1
+ [findinfileadialogfo.incurrentfile]
  value=0
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
+ value=0
+ [findinfileadialogfo.inprojectdir]
  value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
  value=1
  [findinfileadialogfo.mask]
- value="*.pas" "*.pp" "*.inc"
- history=1
+ value="*.pas" "*.pp" "*.inc" "*.c" "*.h"
+ history=2
+  "*.pas" "*.pp" "*.inc" "*.c" "*.h"
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
- filenames=0
- filecolwidth=0
+ filenames=1
+  /home/fred/alsa-lib-master/
+ filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
+ filehistory=1
+  /home/fred/alsa-lib-master/
  filefilterindex=0
- filefilter=
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=
- history=1
+ value=SNDRV_PCM_IOCTL_DROP
+ history=4
+  SNDRV_PCM_IOCTL_DROP
+  fast_ops
+  snd_pcm_drop
   
  [findinfileadialogfo]
  stackedunder=
  x=386
  y=189
- cx=339
- cy=251
+ cx=361
+ cy=270
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -772,8 +782,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=devcount
-findhistory=14
+finddtext=snd_pcm_hw_drop
+findhistory=18
+ snd_pcm_hw_drop
+ snd_pcm_hw_fast_op
+ snd_pcm_drop
+ audio_object_flush
  devcount
  .create
  unloadlib
@@ -789,7 +803,7 @@ findhistory=14
  sort
  uses
 findoptions=1
-editpos=11
+editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -799,8 +813,12 @@ editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 25,336
- 0,342
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,475
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -812,7 +830,11 @@ bookmarks7=0
 bookmarks8=0
 bookmarks9=0
 bookmarks10=0
-sourcefiles=11
+bookmarks11=0
+bookmarks12=0
+bookmarks13=0
+bookmarks14=0
+sourcefiles=15
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -822,9 +844,13 @@ sourcefiles=11
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplayloop.pas
- /home/fred/uos/examples/uos_portaudio.pas
- /home/fred/uos/examples/uos_mpg123.pas
-relpaths=11
+ ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+ /home/fred/alsa-lib-master/src/pcm/pcm.c
+ /home/fred/alsa-lib-master/src/pcm/pcm_hw.c
+ /home/fred/alsa-lib-master/include/sound/asound.h
+ /home/fred/alsa-lib-master/src/pcm/pcm_shm.c
+relpaths=15
  deviceinfos_fpGUI.pas
  uos.pas
  uos_flat.pas
@@ -836,7 +862,15 @@ relpaths=11
  consoleplayloop.pas
  uos_portaudio.pas
  uos_mpg123.pas
-ismoduletexts=11
+ alsa-lib-master/src/pcm/pcm.c
+ alsa-lib-master/src/pcm/pcm_hw.c
+ alsa-lib-master/include/sound/asound.h
+ ../alsa-lib-master/src/pcm/pcm_shm.c
+ismoduletexts=15
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -853,7 +887,7 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=11
+order=15
  0
  8
  5
@@ -862,11 +896,15 @@ order=11
  10
  2
  7
+ 11
+ 12
+ 13
+ 14
  3
  6
  4
-firsttab=0
-index=5
+firsttab=3
+index=11
 [layout]
 windowlayout=547
  [mainfo.basedock]
@@ -991,15 +1029,15 @@ windowlayout=547
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=239
- y=115
+ x=604
+ y=171
  cx=678
  cy=414
  rcx=0
@@ -1356,9 +1394,9 @@ windowlayout=547
  [debuggerfo.edit_compilernum]
  value=0
  [debuggerfo.edit_compiler]
- value=Pascal
+ value=C
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_mpg123.pas
+ value=/home/fred/alsa-lib-master/src/pcm/pcm_shm.c
  history=0
  [debuggerfo.project_options]
  value=1
@@ -1384,7 +1422,7 @@ windowlayout=547
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

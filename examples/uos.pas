@@ -2816,8 +2816,6 @@ var
   SetLength(BufferplugFL, 0);
   SetLength(BufferplugFLTMP, 0);
   
- 
-  
   {$IF DEFINED(debug)}
   writeln('Length(BufferplugFL) = '
   + inttostr(Length(BufferplugFL))); 
@@ -2828,14 +2826,14 @@ var
   {$endif} 
 
   SetLength(BufferplugFLTMP,(Length(Bufferin)));
-  
+{  
   x2 := 0 ;
 while x2 < Length(BufferplugFLTMP) do 
 begin
 BufferplugFLTMP[x2] := 0.0 ;
 inc(x2);
 end;
-  
+}  
   {$IF DEFINED(debug)}
   writeln('2_Length(BufferplugFLTMP) = '
   + inttostr(Length(BufferplugFLTMP))); 
@@ -2858,8 +2856,8 @@ end;
   writeln('SetLength(BufferplugFL) = '  + inttostr(length(BufferplugFL) + trunc(numoutbuf * inputData.Channels))); 
   {$endif}
   
-//  SetLength(BufferplugFL, length(BufferplugFL) + trunc(numoutbuf * inputData.Channels));
-  SetLength(BufferplugFL, length(BufferplugFL) + trunc(numoutbuf * 2));
+  SetLength(BufferplugFL, length(BufferplugFL) + trunc(numoutbuf * inputData.Channels));
+  // works only with 2 channels.
   
   x2 := Length(BufferplugFL) - (numoutbuf * inputData.Channels);
 
