@@ -4658,7 +4658,7 @@ begin
 //  result :  Output Index in array  -1 = error
 // example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
 var
-  x, x2, err: cint32;
+  x, x2, x3, err: cint32;
   devname : pchar;
 
 begin
@@ -4769,26 +4769,54 @@ end;
  {$IF DEFINED(pcaudio)} 
   if (TypeLibrary = 1) then
   begin
-   StreamOut[x].Data.HandleSt := create_audio_device_object(devname, 'uos', 'United Open-libraries of Sound');
+  x3 := 0 ;
+ 
+  err := -1;
+ 
+  StreamOut[x].Data.HandleSt := create_audio_device_object(devname, 'Powered by uos', 'United Open-libraries of Sound');
+  
     case StreamOut[x].Data.SampleFormat of
-  2: audio_object_open(StreamOut[x].Data.HandleSt, AUDIO_OBJECT_FORMAT_S16LE, StreamOut[x].Data.SampleRate,StreamOut[x].Data.channels);
-  1: audio_object_open(StreamOut[x].Data.HandleSt, AUDIO_OBJECT_FORMAT_S32LE, StreamOut[x].Data.SampleRate,StreamOut[x].Data.channels);
-  0: audio_object_open(StreamOut[x].Data.HandleSt, AUDIO_OBJECT_FORMAT_FLOAT32LE, StreamOut[x].Data.SampleRate,StreamOut[x].Data.channels);
+  2: while x3 < 20 do  
+     if  audio_object_open(StreamOut[x].Data.HandleSt, AUDIO_OBJECT_FORMAT_S16LE,
+     StreamOut[x].Data.SampleRate,StreamOut[x].Data.channels) = 0 then
+     begin
+     x3 := 20;
+     err := 0;
+     end else
+     begin
+      inc(x3);
+      sleep(150);
+      end;
+   1: while x3 < 20 do 
+     if audio_object_open(StreamOut[x].Data.HandleSt, AUDIO_OBJECT_FORMAT_S32LE,
+      StreamOut[x].Data.SampleRate,StreamOut[x].Data.channels) = 0 then begin
+     x3 := 20;
+     err := 0;
+     end else begin
+      inc(x3);
+      sleep(150);
+      end;
+  0: while x3 < 20 do 
+     if audio_object_open(StreamOut[x].Data.HandleSt, AUDIO_OBJECT_FORMAT_FLOAT32LE,
+      StreamOut[x].Data.SampleRate,StreamOut[x].Data.channels)= 0 then begin
+     x3 := 20;
+     err := 0;
+     end else begin
+      inc(x3);
+      sleep(150);
+      end;
   end;
-  err := 0;
   end;
   {$endif}
 
   StreamOut[x].LoopProc := nil;
-  if err <> 0 then
+  if err <> 0 then Result := -1
   else
   begin
   StreamOut[x].Data.Enabled := True;
   Result := x;
   end;
 end;
-
-
 
  function Tuos_Player.AddIntoDevOut(Device: cint32; Latency: CDouble;
   SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;

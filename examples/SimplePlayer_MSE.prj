@@ -832,7 +832,7 @@ path=3
  /home/fred/uos/examples/uos.pas
 line=3
  2887
- 6103
+ 6131
  4751
 address=3
  6873038
@@ -905,7 +905,7 @@ findhistory=20
  createpla
 findoptions=1
 editpos=12
- 13,2798
+ 0,2844
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -930,7 +930,7 @@ bookmarks9=0
 bookmarks10=0
 bookmarks11=0
 sourcefiles=12
- /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_soundtouch.pas
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_opusfile.pas
@@ -1048,7 +1048,7 @@ windowlayout=558
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1536,7 +1536,7 @@ windowlayout=558
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0

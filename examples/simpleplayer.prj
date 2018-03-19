@@ -240,9 +240,9 @@ makeoptions=8
  -ghl
  -B
  -O-
- -O3 -XX -CX -Xs
+ -O2 -XX -CX -Xs
  -vi
- -FUunits/
+ -FUunits
 makeoptpurpose=8
  
  
@@ -469,7 +469,7 @@ makeoptionson=8
  2
  61
  4095
- 127
+ 4095
 compilerusedon=29
  4016
  15
@@ -777,7 +777,7 @@ editpos=6
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
+ 63,10
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -813,7 +813,7 @@ nomenumodules=0
 firsttab=0
 index=5
 [layout]
-windowlayout=587
+windowlayout=537
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -826,8 +826,8 @@ windowlayout=587
  ncy=0
  x=0
  y=0
- cx=1356
- cy=784
+ cx=1147
+ cy=604
  rcx=0
  rcy=0
  [mainfo]
@@ -840,15 +840,15 @@ windowlayout=587
  ncx=0
  ncy=0
  x=125
- y=47
+ y=46
  cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,784
+  basedock,0,0,1147,604
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -890,7 +890,7 @@ windowlayout=587
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -943,9 +943,9 @@ windowlayout=587
  ny=0
  ncx=0
  ncy=0
- x=240
- y=111
- cx=948
+ x=239
+ y=115
+ cx=678
  cy=414
  rcx=0
  rcy=0
@@ -962,7 +962,7 @@ windowlayout=587
  x=0
  y=0
  cx=205
- cy=450
+ cy=455
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1167,9 +1167,9 @@ windowlayout=587
  ncx=0
  ncy=0
  x=0
- y=523
- cx=1356
- cy=261
+ y=512
+ cx=1147
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1266,8 +1266,8 @@ windowlayout=587
  ncy=0
  x=0
  y=0
- cx=1356
- cy=67
+ cx=1147
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1278,12 +1278,12 @@ windowlayout=587
  mdistate=0
  nx=0
  ny=0
- ncx=1356
- ncy=62
+ ncx=1147
+ ncy=54
  x=0
  y=0
- cx=1356
- cy=70
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1294,57 +1294,7 @@ windowlayout=587
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/main_sp.pas
- history=50
-  /home/fred/uos/examples/fpc_ct.cfg
-  /home/fred/uoslibCT/src/fpcct_android.cfg
-  /home/fred/uos/examples/main_wf.pas
-  /home/fred/ideu/src/confideu.pas
-  /home/fred/ideu/src/ideusettings.pas
-  /home/fred/ideu/src/msewidgets.pas
-  /home/fred/strumpract/src/aboutform.pas
-  /home/fred/strumpract/src/main.pas
-  /home/fred/strumpract/src/config.pas
-  /home/fred/uos/examples/uoslib.pas
-  /home/fred/uos/examples/uos_libsndfile.pas
-  /home/fred/uos/examples/consoleplay.pas
-  /home/fred/uos/examples/uos.pas
-  /home/fred/uoslib/src/uos_mpg123.pas
-  /home/fred/uoslib/src/uos_libsndfile.pas
-  /home/fred/uoslib/src/uos_portaudio.pas
-  /home/fred/uoslib/examples/demos/java/ReadMe.txt
-  /home/fred/lib_namesh.inc
-  /home/fred/msewidgets.pas
-  /home/fred/uoslib/src/uoslib.pas
-  /home/fred/strumpract/src/define.inc
-  /home/fred/strumpract/src/uos.pas
-  /home/fred/mseconsts.pas
-  /home/fred/ideu/src/mseconsts.pas
-  /home/fred/msegui/lib/common/kernel/mseconsts.pas
-  /home/fred/uos/examples/multiplayer_fpGUI.pas
-  /home/fred/uos/examples/uos_dsp_utils.pas
-  /home/fred/uos/src/uos_flat.pas
-  /home/fred/uos/src/uos_mpg123.pas
-  /home/fred/uos/src/uos.pas
-  /home/fred/uos/src/uos_aac.pas
-  /home/fred/strumpract/src/strumpract.pas
-  /home/fred/uos/examples/SimplePlayer_MSE.pas
-  /home/fred/uos/examples/consolebpmdetect.pas
-  /home/fred/strumpract/src/songplayer2.pas
-  /home/fred/strumpract/src/drums.pas
-  /home/fred/strumpract/src/infos.pas
-  /home/fred/uos/src/uos_soundtouch.pas
-  /home/fred/uos/examples/uos_soundtouch.pas
-  /home/fred/uos/examples/consoleplaymemorybuffer.pas
-  /home/fred/uos/examples/simpleplayer_fpGUI.pas
-  /home/fred/strumpract/src/filelistform.pas
-  /home/fred/strumpract/src/songplayer.pas
-  /home/fred/strumpract/src/commander.pas
-  /home/fred/ideu/src/dialogfiles.pas
-  /home/fred/ideu/src/confmsegui.pas
-  /home/fred/ideu/src/conffpgui.pas
-  /home/fred/ideu/src/confdebugger.pas
-  /home/fred/ideu/src/confcompiler.pas
-  /home/fred/ideu/src/aboutform.pas
+ history=0
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1361,15 +1311,15 @@ windowlayout=587
  ncy=0
  x=208
  y=0
- cx=1148
- cy=450
+ cx=939
+ cy=455
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1396,9 +1346,9 @@ windowlayout=587
  ncx=0
  ncy=0
  x=0
- y=70
- cx=1356
- cy=450
+ y=54
+ cx=1147
+ cy=455
  rcx=0
  rcy=0
 [targetconsole]
