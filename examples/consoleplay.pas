@@ -41,25 +41,21 @@ var
      {$if defined(cpu64)}
     PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
     SF_FileName := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
-    PC_FileName := ordir + 'lib\Windows\64bit\LibPcaudio-64.dll';
      {$else}
     PA_FileName := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
     SF_FileName := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
-    PC_FileName := ordir + 'lib\Windows\32bit\LibPcaudio-32.dll';
      {$endif}
     SoundFilename := ordir + 'sound\test.ogg';
  {$ENDIF}
 
      {$if defined(cpu64) and defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
-    PC_FileName := ordir + 'lib/Linux/64bit/LibPcaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     SoundFilename := ordir + 'sound/test.ogg';
    {$ENDIF}
    
    {$if defined(cpu86) and defined(linux)}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
-    PC_FileName := ordir + 'lib/Linux/32bit/LibPcaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
    SoundFilename := ordir + 'sound/test.ogg';
  {$ENDIF}
@@ -90,9 +86,9 @@ var
  {$ENDIF}
  
     // Load the libraries
-   // function uos_loadlib(PortAudioFileName, PcAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
 
-   res := uos_LoadLib(Pchar(PA_FileName), Pchar(PC_FileName), Pchar(SF_FileName), nil, nil, nil, nil) ;
+   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil, nil) ;
      
     writeln;
     if res = 0 then
@@ -128,11 +124,11 @@ var
     //  result : -1 nothing created, otherwise Output Index in array
     
     {$if defined(cpuarm)}  // need a lower latency
-        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, -1, -1, -1, -1, -1, -1) ;
+        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, -1, -1, -1, -1, -1) ;
        {$else}
        
        //OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1);
-         OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, -1, -1, 1) ;
+         OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, -1, -1) ;
        {$endif}
        
          writeln('OutputIndex1 = ' + inttostr(OutputIndex1));

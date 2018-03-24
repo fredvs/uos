@@ -35,10 +35,6 @@ uos_httpgetthread,  Pipes,
 uos_portaudio,
 {$endif}
 
-{$IF DEFINED(pcaudio)}
-uos_pcaudio,
-{$endif}
-
 {$IF DEFINED(sndfile)}
 uos_LibSndFile,
 {$endif}
@@ -260,7 +256,6 @@ type
   private
 
   PA_FileName: pchar;// PortAudio
-  PC_FileName: pchar;// PCAudio
   SF_FileName: pchar;// SndFile
   MP_FileName: pchar;// Mpg123
   AA_FileName : PChar;// Faad
@@ -281,7 +276,7 @@ type
 
   function loadlib: cint32;
   procedure unloadlib;
-  procedure unloadlibCust(PortAudio, PCaudio, SndFile, Mpg123, AAC, opus: boolean);
+  procedure unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
   function InitLib: cint32;
   procedure unloadPlugin(PluginName: Pchar);
   end;
@@ -333,7 +328,7 @@ type
 // -1 : nothing,  for Input  : 0: from audio file, 1: from input device (like mic),
                           // 2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer, 5: from endless-muted
              // for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
-             //              3: into memory buffer, 4: into wav from memorystream, 5: into output device PCaudio
+             //              3: into memory buffer, 4: into wav from memorystream
     
   Seekable: boolean;
   Status: integer;
@@ -696,9 +691,9 @@ type
   
   Procedure FreePlayer() ;// Free the player: works only when PlayNoFree() was called.
 
-  {$IF DEFINED(portaudio) or DEFINED(pcaudio) }
+  {$IF DEFINED(portaudio)}
   function AddIntoDevOut(Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32 ; TypeLibrary : cint8): cint32;
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32 ): cint32;
 // Add a Output into Device Output
 // Device ( -1 is default device )
 // Latency  ( -1 is latency suggested )
@@ -707,15 +702,10 @@ type
 // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 65536)
 // ChunkCount : default : -1 (= 512)
-// TypeLibrary : default : -1 (default = Portaudio) (Portaudio = 0, PCaudio = 1)
 //  result :  Output Index in array  -1 = error
 // example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
   
-   function AddIntoDevOut(Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32): cint32; 
-  // for compatibility with earlier uos version
-  
-  {$endif}
+ {$endif}
 
   function AddIntoFile(Filename: PChar; SampleRate: cint32;
   Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
@@ -1171,20 +1161,6 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
  
 // for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName)
 
-function uos_loadlib(PortAudioFileName, PCAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName : PChar) : cint32;
-// load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
-// PortAudio => needed for dealing with audio-device input/output
-// PcAudio => needed for dealing with audio-device output (alternative to PortAudio)
-// SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
-// Mpg123 => needed for dealing with mp* audio-files
-// Mp4ff and Faad => needed for dealing with acc, m4a audio-files
-// opusfile => needed for dealing with opus audio-files
-  
-// If you want to load libraries from system, replace it by "'system'"
-// If some libraries are not needed, replace it by "nil", 
- 
-// for example : uos_loadlib('system', nil, SndFileFileName, 'system', nil, nil, nil, OpusFileFileName)
-
 procedure uos_unloadlib();
 // Unload all libraries... Do not forget to call it before close application...
 
@@ -1197,7 +1173,7 @@ procedure uos_unloadServerLib();
 // Unload server libraries... Do not forget to call it before close application...
 {$endif}
 
-procedure uos_unloadlibCust(PortAudio, PCaudio, SndFile, Mpg123, AAC, opus: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
@@ -4643,9 +4619,9 @@ begin
    StreamOut[x].Data.Enabled := True;
   end;
 
- {$IF DEFINED(portaudio) or DEFINED(pcaudio) }
+ {$IF DEFINED(portaudio)}
   function Tuos_Player.AddIntoDevOut(Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32 ; TypeLibrary : cint8): cint32;
+  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32): cint32;
 // Add a Output into Device Output
 // Device ( -1 is default device )
 // Latency  ( -1 is latency suggested )
@@ -4654,7 +4630,6 @@ begin
 // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 65536)
 // ChunkCount : default : -1 (= 512)
-// TypeLibrary : default : -1 (default = Portaudio) (Portaudio = 0, PCaudio = 1)
 //  result :  Output Index in array  -1 = error
 // example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
 var
@@ -4672,35 +4647,25 @@ begin
    StreamOut[x].Data.Enabled := false;
    
    {$IF DEFINED(portaudio)}
-   if (TypeLibrary = 0) or  (TypeLibrary = -1) then
-   begin
-  StreamOut[x].PAParam.hostApiSpecificStreamInfo := nil;
+   StreamOut[x].PAParam.hostApiSpecificStreamInfo := nil;
   if device = -1 then
   StreamOut[x].PAParam.device := Pa_GetDefaultOutputDevice()
   else
   StreamOut[x].PAParam.device := device;
-  end;
-   {$endif} 
+  {$endif} 
   
-   if (TypeLibrary = 1) then
-   if device = -1 then
-  devname := nil
-  else
-  devname := 'sysdefault';  
-
   if SampleRate = -1 then
   StreamOut[x].Data.SampleRate := DefRate
   else
   StreamOut[x].Data.SampleRate := SampleRate;
 
  {$IF DEFINED(portaudio)}
-   if (TypeLibrary = 0) or  (TypeLibrary = -1) then
+  
   if Latency = -1 then
     StreamOut[x].PAParam.SuggestedLatency :=    CDouble((Pa_GetDeviceInfo(StreamOut[x].PAParam.device)^.   defaultHighOutputLatency)) * 1
  else   StreamOut[x].PAParam.SuggestedLatency := CDouble(Latency);
 
- if (TypeLibrary = 0) or  (TypeLibrary = -1) then
- begin
+ 
   {$IF DEFINED(android)}
   StreamOut[x].PAParam.SampleFormat := paFloat32;
   {$else}
@@ -4712,8 +4677,8 @@ begin
   1: StreamOut[x].PAParam.SampleFormat := paInt32;
   2: StreamOut[x].PAParam.SampleFormat := paInt16;
   end;
- end;
  {$endif} 
+
  if SampleFormat = -1 then
   StreamOut[x].Data.SampleFormat := 2 else
   StreamOut[x].Data.SampleFormat := SampleFormat;
@@ -4721,8 +4686,7 @@ begin
   if Channels = -1 then
   begin
   {$IF DEFINED(portaudio)}
-   if (TypeLibrary = 0) or (TypeLibrary = -1) then
-  StreamOut[x].PAParam.channelCount := 2  ;
+   StreamOut[x].PAParam.channelCount := 2  ;
   {$endif} 
    StreamOut[x].Data.Channels := 2  ;
   end
@@ -4754,59 +4718,11 @@ StreamOut[x].Data.Buffer[x2] := 0.0 ;
 inc(x2);
 end;
 
-   if (TypeLibrary = 0) or (TypeLibrary = -1) then
   StreamOut[x].Data.TypePut := 1;
   
-    if (TypeLibrary = 1) then
-  StreamOut[x].Data.TypePut := 5;
-
- {$IF DEFINED(portaudio)}
-  if (TypeLibrary = 0) or (TypeLibrary = -1) then
- err := Pa_OpenStream(@StreamOut[x].Data.HandleSt, nil, @StreamOut[x].PAParam, CDouble(StreamOut[x].Data.SampleRate), CULong(ChunkCount), paClipOff, nil, nil);
+  {$IF DEFINED(portaudio)}
+  err := Pa_OpenStream(@StreamOut[x].Data.HandleSt, nil, @StreamOut[x].PAParam, CDouble(StreamOut[x].Data.SampleRate), CULong(ChunkCount), paClipOff, nil, nil);
  //   err := Pa_OpenDefaultStream(@StreamOut[x].Data.HandleSt, 2, 2, paFloat32, DefRate, 512, nil, nil);
-  {$endif}
-  
- {$IF DEFINED(pcaudio)} 
-  if (TypeLibrary = 1) then
-  begin
-  x3 := 0 ;
- 
-  err := -1;
- 
-  StreamOut[x].Data.HandleSt := create_audio_device_object(devname, 'Powered by uos', 'United Open-libraries of Sound');
-  
-    case StreamOut[x].Data.SampleFormat of
-  2: while x3 < 20 do  
-     if  audio_object_open(StreamOut[x].Data.HandleSt, AUDIO_OBJECT_FORMAT_S16LE,
-     StreamOut[x].Data.SampleRate,StreamOut[x].Data.channels) = 0 then
-     begin
-     x3 := 20;
-     err := 0;
-     end else
-     begin
-      inc(x3);
-      sleep(150);
-      end;
-   1: while x3 < 20 do 
-     if audio_object_open(StreamOut[x].Data.HandleSt, AUDIO_OBJECT_FORMAT_S32LE,
-      StreamOut[x].Data.SampleRate,StreamOut[x].Data.channels) = 0 then begin
-     x3 := 20;
-     err := 0;
-     end else begin
-      inc(x3);
-      sleep(150);
-      end;
-  0: while x3 < 20 do 
-     if audio_object_open(StreamOut[x].Data.HandleSt, AUDIO_OBJECT_FORMAT_FLOAT32LE,
-      StreamOut[x].Data.SampleRate,StreamOut[x].Data.channels)= 0 then begin
-     x3 := 20;
-     err := 0;
-     end else begin
-      inc(x3);
-      sleep(150);
-      end;
-  end;
-  end;
   {$endif}
 
   StreamOut[x].LoopProc := nil;
@@ -4817,15 +4733,6 @@ end;
   Result := x;
   end;
 end;
-
- function Tuos_Player.AddIntoDevOut(Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
-   FramesCount: cint32 ; ChunkCount: cint32): cint32;
-begin
-result := AddIntoDevOut(Device, Latency, SampleRate, Channels, SampleFormat,
-   FramesCount, ChunkCount, -1);
-end;
-
 
  {$endif}
 
@@ -7198,17 +7105,6 @@ begin
    end;
    {$ENDIF}
    
-    {$IF DEFINED(pcaudio)}
-   if (StreamOut[x].Data.HandleSt <> nil) and
-   (StreamOut[x].Data.TypePut = 5) then begin
- 
-    audio_object_flush(StreamOut[x].Data.HandleSt);
-    audio_object_close(StreamOut[x].Data.HandleSt);
-    audio_object_destroy(StreamOut[x].Data.HandleSt);
-    
-   end;
-   {$endif}
-
    {$IF DEFINED(shout)}
    if  (StreamOut[x].Data.TypePut = 2) then
    begin
@@ -7400,6 +7296,7 @@ begin
  writeln('Give to output device');
  writeln('length(StreamOut[x].Data.Buffer) =' + inttostr(length(StreamOut[x].Data.Buffer)));
  {$endif}
+ 
   if (StreamIn[x2].Data.TypePut <> 1) or
   ((StreamIn[x2].Data.TypePut = 1) and (StreamIn[x2].Data.Channels > 1)) then
   begin
@@ -7433,53 +7330,6 @@ begin
   end;
   {$endif}
   
-   {$IF DEFINED(pcaudio)}
-  5:// Give to output device using pcaudio
-  begin
-
- {$IF DEFINED(debug)}
- writeln('Give to output device');
- writeln('length(StreamOut[x].Data.Buffer) =' + inttostr(length(StreamOut[x].Data.Buffer)));
- {$endif}
-  if (StreamIn[x2].Data.TypePut <> 1) or
-  ((StreamIn[x2].Data.TypePut = 1) and (StreamIn[x2].Data.Channels > 1)) then
-  begin
-  {$IF DEFINED(debug)}
-  st := '';
-  for i := 0 to length(StreamOut[x].Data.Buffer) -1 do
-  st := st + '|' + inttostr(i) + '=' + floattostr(StreamOut[x].Data.Buffer[i]);
-  WriteLn('OUTPUT DATA into portaudio------------------------------');
-//WriteLn(st);
-  {$endif}
-
-//  err :=// if you want clean buffer
-
-case StreamOut[x].Data.SampleFormat of
-  2: sizsam := sizeof(cint16);
-  1: sizsam := sizeof(cint32);
-  0: sizsam := sizeof(cfloat);
-  end;
-
- if assigned(StreamOut[x].Data.HandleSt) then
- begin
-    audio_object_write(StreamOut[x].Data.HandleSt,pointer(StreamOut[x].Data.Buffer),
-   sizsam * StreamIn[x2].Data.outframes div (StreamIn[x2].Data.ratio div StreamIn[x2].Data.channels)); 
- end;
- 
- {$IF DEFINED(debug)}
- writeln('End give to output device 5');
-{$endif}
-  end else
-  begin
-    audio_object_write(StreamOut[x].Data.HandleSt,pointer(StreamOut[x].Data.Buffer),
-  sizsam * StreamIn[x2].Data.outframes div (StreamIn[x2].Data.ratio div StreamIn[x2].Data.channels)); 
-  end;
-// if err <> 0 then status := 0;// if you want clean buffer ...
-{$IF DEFINED(debug)}
- writeln('End give to output device 5');
-{$endif}
-  end;
-  {$endif}
 
   {$IF DEFINED(shout)}
   2:// Give to IceCast server
@@ -7759,45 +7609,6 @@ begin
   end;
   {$endif}
   
-   {$IF DEFINED(pcaudio)}
-  5:// Give to output device using pcaudio
-  begin
-
- {$IF DEFINED(debug)}
- writeln('Give to output device');
- writeln('length(StreamOut[x].Data.Buffer) =' + inttostr(length(StreamOut[x].Data.Buffer)));
- {$endif}
-   
-  case StreamOut[x].Data.SampleFormat of
-  0:
-  begin
-  sizsam := sizeof(cfloat);
-     audio_object_write(StreamOut[x].Data.HandleSt,pointer(BufferplugFL),
-   sizsam * Length(BufferplugFL) div (StreamIn[x2].Data.ratio div StreamIn[x2].Data.channels)); 
-  end;
-  1:
-  begin
-  BufferplugLO := CvFloat32ToInt32(BufferplugFL);
-  sizsam := sizeof(cint32);
-      audio_object_write(StreamOut[x].Data.HandleSt,pointer(BufferplugLO),
-   sizsam * Length(BufferplugLO) div (StreamIn[x2].Data.ratio div StreamIn[x2].Data.channels)); 
-  end;
-  2:
-  begin
-  BufferplugSH := CvFloat32ToInt16(BufferplugFL);
-  sizsam := sizeof(cint16);
-      audio_object_write(StreamOut[x].Data.HandleSt,pointer(BufferplugSH),
-   sizsam * Length(BufferplugSH) div (StreamIn[x2].Data.ratio div StreamIn[x2].Data.channels)); 
-  end;
-  end;
-  end;
-   
- {$IF DEFINED(debug)}
- writeln('End give to output device 5');
-{$endif}
-   {$endif}
-  
-
   {$IF DEFINED(shout)}
   2:// Give to IceCast server
   begin
@@ -8570,9 +8381,6 @@ begin
   {$IF DEFINED(portaudio)}
   Pa_Unload();
   {$endif}
-  {$IF DEFINED(pcaudio)}
-  Pc_Unload(); 
-  {$endif}
   {$IF DEFINED(neaac)}
   Aa_Unload;
   {$endif}
@@ -8629,13 +8437,7 @@ begin
 
   end;
   {$endif}
-  
-  {$IF DEFINED(pcaudio)}
-  if (uosLoadResult.pcloadERROR = 0) then
-  begin
-  end;
-  {$endif}
-  
+    
    {$IF DEFINED(sndfile)}
   if (uosLoadResult.SFloadERROR = 0) then sfversion := UTF8Decode(sf_version_string());
    {$endif}
@@ -8652,7 +8454,6 @@ begin
   Result := 0;
   uosLoadResult.PAloadERROR := -1;
   uosLoadResult.SFloadERROR := -1;
-  uosLoadResult.PCloadERROR := -1;
   uosLoadResult.MPloadERROR := -1;
   uosLoadResult.AAloadError := -1;
   uosLoadResult.OPloadERROR := -1;
@@ -8765,29 +8566,7 @@ begin
   uosLoadResult.OPloadERROR := -1;
   {$endif}
   
-  {$IF DEFINED(pcaudio)}
-  if (pc_FileName <> nil) and (pc_FileName <>  '') then
-  begin
-  if pc_FileName =  'system' then pc_FileName :=  '' ;
-  if (pc_load(UTF8String(pc_FileName)))  then  
-  begin
-  uosLoadResult.pcloadERROR := 0;
-  if (uosLoadResult.MPloadERROR = -1) and (uosLoadResult.PAloadERROR = -1) and
-  (uosLoadResult.SFloadERROR = -1) And (uosLoadResult.AAloadERROR = -1)
-  And (uosLoadResult.OPloadERROR = -1)  then
-  Result := 0;
-  end
-  else
-  begin
-  uosLoadResult.pcloadERROR := 2;
-  Result := -1;
-  end;
-  end
-  else
-  uosLoadResult.pcloadERROR := -1;
-  {$endif}
-
-  if Result = 0 then  Result := InitLib();
+   if Result = 0 then  Result := InitLib();
 end;
 
 
@@ -8860,7 +8639,7 @@ op_unload;
  end;  
 {$endif}
  
-function uos_loadlib(PortAudioFileName, PCAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   begin
   result := -1 ;
   if not assigned(uosInit) then begin
@@ -8874,7 +8653,6 @@ function uos_loadlib(PortAudioFileName, PCAudioFileName, SndFileFileName, Mpg123
   end;
   
   uosInit.PA_FileName := PortAudioFileName;
-  uosInit.PC_FileName := PcAudioFileName;
   uosInit.SF_FileName := SndFileFileName;
   uosInit.MP_FileName := Mpg123FileName;
   uosInit.AA_FileName:= FaadFileName;
@@ -8884,12 +8662,6 @@ function uos_loadlib(PortAudioFileName, PCAudioFileName, SndFileFileName, Mpg123
   result := uosInit.loadlib ;
   end;
   
-function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
-  begin
-  result := uos_loadlib(PortAudioFileName, nil, SndFileFileName, Mpg123FileName, 
-  Mp4ffFileName, FaadFileName, opusfileFileName);
-  end; 
-
 function uos_GetVersion() : cint32 ;
 begin
 result := uos_version ;
@@ -8915,10 +8687,10 @@ begin
  end;
 end;
 
-procedure uos_unloadlibCust(PortAudio, Pcaudio, SndFile, Mpg123, AAC, opus: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
- uosInit.unloadlibcust(PortAudio, Pcaudio, SndFile, Mpg123, AAC, opus) ;
+ uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus) ;
 end;
 
 procedure uos_UnloadPlugin(PluginName: PChar);
@@ -9518,14 +9290,11 @@ begin
   inherited Destroy;
 end;
 
-procedure Tuos_Init.unloadlibCust(PortAudio, PCaudio, SndFile, Mpg123, AAc, opus: boolean);
+procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc, opus: boolean);
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
   {$IF DEFINED(portaudio)}
   if PortAudio = true then  Pa_Unload();
-  {$endif}
-   {$IF DEFINED(pcaudio)}
-  if PcAudio = true then  pc_Unload(); 
   {$endif}
   {$IF DEFINED(sndfile)}
   if SndFile = true then  sf_Unload();

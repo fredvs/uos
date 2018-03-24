@@ -562,7 +562,7 @@ makeoptionson=6
  2559
  2331
  0
- 2519
+ 2515
  2295
 compilerusedon=29
  3903
@@ -773,7 +773,7 @@ stoponexception=0
 valuehints=1
 activateonbreak=1
 raiseonbreak=1
-showconsole=1
+showconsole=0
 externalconsole=0
 settty=1
 gdbdownload=0
@@ -905,7 +905,7 @@ findhistory=20
  createpla
 findoptions=1
 editpos=12
- 0,2844
+ 0,2780
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -913,7 +913,7 @@ editpos=12
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 0,435
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -991,7 +991,7 @@ order=12
  3
  2
 firsttab=0
-index=1
+index=4
 [layout]
 windowlayout=558
  [mainfo.basedock]
@@ -1048,7 +1048,7 @@ windowlayout=558
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1070,7 +1070,7 @@ windowlayout=558
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1097,7 +1097,7 @@ windowlayout=558
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1234,7 +1234,7 @@ windowlayout=558
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1249,12 +1249,12 @@ windowlayout=558
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [objectinspectorfo.grid]
- propcolwidthref=306
- width0=136
+ propcolwidthref=291
+ width0=129
  sortdescend0=0
- width1=164
+ width1=156
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1475,7 +1475,7 @@ windowlayout=558
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/mainmse_sp.pas
  history=0
  [debuggerfo.project_options]
  value=1
@@ -1501,7 +1501,7 @@ windowlayout=558
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_simple_player_mse_
+ stackedunder=disassfo
  parent=
  mdistate=0
  nx=0
@@ -1536,7 +1536,7 @@ windowlayout=558
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=threadsfo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0

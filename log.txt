@@ -45,7 +45,6 @@
 * 30 th changes: 2017-07-19 (Martin MSE environement, uos_Player is a class now)  *
 * 31 th changes: 2017-11-26 (Added GetBPM from last commit of SoundTouch plugin)  * 
 * 32 th changes: 2018-02-06 (Added InputFiltersGetLevel and spectrum features)    * 
-* 33 th changes: 2018-03-16 (PCaudiolib (for output dev)) is part of uos familly! * 
 *                                                                                 *
 ***********************************************************************************}
 

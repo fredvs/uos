@@ -300,7 +300,6 @@ loadok : boolean = false;
 // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFilename: PChar) : LongInt;
 
 if uos_LoadLib(Pchar(AnsiString(mainfo.padir.value)),
- Pchar(AnsiString(mainfo.pcdir.value)),
  Pchar(AnsiString(mainfo.sfdir.value)),
  Pchar(AnsiString(mainfo.mpdir.value)), Pchar(AnsiString(mainfo.m4dir.value)),
  Pchar(AnsiString(mainfo.fadir.value)), Pchar(AnsiString(mainfo.ofdir.value))) = 0 
@@ -329,7 +328,7 @@ if uos_LoadLib(Pchar(AnsiString(mainfo.padir.value)),
       ofdir.enabled := false;
 
       btnLoad.caption :=
-        'PortAudio, PCaudio, SndFile, Mpg123, AAC, Opus libraries are loaded...'
+        'PortAudio, SndFile, Mpg123, AAC, Opus libraries are loaded...'
        end else btnLoad.caption :=
         'One or more libraries did not load, check filenames...';
         
@@ -414,25 +413,15 @@ var
     if InputIndex1 > -1 then
      begin
 
-    if usepa.value = true then // use portaudio vs pcaudio
-    begin
-     libused := 0;
-     devused := -1;
-     end  else
-    begin
-     libused := 1; 
-     if usealsa.value = true then devused := 1 else devused := -1;
-     end;
-
-    // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
+     // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
      
   {$if defined(cpuarm)} // needs lower latency
    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, devused, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1, libused)
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1)
       {$else}
       OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, devused, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1 ,libused);
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1 );
     
        {$endif}
  

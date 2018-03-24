@@ -1,0 +1,14 @@
+# build artefacts:
+
+*.o
+*.lo
+*.rsj
+*.ppu
+*.dbg
+
+# vi/vim editor files:
+
+*~
+.*.swp
+
+

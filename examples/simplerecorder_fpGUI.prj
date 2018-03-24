@@ -260,7 +260,7 @@ makeoptions=8
  -FUunits
  -WG
  -B -ghl
- -O4 -XX -Xs -CX
+ -O2 -XX -Xs -CX
  -vewnhibq
 makeoptpurpose=8
  
@@ -854,7 +854,7 @@ findhistory=20
  mono2
 findoptions=1
 editpos=4
- 0,251
+ 0,219
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -863,7 +863,7 @@ bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 sourcefiles=4
- ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ /home/fred/uos/examples/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_portaudio.pas
@@ -890,7 +890,7 @@ order=4
 firsttab=0
 index=0
 [layout]
-windowlayout=543
+windowlayout=547
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -917,7 +917,7 @@ windowlayout=543
  ncx=0
  ncy=0
  x=125
- y=46
+ y=45
  cx=1157
  cy=621
  rcx=0
@@ -967,7 +967,7 @@ windowlayout=543
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1013,7 +1013,7 @@ windowlayout=543
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1089,14 +1089,14 @@ windowlayout=543
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1105,7 +1105,7 @@ windowlayout=543
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1174,7 +1174,11 @@ windowlayout=543
  visible=0
  [symbolfo.grid]
  propcolwidthref=207
- values0=14
+ values0=18
+  
+  
+  
+  
   
   
   
@@ -1211,7 +1215,7 @@ windowlayout=543
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=111
+ propcolwidthref=121
  values0=2
   -1
   -1
@@ -1379,7 +1383,7 @@ windowlayout=543
  value=/home/fred/uos/examples/simplerecorder_fpGUI.pas
  history=0
  [debuggerfo.project_options]
- value=B
+ value=1
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1402,7 +1406,7 @@ windowlayout=543
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

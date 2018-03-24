@@ -806,6 +806,7 @@ findoptions=1
 editpos=15
  0,-1073741823
  0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -817,8 +818,7 @@ editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,475
+ 0,449
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -903,8 +903,8 @@ order=15
  3
  6
  4
-firsttab=3
-index=11
+firsttab=5
+index=6
 [layout]
 windowlayout=547
  [mainfo.basedock]
@@ -961,7 +961,7 @@ windowlayout=547
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -983,7 +983,7 @@ windowlayout=547
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1010,7 +1010,7 @@ windowlayout=547
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=stackfo
  parent=
  mdistate=0
  nx=0
@@ -1381,8 +1381,8 @@ windowlayout=547
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1147
+ ncy=54
  x=0
  y=0
  cx=1147
@@ -1396,7 +1396,7 @@ windowlayout=547
  [debuggerfo.edit_compiler]
  value=C
  [debuggerfo.file_history]
- value=/home/fred/alsa-lib-master/src/pcm/pcm_shm.c
+ value=/home/fred/uos/examples/uos_flat.pas
  history=0
  [debuggerfo.project_options]
  value=1
@@ -1422,7 +1422,7 @@ windowlayout=547
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0

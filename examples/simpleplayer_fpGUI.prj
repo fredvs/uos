@@ -1021,7 +1021,7 @@ editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 56,202
+ 0,186
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1052,7 +1052,7 @@ sourcefiles=15
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_opusfile.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- /home/fred/uos/examples/uos_flat.pas
+ ${PROJECTDIR}/uos_flat.pas
  /home/fred/fpgui/src/corelib/fpg_main.pas
 relpaths=15
  uos.pas
@@ -1187,7 +1187,7 @@ windowlayout=597
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=about_form
  parent=
  mdistate=0
  nx=0
@@ -1214,7 +1214,7 @@ windowlayout=597
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=stackfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1676,7 +1676,7 @@ windowlayout=597
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0

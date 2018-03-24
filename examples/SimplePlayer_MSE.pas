@@ -16,13 +16,11 @@ begin
      {$IFDEF Windows}
      {$if defined(cpu64)}
      mainfo.padir.value := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
-     mainfo.pcdir.value := ordir + 'lib\Windows\64bit\LibPcaudio-64.dll';
      mainfo.sfdir.value := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
      mainfo.mpdir.value := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
      mainfo.stdir.value := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
 {$else}
     mainfo.padir.value := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
-     mainfo.pcdir.value := ordir + 'lib\Windows\32bit\LibPcaudio-32.dll';
     mainfo.sfdir.value := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
      mainfo.mpdir.value := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
     mainfo.m4dir.value := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
@@ -39,7 +37,6 @@ begin
 
    {$if defined(cpu64) and defined(linux) }
     mainfo.padir.value := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
-    mainfo.pcdir.value := ordir + 'lib/Linux/64bit/LibPcaudio-64.so';
     mainfo.sfdir.value := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     mainfo.mpdir.value := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
     mainfo.m4dir.value := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
@@ -54,7 +51,6 @@ begin
 {$if defined(cpu86) and defined(linux)}
     mainfo.padir.value := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     mainfo.sfdir.value := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-    mainfo.pcdir.value := ordir + 'lib/Linux/32bit/LibPcaudio-32.so';
     mainfo.mpdir.value := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     mainfo.m4dir.value := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
     mainfo.fadir.value := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
