@@ -13,7 +13,6 @@
 {.$DEFINE mse}   // uncomment when using a mse project, use mse mseThread in place of fpc TThread.
 
 {$DEFINE portaudio} // uncomment to enable portaudio In/Out sound port
-{$DEFINE pcaudio} // uncomment to enable pcaudio Out sound port
 
 {$DEFINE sndfile} // uncomment to enable sndfile (wav, ogg, flac audio file)
 {$DEFINE mpg123} // uncomment to enable mpg123 (mp3 audio file)

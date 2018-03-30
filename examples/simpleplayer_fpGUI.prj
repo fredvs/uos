@@ -968,7 +968,7 @@ files=
  a=0,8229,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/msegui/apps/ide/compstore/
+storedir=/home/fred/uos/examples/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -1020,8 +1020,8 @@ editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,186
+ 7,629
+ 0,134
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1108,7 +1108,7 @@ order=15
  1
  2
 firsttab=0
-index=3
+index=1
 [layout]
 windowlayout=597
  [mainfo.basedock]
@@ -1124,7 +1124,7 @@ windowlayout=597
  x=0
  y=0
  cx=1147
- cy=604
+ cy=605
  rcx=0
  rcy=0
  [mainfo]
@@ -1137,13 +1137,13 @@ windowlayout=597
  ncx=0
  ncy=0
  x=54
- y=87
+ y=88
  cx=1157
  cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1147,604
+  basedock,0,0,1147,605
  focusedchild=0
  wsize=0
  active=1
@@ -1157,9 +1157,9 @@ windowlayout=597
  ny=0
  ncx=0
  ncy=0
- x=494
- y=239
- cx=497
+ x=275
+ y=196
+ cx=811
  cy=314
  rcx=0
  rcy=0
@@ -1187,7 +1187,7 @@ windowlayout=597
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1214,7 +1214,7 @@ windowlayout=597
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=targetconsolefo
+ stackedunder=stackfo
  parent=
  mdistate=0
  nx=0
@@ -1259,7 +1259,7 @@ windowlayout=597
  x=0
  y=0
  cx=205
- cy=455
+ cy=456
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1271,7 +1271,7 @@ windowlayout=597
  sorted=0
  col=0
  row=2
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1472,7 +1472,7 @@ windowlayout=597
  ncx=0
  ncy=0
  x=0
- y=512
+ y=513
  cx=1147
  cy=92
  rcx=0
@@ -1600,7 +1600,7 @@ windowlayout=597
  [debuggerfo.edit_compiler]
  value=C
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
+ value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
  history=50
   /home/fred/strumpract/src/aboutform.pas
   /home/fred/strumpract/src/main.pas
@@ -1669,7 +1669,7 @@ windowlayout=597
  x=208
  y=0
  cx=939
- cy=455
+ cy=456
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1705,7 +1705,7 @@ windowlayout=597
  x=0
  y=54
  cx=1147
- cy=455
+ cy=456
  rcx=0
  rcy=0
 [targetconsole]

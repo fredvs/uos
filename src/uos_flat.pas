@@ -2184,6 +2184,7 @@ if length(uosPlayers) > 0 then
   if assigned(uosPlayers[x]) then
   begin
   uosPlayers[x].nofree := false;
+  uos_playpaused(x);
   uos_stop(x);
   end;
 

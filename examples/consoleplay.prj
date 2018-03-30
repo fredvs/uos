@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplay.prj
-findinfiledialog=49
+findinfiledialog=52
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,30 +29,33 @@ findinfiledialog=49
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=1
+ value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
- value="*.pas" "*.pp" "*.inc"
- history=1
+ value="*.pas" "*.pp" "*.inc" "*.h" "*.c"
+ history=2
+  "*.pas" "*.pp" "*.inc" "*.h" "*.c"
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/uoslibCT/examples/
+  /usr/
  filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=1
+ filehistory=2
+  /usr/
   /home/fred/uoslibCT/examples/
  filefilterindex=0
- filefilter="*.pas" "*.pp" "*.inc"
+ filefilter="*.pas" "*.pp" "*.inc" "*.h" "*.c"
  [findinfileadialogfo.findtext]
- value=pcaudio
- history=10
+ value=opus_get_version_string
+ history=11
+  opus_get_version_string
   pcaudio
   uos_AddIntoDevOut
   defined(cpu64) and if defined(linux)
@@ -806,50 +809,43 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=6
+on=5
  0
  0
  0
  0
  0
- 0
-path=6
+path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
- /home/fred/uos/examples/consoleplay.pas
-line=6
+line=5
  5965
  5278
- 112
+ 115
  1563
- 124
- 149
-address=6
- 4859440
- 4848535
- 4197906
- 4788769
- 4197962
- 4198204
-addbkpt=6
+ 131
+address=5
+ 4860901
+ 4850065
+ 4198027
+ 4789631
+ 4198207
+addbkpt=5
  0
  0
  0
  0
  0
- 0
-ignore=6
- 0
+ignore=5
  0
  0
  0
  0
  0
-condition=6
- 
+condition=5
  
  
  
@@ -896,7 +892,7 @@ files=
  a=0,8229,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/msegui/apps/ide/compstore/
+storedir=/home/fred/uos/examples/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -912,8 +908,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=audio_object
+finddtext=addfromfile
 findhistory=20
+ addfromfile
+ $if
+ $ifdef
+ addfrom
  audio_object
  AddIntoDevOut
  intodev
@@ -930,13 +930,10 @@ findhistory=20
  loadlib
  of_f
  paloaderr
- chun
- chunck
- readsyn
- addfromsyn
 findoptions=1
-editpos=13
- 0,88
+editpos=15
+ 0,188
+ 0,6476
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -945,10 +942,11 @@ editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,15
- 0,78
- 0,95
- 0,203
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -962,7 +960,9 @@ bookmarks9=0
 bookmarks10=0
 bookmarks11=0
 bookmarks12=0
-sourcefiles=13
+bookmarks13=0
+bookmarks14=0
+sourcefiles=15
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -976,7 +976,9 @@ sourcefiles=13
  ${PROJECTDIR}/mainmse_sp.pas
  ${PROJECTDIR}/SimplePlayer_MSE.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=13
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=15
  consoleplay.pas
  uos.pas
  uos_flat.pas
@@ -990,7 +992,11 @@ relpaths=13
  mainmse_sp.pas
  SimplePlayer_MSE.pas
  uos_flat.pas
-ismoduletexts=13
+ uos_libsndfile.pas
+ uos_flat.pas
+ismoduletexts=15
+ 0
+ 0
  0
  0
  0
@@ -1012,13 +1018,15 @@ moduleoptions=2
  0
 visiblemodules=2
  0
- -1
+ 0
 nomenumodules=2
  0
  0
 [sourcefo.files_tab]
-order=13
+order=15
  0
+ 14
+ 13
  9
  10
  11
@@ -1032,9 +1040,9 @@ order=13
  7
  8
 firsttab=0
-index=2
+index=0
 [layout]
-windowlayout=585
+windowlayout=635
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1047,8 +1055,8 @@ windowlayout=585
  ncy=0
  x=0
  y=0
- cx=1147
- cy=604
+ cx=1356
+ cy=692
  rcx=0
  rcy=0
  [mainfo]
@@ -1067,10 +1075,10 @@ windowlayout=585
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1147,604
+  basedock,0,0,1356,692
  focusedchild=0
- wsize=0
- active=0
+ wsize=6
+ active=1
  visible=1
  [targetconsolefo]
  splitdir=0
@@ -1088,7 +1096,7 @@ windowlayout=585
  rcx=0
  rcy=0
  wsize=0
- active=1
+ active=0
  visible=1
  [threadsfo]
  splitdir=0
@@ -1157,7 +1165,7 @@ windowlayout=585
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1183,7 +1191,7 @@ windowlayout=585
  x=0
  y=0
  cx=205
- cy=455
+ cy=523
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1195,7 +1203,7 @@ windowlayout=585
  sorted=0
  col=1
  row=-1073741823
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1396,9 +1404,9 @@ windowlayout=585
  ncx=0
  ncy=0
  x=0
- y=512
- cx=1147
- cy=92
+ y=587
+ cx=1356
+ cy=105
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1497,8 +1505,8 @@ windowlayout=585
  ncy=0
  x=0
  y=0
- cx=1147
- cy=51
+ cx=1356
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1509,12 +1517,12 @@ windowlayout=585
  mdistate=0
  nx=0
  ny=0
- ncx=1147
- ncy=54
+ ncx=1356
+ ncy=61
  x=0
  y=0
- cx=1147
- cy=54
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1524,8 +1532,58 @@ windowlayout=585
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/mainmse_sp.pas
- history=0
+ value=/home/fred/uos/examples/consoleplay.pas
+ history=50
+  /home/fred/pcaudiolib_pas/src/uos_demo/mainmse_sp.pas
+  /home/fred/pcaudiolib-io/src/pulseaudio.c
+  /home/fred/pcaudiolib-io/src/alsa.c
+  /home/fred/pcaudiolib-mse/src/pulseaudio.c
+  /home/fred/pcaudiolib-mse/src/alsa.c
+  /home/fred/pcaudiolib-mse/src/oss.c
+  /home/fred/pcaudiolib-mse/src/qsa.c
+  /home/fred/pcaudiolib-mse/src/waveout.c
+  /home/fred/pcaudiolib-mse/src/windows.c
+  /home/fred/pcaudiolib_pas/src/uos_demo/simplerecorder_fpGUI.pas
+  /home/fred/pcaudiolib-mse/src/audio_priv.h
+  /home/fred/pcaudiolib-mse/src/xaudio2.cpp
+  /home/fred/pcaudiolib-mse/src/audio.c
+  /usr/include/pulse/simple.h
+  /usr/include/pulse/pulseaudio.h
+  /home/fred/pcaudiolib-mse/src/include/pcaudiolib/audio.h
+  /home/fred/pcaudiolib_pas/src/uos_demo/simplerecorder_fpGUI
+  /home/fred/pcaudiolib_pas/src/uos_demo/uos.pas
+  /home/fred/uos/src/uos.pas
+  /home/fred/pcaudiolib_pas/src/uos_demo/SimplePlayer_MSE.pas
+  /home/fred/pcaudiolib_pas/src/uos_demo/uos_flat.pas
+  /home/fred/pcaudiolib_pas/src/uos_demo/uos_pcaudio.pas
+  /home/fred/portaudio_opensles/src/hostapi/alsa/pa_linux_alsa.c
+  /home/fred/alsatest/alsadrop2.c
+  /home/fred/alsatest/alsadrop1.c
+  /home/fred/strumpract/src/songplayer.pas
+  /home/fred/uos/examples/SimplePlayer_MSE.pas
+  /home/fred/uos/examples/mainmse_sp.pas
+  /home/fred/uos/examples/consoleplay.pas
+  /home/fred/pcaudiolib_pas/src/pcaudiosynth.pas
+  /usr/local/codetyphon/typhon/components/pl_TitanSound/source/tsd_tag_id3v2.pas
+  /home/fred/pcaudiolib_pas/src/pcaudio.pas
+  /home/fred/pcaudio/main.pas
+  /home/fred/msepcaudio/main.pas
+  /home/fred/msepcaudio/msepcaudio.pas
+  /home/fred/pcaudiolib-master/src/xaudio2.cpp
+  /home/fred/pcaudiolib-master/src/audio_priv.h
+  /home/fred/uos/examples/uos_mpg123.pas
+  /home/fred/uos/examples/uos_portaudio.pas
+  /home/fred/uos/examples/main_sp.lfm
+  /home/fred/uos/examples/fpc_ct.cfg
+  /home/fred/uoslibCT/src/fpcct_android.cfg
+  /home/fred/uos/examples/main_wf.pas
+  /home/fred/ideu/src/confideu.pas
+  /home/fred/ideu/src/ideusettings.pas
+  /home/fred/ideu/src/msewidgets.pas
+  /home/fred/strumpract/src/aboutform.pas
+  /home/fred/strumpract/src/main.pas
+  /home/fred/strumpract/src/config.pas
+  /home/fred/uos/examples/uoslib.pas
  [debuggerfo.project_options]
  value=B
  [debuggerfo.hints]
@@ -1542,8 +1600,8 @@ windowlayout=585
  ncy=0
  x=208
  y=0
- cx=939
- cy=455
+ cx=1148
+ cy=523
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1577,9 +1635,9 @@ windowlayout=585
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1147
- cy=455
+ y=61
+ cx=1356
+ cy=523
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
@@ -1604,7 +1662,7 @@ windowlayout=585
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1619,7 +1677,7 @@ windowlayout=585
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
 [targetconsole]
 finddtext=Input from memory
 findhistory=1

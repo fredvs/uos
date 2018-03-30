@@ -6017,6 +6017,7 @@ begin
   if StreamIn[x].Data.HandleSt = nil then
   begin
   StreamIn[x].Data.LibOpen := -1;
+  err := -1;
   {$IF DEFINED(debug)}
   WriteLn('sf_open NOT OK');  
   {$endif}  
@@ -6029,6 +6030,7 @@ begin
   StreamIn[x].Data.LibOpen := 0;
   StreamIn[x].Data.filename := FileName;
   StreamIn[x].Data.channels := SFinfo.channels;
+ 
   if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 65536 div StreamIn[x].Data.Channels  else
   StreamIn[x].Data.Wantframes := FramesCount ;
 
@@ -6039,6 +6041,7 @@ begin
   Streamin[x].Data.Buffer[x2] := 0.0 ;
   inc(x2);
    end;
+   
   StreamIn[x].Data.hdformat := SFinfo.format;
   StreamIn[x].Data.frames := SFinfo.frames;
   StreamIn[x].Data.samplerate := SFinfo.samplerate;
@@ -6065,6 +6068,11 @@ begin
 
   {$endif}
 
+ {$IF DEFINED(debug)}
+  WriteLn('sf StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));  
+  WriteLn('sf err = ' + inttostr(err)); 
+ {$endif}  
+ 
   {$IF DEFINED(mpg123)}
    if ((StreamIn[x].Data.LibOpen = -1)) and (uosLoadResult.MPloadERROR = 0) then
   begin
@@ -6165,6 +6173,11 @@ begin
 
   {$endif}
   
+ {$IF DEFINED(debug)}
+  WriteLn('mp StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));  
+  WriteLn('mp err = ' + inttostr(err)); 
+ {$endif} 
+  
   {$IF DEFINED(opus)}
   if (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.OPloadERROR = 0) then
   begin
@@ -6257,6 +6270,11 @@ begin
   end;
 {$endif}
 
+ {$IF DEFINED(debug)}
+  WriteLn('op StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));  
+  WriteLn('op err = ' + inttostr(err)); 
+ {$endif} 
+
   {$IF DEFINED(neaac)}
   if (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.AAloadERROR = 0) then
   begin
@@ -6337,7 +6355,12 @@ begin
 
   end;
   {$endif}
-
+  
+ {$IF DEFINED(debug)}
+  WriteLn('ac StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));  
+  WriteLn('ac err = ' + inttostr(err)); 
+ {$endif} 
+  
   {$IF DEFINED(cdrom)}
   if (StreamIn[x].Data.LibOpen = -1) then
   begin
@@ -6391,9 +6414,18 @@ begin
   End;
   end;
   {$endif}
- 
-   if err <> 0 then
+  
+ {$IF DEFINED(debug)}
+  WriteLn('cd StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));  
+  WriteLn('cd err = ' + inttostr(err)); 
+ {$endif} 
+   
+   if (err <> 0) or (StreamIn[x].Data.LibOpen = -1) then
   begin
+   {$IF DEFINED(debug)}
+  WriteLn('not ok StreamIn[x].Data.LibOpen = -1');  
+  WriteLn('not ok cd err = ' + inttostr(err)); 
+   {$endif} 
   
   result := -1 ;
   StreamIn[Length(StreamIn) - 1].Destroy;
@@ -6448,6 +6480,11 @@ begin
   StreamIn[x].Data.Enabled := True;
   end;
   end else result := -2;
+  
+  {$IF DEFINED(debug)}
+  WriteLn('result = ' + inttostr(result));  
+  WriteLn('cd err = ' + inttostr(err)); 
+  {$endif} 
 end;
 
 procedure Tuos_Player.ReadEndless(x : integer);

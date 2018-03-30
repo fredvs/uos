@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="10"/>
     <General>
       <Flags>
         <LRSInOutputDirectory Value="False"/>
@@ -127,10 +127,9 @@ install:
       <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
     </PublishOptions>
     <RunParams>
-      <FormatVersion Value="2"/>
-      <Modes Count="1">
-        <Mode0 Name="default"/>
-      </Modes>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -141,8 +140,8 @@ install:
       <Unit0>
         <Filename Value="simpleplayer.ppr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
-        <CursorPos Y="24"/>
+        <EditorIndex Value="3"/>
+        <CursorPos Y="22"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -152,8 +151,9 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="743"/>
-        <CursorPos X="22" Y="753"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="652"/>
+        <CursorPos X="10" Y="665"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit1>
@@ -280,7 +280,7 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="4810"/>
         <CursorPos X="19" Y="4817"/>
         <UsageCount Value="100"/>
@@ -413,7 +413,7 @@ install:
       </Unit44>
       <Unit45>
         <Filename Value="simpleplayer_fpGUI.pas"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="361"/>
         <CursorPos X="24" Y="377"/>
         <UsageCount Value="23"/>
@@ -442,7 +442,7 @@ install:
       </Unit49>
       <Unit50>
         <Filename Value="uos_flat.pas"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="508"/>
         <CursorPos X="45" Y="523"/>
         <UsageCount Value="24"/>
@@ -482,7 +482,7 @@ install:
       </Unit55>
       <Unit56>
         <Filename Value="define.inc"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="7"/>
         <CursorPos X="3" Y="19"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
@@ -544,7 +544,7 @@ install:
       </Unit65>
       <Unit66>
         <Filename Value="uos_httpgetthread.pas"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="18"/>
         <CursorPos X="14" Y="27"/>
         <UsageCount Value="15"/>
@@ -558,7 +558,7 @@ install:
       </Unit67>
       <Unit68>
         <Filename Value="uos_dsp_noiseremoval.pas"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="168"/>
         <CursorPos X="26" Y="177"/>
         <UsageCount Value="15"/>
@@ -586,11 +586,9 @@ install:
       </Unit71>
       <Unit72>
         <Filename Value="../../pcaudiolib_pas/audio.pas"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="99"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit72>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
@@ -711,8 +709,8 @@ install:
         <Caret Line="753" Column="22" TopLine="743"/>
       </Position29>
       <Position30>
-        <Filename Value="../../pcaudiolib_pas/audio.pas"/>
-        <Caret Line="109" Column="34" TopLine="96"/>
+        <Filename Value="simpleplayer.ppr"/>
+        <Caret Line="22"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -735,9 +733,7 @@ install:
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <GenerateDebugInfo Value="False"/>
         <DebugInfoType Value="dsDwarf3"/>
-        <StripSymbols Value="True"/>
         <UseExternalDbgSyms Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>

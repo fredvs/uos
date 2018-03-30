@@ -49,9 +49,11 @@ var
  {$ENDIF}
 
      {$if defined(cpu64) and defined(linux) }
-    PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
-    SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
-    SoundFilename := ordir + 'sound/test.ogg';
+  SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
+  PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
+ // SF_FileName := ordir + 'lib/Linux/64bit/libsndfile.so.1.0.29';
+  
+   SoundFilename := ordir + 'sound/test.ogg';
    {$ENDIF}
    
    {$if defined(cpu86) and defined(linux)}
@@ -98,7 +100,8 @@ var
 
    if res = 0 then begin
     writeln();
-  //  writeln('Libraries version: '+ uos_GetInfoLibraries());
+ 
+    writeln('Libraries version: '+ uos_GetInfoLibraries());
 
     //// Create the player.
     //// PlayerIndex : from 0 to what your computer can do !
@@ -114,11 +117,15 @@ var
     //////////// PlayerIndex : Index of a existing Player
     ////////// FileName : filename of audio file
     //  result : -1 nothing created, otherwise Input Index in array
-
-    InputIndex1 := uos_AddFromFile(PlayerIndex1,(pchar(SoundFilename)));
     
+    InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar((SoundFilename)), 
+    -1, -1, -1);
+    
+      writeln('InputIndex1 = ' + inttostr(InputIndex1));
+     
       if InputIndex1 > -1 then
   
+  begin
     //// add a Output into device with default parameters
     //////////// PlayerIndex : Index of a existing Player
     //  result : -1 nothing created, otherwise Output Index in array
@@ -132,8 +139,6 @@ var
        {$endif}
        
          writeln('OutputIndex1 = ' + inttostr(OutputIndex1));
-       
-    //   z := 0;  writeln(inttostr(3 div z));   
     
     if OutputIndex1 > -1 then 
     begin
@@ -145,13 +150,12 @@ var
     writeln('Title: ' + uos_InputGetTagTitle(PlayerIndex1, InputIndex1));
     sleep(1500);
     writeln(); 
-    y := 0;
-   // x := 1 div y;
     writeln('Artist: ' + uos_InputGetTagArtist(PlayerIndex1, InputIndex1));
     writeln;  
  
     sleep(2000);
     
+     end;
      end;
  end;
 end;
@@ -164,7 +168,7 @@ end;
  //   writeln('Press a key to exit...');
  //   readln;
    writeln('Ciao...');
-     uos_free(); // Do not forget this !
+    uos_free(); // Do not forget this !
     Terminate;   
   end;
 
