@@ -2173,6 +2173,7 @@ var
   ms:word=0;  
   
   begin 
+  Result := sysutils.EncodeTime(0, 0, 0, 0); 
   if (isAssigned = True) then 
   begin 
      tmp := InputPositionSeconds(InputIndex); 
@@ -2183,9 +2184,9 @@ var
      h := trunc(tmp / 3600); 
      m := trunc(tmp / 60 - h * 60); 
      s := trunc(tmp - (h * 3600 + m * 60)); 
+     Result := sysutils.EncodeTime(h, m, s, ms);  
   end; 
-  Result := sysutils.EncodeTime(h, m, s, ms); 
-  {$IF DEFINED(debug)} 
+ {$IF DEFINED(debug)} 
   WriteLn('EncodeTime(): '+ timetostr(Result)); 
   {$endif}   
 end;  
