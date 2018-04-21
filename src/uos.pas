@@ -2164,25 +2164,31 @@ Result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.Position / StreamIn[InputIndex].Data.SampleRate;
 end;
 
-function Tuos_Player.InputPositionTime(InputIndex: cint32): TTime;
-var
-  tmp: float;
-  h, m, s, ms: word;
-begin
-Result := sysutils.EncodeTime(0, 0, 0, 0);
-  if (isAssigned = True) then tmp := InputPositionSeconds(InputIndex);
-  {$IF DEFINED(debug)}
-	WriteLn('InputPositionTime(): InputPositionSeconds: '+ floattostr(tmp));
-  {$endif}
-  ms := trunc(frac(tmp) * 1000);
-  h := trunc(tmp / 3600);
-  m := trunc(tmp / 60 - h * 60);
-  s := trunc(tmp - (h * 3600 + m * 60));
-  Result := sysutils.EncodeTime(h, m, s, ms);
- {$IF DEFINED(debug)}
-	WriteLn('EncodeTime(): '+ timetostr(Result));
-  {$endif}  
-end;
+function Tuos_Player.InputPositionTime(InputIndex: cint32): TTime; 
+var 
+  tmp: float=0.0;                
+  h:word=0;                      
+  m:word=0;    
+  s:word=0;    
+  ms:word=0;  
+  
+  begin 
+  if (isAssigned = True) then 
+  begin 
+     tmp := InputPositionSeconds(InputIndex); 
+     {$IF DEFINED(debug)} 
+     WriteLn('InputPositionTime(): InputPositionSeconds: '+ floattostr(tmp)); 
+     {$endif} 
+     ms := trunc(frac(tmp) * 1000); 
+     h := trunc(tmp / 3600); 
+     m := trunc(tmp / 60 - h * 60); 
+     s := trunc(tmp - (h * 3600 + m * 60)); 
+  end; 
+  Result := sysutils.EncodeTime(h, m, s, ms); 
+  {$IF DEFINED(debug)} 
+  WriteLn('EncodeTime(): '+ timetostr(Result)); 
+  {$endif}   
+end;  
 
 
 // for mp3 and opus files only

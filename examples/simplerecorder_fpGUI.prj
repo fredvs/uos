@@ -814,7 +814,7 @@ files=
  a=0,8229,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/msegui/apps/ide/compstore/
+storedir=/home/fred/uos/examples/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -854,7 +854,7 @@ findhistory=20
  mono2
 findoptions=1
 editpos=4
- 0,219
+ 0,163
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -863,7 +863,7 @@ bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 sourcefiles=4
- /home/fred/uos/examples/simplerecorder_fpGUI.pas
+ ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_portaudio.pas
@@ -904,7 +904,7 @@ windowlayout=547
  x=0
  y=0
  cx=1147
- cy=604
+ cy=605
  rcx=0
  rcy=0
  [mainfo]
@@ -923,7 +923,7 @@ windowlayout=547
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1147,604
+  basedock,0,0,1147,605
  focusedchild=0
  wsize=0
  active=1
@@ -994,7 +994,7 @@ windowlayout=547
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=stackfo
  parent=
  mdistate=0
  nx=0
@@ -1039,7 +1039,7 @@ windowlayout=547
  x=0
  y=0
  cx=205
- cy=455
+ cy=456
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1051,7 +1051,7 @@ windowlayout=547
  sorted=0
  col=1
  row=-1073741823
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1252,7 +1252,7 @@ windowlayout=547
  ncx=0
  ncy=0
  x=0
- y=512
+ y=513
  cx=1147
  cy=92
  rcx=0
@@ -1399,14 +1399,14 @@ windowlayout=547
  x=208
  y=0
  cx=939
- cy=455
+ cy=456
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1435,7 +1435,7 @@ windowlayout=547
  x=0
  y=54
  cx=1147
- cy=455
+ cy=456
  rcx=0
  rcy=0
 [targetconsole]

@@ -81,14 +81,23 @@ finddialog=8
  y=209
  cx=331
  cy=116
-replacedialog=32
+replacedialog=33
  [replacedialogfo.promptonreplace]
  value=1
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=//
- history=19
+ value=:Pcst_item
+ history=20
+  :Pcst_item
+  :Pcst_val
+  :Pcst_features
+  :Pcst_uttfunc
+  :Pcst_utterance
+  :Pcst_tokenstream
+  :Pcst_string
+  :Pcst_voice
+  Pcst_voice
   //
   -1, 0, -1, -1);
   ;  //
@@ -100,18 +109,10 @@ replacedialog=32
   uosInit.uosLoadResult
   uosInit.uosLevelArray
   uosInit.uosPlayers
-  uosInit.tempchan
-  uosInit.tempLibOpen
-  uosInit.tempSampleFormat
-  uosInit.tempSamplerate
-  uosInit.tempoutmemory
-  uosInit.
-  DocView
-  
  [replacedialogfo]
  stackedunder=
- x=765
- y=294
+ x=377
+ y=315
  cx=437
  cy=171
 options=114
@@ -435,6 +436,7 @@ forcezorder=-1
 stripmessageesc=0
 copymessages=0
 closemessages=0
+enablepurpose=0
 checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
@@ -822,17 +824,17 @@ path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
 line=5
- 5965
- 5278
- 115
+ 5971
+ 5284
+ 113
  1563
- 131
+ 129
 address=5
- 4860901
- 4850065
- 4198027
- 4789631
- 4198207
+ 4861013
+ 4850177
+ 4198138
+ 4789743
+ 4198318
 addbkpt=5
  0
  0
@@ -892,7 +894,7 @@ files=
  a=0,8229,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/uos/examples/apps/ide/compstore/
+storedir=/home/fred/msegui/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -908,8 +910,17 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=addfromfile
+finddtext=InputPositionTim
 findhistory=20
+ InputPositionTim
+ :cst_item
+ :cst_val
+ :cst_features
+ :cst_uttfunc
+ :cst_utterance
+ :cst_tokenstream
+ :cst_string
+ :cst_voice
  addfromfile
  $if
  $ifdef
@@ -921,19 +932,9 @@ findhistory=20
  pa_
  writeout
  HandleSt
- TypePut
- device
- intodevice
- pcaudio
- uos_LoadLib
- unloadlibCust
- loadlib
- of_f
- paloaderr
 findoptions=1
-editpos=15
- 0,188
- 0,6476
+editpos=16
+ 0,99
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -947,6 +948,8 @@ editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,0
+ 0,2174
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -962,7 +965,8 @@ bookmarks11=0
 bookmarks12=0
 bookmarks13=0
 bookmarks14=0
-sourcefiles=15
+bookmarks15=0
+sourcefiles=16
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -978,7 +982,8 @@ sourcefiles=15
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=15
+ ${PROJECTDIR}/uos.pas
+relpaths=16
  consoleplay.pas
  uos.pas
  uos_flat.pas
@@ -994,7 +999,9 @@ relpaths=15
  uos_flat.pas
  uos_libsndfile.pas
  uos_flat.pas
-ismoduletexts=15
+ uos.pas
+ismoduletexts=16
+ 0
  0
  0
  0
@@ -1023,8 +1030,9 @@ nomenumodules=2
  0
  0
 [sourcefo.files_tab]
-order=15
+order=16
  0
+ 15
  14
  13
  9
@@ -1040,7 +1048,7 @@ order=15
  7
  8
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=635
  [mainfo.basedock]
@@ -1068,8 +1076,8 @@ windowlayout=635
  ny=0
  ncx=0
  ncy=0
- x=125
- y=46
+ x=55
+ y=27
  cx=1157
  cy=621
  rcx=0
@@ -1191,7 +1199,7 @@ windowlayout=635
  x=0
  y=0
  cx=205
- cy=523
+ cy=526
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1202,7 +1210,7 @@ windowlayout=635
  sortdescend1=0
  sorted=0
  col=1
- row=-1073741823
+ row=7
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1506,7 +1514,7 @@ windowlayout=635
  x=0
  y=0
  cx=1356
- cy=58
+ cy=55
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1522,7 +1530,7 @@ windowlayout=635
  x=0
  y=0
  cx=1356
- cy=61
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1532,7 +1540,7 @@ windowlayout=635
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/consoleplay.pas
+ value=/home/fred/uos/examples/uos.pas
  history=50
   /home/fred/pcaudiolib_pas/src/uos_demo/mainmse_sp.pas
   /home/fred/pcaudiolib-io/src/pulseaudio.c
@@ -1601,7 +1609,7 @@ windowlayout=635
  x=208
  y=0
  cx=1148
- cy=523
+ cy=526
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1635,9 +1643,9 @@ windowlayout=635
  ncx=0
  ncy=0
  x=0
- y=61
+ y=58
  cx=1356
- cy=523
+ cy=526
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

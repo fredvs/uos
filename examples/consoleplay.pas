@@ -51,9 +51,7 @@ var
      {$if defined(cpu64) and defined(linux) }
   SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
- // SF_FileName := ordir + 'lib/Linux/64bit/libsndfile.so.1.0.29';
-  
-   SoundFilename := ordir + 'sound/test.ogg';
+    SoundFilename := ordir + 'sound/test.ogg';
    {$ENDIF}
    
    {$if defined(cpu86) and defined(linux)}
@@ -101,7 +99,7 @@ var
    if res = 0 then begin
     writeln();
  
-    writeln('Libraries version: '+ uos_GetInfoLibraries());
+//    writeln('Libraries version: '+ uos_GetInfoLibraries());
 
     //// Create the player.
     //// PlayerIndex : from 0 to what your computer can do !

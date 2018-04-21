@@ -29,11 +29,11 @@ findinfiledialog=59
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=0
+ value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=1
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
@@ -51,8 +51,9 @@ findinfiledialog=59
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=mifSelected
+ value=uos_callbacks
  history=20
+  uos_callbacks
   mifSelected
   tm_get_filele
   sf_count_t
@@ -72,7 +73,6 @@ findinfiledialog=59
   DSPNoiseRemovalin
   DSPNoiseRemoval
   setDSPVolumeout
-  setDSPVolumein
  [findinfileadialogfo]
  stackedunder=
  x=615
@@ -160,7 +160,7 @@ options=114
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=17
+ rowheight=16
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -182,7 +182,7 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=162
+ y=163
  xprop=1
  yprop=0.33066132264529
  [projectoptionsfo.macrogrid]
@@ -209,7 +209,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=770
  width0=47
@@ -260,8 +260,8 @@ settings=8
  [settings_form]
  x=447
  y=145
- cx=471
- cy=446
+ cx=473
+ cy=498
  wsize=0
  active=1
  visible=1
@@ -528,8 +528,8 @@ compilerusedon=29
  3891
  4
  8
- 128
  64
+ 128
  0
  0
  0
@@ -984,8 +984,12 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=addintode
+finddtext=addfromu
 findhistory=20
+ addfromu
+ readurl
+ opus
+ uos_callbacks
  addintode
  outframes -1
  soundtouchpl
@@ -1002,12 +1006,9 @@ findhistory=20
  InputFiltersGetLevel
  Tuos_Player.DSPLeve
  x < OutFrames
- getbpm
- bpm
- getbpmplug
- soundtouchplug
 findoptions=1
-editpos=15
+editpos=18
+ 0,5102
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1019,9 +1020,11 @@ editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,522
  0,-1073741823
- 7,629
- 0,134
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1038,8 +1041,11 @@ bookmarks11=0
 bookmarks12=0
 bookmarks13=0
 bookmarks14=0
-sourcefiles=15
- ${PROJECTDIR}/uos.pas
+bookmarks15=0
+bookmarks16=0
+bookmarks17=0
+sourcefiles=18
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_flat.pas
@@ -1051,10 +1057,13 @@ sourcefiles=15
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_opusfile.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ /home/fred/uos/examples/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  /home/fred/fpgui/src/corelib/fpg_main.pas
-relpaths=15
+ ${PROJECTDIR}/uos_httpgetthread.pas
+ ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
+ ${PROJECTDIR}/uos_opusfile.pas
+relpaths=18
  uos.pas
  uos_mpg123.pas
  define.inc
@@ -1070,7 +1079,13 @@ relpaths=15
  simpleplayer_fpGUI.pas
  uos_flat.pas
  fpgui/src/corelib/fpg_main.pas
-ismoduletexts=15
+ uos_httpgetthread.pas
+ fpg_style_chrome_silver_flatmenu.pas
+ uos_opusfile.pas
+ismoduletexts=18
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1091,9 +1106,12 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=15
+order=18
  0
+ 17
  12
+ 15
+ 16
  14
  13
  9
@@ -1108,7 +1126,7 @@ order=15
  1
  2
 firsttab=0
-index=1
+index=2
 [layout]
 windowlayout=597
  [mainfo.basedock]
@@ -1165,7 +1183,7 @@ windowlayout=597
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1269,8 +1287,8 @@ windowlayout=597
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=2
+ col=1
+ row=0
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1653,7 +1671,7 @@ windowlayout=597
   /home/fred/Téléchargements/ideU-296c231f492dc77aa758c3f555e5d3e0a62c7a19/src/msedesigner.pas
   /home/fred/ideu/src/msedesigner.pas
  [debuggerfo.project_options]
- value=B
+ value=1
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1676,7 +1694,7 @@ windowlayout=597
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

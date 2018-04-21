@@ -110,7 +110,7 @@ uses
     2:
     begin
       ps := @Data.Buffer;
-     while x < Data.OutFrames  do
+     while x < Data.OutFrames -1 do
           begin
         samplei := round((ps^[x] + ps^[x+1])/2);
         ps^[x] := samplei ;
@@ -122,7 +122,7 @@ uses
     1:
     begin
       pl := @Data.Buffer;
-     while x < Data.OutFrames  do
+     while x < Data.OutFrames -1 do
           begin
         samplei := round((pl^[x] + pl^[x+1])/2);   
         pl^[x] := samplei ;
@@ -134,7 +134,7 @@ uses
     0:
     begin
       pf := @Data.Buffer;
-     while x < Data.OutFrames  do
+     while x < Data.OutFrames -1 do
           begin
         samplef := (pf^[x] + pf^[x+1])/2;   
         pf^[x] := samplef ;
