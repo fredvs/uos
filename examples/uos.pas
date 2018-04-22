@@ -1688,10 +1688,10 @@ function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos
  
   {$IF DEFINED(debug)} 
   writeln('After Filetobuffer');
-  writeln('length(tempoutmemory) =' +inttostr(length(tempoutmemory)));
+  writeln('length(result) =' +inttostr(length(result)));
   st := '';
-  for i := 0 to length(outmemory) -1 do
-  st := st + '|' + inttostr(i) + '=' + floattostr(tempoutmemory[i]);  
+  for i := 0 to length(result) -1 do
+  st := st + '|' + inttostr(i) + '=' + floattostr(result[i]);  
   WriteLn('OUTPUT DATA into portaudio------------------------------');
   WriteLn(st);
   {$endif}
@@ -2227,6 +2227,7 @@ begin
 // custom code for reading ID3Tag ---> problems with  mpg123_id3() 
 
    AssignFile(F, StreamIn[InputIndex].Data.Filename); 
+   FileMode:=fmOpenRead + fmShareDenyNone;
    Reset(F, 1); 
    Seek(F, FileSize(F) - 128); 
    BlockRead(F, BufferTag, SizeOf(BufferTag)); 
@@ -5308,8 +5309,6 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   for i := 0 to length(tempoutmemory) -1 do
   StreamIn[x].Data.memorybuffer[i] := tempoutmemory [i];
 
-//  writeln('length(tempoutmemory) =' +inttostr(length(tempoutmemory)));
-  
   {$IF DEFINED(debug)} 
   writeln('After Filetobuffer');
   writeln('length(tempoutmemory) =' +inttostr(length(tempoutmemory)));
@@ -5317,7 +5316,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   for i := 0 to length(tempoutmemory) -1 do
   st := st + '|' + inttostr(i) + '=' + floattostr(tempoutmemory[i]);  
   WriteLn('OUTPUT DATA into portaudio------------------------------');
-// WriteLn(st);
+  WriteLn(st);
   {$endif}
   
   StreamIn[x].Data.Length := tempLength;
@@ -6153,6 +6152,9 @@ begin
 // custom code for reading ID3Tag ---> problems with  mpg123_id3() 
 
    AssignFile(F, Filename); 
+   
+   FileMode:=fmOpenRead + fmShareDenyNone;
+   
    Reset(F, 1); 
    Seek(F, FileSize(F) - 128); 
    BlockRead(F, BufferTag, SizeOf(BufferTag)); 

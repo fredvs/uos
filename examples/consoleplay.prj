@@ -824,8 +824,8 @@ path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
 line=5
- 5972
- 5285
+ 5971
+ 5286
  113
  1563
  129
@@ -910,8 +910,14 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=InputPositionTim
+finddtext=After Filetobuffe
 findhistory=20
+ After Filetobuffe
+ writeln('After Filetobuffer'); 
+ PlugHandle
+ PlugHandle:=
+ AssignFile
+ addfromfile
  InputPositionTim
  :cst_item
  :cst_val
@@ -921,20 +927,14 @@ findhistory=20
  :cst_tokenstream
  :cst_string
  :cst_voice
- addfromfile
  $if
  $ifdef
  addfrom
  audio_object
  AddIntoDevOut
- intodev
- pa_clo
- pa_
- writeout
- HandleSt
 findoptions=1
 editpos=16
- 0,99
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -949,7 +949,7 @@ editpos=16
  0,-1073741823
  0,-1073741823
  0,0
- 0,2186
+ 0,1694
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1103,9 +1103,9 @@ windowlayout=635
  cy=314
  rcx=0
  rcy=0
- wsize=0
+ wsize=5
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1526,7 +1526,7 @@ windowlayout=635
  nx=0
  ny=0
  ncx=1356
- ncy=61
+ ncy=58
  x=0
  y=0
  cx=1356
@@ -1670,7 +1670,7 @@ windowlayout=635
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=3
  nx=0
