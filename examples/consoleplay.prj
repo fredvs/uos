@@ -830,11 +830,11 @@ line=5
  1563
  129
 address=5
- 4861013
- 4850177
- 4198138
- 4789743
- 4198318
+ 4860997
+ 4850161
+ 4198027
+ 4789631
+ 4198207
 addbkpt=5
  0
  0
@@ -910,8 +910,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=After Filetobuffe
+finddtext={$if defined(cpu64)}
 findhistory=20
+ {$if defined(cpu64)}
  After Filetobuffe
  writeln('After Filetobuffer'); 
  PlugHandle
@@ -931,7 +932,6 @@ findhistory=20
  $ifdef
  addfrom
  audio_object
- AddIntoDevOut
 findoptions=1
 editpos=16
  0,-1073741823
@@ -948,8 +948,8 @@ editpos=16
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
- 0,1694
+ 0,-1073741823
+ 0,9064
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1103,9 +1103,9 @@ windowlayout=635
  cy=314
  rcx=0
  rcy=0
- wsize=5
+ wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1670,7 +1670,7 @@ windowlayout=635
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0

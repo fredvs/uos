@@ -9053,19 +9053,8 @@ begin
   {$IF DEFINED(webstream)}
     httpget:= nil;
 
-//TODO: check this block
-    {$IF DEFINED(windows)}
-      {$if defined(cpu64)}
-      InHandle:= 0;//qword
-      OutHandle:= 0;
-      {$else}
-      InHandle:= 0;//longword
-      OutHandle:= 0;
-      {$ENDIF}
-    {$else}
-    InHandle:= -1;//cint32
-    OutHandle:= -1;
-    {$endif}
+    InHandle:= 0;
+    OutHandle:= 0;   
 
     InPipe:= nil;
     OutPipe:= nil;
@@ -9074,7 +9063,6 @@ begin
   {$IF DEFINED(portaudio)}
   with PAParam do
   begin
-//TODO: check if the default settings are ok
    device:= 0;
    channelCount:= 0;
    sampleFormat:= nil;
