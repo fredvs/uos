@@ -882,8 +882,10 @@ envvarons=0
 [edit]
 hintwidth=314
 hintheight=214
-finddtext=mono
+finddtext=queue
 findhistory=20
+ queue
+ endproc
  mono
  reverse
  soundtou
@@ -902,11 +904,9 @@ findhistory=20
  {$ifdef windows}cdecl{$else}cdecl{$endif};
  {$ifdef windows}stdcall{$else}cdecl{$endif};
  doterminate
- writeo
- writeplu
 findoptions=1
 editpos=12
- 0,-1073741823
+ 0,6683
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -939,7 +939,7 @@ sourcefiles=12
  ${PROJECTDIR}/mainmse_sp.pas
  ${PROJECTDIR}/SimplePlayer_MSE.pas
  ${PROJECTDIR}/define.inc
- /home/fred/uos/examples/mainmse_sp.pas
+ ${PROJECTDIR}/mainmse_sp.pas
  ${PROJECTDIR}/songplayer.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_pcaudio.pas
@@ -992,7 +992,7 @@ order=12
  3
  2
 firsttab=0
-index=4
+index=1
 [layout]
 windowlayout=558
  [mainfo.basedock]
@@ -1235,7 +1235,7 @@ windowlayout=558
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1252,10 +1252,10 @@ windowlayout=558
  active=0
  visible=1
  [objectinspectorfo.grid]
- propcolwidthref=291
- width0=129
+ propcolwidthref=306
+ width0=136
  sortdescend0=0
- width1=156
+ width1=164
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1476,7 +1476,7 @@ windowlayout=558
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/mainmse_sp.pas
+ value=/home/fred/uos/examples/uos.pas
  history=0
  [debuggerfo.project_options]
  value=1
@@ -1502,7 +1502,7 @@ windowlayout=558
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
  nx=0
@@ -1537,7 +1537,7 @@ windowlayout=558
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=objectinspectorfo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0

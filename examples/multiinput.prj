@@ -740,8 +740,9 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=ClosePlayer0
-findhistory=7
+finddtext=endproc
+findhistory=8
+ endproc
  ClosePlayer0
  ClosePlayer1
  AddFromEndlessMuted
@@ -750,12 +751,13 @@ findhistory=7
  0.0
  AddFromSynth
 findoptions=1
-editpos=10
+editpos=11
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 1,446
+ 0,474
  0,-1073741823
+ 0,6924
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -771,7 +773,8 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 bookmarks9=0
-sourcefiles=10
+bookmarks10=0
+sourcefiles=11
  ${PROJECTDIR}/multiplayer.lpr
  ${PROJECTDIR}/main_mp.pas
  ${PROJECTDIR}/multiinput.lpr
@@ -782,7 +785,8 @@ sourcefiles=10
  ${PROJECTDIR}/multiinput.lpr
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/multiinput.lpr
-relpaths=10
+ /home/fred/uosok/examples/main_mi.pas
+relpaths=11
  multiplayer.lpr
  main_mp.pas
  multiinput.lpr
@@ -793,7 +797,9 @@ relpaths=10
  multiinput.lpr
  uos_flat.pas
  multiinput.lpr
-ismoduletexts=10
+ uosok/examples/main_mi.pas
+ismoduletexts=11
+ 0
  0
  0
  0
@@ -809,11 +815,12 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=10
+order=11
  0
  1
  2
  3
+ 10
  7
  6
  5
@@ -821,9 +828,9 @@ order=10
  8
  4
 firsttab=1
-index=3
+index=7
 [layout]
-windowlayout=537
+windowlayout=541
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1303,8 +1310,12 @@ windowlayout=537
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/main_mi.pas
- history=0
+ value=/home/fred/uos/examples/uos.pas
+ history=4
+  /home/fred/strumpract/src/commander.pas
+  /home/fred/strumpract/src/msefiledialog.pas
+  /home/fred/strumpract/src/dialogfiles.pas
+  /home/fred/strumpract/src/recorder.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]

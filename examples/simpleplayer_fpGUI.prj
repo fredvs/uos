@@ -1021,7 +1021,7 @@ editpos=18
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,522
+ 57,508
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1233,7 +1233,7 @@ windowlayout=597
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=stackfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1370,7 +1370,7 @@ windowlayout=597
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1695,7 +1695,7 @@ windowlayout=597
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=disassfo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0

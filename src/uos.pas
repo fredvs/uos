@@ -6870,7 +6870,7 @@ begin
 
 //  Execute LoopEndProc procedure
    {$IF FPC_FULLVERSION>=20701}
-   thethread.queue(thethread,LoopEndProc);
+   thethread.synchronize(thethread,LoopEndProc);
    {$else}
    {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
    begin
@@ -6888,7 +6888,7 @@ begin
    if LoopEndProc <> nil then
 
    {$IF FPC_FULLVERSION>=20701}
-   thethread.queue(thethread,@endprocjava);
+   thethread.synchronize(thethread,@endprocjava);
    {$else}
    thethread.synchronize(thethread,@endprocjava);//  Execute EndProc procedure
    {$endif}
@@ -6900,32 +6900,20 @@ procedure Tuos_Player.DoEndProc;
 begin
 {$IF DEFINED(mse)}
  if EndProc <> nil then
-   begin
-   application.queueasynccall(EndProc);
-   end;
-     {$else}
+     application.queueasynccall(EndProc);
+ {$else}
 
  {$IF not DEFINED(Library)}
   if EndProc <> nil then
-  {$IF FPC_FULLVERSION>=20701}
-  begin
-  thethread.synchronize(thethread,EndProc);   // regression to synchronize, queue() has problems...
-  end;
-  {$else}
   thethread.synchronize(thethread,EndProc);//  Execute EndProc procedure
-  {$endif}
 
   {$elseif not DEFINED(java)}
   if (EndProc <> nil) then
   EndProc;
   {$else}
   if (EndProc <> nil) then
-  {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@endprocjava);
-  {$else}
   thethread.synchronize(thethread,@endprocjava);//  Execute EndProc procedure
-  {$endif}
-  
+ 
   {$endif}
 
   {$endif}
@@ -6974,7 +6962,7 @@ begin
   {$IF not DEFINED(Library)}
   if EndProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,EndProc);
+  thethread.synchronize(thethread,EndProc);
   {$else}
   thethread.synchronize(thethread,EndProc);//  Execute EndProc procedure
   {$endif}
@@ -6985,7 +6973,7 @@ begin
   {$else}
   if (EndProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@endprocjava);
+  thethread.synchronize(thethread,@endprocjava);
   {$else}
   thethread.synchronize(thethread,@endprocjava);//  Execute EndProc procedure
   {$endif}
