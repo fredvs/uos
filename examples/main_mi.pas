@@ -454,13 +454,7 @@ begin
   CheckBox7Change(Sender);
   CheckBox8Change(Sender);
  
-  /////// procedure to execute when stream is terminated
-    uos_EndProc(PlayerIndex0, @ClosePlayer0);
-  ///// Assign the procedure of object to execute at end
-  //////////// PlayerIndex : Index of a existing Player
-  //////////// ClosePlayer1 : procedure of object to execute inside the loop
-
-   application.ProcessMessages;
+    application.ProcessMessages;
    
    button14.Enabled := true;
 end;

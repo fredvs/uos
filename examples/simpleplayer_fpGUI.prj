@@ -434,6 +434,7 @@ forcezorder=-1
 stripmessageesc=0
 copymessages=0
 closemessages=0
+enablepurpose=0
 checkmethods=1
 colorerror=-1610612729
 colorwarning=-1610612712
@@ -968,7 +969,7 @@ files=
  a=0,8229,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/uos/examples/apps/ide/compstore/
+storedir=/home/fred/msegui/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -1008,7 +1009,7 @@ findhistory=20
  x < OutFrames
 findoptions=1
 editpos=18
- 0,5102
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1045,7 +1046,7 @@ bookmarks15=0
 bookmarks16=0
 bookmarks17=0
 sourcefiles=18
- /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_flat.pas
@@ -1057,7 +1058,7 @@ sourcefiles=18
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_opusfile.pas
- /home/fred/uos/examples/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
  /home/fred/fpgui/src/corelib/fpg_main.pas
  ${PROJECTDIR}/uos_httpgetthread.pas
@@ -1183,7 +1184,7 @@ windowlayout=597
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1694,7 +1695,7 @@ windowlayout=597
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=disassfo
  parent=
  mdistate=0
  nx=0
