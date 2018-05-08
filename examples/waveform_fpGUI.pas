@@ -50,11 +50,11 @@ var
 
   procedure Twaveform.DrawWaveForm;
   begin
-     waveformdata := uos_InputGetLevelArray(PlayerIndex1, In1Index);
+    waveformdata := uos_InputGetLevelArray(PlayerIndex1, In1Index);
     fpgapplication.ProcessMessages;
     button1.tag := 1;
     custom1.Visible := True;
-
+  
   end;
 
   procedure Twaveform.btndrawclick(Sender: TObject);
@@ -64,8 +64,8 @@ var
     windowtitle := 'Wave Form.    uos version ' + IntToStr(uos_getversion());
 
     PlayerIndex1 := 0;
-
-    //// Create the player.
+    
+        //// Create the player.
     uos_CreatePlayer(PlayerIndex1);
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...

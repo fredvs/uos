@@ -6909,7 +6909,7 @@ begin
   if EndProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
   begin
-  thethread.queue(thethread,EndProc);
+  thethread.synchronize(thethread,EndProc);   // regression to synchronize, queue() has problems...
   end;
   {$else}
   thethread.synchronize(thethread,EndProc);//  Execute EndProc procedure

@@ -760,7 +760,7 @@ editpos=10
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,9
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -927,7 +927,7 @@ windowlayout=537
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=stackfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1288,8 +1288,8 @@ windowlayout=537
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1147
+ ncy=54
  x=0
  y=0
  cx=1147
@@ -1329,7 +1329,7 @@ windowlayout=537
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

@@ -340,6 +340,7 @@ forcezorder=0
 stripmessageesc=0
 copymessages=0
 closemessages=0
+enablepurpose=0
 checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
@@ -715,8 +716,9 @@ envvarons=0
 [edit]
 hintwidth=314
 hintheight=214
-finddtext=InputSetLevel
-findhistory=11
+finddtext=button1.tag
+findhistory=12
+ button1.tag
  InputSetLevel
  learray
  array
@@ -731,8 +733,8 @@ findhistory=11
 findoptions=1
 editpos=9
  0,-1073741823
- 0,-1073741823
- 0,625
+ 0,96
+ 0,758
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -794,9 +796,9 @@ order=9
  3
  4
 firsttab=0
-index=2
+index=1
 [layout]
-windowlayout=535
+windowlayout=539
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -810,7 +812,7 @@ windowlayout=535
  x=0
  y=0
  cx=1147
- cy=604
+ cy=605
  rcx=0
  rcy=0
  [mainfo]
@@ -829,7 +831,7 @@ windowlayout=535
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1147,604
+  basedock,0,0,1147,605
  focusedchild=0
  wsize=0
  active=1
@@ -945,7 +947,7 @@ windowlayout=535
  x=0
  y=0
  cx=205
- cy=455
+ cy=456
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -957,7 +959,7 @@ windowlayout=535
  sorted=0
  col=1
  row=-1073741823
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1080,7 +1082,11 @@ windowlayout=535
  visible=0
  [symbolfo.grid]
  propcolwidthref=207
- values0=14
+ values0=18
+  
+  
+  
+  
   
   
   
@@ -1146,7 +1152,7 @@ windowlayout=535
  ncx=0
  ncy=0
  x=0
- y=512
+ y=513
  cx=1147
  cy=92
  rcx=0
@@ -1274,7 +1280,7 @@ windowlayout=535
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
+ value=/home/fred/uos/examples/waveform_fpGUI.pas
  history=0
  [debuggerfo.project_options]
  value=B
@@ -1293,7 +1299,7 @@ windowlayout=535
  x=208
  y=0
  cx=939
- cy=455
+ cy=456
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1329,7 +1335,7 @@ windowlayout=535
  x=0
  y=54
  cx=1147
- cy=455
+ cy=456
  rcx=0
  rcy=0
 [targetconsole]
