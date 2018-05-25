@@ -126,7 +126,7 @@ options=114
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=17
+ rowheight=16
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -175,7 +175,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=5
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -382,6 +382,7 @@ forcezorder=0
 stripmessageesc=0
 copymessages=0
 closemessages=0
+enablepurpose=0
 checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
@@ -508,9 +509,9 @@ debuggerusedon=6
  0
  127
 exeusedon=14
- 4095
+ 3903
  0
- 0
+ 192
  0
  0
  0
@@ -777,7 +778,7 @@ editpos=6
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 63,10
+ 0,6
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -827,7 +828,7 @@ windowlayout=537
  x=0
  y=0
  cx=1147
- cy=604
+ cy=605
  rcx=0
  rcy=0
  [mainfo]
@@ -846,7 +847,7 @@ windowlayout=537
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1147,604
+  basedock,0,0,1147,605
  focusedchild=0
  wsize=0
  active=1
@@ -962,7 +963,7 @@ windowlayout=537
  x=0
  y=0
  cx=205
- cy=455
+ cy=456
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -974,7 +975,7 @@ windowlayout=537
  sorted=0
  col=1
  row=-1073741823
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1167,7 +1168,7 @@ windowlayout=537
  ncx=0
  ncy=0
  x=0
- y=512
+ y=513
  cx=1147
  cy=92
  rcx=0
@@ -1312,14 +1313,14 @@ windowlayout=537
  x=208
  y=0
  cx=939
- cy=455
+ cy=456
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1348,7 +1349,7 @@ windowlayout=537
  x=0
  y=54
  cx=1147
- cy=455
+ cy=456
  rcx=0
  rcy=0
 [targetconsole]

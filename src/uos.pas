@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2180508;
+  uos_version : cint32 = 2180525;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -6688,7 +6688,7 @@ begin
   {$IF not DEFINED(Library)}
   if (StreamOut[x].DSP[x3].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,StreamOut[x].DSP[x3].LoopProc);
+  thethread.synchronize(thethread,StreamOut[x].DSP[x3].LoopProc);
   {$else}
  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
  begin
@@ -6707,7 +6707,7 @@ begin
   {$else}
   if (StreamOut[x].DSP[x3].LoopProc <> nil) then
   {$IF FPC_FULLVERSION >= 20701}
-  thethread.queue(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
+  thethread.synchronize(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
   {$else}
   thethread.synchronize(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
   {$endif}
@@ -6786,7 +6786,7 @@ begin
     {$IF not DEFINED(Library)}
   if (StreamIn[x].DSP[x2].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,StreamIn[x].DSP[x2].LoopProc);
+  thethread.synchronize(thethread,StreamIn[x].DSP[x2].LoopProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -6804,7 +6804,7 @@ begin
   {$else}
   if (StreamIn[x].DSP[x2].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@Streamin[x].DSP[x2].LoopProcjava);
+  thethread.synchronize(thethread,@Streamin[x].DSP[x2].LoopProcjava);
   {$else}
   thethread.synchronize(thethread,@Streamin[x].DSP[x2].LoopProcjava);
   {$endif}
@@ -7183,7 +7183,7 @@ begin
   {$IF not DEFINED(Library)}
   if StreamIn[x].LoopProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,StreamIn[x].LoopProc);
+  thethread.synchronize(thethread,StreamIn[x].LoopProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -7202,7 +7202,7 @@ begin
   {$else}
   if (StreamIn[x].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@Streamin[x].LoopProcjava);
+  thethread.synchronize(thethread,@Streamin[x].LoopProcjava);
   {$else}
   thethread.synchronize(thethread,@Streamin[x].LoopProcjava);
   {$endif}
@@ -7227,7 +7227,7 @@ begin
   if BeginProc <> nil then
 //  Execute BeginProc procedure
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,BeginProc);
+  thethread.synchronize(thethread,BeginProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -7244,7 +7244,7 @@ begin
   {$else}
   if BeginProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@BeginProcjava);
+  thethread.synchronize(thethread,@BeginProcjava);
   {$else}
   thethread.synchronize(thethread,@BeginProcjava);
   {$endif}
@@ -7268,7 +7268,7 @@ begin
   if LoopBeginProc <> nil then
 //  Execute BeginProc procedure
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,LoopBeginProc);
+  thethread.synchronize(thethread,LoopBeginProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -7285,7 +7285,7 @@ begin
   {$else}
   if loopBeginProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.queue(thethread,@loopBeginProcjava);
+  thethread.synchronize(thethread,@loopBeginProcjava);
   {$else}
   thethread.synchronize(thethread,@loopBeginProcjava);
   {$endif}

@@ -882,8 +882,9 @@ envvarons=0
 [edit]
 hintwidth=314
 hintheight=214
-finddtext=queue
+finddtext=synchronize
 findhistory=20
+ synchronize
  queue
  endproc
  mono
@@ -903,10 +904,9 @@ findhistory=20
  plughandle
  {$ifdef windows}cdecl{$else}cdecl{$endif};
  {$ifdef windows}stdcall{$else}cdecl{$endif};
- doterminate
 findoptions=1
 editpos=12
- 0,6683
+ 0,6709
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -914,7 +914,7 @@ editpos=12
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,47
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1007,8 +1007,8 @@ windowlayout=558
  ncy=0
  x=0
  y=0
- cx=1147
- cy=605
+ cx=1350
+ cy=692
  rcx=0
  rcy=0
  [mainfo]
@@ -1027,9 +1027,9 @@ windowlayout=558
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1147,605
+  basedock,0,0,1350,692
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1041,7 +1041,7 @@ windowlayout=558
  ny=0
  ncx=0
  ncy=0
- x=545
+ x=539
  y=189
  cx=818
  cy=314
@@ -1143,7 +1143,7 @@ windowlayout=558
  x=0
  y=0
  cx=205
- cy=456
+ cy=523
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1235,7 +1235,7 @@ windowlayout=558
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1250,7 +1250,7 @@ windowlayout=558
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [objectinspectorfo.grid]
  propcolwidthref=306
  width0=136
@@ -1348,9 +1348,9 @@ windowlayout=558
  ncx=0
  ncy=0
  x=0
- y=513
- cx=1147
- cy=92
+ y=587
+ cx=1350
+ cy=105
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1449,8 +1449,8 @@ windowlayout=558
  ncy=0
  x=0
  y=0
- cx=1147
- cy=51
+ cx=1350
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1465,8 +1465,8 @@ windowlayout=558
  ncy=54
  x=0
  y=0
- cx=1147
- cy=54
+ cx=1350
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1494,8 +1494,8 @@ windowlayout=558
  ncy=0
  x=208
  y=0
- cx=939
- cy=456
+ cx=1142
+ cy=523
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1529,15 +1529,15 @@ windowlayout=558
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1147
- cy=456
+ y=61
+ cx=1350
+ cy=523
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=805322875
- stackedunder=threadsfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

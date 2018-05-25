@@ -456,7 +456,7 @@ procedure uos_OutputAddDSPVolume(PlayerIndex: cint32; OutputIndex: cint32; VolLe
 // VolLeft : Left volume
 // VolRight : Right volume
 //  result : -1 nothing created, otherwise index of DSPIn in array
-// example  DSPIndex1 := uos_OutputAddDSPVolume(o,oututIndex1,1,1);
+// example  DSPIndex1 := uos_OutputAddDSPVolume(0,oututIndex1,1,1);
 
 procedure uos_InputSetDSPVolume(PlayerIndex: cint32; InputIndex: cint32;
   VolLeft: double; VolRight: double; Enable: boolean);

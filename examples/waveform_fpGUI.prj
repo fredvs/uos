@@ -716,8 +716,9 @@ envvarons=0
 [edit]
 hintwidth=314
 hintheight=214
-finddtext=button1.tag
-findhistory=12
+finddtext=getlevel
+findhistory=13
+ getlevel
  button1.tag
  InputSetLevel
  learray
@@ -733,12 +734,12 @@ findhistory=12
 findoptions=1
 editpos=9
  0,-1073741823
- 0,96
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 56,937
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -796,7 +797,7 @@ order=9
  3
  4
 firsttab=0
-index=1
+index=3
 [layout]
 windowlayout=539
  [mainfo.basedock]
@@ -1280,7 +1281,7 @@ windowlayout=539
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/waveform_fpGUI.pas
+ value=/home/fred/uos/examples/uos.pas
  history=0
  [debuggerfo.project_options]
  value=B
