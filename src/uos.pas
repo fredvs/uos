@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2180525;
+  uos_version : cint32 = 2180526;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -3546,7 +3546,7 @@ begin
   end;
   end;
   i := 0;
-  while i < (Data.OutFrames div ratio) do
+  while i < (Data.OutFrames div ratio) -1 do
   begin
 
   case Data.SampleFormat of
@@ -3740,7 +3740,7 @@ var
   begin
   ps := @Data.Buffer;
   ps2 := @Buffer2;
-  while x < Data.OutFrames  do
+  while x < Data.OutFrames -1 do
   begin  
   ps2^[x2] := (ps^[x]);
   ps2^[x2+1] := (ps^[x]);
@@ -3753,7 +3753,7 @@ var
   begin
   pl := @Data.Buffer;
   pl2 := @Buffer2;
-  while x < Data.OutFrames  do
+  while x < Data.OutFrames -1  do
   begin  
   pl2^[x2] := (pl^[x]);
   pl2^[x2+1] := (pl^[x]);
@@ -3766,7 +3766,7 @@ var
   begin
   pf := @Data.Buffer;
   pf2 := @Buffer2;
-  while x < Data.OutFrames  do
+  while x < Data.OutFrames -1  do
   begin  
   pf2^[x2] := (pf^[x]);
   pf2^[x2+1] := (pf^[x]);
