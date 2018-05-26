@@ -347,6 +347,11 @@ type
   
   VLeft, VRight: double;
   
+  hasfilters : boolean;
+  
+  nbfilters : cint32;
+  incfilters : cint32;
+  
   levelfilters : string;
   
   levelfiltersar : TDArFloat;
@@ -3375,7 +3380,6 @@ end;
 function DSPLevelString(Buffer: TDArFloat; SampleFormat, Ratio : cint32; var resfloatleft : cfloat; var resfloatright : cfloat): string;
 var
   x, OutFrames: cint32;
-  LevelLeft, Levelright : cfloat;
   ps: PDArShort;// if input is Int16 format
   pl: PDArLong;// if input is Int32 format
   pf: PDArFloat;// if input is Float32 format
@@ -3413,14 +3417,14 @@ OutFrames := length(buffer);
   end;
 
   if Abs(mins[0]) > Abs(maxs[0]) then
-  LevelLeft := Sqrt(Abs(mins[0]) / 32768)
+  resfloatLeft := Sqrt(Abs(mins[0]) / 32768)
   else
-  LevelLeft := Sqrt(Abs(maxs[0]) / 32768);
+  resfloatLeft := Sqrt(Abs(maxs[0]) / 32768);
 
   if Abs(mins[1]) > Abs(maxs[1]) then
-  Levelright := Sqrt(Abs(mins[1]) / 32768)
+  resfloatright := Sqrt(Abs(mins[1]) / 32768)
   else
-  Levelright := Sqrt(Abs(maxs[1]) / 32768);
+  resfloatright := Sqrt(Abs(maxs[1]) / 32768);
 
   end;
 
@@ -3450,14 +3454,14 @@ OutFrames := length(buffer);
   end;
 
   if Abs(minl[0]) > Abs(maxl[0]) then
-  LevelLeft := Sqrt(Abs(minl[0]) / 2147483648)
+  resfloatLeft := Sqrt(Abs(minl[0]) / 2147483648)
   else
-  LevelLeft := Sqrt(Abs(maxl[0]) / 2147483648);
+  resfloatLeft := Sqrt(Abs(maxl[0]) / 2147483648);
 
   if Abs(minl[1]) > Abs(maxl[1]) then
-  Levelright := Sqrt(Abs(minl[1]) / 2147483648)
+  resfloatright := Sqrt(Abs(minl[1]) / 2147483648)
   else
-  Levelright := Sqrt(Abs(maxl[1]) / 2147483648);
+  resfloatright := Sqrt(Abs(maxl[1]) / 2147483648);
   end;
 
   0:
@@ -3487,21 +3491,17 @@ OutFrames := length(buffer);
   end;
 
   if Abs(minf[0]) > Abs(maxf[0]) then
-  LevelLeft := Sqrt(Abs(minf[0]))
+  resfloatLeft := Sqrt(Abs(minf[0]))
   else
-  LevelLeft := Sqrt(Abs(maxf[0]));
+  resfloatLeft := Sqrt(Abs(maxf[0]));
 
   if Abs(minf[1]) > Abs(maxf[1]) then
-  Levelright := Sqrt(Abs(minf[1]))
+  resfloatright := Sqrt(Abs(minf[1]))
   else
-  Levelright := Sqrt(Abs(maxf[1]));
+  resfloatright := Sqrt(Abs(maxf[1]));
   end;
   end;
-  
-  resfloatright := Levelright;
-  resfloatleft := Levelleft;
-// writeln(floattostr(Levelleft) + '|' + floattostr(Levelright));
-  Result := floattostr(Levelleft) + '|' + floattostr(Levelright);
+  Result := floattostr(resfloatleft) + '|' + floattostr(resfloatright);
 end;
 
 
@@ -3510,9 +3510,6 @@ var
   i, ratio: cint32;
   ifbuf: boolean;
   arg, res, res2: cfloat;
-  Levelright : cfloat;
-  Levelleft : cfloat;
-
   ps, ps2: PDArShort;// if input is Int16 format
   pl, pl2: PDArLong;// if input is Int32 format
   pf, pf2: PDArFloat;// if input is Float32 format
@@ -3702,11 +3699,11 @@ begin
   
   if ifbuf = false then
   begin
-  data.levelfilters  := data.levelfilters + '%'+ DSPLevelString(fft.VirtualBuffer, Data.SampleFormat, data.Ratio, levelleft, levelright) ;
-  setlength(Data.levelfiltersar,length(Data.levelfiltersar)+1);
-  Data.levelfiltersar[length(Data.levelfiltersar)-1] := levelleft;
-  setlength(Data.levelfiltersar,length(Data.levelfiltersar)+1);
-  Data.levelfiltersar[length(Data.levelfiltersar)-1] := levelright;
+  data.levelfilters  := data.levelfilters + '%'+ DSPLevelString(fft.VirtualBuffer, Data.SampleFormat, data.Ratio, data.levelleft, data.levelright) ;
+  inc(Data.incfilters);
+  Data.levelfiltersar[Data.incfilters-1] := data.levelleft;
+  inc(Data.incfilters);
+  Data.levelfiltersar[Data.incfilters-1] := data.levelright;
   end;
  
   Result := Data.Buffer;
@@ -3983,7 +3980,10 @@ var
   FilterIndex: cint32;
 begin
   FilterIndex := InputAddDSP(InputIndex, nil, @uos_BandFilter, nil, LoopProc);
-
+  
+  StreamIn[InputIndex].data.hasfilters := true;
+  
+  inc(StreamIn[InputIndex].data.nbfilters);
   StreamIn[InputIndex].DSP[FilterIndex].fftdata :=
   Tuos_FFT.Create();
   
@@ -8051,13 +8051,14 @@ begin
 
 theinc := 0;
 
+
 {$IF DEFINED(mse)}
  {$else}
 with  Tuos_Player(theparent) do
 begin
  {$endif}
  
-  CheckIfPaused ;// is there a pause waiting ?
+   CheckIfPaused ;// is there a pause waiting ?
 
   DoBeginMethods();
    
@@ -8071,7 +8072,13 @@ begin
 // Dealing with input
   for x := 0 to high(StreamIn) do
   begin
-  
+ 
+  if StreamIn[x].data.hasfilters then
+  begin
+  setlength(StreamIn[x].Data.levelfiltersar,StreamIn[x].Data.nbfilters * StreamIn[x].Data.channels );
+  StreamIn[x].Data.incfilters := 0;
+  end;
+   
   {$IF DEFINED(debug)}
    WriteLn('Before for x := 0 to high(StreamIn)');
   {$endif}
@@ -8083,8 +8090,7 @@ begin
   begin
   
   StreamIn[x].Data.levelfilters := '';
-  setlength(StreamIn[x].Data.levelfiltersar,0);
-
+  
   {$IF DEFINED(debug)}
    WriteLn('Before StreamIn[x].Data.Seekable = True');
   {$endif}
@@ -8895,6 +8901,7 @@ begin
   Seekable:= False;
   Status:= 0;// no data
 
+  
   SetLength(Buffer,0);
   SetLength(MemoryBuffer,0);
   MemoryStream:= nil;
@@ -8907,8 +8914,15 @@ begin
   DSPVolumeIndex:= -1;
   DSPNoiseIndex:= -1;
   VLeft:= 0;
+  
   VRight:= 0;
-
+  
+  hasfilters := false;
+  
+  nbfilters := 0;
+  
+  incfilters := 0;
+  
   PositionEnable:= 0;
   LevelEnable:= 0;
   LevelLeft:= 0;
