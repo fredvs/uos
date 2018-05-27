@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2180526;
+  uos_version : cint32 = 2180527;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -4640,8 +4640,7 @@ begin
 //  result :  Output Index in array  -1 = error
 // example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
 var
-  x, x2, x3, err: cint32;
-  devname : pchar;
+  x, x2, err: cint32;
 
 begin
   result := -1 ;
@@ -7295,7 +7294,7 @@ end;
 
 procedure Tuos_Player.WriteOut(x:integer;  x2 : integer);  
  var
- err, rat, wantframestemp, sizsam: integer;
+ err, rat, wantframestemp: integer;
 
  {$IF DEFINED(debug)}
  st : string;
@@ -7520,7 +7519,7 @@ end;
 
 procedure Tuos_Player.WriteOutPlug(x:integer;  x2 : integer);  
  var
- x3, x4, err, wantframestemp, sizsam: integer;
+ x3, x4, err, wantframestemp: integer;
   {$IF DEFINED(debug)}
  st : string;
  i : integer;
