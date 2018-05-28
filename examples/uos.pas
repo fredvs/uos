@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2180527;
+  uos_version : cint32 = 2180528;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -3981,16 +3981,18 @@ var
 begin
   FilterIndex := InputAddDSP(InputIndex, nil, @uos_BandFilter, nil, LoopProc);
   
+ if alsobuf = false then
+ begin
   StreamIn[InputIndex].data.hasfilters := true;
-  
-  inc(StreamIn[InputIndex].data.nbfilters);
+   inc(StreamIn[InputIndex].data.nbfilters);
+ end;
+ 
   StreamIn[InputIndex].DSP[FilterIndex].fftdata :=
   Tuos_FFT.Create();
   
   setlength(StreamIn[InputIndex].DSP[FilterIndex].fftdata.Virtualbuffer, length(StreamIn[InputIndex].data.buffer));
    
-  if TypeFilter = -1 then
-  TypeFilter := 1;
+  if TypeFilter = -1 then  TypeFilter := 1;
   InputSetFilter(InputIndex, FilterIndex, LowFrequency, HighFrequency,
   Gain, TypeFilter, AlsoBuf, True, LoopProc);
 
@@ -4014,11 +4016,17 @@ var
 begin
   FilterIndex := OutputAddDSP(OutputIndex, nil, @uos_BandFilter, nil, LoopProc);
   
+   if alsobuf = false then
+ begin
+  StreamIn[OutputIndex].data.hasfilters := true;  
+   inc(StreamIn[OutputIndex].data.nbfilters);
+ end;
+  
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata :=
   Tuos_FFT.Create();
   
-  if TypeFilter = -1 then
-  TypeFilter := 1;
+  if TypeFilter = -1 then  TypeFilter := 1;
+  
   OutputSetFilter(OutputIndex, FilterIndex, LowFrequency, HighFrequency,
   Gain, TypeFilter, AlsoBuf, True, LoopProc);
 
@@ -4640,7 +4648,8 @@ begin
 //  result :  Output Index in array  -1 = error
 // example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
 var
-  x, x2, err: cint32;
+  x, x2, x3, err: cint32;
+  devname : pchar;
 
 begin
   result := -1 ;
@@ -7294,7 +7303,7 @@ end;
 
 procedure Tuos_Player.WriteOut(x:integer;  x2 : integer);  
  var
- err, rat, wantframestemp: integer;
+ err, rat, wantframestemp, sizsam: integer;
 
  {$IF DEFINED(debug)}
  st : string;
@@ -7519,7 +7528,7 @@ end;
 
 procedure Tuos_Player.WriteOutPlug(x:integer;  x2 : integer);  
  var
- x3, x4, err, wantframestemp: integer;
+ x3, x4, err, wantframestemp, sizsam: integer;
   {$IF DEFINED(debug)}
  st : string;
  i : integer;
@@ -8249,6 +8258,12 @@ begin
   if (StreamOut[x].Data.Enabled = True)
   then
   begin
+  
+   if StreamOut[x].data.hasfilters then
+  begin
+  setlength(StreamOut[x].Data.levelfiltersar,StreamOut[x].Data.nbfilters * StreamOut[x].Data.channels );
+  StreamOut[x].Data.incfilters := 0;
+  end;
 
   for x2 := 0 to high(StreamOut[x].Data.Buffer) do
   StreamOut[x].Data.Buffer[x2] := cfloat(0.0);// clear output

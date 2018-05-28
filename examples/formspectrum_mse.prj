@@ -775,7 +775,7 @@ findhistory=11
 findoptions=1
 editpos=9
  0,-1073741823
- 0,53
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1089,7 +1089,7 @@ windowlayout=572
  [objectinspectorfo]
  splitdir=0
  useroptions=805322859
- stackedunder=_mse_mainfo_mse_
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1104,7 +1104,7 @@ windowlayout=572
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [objectinspectorfo.grid]
  propcolwidthref=306
  width0=136
@@ -1315,8 +1315,8 @@ windowlayout=572
  mdistate=0
  nx=0
  ny=0
- ncx=1350
- ncy=61
+ ncx=1147
+ ncy=54
  x=0
  y=0
  cx=1147
@@ -1366,7 +1366,7 @@ windowlayout=572
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=_mse_mainfo_mse_
  parent=
  mdistate=0
  nx=0
