@@ -814,7 +814,7 @@ nomenumodules=0
 firsttab=0
 index=5
 [layout]
-windowlayout=537
+windowlayout=538
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -1295,7 +1295,8 @@ windowlayout=537
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/main_sp.pas
- history=0
+ history=1
+  /home/fred/uos/examples/main_sp.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]

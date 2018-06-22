@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2180528;
+  uos_version : cint32 = 2180622;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -1682,9 +1682,11 @@ function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos
 // numbuf : number of frames to add to outmemory (default : -1 = all, otherwise number max of frames) 
 //  result :  The memory buffer
 // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos, -1, -1);
+   {$IF DEFINED(debug)} 
   var
   i : integer;
   st : string;
+   {$endif}
   begin
     
  result :=  Filetobuffer(Filename,-1, SampleFormat, 1024, result, bufferinfos, frompos, numbuf);
@@ -4648,9 +4650,8 @@ begin
 //  result :  Output Index in array  -1 = error
 // example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
 var
-  x, x2, x3, err: cint32;
-  devname : pchar;
-
+  x, x2, err: cint32;
+  
 begin
   result := -1 ;
   x := 0;
@@ -5168,10 +5169,13 @@ function Tuos_Player.AddFromMemoryBuffer(var MemoryBuffer: TDArFloat; var Buffer
 // FramesCount : default : -1 (4096)
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := AddFromMemoryBuffer(mybuffer, buffinfos,-1,1024);
-var
-  x,i : cint32; 
-  st: string;
  
+var
+  x : cint32; 
+  {$IF DEFINED(debug)}
+  st: string;
+  ,i : cint32; 
+  {$endif} 
   begin
   
  result := -1 ;
@@ -5274,8 +5278,11 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
 // example : InputIndex1 := AddFromFileIntoMemory(edit5.Text,-1,0,-1);
   var
   x,i : cint32; 
-  st: string;
   bufferinfos: Tuos_bufferinfos;
+ 
+  {$IF DEFINED(debug)}
+   st: string;
+  {$endif}
  
   begin
   result := -1 ;
@@ -7303,7 +7310,7 @@ end;
 
 procedure Tuos_Player.WriteOut(x:integer;  x2 : integer);  
  var
- err, rat, wantframestemp, sizsam: integer;
+ err, rat, wantframestemp: integer;
 
  {$IF DEFINED(debug)}
  st : string;
@@ -7528,7 +7535,7 @@ end;
 
 procedure Tuos_Player.WriteOutPlug(x:integer;  x2 : integer);  
  var
- x3, x4, err, wantframestemp, sizsam: integer;
+ x3, x4, err, wantframestemp: integer;
   {$IF DEFINED(debug)}
  st : string;
  i : integer;
