@@ -7473,11 +7473,11 @@ end;
 procedure Tuos_Player.WriteOut(x:integer;  x2 : integer);  
  var
  err, rat, wantframestemp: integer;
-
- {$IF DEFINED(debug)}
+ 
+{$IF DEFINED(debug)}
  st : string;
  i : integer;
- {$endif}
+{$endif}
   Bufferst2mo: TDArFloat;
 begin
 // Convert Input format into Output format if needed:
@@ -7597,7 +7597,7 @@ if err > 0 then
    st := '';
   for i := 0 to wantframestemp -1 do
   st := st + '|' + inttostr(i) + '=' + floattostr(StreamOut[x].Data.Buffer[i]);
-//WriteLn(st);
+  WriteLn(st);
   WriteLn('OUTPUT DATA AFTER5 ------------------------------');
   writeln('Streamout[x].Data.posmem before = '+inttostr( Streamout[x].Data.posmem)) ;
 
@@ -7606,7 +7606,7 @@ if err > 0 then
   writeln('Begin Give to memory buffer');
   writeln('(StreamIn[x2].Data.outframes ) -1 = ' +
   inttostr((StreamIn[x2].Data.outframes) -1));
-  {$endif}
+ {$endif}
   
   if StreamIn[x2].Data.numbuf > -1 then
   begin
@@ -7625,14 +7625,14 @@ if err > 0 then
 //  if Streamout[x].Data.SampleFormat > 0 then
 //StreamOut[x].Data.Buffer := ConvertSampleFormat(StreamOut[x].Data);
 
-  {$IF DEFINED(debug)}
+ {$IF DEFINED(debug)}
   writeln('Streamout[x].Data.posmem after = '+inttostr( Streamout[x].Data.posmem)) ;
   st := '';
   for i := 0 to length(tempoutmemory) -1 do
   st := st + '|' + inttostr(i) + '=' + floattostr(tempoutmemory[i]);
   WriteLn('OUTPUT DATA AFTER5 ------------------------------');
 //WriteLn(st);
-  {$endif}
+ {$endif}
 
   end;
 
@@ -8454,9 +8454,11 @@ begin
  
   for x3 := 0 to high(StreamIn[x2].Data.Buffer) do
   begin
+  if x3 < high(StreamOut[x].Data.Buffer) + 1 then
   StreamOut[x].Data.Buffer[x3] :=
   cfloat(StreamOut[x].Data.Buffer[x3]) +
   cfloat(StreamIn[x2].Data.Buffer[x3]);
+ 
   end;
   
    {$IF DEFINED(debug)}
@@ -8918,7 +8920,7 @@ end;
 procedure uos_UnloadPlugin(PluginName: PChar);
 // load plugin...
 begin
- uosInit.unloadplugin(PluginName) ;
+ uosInit.unloadplugin(PluginName);
 end;
 
 function uos_GetInfoLibraries() : PansiChar ;

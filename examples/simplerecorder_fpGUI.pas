@@ -73,6 +73,10 @@ var
   ordir, opath: string;
   In1Index, out1index : cint32;
   
+   thebuffer : array of cfloat;
+  thebufferinfos : TuosF_BufferInfos;
+  
+  
   procedure TSimplerecorder.Changechk1(Sender: TObject);
   begin
   uos_outputsetenable(0,out1Index,checkbox1.checked);
@@ -81,7 +85,8 @@ var
   procedure TSimplerecorder.btnPlaySavedClick(Sender: TObject);
   begin
   
- if fileexists( Pchar(filenameedit4.FileName)) then begin
+// if fileexists( Pchar(filenameedit4.FileName)) then begin
+  
      PlayerIndex1 := 1 ; // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
                        // If PlayerIndex exists already, it will be overwritten...
 
@@ -110,7 +115,12 @@ var
     //////////// FramesCount : -1 default : 65536
           // ChunkCount : default : -1 (= 512)
 
+  if fileexists( Pchar(filenameedit4.FileName)) then
   In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
+  
+//  uos_CustBufferInfos(thebufferinfos, 44100, 2, 2 ,Length(thebuffer) div 2);
+//  In1Index := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024);
+  
   //// add input from audio file with default parameters
   // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -141,8 +151,6 @@ var
 
   uos_Play(PlayerIndex1);  /////// everything is ready to play...
 
-    
-  end;
   end;
 
   procedure TSimplerecorder.VolumeChange(Sender: TObject; pos: integer);
@@ -223,8 +231,11 @@ var
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
-   uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
+  uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
    
+     // SetLength(thebuffer, 0);
+     // uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
+      
   // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
   //// add Output into wav file (save record)  with default parameters
   
@@ -245,7 +256,8 @@ var
        {$endif}
    
      uos_outputsetenable(PlayerIndex1,out1Index,checkbox1.checked);
-   
+     
+     
     //// add a Output into OUT device with default parameters
     
     //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 1,-1, -1); 
@@ -295,7 +307,7 @@ var
    ///// Assign the procedure of object to execute at end
    //////////// PlayerIndex : Index of a existing Player
    //////////// ClosePlayer1 : procedure of object to execute inside the loop
-
+  
     uos_Play(PlayerIndex1);  /////// everything is ready to play...
       
       CheckBox2.Enabled := false;

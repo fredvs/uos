@@ -898,6 +898,8 @@ hintheight=19
 finddtext=stream2wav
 findhistory=20
  stream2wav
+ uos_AddIntoDevOut
+ addfrom
  TMemorystream
  DSPReverseAfter
  dsp
@@ -915,16 +917,14 @@ findhistory=20
  freeandnil(theplayer
  theplayer.free
  FiletoBuffer
- uos_file2
- StreamtoBuffer(
 findoptions=1
 editpos=9
- 0,-1073741823
- 0,1240
- 0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
- 0,789
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -983,7 +983,7 @@ order=9
  3
  2
 firsttab=0
-index=5
+index=0
 [layout]
 windowlayout=567
  [mainfo.basedock]
@@ -1475,8 +1475,10 @@ windowlayout=567
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
+ value=/home/fred/uos/examples/consoleplaymemorybuffer.pas
  history=20
+  /home/fred/uos/examples/consoleplaymemorybuffer.pas
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/uos/examples/simpleplayer_fpGUI
@@ -1495,8 +1497,6 @@ windowlayout=567
   /home/fred/uos/src/uos.pas
   /home/fred/uos/examples/lib/Linux/32bit/LibPortaudio-32.so
   /home/fred/uos/examples/deviceinfos_fpGUI.pas
-  /home/fred/strumpract/src/uos.pas
-  /home/fred/ideu/src/sourcepage.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
