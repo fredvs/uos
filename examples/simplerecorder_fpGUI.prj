@@ -832,16 +832,16 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=3:
+finddtext=AddFromDevIn
 findhistory=20
+ AddFromDevIn
+ uos_AddIntoMemoryBuffer
  3:
  TypePut
  AddIntoMemoryBuffer
- uos_AddIntoMemoryBuffer
  WriteOut
  write
  Addinto
- AddFromDevIn
  chunkcount
  pa_open
  StreamOut[x].Data.TypePut
@@ -856,11 +856,11 @@ findhistory=20
  readb
 findoptions=1
 editpos=6
- 57,279
- 0,7627
- 0,787
+ 25,229
+ 0,759
+ 0,1203
  0,-1073741823
- 0,105
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -904,7 +904,7 @@ order=6
 firsttab=0
 index=0
 [layout]
-windowlayout=550
+windowlayout=551
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -952,7 +952,7 @@ windowlayout=550
  ncx=0
  ncy=0
  x=543
- y=496
+ y=449
  cx=497
  cy=314
  rcx=0
@@ -1379,7 +1379,7 @@ windowlayout=550
  mdistate=0
  nx=0
  ny=0
- ncx=1356
+ ncx=1346
  ncy=62
  x=0
  y=0
@@ -1395,7 +1395,8 @@ windowlayout=550
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/simplerecorder_fpGUI.pas
- history=3
+ history=4
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/simplerecorder_fpGUI.pas
   /home/fred/strumpract/src/uos_flat.pas
   /home/fred/ideu/src/aboutform.pas
