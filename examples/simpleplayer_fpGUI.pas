@@ -214,9 +214,16 @@ var
 
   procedure TSimpleplayer.VolumeChange(Sender: TObject; pos: integer);
   begin
+  
+  {
       uos_InputSetDSPVolume(PlayerIndex1, InputIndex1,
         (100 - TrackBar2.position) / 100,
         (100 - TrackBar3.position) / 100, True);
+   }
+     
+    uos_OutputSetDSPVolume(PlayerIndex1, OutputIndex1,
+        (100 - TrackBar2.position) / 100,
+        (100 - TrackBar3.position) / 100, True);      
   end;
 
  procedure TSimpleplayer.ShowLevel;
@@ -534,20 +541,21 @@ loadok : boolean = false;
     //////////// PlayerIndex : Index of a existing Player
     //////////// InputIndex1 : Index of a existing Input
     //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
-    
-    uos_InputAddDSPVolume(PlayerIndex1, InputIndex1, 1, 1);
+
+ 
+   uos_OutputAddDSPVolume(PlayerIndex1, OutputIndex1, 1, 1);
     ///// DSP Volume changer
     ////////// PlayerIndex1 : Index of a existing Player
-    ////////// InputIndex1 : Index of a existing input
+    ////////// OutputIndex1 : Index of a existing output
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
- //{
-     uos_InputSetDSPVolume(PlayerIndex1, InputIndex1,
+ 
+     uos_OutputSetDSPVolume(PlayerIndex1, OutputIndex1,
       (100 - TrackBar2.position) / 100,
       (100 - TrackBar3.position) / 100, True);
- //}   /// Set volume
+    /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
-    ////////// InputIndex1 : InputIndex of a existing Input
+    ////////// OutputIndex1 : InputIndex of a existing Output
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     ////////// Enable : Enabled

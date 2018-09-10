@@ -187,7 +187,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -247,15 +247,17 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=7
+makeoptions=8
  -fPIC
  -l -Mobjfpc -Schi
  -FE.
  -FUunits
  -B
+ -Xd
  -O2 -XX -Xs -CX
  -vewnhibq
-makeoptpurpose=7
+makeoptpurpose=8
+ 
  
  
  
@@ -360,6 +362,7 @@ forcezorder=-1
 stripmessageesc=0
 copymessages=0
 closemessages=0
+enablepurpose=0
 checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
@@ -439,18 +442,19 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=7
+makeoptionson=8
  0
  63
  63
  63
  34
+ 8
  53
  63
 compilerusedon=21
- 4091
+ 4083
  4
- 0
+ 8
  0
  0
  0
@@ -820,18 +824,18 @@ editpos=22
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 12,8
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1346
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,8664
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -932,33 +936,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=22
- 13
- 22
- 11
- 17
- 20
- 19
- 18
- 0
- 5
- 6
- 1
- 12
- 16
- 14
- 9
- 10
- 7
- 15
- 8
- 2
- 3
- 4
-firsttab=0
-index=2
+firsttab=1
+index=6
 [layout]
-windowlayout=547
+windowlayout=548
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -972,7 +953,7 @@ windowlayout=547
  x=0
  y=0
  cx=1356
- cy=694
+ cy=784
  rcx=0
  rcy=0
  [mainfo]
@@ -991,7 +972,7 @@ windowlayout=547
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,694
+  basedock,0,0,1356,784
  focusedchild=0
  wsize=6
  active=1
@@ -1013,7 +994,7 @@ windowlayout=547
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1035,7 +1016,7 @@ windowlayout=547
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1107,7 +1088,7 @@ windowlayout=547
  x=0
  y=0
  cx=205
- cy=523
+ cy=591
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1283,7 +1264,7 @@ windowlayout=547
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=111
+ propcolwidthref=121
  values0=2
   -1
   -1
@@ -1320,9 +1301,9 @@ windowlayout=547
  ncx=0
  ncy=0
  x=0
- y=588
+ y=664
  cx=1356
- cy=106
+ cy=120
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1422,7 +1403,7 @@ windowlayout=547
  x=0
  y=0
  cx=1356
- cy=59
+ cy=67
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1433,12 +1414,12 @@ windowlayout=547
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1356
+ ncy=62
  x=0
  y=0
  cx=1356
- cy=62
+ cy=70
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1448,8 +1429,9 @@ windowlayout=547
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
- history=0
+ value=/home/fred/uos/examples/consolesynth.pas
+ history=1
+  /home/fred/uos/examples/consolesynth.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1467,16 +1449,16 @@ windowlayout=547
  x=208
  y=0
  cx=1148
- cy=523
+ cy=591
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
- mdistate=0
+ mdistate=3
  nx=0
  ny=0
  ncx=0
@@ -1501,9 +1483,9 @@ windowlayout=547
  ncx=0
  ncy=0
  x=0
- y=62
+ y=70
  cx=1356
- cy=523
+ cy=591
  rcx=0
  rcy=0
 [targetconsole]

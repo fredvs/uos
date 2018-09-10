@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2180622;
+  uos_version : cint32 = 2180729;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -546,7 +546,7 @@ type
 // cbits: tbytes;
   {$endif}
   FileBuffer: Tuos_FileBuffer;
- LoopProc: TProc;// External Procedure of object to synchronize after buffer is filled 
+  LoopProc: TProc;// External Procedure of object to synchronize after buffer is filled 
   {$IF DEFINED(Java)}
   procedure LoopProcjava;
   {$endif}
@@ -1146,7 +1146,7 @@ end;
 
 function uos_GetInfoLibraries() : Pansichar ;
 
-  {$IF DEFINED(portaudio)}
+ {$IF DEFINED(portaudio)}
 procedure uos_GetInfoDevice();
 
 function uos_GetInfoDeviceStr() : Pansichar ;
@@ -1197,6 +1197,10 @@ procedure uos_Free();
   
 function uos_GetVersion() : cint32 ;// version of uos
 
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+// to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
+// all infos refer to the buffer used ---> length = length of the buffer div channels.
+
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint ): TDArFloat;
 // Create a memory buffer of a audio file.
 // FileName : filename of audio file  
@@ -1226,6 +1230,14 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
 // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
 // typeout : Type of out file (-1:default=wav, 0:wav, 1:pcm, 2:custom)
 // example : InputIndex1 := uos_File2File(edit5.Text,0,buffmem);
+
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan, samplerate : integer);
+// Create a audio wav file from a TMemoryStream.
+// FileName : filename of wav saved file
+// data : the memorystream
+// BitsPerSample : 16 or 32 (bit)
+// chan : number of channels
+// samplerate : sample rate
 
 const
 // error
@@ -1445,6 +1457,65 @@ begin
   Result := arfl;
 end;
 
+// convert a Tmemory stream into a wav file.
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan, samplerate : integer);
+var
+  f: TFileStream;
+  wFileSize: LongInt;
+  wChunkSize: LongInt;
+  ID: array[0..3] of char;
+  Header: Tuos_WaveHeaderChunk;
+begin
+  f := nil;
+  f := TFileStream.Create(FileName, fmCreate);
+  f.Seek(0, soFromBeginning);
+    try
+    ID := 'RIFF';
+    f.WriteBuffer(ID, 4);
+    wFileSize := 0;
+    f.WriteBuffer(wFileSize, 4);
+    ID := 'WAVE';
+    f.WriteBuffer(ID, 4);
+    ID := 'fmt ';
+    f.WriteBuffer(ID, 4);
+    wChunkSize := SizeOf(Header);
+    f.WriteBuffer(wChunkSize, 4);
+    Header.wFormatTag := 1;
+
+    Header.wChannels := chan;
+
+    Header.wSamplesPerSec := samplerate;
+    
+    Header.wBitsPerSample := BitsPerSample;
+
+    Header.wBlockAlign := chan * (BitsPerSample div 8);
+    
+    Header.wAvgBytesPerSec := samplerate * Header.wBlockAlign;
+  
+    Header.wcbSize := 0;
+    f.WriteBuffer(Header, SizeOf(Header));
+  except
+  
+  end;
+  try
+    ID := 'data';
+    f.WriteBuffer(ID, 4);
+    wChunkSize := Data.Size;
+    f.WriteBuffer(wChunkSize, 4);
+  except
+  end;
+  
+  Data.Seek(0, soFromBeginning);
+    f.CopyFrom(Data, Data.Size);
+  f.Seek(SizeOf(ID), soFromBeginning);
+  wFileSize := f.Size - SizeOf(ID) - SizeOf(wFileSize);
+  f.Write(wFileSize, 4);
+  f.Free;
+end;
+
+
+
+
 function WriteWaveFromMem(FileName: UTF8String; Data: Tuos_FileBuffer): word;
 var
   f: TFileStream;
@@ -1564,6 +1635,17 @@ end;
 procedure mpg_close_stream(ahandle: Pointer);// not used, uos does it...
 begin
   TObject(ahandle).Free;
+end;
+
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+begin
+  bufferinfos.SampleRate := Samplerate; 
+  bufferinfos.SampleRateRoot := Samplerate;
+  bufferinfos.SampleFormat := SampleFormat;
+  bufferinfos.Channels := Channels;
+  bufferinfos.Length := Length;
+  bufferinfos.LibOpen := 0;
+  bufferinfos.Ratio := 2 ;
 end;
 
 function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
@@ -3157,7 +3239,7 @@ end else result := Data.Buffer;// TODO for Array of integer.
 end;
  {$endif}
 
-function uos_DSPVolume(var Data: Tuos_Data;var fft: Tuos_FFT): TDArFloat;
+function uos_DSPVolumeIn(var Data: Tuos_Data;var fft: Tuos_FFT): TDArFloat;
 var
   x, ratio: cint32;
   vleft, vright: cfloat;
@@ -3225,6 +3307,85 @@ begin
   pf := @Data.Buffer;
    
   for x := 0 to (Data.OutFrames div ratio) -1 do
+  begin
+  if (Data.VLeft <> 1)  or (Data.Vright <> 1) then
+  begin
+  if odd(x) then
+  pf^[x] := pf^[x] * vright
+  else
+  pf^[x] := pf^[x] * vleft;
+  end;
+
+// This to avoid distortion
+   if pf^[x] < -1 then pf^[x] := -1;
+   if pf^[x] > 1 then pf^[x] := 1 ;
+
+  end;
+
+  end;
+  end;
+
+  Result := Data.Buffer;
+end;
+
+function uos_DSPVolumeOut(var Data: Tuos_Data;var fft: Tuos_FFT): TDArFloat;
+var
+  x: cint32;
+  vleft, vright: cfloat;
+  ps: PDArShort;// if output is Int16 format
+  pl: PDArLong;// if output is Int32 format
+  pf: PDArFloat;// if output is Float32 format
+begin
+
+  vleft := Data.VLeft;
+  vright := Data.VRight;
+  
+   case Data.SampleFormat of
+  2:// int16
+  begin
+  ps := @Data.Buffer;
+  for x := 0 to (length(Data.Buffer) -1) do
+  begin
+  if (Data.VLeft <> 1)  or (Data.Vright <> 1) then
+  begin
+  if odd(x) then
+  ps^[x] := trunc(ps^[x] * vright)
+  else
+  ps^[x] := trunc(ps^[x] * vleft);
+  end;
+// This to avoid distortion
+   if ps^[x] < (-32760) then ps^[x] := -32760 ;
+   if ps^[x] > (32760) then ps^[x] := 32760 ;
+
+  end;
+
+  end;
+  1:// int32
+  begin
+  pl := @Data.Buffer;
+  for x := 0 to (length(Data.Buffer) -1) do
+  begin
+  if (Data.VLeft <> 1)  or (Data.Vright <> 1) then
+  begin
+  if odd(x) then
+  pl^[x] := trunc(pl^[x] * vright)
+  else
+  pl^[x] := trunc(pl^[x] * vleft);
+  end;
+
+// This to avoid distortion
+  if pl^[x] < (-2147000000) then pl^[x] := -2147000000 ;
+  if pl^[x] > (2147000000) then pl^[x] := 2147000000 ;
+
+  end;
+
+  end;
+  0:// float32
+  begin
+  
+  pf := @Data.Buffer;
+   
+  for x := 0 to (length(Data.Buffer)) -1 do
   begin
   if (Data.VLeft <> 1)  or (Data.Vright <> 1) then
   begin
@@ -3905,7 +4066,7 @@ function Tuos_Player.InputAddDSPVolume(InputIndex: cint32; VolLeft: double;
 //  result : index of DSPIn in array
 // example  DSPIndex1 := InputAddDSPVolume(InputIndex1,1,1);
 begin
-  Result := InputAddDSP(InputIndex, nil, @uos_DSPVolume, nil, nil);
+  Result := InputAddDSP(InputIndex, nil, @uos_DSPVolumeIn, nil, nil);
   StreamIn[InputIndex].Data.VLeft := VolLeft;
   StreamIn[InputIndex].Data.VRight := VolRight;
 end;
@@ -3928,7 +4089,7 @@ function Tuos_Player.OutputAddDSPVolume(OutputIndex: cint32; VolLeft: double;
 //  result :  index of DSPIn in array
 // example  DSPIndex1 := OutputAddDSPVolume(OutputIndex1,1,1);
 begin
-  Result := InputAddDSP(OutputIndex, nil, @uos_DSPVolume, nil, nil);
+  Result := OutputAddDSP(OutputIndex, nil, @uos_DSPVolumeOut, nil, nil);
   StreamOut[OutputIndex].Data.VLeft := VolLeft;
   StreamOut[OutputIndex].Data.VRight := VolRight;
 end;
@@ -8511,7 +8672,7 @@ end;
 
 function Tuos_Init.loadlib(): cint32;
 begin
-  Result := 0;
+  Result := -1;
   uosLoadResult.PAloadERROR := -1;
   uosLoadResult.SFloadERROR := -1;
   uosLoadResult.MPloadERROR := -1;

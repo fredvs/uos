@@ -19,9 +19,9 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/conswebstream.prj
-findinfiledialog=49
+findinfiledialog=53
  [findinfileadialogfo.subdirs]
- value=0
+ value=1
  [findinfileadialogfo.incurrentfile]
  value=0
  [findinfileadialogfo.inopenfiles]
@@ -40,18 +40,22 @@ findinfiledialog=49
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/uos/examples/
- filecolwidth=0
+  /usr/local/codetyphon/fpcsrc/
+ filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
+ filehistory=1
+  /usr/local/codetyphon/fpcsrc/
  filefilterindex=0
- filefilter=
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=op_test_callbacks
- history=11
+ value=music
+ history=14
+  music
+  dns
+  fphttpclient
   op_test_callbacks
   uos_callbacks
   cardinal
@@ -135,7 +139,7 @@ options=114
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=17
+ rowheight=16
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -157,7 +161,7 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=142
+ y=143
  xprop=1
  yprop=0.32954545454545
  [projectoptionsfo.macrogrid]
@@ -193,7 +197,7 @@ options=114
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=0
+ index=1
  [projectoptionsfo.filefiltergrid]
  propcolwidthref=690
  width0=112
@@ -205,7 +209,7 @@ options=114
  index=0
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=1
  [projectoptionsfo]
  stackedunder=
  x=292
@@ -366,6 +370,7 @@ forcezorder=0
 stripmessageesc=0
 copymessages=0
 closemessages=0
+enablepurpose=0
 checkmethods=1
 colorerror=-1610612717
 colorwarning=-1610612712
@@ -653,10 +658,14 @@ beforeload=
 afterload=
 beforerun=
 sourcebase=
-sourcedirs=5
+sourcedirs=9
  ${FPGUIDIR}/src/gui/
  ${FPGUIDIR}/src/corelib/gdi/X/
  ${FPGUIDIR}/src/corelib/x11/
+ /usr/local/codetyphon/fpcsrc/*/
+ /usr/local/codetyphon/fpcsrc/packages/*/*/*/
+ /usr/local/codetyphon/fpcsrc/packages/*/*/
+ /usr/local/codetyphon/fpcsrc/rtl/*/*/
  ${FPGUIDIR}/src/corelib/
  ./
 defines=0
@@ -822,11 +831,16 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=cdecl;
+finddtext=dns
 findhistory=20
+ dns
+ op_
+ op_freopen
+ op_fopen
+ mode
+ AddFromURL
  cdecl;
  cdecl
- AddFromURL
  WriteOutPlug
  inputupdateicy
  StreamIn[x].Data.HandleSt u
@@ -839,16 +853,12 @@ findhistory=20
  updat
  UpdateIcyMetaInterval
   mpg123_open_handle
- Tuos_InStream
- Tuos_InStream = class(TObject)
- Tuos_InStream = class(TObject) 
- fromurl
- MPG123_OK
 findoptions=1
-editpos=6
+editpos=7
  0,-1073741823
- 0,80
  0,-1073741823
+ 0,-1073741823
+ 14,18
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -858,21 +868,25 @@ bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-sourcefiles=6
+bookmarks6=0
+sourcefiles=7
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/conswebstream.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/uos_httpgetthread.pas
  ${PROJECTDIR}/uos_opusfile.pas
-relpaths=6
+ /usr/local/codetyphon/fpcsrc/packages/fcl-web/src/base/fphttpclient.pp
+relpaths=7
  uos_flat.pas
  conswebstream.pas
  define.inc
  uos.pas
  uos_httpgetthread.pas
  uos_opusfile.pas
-ismoduletexts=6
+ ../../usr/local/codetyphon/fpcsrc/packages/fcl-web/src/base/fphttpclient.pp
+ismoduletexts=7
+ 0
  0
  0
  0
@@ -884,10 +898,18 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=7
+ 3
+ 0
+ 1
+ 2
+ 4
+ 6
+ 5
 firsttab=0
-index=1
+index=0
 [layout]
-windowlayout=535
+windowlayout=559
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -900,8 +922,8 @@ windowlayout=535
  ncy=0
  x=0
  y=0
- cx=1147
- cy=604
+ cx=1344
+ cy=690
  rcx=0
  rcy=0
  [mainfo]
@@ -913,14 +935,14 @@ windowlayout=535
  ny=0
  ncx=0
  ncy=0
- x=125
- y=46
- cx=1157
- cy=621
+ x=3
+ y=27
+ cx=1354
+ cy=706
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1147,604
+  basedock,0,0,1344,690
  focusedchild=0
  wsize=0
  active=1
@@ -964,7 +986,7 @@ windowlayout=535
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=about_form
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1010,17 +1032,17 @@ windowlayout=535
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=239
- y=115
- cx=678
- cy=414
+ x=3
+ y=27
+ cx=1354
+ cy=706
  rcx=0
  rcy=0
  [projecttreefo]
@@ -1036,7 +1058,7 @@ windowlayout=535
  x=0
  y=0
  cx=205
- cy=455
+ cy=521
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1048,7 +1070,7 @@ windowlayout=535
  sorted=0
  col=1
  row=-1073741823
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=805331049
@@ -1171,7 +1193,11 @@ windowlayout=535
  visible=0
  [symbolfo.grid]
  propcolwidthref=207
- values0=14
+ values0=18
+  
+  
+  
+  
   
   
   
@@ -1237,9 +1263,9 @@ windowlayout=535
  ncx=0
  ncy=0
  x=0
- y=512
- cx=1147
- cy=92
+ y=585
+ cx=1344
+ cy=105
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1338,8 +1364,8 @@ windowlayout=535
  ncy=0
  x=0
  y=0
- cx=1147
- cy=51
+ cx=1344
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1350,12 +1376,12 @@ windowlayout=535
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1344
+ ncy=61
  x=0
  y=0
- cx=1147
- cy=54
+ cx=1344
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1365,8 +1391,28 @@ windowlayout=535
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/conswebstream.pas
- history=0
+ value=/home/fred/uos/examples/uos.pas
+ history=20
+  /home/fred/uos/examples/uos.pas
+  /home/fred/strumpract/src/uos.pas
+  /home/fred/strumpract/src/status.pas
+  /home/fred/strumpract/src/infos.pas
+  /home/fred/strumpract/src/dialogfiles.pas
+  /home/fred/strumpract/src/drums.pas
+  /home/fred/strumpract/src/dockpanel1.pas
+  /home/fred/strumpract/src/commander.pas
+  /home/fred/strumpract/src/songplayer.pas
+  /home/fred/strumpract/src/filelistform.pas
+  /home/fred/strumpract/src/guitars.pas
+  /home/fred/ideu/src/sourceupdate.pas
+  /home/fred/strumpract/src/main.pas
+  /home/fred/strumpract/src/waveform.pas
+  /home/fred/strumpract/src/spectrum1.pas
+  /home/fred/scrolltest/waveform.pas
+  /home/fred/strumpract2play/src/songplayer.pas
+  /home/fred/ideu/src/syntaxdefs/pascal_ideu.sdef
+  /home/fred/Téléchargements/msemem/main.pas
+  /home/fred/sak/sak/sak_mse/examples/main.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1383,15 +1429,15 @@ windowlayout=535
  ncy=0
  x=208
  y=0
- cx=939
- cy=455
+ cx=1136
+ cy=521
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1418,9 +1464,9 @@ windowlayout=535
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1147
- cy=455
+ y=61
+ cx=1344
+ cy=521
  rcx=0
  rcy=0
 [targetconsole]

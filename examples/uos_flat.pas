@@ -747,6 +747,9 @@ function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32)
 // From SoundTouch plugin  
 {$endif}
 
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+// to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created. 
+
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint ): TDArFloat;
 // Create a memory buffer of a audio file.
 // FileName : filename of audio file  
@@ -775,6 +778,14 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
 // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
 // typeout : Type of out file (-1:default=wav, 0:wav, 1:pcm, 2:custom)  
 // example : InputIndex1 := uos_File2File(edit5.Text,0,buffmem); 
+
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan, samplerate : integer);
+// Create a audio wav file from a TMemoryStream.
+// FileName : filename of wav saved file
+// data : the memorystream
+// BitsPerSample : 16 or 32 (bit)
+// chan : number of channels
+// samplerate : sample rate
 
 var
   uosDeviceInfos: array of Tuos_DeviceInfos;
@@ -1966,6 +1977,13 @@ begin
  uosPlayers[PlayerIndex].StreamOut[OutIndex].LoopProc := Proc;
 end;
 
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+// to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created. 
+// all infos refer to the buffer used ---> length = length of the buffer div channels.
+ begin
+  uos.uos_CustBufferInfos(bufferinfos, SampleRate, SampleFormat, Channels, Length)  ;
+ end;
+
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint ): TDArFloat;
 // Create a memory buffer of a audio file.
 // FileName : filename of audio file  
@@ -2010,6 +2028,17 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
  begin
   uos.uos_File2File(FilenameIN, FilenameOUT, SampleFormat, typeout);
   end;
+  
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan, samplerate : integer);
+// Create a audio wav file from a TMemoryStream.
+// FileName : filename of wav saved file
+// data : the memorystream
+// BitsPerSample : 16 or 32 (bit)
+// chan : number of channels
+// samplerate : sample rate 
+  begin
+  uos.uos_MemStream2Wavfile(FileName,Data,BitsPerSample, chan, samplerate);
+  end; 
   
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   begin
