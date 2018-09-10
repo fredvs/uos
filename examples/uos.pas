@@ -1197,10 +1197,6 @@ procedure uos_Free();
   
 function uos_GetVersion() : cint32 ;// version of uos
 
-procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
-// to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
-// all infos refer to the buffer used ---> length = length of the buffer div channels.
-
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint ): TDArFloat;
 // Create a memory buffer of a audio file.
 // FileName : filename of audio file  
@@ -1238,6 +1234,10 @@ procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsP
 // BitsPerSample : 16 or 32 (bit)
 // chan : number of channels
 // samplerate : sample rate
+
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+// to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
+// all infos refer to the buffer used ---> length = length of the buffer div channels.
 
 const
 // error
@@ -1635,17 +1635,6 @@ end;
 procedure mpg_close_stream(ahandle: Pointer);// not used, uos does it...
 begin
   TObject(ahandle).Free;
-end;
-
-procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
-begin
-  bufferinfos.SampleRate := Samplerate; 
-  bufferinfos.SampleRateRoot := Samplerate;
-  bufferinfos.SampleFormat := SampleFormat;
-  bufferinfos.Channels := Channels;
-  bufferinfos.Length := Length;
-  bufferinfos.LibOpen := 0;
-  bufferinfos.Ratio := 2 ;
 end;
 
 function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
@@ -4596,6 +4585,18 @@ if err =0 then begin
  end;
  end; 
  {$endif}
+ 
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+begin
+  bufferinfos.SampleRate := Samplerate; 
+  bufferinfos.SampleRateRoot := Samplerate;
+  bufferinfos.SampleFormat := SampleFormat;
+  bufferinfos.Channels := Channels;
+  bufferinfos.Length := Length;
+  bufferinfos.LibOpen := 0;
+  bufferinfos.Ratio := 2 ;
+end; 
+
 
 function Tuos_Player.AddIntoFileFromMem(Filename: PChar; SampleRate: LongInt;
   Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt; FileFormat: cint32): LongInt;

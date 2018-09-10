@@ -747,9 +747,6 @@ function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32)
 // From SoundTouch plugin  
 {$endif}
 
-procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
-// to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created. 
-
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint ): TDArFloat;
 // Create a memory buffer of a audio file.
 // FileName : filename of audio file  
@@ -786,6 +783,11 @@ procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsP
 // BitsPerSample : 16 or 32 (bit)
 // chan : number of channels
 // samplerate : sample rate
+
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+// to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
+// all infos refer to the buffer used ---> length = length of the buffer div channels.
+
 
 var
   uosDeviceInfos: array of Tuos_DeviceInfos;
@@ -1977,13 +1979,6 @@ begin
  uosPlayers[PlayerIndex].StreamOut[OutIndex].LoopProc := Proc;
 end;
 
-procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
-// to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created. 
-// all infos refer to the buffer used ---> length = length of the buffer div channels.
- begin
-  uos.uos_CustBufferInfos(bufferinfos, SampleRate, SampleFormat, Channels, Length)  ;
- end;
-
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint ): TDArFloat;
 // Create a memory buffer of a audio file.
 // FileName : filename of audio file  
@@ -2018,6 +2013,13 @@ begin
   result := uos.uos_GetBPM(TheBuffer, Channels, SampleRate);
   end; 
 {$endif}  
+
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+// to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
+// all infos refer to the buffer used ---> length = length of the buffer div channels.
+begin
+  uos.uos_CustBufferInfos(bufferinfos, SampleRate, SampleFormat, Channels, Length);
+  end;
   
 procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32 ; typeout: cint32 );
 // Create a audio file from a audio file.

@@ -61,7 +61,7 @@ findinfiledialog=42
  x=386
  y=189
  cx=339
- cy=271
+ cy=251
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -809,11 +809,11 @@ path=5
  /home/fred/uos/examples/uos_libsndfile.pas
  /home/fred/uos/examples/uos_flat.pas
 line=5
- 5840
- 5156
- 409
+ 5837
+ 5153
+ 406
  41
- 1747
+ 1749
 address=5
  4858757
  4849477
@@ -895,34 +895,37 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=file2
+finddtext=stream2wav
 findhistory=20
- file2
- addfrom
- add from
- from
- File2buffer
- Filetobuffer
- Samplerate
- AddIntoMemoryBuffer
- Tuos_BufferInfos
- addinto
+ stream2wav
  TMemorystream
  DSPReverseAfter
  dsp
  loopproc
  DataMS
  TMemoryStream
- stream2wav
  uos_
  wBlockAlign
  wBitsPerSample
+ FileBuffer
+ write
+ outmemory
+ AddIntoMemoryBuffer
+ tofile
+ freeandnil(theplayer
+ theplayer.free
+ FiletoBuffer
+ uos_file2
+ StreamtoBuffer(
 findoptions=1
-editpos=6
+editpos=9
  0,-1073741823
- 0,1201
- 0,1982
- 0,238
+ 0,1240
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,789
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -931,21 +934,33 @@ bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-sourcefiles=6
+bookmarks6=0
+bookmarks7=0
+bookmarks8=0
+sourcefiles=9
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/consoleplaymemorystream.pas
-relpaths=6
+relpaths=9
  consoleplaymemorybuffer.pas
  uos.pas
+ consoleplaymemorybuffer.pas
+ consoleplaymemorybuffer.pas
  uos_flat.pas
  uos_flat.pas
+ uos.pas
  simpleplayer_fpGUI.pas
  consoleplaymemorystream.pas
-ismoduletexts=6
+ismoduletexts=9
+ 0
+ 0
+ 0
  0
  0
  0
@@ -957,8 +972,18 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=9
+ 0
+ 8
+ 1
+ 6
+ 7
+ 5
+ 4
+ 3
+ 2
 firsttab=0
-index=2
+index=5
 [layout]
 windowlayout=567
  [mainfo.basedock]
@@ -1452,8 +1477,6 @@ windowlayout=567
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos_flat.pas
  history=20
-  /home/fred/uos/examples/uos_flat.pas
-  /home/fred/uos/examples/consoleplaymemorybuffer.pas
   /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/uos/examples/simpleplayer_fpGUI
@@ -1472,6 +1495,8 @@ windowlayout=567
   /home/fred/uos/src/uos.pas
   /home/fred/uos/examples/lib/Linux/32bit/LibPortaudio-32.so
   /home/fred/uos/examples/deviceinfos_fpGUI.pas
+  /home/fred/strumpract/src/uos.pas
+  /home/fred/ideu/src/sourcepage.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]

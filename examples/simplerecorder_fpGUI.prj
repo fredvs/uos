@@ -19,9 +19,9 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simplerecorder_fpGUI.prj
-findinfiledialog=42
+findinfiledialog=40
  [findinfileadialogfo.subdirs]
- value=1
+ value=0
  [findinfileadialogfo.incurrentfile]
  value=0
  [findinfileadialogfo.inopenfiles]
@@ -50,10 +50,8 @@ findinfiledialog=42
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.findtext]
- value=AddIntoMemoryBuffer
- history=4
-  AddIntoMemoryBuffer
-  TDArFloat
+ value=Pa_GetStreamReadAvailable
+ history=2
   Pa_GetStreamReadAvailable
   
  [findinfileadialogfo]
@@ -61,7 +59,7 @@ findinfiledialog=42
  x=386
  y=189
  cx=339
- cy=286
+ cy=251
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -378,7 +376,6 @@ forcezorder=0
 stripmessageesc=0
 copymessages=0
 closemessages=0
-enablepurpose=0
 checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
@@ -703,7 +700,6 @@ externalconsole=0
 settty=1
 gdbdownload=0
 downloadalways=0
-restartgdbbeforeload=0
 startupbkpt=0
 startupbkpton=0
 gdbsimulator=0
@@ -818,7 +814,7 @@ files=
  a=0,8229,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/msegui/apps/ide/compstore/
+storedir=/home/fred/uos/examples/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -834,9 +830,8 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=stop
+finddtext=AddFromDevIn
 findhistory=20
- stop
  AddFromDevIn
  chunkcount
  pa_open
@@ -856,11 +851,10 @@ findhistory=20
  filetobuffer
  uos_AddIntoFile
  freeon
+ mono2
 findoptions=1
-editpos=6
- 35,202
- 0,-1073741823
- 0,-1073741823
+editpos=4
+ 0,163
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -868,25 +862,17 @@ bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-sourcefiles=6
+sourcefiles=4
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
-relpaths=6
+relpaths=4
  simplerecorder_fpGUI.pas
  uos.pas
  uos_flat.pas
  uos_portaudio.pas
- uos.pas
- uos_flat.pas
-ismoduletexts=6
- 0
- 0
+ismoduletexts=4
  0
  0
  0
@@ -896,17 +882,15 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=6
+order=4
  0
- 4
- 5
  2
  1
  3
 firsttab=0
 index=0
 [layout]
-windowlayout=549
+windowlayout=547
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -919,8 +903,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=700
+ cx=1147
+ cy=605
  rcx=0
  rcy=0
  [mainfo]
@@ -932,16 +916,16 @@ windowlayout=549
  ny=0
  ncx=0
  ncy=0
- x=0
- y=19
- cx=1366
- cy=716
+ x=125
+ y=45
+ cx=1157
+ cy=621
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1356,700
+  basedock,0,0,1147,605
  focusedchild=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -961,7 +945,7 @@ windowlayout=549
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -983,7 +967,7 @@ windowlayout=549
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=componentstorefo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1010,7 +994,7 @@ windowlayout=549
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=memoryfo
+ stackedunder=stackfo
  parent=
  mdistate=0
  nx=0
@@ -1029,7 +1013,7 @@ windowlayout=549
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1055,7 +1039,7 @@ windowlayout=549
  x=0
  y=0
  cx=205
- cy=528
+ cy=456
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1126,7 +1110,7 @@ windowlayout=549
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=cpuc86_64fo
+ stackedunder=memoryfo
  parent=
  mdistate=0
  nx=0
@@ -1172,7 +1156,7 @@ windowlayout=549
  [symbolfo]
  splitdir=0
  useroptions=805322875
- stackedunder=findinfilefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1268,15 +1252,15 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=593
- cx=1356
- cy=107
+ y=513
+ cx=1147
+ cy=92
  rcx=0
  rcy=0
  [componentstorefo]
  splitdir=0
  useroptions=805331067
- stackedunder=symbolfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1369,8 +1353,8 @@ windowlayout=549
  ncy=0
  x=0
  y=0
- cx=1356
- cy=59
+ cx=1147
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1381,12 +1365,12 @@ windowlayout=549
  mdistate=0
  nx=0
  ny=0
- ncx=1356
- ncy=62
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1356
- cy=62
+ cx=1147
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1397,9 +1381,7 @@ windowlayout=549
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/simplerecorder_fpGUI.pas
- history=2
-  /home/fred/uos/examples/simplerecorder_fpGUI.pas
-  /home/fred/uos/examples/uos_flat.pas
+ history=0
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1416,15 +1398,15 @@ windowlayout=549
  ncy=0
  x=208
  y=0
- cx=1148
- cy=528
+ cx=939
+ cy=456
  rcx=0
  rcy=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=disassfo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1451,9 +1433,9 @@ windowlayout=549
  ncx=0
  ncy=0
  x=0
- y=62
- cx=1356
- cy=528
+ y=54
+ cx=1147
+ cy=456
  rcx=0
  rcy=0
 [targetconsole]
