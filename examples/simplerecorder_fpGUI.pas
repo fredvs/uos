@@ -219,9 +219,8 @@ var
     if (checkbox1.Checked = True) or (checkbox2.Checked = True) then
     begin
 
-    PlayerIndex1 := 0 ; // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
-                       // If PlayerIndex exists already, it will be overwritten...
-
+    PlayerIndex1 := 0 ;
+    
      {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
       uos_CreatePlayer(PlayerIndex1);
           {$else}

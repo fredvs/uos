@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2180729;
+  uos_version : cint32 = 2180811;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -324,10 +324,11 @@ type
   Enabled: boolean;
   
   TypePut: integer;
-// -1 : nothing,  for Input  : 0: from audio file, 1: from input device (like mic),
-                          // 2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer, 5: from endless-muted
-             // for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
-             //              3: into memory buffer, 4: into wav from memorystream
+// -1 : nothing. 
+// for Input  : 0: from audio file, 1: from input device (like mic),
+//              2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer, 5: from endless-muted
+// for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
+//              3: into memory buffer, 4: into wav from memorystream
     
   Seekable: boolean;
   Status: integer;
@@ -637,19 +638,15 @@ type
 // External procedure of object to execute at begin of thread
 
   LoopBeginProc: TProc;
- 
 // External procedure of object to execute at each begin of loop
 
   LoopEndProc: TProc;
- 
 // External procedure of object to execute at each end of loop
 
   EndProc: TProc;
- 
 // Procedure of object to execute at end of thread
  
   EndProcOnly: TProcOnly ;
- 
 // Procedure to execute at end of thread (not of object)
 
   StreamIn: array of Tuos_InStream;
@@ -713,7 +710,6 @@ type
 
   function AddIntoFile(Filename: PChar; SampleRate: cint32;
   Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
-
 // Add a Output into audio wav file with custom parameters from TFileStream
 // FileName : filename of saved audio wav file
 // SampleRate : delault : -1 (44100)
@@ -827,6 +823,7 @@ function AddFromMemoryBuffer(var MemoryBuffer: TDArFloat; var Bufferinfos: Tuos_
 // MemoryBuffer : the buffer
 // Bufferinfos : infos of the buffer
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)// SampleRate : delault : -1 (44100)// FramesCount : default : -1 (4096)
+// FramesCount : default : -1 (65536 div Channels)
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := AddFromMemoryBuffer(mybuffer, buffinfos,-1,1024);
   
@@ -5328,7 +5325,7 @@ function Tuos_Player.AddFromMemoryBuffer(var MemoryBuffer: TDArFloat; var Buffer
 // MemoryBuffer : the buffer
 // Bufferinfos : infos of the buffer
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)// SampleRate : delault : -1 (44100)
-// FramesCount : default : -1 (4096)
+// FramesCount : default : -1 (65536 div Channels)
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := AddFromMemoryBuffer(mybuffer, buffinfos,-1,1024);
  
@@ -9447,7 +9444,7 @@ if thethread <> nil then begin
   for x := 0 to high(Plugin) do
   freeandnil(Plugin[x]);
   
-//Note: if Index = -1 is a indipendent instance
+//Note: if Index = -1 is a independent instance
   if Index <> -1 then
   begin
 //now notice that player is really free

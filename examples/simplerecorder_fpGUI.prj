@@ -832,8 +832,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=AddFromDevIn
+finddtext=AddFromMemoryBuffer
 findhistory=20
+ AddFromMemoryBuffer
+ cust
  AddFromDevIn
  uos_AddIntoMemoryBuffer
  3:
@@ -852,13 +854,11 @@ findhistory=20
  tfile
  wChunkSize
  writebu
- read
- readb
 findoptions=1
 editpos=6
- 25,229
- 0,759
- 0,1203
+ 0,382
+ 0,9421
+ 0,2232
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -902,7 +902,7 @@ order=6
  1
  3
 firsttab=0
-index=0
+index=4
 [layout]
 windowlayout=551
  [mainfo.basedock]
@@ -931,7 +931,7 @@ windowlayout=551
  ncx=0
  ncy=0
  x=5
- y=19
+ y=29
  cx=1356
  cy=716
  rcx=0
@@ -1394,10 +1394,10 @@ windowlayout=551
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simplerecorder_fpGUI.pas
+ value=/home/fred/uos/examples/uos.pas
  history=4
-  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/simplerecorder_fpGUI.pas
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/strumpract/src/uos_flat.pas
   /home/fred/ideu/src/aboutform.pas
  [debuggerfo.project_options]
