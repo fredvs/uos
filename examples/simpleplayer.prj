@@ -175,7 +175,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=5
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -473,11 +473,11 @@ makeoptionson=8
  4095
 compilerusedon=29
  4016
- 15
+ 11
  0
  0
  0
- 64
+ 4
  0
  0
  0
@@ -680,6 +680,7 @@ externalconsole=0
 settty=1
 gdbdownload=0
 downloadalways=0
+restartgdbbeforeload=0
 startupbkpt=0
 startupbkpton=0
 gdbsimulator=0
@@ -772,7 +773,8 @@ findhistory=7
  PCAUDIOLIB
  my_audio
 findoptions=1
-editpos=6
+editpos=7
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -785,21 +787,25 @@ bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-sourcefiles=6
+bookmarks6=0
+sourcefiles=7
  ${PROJECTDIR}/simpleplayer.lpr
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/simpleplayer.lpr
  /home/fred/msegui/lib/common/kernel/msetypes.pas
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/main_sp.pas
-relpaths=6
+ ${PROJECTDIR}/simpleplayer.lpr
+relpaths=7
  simpleplayer.lpr
  main_sp.pas
  simpleplayer.lpr
  msegui/lib/common/kernel/msetypes.pas
  main_sp.pas
  main_sp.pas
-ismoduletexts=6
+ simpleplayer.lpr
+ismoduletexts=7
+ 0
  0
  0
  0
@@ -812,9 +818,9 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=5
+index=6
 [layout]
-windowlayout=538
+windowlayout=539
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -891,7 +897,7 @@ windowlayout=538
  [memoryfo]
  splitdir=0
  useroptions=805322875
- stackedunder=dialogfilesfo
+ stackedunder=componentstorefo
  parent=
  mdistate=0
  nx=0
@@ -918,7 +924,7 @@ windowlayout=538
  [disassfo]
  splitdir=0
  useroptions=805322859
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -937,7 +943,7 @@ windowlayout=538
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=disassfo
  parent=
  mdistate=0
  nx=0
@@ -1034,7 +1040,7 @@ windowlayout=538
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=memoryfo
+ stackedunder=cpuc86_64fo
  parent=
  mdistate=0
  nx=0
@@ -1080,7 +1086,7 @@ windowlayout=538
  [symbolfo]
  splitdir=0
  useroptions=805322875
- stackedunder=
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0
@@ -1176,7 +1182,7 @@ windowlayout=538
  [componentstorefo]
  splitdir=0
  useroptions=805331067
- stackedunder=
+ stackedunder=symbolfo
  parent=
  mdistate=0
  nx=0
@@ -1294,8 +1300,9 @@ windowlayout=538
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/main_sp.pas
- history=1
+ value=/home/fred/uos/examples/simpleplayer.lpr
+ history=2
+  /home/fred/uos/examples/simpleplayer.lpr
   /home/fred/uos/examples/main_sp.pas
  [debuggerfo.project_options]
  value=1
@@ -1321,7 +1328,7 @@ windowlayout=538
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=memoryfo
  parent=
  mdistate=0
  nx=0

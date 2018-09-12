@@ -82,6 +82,111 @@ var
   uos_outputsetenable(0,out1Index,checkbox1.checked);
   end;  
  
+   procedure TSimplerecorder.btnStartClick(Sender: TObject);
+ 
+  begin
+    if (checkbox1.Checked = True) or (checkbox2.Checked = True) then
+    begin
+
+    PlayerIndex1 := 0 ;
+    
+     {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
+      uos_CreatePlayer(PlayerIndex1);
+          {$else}
+      uos_CreatePlayer(PlayerIndex1, sender);
+      {$ENDIF}
+  //// Create the player.
+  //// PlayerIndex : from 0 to what your computer can do !
+  //// If PlayerIndex exists already, it will be overwriten...
+
+ // uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
+   
+   SetLength(thebuffer, 0);
+   uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
+      
+  // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
+  //// add Output into wav file (save record)  with default parameters
+  
+   // uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename), -1, -1, 1, -1, -1);
+   //// add a Output into wav file (save record) with custom parameters
+    //////////// PlayerIndex : Index of a existing Player
+    //////////// Filename : name of new file for recording
+    //////////// SampleRate : delault : -1 (44100)
+    //////////// Channels : delault : -1 (2:stereo) ( 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    //////////// FramesCount : -1 default : 65536
+    //////////// FileFormat : -1 default : wav (0:wav, 1:pcm, 2:uos, 3:custom)
+    
+    {$if defined(cpuarm)} // needs lower latency
+    out1Index :=  uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1, -1) ;
+       {$else}
+     out1Index := uos_AddIntoDevOut(PlayerIndex1);
+       {$endif}
+   
+     uos_outputsetenable(PlayerIndex1,out1Index,checkbox1.checked);
+     
+     
+    //// add a Output into OUT device with default parameters
+    
+    //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 1,-1, -1); 
+     //// add a Output into device with custom parameters
+    //////////// PlayerIndex : Index of a existing Player
+    //////////// Device ( -1 is default Output device )
+    //////////// Latency  ( -1 is latency suggested ) )
+    //////////// SampleRate : delault : -1 (44100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    //////////// FramesCount : -1 default : 65536
+      // ChunkCount : default : -1 (= 512)
+    // ChunkCount : default : -1 (= 512)
+
+   In1Index := uos_AddFromDevIn(PlayerIndex1);
+   /// add Input from mic/aux into IN device with default parameters
+    
+   //   In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, -1, -1, -1);   
+    /// add Input from mic/aux into IN device with custom parameters
+    //////////// PlayerIndex : Index of a existing Player
+    //////////// Device ( -1 is default Input device )
+    //////////// Latency  ( -1 is latency suggested ) )
+    //////////// SampleRate : delault : -1 (44100)
+    //////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    //////////// FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
+    
+    uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, In1Index);
+   /////  Convert mono one channel channel to stereo two channels.
+    //// If the input is stereo, original buffer is keeped.
+    ////////// InputIndex : InputIndex of a existing Input       
+    //  result :  index of DSPIn in array
+    ////////// example  DSPIndex1 := uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, InputIndex1);
+
+    uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
+    ///// DSP Volume changer
+    //////////// PlayerIndex : Index of a existing Player
+    ////////// In1Index : InputIndex of a existing input
+    ////////// VolLeft : Left volume
+    ////////// VolRight : Right volume
+
+    uos_InputSetDSPVolume(PlayerIndex1,  In1Index, (100 - TrackBar2.position) / 100,
+     (100 - TrackBar3.position) / 100, True);  /// Set volume
+
+   /////// procedure to execute when stream is terminated
+     uos_EndProc(PlayerIndex1, @ClosePlayer1);
+   ///// Assign the procedure of object to execute at end
+   //////////// PlayerIndex : Index of a existing Player
+   //////////// ClosePlayer1 : procedure of object to execute inside the loop
+  
+    uos_Play(PlayerIndex1);  /////// everything is ready to play...
+      
+      CheckBox2.Enabled := false;
+      btnStart.Enabled := False;
+      btnStop.Enabled := True;
+      button5.Enabled := False;
+      button4.Enabled := False;
+    end;
+
+  end;
+ 
   procedure TSimplerecorder.btnPlaySavedClick(Sender: TObject);
   begin
   
@@ -103,6 +208,7 @@ var
        uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1, -1) ;
        {$else}
        uos_AddIntoDevOut(PlayerIndex1);
+     //  uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, 1024*4, -1) ;
        {$endif}
    
     //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 0,-1, -1);   //// add a Output into device with custom parameters
@@ -115,11 +221,11 @@ var
     //////////// FramesCount : -1 default : 65536
           // ChunkCount : default : -1 (= 512)
 
-  if fileexists( Pchar(filenameedit4.FileName)) then
-  In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
+//  if fileexists( Pchar(filenameedit4.FileName)) then
+//  In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
   
-  //uos_CustBufferInfos(thebufferinfos, 44100, 2, 2 ,Length(thebuffer) div 2);
-  //In1Index := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024*4);
+ uos_CustBufferInfos(thebufferinfos, 44100, 2, 2 ,Length(thebuffer) div 2);
+ In1Index := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024*4);
   
   //// add input from audio file with default parameters
   // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
@@ -213,110 +319,7 @@ var
     uos_Stop(PlayerIndex1);
   end;
 
-  procedure TSimplerecorder.btnStartClick(Sender: TObject);
  
-  begin
-    if (checkbox1.Checked = True) or (checkbox2.Checked = True) then
-    begin
-
-    PlayerIndex1 := 0 ;
-    
-     {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
-      uos_CreatePlayer(PlayerIndex1);
-          {$else}
-      uos_CreatePlayer(PlayerIndex1, sender);
-      {$ENDIF}
-  //// Create the player.
-  //// PlayerIndex : from 0 to what your computer can do !
-  //// If PlayerIndex exists already, it will be overwriten...
-
-  uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
-   
- //   SetLength(thebuffer, 0);
- //   uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
-      
-  // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
-  //// add Output into wav file (save record)  with default parameters
-  
-   // uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename), -1, -1, 1, -1, -1);
-   //// add a Output into wav file (save record) with custom parameters
-    //////////// PlayerIndex : Index of a existing Player
-    //////////// Filename : name of new file for recording
-    //////////// SampleRate : delault : -1 (44100)
-    //////////// Channels : delault : -1 (2:stereo) ( 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-    //////////// FramesCount : -1 default : 65536
-    //////////// FileFormat : -1 default : wav (0:wav, 1:pcm, 2:uos, 3:custom)
-    
-    {$if defined(cpuarm)} // needs lower latency
-    out1Index :=  uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1, -1) ;
-       {$else}
-     out1Index := uos_AddIntoDevOut(PlayerIndex1);
-       {$endif}
-   
-     uos_outputsetenable(PlayerIndex1,out1Index,checkbox1.checked);
-     
-     
-    //// add a Output into OUT device with default parameters
-    
-    //  uos_AddIntoDevOut(0, -1, -1, -1, -1, 1,-1, -1); 
-     //// add a Output into device with custom parameters
-    //////////// PlayerIndex : Index of a existing Player
-    //////////// Device ( -1 is default Output device )
-    //////////// Latency  ( -1 is latency suggested ) )
-    //////////// SampleRate : delault : -1 (44100)
-    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-    //////////// FramesCount : -1 default : 65536
-      // ChunkCount : default : -1 (= 512)
-    // ChunkCount : default : -1 (= 512)
-
-   In1Index := uos_AddFromDevIn(PlayerIndex1);
-   /// add Input from mic/aux into IN device with default parameters
-    
-   //    In1Index := uos_AddFromDevIn(0, -1, -1, -1, -1, 1, -1, -1);   
-    /// add Input from mic/aux into IN device with custom parameters
-    //////////// PlayerIndex : Index of a existing Player
-    //////////// Device ( -1 is default Input device )
-    //////////// Latency  ( -1 is latency suggested ) )
-    //////////// SampleRate : delault : -1 (44100)
-    //////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-    //////////// FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
-    
-    uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, In1Index);
-   /////  Convert mono one channel channel to stereo two channels.
-    //// If the input is stereo, original buffer is keeped.
-    ////////// InputIndex : InputIndex of a existing Input       
-    //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, InputIndex1);
-
-    uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
-    ///// DSP Volume changer
-    //////////// PlayerIndex : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing input
-    ////////// VolLeft : Left volume
-    ////////// VolRight : Right volume
-
-    uos_InputSetDSPVolume(PlayerIndex1,  In1Index, (100 - TrackBar2.position) / 100,
-     (100 - TrackBar3.position) / 100, True);  /// Set volume
-
-   /////// procedure to execute when stream is terminated
-     uos_EndProc(PlayerIndex1, @ClosePlayer1);
-   ///// Assign the procedure of object to execute at end
-   //////////// PlayerIndex : Index of a existing Player
-   //////////// ClosePlayer1 : procedure of object to execute inside the loop
-  
-    uos_Play(PlayerIndex1);  /////// everything is ready to play...
-      
-      CheckBox2.Enabled := false;
-      btnStart.Enabled := False;
-      btnStop.Enabled := True;
-      button5.Enabled := False;
-      button4.Enabled := False;
-    end;
-
-  end;
 
   procedure TSimplerecorder.AfterCreate;
   begin

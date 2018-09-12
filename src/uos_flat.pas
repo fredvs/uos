@@ -236,6 +236,15 @@ function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : ci
 // outmemory : pointer of buffer to use to store memory.
 // example : OutputIndex1 := uos_AddIntoMemoryBuffer(0, pointer(bufmemory));
 
+function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; SampleRate: LongInt;  SampleFormat: LongInt;
+      Channels: LongInt; FramesCount: LongInt): LongInt;  
+// Add a Output into memory buffer with custom parameters
+// outmemory : pointer of buffer to use to store memory.
+// SampleRate : delault : -1 (44100)
+// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+// FramesCount : default : -1 (= 1024 * 2)
+
 function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; Bufferinfos: Tuos_bufferinfos;
  OutputIndex: cint32; FramesCount: cint32): cint32;
 // Add a input from memory buffer with custom parameters
@@ -1404,6 +1413,22 @@ function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : ci
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddIntoMemoryBuffer(outmemory);
+end;
+
+function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; SampleRate: LongInt;  SampleFormat: LongInt;
+      Channels: LongInt; FramesCount: LongInt): LongInt;  
+// Add a Output into TMemoryStream
+// outmemory : pointer of buffer to use to store memory.
+// SampleRate : delault : -1 (44100)
+// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+// FramesCount : default : -1 (= 1024 * 2)
+ begin
+  result := -1 ;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
+  Result :=  uosPlayers[PlayerIndex].AddIntoMemoryBuffer(outmemory, SampleRate,SampleFormat,Channels,FramesCount);
 end;
 
 function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; Bufferinfos: Tuos_bufferinfos;

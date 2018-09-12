@@ -328,7 +328,7 @@ type
 // for Input  : 0: from audio file, 1: from input device (like mic),
 //              2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer, 5: from endless-muted
 // for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
-//              3: into memory buffer, 4: into wav from memorystream
+//              3: into memory buffer, 4: into wav file from memorystream, 5: into memorystream
     
   Seekable: boolean;
   Status: integer;
@@ -537,6 +537,7 @@ type
   public
   Data: Tuos_Data;
   BufferOut: PDArFloat;
+  MemorySteamOut: Tmemorystream;
   DSP: array of Tuos_DSP;
   {$IF DEFINED(portaudio)}
   PAParam: PaStreamParameters;
@@ -728,6 +729,7 @@ type
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 4096)
+// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
 //  result : Output Index in array     -1 = error
 // example : OutputIndex1 := AddIntoFileFromBuf(edit5.Text,-1,-1, 0, -1);
   
@@ -735,6 +737,26 @@ type
 // Add a Output into memory buffer
 // outmemory : pointer of buffer to use to store memory.
 // example : OutputIndex1 := AddIntoMemoryBuffer(bufmemory);
+
+  function  AddIntoMemoryBuffer(outmemory: PDArFloat; SampleRate: LongInt;  SampleFormat: LongInt;
+      Channels: LongInt; FramesCount: LongInt): LongInt;  
+// Add a Output into TMemoryStream
+// outmemory : pointer of buffer to use to store memory.
+// SampleRate : delault : -1 (44100)
+// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+// FramesCount : default : -1 (= 1024 * 2) 
+
+
+// TODO
+  function AddIntoMemoryStream(MemoryStream: TMemoryStream; SampleRate: LongInt; 
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
+// Add a Output into TMemoryStream
+// MemoryStream : the TMemoryStream to use to store memory.
+// SampleRate : delault : -1 (44100)
+// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// FramesCount : default : -1 (= 4096)
 
  {$IF DEFINED(shout)}
   function AddIntoIceServer(SampleRate : cint; Channels: cint; SampleFormat: cint;
@@ -4776,7 +4798,8 @@ begin
 // Add a Output into memory-bufffer
 // outmemory : buffer to use to store memory buffer
 // example : OutputIndex1 := AddIntoMemoryBuffer(bufmemory);
-  var
+ 
+var
   x: integer;
   begin
   result := -1 ;
@@ -4788,9 +4811,77 @@ begin
   StreamOut[x].Data.TypePut := 3;
   Streamout[x].Data.posmem := 0;
   Streamout[x].BufferOut := outmemory;
-  StreamOut[x].Data.Wantframes := 1024 ;
-  SetLength(StreamOut[x].Data.Buffer,1024*2);
+  StreamOut[x].Data.Wantframes := 1024*2 ;
+  StreamOut[x].Data.SampleRate := 44100 ;
+  SetLength(StreamOut[x].Data.Buffer,1024*4);
   intobuf := true;// to check, why ?
+  result := x;
+   StreamOut[x].Data.Enabled := True;
+  end;
+ 
+function  Tuos_Player.AddIntoMemoryBuffer(outmemory: PDArFloat; SampleRate: LongInt;  SampleFormat: LongInt;
+      Channels: LongInt; FramesCount: LongInt): LongInt;  
+// Add a Output into TMemoryStream
+// outmemory : pointer of buffer to use to store memory.
+// SampleRate : delault : -1 (44100)
+// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+// FramesCount : default : -1 (= 1024 * 2) 
+
+  var
+  x, ch, sr, sf, fr: integer;
+  begin
+  result := -1 ;
+  x := 0;
+  SetLength(StreamOut, Length(StreamOut) + 1);
+  StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
+  x := Length(StreamOut) - 1;
+  StreamOut[x].Data.Enabled := false;
+  StreamOut[x].Data.TypePut := 3;
+  Streamout[x].Data.posmem := 0;
+  Streamout[x].BufferOut := outmemory;
+  if channels = -1 then ch := 2 else ch := channels;
+  StreamOut[x].Data.channels := ch;
+  if SampleFormat = -1 then sf := 2 else sf := SampleFormat;
+  StreamOut[x].Data.SampleFormat := sf;
+  if FramesCount = -1 then fr := 1024 *2  else fr := FramesCount;
+  StreamOut[x].Data.Wantframes := fr ;
+  if SampleRate = -1 then sr := 44100  else sr := SampleRate;
+  StreamOut[x].Data.SampleRate := sr ;
+  
+  SetLength(StreamOut[x].Data.Buffer,fr*ch);
+  intobuf := true;// to check, why ?
+  result := x;
+  StreamOut[x].Data.Enabled := True;
+  end;
+  
+// TODO
+function Tuos_Player.AddIntoMemoryStream(MemoryStream: TMemoryStream; SampleRate: LongInt; 
+      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
+// Add a Output into TMemoryStream
+// MemoryStream : the TMemoryStream to use to store memory.
+// SampleRate : delault : -1 (44100)
+// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// FramesCount : default : -1 (= 4096)
+ var
+  x: integer;
+  begin
+  result := -1 ;
+  x := 0;
+  SetLength(StreamOut, Length(StreamOut) + 1);
+  StreamOut[Length(StreamOut) - 1] := Tuos_OutStream.Create();
+  x := Length(StreamOut) - 1;
+  StreamOut[x].Data.Enabled := false;
+  StreamOut[x].Data.TypePut := 5;
+  StreamOut[x].Data.channels := channels;
+  StreamOut[x].Data.SampleFormat := SampleFormat;
+  Streamout[x].Data.posmem := 0;
+  Streamout[x].MemorySteamOut := MemoryStream;
+  
+  Streamout[x].MemorySteamOut := TMemoryStream.Create;
+  
+  StreamOut[x].Data.Wantframes := FramesCount ;
   result := x;
    StreamOut[x].Data.Enabled := True;
   end;
@@ -7079,7 +7170,9 @@ begin
 
  {$IF not DEFINED(Library)}
   if EndProc <> nil then
-  thethread.synchronize(thethread,EndProc);//  Execute EndProc procedure
+  // thethread.synchronize(thethread,EndProc);//  Execute EndProc procedure
+
+ thethread.queue(thethread,EndProc);//  Execute EndProc procedure
 
   {$elseif not DEFINED(java)}
   if (EndProc <> nil) then
@@ -9287,6 +9380,8 @@ begin
   for i:= 0 to High(cbits) do
    cbits[i]:= 0;//byte
   {$endif}
+  
+  
 
   with FileBuffer do
   begin
@@ -9299,6 +9394,8 @@ begin
    DataMS:= nil;
   end;
   LoopProc:= nil;
+  
+  MemorySteamOut := nil;
 
   {$IF DEFINED(Java)}
 //  procedure LoopProcjava;

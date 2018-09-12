@@ -462,7 +462,7 @@ makeoptionson=8
  511
  511
  192
- 6
+ 2
  511
  511
 compilerusedon=29
@@ -496,12 +496,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3844
+ 3840
  0
  0
  0
  0
- 507
+ 511
 exeusedon=14
  4095
  0
@@ -751,7 +751,7 @@ on=1
 path=1
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=1
- 206
+ 312
 address=1
  4209176
 addbkpt=1
@@ -832,33 +832,33 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=AddFromMemoryBuffer
+finddtext=AddIntoMemory
 findhistory=20
+ AddIntoMemory
+ Addinto
+ TMemoryStream
+ DataMS
+ streamout
  AddFromMemoryBuffer
- cust
  AddFromDevIn
+ cust
  uos_AddIntoMemoryBuffer
  3:
  TypePut
  AddIntoMemoryBuffer
  WriteOut
  write
- Addinto
  chunkcount
  pa_open
  StreamOut[x].Data.TypePut
  Data.TypePut
  addintofile
  out1Index
- TFileStream
- tfile
- wChunkSize
- writebu
 findoptions=1
 editpos=6
- 0,382
- 0,9421
- 0,2232
+ 0,-1073741823
+ 4,4866
+ 0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -904,7 +904,7 @@ order=6
 firsttab=0
 index=4
 [layout]
-windowlayout=551
+windowlayout=552
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -917,8 +917,8 @@ windowlayout=551
  ncy=0
  x=0
  y=0
- cx=1346
- cy=700
+ cx=1356
+ cy=690
  rcx=0
  rcy=0
  [mainfo]
@@ -937,9 +937,9 @@ windowlayout=551
  rcx=0
  rcy=0
  children=1
-  basedock,0,0,1346,700
+  basedock,0,0,1356,690
  focusedchild=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1053,7 +1053,7 @@ windowlayout=551
  x=0
  y=0
  cx=205
- cy=528
+ cy=521
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1266,9 +1266,9 @@ windowlayout=551
  ncx=0
  ncy=0
  x=0
- y=593
- cx=1346
- cy=107
+ y=585
+ cx=1356
+ cy=105
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1367,8 +1367,8 @@ windowlayout=551
  ncy=0
  x=0
  y=0
- cx=1346
- cy=59
+ cx=1356
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1379,12 +1379,12 @@ windowlayout=551
  mdistate=0
  nx=0
  ny=0
- ncx=1346
- ncy=62
+ ncx=1356
+ ncy=61
  x=0
  y=0
- cx=1346
- cy=62
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1395,7 +1395,8 @@ windowlayout=551
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos.pas
- history=4
+ history=5
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/simplerecorder_fpGUI.pas
   /home/fred/uos/examples/uos_flat.pas
   /home/fred/strumpract/src/uos_flat.pas
@@ -1416,8 +1417,8 @@ windowlayout=551
  ncy=0
  x=208
  y=0
- cx=1138
- cy=528
+ cx=1148
+ cy=521
  rcx=0
  rcy=0
  [cpuc86_64fo]
@@ -1451,9 +1452,9 @@ windowlayout=551
  ncx=0
  ncy=0
  x=0
- y=62
- cx=1346
- cy=528
+ y=61
+ cx=1356
+ cy=521
  rcx=0
  rcy=0
 [targetconsole]
