@@ -99,10 +99,10 @@ var
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
- // uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
+  uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
    
-   SetLength(thebuffer, 0);
-   uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
+ //  SetLength(thebuffer, 0);
+ //  uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
       
   // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
   //// add Output into wav file (save record)  with default parameters
@@ -221,11 +221,11 @@ var
     //////////// FramesCount : -1 default : 65536
           // ChunkCount : default : -1 (= 512)
 
-//  if fileexists( Pchar(filenameedit4.FileName)) then
-//  In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
+ if fileexists( Pchar(filenameedit4.FileName)) then
+  In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
   
- uos_CustBufferInfos(thebufferinfos, 44100, 2, 2 ,Length(thebuffer) div 2);
- In1Index := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024*4);
+// uos_CustBufferInfos(thebufferinfos, 44100, 2, 2 ,Length(thebuffer) div 2);
+// In1Index := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024*4);
   
   //// add input from audio file with default parameters
   // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
