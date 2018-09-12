@@ -198,7 +198,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=1
+ index=2
  [projectoptionsfo]
  stackedunder=
  x=514
@@ -253,7 +253,7 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=8
+makeoptions=9
  -fPIC
  -l -Mobjfpc -Schi
  -FE.
@@ -261,8 +261,10 @@ makeoptions=8
  -WG
  -B -ghl
  -O2 -XX -Xs -CX
+ _B
  -vewnhibq
-makeoptpurpose=8
+makeoptpurpose=9
+ 
  
  
  
@@ -456,7 +458,7 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=8
+makeoptionson=9
  0
  1023
  511
@@ -464,6 +466,7 @@ makeoptionson=8
  192
  2
  511
+ 4095
  511
 compilerusedon=29
  3903
@@ -496,12 +499,12 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 3840
+ 3844
  0
  0
  0
  0
- 511
+ 507
 exeusedon=14
  4095
  0
@@ -751,9 +754,9 @@ on=1
 path=1
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=1
- 312
+ 324
 address=1
- 4209176
+ 4210008
 addbkpt=1
  0
 ignore=1
@@ -832,57 +835,67 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=AddIntoMemory
+finddtext=AddFromMemoryBuffer
 findhistory=20
- AddIntoMemory
- Addinto
- TMemoryStream
- DataMS
- streamout
  AddFromMemoryBuffer
- AddFromDevIn
- cust
- uos_AddIntoMemoryBuffer
- 3:
- TypePut
- AddIntoMemoryBuffer
- WriteOut
- write
- chunkcount
- pa_open
- StreamOut[x].Data.TypePut
- Data.TypePut
- addintofile
- out1Index
+ AddFromMemoryStreamdec
+ readmem
+ writeout
+ ddIntoMemoryStream
+ length(StreamIn[x].MemoryStreamDec
+ MemoryStream
+ MemoryStreamDec
+ Pmemorystream
+ AddIntoMemoryStream
+ BufferOut
+ MemorySteamOut
+ Give to MemoryStream
+ PDArFloat
+ filetomem
+ file2mem
+ ^
+ @
+ AddFromMemorys
+ uos_AddIntoMemoryStream
 findoptions=1
-editpos=6
- 0,245
- 0,4825
- 0,233
+editpos=8
+ 0,103
+ 0,5494
+ 0,248
+ 0,0
+ 0,0
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
+ 0,135
+ 0,6
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 bookmarks5=0
-sourcefiles=6
+bookmarks6=0
+bookmarks7=0
+sourcefiles=8
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
-relpaths=6
+ ${PROJECTDIR}/uos_shout.pas
+ ${PROJECTDIR}/define.inc
+relpaths=8
  simplerecorder_fpGUI.pas
  uos.pas
  uos_flat.pas
  uos_portaudio.pas
  consoleplaymemorybuffer.pas
  fpg_style_chrome_silver_flatmenu.pas
-ismoduletexts=6
+ uos_shout.pas
+ define.inc
+ismoduletexts=8
+ 0
+ 0
  0
  0
  0
@@ -894,12 +907,14 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=6
+order=8
  0
  5
  4
  2
  1
+ 7
+ 6
  3
 firsttab=0
 index=0
@@ -951,10 +966,10 @@ windowlayout=552
  ny=0
  ncx=0
  ncy=0
- x=543
- y=449
+ x=540
+ y=152
  cx=497
- cy=314
+ cy=450
  rcx=0
  rcy=0
  wsize=0
@@ -977,7 +992,7 @@ windowlayout=552
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [memoryfo]
  splitdir=0
  useroptions=805322875
@@ -1027,7 +1042,7 @@ windowlayout=552
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=stackfo
  parent=
  mdistate=0
  nx=0
@@ -1063,8 +1078,8 @@ windowlayout=552
  width1=82
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=1
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1083,7 +1098,7 @@ windowlayout=552
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [watchpointsfo]
  splitdir=0
  useroptions=805322857
@@ -1397,8 +1412,8 @@ windowlayout=552
  value=/home/fred/uos/examples/simplerecorder_fpGUI.pas
  history=5
   /home/fred/uos/examples/uos.pas
-  /home/fred/uos/examples/simplerecorder_fpGUI.pas
   /home/fred/uos/examples/uos_flat.pas
+  /home/fred/uos/examples/simplerecorder_fpGUI.pas
   /home/fred/strumpract/src/uos_flat.pas
   /home/fred/ideu/src/aboutform.pas
  [debuggerfo.project_options]
@@ -1458,6 +1473,7 @@ windowlayout=552
  rcx=0
  rcy=0
 [targetconsole]
-finddtext=
-findhistory=0
+finddtext=MemoryStreamDec
+findhistory=1
+ MemoryStreamDec
 findoptions=1

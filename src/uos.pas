@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2180811;
+  uos_version : cint32 = 2180813;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -194,8 +194,8 @@ type
   PDArFloat = ^TDArFloat;
   PDArShort = ^TDArShort;
   PDArLong = ^TDArLong;
-
-{$IF not DEFINED(windows)}
+  
+  {$IF not DEFINED(windows)}
   THandle = pointer;
   TArray = single;
 {$endif}
@@ -325,8 +325,9 @@ type
   
   TypePut: integer;
 // -1 : nothing. 
-// for Input  : 0: from audio file, 1: from input device (like mic),
-//              2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer, 5: from endless-muted
+// for Input  : 0: from audio encoded file, 1: from input device (like mic),
+//              2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer,
+//              5: from endless-muted, 6: from decoded memorystream
 // for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
 //              3: into memory buffer, 4: into wav file from memorystream, 5: into memorystream
     
@@ -336,6 +337,7 @@ type
   Buffer: TDArFloat;
   MemoryBuffer: TDArFloat;
   MemoryStream : Tmemorystream;
+  
   posmem : longint;
  
   {$IF DEFINED(opus)}
@@ -494,6 +496,8 @@ type
   Data: Tuos_Data;
   DSP: array of Tuos_DSP;
   
+  MemoryStreamDec : TMemoryStream;
+  
   {$IF DEFINED(neaac)}
   AACI: TAACInfo;
   {$endif}
@@ -537,7 +541,7 @@ type
   public
   Data: Tuos_Data;
   BufferOut: PDArFloat;
-  MemorySteamOut: Tmemorystream;
+  MemorySteamOut: TMemoryStream;
   DSP: array of Tuos_DSP;
   {$IF DEFINED(portaudio)}
   PAParam: PaStreamParameters;
@@ -596,6 +600,7 @@ type
   {$endif}
   procedure ReadEndless(x : integer); 
   procedure ReadMem(x : integer); 
+  procedure ReadMemDec(x : integer); 
   {$IF DEFINED(portaudio)}
   procedure ReadDevice(x : integer); 
   {$endif}
@@ -748,14 +753,13 @@ type
 // FramesCount : default : -1 (= 1024 * 2) 
 
 
-// TODO
-  function AddIntoMemoryStream(MemoryStream: TMemoryStream; SampleRate: LongInt; 
-      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
+  function AddIntoMemoryStream(var MemoryStream: TMemoryStream; SampleRate: LongInt; 
+       SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt): LongInt;  
 // Add a Output into TMemoryStream
 // MemoryStream : the TMemoryStream to use to store memory.
 // SampleRate : delault : -1 (44100)
-// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // FramesCount : default : -1 (= 4096)
 
  {$IF DEFINED(shout)}
@@ -849,8 +853,8 @@ function AddFromMemoryBuffer(var MemoryBuffer: TDArFloat; var Bufferinfos: Tuos_
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := AddFromMemoryBuffer(mybuffer, buffinfos,-1,1024);
   
-function AddFromMemoryStream(MemoryStream: TMemoryStream; 
-         TypeAudio: cint32; OutputIndex: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
+function AddFromMemoryStream(var MemoryStream: TMemoryStream; 
+         TypeAudio: cint32; OutputIndex: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;   
 // MemoryStream : Memory stream of encoded audio.
 // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
@@ -858,6 +862,14 @@ function AddFromMemoryStream(MemoryStream: TMemoryStream;
 // FramesCount : default : -1 (4096)
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := AddFromMemoryStream(mymemorystream,-1,-1,0,1024);
+
+function AddFromMemoryStreamDec(var MemoryStream: TMemoryStream; var Bufferinfos: Tuos_bufferinfos;
+ OutputIndex: cint32; FramesCount: cint32): cint32;
+// MemoryStream : Memory-stream of decoded audio (like created by AddIntoMemoryStream)
+// Bufferinfos : infos of the Memory-stream
+// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+// FramesCount : default : -1 (4096)
+//  result :  Input Index in array  -1 = error
 
 {$IF DEFINED(webstream)}
 function AddFromURL(URL: PChar; OutputIndex: cint32;
@@ -4855,17 +4867,16 @@ function  Tuos_Player.AddIntoMemoryBuffer(outmemory: PDArFloat; SampleRate: Long
   StreamOut[x].Data.Enabled := True;
   end;
   
-// TODO
-function Tuos_Player.AddIntoMemoryStream(MemoryStream: TMemoryStream; SampleRate: LongInt; 
-      Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt): LongInt;  
+function Tuos_Player.AddIntoMemoryStream(var MemoryStream: TMemoryStream; SampleRate: LongInt; 
+       SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt): LongInt;  
 // Add a Output into TMemoryStream
 // MemoryStream : the TMemoryStream to use to store memory.
 // SampleRate : delault : -1 (44100)
-// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // FramesCount : default : -1 (= 4096)
  var
-  x: integer;
+  x, ch, sr, sf, fr: integer;
   begin
   result := -1 ;
   x := 0;
@@ -4874,15 +4885,24 @@ function Tuos_Player.AddIntoMemoryStream(MemoryStream: TMemoryStream; SampleRate
   x := Length(StreamOut) - 1;
   StreamOut[x].Data.Enabled := false;
   StreamOut[x].Data.TypePut := 5;
-  StreamOut[x].Data.channels := channels;
-  StreamOut[x].Data.SampleFormat := SampleFormat;
+   if channels = -1 then ch := 2 else ch := channels;
+  StreamOut[x].Data.channels := ch;
+  if SampleFormat = -1 then sf := 2 else sf := SampleFormat;
+  StreamOut[x].Data.SampleFormat := sf;
+  if FramesCount = -1 then fr := 1024 *2  else fr := FramesCount;
+  StreamOut[x].Data.Wantframes := fr ;
+  if SampleRate = -1 then sr := 44100  else sr := SampleRate;
+  StreamOut[x].Data.SampleRate := sr ;
+  
   Streamout[x].Data.posmem := 0;
+  
+// if MemoryStream = nil then
+// MemoryStream := Tmemorystream.create;
+  
   Streamout[x].MemorySteamOut := MemoryStream;
   
-  Streamout[x].MemorySteamOut := TMemoryStream.Create;
-  
-  StreamOut[x].Data.Wantframes := FramesCount ;
-  result := x;
+   SetLength(StreamOut[x].Data.Buffer, StreamOut[x].Data.Wantframes*StreamOut[x].Data.Channels);
+   result := x;
    StreamOut[x].Data.Enabled := True;
   end;
 
@@ -5424,7 +5444,7 @@ var
   x : cint32; 
   {$IF DEFINED(debug)}
   st: string;
-  ,i : cint32; 
+  i : cint32; 
   {$endif} 
   begin
   
@@ -5479,7 +5499,7 @@ var
   StreamIn[x].Data.Channels := Bufferinfos.Channels;
    
  if FramesCount = -1 then
-  StreamIn[x].Data.Wantframes :=  65536 div StreamIn[x].Data.Channels
+  StreamIn[x].Data.Wantframes :=  4096
   else
   StreamIn[x].Data.Wantframes := FramesCount;
 
@@ -5665,11 +5685,106 @@ function m_tell(pms: PMemoryStream): Tsf_count_t; cdecl;
 begin
  Result:= pms^.Position;
 end;
+
+function Tuos_Player.AddFromMemoryStreamDec(var MemoryStream: TMemoryStream; var Bufferinfos: Tuos_bufferinfos;
+ OutputIndex: cint32; FramesCount: cint32): cint32;
+// MemoryStream : Memory-stream of decoded audio (like created by AddIntoMemoryStream)
+// Bufferinfos : infos of the Memory-stream
+// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+// FramesCount : default : -1 (4096)
+//  result :  Input Index in array  -1 = error
+var
+x : integer;
+begin
+ result := -1 ;
+
+   {$IF DEFINED(debug)}
+   WriteLn('Before all.');
+   {$endif}
+
+   if assigned(MemoryStream) then begin
+      x := 0;
+      MemoryStream.Position:= 0;
+
+      {$IF DEFINED(debug)}
+      WriteLn('Before setlength.');
+      {$endif}
+
+      SetLength(StreamIn, Length(StreamIn) + 1);
+      StreamIn[Length(StreamIn) - 1] := Tuos_InStream.Create;
+      x := Length(StreamIn) - 1;
+     
+      StreamIn[x].Data.LibOpen := -1;
+      StreamIn[x].Data.levelEnable := 0;
+      StreamIn[x].Data.Output := OutputIndex;
+         StreamIn[x].Data.Status := 1;
+         StreamIn[x].Data.Position := 0;
+         StreamIn[x].Data.OutFrames := 0;
+         StreamIn[x].Data.Poseek := -1;
+         StreamIn[x].Data.TypePut := 6;
+         StreamIn[x].Data.seekable := True;
+         StreamIn[x].LoopProc := nil;
+       
+  StreamIn[x].Data.Channels := Bufferinfos.Channels;
+   
+ if FramesCount = -1 then
+  StreamIn[x].Data.Wantframes :=  4096
+  else
+  StreamIn[x].Data.Wantframes := FramesCount;
+
+  StreamIn[x].Data.Samplerate := bufferinfos.SampleRate; 
+  StreamIn[x].Data.SampleRateRoot := Bufferinfos.Samplerate;
+  StreamIn[x].Data.SampleFormat := Bufferinfos.SampleFormat;
+  StreamIn[x].Data.Filename := BufferInfos.Filename;
+  StreamIn[x].Data.Title := BufferInfos.Title;
+  StreamIn[x].Data.Copyright := BufferInfos.Copyright;
+  StreamIn[x].Data.Software := BufferInfos.Software;
+  StreamIn[x].Data.Artist := BufferInfos.Artist;
+  StreamIn[x].Data.Comment := BufferInfos.Comment;
+  StreamIn[x].Data.Date := BufferInfos.Date;
+  StreamIn[x].Data.Tag := BufferInfos.Tag;
+  StreamIn[x].Data.Album := BufferInfos.Album;
+  StreamIn[x].Data.Genre := BufferInfos.Genre;
+  StreamIn[x].Data.HDFormat := BufferInfos.HDFormat;
+  StreamIn[x].Data.Sections := BufferInfos.Sections;
+  StreamIn[x].Data.Encoding := BufferInfos.Encoding;
+  StreamIn[x].Data.bitrate := BufferInfos.bitrate;
+//StreamIn[x].Data.Length := BufferInfos.Length;
+  StreamIn[x].Data.LibOpen := -1;
+  StreamIn[x].Data.ratio := StreamIn[x].Data.Channels;  
   
-function Tuos_Player.AddFromMemoryStream(MemoryStream: TMemoryStream; 
+  StreamIn[x].Data.posmem := 0;
+  StreamIn[x].Data.Output := OutputIndex;
+  StreamIn[x].Data.Status := 1;
+  StreamIn[x].Data.Position := 0;
+  StreamIn[x].Data.OutFrames := 0;
+  StreamIn[x].Data.Poseek := -1;
+  StreamIn[x].Data.seekable := false;
+  StreamIn[x].LoopProc := nil;
+  streamIn[x].Data.ratio := StreamIn[x].Data.Channels;
+  StreamIn[x].Data.positionEnable := 0;
+  StreamIn[x].Data.levelArrayEnable := 0;
+  StreamIn[x].MemoryStreamDec := MemoryStream;
+  
+    
+  StreamIn[x].MemoryStreamDec.Position:= 0;
+  SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
+
+  StreamIn[x].Data.Enabled := true;
+       result := x; 
+      {$IF DEFINED(debug)}
+      writeln('length(StreamIn[x].MemoryStreamDec) = '+inttostr(StreamIn[x].MemoryStreamDec.size)) ;
+      writeln('length(MemoryStream) = '+inttostr(MemoryStream.size)) ;
+      WriteLn('Length(StreamIn) = '+ inttostr(x));
+      {$endif}
+end else result := -1;
+
+end;
+  
+function Tuos_Player.AddFromMemoryStream(var MemoryStream: TMemoryStream; 
          TypeAudio: cint32; OutputIndex: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
-// MemoryStream : Memory stream of encoded audio.
-// TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
+// MemoryStream : Memory stream of encoded audio file.
+// TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus ; 3:decoded Tmemory-stream)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (4096)
@@ -6902,6 +7017,54 @@ WriteLn(st);
 {$endif}
 end;
 
+procedure Tuos_Player.ReadMemDec(X : integer);  
+var
+x2, wantframestemp : integer;
+{$IF DEFINED(debug)}
+i : integer;
+ st : string;
+{$endif}
+begin
+ {
+ if length(StreamIn[x].Data.MemoryStream) - StreamIn[x].Data.posmem - (StreamIn[x].Data.WantFrames
+
+* StreamIn[x].Data.Channels) >= 0 then wantframestemp := (StreamIn[x].Data.WantFrames
+* StreamIn[x].Data.Channels) else
+ wantframestemp := length(StreamIn[x].Data.MemoryStream) - StreamIn[x].Data.posmem;
+}
+
+
+wantframestemp := (StreamIn[x].Data.WantFrames * StreamIn[x].Data.channels);
+
+{$IF DEFINED(debug)}
+writeln('length(StreamIn[x].MemoryStreamDec) = '+inttostr(StreamIn[x].MemoryStreamDec.size)) ;
+writeln('StreamIn[x].Data.posmem = '+inttostr(StreamIn[x].Data.posmem)) ;
+writeln('wantframestemp = '+inttostr(wantframestemp)) ;
+{$endif}
+
+
+StreamIn[x].Data.OutFrames := StreamIn[x].MemoryStreamDec.Read(StreamIn[x].Data.Buffer[0] ,wantframestemp);
+
+StreamIn[x].Data.OutFrames := StreamIn[x].Data.OutFrames div StreamIn[x].Data.channels;
+
+StreamIn[x].Data.posmem := StreamIn[x].Data.posmem + wantframestemp;
+
+// StreamIn[x].Data.OutFrames := wantframestemp;
+
+if StreamIn[x].Data.SampleFormat > 0 then
+StreamIn[x].Data.Buffer := ConvertSampleFormat(StreamIn[x].Data);
+
+{$IF DEFINED(debug)}
+writeln('StreamIn[x].Data.posmem after = '+inttostr(StreamIn[x].Data.posmem)) ;
+writeln('StreamIn[x].Data.OutFrames = '+ inttostr(wantframestemp)) ;
+st := '';
+for i := 0 to length(StreamIn[x].data.Buffer) -1 do
+st := st + '|' + inttostr(i) + '=' + floattostr(StreamIn[x].data.Buffer[i]);
+WriteLn('OUTPUT DATA AFTER Input from memory ------------------------------');
+WriteLn(st);
+{$endif}
+end;
+
 procedure Tuos_Player.DoSeek( x : integer);  
 begin
  if StreamIn[x].Data.TypePut = 4 then
@@ -7754,6 +7917,21 @@ if err > 0 then
   StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels * rat);
   end;
 
+   5:// Give to MemoryStream
+  begin
+ 
+  case StreamOut[x].Data.SampleFormat of
+  0: rat := 2 ;
+  1: rat := 2 ;
+  2: rat := 1 ;
+  end;
+  
+ if assigned(StreamOut[x].MemorySteamOut) then
+  StreamOut[x].MemorySteamOut.WriteBuffer(
+  StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels * rat);
+   
+  end;
+
   0:// Give to wav file from TFileStream
   begin
 
@@ -7987,6 +8165,23 @@ if err > 0 then
   Length(BufferplugSH));
 
   end;
+  
+  5:// Give to MemoryStream
+  begin
+
+   case StreamOut[x].Data.SampleFormat of
+  0:  StreamOut[x].MemorySteamOut.WriteBuffer(BufferplugFL[0],
+  Length(BufferplugFL));
+  
+  1:  StreamOut[x].MemorySteamOut.WriteBuffer(BufferplugLO[0],
+  Length(BufferplugLO));
+  
+  2:  StreamOut[x].MemorySteamOut.WriteBuffer(BufferplugSH[0],
+  Length(BufferplugSH));
+ 
+  end;
+  end;
+
 
   3:
   begin// Give to memory buffer
@@ -8314,6 +8509,11 @@ var
   x, x2, x3 : cint32;
   plugenabled: boolean;
   curpos: cint64 = 0;
+  {$IF DEFINED(debug)}
+  st : string;
+  i : integer;
+   {$endif}
+  
 begin
 
 theinc := 0;
@@ -8409,6 +8609,9 @@ begin
   
   5:// for Input from endless muted
   ReadEndless(x);
+  
+  6:// for Input from decoded memory-stream
+  ReadMemDec(x);
 
   end;//case StreamIn[x].Data.TypePut of
   

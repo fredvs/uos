@@ -73,8 +73,9 @@ var
   ordir, opath: string;
   In1Index, out1index : cint32;
   
-   thebuffer : array of cfloat;
+  thebuffer : array of cfloat;
   thebufferinfos : TuosF_BufferInfos;
+  thememorystream : Tmemorystream;
   
   
   procedure TSimplerecorder.Changechk1(Sender: TObject);
@@ -83,7 +84,8 @@ var
   end;  
  
    procedure TSimplerecorder.btnStartClick(Sender: TObject);
- 
+ var 
+ inp : integer;
   begin
     if (checkbox1.Checked = True) or (checkbox2.Checked = True) then
     begin
@@ -101,9 +103,12 @@ var
 
   uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
    
- //  SetLength(thebuffer, 0);
- //  uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
-      
+  // SetLength(thebuffer, 0);
+  // uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
+  
+ // if thememorystream = nil then thememorystream := tmemorystream.create;
+ // uos_AddIntoMemoryStream(PlayerIndex1, (thememorystream),-1,-1,-1,-1);
+    
   // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
   //// add Output into wav file (save record)  with default parameters
   
@@ -191,7 +196,10 @@ var
   begin
   
 // if fileexists( Pchar(filenameedit4.FileName)) then begin
-  
+
+// writeln('length(StreamIn[x].MemoryStreamDec) = '+inttostr(StreamIn[x].MemoryStreamDec.size)) ;
+//  writeln('length(MemoryStream) = '+inttostr(theMemoryStream.size)) ;
+    
      PlayerIndex1 := 1 ; // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
                        // If PlayerIndex exists already, it will be overwritten...
 
@@ -221,11 +229,15 @@ var
     //////////// FramesCount : -1 default : 65536
           // ChunkCount : default : -1 (= 512)
 
- if fileexists( Pchar(filenameedit4.FileName)) then
-  In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
+if fileexists( Pchar(filenameedit4.FileName)) then
+ In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
   
 // uos_CustBufferInfos(thebufferinfos, 44100, 2, 2 ,Length(thebuffer) div 2);
-// In1Index := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024*4);
+// In1Index := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, -1);
+
+// uos_CustBufferInfos(thebufferinfos, 44100, 2, 2 ,thememorystream.size div 2);
+// In1Index := uos_AddFromMemoryStreamdec(PlayerIndex1,(thememorystream),thebufferinfos, -1, -1);
+ 
   
   //// add input from audio file with default parameters
   // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
@@ -255,7 +267,7 @@ var
     button4.Enabled := False;
     button5.Enabled := True;
 
-  uos_Play(PlayerIndex1);  /////// everything is ready to play...
+    uos_Play(PlayerIndex1);  /////// everything is ready to play...
 
   end;
 
@@ -651,7 +663,7 @@ var
     FilenameEdit4.Initialdir := ordir + 'sound';
     FilenameEdit1.Initialdir := ordir + 'lib';
     FilenameEdit2.Initialdir := ordir + 'lib';
-
+    //thememorystream := Tmemorystream.create;
   end;
 
   procedure TSimplerecorder.uos_logo(Sender: TObject);
@@ -684,6 +696,8 @@ var
       frm.Show;
       fpgApplication.Run;
     finally
+   // if thememorystream <> nil then
+freeandnil(thememorystream);
       frm.Free;
     end;
   end;
