@@ -754,7 +754,7 @@ on=1
 path=1
  /home/fred/uos/examples/simplerecorder_fpGUI.pas
 line=1
- 324
+ 331
 address=1
  4210008
 addbkpt=1
@@ -858,15 +858,16 @@ findhistory=20
  AddFromMemorys
  uos_AddIntoMemoryStream
 findoptions=1
-editpos=8
- 0,103
- 0,5494
- 0,248
- 0,0
- 0,0
+editpos=9
+ 21,280
  0,-1073741823
- 0,135
- 0,6
+ 36,277
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,192
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -875,7 +876,8 @@ bookmarks4=0
 bookmarks5=0
 bookmarks6=0
 bookmarks7=0
-sourcefiles=8
+bookmarks8=0
+sourcefiles=9
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -884,7 +886,8 @@ sourcefiles=8
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
  ${PROJECTDIR}/uos_shout.pas
  ${PROJECTDIR}/define.inc
-relpaths=8
+ ${PROJECTDIR}/main_sr.pas
+relpaths=9
  simplerecorder_fpGUI.pas
  uos.pas
  uos_flat.pas
@@ -893,7 +896,9 @@ relpaths=8
  fpg_style_chrome_silver_flatmenu.pas
  uos_shout.pas
  define.inc
-ismoduletexts=8
+ main_sr.pas
+ismoduletexts=9
+ 0
  0
  0
  0
@@ -907,11 +912,12 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=8
+order=9
  0
  5
  4
  2
+ 8
  1
  7
  6
@@ -919,7 +925,7 @@ order=8
 firsttab=0
 index=0
 [layout]
-windowlayout=552
+windowlayout=550
  [mainfo.basedock]
  splitdir=2
  useroptions=11395
@@ -974,7 +980,7 @@ windowlayout=552
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=805322857
@@ -1042,7 +1048,7 @@ windowlayout=552
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=stackfo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1369,7 +1375,7 @@ windowlayout=552
  active=0
  visible=0
  [componentpalettefo.componentpages]
- activetab=0
+ activetab=12
  [debuggerfo]
  splitdir=0
  useroptions=24683
@@ -1410,10 +1416,8 @@ windowlayout=552
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/simplerecorder_fpGUI.pas
- history=5
-  /home/fred/uos/examples/uos.pas
-  /home/fred/uos/examples/uos_flat.pas
-  /home/fred/uos/examples/simplerecorder_fpGUI.pas
+ history=3
+  /home/fred/uos/examples/consoleplaymemorybuffer.pas
   /home/fred/strumpract/src/uos_flat.pas
   /home/fred/ideu/src/aboutform.pas
  [debuggerfo.project_options]

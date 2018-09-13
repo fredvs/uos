@@ -56,6 +56,9 @@ var
   BufferBMP: TBitmap;
   PlayerIndex1: cardinal;
   In1Index, out1index : integer;
+  thebuffer : array of cfloat;
+  thebufferinfos : TuosF_BufferInfos;
+  thememorystream : Tmemorystream;
 
 implementation
 
@@ -194,8 +197,21 @@ begin
     //uos_AddIntoFileFromMem(PlayerIndex1, Pchar(edit3.Text));
     //// add Output into wav file (save record) from TMemoryStream  with default parameters
 
+      // saving in a file using a File-Stream:
       uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));
     //// add Output into wav file (save record) from TFileStream  with default parameters
+   
+  // saving in a Memory-Buffer:  
+  // SetLength(thebuffer, 0);
+  // uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
+  
+ // saving in a Memory-Stream:  
+ // if thememorystream = nil then thememorystream := tmemorystream.create;
+ // uos_AddIntoMemoryStream(PlayerIndex1, (thememorystream),-1,-1,-1,-1);
+    
+  // saving in a file using a Menory-Stream:   
+  // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
+  //// add Output into wav file (save record)  with default parameters
 
     //   uos_addIntoFile(PlayerIndex1, Pchar(edit3.Text) ,8000,1,1,-1 ); //  add a Output into wav with custom parameters mono radio-quality
     //////////// PlayerIndex : Index of a existing Player

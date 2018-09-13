@@ -101,14 +101,18 @@ var
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
+  // saving in a file using a File-Stream:  
   uos_AddIntoFile(PlayerIndex1, Pchar(filenameEdit4.filename));
-   
+  
+  // saving in a Memory-Buffer:  
   // SetLength(thebuffer, 0);
   // uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
   
+ // saving in a Memory-Stream:  
  // if thememorystream = nil then thememorystream := tmemorystream.create;
  // uos_AddIntoMemoryStream(PlayerIndex1, (thememorystream),-1,-1,-1,-1);
     
+  // saving in a file using a Menory-Stream:   
   // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
   //// add Output into wav file (save record)  with default parameters
   
@@ -229,12 +233,15 @@ var
     //////////// FramesCount : -1 default : 65536
           // ChunkCount : default : -1 (= 512)
 
+// from audio-encoded file
 if fileexists( Pchar(filenameedit4.FileName)) then
  In1Index :=uos_AddFromFile(PlayerIndex1, Pchar(filenameedit4.FileName)); 
-  
+ 
+// from Memory-Buffer  
 // uos_CustBufferInfos(thebufferinfos, 44100, 2, 2 ,Length(thebuffer) div 2);
 // In1Index := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, -1);
 
+// from Memory-Stream
 // uos_CustBufferInfos(thebufferinfos, 44100, 2, 2 ,thememorystream.size div 2);
 // In1Index := uos_AddFromMemoryStreamdec(PlayerIndex1,(thememorystream),thebufferinfos, -1, -1);
  
