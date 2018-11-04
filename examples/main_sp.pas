@@ -228,7 +228,7 @@ begin
   Edit2.Text := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
   Edit3.Text := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
   Edit5.Text := opath + '/lib/Mac/32bit/plugin/LibSoundTouch-32.dylib';
-  Edit4.Text := opath + 'sound/test.ogg';
+  Edit4.Text := ordir + '/sound/test.ogg';
    {$ENDIF}
     {$IFDEF CPU64}
   opath := ordir;
@@ -236,7 +236,7 @@ begin
   Edit1.Text := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
   Edit2.Text := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
   Edit3.Text := opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
-  Edit4.Text := opath + 'sound/test.ogg';
+  Edit4.Text := ordir + '/sound/test.ogg';
    {$ENDIF}
     {$ENDIF}
                

@@ -132,11 +132,18 @@ begin
         {$endif}
       {$ENDIF}
 
-     {$IFDEF Darwin}
-        ordir := copy(ordir, 1, Pos('/UOS', ordir) - 1);
+       {$IFDEF Darwin}
+   {$IFDEF CPU32}
+   ordir := copy(ordir, 1, Pos('/UOS', ordir) - 1);
        lib1 :=  ordir + '/lib/Mac/32bit/LibPortaudio-32.dylib';
        lib2 :=  ordir + '/lib/Mac/32bit/LibSndFile-32.dylib';
-     {$ENDIF}
+   {$ENDIF}
+    {$IFDEF CPU64}
+    ordir := copy(ordir, 1, Pos('/UOS', ordir) - 1);
+    lib1 := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
+    lib2 := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
+    {$ENDIF}
+    {$ENDIF}
 
 uos_LoadLib(Pchar(lib1),  Pchar(lib2), nil, nil, nil,nil);
 

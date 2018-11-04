@@ -935,27 +935,54 @@ findhistory=20
  addfrom
  audio_object
 findoptions=1
-editpos=20
- 0,95
+editpos=47
+ 0,93
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,9064
  0,102
- 0,140
- 0,223
- 50,1342
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,93
+ 0,96
+ 0,99
+ 0,244
+ 0,59
+ 0,81
+ 0,67
+ 0,285
+ 0,787
+ 0,532
+ 0,136
+ 0,1346
+ 0,642
+ 0,962
+ 0,236
+ 0,69
+ 0,136
+ 0,232
+ 0,168
+ 0,118
+ 0,134
+ 0,218
+ 0,125
+ 0,61
+ 0,89
+ 0,203
+ 0,191
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -976,7 +1003,34 @@ bookmarks16=0
 bookmarks17=0
 bookmarks18=0
 bookmarks19=0
-sourcefiles=20
+bookmarks20=0
+bookmarks21=0
+bookmarks22=0
+bookmarks23=0
+bookmarks24=0
+bookmarks25=0
+bookmarks26=0
+bookmarks27=0
+bookmarks28=0
+bookmarks29=0
+bookmarks30=0
+bookmarks31=0
+bookmarks32=0
+bookmarks33=0
+bookmarks34=0
+bookmarks35=0
+bookmarks36=0
+bookmarks37=0
+bookmarks38=0
+bookmarks39=0
+bookmarks40=0
+bookmarks41=0
+bookmarks42=0
+bookmarks43=0
+bookmarks44=0
+bookmarks45=0
+bookmarks46=0
+sourcefiles=47
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -985,7 +1039,7 @@ sourcefiles=20
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/define.inc
- /home/fred/pcaudiolib_pas/src/pcaudiosynth.pas
+ ${PROJECTDIR}/consolebpmdetect.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/mainmse_sp.pas
  ${PROJECTDIR}/SimplePlayer_MSE.pas
@@ -997,7 +1051,34 @@ sourcefiles=20
  ${PROJECTDIR}/main_sd.pas
  ${PROJECTDIR}/main_sp.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
-relpaths=20
+ ${PROJECTDIR}/consoleplayloop.pas
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
+ ${PROJECTDIR}/consoleplaymemorystream.pas
+ ${PROJECTDIR}/main_sp.pas
+ ${PROJECTDIR}/conswebstream.pas
+ ${PROJECTDIR}/consolespectrum.pas
+ ${PROJECTDIR}/consolesynth.pas
+ ${PROJECTDIR}/deviceinfos_fpGUI.pas
+ ${PROJECTDIR}/filterplayer_fpGUI.pas
+ ${PROJECTDIR}/multiplayer_fpGUI.pas
+ ${PROJECTDIR}/simpledrums_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ ${PROJECTDIR}/simplewebplayer_fpGUI.pas
+ ${PROJECTDIR}/waveform_fpGUI.pas
+ ${PROJECTDIR}/main_di.pas
+ ${PROJECTDIR}/main_fp.pas
+ ${PROJECTDIR}/main_mi.pas
+ ${PROJECTDIR}/main_mp.pas
+ ${PROJECTDIR}/main_nr.pas
+ ${PROJECTDIR}/main_sd.pas
+ ${PROJECTDIR}/main_sp_nf.pas
+ ${PROJECTDIR}/main_spectrum_mse.pas
+ ${PROJECTDIR}/main_sr.pas
+ ${PROJECTDIR}/main_wf.pas
+ ${PROJECTDIR}/main_wsp.pas
+ ${PROJECTDIR}/formspectrum_unit.pas
+relpaths=47
  consoleplay.pas
  uos.pas
  uos_flat.pas
@@ -1006,7 +1087,7 @@ relpaths=20
  uos_portaudio.pas
  uos_mpg123.pas
  define.inc
- pcaudiolib_pas/src/pcaudiosynth.pas
+ consolebpmdetect.pas
  define.inc
  mainmse_sp.pas
  SimplePlayer_MSE.pas
@@ -1018,7 +1099,61 @@ relpaths=20
  main_sd.pas
  main_sp.pas
  simpleplayer_fpGUI.pas
-ismoduletexts=20
+ consoleplayloop.pas
+ consoleplaymemorybuffer.pas
+ consoleplaymemorystream.pas
+ main_sp.pas
+ conswebstream.pas
+ consolespectrum.pas
+ consolesynth.pas
+ deviceinfos_fpGUI.pas
+ filterplayer_fpGUI.pas
+ multiplayer_fpGUI.pas
+ simpledrums_fpGUI.pas
+ simpleplayer_fpGUI.pas
+ simplerecorder_fpGUI.pas
+ simplewebplayer_fpGUI.pas
+ waveform_fpGUI.pas
+ main_di.pas
+ main_fp.pas
+ main_mi.pas
+ main_mp.pas
+ main_nr.pas
+ main_sd.pas
+ main_sp_nf.pas
+ main_spectrum_mse.pas
+ main_sr.pas
+ main_wf.pas
+ main_wsp.pas
+ formspectrum_unit.pas
+ismoduletexts=47
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1052,8 +1187,46 @@ nomenumodules=2
  0
  0
 [sourcefo.files_tab]
-order=20
+order=47
  0
+ 20
+ 21
+ 22
+ 24
+ 27
+ 46
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 25
+ 26
+ 23
+ 42
+ 43
+ 44
+ 45
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 35
+ 8
+ 6
+ 7
+ 4
+ 5
+ 3
+ 2
+ 10
+ 11
+ 12
+ 1
  17
  18
  19
@@ -1062,21 +1235,10 @@ order=20
  14
  13
  9
- 10
- 11
- 12
- 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
-firsttab=0
-index=3
+firsttab=16
+index=20
 [layout]
-windowlayout=614
+windowlayout=641
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1184,7 +1346,7 @@ windowlayout=614
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1551,8 +1713,9 @@ windowlayout=614
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
+ value=/home/fred/uos/examples/main_wsp.pas
  history=20
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/uos.pas
   /home/fred/pcaudiolib_pas/src/uos_demo/mainmse_sp.pas
   /home/fred/pcaudiolib-io/src/pulseaudio.c
@@ -1572,7 +1735,6 @@ windowlayout=614
   /home/fred/pcaudiolib-mse/src/include/pcaudiolib/audio.h
   /home/fred/pcaudiolib_pas/src/uos_demo/simplerecorder_fpGUI
   /home/fred/pcaudiolib_pas/src/uos_demo/uos.pas
-  /home/fred/uos/src/uos.pas
  [debuggerfo.project_options]
  value=B
  [debuggerfo.hints]
@@ -1594,8 +1756,46 @@ windowlayout=614
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=20
+ order=47
   0
+  20
+  21
+  22
+  24
+  27
+  46
+  28
+  29
+  30
+  31
+  32
+  33
+  34
+  25
+  26
+  23
+  42
+  43
+  44
+  45
+  36
+  37
+  38
+  39
+  40
+  41
+  35
+  8
+  6
+  7
+  4
+  5
+  3
+  2
+  10
+  11
+  12
+  1
   17
   18
   19
@@ -1604,19 +1804,8 @@ windowlayout=614
   14
   13
   9
-  10
-  11
-  12
-  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
- firsttab=0
- index=3
+ firsttab=16
+ index=20
  [cpuc86_64fo]
  irqoff=0
  splitdir=0

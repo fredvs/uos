@@ -58,12 +58,22 @@ var
  {$ENDIF}
 
  {$IFDEF Darwin}
+  {$IFDEF CPU32}
     opath := ordir;
     opath := copy(opath, 1, Pos('/UOS', opath) - 1);
     PA_FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     MP_FileName := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
+     {$ENDIF}
+  
+   {$IFDEF CPU64}
+    opath := ordir;
+    opath := copy(opath, 1, Pos('/UOS', opath) - 1);
+    PA_FileName := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
+    MP_FileName := opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
+    {$ENDIF}  
  {$ENDIF}
-    
+ 
+ 
     // Load the libraries
     // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName, opusfilefilename: Pchar; Mpg123FileName: Pchar) : integer;
     // for web streaming => Mpg123 is needed

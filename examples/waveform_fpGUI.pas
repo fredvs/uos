@@ -228,12 +228,22 @@ var
  {$ENDIF}
 
   {$IFDEF Darwin}
+   {$IFDEF CPU32}
     opath := ordir;
     opath := copy(opath, 1, Pos('/uos', opath) - 1);
+    FilenameEdit1.FileName := ordir + 'sound/test.mp3';
     fnsf := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
     fnmp := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
-    FilenameEdit1.FileName := opath + 'sound/test.mp3';
-            {$ENDIF}
+    {$ENDIF}
+    {$IFDEF CPU64}
+    opath := ordir;
+    opath := copy(opath, 1, Pos('/uos', opath) - 1);
+    FilenameEdit1.FileName := ordir + 'sound/test.mp3';
+    fnsf := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
+    fnmp:= opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
+    {$ENDIF}
+   {$ENDIF}
+
 
    {$if defined(cpu64) and defined(linux) }
     fnsf := ordir + 'lib/Linux/64bit/LibSndFile-64.so';

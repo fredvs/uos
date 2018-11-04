@@ -66,11 +66,19 @@ var
   {$ENDIF}
 
  {$IFDEF Darwin}
+  {$IFDEF CPU32}
     opath := ordir;
     opath := copy(opath, 1, Pos('/UOS', opath) - 1);
     PA_FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
+    {$ENDIF}
+  
+   {$IFDEF CPU64}
+    opath := ordir;
+    opath := copy(opath, 1, Pos('/UOS', opath) - 1);
+    PA_FileName := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
+    {$ENDIF}  
  {$ENDIF}
- 
+  
     // Load the libraries (here only portaudio is needed)
     // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename:: PChar) : LongInt;
 
