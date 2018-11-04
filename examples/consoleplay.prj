@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplay.prj
-findinfiledialog=52
+findinfiledialog=53
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,11 +29,11 @@ findinfiledialog=52
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=0
+ value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=1
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc" "*.h" "*.c"
  history=2
@@ -53,8 +53,9 @@ findinfiledialog=52
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc" "*.h" "*.c"
  [findinfileadialogfo.findtext]
- value=opus_get_version_string
- history=11
+ value={$IFDEF Darwin}
+ history=12
+  {$IFDEF Darwin}
   opus_get_version_string
   pcaudio
   uos_AddIntoDevOut
@@ -767,6 +768,7 @@ externalconsole=0
 settty=1
 gdbdownload=0
 downloadalways=0
+restartgdbbeforeload=0
 startupbkpt=0
 startupbkpton=0
 gdbsimulator=0
@@ -826,9 +828,9 @@ path=5
 line=5
  5971
  5286
- 113
+ 123
  1563
- 129
+ 139
 address=5
  4860997
  4850161
@@ -933,8 +935,8 @@ findhistory=20
  addfrom
  audio_object
 findoptions=1
-editpos=16
- 0,-1073741823
+editpos=20
+ 0,95
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -950,6 +952,10 @@ editpos=16
  0,-1073741823
  0,-1073741823
  0,9064
+ 0,102
+ 0,140
+ 0,223
+ 50,1342
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -966,7 +972,11 @@ bookmarks12=0
 bookmarks13=0
 bookmarks14=0
 bookmarks15=0
-sourcefiles=16
+bookmarks16=0
+bookmarks17=0
+bookmarks18=0
+bookmarks19=0
+sourcefiles=20
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
@@ -983,7 +993,11 @@ sourcefiles=16
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
-relpaths=16
+ ${PROJECTDIR}/consolebpmdetect.pas
+ ${PROJECTDIR}/main_sd.pas
+ ${PROJECTDIR}/main_sp.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+relpaths=20
  consoleplay.pas
  uos.pas
  uos_flat.pas
@@ -1000,7 +1014,15 @@ relpaths=16
  uos_libsndfile.pas
  uos_flat.pas
  uos.pas
-ismoduletexts=16
+ consolebpmdetect.pas
+ main_sd.pas
+ main_sp.pas
+ simpleplayer_fpGUI.pas
+ismoduletexts=20
+ 0
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1030,9 +1052,13 @@ nomenumodules=2
  0
  0
 [sourcefo.files_tab]
-order=16
+order=20
  0
+ 17
+ 18
+ 19
  15
+ 16
  14
  13
  9
@@ -1048,28 +1074,16 @@ order=16
  7
  8
 firsttab=0
-index=1
+index=3
 [layout]
-windowlayout=635
+windowlayout=614
  [mainfo.basedock]
  splitdir=2
- useroptions=11395
- parent=mainfo.container
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=668
- ncy=0
- x=0
- y=0
- cx=1356
- cy=692
- rcx=0
- rcy=0
+ useroptions=268450944
  [mainfo]
  splitdir=0
- useroptions=838860925
+ useroptions=301990011
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1082,15 +1096,12 @@ windowlayout=635
  cy=621
  rcx=0
  rcy=0
- children=1
-  basedock,0,0,1356,692
- focusedchild=0
  wsize=6
  active=1
  visible=1
  [targetconsolefo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -1108,7 +1119,7 @@ windowlayout=635
  visible=1
  [threadsfo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -1126,7 +1137,7 @@ windowlayout=635
  visible=0
  [memoryfo]
  splitdir=0
- useroptions=805322875
+ useroptions=268451963
  stackedunder=dialogfilesfo
  parent=
  mdistate=0
@@ -1153,7 +1164,7 @@ windowlayout=635
  value=0
  [disassfo]
  splitdir=0
- useroptions=805322859
+ useroptions=268451947
  stackedunder=
  parent=
  mdistate=0
@@ -1173,22 +1184,22 @@ windowlayout=635
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=239
- y=115
- cx=678
- cy=414
+ x=0
+ y=29
+ cx=1366
+ cy=706
  rcx=0
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=805355627
+ useroptions=268484715
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1199,7 +1210,7 @@ windowlayout=635
  x=0
  y=0
  cx=205
- cy=526
+ cy=524
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1214,7 +1225,7 @@ windowlayout=635
  rowheight=16
  [stackfo]
  splitdir=0
- useroptions=805331049
+ useroptions=268460137
  parent=
  mdistate=0
  nx=0
@@ -1232,7 +1243,7 @@ windowlayout=635
  visible=0
  [watchpointsfo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -1290,7 +1301,7 @@ windowlayout=635
  value=0
  [objectinspectorfo]
  splitdir=0
- useroptions=805322859
+ useroptions=268451947
  stackedunder=
  parent=
  mdistate=0
@@ -1315,7 +1326,7 @@ windowlayout=635
  sortdescend1=0
  [symbolfo]
  splitdir=0
- useroptions=805322875
+ useroptions=268451963
  stackedunder=
  parent=
  mdistate=0
@@ -1360,7 +1371,7 @@ windowlayout=635
  [symbolfo.symbol]
  [watchfo]
  splitdir=0
- useroptions=805331049
+ useroptions=268460137
  parent=mainfo.basedock
  visible=0
  mdistate=0
@@ -1403,7 +1414,7 @@ windowlayout=635
  value=1
  [messagefo]
  splitdir=0
- useroptions=805388395
+ useroptions=268517483
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1412,14 +1423,14 @@ windowlayout=635
  ncx=0
  ncy=0
  x=0
- y=587
+ y=585
  cx=1356
  cy=105
  rcx=0
  rcy=0
  [componentstorefo]
  splitdir=0
- useroptions=805331067
+ useroptions=268460155
  stackedunder=
  parent=
  mdistate=0
@@ -1482,7 +1493,7 @@ windowlayout=635
  filefilter=
  [componentpalettefo]
  splitdir=0
- useroptions=805331051
+ useroptions=268460139
  stackedunder=
  parent=
  mdistate=3
@@ -1519,7 +1530,7 @@ windowlayout=635
  rcy=0
  [debuggerfo.basedock]
  splitdir=2
- useroptions=805452931
+ useroptions=268582019
  parent=debuggerfo.container
  visible=1
  mdistate=0
@@ -1540,8 +1551,9 @@ windowlayout=635
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
- history=50
+ value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
+ history=20
+  /home/fred/uos/examples/uos.pas
   /home/fred/pcaudiolib_pas/src/uos_demo/mainmse_sp.pas
   /home/fred/pcaudiolib-io/src/pulseaudio.c
   /home/fred/pcaudiolib-io/src/alsa.c
@@ -1561,37 +1573,6 @@ windowlayout=635
   /home/fred/pcaudiolib_pas/src/uos_demo/simplerecorder_fpGUI
   /home/fred/pcaudiolib_pas/src/uos_demo/uos.pas
   /home/fred/uos/src/uos.pas
-  /home/fred/pcaudiolib_pas/src/uos_demo/SimplePlayer_MSE.pas
-  /home/fred/pcaudiolib_pas/src/uos_demo/uos_flat.pas
-  /home/fred/pcaudiolib_pas/src/uos_demo/uos_pcaudio.pas
-  /home/fred/portaudio_opensles/src/hostapi/alsa/pa_linux_alsa.c
-  /home/fred/alsatest/alsadrop2.c
-  /home/fred/alsatest/alsadrop1.c
-  /home/fred/strumpract/src/songplayer.pas
-  /home/fred/uos/examples/SimplePlayer_MSE.pas
-  /home/fred/uos/examples/mainmse_sp.pas
-  /home/fred/uos/examples/consoleplay.pas
-  /home/fred/pcaudiolib_pas/src/pcaudiosynth.pas
-  /usr/local/codetyphon/typhon/components/pl_TitanSound/source/tsd_tag_id3v2.pas
-  /home/fred/pcaudiolib_pas/src/pcaudio.pas
-  /home/fred/pcaudio/main.pas
-  /home/fred/msepcaudio/main.pas
-  /home/fred/msepcaudio/msepcaudio.pas
-  /home/fred/pcaudiolib-master/src/xaudio2.cpp
-  /home/fred/pcaudiolib-master/src/audio_priv.h
-  /home/fred/uos/examples/uos_mpg123.pas
-  /home/fred/uos/examples/uos_portaudio.pas
-  /home/fred/uos/examples/main_sp.lfm
-  /home/fred/uos/examples/fpc_ct.cfg
-  /home/fred/uoslibCT/src/fpcct_android.cfg
-  /home/fred/uos/examples/main_wf.pas
-  /home/fred/ideu/src/confideu.pas
-  /home/fred/ideu/src/ideusettings.pas
-  /home/fred/ideu/src/msewidgets.pas
-  /home/fred/strumpract/src/aboutform.pas
-  /home/fred/strumpract/src/main.pas
-  /home/fred/strumpract/src/config.pas
-  /home/fred/uos/examples/uoslib.pas
  [debuggerfo.project_options]
  value=B
  [debuggerfo.hints]
@@ -1609,9 +1590,33 @@ windowlayout=635
  x=208
  y=0
  cx=1148
- cy=526
+ cy=524
  rcx=0
  rcy=0
+ [sourcefo.files_tab]
+ order=20
+  0
+  17
+  18
+  19
+  15
+  16
+  14
+  13
+  9
+  10
+  11
+  12
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+ firsttab=0
+ index=3
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
@@ -1634,7 +1639,7 @@ windowlayout=635
  visible=0
  [mainfo.panel1]
  splitdir=1
- useroptions=838958571
+ useroptions=302087659
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1645,12 +1650,12 @@ windowlayout=635
  x=0
  y=58
  cx=1356
- cy=526
+ cy=524
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
- useroptions=805322875
+ useroptions=268451963
  stackedunder=_mse_simple_player_mse_
  parent=
  mdistate=0
@@ -1658,8 +1663,8 @@ windowlayout=635
  ny=0
  ncx=0
  ncy=0
- x=99
- y=135
+ x=251
+ y=194
  cx=493
  cy=132
  rcx=0
@@ -1669,7 +1674,7 @@ windowlayout=635
  visible=0
  [_mse_simple_player_mse_]
  splitdir=0
- useroptions=805322875
+ useroptions=268451963
  stackedunder=targetconsolefo
  parent=
  mdistate=3

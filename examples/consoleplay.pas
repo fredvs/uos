@@ -3,7 +3,7 @@ program consoleplay;
 ///WARNING : if FPC version < 2.7.1 => Do not forget to uncoment {$DEFINE consoleapp} in define.inc !
 
 {$mode objfpc}{$H+}
-   {$DEFINE UseCThreads}
+ {$DEFINE UseCThreads}
 uses
 {$IFDEF UNIX}
   cthreads, 
@@ -78,11 +78,21 @@ var
  {$ENDIF}
 
  {$IFDEF Darwin}
+  {$IFDEF CPU32}
     opath := ordir;
     opath := copy(opath, 1, Pos('/UOS', opath) - 1);
     PA_FileName := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
     SF_FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
     SoundFilename := opath + '/sound/test.ogg';
+    {$ENDIF}
+  
+   {$IFDEF CPU64}
+    opath := ordir;
+    opath := copy(opath, 1, Pos('/UOS', opath) - 1);
+    PA_FileName := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
+    SF_FileName := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
+    SoundFilename := opath + '/sound/test.ogg';
+    {$ENDIF}  
  {$ENDIF}
  
     // Load the libraries

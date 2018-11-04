@@ -221,6 +221,7 @@ begin
  {$ENDIF}
 
   {$IFDEF Darwin}
+   {$IFDEF CPU32}
   opath := ordir;
   opath := copy(opath, 1, Pos('/uos', opath) - 1);
   Edit1.Text := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
@@ -228,9 +229,18 @@ begin
   Edit3.Text := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
   Edit5.Text := opath + '/lib/Mac/32bit/plugin/LibSoundTouch-32.dylib';
   Edit4.Text := opath + 'sound/test.ogg';
-            {$ENDIF}
-
-  {$if defined(cpu64) and defined(linux) }
+   {$ENDIF}
+    {$IFDEF CPU64}
+  opath := ordir;
+  opath := copy(opath, 1, Pos('/uos', opath) - 1);
+  Edit1.Text := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
+  Edit2.Text := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
+  Edit3.Text := opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
+  Edit4.Text := opath + 'sound/test.ogg';
+   {$ENDIF}
+    {$ENDIF}
+               
+   {$if defined(cpu64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
