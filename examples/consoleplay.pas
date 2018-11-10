@@ -147,9 +147,7 @@ var
          OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, -1, -1) ;
        {$endif}
   
-     uos_AddIntoDevOut(1, -1, -1, -1, -1, -1, -1, -1) ;
-       
-         writeln('OutputIndex1 = ' + inttostr(OutputIndex1));
+     writeln('OutputIndex1 = ' + inttostr(OutputIndex1));
     
     if OutputIndex1 > -1 then 
     begin
@@ -157,7 +155,7 @@ var
     /////// everything is ready, here we are, lets play it...
    
     uos_Play(PlayerIndex1);
-   
+    
     sleep(1000);
     writeln;   
     writeln('Title: ' + uos_InputGetTagTitle(PlayerIndex1, InputIndex1));
