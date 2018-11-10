@@ -916,7 +916,8 @@ procedure SetPluginBs2b(PluginIndex: cint32; level: CInt32; fcut: CInt32;
 {$endif}
 
 function GetStatus() : cint32 ;
-// Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, -1 => error.
+// Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, 
+// -1 => error or not yet played, only created.
 
 procedure InputSeek(InputIndex: cint32; pos: Tcount_t);
 // change position in sample
@@ -1949,7 +1950,7 @@ end;
  {$endif}
   
 function Tuos_Player.GetStatus() : cint32 ;
-// Get the status of the player : -1 => error, 0 => has stopped, 1 => is running, 2 => is paused.
+// Get the status of the player : -1 => error or not yet played, 0 => has stopped, 1 => is running, 2 => is paused.
 begin
 result := -1 ;
   if (isAssigned = True) then  result := Status else result := -1 ;
@@ -2068,8 +2069,10 @@ end;
 
 procedure Tuos_Player.Stop();
 begin
-  if (Status > 0) and (isAssigned = True) then
+//writeln(inttostr(Status));
+  if (Status <> 0) and (isAssigned = True) then
   begin
+    if status < 0 then playpaused;
   NLooped:= 0;
   if isGlobalPause = true then
   RTLeventSetEvent(uosInit.evGlobalPause) else   
@@ -9682,7 +9685,7 @@ begin
   intobuf := false;
   NLooped:= 0; 
   NoFree:= False;
-  status := 2;
+  status := -1;
   BeginProc := nil;
   EndProc := nil;
   EndProcOnly := nil;

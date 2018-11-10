@@ -120,7 +120,7 @@ var
    if uos_CreatePlayer(PlayerIndex1) then
   
   begin
-  
+ 
     //// add a Input from audio-file with default parameters
     //////////// PlayerIndex : Index of a existing Player
     ////////// FileName : filename of audio file
@@ -128,6 +128,7 @@ var
     
     InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar((SoundFilename)), 
     -1, -1, -1);
+    
     
       writeln('InputIndex1 = ' + inttostr(InputIndex1));
      
@@ -145,6 +146,8 @@ var
        //OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1);
          OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, -1, -1) ;
        {$endif}
+  
+     uos_AddIntoDevOut(1, -1, -1, -1, -1, -1, -1, -1) ;
        
          writeln('OutputIndex1 = ' + inttostr(OutputIndex1));
     
@@ -152,7 +155,9 @@ var
     begin
 
     /////// everything is ready, here we are, lets play it...
+   
     uos_Play(PlayerIndex1);
+   
     sleep(1000);
     writeln;   
     writeln('Title: ' + uos_InputGetTagTitle(PlayerIndex1, InputIndex1));
