@@ -19,12 +19,16 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/multiplayer.prj
-findinfiledialog=37
+findinfiledialog=43
  [findinfileadialogfo.subdirs]
  value=1
+ [findinfileadialogfo.incurrentfile]
+ value=0
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
+ value=0
+ [findinfileadialogfo.inprojectdir]
  value=0
  [findinfileadialogfo.casesensitive]
  value=0
@@ -36,27 +40,29 @@ findinfiledialog=37
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/graemeg/devel/
- filehistory=1
-  /home/graemeg/devel/
- filefilterindex=0
- filefilter="*.pas" "*.pp" "*.inc"
+  /usr/local/codetyphon/
  filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
+ filehistory=2
+  /usr/local/codetyphon/
+  /home/graemeg/devel/
+ filefilterindex=0
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=lapAutoAdjustForDPI
- history=2
+ value=lazfileutils
+ history=3
+  lazfileutils
   lapAutoAdjustForDPI
   
  [findinfileadialogfo]
  stackedunder=
- x=268
- y=415
+ x=507
+ y=259
  cx=339
- cy=251
+ cy=292
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -177,8 +183,8 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=337
- y=99
+ x=400
+ y=78
  cx=759
  cy=568
 settings=8
@@ -195,7 +201,8 @@ targetfile=${PROJECTNAME}${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=9
+unitdirs=10
+ ${lcldir}/components/BaseUtils
  ${lcldir}*
  ${lcldir}/*
  ${lcldir}/lcl/*
@@ -220,7 +227,7 @@ makeoptions=9
  -WG
  -B
  -O-
- -O4 -XX -CX -Xs
+ -O1 -XX -CX -Xs
  -FUunits/
 makeoptpurpose=9
  
@@ -363,6 +370,7 @@ stripmessageesc=0
 copymessages=0
 closemessages=0
 enablepurpose=0
+enablesource=0
 checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
@@ -524,7 +532,8 @@ project_time=
 project_date=15:21:42 26/03/2017
 project_comment=
 aftcommandon=0
-unitdirson=9
+unitdirson=10
+ 987135
  987135
  987135
  987135
@@ -661,6 +670,7 @@ externalconsole=0
 settty=1
 gdbdownload=0
 downloadalways=0
+restartgdbbeforeload=0
 startupbkpt=0
 startupbkpton=0
 gdbsimulator=0
@@ -758,8 +768,8 @@ editpos=8
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1120
- 0,3
+ 0,-1073741823
+ 0,6
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -784,7 +794,7 @@ relpaths=8
  uos_portaudio.pas
  uos_flat.pas
  multiplayer_fpGUI.pas
- ../msegui/lib/common/fpccompatibility/mclasses.pas
+ msegui/lib/common/fpccompatibility/mclasses.pas
  multiplayer.lpr
 ismoduletexts=8
  0
@@ -812,26 +822,14 @@ order=8
 firsttab=1
 index=7
 [layout]
-windowlayout=537
+windowlayout=535
  [mainfo.basedock]
  splitdir=2
- useroptions=11395
- parent=mainfo.container
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=668
- ncy=0
- x=0
- y=0
- cx=1147
- cy=605
- rcx=0
- rcy=0
+ useroptions=268450944
  [mainfo]
  splitdir=0
- useroptions=838860925
+ useroptions=301990011
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -844,15 +842,12 @@ windowlayout=537
  cy=621
  rcx=0
  rcy=0
- children=1
-  basedock,0,0,1147,605
- focusedchild=0
  wsize=0
  active=1
  visible=1
  [targetconsolefo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -870,7 +865,7 @@ windowlayout=537
  visible=1
  [threadsfo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -888,7 +883,7 @@ windowlayout=537
  visible=0
  [memoryfo]
  splitdir=0
- useroptions=805322875
+ useroptions=268451963
  stackedunder=dialogfilesfo
  parent=
  mdistate=0
@@ -915,8 +910,8 @@ windowlayout=537
  value=0
  [disassfo]
  splitdir=0
- useroptions=805322859
- stackedunder=stackfo
+ useroptions=268451947
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -950,7 +945,7 @@ windowlayout=537
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=805355627
+ useroptions=268484715
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -976,7 +971,7 @@ windowlayout=537
  rowheight=16
  [stackfo]
  splitdir=0
- useroptions=805331049
+ useroptions=268460137
  parent=
  mdistate=0
  nx=0
@@ -994,7 +989,7 @@ windowlayout=537
  visible=0
  [watchpointsfo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -1052,7 +1047,7 @@ windowlayout=537
  value=1
  [objectinspectorfo]
  splitdir=0
- useroptions=805322859
+ useroptions=268451947
  stackedunder=
  parent=
  mdistate=0
@@ -1077,7 +1072,7 @@ windowlayout=537
  sortdescend1=0
  [symbolfo]
  splitdir=0
- useroptions=805322875
+ useroptions=268451963
  stackedunder=
  parent=
  mdistate=0
@@ -1122,7 +1117,7 @@ windowlayout=537
  [symbolfo.symbol]
  [watchfo]
  splitdir=0
- useroptions=805331049
+ useroptions=268460137
  parent=mainfo.basedock
  visible=0
  mdistate=0
@@ -1157,7 +1152,7 @@ windowlayout=537
  value=1
  [messagefo]
  splitdir=0
- useroptions=805388395
+ useroptions=268517483
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1173,7 +1168,7 @@ windowlayout=537
  rcy=0
  [componentstorefo]
  splitdir=0
- useroptions=805331067
+ useroptions=268460155
  stackedunder=
  parent=
  mdistate=0
@@ -1234,7 +1229,7 @@ windowlayout=537
  filefilter=
  [componentpalettefo]
  splitdir=0
- useroptions=805331051
+ useroptions=268460139
  stackedunder=
  parent=
  mdistate=3
@@ -1271,7 +1266,7 @@ windowlayout=537
  rcy=0
  [debuggerfo.basedock]
  splitdir=2
- useroptions=805452931
+ useroptions=268582019
  parent=debuggerfo.container
  visible=1
  mdistate=0
@@ -1293,7 +1288,8 @@ windowlayout=537
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/multiplayer.lpr
- history=0
+ history=1
+  /home/fred/uos/examples/multiplayer.lpr
  [debuggerfo.project_options]
  value=B
  [debuggerfo.hints]
@@ -1314,11 +1310,23 @@ windowlayout=537
  cy=457
  rcx=0
  rcy=0
+ [sourcefo.files_tab]
+ order=8
+  0
+  2
+  3
+  1
+  5
+  4
+  6
+  7
+ firsttab=1
+ index=7
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1336,7 +1344,7 @@ windowlayout=537
  visible=0
  [mainfo.panel1]
  splitdir=1
- useroptions=838958571
+ useroptions=302087659
  parent=mainfo.basedock
  visible=1
  mdistate=0

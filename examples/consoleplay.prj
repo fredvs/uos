@@ -935,7 +935,7 @@ bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 sourcefiles=3
- ${PROJECTDIR}/consoleplay.pas
+ /home/fred/uos/examples/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
 relpaths=3
@@ -978,7 +978,7 @@ windowlayout=556
  cy=621
  rcx=0
  rcy=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1092,7 +1092,7 @@ windowlayout=556
  x=0
  y=0
  cx=205
- cy=456
+ cy=521
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1305,9 +1305,9 @@ windowlayout=556
  ncx=0
  ncy=0
  x=0
- y=513
- cx=1147
- cy=92
+ y=585
+ cx=1356
+ cy=105
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1406,8 +1406,8 @@ windowlayout=556
  ncy=0
  x=0
  y=0
- cx=1147
- cy=51
+ cx=1356
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1422,8 +1422,8 @@ windowlayout=556
  ncy=54
  x=0
  y=0
- cx=1147
- cy=54
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1453,8 +1453,8 @@ windowlayout=556
  ncy=0
  x=208
  y=0
- cx=939
- cy=456
+ cx=1148
+ cy=521
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1491,9 +1491,9 @@ windowlayout=556
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1147
- cy=456
+ y=61
+ cx=1356
+ cy=521
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

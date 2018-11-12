@@ -7252,6 +7252,9 @@ begin
   statustemp := 0 ;
   for x := 0 to high(StreamIn) do
   begin
+   if (StreamIn[x].Data.enabled = true)
+  then begin
+   
   if (StreamIn[x].Data.TypePut <> 1)
   then
   begin
@@ -7263,6 +7266,8 @@ begin
   if
   (StreamIn[x].Data.TypePut = 1) then statustemp := status ;
   end ;
+  end;
+  
   if statustemp <> status then status := statustemp;
 
   if (status = 0) and IsLooped then

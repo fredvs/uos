@@ -362,6 +362,8 @@ forcezorder=0
 stripmessageesc=0
 copymessages=0
 closemessages=0
+enablepurpose=0
+enablesource=0
 checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
@@ -678,6 +680,7 @@ externalconsole=0
 settty=1
 gdbdownload=0
 downloadalways=0
+restartgdbbeforeload=0
 startupbkpt=0
 startupbkpton=0
 gdbsimulator=0
@@ -924,26 +927,14 @@ order=13
 firsttab=2
 index=6
 [layout]
-windowlayout=543
+windowlayout=550
  [mainfo.basedock]
  splitdir=2
- useroptions=11395
- parent=mainfo.container
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=668
- ncy=0
- x=0
- y=0
- cx=1148
- cy=604
- rcx=0
- rcy=0
+ useroptions=268450944
  [mainfo]
  splitdir=0
- useroptions=838860925
+ useroptions=301990011
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -956,15 +947,12 @@ windowlayout=543
  cy=621
  rcx=0
  rcy=0
- children=1
-  basedock,0,0,1148,604
- focusedchild=0
  wsize=0
  active=1
  visible=1
  [targetconsolefo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -982,7 +970,7 @@ windowlayout=543
  visible=1
  [threadsfo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -1000,8 +988,8 @@ windowlayout=543
  visible=0
  [memoryfo]
  splitdir=0
- useroptions=805322875
- stackedunder=about_form
+ useroptions=268451963
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1027,7 +1015,7 @@ windowlayout=543
  value=0
  [disassfo]
  splitdir=0
- useroptions=805322859
+ useroptions=268451947
  stackedunder=
  parent=
  mdistate=0
@@ -1047,7 +1035,7 @@ windowlayout=543
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1062,7 +1050,7 @@ windowlayout=543
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=805355627
+ useroptions=268484715
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1073,7 +1061,7 @@ windowlayout=543
  x=0
  y=0
  cx=205
- cy=455
+ cy=456
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1085,10 +1073,10 @@ windowlayout=543
  sorted=0
  col=0
  row=2
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
- useroptions=805331049
+ useroptions=268460137
  parent=
  mdistate=0
  nx=0
@@ -1106,7 +1094,7 @@ windowlayout=543
  visible=0
  [watchpointsfo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -1164,7 +1152,7 @@ windowlayout=543
  value=0
  [objectinspectorfo]
  splitdir=0
- useroptions=805322859
+ useroptions=268451947
  stackedunder=
  parent=
  mdistate=0
@@ -1189,7 +1177,7 @@ windowlayout=543
  sortdescend1=0
  [symbolfo]
  splitdir=0
- useroptions=805322875
+ useroptions=268451963
  stackedunder=
  parent=
  mdistate=0
@@ -1208,7 +1196,11 @@ windowlayout=543
  visible=0
  [symbolfo.grid]
  propcolwidthref=207
- values0=14
+ values0=18
+  
+  
+  
+  
   
   
   
@@ -1230,7 +1222,7 @@ windowlayout=543
  [symbolfo.symbol]
  [watchfo]
  splitdir=0
- useroptions=805331049
+ useroptions=268460137
  parent=mainfo.basedock
  visible=0
  mdistate=0
@@ -1273,7 +1265,7 @@ windowlayout=543
  value=1
  [messagefo]
  splitdir=0
- useroptions=805388395
+ useroptions=268517483
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1282,14 +1274,14 @@ windowlayout=543
  ncx=0
  ncy=0
  x=0
- y=512
+ y=513
  cx=1148
  cy=92
  rcx=0
  rcy=0
  [componentstorefo]
  splitdir=0
- useroptions=805331067
+ useroptions=268460155
  stackedunder=
  parent=
  mdistate=0
@@ -1352,7 +1344,7 @@ windowlayout=543
  filefilter=
  [componentpalettefo]
  splitdir=0
- useroptions=805331051
+ useroptions=268460139
  stackedunder=
  parent=
  mdistate=3
@@ -1389,7 +1381,7 @@ windowlayout=543
  rcy=0
  [debuggerfo.basedock]
  splitdir=2
- useroptions=805452931
+ useroptions=268582019
  parent=debuggerfo.container
  visible=1
  mdistate=0
@@ -1411,7 +1403,8 @@ windowlayout=543
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/multiplayer_fpGUI.pas
- history=0
+ history=1
+  /home/fred/uos/examples/multiplayer_fpGUI.pas
  [debuggerfo.project_options]
  value=B
  [debuggerfo.hints]
@@ -1429,14 +1422,31 @@ windowlayout=543
  x=208
  y=0
  cx=940
- cy=455
+ cy=456
  rcx=0
  rcy=0
+ [sourcefo.files_tab]
+ order=13
+  6
+  9
+  10
+  2
+  1
+  0
+  12
+  11
+  8
+  7
+  5
+  4
+  3
+ firsttab=2
+ index=6
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=findinfilefo
+ stackedunder=stackfo
  parent=
  mdistate=0
  nx=0
@@ -1454,7 +1464,7 @@ windowlayout=543
  visible=0
  [mainfo.panel1]
  splitdir=1
- useroptions=838958571
+ useroptions=302087659
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1465,7 +1475,7 @@ windowlayout=543
  x=0
  y=54
  cx=1148
- cy=455
+ cy=456
  rcx=0
  rcy=0
 [targetconsole]

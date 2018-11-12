@@ -130,7 +130,8 @@ procedure uos_logo();
 var
   Form1: TForm1;
   BufferBMP: TBitmap;
-  PlayerIndex0, inindex1, inindex2, inindex3, inindex4, inindex5, inindex6, inindex7, inindex8, channels : cardinal;
+  PlayerIndex0, inindex1, inindex2, inindex3, inindex4,
+  mut, inindex5, inindex6, inindex7, inindex8, channels : cardinal;
 
 
 implementation
@@ -402,6 +403,13 @@ begin
 
  uos_CreatePlayer(PlayerIndex0);
 
+  //// add input from audio file with custom parameters
+  //////////// PlayerIndex : Index of a existing Player
+   ////////// FileName : filename of audio file
+   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+  //////////// FramesCount : default : -1 (65536)
+  //  result : -1 nothing created, otherwise Input Index in array
  inindex1 := uos_AddFromFile(PlayerIndex0, pchar(Edit4.Text), -1, 0, 1024);
  inindex2 := uos_AddFromFile(PlayerIndex0, pchar(Edit5.Text), -1, 0, 1024);
  inindex3 := uos_AddFromFile(PlayerIndex0, pchar(Edit6.Text), -1, 0, 1024);
@@ -410,17 +418,17 @@ begin
  inindex6 := uos_AddFromFile(PlayerIndex0, pchar(Edit9.Text), -1, 0, 1024);
  inindex7 := uos_AddFromFile(PlayerIndex0, pchar(Edit10.Text), -1, 0, 1024);
  inindex8 := uos_AddFromFile(PlayerIndex0, pchar(Edit11.Text), -1, 0, 1024);
-  //// add input from audio file with custom parameters
-  ////////// FileName : filename of audio file
-  //////////// PlayerIndex : Index of a existing Player
-  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-  //////////// FramesCount : default : -1 (65536)
-  //  result : -1 nothing created, otherwise Input Index in array
 
- uos_AddFromEndlessMuted(PlayerIndex0, channels, 1024) ;
- // this for a dummy endless input, must be last input
-
+ // This for a dummy endless input, set enable to false, must be last input
+ // Needed to make work EndProc if all input reach the end. 
+  mut := uos_AddFromEndlessMuted(PlayerIndex0, channels, 1024) ;
+  uos_inputsetenable(PlayerIndex0, mut, false);
+ 
+    ///// DSP Volume changer
+    ////////// PlayerIndex1 : Index of a existing Player
+    ////////// In1Index : InputIndex of a existing input
+    ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
+    ////////// VolRight : Right volume
   uos_InputAddDSPVolume(PlayerIndex0, InIndex1, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex2, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex3, 1, 1);
@@ -429,19 +437,8 @@ begin
   uos_InputAddDSPVolume(PlayerIndex0, InIndex6, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex7, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex8, 1, 1);
-    ///// DSP Volume changer
-    ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing input
-    ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
-    ////////// VolRight : Right volume
-
-
- {$if defined(cpuarm)} // needs lower latency
-   uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, -1, -1, 0, 1024, -1);
-     {$else}
-  uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, 1024, -1);
-  {$endif}
-
+ 
+ 
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -453,7 +450,12 @@ begin
   //////////// FramesCount : default : -1 (65536)
     // ChunkCount : default : -1 (= 512)
   //  result : -1 nothing created, otherwise Output Index in array
-  
+  {$if defined(cpuarm)} // needs lower latency
+   uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, -1, -1, 0, 1024, -1);
+     {$else}
+  uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, 1024, -1);
+  {$endif}
+   
   CheckBox1Change(Sender);
   CheckBox2Change(Sender);
   CheckBox3Change(Sender);
