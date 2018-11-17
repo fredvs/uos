@@ -2068,6 +2068,7 @@ end;
 
 procedure Tuos_Player.Stop();
 begin
+   if (Status < 0) and (isAssigned = True) then playpaused;
   if (Status > 0) and (isAssigned = True) then
   begin
   NLooped:= 0;
