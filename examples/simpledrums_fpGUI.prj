@@ -164,7 +164,7 @@ options=114
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=17
+ rowheight=16
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -186,7 +186,7 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=144
  xprop=1
  yprop=0.33031674208145
  [projectoptionsfo.macrogrid]
@@ -1038,7 +1038,7 @@ findhistory=20
  dynload
 findoptions=1
 editpos=1
- 0,170
+ 0,157
 bookmarks0=0
 sourcefiles=1
  ${PROJECTDIR}/simpledrums_fpGUI.pas

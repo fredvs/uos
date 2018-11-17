@@ -441,6 +441,7 @@ stripmessageesc=0
 copymessages=0
 closemessages=0
 enablepurpose=0
+enablesource=0
 checkmethods=1
 colorerror=-1610612729
 colorwarning=-1610612712
@@ -998,8 +999,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=EndProc
+finddtext=stereo
 findhistory=20
+ stereo
  EndProc
  EndProcOnly
  EndPro
@@ -1019,10 +1021,8 @@ findhistory=20
  uos_callbacks
  addintode
  outframes -1
- soundtouchpl
 findoptions=1
-editpos=14
- 0,659
+editpos=15
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1031,11 +1031,13 @@ editpos=14
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,614
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,11
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1050,7 +1052,8 @@ bookmarks10=0
 bookmarks11=0
 bookmarks12=0
 bookmarks13=0
-sourcefiles=14
+bookmarks14=0
+sourcefiles=15
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/define.inc
@@ -1065,7 +1068,8 @@ sourcefiles=14
  /home/fred/fpgui/src/corelib/fpg_main.pas
  /home/fred/fpcsrc304/fpcsrc/3.0.4/rtl/emx/sysutils.pp
  ${PROJECTDIR}/uos_flat.pas
-relpaths=14
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+relpaths=15
  uos.pas
  uos_mpg123.pas
  define.inc
@@ -1080,7 +1084,9 @@ relpaths=14
  fpgui/src/corelib/fpg_main.pas
  fpcsrc304/fpcsrc/3.0.4/rtl/emx/sysutils.pp
  uos_flat.pas
-ismoduletexts=14
+ simpleplayer_fpGUI.pas
+ismoduletexts=15
+ 0
  0
  0
  0
@@ -1100,7 +1106,8 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=14
+order=15
+ 0
  1
  2
  3
@@ -1108,36 +1115,24 @@ order=14
  5
  6
  7
- 0
  11
  12
  9
  13
+ 14
  10
  8
 firsttab=6
-index=11
+index=12
 [layout]
-windowlayout=553
+windowlayout=558
  [mainfo.basedock]
  splitdir=2
- useroptions=11395
- parent=mainfo.container
- visible=1
- mdistate=0
- nx=0
- ny=0
- ncx=668
- ncy=0
- x=0
- y=0
- cx=1350
- cy=695
- rcx=0
- rcy=0
+ useroptions=268450944
  [mainfo]
  splitdir=0
- useroptions=838860925
+ useroptions=301990011
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1150,15 +1145,12 @@ windowlayout=553
  cy=711
  rcx=0
  rcy=0
- children=1
-  basedock,0,0,1350,695
- focusedchild=0
  wsize=0
  active=1
  visible=1
  [targetconsolefo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -1176,7 +1168,7 @@ windowlayout=553
  visible=1
  [threadsfo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -1194,8 +1186,8 @@ windowlayout=553
  visible=1
  [memoryfo]
  splitdir=0
- useroptions=805322875
- stackedunder=componentstorefo
+ useroptions=268451963
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1221,8 +1213,8 @@ windowlayout=553
  value=0
  [disassfo]
  splitdir=0
- useroptions=805322859
- stackedunder=threadsfo
+ useroptions=268451947
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1241,7 +1233,7 @@ windowlayout=553
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=disassfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1256,7 +1248,7 @@ windowlayout=553
  rcy=0
  [projecttreefo]
  splitdir=0
- useroptions=805355627
+ useroptions=268484715
  parent=mainfo.panel1.container
  visible=1
  mdistate=0
@@ -1278,11 +1270,11 @@ windowlayout=553
  sortdescend1=0
  sorted=0
  col=0
- row=5
+ row=2
  rowheight=16
  [stackfo]
  splitdir=0
- useroptions=805331049
+ useroptions=268460137
  parent=
  mdistate=0
  nx=0
@@ -1300,7 +1292,7 @@ windowlayout=553
  visible=0
  [watchpointsfo]
  splitdir=0
- useroptions=805322857
+ useroptions=268451945
  parent=
  mdistate=0
  nx=0
@@ -1338,7 +1330,7 @@ windowlayout=553
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=cpuc86_64fo
+ stackedunder=memoryfo
  parent=
  mdistate=0
  nx=0
@@ -1358,7 +1350,7 @@ windowlayout=553
  value=1
  [objectinspectorfo]
  splitdir=0
- useroptions=805322859
+ useroptions=268451947
  stackedunder=
  parent=
  mdistate=0
@@ -1383,8 +1375,8 @@ windowlayout=553
  sortdescend1=0
  [symbolfo]
  splitdir=0
- useroptions=805322875
- stackedunder=findinfilefo
+ useroptions=268451963
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1428,7 +1420,7 @@ windowlayout=553
  [symbolfo.symbol]
  [watchfo]
  splitdir=0
- useroptions=805331049
+ useroptions=268460137
  parent=mainfo.basedock
  visible=0
  mdistate=0
@@ -1471,7 +1463,7 @@ windowlayout=553
  value=0
  [messagefo]
  splitdir=0
- useroptions=805388395
+ useroptions=268517483
  parent=mainfo.basedock
  visible=1
  mdistate=0
@@ -1487,8 +1479,8 @@ windowlayout=553
  rcy=0
  [componentstorefo]
  splitdir=0
- useroptions=805331067
- stackedunder=symbolfo
+ useroptions=268460155
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1550,7 +1542,7 @@ windowlayout=553
  filefilter=
  [componentpalettefo]
  splitdir=0
- useroptions=805331051
+ useroptions=268460139
  stackedunder=
  parent=
  mdistate=3
@@ -1587,13 +1579,13 @@ windowlayout=553
  rcy=0
  [debuggerfo.basedock]
  splitdir=2
- useroptions=805452931
+ useroptions=268582019
  parent=debuggerfo.container
  visible=1
  mdistate=0
  nx=0
  ny=0
- ncx=1356
+ ncx=1350
  ncy=62
  x=0
  y=0
@@ -1608,13 +1600,14 @@ windowlayout=553
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
- history=6
-  /home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
+ history=7
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/uos/examples/uos_flat.pas
+  /home/fred/uos/examples/uos_mpg123.pas
+  /home/fred/uos/examples/uos.pas
   /home/fred/fpcsrc304/fpcsrc/3.0.4/rtl/emx/sysutils.pp
   /home/fred/uos/examples/fpg_style_chrome_silver_flatmenu.pas
-  /home/fred/uos/examples/uos_mpg123.pas
   /home/fred/fpcsrc304/fpcsrc/3.0.4/compiler/msg/errore.msg
  [debuggerfo.project_options]
  value=1
@@ -1636,11 +1629,30 @@ windowlayout=553
  cy=524
  rcx=0
  rcy=0
+ [sourcefo.files_tab]
+ order=15
+  0
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  11
+  12
+  9
+  13
+  14
+  10
+  8
+ firsttab=6
+ index=12
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=memoryfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1658,7 +1670,7 @@ windowlayout=553
  visible=0
  [mainfo.panel1]
  splitdir=1
- useroptions=838958571
+ useroptions=302087659
  parent=mainfo.basedock
  visible=1
  mdistate=0

@@ -446,8 +446,8 @@ makeoptionson=8
  2
  0
  4095
- 2
- 2
+ 6
+ 6
  61
  63
 compilerusedon=29
@@ -527,8 +527,8 @@ unitdirson=9
  987135
  987135
  987135
+ 987104
  987135
- 983040
  987135
  987135
  987135
@@ -762,26 +762,31 @@ findhistory=17
  0.0
  AddFromSynth
 findoptions=1
-editpos=4
- 0,11
- 0,479
- 0,27
- 0,7268
+editpos=5
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,0
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/multiinput.lpr
  ${PROJECTDIR}/main_mi.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
-relpaths=4
+ /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/multiinput.lpr
+relpaths=5
  multiinput.lpr
  main_mi.pas
  uos_flat.pas
  uos.pas
-ismoduletexts=4
+ multiinput.lpr
+ismoduletexts=5
+ 0
  0
  0
  0
@@ -791,10 +796,16 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=5
+ 0
+ 1
+ 3
+ 4
+ 2
 firsttab=0
-index=1
+index=2
 [layout]
-windowlayout=531
+windowlayout=538
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1259,10 +1270,11 @@ windowlayout=531
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/main_mi.pas
- history=6
-  /home/fred/uos/examples/main_mp.pas
+ value=/home/fred/uos/examples/uos.pas
+ history=7
   /home/fred/uos/examples/uos.pas
+  /home/fred/uos/examples/main_mi.pas
+  /home/fred/uos/examples/main_mp.pas
   /home/fred/strumpract/src/commander.pas
   /home/fred/strumpract/src/msefiledialog.pas
   /home/fred/strumpract/src/dialogfiles.pas
@@ -1288,13 +1300,19 @@ windowlayout=531
  rcx=0
  rcy=0
  [sourcefo.files_tab]
+ order=5
+  0
+  1
+  3
+  4
+  2
  firsttab=0
- index=1
+ index=2
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
