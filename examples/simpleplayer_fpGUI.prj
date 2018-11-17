@@ -999,10 +999,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=Tuos_Player.play(
+finddtext=status > 0
 findhistory=20
- Tuos_Player.play(
  status > 0
+ Tuos_Player.play(
  playpaused
  playex(
  Tuos_Player.play()
@@ -1022,23 +1022,21 @@ findhistory=20
  btnloa
  OutputaddDSPVolume
 findoptions=1
-editpos=16
+editpos=14
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 12,507
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,0
- 0,479
- 0,9692
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,1735
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1053,9 +1051,7 @@ bookmarks10=0
 bookmarks11=0
 bookmarks12=0
 bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-sourcefiles=16
+sourcefiles=14
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/define.inc
@@ -1067,12 +1063,10 @@ sourcefiles=16
  ${PROJECTDIR}/uos_mpg123.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  /home/fred/fpgui/src/gui/fpg_stylemanager.pas
- /home/fred/fpgui/src/corelib/fpg_main.pas
- /home/fred/fpcsrc304/fpcsrc/3.0.4/rtl/emx/sysutils.pp
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
-relpaths=16
+relpaths=14
  uos.pas
  uos_mpg123.pas
  define.inc
@@ -1084,14 +1078,10 @@ relpaths=16
  uos_mpg123.pas
  simpleplayer_fpGUI.pas
  fpgui/src/gui/fpg_stylemanager.pas
- fpgui/src/corelib/fpg_main.pas
- fpcsrc304/fpcsrc/3.0.4/rtl/emx/sysutils.pp
  uos_flat.pas
  simpleplayer_fpGUI.pas
  uos.pas
-ismoduletexts=16
- 0
- 0
+ismoduletexts=14
  0
  0
  0
@@ -1111,27 +1101,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=16
- 0
- 1
- 2
- 3
- 4
- 5
- 6
- 7
- 9
- 11
- 8
- 12
- 13
- 15
- 14
- 10
 firsttab=7
-index=8
+index=13
 [layout]
-windowlayout=559
+windowlayout=542
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1146,7 +1119,7 @@ windowlayout=559
  ncx=0
  ncy=0
  x=3
- y=82
+ y=54
  cx=1360
  cy=711
  rcx=0
@@ -1606,13 +1579,13 @@ windowlayout=559
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
+ value=/home/fred/uos/examples/uos.pas
  history=7
-  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/uos_mpg123.pas
+  /home/fred/fpcsrc304/fpcsrc/3.0.4/rtl/emx/sysutils.pp
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/uos/examples/uos.pas
-  /home/fred/fpcsrc304/fpcsrc/3.0.4/rtl/emx/sysutils.pp
   /home/fred/uos/examples/fpg_style_chrome_silver_flatmenu.pas
   /home/fred/fpcsrc304/fpcsrc/3.0.4/compiler/msg/errore.msg
  [debuggerfo.project_options]
@@ -1636,25 +1609,8 @@ windowlayout=559
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=16
-  0
-  1
-  2
-  3
-  4
-  5
-  6
-  7
-  9
-  11
-  8
-  12
-  13
-  15
-  14
-  10
  firsttab=7
- index=8
+ index=13
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
