@@ -2004,9 +2004,11 @@ var
   
  if  paused = true then
  begin
+  Status := 2;
    if isGlobalPause = true then
   RTLeventReSetEvent(uosInit.evGlobalPause) else   
   RTLeventResetEvent(evPause);
+ 
  end;
   
 //protect from multiple instances of thread
@@ -2068,7 +2070,7 @@ end;
 
 procedure Tuos_Player.Stop();
 begin
-   if (Status < 0) and (isAssigned = True) then playpaused;
+  if (Status < 0) and (isAssigned = True) then playpaused;
   if (Status > 0) and (isAssigned = True) then
   begin
   NLooped:= 0;
@@ -2149,7 +2151,7 @@ var
   h, m, s, ms: word;
 begin
  Result := sysutils.EncodeTime(0, 0, 0, 0);
-  if (Status > 0) and (isAssigned = True) then tmp := InputLengthSeconds(InputIndex);
+  if (isAssigned = True) then tmp := InputLengthSeconds(InputIndex);
   ms := trunc(frac(tmp) * 1000);
   h := trunc(tmp / 3600);
   m := trunc(tmp / 60 - h * 60);
@@ -2166,7 +2168,7 @@ end;
 
 procedure Tuos_Player.InputSetFrameCount(InputIndex: cint32 ; framecount : cint32);
 begin
-  if (Status > 0) and (isAssigned = True) then
+  if (isAssigned = True) then
 
   case StreamIn[InputIndex].Data.LibOpen of
   0:
@@ -2194,7 +2196,7 @@ procedure Tuos_Player.InputSetLevelArrayEnable(InputIndex: cint32 ; levelcalc : 
 // 1 => calcul before all DSP procedures.
 // 2 => calcul after all DSP procedures.
 begin
- if (Status > 0) and (isAssigned = True) then
+ if (isAssigned = True) then
  begin
  if index + 1 > length(uosLevelArray) then
  setlength(uosLevelArray,index + 1) ;
@@ -2213,7 +2215,7 @@ procedure Tuos_Player.InputSetLevelEnable(InputIndex: cint32 ; levelcalc : cint3
 // 3 => calcul before and after all DSP procedures.
 
 begin
-  if (Status > 0) and (isAssigned = True) then
+  if (isAssigned = True) then
 StreamIn[InputIndex].Data.levelEnable:= levelcalc;
 end;
 
@@ -2222,7 +2224,7 @@ procedure Tuos_Player.InputSetPositionEnable(InputIndex: cint32 ; poscalc : cint
 // 0 => no calcul
 // 1 => calcul position procedures.
 begin
-  if (Status > 0) and (isAssigned = True) then
+  if (isAssigned = True) then
 StreamIn[InputIndex].Data.PositionEnable:= poscalc;
 end;
 
@@ -2231,7 +2233,7 @@ function Tuos_Player.InputGetLevelLeft(InputIndex: cint32): double;
 // result : left level(volume) from 0 to 1
 begin
 Result := 0;
-  if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelLeft;
+  if (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelLeft;
 end;
 
 function Tuos_Player.InputGetLevelRight(InputIndex: cint32): double;
@@ -2247,7 +2249,7 @@ function Tuos_Player.InputFiltersGetLevelString(InputIndex: cint32): string;
 // result : list of left|right levels separed by $ character
  begin
 Result := '';
-  if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].data.Levelfilters;
+  if (isAssigned = True) then Result := StreamIn[InputIndex].data.Levelfilters;
 end;
 
 function Tuos_Player.InputFiltersGetLevelArray(InputIndex: cint32): TDArFloat;
@@ -2255,7 +2257,7 @@ function Tuos_Player.InputFiltersGetLevelArray(InputIndex: cint32): TDArFloat;
 // result : array of float of each filter. 
          //in format levelfilter0left,levelfilter0right,levelfilter1left,levelfilter2right,...
  begin
-  if (Status > 0) and (isAssigned = True) then Result := StreamIn[InputIndex].data.Levelfiltersar;
+  if (isAssigned = True) then Result := StreamIn[InputIndex].data.Levelfiltersar;
 end;
  
 {$IF DEFINED(soundtouch)}
@@ -9683,7 +9685,7 @@ begin
   intobuf := false;
   NLooped:= 0; 
   NoFree:= False;
-  status := 2;
+  status := -1;
   BeginProc := nil;
   EndProc := nil;
   EndProcOnly := nil;

@@ -848,19 +848,19 @@ path=13
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
 line=13
- 3893
+ 3895
  33
  913
  764
- 2728
- 2037
+ 2730
+ 2039
  573
  249
- 5730
- 5727
- 5726
- 2787
- 2781
+ 5732
+ 5729
+ 5728
+ 2789
+ 2783
 address=13
  4946590
  0
@@ -999,8 +999,14 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=Tuos_Player.Stop();
+finddtext=Tuos_Player.play(
 findhistory=20
+ Tuos_Player.play(
+ status > 0
+ playpaused
+ playex(
+ Tuos_Player.play()
+ Tuos_Player.play();
  Tuos_Player.Stop();
  stereo
  EndProc
@@ -1015,12 +1021,6 @@ findhistory=20
  LoadLib
  btnloa
  OutputaddDSPVolume
- OutputSetDSPVolume
- addfromu
- readurl
- opus
- uos_callbacks
- addintode
 findoptions=1
 editpos=16
  0,-1073741823
@@ -1032,13 +1032,13 @@ editpos=16
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
+ 12,507
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,0
- 0,-1073741823
- 0,2070
+ 0,479
+ 0,9692
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1129,7 +1129,7 @@ order=16
  14
  10
 firsttab=7
-index=13
+index=8
 [layout]
 windowlayout=559
  [mainfo.basedock]
@@ -1146,7 +1146,7 @@ windowlayout=559
  ncx=0
  ncy=0
  x=3
- y=29
+ y=82
  cx=1360
  cy=711
  rcx=0
@@ -1606,7 +1606,7 @@ windowlayout=559
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
  history=7
   /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/uos_mpg123.pas
@@ -1654,12 +1654,12 @@ windowlayout=559
   14
   10
  firsttab=7
- index=13
+ index=8
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=3
  nx=0

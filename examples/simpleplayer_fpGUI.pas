@@ -512,7 +512,7 @@ loadok : boolean = false;
      uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
        {$endif}
    
-    //// add a Output into device with custom parameters
+       //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
     //////////// Latency  ( -1 is latency suggested ) )
