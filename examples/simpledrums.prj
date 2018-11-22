@@ -174,7 +174,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=3
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=710
  width0=47
@@ -468,7 +468,7 @@ befcommandon=0
 makeoptionson=9
  255
  2
- 0
+ 4
  4095
  240
  254
@@ -799,7 +799,7 @@ findoptions=1
 editpos=4
  0,-1073741823
  0,-1073741823
- 0,188
+ 0,-1073741823
  0,27
 bookmarks0=0
 bookmarks1=0
@@ -828,7 +828,7 @@ nomenumodules=0
 firsttab=0
 index=3
 [layout]
-windowlayout=526
+windowlayout=527
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1294,10 +1294,11 @@ windowlayout=526
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos_flat.pas
- history=1
+ history=2
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/main_sd.pas
  [debuggerfo.project_options]
- value=B
+ value=1
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1323,7 +1324,7 @@ windowlayout=526
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

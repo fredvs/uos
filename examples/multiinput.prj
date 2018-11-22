@@ -766,8 +766,8 @@ editpos=5
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,8
  0,-1073741823
- 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -777,7 +777,7 @@ sourcefiles=5
  ${PROJECTDIR}/multiinput.lpr
  ${PROJECTDIR}/main_mi.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/multiinput.lpr
 relpaths=5
  multiinput.lpr
@@ -799,9 +799,9 @@ nomenumodules=0
 order=5
  0
  1
+ 3
  4
  2
- 3
 firsttab=0
 index=2
 [layout]
@@ -1270,10 +1270,10 @@ windowlayout=539
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/multiinput.lpr
+ value=/home/fred/uos/examples/uos.pas
  history=8
-  /home/fred/uos/examples/multiinput.lpr
   /home/fred/uos/examples/uos.pas
+  /home/fred/uos/examples/multiinput.lpr
   /home/fred/uos/examples/main_mi.pas
   /home/fred/uos/examples/main_mp.pas
   /home/fred/strumpract/src/commander.pas
@@ -1304,16 +1304,16 @@ windowlayout=539
  order=5
   0
   1
+  3
   4
   2
-  3
  firsttab=0
  index=2
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

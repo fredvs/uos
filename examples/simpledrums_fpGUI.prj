@@ -29,11 +29,11 @@ findinfiledialog=63
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=0
+ value=1
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=1
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
@@ -55,8 +55,9 @@ findinfiledialog=63
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=xrender
+ value=debug
  history=20
+  debug
   xrender
   fpg_xft_x11
   Xft
@@ -76,7 +77,6 @@ findinfiledialog=63
   keysym
   XAllocClassHint
   XOpenIM
-  Xutf8LookupString
  [findinfileadialogfo]
  stackedunder=
  x=615
@@ -98,8 +98,9 @@ replacedialog=33
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=var X
+ value=$IF DEFINED(debug) and DEFINED(unix)
  history=20
+  $IF DEFINED(debug) and DEFINED(unix)
   var X
   var 
   cdecl;
@@ -119,7 +120,6 @@ replacedialog=33
   OutputSetDSP
   OutputAddDSP
   cint32
-  shhandle
  [replacedialogfo]
  stackedunder=
  x=260
@@ -213,7 +213,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=3
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -312,18 +312,20 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=10
+makeoptions=11
  -fPIC
  -l -Mobjfpc -Scghi
  -FE.
  -FUunits
  -WG
  -B
- -O4 -XX -Xs -CX
+ -dDEEBUG
+ -O1 -XX -Xs -CX
  -vewnbq
  -ghl
  -CX -Cg  -g -gl -Xg -vewnhibq 
-makeoptpurpose=10
+makeoptpurpose=11
+ 
  
  
  
@@ -520,16 +522,17 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=10
+makeoptionson=11
  0
  511
  511
  511
  192
  510
+ 4095
  511
  255
- 3
+ 7
  0
 compilerusedon=29
  3891
@@ -854,9 +857,9 @@ line=16
  776
  2767
  2080
- 620
- 271
- 312
+ 619
+ 270
+ 311
  356
  163
  2069
@@ -1014,8 +1017,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=bs_Load
+finddtext=$IF DEFINED(debug)
 findhistory=20
+ $IF DEFINED(debug)
  bs_Load
  PA_FileName
  Pa_Load
@@ -1035,16 +1039,30 @@ findhistory=20
  PrintKeyEvent
  xlookupstring
  writeln
- dynload
 findoptions=1
-editpos=1
- 0,157
+editpos=4
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,6
 bookmarks0=0
-sourcefiles=1
+bookmarks1=0
+bookmarks2=0
+bookmarks3=0
+sourcefiles=4
  ${PROJECTDIR}/simpledrums_fpGUI.pas
-relpaths=1
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/define.inc
+relpaths=4
  simpledrums_fpGUI.pas
-ismoduletexts=1
+ uos_flat.pas
+ uos.pas
+ define.inc
+ismoduletexts=4
+ 0
+ 0
+ 0
  0
 modules=0
 moduleoptions=0
@@ -1052,9 +1070,9 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=3
 [layout]
-windowlayout=536
+windowlayout=537
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1198,8 +1216,8 @@ windowlayout=536
  width1=82
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=1
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1514,8 +1532,8 @@ windowlayout=536
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
+ ncx=1147
+ ncy=54
  x=0
  y=0
  cx=1147
@@ -1529,8 +1547,9 @@ windowlayout=536
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simpledrums_fpGUI.pas
- history=1
+ value=/home/fred/uos/examples/define.inc
+ history=2
+  /home/fred/uos/examples/define.inc
   /home/fred/uos/examples/simpledrums_fpGUI.pas
  [debuggerfo.project_options]
  value=1
@@ -1554,7 +1573,7 @@ windowlayout=536
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=0
+ index=3
  [cpuc86_64fo]
  irqoff=0
  splitdir=0

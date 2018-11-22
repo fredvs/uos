@@ -999,8 +999,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=status > 0
+finddtext=seek
 findhistory=20
+ seek
+ endproconly
+ endproc
  status > 0
  Tuos_Player.play(
  playpaused
@@ -1018,9 +1021,6 @@ findhistory=20
  Data.title
  id3v1
  tag
- LoadLib
- btnloa
- OutputaddDSPVolume
 findoptions=1
 editpos=14
  0,-1073741823
@@ -1031,12 +1031,12 @@ editpos=14
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1735
+ 29,340
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1102,7 +1102,7 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=7
-index=13
+index=12
 [layout]
 windowlayout=542
  [mainfo.basedock]
@@ -1144,7 +1144,7 @@ windowlayout=542
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1162,7 +1162,7 @@ windowlayout=542
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [memoryfo]
  splitdir=0
  useroptions=268451963
@@ -1579,13 +1579,13 @@ windowlayout=542
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
  history=7
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/uos_mpg123.pas
   /home/fred/fpcsrc304/fpcsrc/3.0.4/rtl/emx/sysutils.pp
   /home/fred/uos/examples/uos_flat.pas
-  /home/fred/uos/examples/simpleplayer_fpGUI.pas
-  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/fpg_style_chrome_silver_flatmenu.pas
   /home/fred/fpcsrc304/fpcsrc/3.0.4/compiler/msg/errore.msg
  [debuggerfo.project_options]
@@ -1610,12 +1610,12 @@ windowlayout=542
  rcy=0
  [sourcefo.files_tab]
  firsttab=7
- index=13
+ index=12
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=mainfo
  parent=
  mdistate=3
  nx=0
