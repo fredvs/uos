@@ -1329,6 +1329,7 @@ var
   uosDefaultDeviceIn: cint32 = -1;
   uosDefaultDeviceOut: cint32 = -1;
   uosInit: Tuos_Init = nil;
+  uosisactif : boolean = true;
 
  {$IF DEFINED(windows)}
   old8087cw: word;
@@ -8541,14 +8542,14 @@ begin
 
  repeat
 
-   DoLoopBeginMethods;
+  if uosisactif then DoLoopBeginMethods else nofree := false;
  
    CheckIfPaused ;// is there a pause waiting ?
 // Dealing with input
   for x := 0 to high(StreamIn) do
   begin
  
-  if StreamIn[x].data.hasfilters then
+  if (StreamIn[x].data.hasfilters) and uosisactif then
   begin
   setlength(StreamIn[x].Data.levelfiltersar,StreamIn[x].Data.nbfilters * StreamIn[x].Data.channels );
   StreamIn[x].Data.incfilters := 0;
@@ -8569,7 +8570,7 @@ begin
   {$IF DEFINED(debug) and DEFINED(unix)}
    WriteLn('Before StreamIn[x].Data.Seekable = True');
   {$endif}
-  if (StreamIn[x].Data.Poseek > -1) and (StreamIn[x].Data.Seekable = True) then
+  if (StreamIn[x].Data.Poseek > -1) and (StreamIn[x].Data.Seekable = True) and uosisactif then
   begin// there is a seek waiting
 
   DoSeek(x);
@@ -8590,8 +8591,9 @@ begin
   writeln('DSPin BeforeBufProc 2');
   {$endif}   
 
+ if uosisactif then
+  begin
   CheckIfPaused ;// is there a pause waiting ?
-   
   case StreamIn[x].Data.TypePut of
  
   0:// It is a input from audio file.
@@ -8622,6 +8624,8 @@ begin
   ReadMemDec(x);
 
   end;//case StreamIn[x].Data.TypePut of
+  
+  end else StreamIn[x].Data.OutFrames := 0;
   
   if StreamIn[x].Data.OutFrames = 0 then StreamIn[x].Data.status := 0;
 
@@ -8723,7 +8727,7 @@ begin
   writeln('Give Buffer to Output');
   {$endif}
  
-  for x := 0 to high(StreamOut) do
+  if uosisactif then for x := 0 to high(StreamOut) do
 
   if (StreamOut[x].Data.Enabled = True)
   then
@@ -8787,7 +8791,7 @@ begin
   {$endif}
  
 // DSPOut AfterBuffProc
-  if (length(StreamOut[x].DSP) > 0) then
+  if (length(StreamOut[x].DSP) > 0) and uosisactif then
 
   DoDSPOutAfterBufProc(x) ;
 
@@ -8806,10 +8810,13 @@ begin
   end;
 //
  
+ if uosisactif then begin
   if plugenabled = True then
   WriteOutPlug(x, x2)
   else// No plugin
   WriteOut(x, x2);
+  end;
+  
   end;
   end;
  
@@ -8817,7 +8824,7 @@ begin
    WriteLn('Before LoopEndProc ------------------------------');
   {$endif}
 
-  DoLoopEndMethods;
+ if uosisactif then DoLoopEndMethods;
 
   if length(StreamIn) > 1 then// clear buffer for multi-input
   for x2 := 0 to high(StreamIn) do
@@ -8858,9 +8865,9 @@ begin
  writeln('EndProc---');
  {$endif}
 
-  DoEndProc;
+ if uosisactif then  DoEndProc;
 
- if EndProcOnly <> nil then EndProcOnly;
+if uosisactif then if EndProcOnly <> nil then EndProcOnly;
          
   isAssigned := false ;
   

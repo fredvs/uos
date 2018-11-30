@@ -813,8 +813,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=freepl
+finddtext=btnCloseClick
 findhistory=20
+ btnCloseClick
+ clickall
+ uos_Play
  freepl
  InputPositionTime
  SeekTime
@@ -832,24 +835,21 @@ findhistory=20
  delete
  terminate
  Destroy
- destructor Destroy
- .play
- play
 findoptions=1
 editpos=13
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,10
+ 0,-1073741823
+ 0,-1073741823
+ 0,610
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,0
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,910
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -911,23 +911,23 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 order=13
- 6
- 9
- 10
- 2
- 1
- 0
  12
- 11
- 8
  7
  5
- 4
+ 10
+ 9
+ 6
  3
+ 4
+ 8
+ 11
+ 0
+ 1
+ 2
 firsttab=2
-index=6
+index=5
 [layout]
-windowlayout=550
+windowlayout=551
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -947,7 +947,7 @@ windowlayout=550
  cy=621
  rcx=0
  rcy=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -967,7 +967,7 @@ windowlayout=550
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1061,7 +1061,7 @@ windowlayout=550
  x=0
  y=0
  cx=205
- cy=456
+ cy=521
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1274,9 +1274,9 @@ windowlayout=550
  ncx=0
  ncy=0
  x=0
- y=513
- cx=1148
- cy=92
+ y=585
+ cx=1356
+ cy=105
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1375,8 +1375,8 @@ windowlayout=550
  ncy=0
  x=0
  y=0
- cx=1148
- cy=51
+ cx=1356
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1391,8 +1391,8 @@ windowlayout=550
  ncy=54
  x=0
  y=0
- cx=1148
- cy=54
+ cx=1356
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1403,7 +1403,8 @@ windowlayout=550
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/multiplayer_fpGUI.pas
- history=1
+ history=2
+  /home/fred/uos/examples/uos_mpg123.pas
   /home/fred/uos/examples/multiplayer_fpGUI.pas
  [debuggerfo.project_options]
  value=B
@@ -1421,32 +1422,32 @@ windowlayout=550
  ncy=0
  x=208
  y=0
- cx=940
- cy=456
+ cx=1148
+ cy=521
  rcx=0
  rcy=0
  [sourcefo.files_tab]
  order=13
-  6
-  9
-  10
-  2
-  1
-  0
   12
-  11
-  8
   7
   5
-  4
+  10
+  9
+  6
   3
+  4
+  8
+  11
+  0
+  1
+  2
  firsttab=2
- index=6
+ index=5
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=stackfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1473,9 +1474,9 @@ windowlayout=550
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1148
- cy=456
+ y=61
+ cx=1356
+ cy=521
  rcx=0
  rcy=0
 [targetconsole]

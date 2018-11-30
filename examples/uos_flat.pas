@@ -2282,7 +2282,7 @@ end;
 procedure uos_Free();
 var
 x : integer;
-nt : integer = 200;
+nt : integer = 100;
 begin
 
 // needed for MSE and if some players are still playing

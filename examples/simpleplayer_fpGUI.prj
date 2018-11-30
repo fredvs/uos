@@ -211,7 +211,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=770
  width0=47
@@ -848,33 +848,33 @@ path=13
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/uos.pas
 line=13
- 3895
+ 3900
  33
  913
  764
- 2730
- 2039
- 573
+ 2735
+ 2043
+ 572
  249
- 5732
- 5729
- 5728
- 2789
- 2783
+ 5737
+ 5734
+ 5733
+ 2794
+ 2788
 address=13
- 4946590
+ 4947184
  0
  0
- 5072192
- 4932223
- 4919376
- 4215001
+ 5077936
+ 4930497
+ 4919178
+ 4214793
  0
- 4972654
- 4972590
- 4972560
- 4932978
- 4932959
+ 4971984
+ 4971953
+ 4971953
+ 4931905
+ 4931770
 addbkpt=13
  0
  0
@@ -999,8 +999,21 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=seek
+finddtext=playno
 findhistory=20
+ playno
+ theinc
+ writeou
+ btnCloseClick
+ write
+ DofreePlayer
+ freeplayer
+ nofree
+ addfrom
+ CreatePlayer
+ play(
+ play
+ uos_play
  seek
  endproconly
  endproc
@@ -1008,91 +1021,23 @@ findhistory=20
  Tuos_Player.play(
  playpaused
  playex(
- Tuos_Player.play()
- Tuos_Player.play();
- Tuos_Player.Stop();
- stereo
- EndProc
- EndProcOnly
- EndPro
- uos_DSPVolume
- StreamOut
- setdspvol
- Data.title
- id3v1
- tag
 findoptions=1
-editpos=14
+editpos=3
  0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 29,340
+ 0,1458
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-sourcefiles=14
+sourcefiles=3
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_opusfile.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
- ${PROJECTDIR}/uos_mpg123.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- /home/fred/fpgui/src/gui/fpg_stylemanager.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos.pas
-relpaths=14
+relpaths=3
  uos.pas
- uos_mpg123.pas
- define.inc
  simpleplayer_fpGUI.pas
- uos_opusfile.pas
  uos_flat.pas
- simpleplayer_fpGUI.pas
- fpg_style_chrome_silver_flatmenu.pas
- uos_mpg123.pas
- simpleplayer_fpGUI.pas
- fpgui/src/gui/fpg_stylemanager.pas
- uos_flat.pas
- simpleplayer_fpGUI.pas
- uos.pas
-ismoduletexts=14
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=3
  0
  0
  0
@@ -1101,10 +1046,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-firsttab=7
-index=12
+firsttab=0
+index=1
 [layout]
-windowlayout=542
+windowlayout=555
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1119,9 +1064,9 @@ windowlayout=542
  ncx=0
  ncy=0
  x=3
- y=54
+ y=29
  cx=1360
- cy=711
+ cy=706
  rcx=0
  rcy=0
  wsize=0
@@ -1136,15 +1081,15 @@ windowlayout=542
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=591
+ y=177
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1238,7 +1183,7 @@ windowlayout=542
  x=0
  y=0
  cx=205
- cy=524
+ cy=520
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1249,7 +1194,7 @@ windowlayout=542
  sortdescend1=0
  sorted=0
  col=0
- row=10
+ row=5
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1451,9 +1396,9 @@ windowlayout=542
  ncx=0
  ncy=0
  x=0
- y=589
+ y=585
  cx=1350
- cy=106
+ cy=105
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1580,14 +1525,27 @@ windowlayout=542
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
- history=7
+ history=20
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
-  /home/fred/uos/examples/uos.pas
-  /home/fred/uos/examples/uos_mpg123.pas
-  /home/fred/fpcsrc304/fpcsrc/3.0.4/rtl/emx/sysutils.pp
   /home/fred/uos/examples/uos_flat.pas
-  /home/fred/uos/examples/fpg_style_chrome_silver_flatmenu.pas
-  /home/fred/fpcsrc304/fpcsrc/3.0.4/compiler/msg/errore.msg
+  /home/fred/uos/src/uos.pas
+  /home/fred/eschecs/source/engines.pas
+  /home/fred/eschecs/source/settings.pas
+  /home/fred/eschecs_colorstatus/source/eschecs.pas
+  /home/fred/eschecs_colorstatus/source/eschecs.res
+  /home/fred/eschecs/source/board.pas
+  /home/fred/eschecs_prerel2/source/eschecs.pas
+  /home/fred/eschecs/source/version.inc
+  /home/fred/eschecs_prerel2/source/version.inc
+  /home/fred/eschecs_colorstatus/source/version.inc
+  /home/fred/ideu/src/main.pas
+  /home/fred/ideu/src/msefiledialog.pas
+  /home/fred/ideu/src/dialogfiles.pas
+  /home/fred/ideu/src/findinfileform.mfm
+  /home/fred/ideu/src/messageform.pas
+  /home/fred/eschecs/source/eco/eco.pas
+  /home/fred/eschecs/source/messagefrm.pas
+  /home/fred/eschecs_image/source/messagefrm.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1605,17 +1563,17 @@ windowlayout=542
  x=208
  y=0
  cx=1142
- cy=524
+ cy=520
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- firsttab=7
- index=12
+ firsttab=0
+ index=1
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1644,7 +1602,7 @@ windowlayout=542
  x=0
  y=62
  cx=1350
- cy=524
+ cy=520
  rcx=0
  rcy=0
 [targetconsole]

@@ -204,7 +204,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=724
  width0=47
@@ -826,7 +826,7 @@ line=4
  5974
  5289
  1564
- 140
+ 147
 address=4
  4861454
  4850861
@@ -904,8 +904,16 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=status
+finddtext=ClosePlayer1
 findhistory=20
+ ClosePlayer1
+ endproc
+ Tuos_InStream
+ StreamIn
+ WriteOut
+ buffer
+ stop
+ player.free
  status
  status:=
  status :=
@@ -918,31 +926,28 @@ findhistory=20
  uos_play(
  uos_play
  {$if defined(cpu64)}
- After Filetobuffe
- writeln('After Filetobuffer'); 
- PlugHandle
- PlugHandle:=
- AssignFile
- addfromfile
- InputPositionTim
- :cst_item
 findoptions=1
-editpos=3
- 12,123
- 0,-1073741823
- 0,-1073741823
+editpos=4
+ 0,164
+ 0,421
+ 0,455
+ 0,99
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
- /home/fred/uos/examples/consoleplay.pas
+bookmarks3=0
+sourcefiles=4
+ ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
-relpaths=3
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+relpaths=4
  consoleplay.pas
  uos_flat.pas
  uos.pas
-ismoduletexts=3
+ simpleplayer_fpGUI.pas
+ismoduletexts=4
+ 0
  0
  0
  0
@@ -955,10 +960,15 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
+order=4
+ 0
+ 3
+ 1
+ 2
 firsttab=0
 index=0
 [layout]
-windowlayout=556
+windowlayout=609
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1016,7 +1026,7 @@ windowlayout=556
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [memoryfo]
  splitdir=0
  useroptions=268451963
@@ -1434,9 +1444,57 @@ windowlayout=556
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consoleplay.pas
- history=2
-  /home/fred/uos/examples/consoleplay.pas
-  ${PROJECTDIR}/main.pas
+ history=50
+  /home/fred/eschecs/source/engines.pas
+  /home/fred/eschecs/source/settings.pas
+  /home/fred/eschecs_colorstatus/source/eschecs.pas
+  /home/fred/eschecs_colorstatus/source/eschecs.res
+  /home/fred/eschecs/source/board.pas
+  /home/fred/eschecs_prerel2/source/eschecs.pas
+  /home/fred/eschecs/source/version.inc
+  /home/fred/eschecs_prerel2/source/version.inc
+  /home/fred/eschecs_colorstatus/source/version.inc
+  /home/fred/ideu/src/main.pas
+  /home/fred/ideu/src/msefiledialog.pas
+  /home/fred/ideu/src/dialogfiles.pas
+  /home/fred/ideu/src/findinfileform.mfm
+  /home/fred/ideu/src/messageform.pas
+  /home/fred/eschecs/source/eco/eco.pas
+  /home/fred/eschecs/source/messagefrm.pas
+  /home/fred/eschecs_image/source/messagefrm.pas
+  /home/fred/eschecs_image/source/eco/eco.pas
+  /home/fred/eschecs_image/source/eschecs.pas
+  /home/fred/eschecs/source/eco/ecoor.pas
+  /home/fred/eschecs_uos_noleak/source/eco/eco.pas
+  /home/fred/eschecs_errorfriend/source/log.pas
+  /home/fred/eschecs_errorfriend/source/eschecs.pas
+  /home/fred/eschecs/source/log.pas
+  /home/fred/eschecs/source/sound.pas
+  /home/fred/eschecs/source/language.pas
+  /home/fred/eschecs_uos2/source/eschecs.pas
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/eschecs/libraries/uos/define.inc
+  /home/fred/eschecs/libraries/uos/uos_flat.pas
+  /home/fred/eschecs/libraries/uos/uos.pas
+  /home/fred/uos/examples/consoleplaymemorystream.pas
+  /home/fred/eschecs_uos/source/sound.pas
+  /home/fred/uos/examples/simpledrums_fpGUI.pas
+  /home/fred/eschecs_uos/source/messagefrm.pas
+  /home/fred/eschecs/libraries/fpgui/src/gui/fpg_dialogs.pas
+  /home/fred/eschecs/libraries/fpgui/AUTHORS.txt
+  /home/fred/eschecs_uos/source/eschecs.pas
+  /home/fred/eschecs_uos/source/log.pas
+  /home/fred/eschecs/libraries/uos/uos_define.inc
+  /home/fred/eschecs/libraries/uos/uos_libsndfile.pas
+  /home/fred/eschecs/libraries/uos/uos_mpg123.pas
+  /home/fred/designer_ext/src/frm_main_designer.pas
+  /home/fred/eschecs/libraries/fpgui/src/corelib/x11/fpg_x11.pas
+  /home/fred/eschecs/libraries/fpgui/src/corelib/x11/fpg_xft_x11.pas
+  /home/fred/eschecs_msg_center/source/eschecs.pas
+  /home/fred/eschecs_msg_center/source/fpg_style_chrome_silver_flatmenu.pas
+  /home/fred/eschecs_msg_center/source/fpg_style_eschecs.pas
+  /home/fred/eschecs_msg_center/source/eschecsstyle.pas
+  /home/fred/eschecs/source/fpg_style_chrome_silver_flatmenu.pas
  [debuggerfo.project_options]
  value=B
  [debuggerfo.hints]
@@ -1458,6 +1516,11 @@ windowlayout=556
  rcx=0
  rcy=0
  [sourcefo.files_tab]
+ order=4
+  0
+  3
+  1
+  2
  firsttab=0
  index=0
  [cpuc86_64fo]
@@ -1499,7 +1562,7 @@ windowlayout=556
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=targetconsolefo
+ stackedunder=stackfo
  parent=
  mdistate=0
  nx=0
