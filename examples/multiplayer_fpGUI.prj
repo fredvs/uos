@@ -843,12 +843,12 @@ editpos=13
  0,10
  0,-1073741823
  0,-1073741823
- 0,610
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,0
+ 0,-1073741823
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -867,7 +867,7 @@ sourcefiles=13
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_mpg123.pas
+ /home/fred/uos/examples/uos_mpg123.pas
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/multiplayer_fpGUI.pas
@@ -911,19 +911,19 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 order=13
+ 2
+ 4
+ 6
+ 0
+ 11
+ 3
+ 10
+ 9
+ 8
+ 1
  12
  7
  5
- 10
- 9
- 6
- 3
- 4
- 8
- 11
- 0
- 1
- 2
 firsttab=2
 index=5
 [layout]
@@ -1387,8 +1387,8 @@ windowlayout=551
  mdistate=0
  nx=0
  ny=0
- ncx=1148
- ncy=54
+ ncx=1356
+ ncy=61
  x=0
  y=0
  cx=1356
@@ -1402,7 +1402,7 @@ windowlayout=551
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/multiplayer_fpGUI.pas
+ value=/home/fred/uos/examples/uos_mpg123.pas
  history=2
   /home/fred/uos/examples/uos_mpg123.pas
   /home/fred/uos/examples/multiplayer_fpGUI.pas
@@ -1428,19 +1428,19 @@ windowlayout=551
  rcy=0
  [sourcefo.files_tab]
  order=13
+  2
+  4
+  6
+  0
+  11
+  3
+  10
+  9
+  8
+  1
   12
   7
   5
-  10
-  9
-  6
-  3
-  4
-  8
-  11
-  0
-  1
-  2
  firsttab=2
  index=5
  [cpuc86_64fo]

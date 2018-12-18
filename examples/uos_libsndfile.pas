@@ -45,7 +45,7 @@ libsf=
   {$ENDIF}    
   
 type   
-PMemoryStream = ^TMemoryStream;
+  PMemoryStream = ^TMemoryStream;
  
   {$IF Defined(MSWINDOWS)}
   off_t = int64;
@@ -246,12 +246,12 @@ type
 
   {
 ** The following typedef is system specific and is defined when libsndfile is.
-** compiled. sf_count_t can be one of loff_t (Linux), off_t (*BSD),
+** compiled. uos_count_t can be one of loff_t (Linux), off_t (*BSD),
 ** off64_t (Solaris), __int64_t (Win32) etc.
 }
 type
-  Psf_count_t = ^Tsf_count_t;
-  Tsf_count_t = off_t;
+  Puos_count_t = ^Tuos_count_t;
+  Tuos_count_t = off_t;
 
 const
   SF_COUNT_MAX = ctypes.clong($7FFFFFFFFFFFFFFF);
@@ -261,11 +261,12 @@ const
 ** On write, the SF_INFO structure is filled in by the user and passed into
 ** sf_open_write ().
 }
+
 type
   PSF_INFO = ^TSF_INFO;
 
   TSF_INFO = record
-    frames: Tsf_count_t;
+    frames: Tuos_count_t;
     // Used to be called samples.  Changed to avoid confusion.
     samplerate: ctypes.cint;
     channels: ctypes.cint;
@@ -285,6 +286,7 @@ type
 ** Please consult the libsndfile documentation (particularly the information
 ** on the sf_command () interface) for examples of its use.
 }
+
 type
   PSF_FORMAT_INFO = ^TSF_FORMAT_INFO;
 
@@ -324,8 +326,8 @@ type
   PSF_EMBED_FILE_INFO = ^TSF_EMBED_FILE_INFO;
 
   TSF_EMBED_FILE_INFO = record
-    offset: Tsf_count_t;
-    length: Tsf_count_t;
+    offset: Tuos_count_t;
+    length: Tuos_count_t;
   end;
 
 // Structs used to retrieve music sample information from a file.
@@ -408,19 +410,19 @@ type
  type
  //pm_get_filelen = ^tm_get_filelen;
  tm_get_filelen =
-  function (pms: PMemoryStream): Tsf_count_t; cdecl; 
+  function (pms: PMemoryStream): Tuos_count_t; cdecl; 
  //pm_seek = ^tm_seek;
  tm_seek =
-  function (offset: Tsf_count_t; whence: cint32; pms: PMemoryStream): Tsf_count_t; cdecl; 
+  function (offset: Tuos_count_t; whence: cint32; pms: PMemoryStream): Tuos_count_t; cdecl; 
  //pm_read = ^tm_read;
  tm_read =
-  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
+  function (const buf: Pointer; count: Tuos_count_t; pms: PMemoryStream): Tuos_count_t; cdecl; 
  //pm_write = ^tm_write;
  tm_write =
-  function (const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
+  function (const buf: Pointer; count: Tuos_count_t; pms: PMemoryStream): Tuos_count_t; cdecl; 
  //pm_tell = ^tm_tell;
  tm_tell =
-  function (pms: PMemoryStream): Tsf_count_t; cdecl; 
+  function (pms: PMemoryStream): Tuos_count_t; cdecl; 
  
  TSF_VIRTUAL = packed record
   sf_vio_get_filelen  : tm_get_filelen;
@@ -475,10 +477,12 @@ var
   sf_error_str: function(sndfile: TSNDFILE_HANDLE;
   str: ctypes.pcchar; len: size_t): ctypes.cint; cdecl;
 
-////// In libsndfile there are 4 functions with the same name (sf_command), 3 of them use the parameter "overload".
-////// In dynamic loading (because of var) we use 4 different names for the 4 functions sf_command :
-////// sf_command_pointer, sf_command_double, sf_command_array, sf_command_tsf. All that 4 functions gonna point
-////// to sf_command in libsndfile library.
+{
+ In libsndfile there are 4 functions with the same name (sf_command), 3 of them use the parameter "overload".
+ In dynamic loading (because of var) we use 4 different names for the 4 functions sf_command :
+ sf_command_pointer, sf_command_double, sf_command_array, sf_command_tsf. All that 4 functions gonna point
+ to sf_command in libsndfile library.
+}
 
 var
   sf_command_pointer: function(sndfile: TSNDFILE_HANDLE; command: ctypes.cint;
@@ -511,6 +515,7 @@ var
 ** separately from the write pointer on files open in mode SFM_RDWR.
 ** On error all of these functions return -1.
 }
+
 //the following CONST values originally are NOT in libsndfile.pas:
 const
   SEEK_SET = 0;       //* seek relative to beginning of file */
@@ -531,8 +536,8 @@ const
   SEEK_MAX = SEEK_HOLE;
 
 var
-  sf_seek: function(sndfile: TSNDFILE_HANDLE; frame: Tsf_count_t;
-  whence: ctypes.cint): Tsf_count_t; cdecl;
+  sf_seek: function(sndfile: TSNDFILE_HANDLE; frame: Tuos_count_t;
+  whence: ctypes.cint): Tuos_count_t; cdecl;
 
 {
 ** Functions for retrieving and setting string data within sound files.
@@ -552,11 +557,11 @@ var
 
 var
   sf_read_raw: function(sndfile: TSNDFILE_HANDLE; ptr: Pointer;
-  bytes: Tsf_count_t): Tsf_count_t; cdecl;
+  bytes: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_write_raw: function(sndfile: TSNDFILE_HANDLE; ptr: Pointer;
-  bytes: Tsf_count_t): Tsf_count_t; cdecl;
+  bytes: Tuos_count_t): Tuos_count_t; cdecl;
 
 {
 ** Functions for reading and writing the data chunk in terms of frames.
@@ -570,35 +575,35 @@ var
 }
 var
   sf_readf_short: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcshort;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_writef_short: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcshort;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_readf_int: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcint;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_writef_int: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcint;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_readf_float: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcfloat;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_writef_float: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcfloat;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_readf_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_writef_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 {
 ** Functions for reading and writing the data chunk in terms of items.
@@ -607,35 +612,35 @@ var
 }
 var
   sf_read_short: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcshort;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_write_short: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcshort;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_read_int: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcint;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_write_int: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcint;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_read_float: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcfloat;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_write_float: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcfloat;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_read_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
   sf_write_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
-  frames: Tsf_count_t): Tsf_count_t; cdecl;
+  frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 {
 ** Close the SNDFILE and clean up all memory allocations associated
@@ -653,7 +658,6 @@ var
 var
   sf_write_sync: function(sndfile: TSNDFILE_HANDLE): ctypes.cint; cdecl;
 
-/////////////////////////////////////////////////////
 {Special function for dynamic loading of lib ...}
 
 var
@@ -664,8 +668,6 @@ function sf_Load(const libfilename: string): boolean; // load the lib
 
 procedure sf_Unload();
 // unload and frees the lib from memory : do not forget to call it before close application.
-
-////////////////////////////////////////////////
 
 function sf_IsLoaded: boolean; inline;
 
@@ -745,7 +747,6 @@ begin
 
 end;
 
-//////////////////////////////
 procedure sf_Unload;
 begin
   // < Reference counting
@@ -761,8 +762,6 @@ begin
   end;
 
 end;
-
-/////////////////
 
 function sf_open(path: string; mode: ctypes.cint;
   var sfinfo: TSF_INFO): TSNDFILE_HANDLE;

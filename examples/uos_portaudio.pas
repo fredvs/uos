@@ -22,7 +22,7 @@ libpa=
  'libportaudio.so.2';
   {$ELSE}
  'portaudio.dll';
-  {$ENDIF}  
+  {$ENDIF} 
 
 type
   PaError = CInt32;

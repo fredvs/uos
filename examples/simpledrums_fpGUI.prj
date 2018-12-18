@@ -19,7 +19,7 @@ order16=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpledrums_fpGUI.prj
-findinfiledialog=63
+findinfiledialog=65
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,24 +29,26 @@ findinfiledialog=63
  [findinfileadialogfo.wholeword]
  value=0
  [findinfileadialogfo.inprojectdir]
- value=1
+ value=0
  [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.indirectories]
- value=0
+ value=1
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/fpgui/
+  /home/fred/fpGUI/
  filecolwidth=174
  x=0
  y=0
  cx=0
  cy=0
- filehistory=5
+ filehistory=7
+  /home/fred/fpGUI/
+  /home/fred/fpGUI-maintmoi/
   /home/fred/fpgui/
   /usr/share/fpcsrc/3.0.3/packages/x11/
   /usr/share/fpcsrc/3.0.3/
@@ -55,8 +57,9 @@ findinfiledialog=63
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=debug
+ value=fpg_defines
  history=20
+  fpg_defines
   debug
   xrender
   fpg_xft_x11
@@ -76,7 +79,6 @@ findinfiledialog=63
   TKeySym
   keysym
   XAllocClassHint
-  XOpenIM
  [findinfileadialogfo]
  stackedunder=
  x=615
@@ -237,8 +239,8 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=339
- y=127
+ x=365
+ y=117
  cx=773
  cy=497
 programparameters=18
@@ -264,8 +266,8 @@ settings=8
  [settings_form]
  x=447
  y=148
- cx=471
- cy=446
+ cx=481
+ cy=546
  wsize=0
  active=1
  visible=1
@@ -529,10 +531,10 @@ makeoptionson=11
  511
  192
  510
- 4095
+ 4091
  511
  255
- 7
+ 3
  0
 compilerusedon=29
  3891
@@ -1017,8 +1019,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=95
-finddtext=$IF DEFINED(debug)
+finddtext=playpaused
 findhistory=20
+ playpaused
+ memory
+ Label4
  $IF DEFINED(debug)
  bs_Load
  PA_FileName
@@ -1036,30 +1041,42 @@ findhistory=20
  XftFontOpenName
  XftTextExtentsUTF8
  DYNLOAD
- PrintKeyEvent
- xlookupstring
- writeln
 findoptions=1
-editpos=4
+editpos=7
+ 0,-1073741823
+ 0,753
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,6
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+bookmarks5=0
+bookmarks6=0
+sourcefiles=7
  ${PROJECTDIR}/simpledrums_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
+ /home/fred/uos/examples/uos_flat.pas
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/define.inc
-relpaths=4
+ ${PROJECTDIR}/define.inc
+ /home/fred/eschecs/libraries/fpgui/src/corelib/x11/fpg_x11.pas
+ /home/fred/fpGUI/src/corelib/x11/fpg_x11.pas
+ /home/fred/fpGUI/src/corelib/x11/fpg_xft_x11.pas
+relpaths=7
  simpledrums_fpGUI.pas
  uos_flat.pas
  uos.pas
  define.inc
-ismoduletexts=4
+ eschecs/libraries/fpgui/src/corelib/x11/fpg_x11.pas
+ fpGUI/src/corelib/x11/fpg_x11.pas
+ fpGUI/src/corelib/x11/fpg_xft_x11.pas
+ismoduletexts=7
+ 0
+ 0
+ 0
  0
  0
  0
@@ -1070,9 +1087,9 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=3
+index=1
 [layout]
-windowlayout=537
+windowlayout=555
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1216,7 +1233,7 @@ windowlayout=537
  width1=82
  sortdescend1=0
  sorted=0
- col=0
+ col=1
  row=1
  rowheight=16
  [stackfo]
@@ -1547,10 +1564,28 @@ windowlayout=537
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/define.inc
- history=2
-  /home/fred/uos/examples/define.inc
+ value=/home/fred/uos/examples/uos_flat.pas
+ history=20
+  /home/fred/uos/examples/uos_flat.pas
+  /home/fred/fpGUI/src/corelib/x11/fpg_x11.pas
+  /home/fred/eschecs/libraries/fpgui/src/corelib/x11/fpg_x11.pas
   /home/fred/uos/examples/simpledrums_fpGUI.pas
+  /home/fred/eschecs/source/icon.inc
+  /home/fred/fpGUI-maint/src/corelib/x11/fpg_x11.pas
+  /home/fred/uos/examples/uos.pas
+  /home/fred/uos/src/uos_flat.pas
+  /home/fred/uos/src/uos.pas
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/eschecs/source/engines.pas
+  /home/fred/eschecs/source/settings.pas
+  /home/fred/eschecs_colorstatus/source/eschecs.pas
+  /home/fred/eschecs_colorstatus/source/eschecs.res
+  /home/fred/eschecs/source/board.pas
+  /home/fred/eschecs_prerel2/source/eschecs.pas
+  /home/fred/eschecs/source/version.inc
+  /home/fred/eschecs_prerel2/source/version.inc
+  /home/fred/eschecs_colorstatus/source/version.inc
+  /home/fred/ideu/src/main.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1573,7 +1608,7 @@ windowlayout=537
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=3
+ index=1
  [cpuc86_64fo]
  irqoff=0
  splitdir=0

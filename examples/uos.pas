@@ -1623,6 +1623,7 @@ begin
   Data.data.Free;
 end;
 
+{$IF DEFINED(portaudio) or DEFINED(sndfile)}
 function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; cdecl;
 var
   Stream: TStream absolute ahandle;
@@ -1648,6 +1649,12 @@ begin
  end; 
 end; 
 
+procedure mpg_close_stream(ahandle: Pointer);// not used, uos does it...
+begin
+  TObject(ahandle).Free;
+end;
+{$endif}
+
 {$IF DEFINED(webstream)}
 // should use this for pipes vs memorystream ?
 function mpg_seek_url(ahandle: Pointer; aoffset: Integer): Integer; cdecl; 
@@ -1664,11 +1671,6 @@ begin
   end;
 end;
 {$endif}
-
-procedure mpg_close_stream(ahandle: Pointer);// not used, uos does it...
-begin
-  TObject(ahandle).Free;
-end;
 
 function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
   SampleFormat: cint32 ; FramesCount: cint32; var outmemory: TDArFloat;
@@ -5653,13 +5655,14 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   end else  result := -2;  
    
   end; 
-  
-  function m_get_filelen(pms: PMemoryStream): tsf_count_t; cdecl; 
+
+{$IF DEFINED(portaudio) or DEFINED(sndfile)}  
+  function m_get_filelen(pms: PMemoryStream): tuos_count_t; cdecl; 
 begin
  Result:= pms^.Size;
 end;
  
-function m_seek(offset: tsf_count_t; whence: cint32; pms: PMemoryStream): tsf_count_t; cdecl; 
+function m_seek(offset: tuos_count_t; whence: cint32; pms: PMemoryStream): tuos_count_t; cdecl; 
 Const
  SEEK_SET = 0;
  SEEK_CUR = 1;
@@ -5674,21 +5677,22 @@ Result:= 0 ;
 
 end;
  
-function m_read(const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
+function m_read(const buf: Pointer; count: Tuos_count_t; pms: PMemoryStream): Tuos_count_t; cdecl; 
 
 begin
 Result := pms^.Read(buf^,count);
 end;
  
-function m_write(const buf: Pointer; count: Tsf_count_t; pms: PMemoryStream): Tsf_count_t; cdecl; 
+function m_write(const buf: Pointer; count: Tuos_count_t; pms: PMemoryStream): Tuos_count_t; cdecl; 
 begin
  Result:= pms^.Write(buf^,count);
 end;
  
-function m_tell(pms: PMemoryStream): Tsf_count_t; cdecl; 
+function m_tell(pms: PMemoryStream): Tuos_count_t; cdecl; 
 begin
  Result:= pms^.Position;
 end;
+{$endif}
 
 function Tuos_Player.AddFromMemoryStreamDec(var MemoryStream: TMemoryStream; var Bufferinfos: Tuos_bufferinfos;
  OutputIndex: cint32; FramesCount: cint32): cint32;
