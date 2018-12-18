@@ -1024,10 +1024,10 @@ findhistory=20
 findoptions=1
 editpos=5
  0,-1073741823
- 0,1433
  0,-1073741823
- 0,29
- 0,30
+ 0,0
+ 0,46
+ 0,44
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1035,10 +1035,10 @@ bookmarks3=0
 bookmarks4=0
 sourcefiles=5
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/examples/uos_libsndfile.pas
- /home/fred/uos/examples/uos_mpg123.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_mpg123.pas
 relpaths=5
  uos.pas
  simpleplayer_fpGUI.pas
@@ -1063,7 +1063,7 @@ order=5
  4
  2
 firsttab=0
-index=3
+index=2
 [layout]
 windowlayout=561
  [mainfo.basedock]
@@ -1540,10 +1540,10 @@ windowlayout=561
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_mpg123.pas
+ value=/home/fred/uos/examples/uos_libsndfile.pas
  history=20
-  /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/uos/examples/uos_flat.pas
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/uos/src/uos.pas
   /home/fred/eschecs/source/engines.pas
   /home/fred/eschecs/source/settings.pas
@@ -1590,7 +1590,7 @@ windowlayout=561
   4
   2
  firsttab=0
- index=3
+ index=2
  [cpuc86_64fo]
  irqoff=0
  splitdir=0

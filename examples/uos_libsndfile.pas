@@ -25,10 +25,7 @@ interface
 
 uses
   dynlibs, classes,
-  {$IFDEF unix}
-    unixtype,
-     {$ENDIF}  
-   ctypes;
+  ctypes;
 
 const
 libsf=
@@ -41,9 +38,13 @@ libsf=
 type   
   PMemoryStream = ^TMemoryStream;
  
-  {$IF Defined(MSWINDOWS)}
+type 
+ {$IF Defined(MSWINDOWS)} 
   off_t = int64;
-   {$IFEND}
+  {$ELSE}  
+  off_t    = clonglong;  
+  size_t   = culong; 
+  {$ENDIF} 
 
 const
   //* Major formats. *//

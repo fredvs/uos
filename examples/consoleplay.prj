@@ -931,15 +931,15 @@ findhistory=20
  Data.status
 findoptions=1
 editpos=9
- 0,154
  0,-1073741823
  0,-1073741823
- 0,6
- 0,5
  0,-1073741823
- 0,30
- 0,73
+ 0,-1073741823
+ 0,-1073741823
  0,0
+ 0,28
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -956,7 +956,7 @@ sourcefiles=9
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/define.inc
  /home/fred/eschecs/libraries/uos/uos.pas
- ${PROJECTDIR}/uos_libsndfile.pas
+ /home/fred/uos/examples/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_mpg123.pas
 relpaths=9
@@ -965,7 +965,7 @@ relpaths=9
  uos.pas
  simpleplayer_fpGUI.pas
  define.inc
- eschecs/libraries/uos/uos.pas
+ ../eschecs/libraries/uos/uos.pas
  uos_libsndfile.pas
  uos_portaudio.pas
  uos_mpg123.pas
@@ -988,20 +988,10 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=9
- 0
- 6
- 4
- 8
- 2
- 7
- 1
- 5
- 3
 firsttab=0
-index=5
+index=6
 [layout]
-windowlayout=584
+windowlayout=574
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1109,7 +1099,7 @@ windowlayout=584
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1476,11 +1466,11 @@ windowlayout=584
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_portaudio.pas
+ value=/home/fred/uos/examples/uos_libsndfile.pas
  history=20
+  /home/fred/eschecs/libraries/uos/uos.pas
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/eschecs/libraries/uos/define.inc
-  /home/fred/eschecs/libraries/uos/uos.pas
   /home/fred/strumpract/src/drums.pas
   /home/fred/strumpract/src/main.pas
   /home/fred/Downloads/testprj/common.pas
@@ -1519,18 +1509,8 @@ windowlayout=584
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=9
-  0
-  6
-  4
-  8
-  2
-  7
-  1
-  5
-  3
  firsttab=0
- index=5
+ index=6
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
