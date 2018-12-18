@@ -25,17 +25,9 @@ interface
 
 uses
   dynlibs, classes,
-  {$IFDEF UNIX}
-    {$IFDEF UseCThreads}
-  cthreads,
-    {$ENDIF}
-  unixtype,
-  {$ENDIF}
-  {$IFDEF FPC}
-  ctypes;
+   unixtype,
+   ctypes;
 
-  {$ENDIF}
-  
 const
 libsf=
  {$IFDEF unix}

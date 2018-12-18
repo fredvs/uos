@@ -931,15 +931,15 @@ findhistory=20
  Data.status
 findoptions=1
 editpos=9
- 0,164
+ 0,154
  0,-1073741823
- 0,5669
  0,-1073741823
+ 0,6
  0,5
  0,-1073741823
- 0,5
+ 0,30
  0,73
- 0,46
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -950,15 +950,15 @@ bookmarks6=0
 bookmarks7=0
 bookmarks8=0
 sourcefiles=9
- /home/fred/uos/examples/consoleplay.pas
+ ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
- /home/fred/uos/examples/define.inc
+ ${PROJECTDIR}/define.inc
  /home/fred/eschecs/libraries/uos/uos.pas
- /home/fred/uos/examples/uos_libsndfile.pas
- /home/fred/uos/examples/uos_portaudio.pas
- /home/fred/uos/examples/uos_mpg123.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+ ${PROJECTDIR}/uos_mpg123.pas
 relpaths=9
  consoleplay.pas
  uos_flat.pas
@@ -990,18 +990,18 @@ nomenumodules=1
 [sourcefo.files_tab]
 order=9
  0
- 7
- 8
- 2
- 3
- 1
- 5
  6
  4
+ 8
+ 2
+ 7
+ 1
+ 5
+ 3
 firsttab=0
-index=8
+index=5
 [layout]
-windowlayout=614
+windowlayout=584
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1109,7 +1109,7 @@ windowlayout=614
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0
@@ -1146,7 +1146,7 @@ windowlayout=614
  sortdescend1=0
  sorted=0
  col=0
- row=1
+ row=4
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1476,8 +1476,9 @@ windowlayout=614
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/define.inc
- history=50
+ value=/home/fred/uos/examples/uos_portaudio.pas
+ history=20
+  /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/eschecs/libraries/uos/define.inc
   /home/fred/eschecs/libraries/uos/uos.pas
   /home/fred/strumpract/src/drums.pas
@@ -1494,40 +1495,9 @@ windowlayout=614
   /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/src/uos_flat.pas
   /home/fred/uos/src/uos.pas
-  /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/eschecs/source/engines.pas
   /home/fred/eschecs/source/settings.pas
   /home/fred/eschecs_colorstatus/source/eschecs.pas
-  /home/fred/eschecs_colorstatus/source/eschecs.res
-  /home/fred/eschecs/source/board.pas
-  /home/fred/eschecs_prerel2/source/eschecs.pas
-  /home/fred/eschecs/source/version.inc
-  /home/fred/eschecs_prerel2/source/version.inc
-  /home/fred/eschecs_colorstatus/source/version.inc
-  /home/fred/ideu/src/main.pas
-  /home/fred/ideu/src/msefiledialog.pas
-  /home/fred/ideu/src/dialogfiles.pas
-  /home/fred/ideu/src/findinfileform.mfm
-  /home/fred/ideu/src/messageform.pas
-  /home/fred/eschecs/source/eco/eco.pas
-  /home/fred/eschecs/source/messagefrm.pas
-  /home/fred/eschecs_image/source/messagefrm.pas
-  /home/fred/eschecs_image/source/eco/eco.pas
-  /home/fred/eschecs_image/source/eschecs.pas
-  /home/fred/eschecs/source/eco/ecoor.pas
-  /home/fred/eschecs_uos_noleak/source/eco/eco.pas
-  /home/fred/eschecs_errorfriend/source/log.pas
-  /home/fred/eschecs_errorfriend/source/eschecs.pas
-  /home/fred/eschecs/source/log.pas
-  /home/fred/eschecs/source/sound.pas
-  /home/fred/eschecs/source/language.pas
-  /home/fred/eschecs_uos2/source/eschecs.pas
-  /home/fred/eschecs/libraries/uos/uos_flat.pas
-  /home/fred/uos/examples/consoleplaymemorystream.pas
-  /home/fred/eschecs_uos/source/sound.pas
-  /home/fred/uos/examples/simpledrums_fpGUI.pas
-  /home/fred/eschecs_uos/source/messagefrm.pas
-  /home/fred/eschecs/libraries/fpgui/src/gui/fpg_dialogs.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1551,16 +1521,16 @@ windowlayout=614
  [sourcefo.files_tab]
  order=9
   0
-  7
-  8
-  2
-  3
-  1
-  5
   6
   4
+  8
+  2
+  7
+  1
+  5
+  3
  firsttab=0
- index=8
+ index=5
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
@@ -1600,7 +1570,7 @@ windowlayout=614
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=threadsfo
+ stackedunder=findinfilefo
  parent=
  mdistate=0
  nx=0

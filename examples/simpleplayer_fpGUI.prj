@@ -1024,7 +1024,7 @@ findhistory=20
 findoptions=1
 editpos=3
  0,-1073741823
- 0,1458
+ 0,1446
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -1157,7 +1157,7 @@ windowlayout=555
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1573,7 +1573,7 @@ windowlayout=555
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=threadsfo
  parent=
  mdistate=3
  nx=0
