@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2180813;
+  uos_version : cint32 = 2181218;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -751,7 +751,6 @@ type
 // SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // FramesCount : default : -1 (= 1024 * 2) 
-
 
   function AddIntoMemoryStream(var MemoryStream: TMemoryStream; SampleRate: LongInt; 
        SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt): LongInt;  
@@ -1545,9 +1544,6 @@ begin
   f.Write(wFileSize, 4);
   f.Free;
 end;
-
-
-
 
 function WriteWaveFromMem(FileName: UTF8String; Data: Tuos_FileBuffer): word;
 var

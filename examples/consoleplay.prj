@@ -933,10 +933,10 @@ findoptions=1
 editpos=9
  0,-1073741823
  0,-1073741823
+ 33,76
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,0
+ 0,76
  0,28
  0,-1073741823
  0,-1073741823
@@ -952,17 +952,17 @@ bookmarks8=0
 sourcefiles=9
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/src/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/define.inc
  /home/fred/eschecs/libraries/uos/uos.pas
- /home/fred/uos/examples/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/uos_mpg123.pas
 relpaths=9
  consoleplay.pas
  uos_flat.pas
- uos.pas
+ src/uos.pas
  simpleplayer_fpGUI.pas
  define.inc
  ../eschecs/libraries/uos/uos.pas
@@ -989,7 +989,7 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=6
+index=2
 [layout]
 windowlayout=574
  [mainfo.basedock]
@@ -1099,7 +1099,7 @@ windowlayout=574
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1466,8 +1466,9 @@ windowlayout=574
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_libsndfile.pas
+ value=/home/fred/uos/src/uos.pas
  history=20
+  /home/fred/uos/examples/uos_libsndfile.pas
   /home/fred/eschecs/libraries/uos/uos.pas
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/eschecs/libraries/uos/define.inc
@@ -1487,7 +1488,6 @@ windowlayout=574
   /home/fred/uos/src/uos.pas
   /home/fred/eschecs/source/engines.pas
   /home/fred/eschecs/source/settings.pas
-  /home/fred/eschecs_colorstatus/source/eschecs.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1510,7 +1510,7 @@ windowlayout=574
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=6
+ index=2
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
@@ -1550,7 +1550,7 @@ windowlayout=574
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=findinfilefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

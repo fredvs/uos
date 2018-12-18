@@ -1026,7 +1026,7 @@ editpos=5
  0,-1073741823
  0,-1073741823
  0,0
- 0,46
+ 0,17
  0,44
 bookmarks0=0
 bookmarks1=0
@@ -1035,10 +1035,10 @@ bookmarks3=0
 bookmarks4=0
 sourcefiles=5
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/uos_mpg123.pas
+ /home/fred/uos/examples/simpleplayer_fpGUI.pas
+ /home/fred/uos/examples/uos_flat.pas
+ /home/fred/uos/examples/uos_libsndfile.pas
+ /home/fred/uos/examples/uos_mpg123.pas
 relpaths=5
  uos.pas
  simpleplayer_fpGUI.pas
