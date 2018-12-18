@@ -211,7 +211,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=770
  width0=47
@@ -862,19 +862,19 @@ line=13
  2794
  2788
 address=13
- 4947184
+ 4946928
  0
  0
- 5077936
- 4930497
- 4919178
- 4214793
+ 5077776
+ 4930208
+ 4918960
+ 4214601
  0
- 4971984
- 4971953
- 4971953
- 4931905
- 4931770
+ 4971745
+ 4971674
+ 4971657
+ 4931697
+ 4931524
 addbkpt=13
  0
  0
@@ -1022,22 +1022,32 @@ findhistory=20
  playpaused
  playex(
 findoptions=1
-editpos=3
+editpos=5
  0,-1073741823
- 0,1446
+ 0,1433
  0,-1073741823
+ 0,29
+ 0,30
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
+bookmarks3=0
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ /home/fred/uos/examples/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=3
+ /home/fred/uos/examples/uos_libsndfile.pas
+ /home/fred/uos/examples/uos_mpg123.pas
+relpaths=5
  uos.pas
  simpleplayer_fpGUI.pas
  uos_flat.pas
-ismoduletexts=3
+ uos_libsndfile.pas
+ uos_mpg123.pas
+ismoduletexts=5
+ 0
+ 0
  0
  0
  0
@@ -1046,10 +1056,16 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=5
+ 0
+ 1
+ 3
+ 4
+ 2
 firsttab=0
-index=1
+index=3
 [layout]
-windowlayout=555
+windowlayout=561
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1524,7 +1540,7 @@ windowlayout=555
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simpleplayer_fpGUI.pas
+ value=/home/fred/uos/examples/uos_mpg123.pas
  history=20
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/uos/examples/uos_flat.pas
@@ -1547,7 +1563,7 @@ windowlayout=555
   /home/fred/eschecs/source/messagefrm.pas
   /home/fred/eschecs_image/source/messagefrm.pas
  [debuggerfo.project_options]
- value=1
+ value=5
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1567,8 +1583,14 @@ windowlayout=555
  rcx=0
  rcy=0
  [sourcefo.files_tab]
+ order=5
+  0
+  1
+  3
+  4
+  2
  firsttab=0
- index=1
+ index=3
  [cpuc86_64fo]
  irqoff=0
  splitdir=0

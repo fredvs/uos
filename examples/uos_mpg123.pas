@@ -17,7 +17,11 @@ interface
 
 {$LONGSTRINGS ON}
 uses
- ctypes, unixtype, classes, dynlibs;
+ ctypes, 
+  {$IFDEF unix} 
+  unixtype,
+  {$ENDIF}  
+  classes, dynlibs;
  
 const
 libmp=
@@ -35,12 +39,10 @@ const
   SEEK_HOLE = 4;       //* seek to the next hole */
   SEEK_MAX = SEEK_HOLE;
   
- 
-  {$IF Defined(MSWINDOWS)}
+ {$IF Defined(MSWINDOWS)}
   type
   off_t = int64;
    {$IFEND}
-
   
 type
   Puos_count_t = ^Tuos_count_t;

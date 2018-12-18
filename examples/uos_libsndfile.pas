@@ -25,7 +25,9 @@ interface
 
 uses
   dynlibs, classes,
-   unixtype,
+  {$IFDEF unix}
+    unixtype,
+     {$ENDIF}  
    ctypes;
 
 const
