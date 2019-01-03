@@ -9,6 +9,7 @@ unit uos_OpusFile;
 
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}
+{$PACKENUM 4}(* use 4-byte enums *)
 
 interface
 

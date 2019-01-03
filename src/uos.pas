@@ -2636,8 +2636,8 @@ begin
   4://  DSPFFTLowPass
   begin
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
-  1 / Tan(Pi * (HighFrequency - LowFrequency + 1) /
-  StreamIn[InputIndex].Data.SampleRate);
+  1 / Tan(Pi * HighFrequency / StreamIn[InputIndex].Data.SampleRate);
+  
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.C +
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C *
@@ -2659,9 +2659,9 @@ begin
 
   5://  DSPFFTHighPass
   begin
-  StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
-  Tan(Pi * (HighFrequency - LowFrequency + 1) /
-  StreamIn[InputIndex].Data.SampleRate);
+   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
+   Tan(Pi * LowFrequency / StreamIn[InputIndex].Data.SampleRate);
+  
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.C +
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C *

@@ -907,8 +907,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=sf_count_t
+finddtext=free
 findhistory=20
+ free
+ create
  sf_count_t
  off_t
  tsf_count_t
@@ -927,54 +929,27 @@ findhistory=20
  Tuos_Player.cre
  .stop
  GetStatus
- createplayer
- Data.status
 findoptions=1
-editpos=9
+editpos=4
  0,-1073741823
  0,-1073741823
- 33,76
- 0,-1073741823
- 0,-1073741823
- 0,76
- 0,28
- 0,-1073741823
+ 0,0
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-sourcefiles=9
- ${PROJECTDIR}/consoleplay.pas
+sourcefiles=4
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/src/uos.pas
- ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ /home/fred/uos/examples/consoleplay.pas
  ${PROJECTDIR}/define.inc
- /home/fred/eschecs/libraries/uos/uos.pas
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/uos_portaudio.pas
- ${PROJECTDIR}/uos_mpg123.pas
-relpaths=9
- consoleplay.pas
+relpaths=4
+ uos.pas
  uos_flat.pas
- src/uos.pas
- simpleplayer_fpGUI.pas
+ consoleplay.pas
  define.inc
- ../eschecs/libraries/uos/uos.pas
- uos_libsndfile.pas
- uos_portaudio.pas
- uos_mpg123.pas
-ismoduletexts=9
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=4
  0
  0
  0
@@ -1136,7 +1111,7 @@ windowlayout=574
  sortdescend1=0
  sorted=0
  col=0
- row=4
+ row=1
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1451,8 +1426,8 @@ windowlayout=574
  mdistate=0
  nx=0
  ny=0
- ncx=1147
- ncy=54
+ ncx=1356
+ ncy=61
  x=0
  y=0
  cx=1356
@@ -1466,28 +1441,28 @@ windowlayout=574
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/src/uos.pas
+ value=/home/fred/uos/examples/consoleplay.pas
  history=20
-  /home/fred/uos/examples/uos_libsndfile.pas
-  /home/fred/eschecs/libraries/uos/uos.pas
-  /home/fred/uos/examples/simpleplayer_fpGUI.pas
+  /home/fred/uos/examples/consoleplay.pas
+  /home/fred/uos/examples/uos_dsp_utils.pas
+  /home/fred/uos/examples/uos_dsp_noiseremoval.pas
+  /home/fred/uos/examples/uos_httpgetthread.pas
+  /home/fred/uos/examples/uos_opusurl.pas
+  /home/fred/uos/examples/uos_shout.pas
+  /home/fred/uos/examples/uos_soundtouch.pas
+  /home/fred/uos/examples/uos_opusfile.pas
+  /home/fred/uos/examples/uos_opus.pas
+  /home/fred/uos/src/uos.pas
+  /home/fred/strumpract/src/define.inc
+  /home/fred/eschecs/libraries/uos/uos_mpg123.pas
+  /home/fred/eschecs/libraries/uos/uos_portaudio.pas
+  /home/fred/eschecs/libraries/uos/uos_libsndfile.pas
+  /home/fred/uos/examples/uos_mpg123.pas
   /home/fred/eschecs/libraries/uos/define.inc
+  /home/fred/eschecs/libraries/uos/uos.pas
   /home/fred/strumpract/src/drums.pas
   /home/fred/strumpract/src/main.pas
   /home/fred/Downloads/testprj/common.pas
-  /home/fred/Downloads/testprj/contacts.pas
-  /home/fred/Downloads/testprj/testprj.pas
-  /home/fred/fpGUI/src/corelib/gdi/fpg_gdi.pas
-  /home/fred/fpGUI/src/corelib/x11/fpg_xft_x11.pas
-  /home/fred/eschecs/source/icon.inc
-  /home/fred/eschecs/libraries/fpgui/src/corelib/x11/fpg_x11.pas
-  /home/fred/fpGUI-maint/src/corelib/x11/fpg_x11.pas
-  /home/fred/uos/examples/uos.pas
-  /home/fred/uos/examples/uos_flat.pas
-  /home/fred/uos/src/uos_flat.pas
-  /home/fred/uos/src/uos.pas
-  /home/fred/eschecs/source/engines.pas
-  /home/fred/eschecs/source/settings.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]

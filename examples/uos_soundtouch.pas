@@ -15,6 +15,8 @@ unit uos_soundtouch;
 
 {$PACKRECORDS C}
 
+{$PACKENUM 4}(* use 4-byte enums *)
+
 interface
 
 uses
