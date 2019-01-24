@@ -930,9 +930,9 @@ findhistory=20
  OU_FileName
 findoptions=1
 editpos=4
- 0,244
  0,-1073741823
- 2,2661
+ 0,0
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
@@ -940,7 +940,7 @@ bookmarks2=0
 bookmarks3=0
 sourcefiles=4
  ${PROJECTDIR}/filterplayer_fpGUI.pas
- ${PROJECTDIR}/uos_flat.pas
+ /home/fred/uos/examples/uos_flat.pas
  /home/fred/uos/src/uos.pas
  ${PROJECTDIR}/uos_flat.pas
 relpaths=4
@@ -964,13 +964,13 @@ nomenumodules=1
 [sourcefo.files_tab]
 order=4
  0
+ 2
  3
  1
- 2
 firsttab=0
 index=3
 [layout]
-windowlayout=560
+windowlayout=561
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1445,8 +1445,9 @@ windowlayout=560
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/src/uos.pas
- history=1
+ value=/home/fred/uos/examples/uos_flat.pas
+ history=2
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/filterplayer_fpGUI.pas
  [debuggerfo.project_options]
  value=1
@@ -1471,9 +1472,9 @@ windowlayout=560
  [sourcefo.files_tab]
  order=4
   0
+  2
   3
   1
-  2
  firsttab=0
  index=3
  [cpuc86_64fo]
