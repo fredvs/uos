@@ -20,8 +20,13 @@ uses
 const
 
  {$IFDEF unix}
+{$IFDEF darwin}
+libaa= 'libfaad.2.dylib';
+libm4= 'libmp4ff.0.dylib';
+  {$ELSE}
 libaa= 'libfaad.so.2';
 libm4= 'libmp4ff.so.0.0.0';
+  {$ENDIF}    
   {$ELSE}
 libaa= 'Faad2.dll';
 libm4= 'mp4ff.dll';

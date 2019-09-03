@@ -30,7 +30,11 @@ uses
 const
 libsf=
  {$IFDEF unix}
+ {$IFDEF darwin}
+ 'libsndfile.1.dylib';
+  {$ELSE}
  'libsndfile.so.1';
+  {$ENDIF}    
   {$ELSE}
  'sndfile.dll';
   {$ENDIF}    

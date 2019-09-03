@@ -23,7 +23,11 @@ uses
 const
 libmp=
  {$IFDEF unix}
+{$IFDEF darwin}
+ 'libmpg123.0.dylib';
+  {$ELSE}
  'libmpg123.so.0';
+  {$ENDIF}    
   {$ELSE}
  'mpg123.dll';
   {$ENDIF} 

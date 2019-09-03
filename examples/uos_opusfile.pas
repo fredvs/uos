@@ -9,7 +9,6 @@ unit uos_OpusFile;
 
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}
-{$PACKENUM 4}(* use 4-byte enums *)
 
 interface
 
@@ -24,8 +23,12 @@ type
 const
 libop=
  {$IFDEF unix}
- 'libopusfile.so.0';
+{$IFDEF darwin}
+ 'libopusfile.0.dylib';
   {$ELSE}
+'libopusfile.so.0';
+  {$ENDIF}    
+   {$ELSE}
  'opusfile.dll';
   {$ENDIF}  
 

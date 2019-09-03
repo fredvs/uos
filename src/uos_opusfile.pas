@@ -23,8 +23,12 @@ type
 const
 libop=
  {$IFDEF unix}
- 'libopusfile.so.0';
+{$IFDEF darwin}
+ 'libopusfile.0.dylib';
   {$ELSE}
+'libopusfile.so.0';
+  {$ENDIF}    
+   {$ELSE}
  'opusfile.dll';
   {$ENDIF}  
 
