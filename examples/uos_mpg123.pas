@@ -11,8 +11,6 @@ interface
 
   {$DEFINE newversion}   // uncomment for mpg123 new version
 
-  {$PACKENUM 4}(* use 4-byte enums *)
-  {$PACKRECORDS C}(* C/C++-compatible record packing *)
   {$mode objfpc}{$H+}
 
 {$LONGSTRINGS ON}
@@ -125,12 +123,14 @@ const
   // (32 or 64 bits depends on mpg123 internal precision).
   MPG123_PLAIN_ID3TEXT = $800;
   MPG123_IGNORE_STREAMLENGTH = $1000;
-  MPG123_SKIP_ID3V2 = $2000;
-
+  
    {$IF DEFINED(newversion)}
       MPG123_IGNORE_INFOFRAME = $4000;
         MPG123_AUTO_RESAMPLE = $8000;
         MPG123_PICTURE = $10000;
+        MPG123_NO_PEEK_END = $20000;
+        MPG123_SKIP_ID3V2 = $2000;
+        MPG123_FORCE_SEEKABLE = $40000;
     {$endif}
 
 {** mpg123_param_rva - Choices for MPG123_RVA **}
@@ -358,6 +358,17 @@ type
      *  \param r_read The callback for reading (behaviour like posix read).
      *  \param r_lseek The callback for seeking (like posix lseek).
      *  \param cleanup A callback to clean up an I/O handle on mpg123_close, can be NULL for none (you take care of cleaning your handles).  }
+
+type
+  Tmpg123_getformat2 = function(mh: Tmpg123_handle; var rate: cardinal;
+    var channels, encoding: integer; var clear_flag: integer): integer; cdecl;
+    
+type
+  Tmpg123_framelength = function(mh: Tmpg123_handle): coff_t; cdecl;
+
+type
+  Tmpg123_meta_free = procedure(mh: Tmpg123_handle); cdecl;
+
  {$endif}
 
 type
@@ -382,6 +393,16 @@ type
 type
   Tmpg123_decode_frame = function(mh: Tmpg123_handle; var num: coff_t;
     audio: PPChar; var bytes: size_t): integer; cdecl;
+
+{$IF DEFINED(newversion)}
+  Tmpg123_framebyframe_decode = function(mh: Tmpg123_handle; var num: coff_t;
+    audio: PPChar; var bytes: size_t): integer; cdecl; 
+
+ Tmpg123_framebyframe_next = function(mh: Tmpg123_handle): integer; cdecl; 
+ 
+ Tmpg123_framedata = function(mh: Tmpg123_handle; var header: longint;
+    bodydata: PPChar; var bodybytes: size_t): integer; cdecl;  
+  {$endif}
 
 type
   Tmpg123_tell = function(mh: Tmpg123_handle): coff_t; cdecl;
@@ -554,6 +575,11 @@ type
 
 type
   Tmpg123_strlen = function(psb: Pmpg123_string; utf8: integer): size_t;
+
+ {$IF DEFINED(newversion)}
+type
+  Tmpg123_chomp_string = function(psb: Pmpg123_string): integer;
+{$endif}
 
 const
   mpg123_text_unknown = 0;
@@ -817,7 +843,8 @@ var
   mpg123_format: Tmpg123_format;
   mpg123_format_support: Tmpg123_format_support;
   mpg123_getformat: Tmpg123_getformat;
-
+  mpg123_getformat2: Tmpg123_getformat2;
+ 
 (** \defgroup mpg123_input mpg123 file input and decoding
  * Functions for input bitstream and decoding operations. *)
 var
@@ -835,6 +862,11 @@ var
   mpg123_feed: Tmpg123_feed;
   mpg123_decode: Tmpg123_decode;
   mpg123_decode_frame: Tmpg123_decode_frame;
+ {$IF DEFINED(newversion)}
+  mpg123_framebyframe_decode: Tmpg123_framebyframe_decode;
+  mpg123_framebyframe_next: Tmpg123_framebyframe_next;
+  mpg123_framedata: Tmpg123_framedata;
+  {$endif}
   mpg123_tell: Tmpg123_tell;
   mpg123_tellframe: Tmpg123_tellframe;
   mpg123_tell_stream: Tmpg123_tell_stream;
@@ -860,6 +892,7 @@ var
   mpg123_safe_buffer: Tmpg123_safe_buffer;
   mpg123_scan: Tmpg123_scan;
   mpg123_length: Tmpg123_length;
+  mpg123_framelength: Tmpg123_framelength;
   mpg123_set_filesize: Tmpg123_set_filesize;
   mpg123_tpf: Tmpg123_tpf;
   mpg123_clip: Tmpg123_clip;
@@ -877,6 +910,7 @@ var
   mpg123_set_string: Tmpg123_set_string;
   mpg123_set_substring: Tmpg123_set_substring;
   mpg123_strlen: Tmpg123_strlen;
+  mpg123_chomp_string :Tmpg123_chomp_string;
 
 var
   mpg123_enc_from_id3: Tmpg123_enc_from_id3;
@@ -884,6 +918,7 @@ var
 
 var
   mpg123_meta_check: Tmpg123_meta_check;
+  mpg123_meta_free: Tmpg123_meta_free;
   mpg123_id3: Tmpg123_id3;
   mpg123_icy: Tmpg123_icy;
   mpg123_icy2utf8: Tmpg123_icy2utf8;
@@ -993,6 +1028,22 @@ begin
       mpg123_open_handle := Tmpg123_open_handle(GetProcAddress(Mp_Handle, 'mpg123_open_handle'));
      mpg123_replace_reader_handle := Tmpg123_replace_reader_handle(GetProcAddress(Mp_Handle,
      'mpg123_replace_reader_handle'));
+     mpg123_framebyframe_decode := Tmpg123_framebyframe_decode(
+        GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode'));
+      mpg123_framebyframe_next := Tmpg123_framebyframe_next(
+        GetProcAddress(Mp_Handle, 'mpg123_framebyframe_next'));
+      mpg123_framedata := Tmpg123_framedata(
+        GetProcAddress(Mp_Handle, 'mpg123_framedata'));
+       mpg123_meta_free := Tmpg123_meta_free(
+        GetProcAddress(Mp_Handle, 'mpg123_meta_free'));
+       mpg123_strlen := Tmpg123_strlen(
+        GetProcAddress(Mp_Handle, 'mpg123_strlen'));
+      mpg123_chomp_string := Tmpg123_chomp_string(
+        GetProcAddress(Mp_Handle, 'mpg123_chomp_string'));
+       mpg123_getformat2 := Tmpg123_getformat2(
+        GetProcAddress(Mp_Handle, 'mpg123_getformat2'));
+      mpg123_framelength := Tmpg123_framelength(GetProcAddress(Mp_Handle, 'mpg123_framelength'));
+      mpg123_encsize := Tmpg123_encsize(GetProcAddress(Mp_Handle, 'mpg123_encsize'));
      {$endif}
 
       mpg123_open_feed := Tmpg123_open_feed(
@@ -1040,9 +1091,14 @@ begin
         GetProcAddress(Mp_Handle, 'mpg123_copy_string'));
       mpg123_add_string := Tmpg123_add_string(
         GetProcAddress(Mp_Handle, 'mpg123_add_string'));
+       mpg123_add_substring := Tmpg123_add_substring(
+        GetProcAddress(Mp_Handle, 'mpg123_add_substring'));
       mpg123_set_string := Tmpg123_set_string(
         GetProcAddress(Mp_Handle, 'mpg123_set_string'));
-      mpg123_meta_check := Tmpg123_meta_check(
+      mpg123_set_substring := Tmpg123_set_substring(
+        GetProcAddress(Mp_Handle, 'mpg123_set_substring'));
+       
+        mpg123_meta_check := Tmpg123_meta_check(
         GetProcAddress(Mp_Handle, 'mpg123_meta_check'));
       mpg123_id3 := Tmpg123_id3(GetProcAddress(Mp_Handle, 'mpg123_id3'));
       mpg123_icy := Tmpg123_icy(GetProcAddress(Mp_Handle, 'mpg123_icy'));

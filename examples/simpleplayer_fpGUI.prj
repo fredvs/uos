@@ -436,7 +436,7 @@ newfosources=2
 newfoforms=2
  
  
-forcezorder=-1
+forcezorder=1
 stripmessageesc=0
 copymessages=0
 closemessages=0
@@ -662,9 +662,9 @@ fontoptions=0
 fontxscales=0
 expandprojectfilemacros=4
  1
- -1
- -1
- -1
+ 255
+ 255
+ 255
 loadprojectfile=4
  1
  0
@@ -939,6 +939,11 @@ units=
   a=0,8196,0,st2bi.pas
   )
   (
+  file=uos.pas
+  kind=1
+  a=0,8196,0,uos.pas
+  )
+  (
   file=uos_bs2b.pas
   kind=1
   a=0,8196,0,uos_bs2b.pas
@@ -968,11 +973,6 @@ units=
   kind=1
   a=0,8196,0,uos_soundtouch.pas
   )
-  (
-  file=uos.pas
-  kind=1
-  a=0,8196,0,uos.pas
-  )
  )
 cmodules=
  (
@@ -983,7 +983,7 @@ files=
  a=0,8229,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/msegui/apps/ide/compstore/
+storedir=/home/fred/mseide-msegui/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -999,8 +999,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=playno
+finddtext=Tmpg123_getformat
 findhistory=20
+ Tmpg123_getformat
  playno
  theinc
  writeou
@@ -1020,14 +1021,13 @@ findhistory=20
  status > 0
  Tuos_Player.play(
  playpaused
- playex(
 findoptions=1
 editpos=5
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
  0,0
- 0,17
- 0,44
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1035,10 +1035,10 @@ bookmarks3=0
 bookmarks4=0
 sourcefiles=5
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/simpleplayer_fpGUI.pas
- /home/fred/uos/examples/uos_flat.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/uos_flat.pas
  /home/fred/uos/examples/uos_libsndfile.pas
- /home/fred/uos/examples/uos_mpg123.pas
+ ${PROJECTDIR}/uos_mpg123.pas
 relpaths=5
  uos.pas
  simpleplayer_fpGUI.pas
@@ -1173,7 +1173,7 @@ windowlayout=561
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1199,7 +1199,7 @@ windowlayout=561
  x=0
  y=0
  cx=205
- cy=520
+ cy=513
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1211,7 +1211,7 @@ windowlayout=561
  sorted=0
  col=0
  row=5
- rowheight=16
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1412,9 +1412,9 @@ windowlayout=561
  ncx=0
  ncy=0
  x=0
- y=585
+ y=577
  cx=1350
- cy=105
+ cy=104
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1514,7 +1514,7 @@ windowlayout=561
  x=0
  y=0
  cx=1350
- cy=59
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1526,11 +1526,11 @@ windowlayout=561
  nx=0
  ny=0
  ncx=1350
- ncy=62
+ ncy=61
  x=0
  y=0
  cx=1350
- cy=62
+ cy=61
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1542,6 +1542,8 @@ windowlayout=561
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos_libsndfile.pas
  history=20
+  /home/fred/uos/examples/uos_libsndfile.pas
+  /home/fred/uos/examples/uos_mpg123.pas
   /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/uos/src/uos.pas
@@ -1560,10 +1562,8 @@ windowlayout=561
   /home/fred/ideu/src/findinfileform.mfm
   /home/fred/ideu/src/messageform.pas
   /home/fred/eschecs/source/eco/eco.pas
-  /home/fred/eschecs/source/messagefrm.pas
-  /home/fred/eschecs_image/source/messagefrm.pas
  [debuggerfo.project_options]
- value=5
+ value=1
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1579,7 +1579,7 @@ windowlayout=561
  x=208
  y=0
  cx=1142
- cy=520
+ cy=513
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1595,7 +1595,7 @@ windowlayout=561
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=threadsfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1622,9 +1622,9 @@ windowlayout=561
  ncx=0
  ncy=0
  x=0
- y=62
+ y=61
  cx=1350
- cy=520
+ cy=513
  rcx=0
  rcy=0
 [targetconsole]
