@@ -359,6 +359,9 @@ type
      *  \param r_lseek The callback for seeking (like posix lseek).
      *  \param cleanup A callback to clean up an I/O handle on mpg123_close, can be NULL for none (you take care of cleaning your handles).  }
 
+Tmpg123_replace_reader = function(mh : Tmpg123_handle;   r_read : pointer;
+    r_lseek : pointer): integer; cdecl;
+
 type
   Tmpg123_getformat2 = function(mh: Tmpg123_handle; var rate: cardinal;
     var channels, encoding: integer; var clear_flag: integer): integer; cdecl;
@@ -367,7 +370,14 @@ type
   Tmpg123_framelength = function(mh: Tmpg123_handle): coff_t; cdecl;
 
 type
+  Tmpg123_spf = function(mh: Tmpg123_handle): integer; cdecl;
+
+type
   Tmpg123_meta_free = procedure(mh: Tmpg123_handle); cdecl;
+
+type
+  Tmpg123_set_index = function(mh: Tmpg123_handle; var offsets: PPInteger;
+    step: coff_t; fill: size_t): integer;
 
  {$endif}
 
@@ -489,7 +499,7 @@ const
 (** Data structure for storing information about a frame of MPEG Audio *)
 type
   pmpg123_frameinfo = ^Tmpg123_frameinfo;
-   Tmpg123_frameinfo = packed record
+   Tmpg123_frameinfo = record
     mpg123_version_version: longword;  (**< The MPEG version (1.0/2.0/2.5). *)
     layer: integer;   (**< The MPEG Audio Layer (MP1/MP2/MP3). *)
     rate: longword;  (**< The sampling rate in Hz. *)
@@ -537,7 +547,7 @@ type
 type
   Pmpg123_string = ^Tmpg123_string;
 
-  Tmpg123_string = packed record
+  Tmpg123_string = record
     p: PChar;   (**< pointer to the string data *)
     size: size_t;  (**< raw number of bytes allocated *)
     fill: size_t;
@@ -608,7 +618,7 @@ type
 type
   Pmpg123_text = ^Tmpg123_text;
 
-  Tmpg123_text = packed record
+  Tmpg123_text = record
     lang: array[0..2] of char;
     (**< Three-letter language code (not terminated). *)
     id: array[0..3] of char;
@@ -652,7 +662,7 @@ type
       PPmpg123_picture = ^Pmpg123_picture;
       Pmpg123_picture = ^Tmpg123_picture;
 
-      Tmpg123_picture = packed record
+      Tmpg123_picture = record
           pictype : char;
           description : Tmpg123_string;
           mime_type : Tmpg123_string;
@@ -666,7 +676,7 @@ type
     PPmpg123_id3v2 = ^Pmpg123_id3v2;
      Pmpg123_id3v2 = ^Tmpg123_id3v2;
 
-  Tmpg123_id3v2 = packed record
+  Tmpg123_id3v2 = record
     Version: byte;            (**< 3 or 4 for ID3v2.3 or ID3v2.4. *)
     Title: Pmpg123_string;
     (**< Title string (pointer into text_list). *)
@@ -703,7 +713,7 @@ type
      PPmpg123_id3v1 = ^Pmpg123_id3v1;
      Pmpg123_id3v1 = ^Tmpg123_id3v1;
 
-  Tmpg123_id3v1 = packed record
+  Tmpg123_id3v1 = record
     tag: array[0..2] of char;
     (**< Always the string "TAG", the classic intro. *)
     title: array[0..29] of char;  (**< Title string.  *)
@@ -745,7 +755,7 @@ const
 type
   Pmpg123_pars = ^Tmpg123_pars;
 
-  Tmpg123_pars = packed record
+  Tmpg123_pars = record
     verbose: integer;   (* verbose level *)
     flags: longword;  (* combination of above *)
     force_rate: longword;
@@ -853,7 +863,9 @@ var
 
  {$IF DEFINED(newversion)}
   mpg123_open_handle: Tmpg123_open_handle;
+  mpg123_replace_reader: Tmpg123_replace_reader;
   mpg123_replace_reader_handle: Tmpg123_replace_reader_handle;
+  mpg123_set_index: Tmpg123_set_index;
   {$endif}
 
   mpg123_open_feed: Tmpg123_open_feed;
@@ -895,6 +907,7 @@ var
   mpg123_framelength: Tmpg123_framelength;
   mpg123_set_filesize: Tmpg123_set_filesize;
   mpg123_tpf: Tmpg123_tpf;
+  mpg123_spf: Tmpg123_spf;
   mpg123_clip: Tmpg123_clip;
   mpg123_getstate: Tmpg123_getstate;
 
@@ -1026,6 +1039,8 @@ begin
 
      {$IF DEFINED(newversion)}
       mpg123_open_handle := Tmpg123_open_handle(GetProcAddress(Mp_Handle, 'mpg123_open_handle'));
+      mpg123_replace_reader := Tmpg123_replace_reader(GetProcAddress(Mp_Handle,
+     'mpg123_replace_reader'));
      mpg123_replace_reader_handle := Tmpg123_replace_reader_handle(GetProcAddress(Mp_Handle,
      'mpg123_replace_reader_handle'));
      mpg123_framebyframe_decode := Tmpg123_framebyframe_decode(
@@ -1044,6 +1059,7 @@ begin
         GetProcAddress(Mp_Handle, 'mpg123_getformat2'));
       mpg123_framelength := Tmpg123_framelength(GetProcAddress(Mp_Handle, 'mpg123_framelength'));
       mpg123_encsize := Tmpg123_encsize(GetProcAddress(Mp_Handle, 'mpg123_encsize'));
+       mpg123_set_index := Tmpg123_set_index(GetProcAddress(Mp_Handle, 'mpg123_set_index'));
      {$endif}
 
       mpg123_open_feed := Tmpg123_open_feed(
@@ -1080,6 +1096,7 @@ begin
       mpg123_scan := Tmpg123_scan(GetProcAddress(Mp_Handle, 'mpg123_scan'));
       mpg123_length := Tmpg123_length(GetProcAddress(Mp_Handle, 'mpg123_length'));
       mpg123_tpf := Tmpg123_tpf(GetProcAddress(Mp_Handle, 'mpg123_tpf'));
+      mpg123_spf := Tmpg123_spf(GetProcAddress(Mp_Handle, 'mpg123_spf'));
       mpg123_clip := Tmpg123_clip(GetProcAddress(Mp_Handle, 'mpg123_clip'));
       mpg123_init_string := Tmpg123_init_string(
         GetProcAddress(Mp_Handle, 'mpg123_init_string'));
