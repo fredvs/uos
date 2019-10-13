@@ -313,8 +313,7 @@ type
   Tmpg123_set_index = function(mh: Tmpg123_handle; var offsets: PPInteger;
     step: coff_t; fill: size_t): integer;
 
-{$if defined(cpu64) and defined(unix)}
- {else}
+{$if not(defined(cpu64) and defined(unix))}
   Tmpg123_open_32 = function(mh: Tmpg123_handle; path: PChar): integer; cdecl;
   Tmpg123_open_fd_32 = function(mh: Tmpg123_handle; fd: integer): integer; cdecl;
   Tmpg123_open_handle_32 = function(mh: Tmpg123_handle; pha: pointer): integer; cdecl;
@@ -348,7 +347,7 @@ type
     r_lseek : pointer): integer; cdecl;
   Tmpg123_replace_reader_handle_32 = function(mh : Tmpg123_handle;   r_read : pointer;
     r_lseek : pointer ; cleanup :  pointer): integer; cdecl;
- {$endif}
+{$endif}
  
 
   Tmpg123_open_64 = function(mh: Tmpg123_handle; path: PChar): integer; cdecl;
@@ -752,13 +751,15 @@ var
   mpg123_open: Tmpg123_open;
   mpg123_open_fd: Tmpg123_open_fd;
 
- {$IF DEFINED(newversion)}
+{$IF DEFINED(newversion)}
+{$if not(defined(cpu64) and defined(unix))}
   mpg123_open_32: Tmpg123_open_32;
-  mpg123_open_64: Tmpg123_open_64;
   mpg123_open_fd_32: Tmpg123_open_fd_32;
+  mpg123_open_handle_32 : Tmpg123_open_handle_32;
+{$ifend}
+  mpg123_open_64: Tmpg123_open_64;
   mpg123_open_fd_64: Tmpg123_open_fd_64;
   mpg123_open_handle: Tmpg123_open_handle;
-  mpg123_open_handle_32 : Tmpg123_open_handle_32;
   mpg123_open_handle_64: Tmpg123_open_handle_64;
   mpg123_replace_reader: Tmpg123_replace_reader;
   mpg123_replace_reader_handle: Tmpg123_replace_reader_handle;
@@ -773,43 +774,45 @@ var
   mpg123_decode_frame: Tmpg123_decode_frame;
   mpg123_framepos: Tmpg123_framepos;
 
-  {$IF DEFINED(newversion)}
+{$IF DEFINED(newversion)}
+  {$if not(defined(cpu64) and defined(unix))}
+  mpg123_decode_frame_32: Tmpg123_decode_frame_32;
+  mpg123_framebyframe_decode_32: Tmpg123_framebyframe_decode_32;
+  mpg123_tell_32: Tmpg123_tell_32;
+  mpg123_framepos_32: Tmpg123_framepos_32;
+  mpg123_tellframe_32: Tmpg123_tellframe_32;
+  mpg123_seek_32: Tmpg123_seek_32;
+  mpg123_seek_frame_32: Tmpg123_seek_frame_32;
+  mpg123_timeframe_32: Tmpg123_timeframe_32;
+  mpg123_index_32: Tmpg123_index_32;
+  mpg123_set_index_32: Tmpg123_set_index_32;
+  mpg123_position_32: Tmpg123_position_32;
+  mpg123_framelength_32: Tmpg123_framelength_32;
+  mpg123_length_32: Tmpg123_length_32;
+  mpg123_set_filesize_32: Tmpg123_set_filesize_32;
+  mpg123_replace_reader_32: Tmpg123_replace_reader_32;
+  mpg123_replace_reader_handle_32: Tmpg123_replace_reader_handle_32;
+  {$ifend}
   mpg123_framebyframe_decode: Tmpg123_framebyframe_decode;
   mpg123_framebyframe_next: Tmpg123_framebyframe_next;
   mpg123_framedata: Tmpg123_framedata;
-  mpg123_decode_frame_32: Tmpg123_decode_frame_32;
   mpg123_decode_frame_64: Tmpg123_decode_frame_64;
-  mpg123_framebyframe_decode_32: Tmpg123_framebyframe_decode_32;
   mpg123_framebyframe_decode_64: Tmpg123_framebyframe_decode_64;
-  mpg123_tell_32: Tmpg123_tell_32;
   mpg123_tell_64: Tmpg123_tell_64;
-  mpg123_framepos_32: Tmpg123_framepos_32;
   mpg123_framepos_64: Tmpg123_framepos_64;
-  mpg123_tellframe_32: Tmpg123_tellframe_32;
   mpg123_tellframe_64: Tmpg123_tellframe_64;
-  mpg123_seek_32: Tmpg123_seek_32;
   mpg123_seek_64: Tmpg123_seek_64;
-  mpg123_seek_frame_32: Tmpg123_seek_frame_32;
   mpg123_seek_frame_64: Tmpg123_seek_frame_64;
-  mpg123_timeframe_32: Tmpg123_timeframe_32;
   mpg123_timeframe_64: Tmpg123_timeframe_64;
-  mpg123_index_32: Tmpg123_index_32;
   mpg123_index_64: Tmpg123_index_64;
-  mpg123_set_index_32: Tmpg123_set_index_32;
   mpg123_set_index_64: Tmpg123_set_index_64;
-  mpg123_position_32: Tmpg123_position_32;
   mpg123_position_64: Tmpg123_position_64;
-  mpg123_framelength_32: Tmpg123_framelength_32;
   mpg123_framelength_64: Tmpg123_framelength_64;
-  mpg123_length_32: Tmpg123_length_32;
   mpg123_length_64: Tmpg123_length_64;
-  mpg123_set_filesize_32: Tmpg123_set_filesize_32;
   mpg123_set_filesize_64: Tmpg123_set_filesize_64;
-  mpg123_replace_reader_32: Tmpg123_replace_reader_32;
   mpg123_replace_reader_64: Tmpg123_replace_reader_64;
-  mpg123_replace_reader_handle_32: Tmpg123_replace_reader_handle_32;  
   mpg123_replace_reader_handle_64: Tmpg123_replace_reader_handle_64;  
-  {$endif}
+{$endif}
 
   mpg123_tell: Tmpg123_tell;
   mpg123_tellframe: Tmpg123_tellframe;
@@ -988,8 +991,7 @@ begin
       mpg123_encsize := Tmpg123_encsize(GetProcAddress(Mp_Handle, 'mpg123_encsize'));
        mpg123_set_index := Tmpg123_set_index(GetProcAddress(Mp_Handle, 'mpg123_set_index'));
 
-      {$if defined(cpu64) and defined(unix)}
-      {else}
+      {$if not(defined(cpu64) and defined(unix))}
       mpg123_open_32 := Tmpg123_open_32(GetProcAddress(Mp_Handle, 'mpg123_open_32'));
       mpg123_open_fd_32 := Tmpg123_open_fd_32(GetProcAddress(Mp_Handle, 'mpg123_open_fd_32'));
       mpg123_open_handle_32 := Tmpg123_open_handle_32(GetProcAddress(Mp_Handle, 'mpg123_open_handle_32'));         
@@ -1009,8 +1011,8 @@ begin
       mpg123_set_filesize_32 := Tmpg123_set_filesize_32(GetProcAddress(Mp_Handle, 'mpg123_set_filesize_32'));
       mpg123_replace_reader_32 := Tmpg123_replace_reader_32(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_32'));
       mpg123_replace_reader_handle_32 := Tmpg123_replace_reader_handle_32(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_handle_32'));
-     
      {$endif}
+
        mpg123_open_64 := Tmpg123_open_64(GetProcAddress(Mp_Handle, 'mpg123_open_64'));
        mpg123_open_fd_64 := Tmpg123_open_fd_64(GetProcAddress(Mp_Handle, 'mpg123_open_fd_64'));
        mpg123_open_handle_64 := Tmpg123_open_handle_64(GetProcAddress(Mp_Handle, 'mpg123_open_handle_64'));         
