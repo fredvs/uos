@@ -760,10 +760,6 @@ var
   mpg123_open_handle: Tmpg123_open_handle;
   mpg123_open_handle_32 : Tmpg123_open_handle_32;
   mpg123_open_handle_64: Tmpg123_open_handle_64;
-  
-  
-
-
   mpg123_replace_reader: Tmpg123_replace_reader;
   mpg123_replace_reader_handle: Tmpg123_replace_reader_handle;
   mpg123_set_index: Tmpg123_set_index;
@@ -994,6 +990,9 @@ begin
 
       {$if defined(cpu64) and defined(unix)}
       {else}
+      mpg123_open_32 := Tmpg123_open_32(GetProcAddress(Mp_Handle, 'mpg123_open_32'));
+      mpg123_open_fd_32 := Tmpg123_open_fd_32(GetProcAddress(Mp_Handle, 'mpg123_open_fd_32'));
+      mpg123_open_handle_32 := Tmpg123_open_handle_32(GetProcAddress(Mp_Handle, 'mpg123_open_handle_32'));         
       mpg123_decode_frame_32 := Tmpg123_decode_frame_32(GetProcAddress(Mp_Handle, 'mpg123_decode_frame_32'));
       mpg123_framebyframe_decode_32 := Tmpg123_framebyframe_decode_32(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode_32'));
       mpg123_tell_32 := Tmpg123_tell_32(GetProcAddress(Mp_Handle, 'mpg123_tell_32'));
@@ -1012,6 +1011,9 @@ begin
       mpg123_replace_reader_handle_32 := Tmpg123_replace_reader_handle_32(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_handle_32'));
      
      {$endif}
+       mpg123_open_64 := Tmpg123_open_64(GetProcAddress(Mp_Handle, 'mpg123_open_64'));
+       mpg123_open_fd_64 := Tmpg123_open_fd_64(GetProcAddress(Mp_Handle, 'mpg123_open_fd_64'));
+       mpg123_open_handle_64 := Tmpg123_open_handle_64(GetProcAddress(Mp_Handle, 'mpg123_open_handle_64'));         
        mpg123_decode_frame_64 := Tmpg123_decode_frame_64(GetProcAddress(Mp_Handle, 'mpg123_decode_frame_64'));
        mpg123_framebyframe_decode_64 := Tmpg123_framebyframe_decode_64(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode_64'));
        mpg123_tell_64 := Tmpg123_tell_64(GetProcAddress(Mp_Handle, 'mpg123_tell_64'));
