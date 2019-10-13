@@ -11,7 +11,6 @@ interface
 
 {$DEFINE newversion}   // uncomment for mpg123 new version
 {$mode objfpc}{$H+}
-{$LONGSTRINGS ON}
 
 uses
  ctypes, 
