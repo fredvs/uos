@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '5.9'
+  LCLVersion = '2.0.6.0'
   object Edit1: TEdit
     Left = 320
     Height = 27
@@ -174,7 +174,9 @@ object Form1: TForm1
     Top = 134
     Width = 483
     Caption = 'Load that libraries'
+    Font.Height = 12
     OnClick = Button1Click
+    ParentFont = False
     TabOrder = 2
   end
   object Button3: TButton
@@ -183,7 +185,9 @@ object Form1: TForm1
     Top = 171
     Width = 136
     Caption = 'Design Wave Form'
+    Font.Height = 12
     OnClick = Button3Click
+    ParentFont = False
     TabOrder = 1
   end
   object Button2: TButton
@@ -192,7 +196,9 @@ object Form1: TForm1
     Top = 171
     Width = 66
     Caption = 'Choose'
+    Font.Height = 12
     OnClick = Button2Click
+    ParentFont = False
     TabOrder = 6
   end
   object PaintBox2: TPaintBox
@@ -218,7 +224,9 @@ object Form1: TForm1
     Top = 171
     Width = 75
     Caption = 'Play'
+    Font.Height = 12
     OnClick = Button4Click
+    ParentFont = False
     TabOrder = 8
   end
   object Button5: TButton
@@ -228,7 +236,9 @@ object Form1: TForm1
     Width = 75
     Caption = 'Stop'
     Enabled = False
+    Font.Height = 12
     OnClick = Button5Click
+    ParentFont = False
     TabOrder = 9
   end
   object OpenDialog1: TOpenDialog

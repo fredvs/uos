@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <General>
       <MainUnit Value="0"/>
       <Title Value="SimpleWebPlayer"/>
@@ -114,13 +114,12 @@ install:
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
-      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
-      <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -131,7 +130,7 @@ install:
       <Unit0>
         <Filename Value="simplewebplayer.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="8"/>
         <WindowIndex Value="1"/>
         <CursorPos Y="4"/>
         <UsageCount Value="200"/>
@@ -400,7 +399,7 @@ install:
       </Unit44>
       <Unit45>
         <Filename Value="simplewebplayer_fpGUI.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="2"/>
         <WindowIndex Value="1"/>
         <TopLine Value="332"/>
         <CursorPos X="50" Y="348"/>
@@ -430,7 +429,7 @@ install:
       </Unit49>
       <Unit50>
         <Filename Value="uos_flat.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
         <TopLine Value="129"/>
         <CursorPos X="10" Y="149"/>
@@ -465,7 +464,7 @@ install:
       <Unit54>
         <Filename Value="uos_httpgetthread.pas"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
         <TopLine Value="21"/>
         <CursorPos X="15" Y="36"/>
@@ -498,7 +497,7 @@ install:
       </Unit57>
       <Unit58>
         <Filename Value="conswebstream.pas"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
         <TopLine Value="77"/>
         <CursorPos X="3" Y="85"/>
@@ -507,37 +506,35 @@ install:
       </Unit58>
       <Unit59>
         <Filename Value="../../opusfile-0.7/include/opusfile.pas"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit59>
       <Unit60>
         <Filename Value="../../opus-1.1.3/include/opus.h"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <CursorPos Y="154"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="C++"/>
       </Unit60>
       <Unit61>
         <Filename Value="/usr/local/codetyphon/fpcsrc/packages/fcl-web/src/base/fphttpclient.pp"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="7"/>
         <WindowIndex Value="1"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit61>
       <Unit62>
         <Filename Value="/usr/local/codetyphon/fpcsrc/packages/fcl-web/src/base/fphttpserver.pp"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
         <TopLine Value="32"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit62>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="27" HistoryIndex="26">
       <Position1>
         <Filename Value="uos.pas"/>
         <Caret Line="3141" Column="15" TopLine="3134"/>
@@ -639,23 +636,13 @@ install:
         <Caret Line="289" Column="5" TopLine="269"/>
       </Position25>
       <Position26>
-        <Filename Value="../../opusfile-0.7/include/opusfile.pas"/>
-      </Position26>
-      <Position27>
-        <Filename Value="../../opus-1.1.3/include/opus.h"/>
-      </Position27>
-      <Position28>
-        <Filename Value="../../opus-1.1.3/include/opus.h"/>
-        <Caret Line="154"/>
-      </Position28>
-      <Position29>
         <Filename Value="uos.pas"/>
         <Caret Line="1063" Column="31"/>
-      </Position29>
-      <Position30>
+      </Position26>
+      <Position27>
         <Filename Value="uos_httpgetthread.pas"/>
         <Caret Line="36" Column="29" TopLine="21"/>
-      </Position30>
+      </Position27>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

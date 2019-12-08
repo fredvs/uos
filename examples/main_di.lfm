@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '5.9'
+  LCLVersion = '2.0.6.0'
   object Shape1: TShape
     Left = 10
     Height = 192
@@ -132,13 +132,16 @@ object Form1: TForm1
     TabOrder = 0
   end
   object StringGrid1: TStringGrid
-    Left = 20
+    Left = 18
     Height = 164
     Top = 164
     Width = 550
     ColCount = 13
     FixedCols = 0
+    Font.Height = 12
+    ParentFont = False
     TabOrder = 2
+    TitleFont.Height = 12
     ColWidths = (
       36
       262
@@ -212,7 +215,9 @@ object Form1: TForm1
     Top = 356
     Width = 118
     Caption = 'Device Count =  99'
+    Font.Height = 12
     ParentColor = False
+    ParentFont = False
   end
   object Label3: TLabel
     Left = 152
@@ -220,7 +225,9 @@ object Form1: TForm1
     Top = 356
     Width = 146
     Caption = 'Default Device  IN =  99'
+    Font.Height = 12
     ParentColor = False
+    ParentFont = False
   end
   object Label4: TLabel
     Left = 320
@@ -228,6 +235,8 @@ object Form1: TForm1
     Top = 356
     Width = 158
     Caption = 'Default Device OUT  =  99'
+    Font.Height = 12
     ParentColor = False
+    ParentFont = False
   end
 end

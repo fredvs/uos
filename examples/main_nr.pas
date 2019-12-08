@@ -130,17 +130,17 @@ begin
   {$if defined(cpu64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so'; 
-   Edit4.Text := opath + 'sound/noisyvoice.ogg';
+   Edit4.Text := ordir + 'sound/noisyvoice.ogg';
   {$ENDIF}
  {$if defined(cpu86) and defined(linux)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
-   Edit4.Text := opath + 'sound/noisyvoice.ogg';
+   Edit4.Text := ordir + 'sound/noisyvoice.ogg';
   {$ENDIF}
    {$if defined(linux) and defined(cpuarm)}
   Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit2.Text := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
-   Edit4.Text := opath + 'sound/noisyvoice.ogg';
+   Edit4.Text := ordir + 'sound/noisyvoice.ogg';
   {$ENDIF}
 
   opendialog1.Initialdir := application.Location + 'sound';
@@ -244,10 +244,10 @@ var
   
   {$if defined(cpuarm)} // needs lower latency
        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-    uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
+    uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1,-1);
        {$else}
      OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-    uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1);
+    uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1,-1);
        {$endif}
   
   //// add a Output into device with custom parameters

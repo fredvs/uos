@@ -6,7 +6,7 @@ unit main_sr;
 interface
 
 uses
-  uos_flat, Forms, Dialogs, SysUtils, Graphics,
+  uos_flat, ctypes, Forms, Dialogs, SysUtils, Graphics,
   StdCtrls, ComCtrls, ExtCtrls, Classes, Controls;
 
 type
