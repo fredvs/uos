@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '5.9'
+  LCLVersion = '2.0.6.0'
   object Edit1: TEdit
     Left = 130
     Height = 27
@@ -157,6 +157,7 @@ object Form1: TForm1
     Height = 105
     Top = 145
     Width = 105
+    OnClick = PaintBox1Click
     OnPaint = PaintBox1Paint
   end
   object Button1: TButton
@@ -303,16 +304,16 @@ object Form1: TForm1
     end
     object CheckBox1: TCheckBox
       Left = 122
-      Height = 22
+      Height = 21
       Top = 138
-      Width = 98
+      Width = 122
       Caption = 'Play Reverse'
       OnChange = CheckBox1Change
       TabOrder = 1
     end
     object TrackBar2: TTrackBar
       Left = 120
-      Height = 35
+      Height = 36
       Top = 35
       Width = 355
       Max = 100
@@ -423,16 +424,16 @@ object Form1: TForm1
       ChildSizing.ShrinkVertical = crsScaleChilds
       ChildSizing.Layout = cclLeftToRightThenTopToBottom
       ChildSizing.ControlsPerLine = 1
-      ClientHeight = 62
-      ClientWidth = 105
+      ClientHeight = 57
+      ClientWidth = 103
       Color = clMoneyGreen
       ParentColor = False
       TabOrder = 9
       object RadioButton1: TRadioButton
         Left = 6
-        Height = 16
+        Height = 15
         Top = 6
-        Width = 93
+        Width = 91
         Caption = 'Float 32 bit'
         Checked = True
         Color = clMoneyGreen
@@ -442,9 +443,9 @@ object Form1: TForm1
       end
       object RadioButton2: TRadioButton
         Left = 6
-        Height = 17
-        Top = 22
-        Width = 93
+        Height = 15
+        Top = 21
+        Width = 91
         Caption = 'Int 32 bit'
         Color = clMoneyGreen
         ParentColor = False
@@ -452,9 +453,9 @@ object Form1: TForm1
       end
       object RadioButton3: TRadioButton
         Left = 6
-        Height = 17
-        Top = 39
-        Width = 93
+        Height = 15
+        Top = 36
+        Width = 91
         Caption = 'Int 16 bit'
         Color = clMoneyGreen
         ParentColor = False
@@ -463,25 +464,25 @@ object Form1: TForm1
     end
     object llength: TLabel
       Left = 304
-      Height = 15
+      Height = 19
       Top = 75
-      Width = 84
+      Width = 105
       Caption = '00:00:00.000'
       ParentColor = False
     end
     object lposition: TLabel
       Left = 200
-      Height = 15
+      Height = 19
       Top = 75
-      Width = 84
+      Width = 105
       Caption = '00:00:00.000'
       ParentColor = False
     end
     object Label8: TLabel
       Left = 294
-      Height = 15
+      Height = 19
       Top = 75
-      Width = 4
+      Width = 5
       Caption = '/'
       ParentColor = False
     end
@@ -501,9 +502,9 @@ object Form1: TForm1
     end
     object CheckBox2: TCheckBox
       Left = 266
-      Height = 22
+      Height = 21
       Top = 94
-      Width = 184
+      Width = 228
       Caption = 'Enable SoundTouch Plugin'
       OnChange = ChangePlugSet
       TabOrder = 10
@@ -519,17 +520,17 @@ object Form1: TForm1
     end
     object Label7: TLabel
       Left = 270
-      Height = 15
+      Height = 19
       Top = 121
-      Width = 67
+      Width = 88
       Caption = 'Tempo: 1.0'
       ParentColor = False
     end
     object Label9: TLabel
       Left = 382
-      Height = 15
+      Height = 19
       Top = 120
-      Width = 58
+      Width = 74
       Caption = 'Pitch: 1.0'
       ParentColor = False
     end
@@ -561,18 +562,18 @@ object Form1: TForm1
     end
     object CheckBox3: TCheckBox
       Left = 122
-      Height = 22
+      Height = 21
       Top = 96
-      Width = 133
+      Width = 166
       Caption = 'Stereo to BinAural'
       OnChange = CheckBox3Change
       TabOrder = 14
     end
     object Chknoise: TCheckBox
       Left = 122
-      Height = 22
+      Height = 21
       Top = 160
-      Width = 112
+      Width = 141
       Caption = 'Noise Remover'
       OnChange = ChknoiseChange
       TabOrder = 15
@@ -580,9 +581,9 @@ object Form1: TForm1
     end
     object chkstereo2mono: TCheckBox
       Left = 122
-      Height = 22
+      Height = 21
       Top = 116
-      Width = 115
+      Width = 143
       Caption = 'Stereo to Mono'
       OnChange = chkstereo2monoChange
       TabOrder = 16

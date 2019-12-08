@@ -13,7 +13,7 @@ uses
   main_sp { you can add units after this };
 
 begin
-  Application.Title := 'SimplePlayer';
+  Application.Title:='SimplePlayer';
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.Run;

@@ -79,6 +79,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure PaintBox1Click(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure Panel1Click(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
@@ -773,6 +774,11 @@ begin
     uos_free;
     BufferBMP.free;
   end;
+
+procedure TForm1.PaintBox1Click(Sender: TObject);
+begin
+
+end;
 
 
 
