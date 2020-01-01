@@ -1,4 +1,4 @@
-![alt text](https://user-images.githubusercontent.com/3421249/68167507-fe9d1d00-ff65-11e9-9f1f-686fdcabdd5a.jpg)
+![uos2](https://user-images.githubusercontent.com/3421249/71642761-b32a9500-2cb0-11ea-9acb-706ef5ddb244.png)
 
 # uos : United OpenLib of Sound.
 
