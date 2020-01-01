@@ -26,8 +26,11 @@ With uos you can:
 uos can use: PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile
 audio libraries and SoundTouch, Bs2b audio-effect libraries.
 
-Included in the package: . Examples fpGUI, MSEgui, LCL and console. .
-Binaries of libraries for Linux, arm-Rapsberry Pi, Windows, Mac osX,
+Included in the package:
+
+. Examples fpGUI, MSEgui, LCL and console.
+
+. Binaries of libraries for Linux, arm-Rapsberry Pi, Windows, Mac osX,
 FreeBSD.
 
 See you at uos forum: http://uos.2369694.n4.nabble.com
