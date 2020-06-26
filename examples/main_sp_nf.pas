@@ -392,7 +392,7 @@ begin
     radiogroup1.Enabled := False;
 
     {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
-    PlayerIndex1 := Tuos_Player.Create(true);
+    PlayerIndex1 := Tuos_Player.Create();
      {$else}
     PlayerIndex1 := Tuos_Player.Create(true,self);
     {$endif}
@@ -415,16 +415,17 @@ begin
       // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
 
-    OutputIndex1 := PlayerIndex1.AddIntoDevOut(-1, -1, PlayerIndex1.StreamIn[InputIndex1].Data.SampleRate, -1, samformat, -1);
-    //// add a Output into device with custom parameters
-    //////////// PlayerIndex : Index of a existing Player
-    //////////// Device ( -1 is default Output device )
-    //////////// Latency  ( -1 is latency suggested ) )
-    //////////// SampleRate : delault : -1 (44100)   /// here default samplerate of input
-    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-    //////////// FramesCount : default : -1 (65536)
-    //  result : -1 nothing created, otherwise Output Index in array
+    OutputIndex1 := PlayerIndex1.AddIntoDevOut(-1, -1, PlayerIndex1.StreamIn[InputIndex1].Data.SampleRate, -1, samformat, -1, -1);
+   // Add a Output into Device Output
+// Device ( -1 is default device )
+// Latency  ( -1 is latency suggested )
+// SampleRate : delault : -1 (44100)
+// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+// FramesCount : default : -1 (= 65536)
+// ChunkCount : default : -1 (= 512)
+//  result :  Output Index in array  -1 = error
+// example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
 
   //  PlayerIndex1.StreamIn[In1Index].Data.levelEnable:=2 ;
     PlayerIndex1.InputSetLevelEnable(InputIndex1, 2) ;
@@ -653,7 +654,7 @@ begin
  ShowLevel ;
 end;
 //{
-function DSPReverseBefore(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+function DSPReverseBefore(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
 begin
   if Data.position > Data.OutFrames div Data.ratio then
     PlayerIndex1.InputSeek(InputIndex1, Data.position - (Data.OutFrames div (Data.Ratio)));
@@ -675,7 +676,7 @@ begin
 end;
 //}
 
-function DSPStereo2Mono(Data: Tuos_Data; fft: Tuos_FFT): TDArFloat;
+function DSPStereo2Mono(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
 var
   x: integer = 0;
   ps: PDArShort;     //////// if input is Int16 format
