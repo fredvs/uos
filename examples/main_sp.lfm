@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 267
+  Left = 159
   Height = 373
-  Top = 72
+  Top = 198
   Width = 499
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'

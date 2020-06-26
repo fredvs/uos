@@ -556,7 +556,7 @@ begin
   if radiogroup1.Enabled = False then   /// player1 was created
   begin
    PlayerIndex1.SetPluginbs2b(PluginIndex1, -1, -1, -1, checkbox3.checked);
-    end;
+  end;
 end;
 
 procedure TForm1.chkstereo2monoChange(Sender: TObject);
