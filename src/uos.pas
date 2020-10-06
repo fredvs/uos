@@ -7342,9 +7342,9 @@ begin
 
  {$IF not DEFINED(Library)}
   if EndProc <> nil then
-  // thethread.synchronize(thethread,EndProc);//  Execute EndProc procedure
+   thethread.synchronize(thethread,EndProc);//  Execute EndProc procedure
 
- thethread.queue(thethread,EndProc);//  Execute EndProc procedure
+   //thethread.queue(thethread,EndProc);//  Execute EndProc procedure
 
   {$elseif not DEFINED(java)}
   if (EndProc <> nil) then
