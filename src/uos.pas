@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2181218;
+  uos_version : cint32 = 2201106;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -364,9 +364,9 @@ type
   LevelLeft, LevelRight: cfloat;
   levelArrayEnable : integer;
   
-  lensine: cfloat;
-   
-  freqsine: cfloat;
+  typLsine, typRsine: cint32;
+  lenLsine, lenRsine: cfloat;
+  freqLsine, freqRsine: cfloat;
   dursine, posdursine: cint32;
   posLsine, posRsine: cint32;
   
@@ -698,7 +698,7 @@ type
   
   Procedure FreePlayer() ;// Free the player: works only when PlayNoFree() was called.
 
-  {$IF DEFINED(portaudio)}
+ {$IF DEFINED(portaudio)}
   function AddIntoDevOut(Device: cint32; Latency: CDouble;
   SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; ChunkCount: cint32 ): cint32;
 // Add a Output into Device Output
@@ -710,9 +710,8 @@ type
 // FramesCount : default : -1 (= 65536)
 // ChunkCount : default : -1 (= 512)
 //  result :  Output Index in array  -1 = error
-// example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);
-  
- {$endif}
+// example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);  
+{$endif}
 
   function AddIntoFile(Filename: PChar; SampleRate: cint32;
   Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
@@ -777,7 +776,7 @@ type
 //  result :  Output Index in array  -1 = error
  {$endif}
 
- {$IF DEFINED(portaudio)}
+{$IF DEFINED(portaudio)}
   function AddFromDevIn(Device: cint32; Latency: CDouble;
   SampleRate: cint32; OutputIndex: cint32;
   SampleFormat: cint32; FramesCount : cint32 ; ChunkCount: cint32): cint32;
@@ -799,26 +798,37 @@ function AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
 // Channels = Channels of input-to-follow.
 
 {$IF DEFINED(synthesizer)}
-function AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; Duration: cint32; OutputIndex: cint32;
-  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
+function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: integer;
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; 
+ OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
-// Frequency : default : -1 (440 htz)
+// Channels : default : -1 (2) (1 = mono, 2 = stereo)
+// WaveTypeL : default : -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
+// WaveTypeR : default : -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// FrequencyL : default : -1 (440 htz) (Left frequency, used for mono)
+// FrequencyR : default : -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
-// VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth
+// VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
 // SampleRate : delault : -1 (44100)
 // FramesCount : -1 default : 1024
-//  result :  Input Index in array  -1 = error
-// example : InputIndex1 := AddFromSynth(880,-1,-1,-1,-1,-1,-1, -1);
+// example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
   
-procedure InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;  Duration: cint32; Enable : boolean);
-// Frequency : in Hertz (-1 = do not change)
-// VolumeL :  from 0 to 1 (-1 = do not change)
-// VolumeR :  from 0 to 1 (-1 = do not change)
+procedure InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; Enable: boolean);
+// InputIndex: one existing input index   
+// WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
+// WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// FrequencyL : do not change: -1 (Left frequency, used for mono)
+// FrequencyR : do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
+// VolumeL : do not change: -1 (= 1) (from 0 to 1) => volume left
+// VolumeR : do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : in msec (-1 = do not change)
 // Enable : true or false ;
+
+ 
 {$endif}
 
 function AddFromFile(Filename: Pchar; OutputIndex: cint32;
@@ -4364,19 +4374,23 @@ begin
 end;
 
 {$IF DEFINED(synthesizer)}
-function Tuos_Player.AddFromSynth(Frequency: float; VolumeL: float; VolumeR: float; duration : cint32; OutputIndex: cint32;
-  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
+function Tuos_Player.AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: integer;
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; 
+ OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
-// Frequency : default : -1 (440 htz)
+// Channels : default : -1 (2) (1 = mono, 2 = stereo)
+// WaveTypeL : default : -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
+// WaveTypeR : default : -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// FrequencyL : default : -1 (440 htz) (Left frequency, used for mono)
+// FrequencyR : default : -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
-// VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth
+// VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
 // SampleRate : delault : -1 (44100)
 // FramesCount : -1 default : 1024
 //  result :  Input Index in array  -1 = error
-// example : InputIndex1 := AddFromSynth(880,-1,-1,-1,-1,-1,-1);
  
 var
   x : cint32;
@@ -4392,7 +4406,9 @@ begin
   StreamIn[x].Data.PositionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
 
-  StreamIn[x].data.channels := 2;
+  if channels < 1 then
+  StreamIn[x].data.channels := 2 else
+  StreamIn[x].data.channels := channels;
   
   if SampleRate = -1 then
   StreamIn[x].Data.SampleRate := DefRate
@@ -4402,11 +4418,25 @@ begin
   if FramesCount = -1 then  StreamIn[x].Data.Wantframes :=  1024 else
   StreamIn[x].Data.Wantframes := FramesCount ;
  
-  if Frequency = -1 then 
-  StreamIn[x].Data.freqsine := 440  else
-  StreamIn[x].Data.freqsine := Frequency ;
+  if FrequencyL = -1 then 
+  StreamIn[x].Data.freqLsine := 440  else
+  StreamIn[x].Data.freqLsine := FrequencyL ;
+  
+  if FrequencyR = -1 then 
+  StreamIn[x].Data.freqRsine := 440  else
+  StreamIn[x].Data.freqRsine := FrequencyR ;
+  
+  if WaveTypeL < 1 then 
+  StreamIn[x].Data.typLsine := 0 else
+  StreamIn[x].Data.typLsine := 1;
+  
+  if WaveTypeR < 1 then 
+  StreamIn[x].Data.typRsine := 0 else
+  StreamIn[x].Data.typRsine := 1;
 
-  StreamIn[x].Data.lensine := StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqsine*2 ;
+  StreamIn[x].Data.lenLsine := StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqLsine*2 ;
+  
+  StreamIn[x].Data.lenRsine := StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqRsine*2 ;
 
   StreamIn[x].Data.posLsine := 0 ;
   StreamIn[x].Data.posRsine := 0 ;
@@ -4442,22 +4472,39 @@ begin
   Result := x;
 end;
 
-procedure Tuos_Player.InputSetSynth(InputIndex: cint32; Frequency: float; VolumeL: float; VolumeR: float;  Duration: cint32; Enable : boolean);
-// Frequency : in Hertz (-1 = do not change)
-// VolumeL :  from 0 to 1 (-1 = do not change)
-// VolumeR :  from 0 to 1 (-1 = do not change)
+procedure Tuos_Player.InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; Enable: boolean); 
+// InputIndex one existing input index
+// InputIndex: one existing input index   
+// WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
+// WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// FrequencyL : do not change: -1 (Left frequency, used for mono)
+// FrequencyR : do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
+// VolumeL : do not change: -1 (= 1) (from 0 to 1) => volume left
+// VolumeR : do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : in msec (-1 = do not change)
 // Enable : true or false ;
 
 begin
- if Frequency <> -1 then
- begin
  StreamIn[InputIndex].Data.Enabled := Enable;
- StreamIn[InputIndex].Data.freqsine := Frequency ;
- StreamIn[InputIndex].Data.lensine := (StreamIn[InputIndex].Data.SampleRate / Frequency*2) ;
- end;
- if VolumeL <> -1 then StreamIn[InputIndex].Data.VLeft := VolumeL;
   
+ if WaveTypeL <> -1 then StreamIn[InputIndex].Data.typLsine := WaveTypeL;
+  
+ if WaveTypeR <> -1 then StreamIn[InputIndex].Data.typRsine := WaveTypeR;
+ 
+ if FrequencyL <> -1 then
+ begin
+ StreamIn[InputIndex].Data.freqLsine := FrequencyL ;
+ StreamIn[InputIndex].Data.lenLsine := (StreamIn[InputIndex].Data.SampleRate / FrequencyL*2) ;
+ end;
+ 
+  if FrequencyR <> -1 then
+ begin
+ StreamIn[InputIndex].Data.freqRsine := FrequencyR ;
+ StreamIn[InputIndex].Data.lenRsine := (StreamIn[InputIndex].Data.SampleRate / FrequencyR*2) ;
+ end;
+ 
+ if VolumeL <> -1 then StreamIn[InputIndex].Data.VLeft := VolumeL;
  if VolumeR <> -1 then StreamIn[InputIndex].Data.Vright := VolumeR;
  
  if Duration <> -1 then  StreamIn[InputIndex].Data.dursine := trunc( StreamIn[InputIndex].Data.SampleRate * duration / 1000);  
@@ -6917,8 +6964,25 @@ pf: PDArFloat;// if input is Float32 format
 
   if StreamIn[x].Data.Channels = 2 then
   begin
-  sf1 := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat((x2 div 2)+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
-  sf2 := StreamIn[x].Data.VRight * CFloat((Sin( ( CFloat((x2 div 2) + StreamIn[x].Data.posRsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+  
+ if StreamIn[x].Data.typLsine < 1 then
+ sf1 := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat((x2 div 2)+
+  StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lenLsine) ) * Pi * 2 )))
+  else 
+  begin
+   if StreamIn[x].Data.posLsine < round(StreamIn[x].Data.lenLsine / 2) then
+   sf1 := StreamIn[x].Data.VLeft * +1 else sf1 := StreamIn[x].Data.VLeft * -1;
+  end;
+  
+ if StreamIn[x].Data.typRsine < 1 then
+   sf2 := StreamIn[x].Data.VRight * CFloat((Sin( ( CFloat((x2 div 2) +
+   StreamIn[x].Data.posRsine)/CFloat( StreamIn[x].Data.lenRsine) ) * Pi * 2 )))
+  else 
+  begin
+   if StreamIn[x].Data.posRsine < round(StreamIn[x].Data.lenRsine / 2) then 
+   sf2 := StreamIn[x].Data.VRight * +1 else sf2 := StreamIn[x].Data.VRight * -1;
+   end; 
+
   case StreamIn[x].Data.SampleFormat of
   2:// int16
   begin
@@ -6936,11 +7000,11 @@ pf: PDArFloat;// if input is Float32 format
   pf^[x2+1] := sf2 ;
   end;
   end;  
-   if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine -1 then
+   if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lenLsine -1 then
   StreamIn[x].Data.posLsine := 0 else
   StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
 
-  if StreamIn[x].Data.posRsine +1 > StreamIn[x].Data.lensine -1 then
+  if StreamIn[x].Data.posRsine +1 > StreamIn[x].Data.lenRsine -1 then
   StreamIn[x].Data.posRsine := 0 else
   StreamIn[x].Data.posRsine := StreamIn[x].Data.posRsine +1 ;
 
@@ -6949,7 +7013,14 @@ pf: PDArFloat;// if input is Float32 format
 
   if StreamIn[x].Data.Channels = 1 then
   begin
-   sf1 := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2+ StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lensine) ) * Pi * 2 )));
+   if StreamIn[x].Data.typLsine < 1 then
+   sf1 := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2+ 
+   StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lenLsine) ) * Pi * 2 )))
+   else 
+   begin
+   if StreamIn[x].Data.posLsine < round(StreamIn[x].Data.lenLsine / 2) then
+   sf1 := StreamIn[x].Data.VLeft * +1 else sf1 := StreamIn[x].Data.VLeft * -1;
+   end;
   case StreamIn[x].Data.SampleFormat of
   2:// int16
   begin
@@ -6965,7 +7036,7 @@ pf: PDArFloat;// if input is Float32 format
   end;
   end;  
   
-  if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lensine - 1  then
+  if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lenLsine - 1  then
   StreamIn[x].Data.posLsine := 0 else
   StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
 
@@ -9424,8 +9495,11 @@ begin
 
 //----------------------------//
   SampleRate:= 44100;
-  freqsine:= 440;
-  lensine:= SampleRate / freqsine *2;
+  freqLsine:= 440;
+  freqRsine:= freqLsine;
+  lenLsine:= SampleRate / freqLsine *2;
+  lenRsine:= lenLsine;
+  
   dursine:= SampleRate;
   posdursine:= 0;
   posLsine:= 0;
