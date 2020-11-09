@@ -797,55 +797,26 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=addfromsyn
-findhistory=20
- addfromsyn
- AddFromSynth
- NbHarmony
- harmony
- inputsetsyn
- posLsine
- cLookupTableSize
- LookupTable
- ReadSynth
- lenLsine
- synth
- inputsetsy
- lenrsine
- lensine
- posdursine
- freqsine
- synt
- TypeLibrary
- pcaudio
- loadlib
+finddtext=LookupTableLeft
+findhistory=1
+ LookupTableLeft
 findoptions=1
-editpos=5
- 0,-1073741823
- 0,7095
- 0,-1073741823
- 0,424
- 0,169
+editpos=3
+ 0,170
+ 0,7120
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-sourcefiles=5
+sourcefiles=3
  ${PROJECTDIR}/consolesynth.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/consolesynth.pas
-relpaths=5
+relpaths=3
  consolesynth.pas
  uos.pas
  uos_flat.pas
- uos_flat.pas
- consolesynth.pas
-ismoduletexts=5
- 0
- 0
+ismoduletexts=3
  0
  0
  0
@@ -854,16 +825,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=5
- 0
- 1
- 3
- 4
- 2
 firsttab=0
 index=1
 [layout]
-windowlayout=579
+windowlayout=573
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -997,7 +962,7 @@ windowlayout=579
  x=0
  y=0
  cx=205
- cy=481
+ cy=482
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1295,7 +1260,7 @@ windowlayout=579
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1326,7 +1291,7 @@ windowlayout=579
  x=0
  y=0
  cx=1356
- cy=51
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1337,12 +1302,12 @@ windowlayout=579
  mdistate=0
  nx=0
  ny=0
- ncx=1341
- ncy=50
+ ncx=1356
+ ncy=45
  x=0
  y=0
  cx=1356
- cy=49
+ cy=45
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1354,8 +1319,12 @@ windowlayout=579
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos.pas
  history=20
-  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consolesynth.pas
+  /home/fred/strumpract/src/dockpanel1.pas
+  /home/fred/alsa_sound/src/alsa_sound.pas
+  /home/fred/alsa_sound/README.md
+  /home/fred/mseide-msegui/apps/ide/main.pas
+  /home/fred/mseide-msegui/msegui.svg
   /home/fred/strumpract/src/guitars.pas
   /home/fred/strumpract/src/config.pas
   /home/fred/uos/examples/deviceinfos_fpGUI.pas
@@ -1370,10 +1339,6 @@ windowlayout=579
   /home/fred/roland/fontdata.inc
   /home/fred/roland/graph.inc
   /home/fred/roland/graphh.inc
-  /home/fred/freepascal-ootb_322/packages/graph/src/inc/graphh.inc
-  /home/fred/freepascal-ootb_322/packages/graph/src/inc/graph.inc
-  /home/fred/freepascal-ootb_322/packages/graph/src/inc/fontdata.inc
-  /home/fred/freepascal-ootb_322/packages/graph/src/ptcgraph/ptcgraph.pp
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1391,16 +1356,10 @@ windowlayout=579
  x=208
  y=0
  cx=1148
- cy=481
+ cy=482
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=5
-  0
-  1
-  3
-  4
-  2
  firsttab=0
  index=1
  [confideufo.fontname]
@@ -1438,9 +1397,9 @@ windowlayout=579
  ncx=0
  ncy=0
  x=0
- y=54
+ y=53
  cx=1356
- cy=481
+ cy=482
  rcx=0
  rcy=0
 [targetconsole]

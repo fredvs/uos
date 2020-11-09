@@ -100,7 +100,8 @@ var
 
       if uos_CreatePlayer(PlayerIndex1) then
 
-        inindex1 := uos_AddFromSynth(PlayerIndex1, -1, -1, -1, 420, 420, -1, -1, -1, -1, 0, -1, -1, -1);
+        inindex1 := uos_AddFromSynth(PlayerIndex1, -1, -1, -1, 420, 420, -1, -1,
+         -1, -1, 0, -1, -1, 1024 );
 
       // function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, WaveTypeR: integer;
       // FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; NbHarmonic: cint32;
@@ -139,7 +140,7 @@ var
 
         sleep(150);
 
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 880, 880, -1, -1, 0, 2, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 880, 880, -1, -1, 0, 0, True);
 
         // procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
         // FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32;
@@ -159,23 +160,23 @@ var
 
         sleep(175);
 
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 610, 610 * 0.99, -1, -1, -1, 1, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 610, 610 * 0.99, -1, -1, -1, 0, True);
 
         sleep(300);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la1, la1 * 0.99, -1, -1, -1, 2, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 0.99, -1, -1, -1, 1, True);
 
         sleep(150);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 440, 440 * 0.99, -1, -1, -1, 0, True);
+         uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 420, 420 * 0.99, -1, -1, -1, 2, True);
 
         sleep(300);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 320, 320 * 0.99, -1, -1, -1, 0, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 320, 320 * 0.99, -1, -1, -1, 2, True);
 
         sleep(150);
         uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 660, 660 * 0.99, -1, -1, -1, 1, True);
 
         sleep(300);
 
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 0.99, -1, -1, -1, 2, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 0.99, -1, -1, -1, 4, True);
 
         sleep(2000);
 
