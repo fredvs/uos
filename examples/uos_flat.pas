@@ -391,7 +391,7 @@ function uos_AddFromEndlessMuted(PlayerIndex: cint32; Channels : cint32; FramesC
  
 {$IF DEFINED(synthesizer)}
 function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; 
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; NbHarmonic: cint32;
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels : default : -1 (2) (1 = mono, 2 = stereo)
@@ -402,14 +402,16 @@ function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, Wav
 // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
 // VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
+// NbHarmonic : default :  -1 (= 0) Number of Harmonic (0 to 5)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
 // SampleRate : delault : -1 (44100)
 // FramesCount : -1 default : 1024
-// example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
+//  result :  Input Index in array  -1 = error
 
 procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; Enable: boolean); 
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32;
+  NbHarmonic: cint32; Enable: boolean);
 // InputIndex: one existing input index   
 // WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
 // WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
@@ -418,6 +420,7 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, 
 // VolumeL : do not change: -1 (= 1) (from 0 to 1) => volume left
 // VolumeR : do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : in msec (-1 = do not change)
+// NbHarmonic : Number of Harmony (-1 not change) (0 to 5 harmonies)
 // Enable : true or false ;
 
 {$endif}
@@ -1254,7 +1257,7 @@ end;
 
 {$IF DEFINED(synthesizer)}
 function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; 
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; NbHarmonic: cint32;
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels : default : -1 (2) (1 = mono, 2 = stereo)
@@ -1265,22 +1268,25 @@ function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, Wav
 // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
 // VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
+// NbHarmonic : default :  -1 (= 0) Number of Harmonic (0 to 5)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
 // SampleRate : delault : -1 (44100)
 // FramesCount : -1 default : 1024
-// example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
+//  result :  Input Index in array  -1 = error
  begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
-  Result :=  uosPlayers[PlayerIndex].AddFromSynth(Channels,WaveTypeL, WaveTypeR, FrequencyL, FrequencyR, VolumeL, VolumeR, Duration, OutputIndex,
+  Result :=  uosPlayers[PlayerIndex].AddFromSynth(Channels,WaveTypeL, WaveTypeR, FrequencyL,
+   FrequencyR, VolumeL, VolumeR, Duration, NbHarmonic, OutputIndex,
   SampleFormat, SampleRate,  FramesCount) ;
 end;
 
 procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; Enable: boolean); 
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32;
+  NbHarmonic: cint32; Enable: boolean);
 // InputIndex: one existing input index   
 // WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
 // WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
@@ -1289,6 +1295,7 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, 
 // VolumeL : do not change: -1 (= 1) (from 0 to 1) => volume left
 // VolumeR : do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : in msec (-1 = do not change)
+// NbHarmonic : Number of Harmony (-1 not change) (0 to 5 harmonies)
 // Enable : true or false ;
 
   begin
@@ -1296,7 +1303,7 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, 
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetSynth(InputIndex, WaveTypeL, WaveTypeR ,
-   FrequencyL, FrequencyR, VolumeL, VolumeR, Duration, Enable) ;
+   FrequencyL, FrequencyR, VolumeL, VolumeR, Duration, NbHarmonic, Enable) ;
 end;
 {$endif}
 

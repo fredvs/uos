@@ -225,7 +225,6 @@ type
   Ratio: integer;  
 end;  
 
-
 type
 {$if not defined(fs32bit)}
   Tcount_t  = cint64;  { used for file sizes }
@@ -364,11 +363,20 @@ type
   LevelLeft, LevelRight: cfloat;
   levelArrayEnable : integer;
   
+{$IF DEFINED(synthesizer)}
   typLsine, typRsine: cint32;
-  lenLsine, lenRsine: cfloat;
   freqLsine, freqRsine: cfloat;
   dursine, posdursine: cint32;
+  harmonic : cint32;
+   
   posLsine, posRsine: cint32;
+  
+  posLH1, posRH1: cint32; 
+  posLH2, posRH2: cint32;
+  posLH3, posRH3: cint32;
+  posLH4, posRH4: cint32;
+  posLH5, posRH5: cint32;
+{$endif}
   
 {$if defined(cpu64)}
   Wantframes: Tcount_t;
@@ -412,9 +420,7 @@ type
   Ratio: integer;//  if mpg123 or aac then ratio := 2
   
   BPM : cfloat;
-  
   numbuf : integer;
-  
   Output: cint32;
 
   {$if defined(cpu64)}// TO CHECK
@@ -484,7 +490,7 @@ type
   constructor Create;
   destructor Destroy; override;
 
-  end;
+end;
   
 type
   Tuos_InStream = class(TObject)
@@ -527,7 +533,7 @@ type
   {$IF DEFINED(portaudio)}
   PAParam: PaStreamParameters;
   {$endif}
- LoopProc: TProc;// External Procedure of object to synchronize after buffer is filled 
+  LoopProc: TProc;// External Procedure of object to synchronize after buffer is filled 
  
   {$IF DEFINED(Java)}
   procedure LoopProcjava;
@@ -799,7 +805,7 @@ function AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
 
 {$IF DEFINED(synthesizer)}
 function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; 
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; NbHarmonic: cint32;
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels : default : -1 (2) (1 = mono, 2 = stereo)
@@ -810,14 +816,15 @@ function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: integer;
 // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
 // VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
+// NbHarmonic : default :  -1 (= 0) Number of Harmonic (0 to 5)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
 // SampleRate : delault : -1 (44100)
 // FramesCount : -1 default : 1024
-// example : InputIndex1 := AddFromSynth(0,880,-1,-1,-1,-1,-1,-1);
+//  result :  Input Index in array  -1 = error
   
 procedure InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; Enable: boolean);
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; NbHarmonic: cint32; Enable: boolean);
 // InputIndex: one existing input index   
 // WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
 // WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
@@ -826,9 +833,8 @@ procedure InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
 // VolumeL : do not change: -1 (= 1) (from 0 to 1) => volume left
 // VolumeR : do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : in msec (-1 = do not change)
+// NbHarmonic : Number of Harmony (-1 not change) (0 to 5 harmonies)
 // Enable : true or false ;
-
- 
 {$endif}
 
 function AddFromFile(Filename: Pchar; OutputIndex: cint32;
@@ -2003,8 +2009,7 @@ var
   
    StreamIn[x].Data.status  := 1 ;
   
-  end;
-  
+  end; 
    
   Status := 1;
   
@@ -2195,8 +2200,7 @@ begin
   4:
   StreamIn[InputIndex].Data.Wantframes:= (framecount * StreamIn[InputIndex].Data.Channels) ;
 
-end;
-
+ end;
 end;
 
 procedure Tuos_Player.InputSetLevelArrayEnable(InputIndex: cint32 ; levelcalc : cint32);
@@ -2311,7 +2315,6 @@ var
   WriteLn('EncodeTime(): '+ timetostr(Result)); 
   {$endif}   
 end;  
-
 
 // for mp3 and opus files only
 function Tuos_Player.InputUpdateTag(InputIndex: cint32): boolean;
@@ -4087,7 +4090,7 @@ procedure Tuos_Player.OutputSetDSPNoiseRemoval(OutputIndex: cint32; Enable: bool
  StreamOut[OutputIndex].DSP[StreamOut[OutputIndex].data.DSPNoiseIndex].enabled := Enable ; 
  end;  
   
-  {$endif}  
+{$endif}  
 
 function Tuos_Player.InputAddDSPVolume(InputIndex: cint32; VolLeft: double;
   VolRight: double): cint32;  
@@ -4375,7 +4378,7 @@ end;
 
 {$IF DEFINED(synthesizer)}
 function Tuos_Player.AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; 
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; NbHarmonic: cint32;
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels : default : -1 (2) (1 = mono, 2 = stereo)
@@ -4386,6 +4389,7 @@ function Tuos_Player.AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: integ
 // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
 // VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
+// NbHarmonic : default :  -1 (= 0) Number of Harmonic (0 to 5)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
 // SampleRate : delault : -1 (44100)
@@ -4405,6 +4409,10 @@ begin
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.PositionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
+  
+  if NbHarmonic < 1 then
+  StreamIn[x].data.harmonic := 0 else
+  StreamIn[x].data.harmonic := NbHarmonic; 
 
   if channels < 1 then
   StreamIn[x].data.channels := 2 else
@@ -4433,15 +4441,24 @@ begin
   if WaveTypeR < 1 then 
   StreamIn[x].Data.typRsine := 0 else
   StreamIn[x].Data.typRsine := 1;
-
-  StreamIn[x].Data.lenLsine := StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqLsine*2 ;
   
-  StreamIn[x].Data.lenRsine := StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqRsine*2 ;
+  StreamIn[x].Data.harmonic := 0 ;
 
   StreamIn[x].Data.posLsine := 0 ;
   StreamIn[x].Data.posRsine := 0 ;
   
- 
+  StreamIn[x].Data.posLH1 := 0 ;
+  StreamIn[x].Data.posLH2 := 0 ;
+  StreamIn[x].Data.posLH3 := 0 ;
+  StreamIn[x].Data.posLH4 := 0 ;
+  StreamIn[x].Data.posLH5 := 0 ;
+  
+  StreamIn[x].Data.posRH1 := 0 ;
+  StreamIn[x].Data.posRH2 := 0 ;
+  StreamIn[x].Data.posRH3 := 0 ;
+  StreamIn[x].Data.posRH4 := 0 ;
+  StreamIn[x].Data.posRH5 := 0 ;
+  
   SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes* StreamIn[x].Data.channels);
   
   StreamIn[x].Data.posdursine := 0 ;
@@ -4473,8 +4490,8 @@ begin
 end;
 
 procedure Tuos_Player.InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; Enable: boolean); 
-// InputIndex one existing input index
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32;
+  NbHarmonic: cint32; Enable: boolean);
 // InputIndex: one existing input index   
 // WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
 // WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
@@ -4483,10 +4500,13 @@ procedure Tuos_Player.InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: in
 // VolumeL : do not change: -1 (= 1) (from 0 to 1) => volume left
 // VolumeR : do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
 // Duration : in msec (-1 = do not change)
+// NbHarmonic : Number of Harmony (-1 not change) (0 to 5 harmonies)
 // Enable : true or false ;
 
 begin
  StreamIn[InputIndex].Data.Enabled := Enable;
+ 
+ if NbHarmonic <> -1 then StreamIn[InputIndex].Data.harmonic := NbHarmonic;
   
  if WaveTypeL <> -1 then StreamIn[InputIndex].Data.typLsine := WaveTypeL;
   
@@ -4495,13 +4515,11 @@ begin
  if FrequencyL <> -1 then
  begin
  StreamIn[InputIndex].Data.freqLsine := FrequencyL ;
- StreamIn[InputIndex].Data.lenLsine := (StreamIn[InputIndex].Data.SampleRate / FrequencyL*2) ;
  end;
  
   if FrequencyR <> -1 then
  begin
  StreamIn[InputIndex].Data.freqRsine := FrequencyR ;
- StreamIn[InputIndex].Data.lenRsine := (StreamIn[InputIndex].Data.SampleRate / FrequencyR*2) ;
  end;
  
  if VolumeL <> -1 then StreamIn[InputIndex].Data.VLeft := VolumeL;
@@ -6936,52 +6954,139 @@ procedure Tuos_Player.ReadEndless(x : integer);
   end;
  
 {$IF DEFINED(synthesizer)}
+
 procedure Tuos_Player.ReadSynth(x :integer);  
 var
-x2 : integer;
+x2, lenLsine, lenRsine, lenLH1, lenLH2, lenLH3, lenLH4, lenLH5,
+lenRH1, lenRH2, lenRH3, lenRH4, lenRH5 : integer;
 sf1, sf2 : cfloat;
 ps: PDArShort;// if input is Int16 format
 pl: PDArLong;// if input is Int32 format
 pf: PDArFloat;// if input is Float32 format
-
-  begin
+harmonicnum : integer;
+ 
+ begin
   
   if StreamIn[x].Data.SampleFormat =  2 then ps := @StreamIn[x].Data.Buffer else
   if StreamIn[x].Data.SampleFormat =  1 then pl := @StreamIn[x].Data.Buffer else
   if StreamIn[x].Data.SampleFormat =  0 then pf := @StreamIn[x].Data.Buffer;
+  
+  lenLsine := trunc(StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqLsine*2) ;
 
-  x2 := 0 ;
+  lenRsine := trunc(StreamIn[x].Data.SampleRate / StreamIn[x].Data.freqRsine*2) ;
+  
+  harmonicnum := StreamIn[x].Data.harmonic;
+  
+  if harmonicnum > 0 
+  then begin
+  lenLH1 := round(lenLsine div 2 );
+  lenRH1 := round(lenLsine div 2);
+  end;
+  
+  if harmonicnum > 1 
+  then begin
+  lenLH2 := round(lenLsine div 3);
+  lenRH2 := round(lenLsine div 3);
+  end;
+  
+  if harmonicnum > 2 
+  then begin
+  lenLH3 := round(lenLsine div 4);
+  lenRH3 := round(lenLsine div 4);
+  end;
+  
+  if harmonicnum > 3 
+  then begin
+  lenLH4 := round(lenLsine div 5);
+  lenRH4 := round(lenLsine div 5);
+  end;
+  
+  if harmonicnum > 4 
+  then begin
+  lenLH5 := round(lenLsine div 6);
+  lenRH5 := round(lenLsine div 6);
+  end;
 
+   x2 := 0 ;
+ 
    StreamIn[x].Data.posdursine := StreamIn[x].Data.posdursine + (StreamIn[x].Data.WantFrames div StreamIn[x].Data.Channels);
 
-    if (StreamIn[x].Data.posdursine <= StreamIn[x].Data.dursine) or (StreamIn[x].Data.dursine = 0) then
-  
+  if (StreamIn[x].Data.posdursine <= StreamIn[x].Data.dursine) or (StreamIn[x].Data.dursine = 0) then
   begin
-
+ 
   while x2 < (StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels) - (StreamIn[x].Data.Channels -1)  do
 
   begin
 
   if StreamIn[x].Data.Channels = 2 then
   begin
-  
+ 
+// { 
  if StreamIn[x].Data.typLsine < 1 then
+ begin
  sf1 := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat((x2 div 2)+
-  StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lenLsine) ) * Pi * 2 )))
+  StreamIn[x].Data.posLsine)/(lenLsine) ) * Pi * 2 )));
+  
+ if harmonicnum > 0 then 
+ sf1 := sf1 + (StreamIn[x].Data.VLeft / 32 * CFloat(Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posLH1)/(lenLH1) ) * Pi * 2 )));
+
+ if harmonicnum > 1 then
+  sf1 := sf1 + (StreamIn[x].Data.VLeft / 32 * CFloat((Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posLH2)/(lenLH2) ) * Pi * 2 ))));
+ 
+ if harmonicnum > 2 then
+  sf1 := sf1 + (StreamIn[x].Data.VLeft / 32 * CFloat((Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posLH3)/(lenLH3) ) * Pi * 2 ))));
+
+if harmonicnum > 3 then
+  sf1 := sf1 + (StreamIn[x].Data.VLeft / 32 * CFloat((Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posLH4)/(lenLH4) ) * Pi * 2 ))));
+
+if harmonicnum > 4 then
+  sf1 := sf1 + (StreamIn[x].Data.VLeft / 32 * CFloat((Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posLH5)/(lenLH5) ) * Pi * 2 ))));
+
+end
   else 
   begin
-   if StreamIn[x].Data.posLsine < round(StreamIn[x].Data.lenLsine / 2) then
+   if StreamIn[x].Data.posLsine < round(lenLsine / 2) then
    sf1 := StreamIn[x].Data.VLeft * +1 else sf1 := StreamIn[x].Data.VLeft * -1;
   end;
   
  if StreamIn[x].Data.typRsine < 1 then
-   sf2 := StreamIn[x].Data.VRight * CFloat((Sin( ( CFloat((x2 div 2) +
-   StreamIn[x].Data.posRsine)/CFloat( StreamIn[x].Data.lenRsine) ) * Pi * 2 )))
+ begin
+ sf2 := StreamIn[x].Data.VRight * CFloat((Sin( ( CFloat((x2 div 2)+
+  StreamIn[x].Data.posRsine)/(lenRsine) ) * Pi * 2 )));
+  
+ if harmonicnum > 0 then 
+  sf2 := sf2 + (StreamIn[x].Data.VRight / 32 * CFloat(Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posRH1)/(lenRH1) ) * Pi * 2 )));
+
+ if harmonicnum > 1 then
+  sf2 := sf2 + (StreamIn[x].Data.VRight / 32 * CFloat((Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posRH2)/(lenRH2) ) * Pi * 2 ))));
+ 
+ if harmonicnum > 2 then
+  sf2 := sf2 + (StreamIn[x].Data.VRight / 32 * CFloat((Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posRH3)/(lenRH3) ) * Pi * 2 ))));
+
+if harmonicnum > 3 then
+  sf2 := sf2 + (StreamIn[x].Data.VRight / 32 * CFloat((Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posRH4)/(lenRH4) ) * Pi * 2 ))));
+
+if harmonicnum > 4 then
+  sf2 := sf2 + (StreamIn[x].Data.VRight / 32 * CFloat((Sin( ( CFloat((x2 div 2)+
+ StreamIn[x].Data.posRH5)/(lenRH5) ) * Pi * 2 ))));
+
+end   
   else 
   begin
-   if StreamIn[x].Data.posRsine < round(StreamIn[x].Data.lenRsine / 2) then 
+   if StreamIn[x].Data.posRsine < round(lenRsine / 2) then 
    sf2 := StreamIn[x].Data.VRight * +1 else sf2 := StreamIn[x].Data.VRight * -1;
    end; 
+   
+// }  
 
   case StreamIn[x].Data.SampleFormat of
   2:// int16
@@ -7000,25 +7105,80 @@ pf: PDArFloat;// if input is Float32 format
   pf^[x2+1] := sf2 ;
   end;
   end;  
-   if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lenLsine -1 then
+   if StreamIn[x].Data.posLsine +1 > lenLsine -1 then
   StreamIn[x].Data.posLsine := 0 else
   StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
-
-  if StreamIn[x].Data.posRsine +1 > StreamIn[x].Data.lenRsine -1 then
+  
+  if StreamIn[x].Data.posRsine +1 >  lenRsine -1 then
   StreamIn[x].Data.posRsine := 0 else
   StreamIn[x].Data.posRsine := StreamIn[x].Data.posRsine +1 ;
+  
+  if harmonicnum > 0 then 
+  begin
+  if StreamIn[x].Data.posLH1 +1 > lenLH1 -1 then
+  StreamIn[x].Data.posLH1 := 0 else
+  StreamIn[x].Data.posLH1 := StreamIn[x].Data.posLH1 +1 ;
+  
+  if StreamIn[x].Data.posRH1 +1 > lenRH1 -1 then
+  StreamIn[x].Data.posRH1 := 0 else
+  StreamIn[x].Data.posRH1 := StreamIn[x].Data.posRH1 +1 ;
+  end; 
+  
+  if harmonicnum > 1 then 
+  begin
+  if StreamIn[x].Data.posLH2 +1 > lenLH2 -1 then
+  StreamIn[x].Data.posLH2 := 0 else
+  StreamIn[x].Data.posLH2 := StreamIn[x].Data.posLH2 +1 ;
+  
+  if StreamIn[x].Data.posRH2 +1 > lenRH2 -1 then
+  StreamIn[x].Data.posRH2 := 0 else
+  StreamIn[x].Data.posRH2 := StreamIn[x].Data.posRH2 +1 ;
+  end;
 
-  x2 := x2 + 2 ;
+  if harmonicnum > 2 then 
+  begin
+  if StreamIn[x].Data.posLH3 +1 > lenLH3 -1 then
+  StreamIn[x].Data.posLH3 := 0 else
+  StreamIn[x].Data.posLH3 := StreamIn[x].Data.posLH3 +1 ;
+  
+  if StreamIn[x].Data.posRH3 +1 > lenRH3 -1 then
+  StreamIn[x].Data.posRH3 := 0 else
+  StreamIn[x].Data.posRH3 := StreamIn[x].Data.posRH3 +1 ;
+  end;
+  
+  if harmonicnum > 3 then 
+  begin
+  if StreamIn[x].Data.posLH4 +1 > lenLH4 -1 then
+  StreamIn[x].Data.posLH4 := 0 else
+  StreamIn[x].Data.posLH4 := StreamIn[x].Data.posLH4 +1 ;
+  
+  if StreamIn[x].Data.posRH4 +1 > lenRH4 -1 then
+  StreamIn[x].Data.posRH4 := 0 else
+  StreamIn[x].Data.posRH4 := StreamIn[x].Data.posRH4 +1 ;
+  end; 
+  
+  if harmonicnum > 4 then 
+  begin
+  if StreamIn[x].Data.posLH5 +1 > lenLH5 -1 then
+  StreamIn[x].Data.posLH5 := 0 else
+  StreamIn[x].Data.posLH5 := StreamIn[x].Data.posLH5 +1 ;
+  
+  if StreamIn[x].Data.posRH5 +1 > lenRH5 -1 then
+  StreamIn[x].Data.posRH5 := 0 else
+  StreamIn[x].Data.posRH5 := StreamIn[x].Data.posRH5 +1 ;
+  end; 
+  
+  inc(x2, 2);
   end;
 
   if StreamIn[x].Data.Channels = 1 then
   begin
    if StreamIn[x].Data.typLsine < 1 then
    sf1 := StreamIn[x].Data.VLeft * CFloat((Sin( ( CFloat(x2+ 
-   StreamIn[x].Data.posLsine)/CFloat( StreamIn[x].Data.lenLsine) ) * Pi * 2 )))
+   StreamIn[x].Data.posLsine)/lenLsine) * Pi * 2 )))
    else 
    begin
-   if StreamIn[x].Data.posLsine < round(StreamIn[x].Data.lenLsine / 2) then
+   if StreamIn[x].Data.posLsine < round(lenLsine / 2) then
    sf1 := StreamIn[x].Data.VLeft * +1 else sf1 := StreamIn[x].Data.VLeft * -1;
    end;
   case StreamIn[x].Data.SampleFormat of
@@ -7036,14 +7196,14 @@ pf: PDArFloat;// if input is Float32 format
   end;
   end;  
   
-  if StreamIn[x].Data.posLsine +1 > StreamIn[x].Data.lenLsine - 1  then
+  if StreamIn[x].Data.posLsine +1 > lenLsine - 1  then
   StreamIn[x].Data.posLsine := 0 else
   StreamIn[x].Data.posLsine := StreamIn[x].Data.posLsine +1 ;
 
   inc(x2) ;
   end;
   end;
-
+    
   StreamIn[x].Data.OutFrames :=  StreamIn[x].Data.WantFrames;
   end else StreamIn[x].Data.OutFrames :=  0 ;
   
@@ -9497,13 +9657,11 @@ begin
   SampleRate:= 44100;
   freqLsine:= 440;
   freqRsine:= freqLsine;
-  lenLsine:= SampleRate / freqLsine *2;
-  lenRsine:= lenLsine;
-  
   dursine:= SampleRate;
   posdursine:= 0;
   posLsine:= 0;
   posRsine:= 0;
+  harmonic:= 0;
   SamplerateRoot:= SampleRate;
 //----------------------------//
 
