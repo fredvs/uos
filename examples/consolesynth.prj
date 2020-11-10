@@ -802,9 +802,9 @@ findhistory=1
  LookupTableLeft
 findoptions=1
 editpos=3
- 0,170
- 0,7120
- 0,0
+ 0,-1073741823
+ 0,74
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -962,7 +962,7 @@ windowlayout=573
  x=0
  y=0
  cx=205
- cy=482
+ cy=483
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1260,7 +1260,7 @@ windowlayout=573
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1291,7 +1291,7 @@ windowlayout=573
  x=0
  y=0
  cx=1356
- cy=50
+ cy=49
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1302,12 +1302,12 @@ windowlayout=573
  mdistate=0
  nx=0
  ny=0
- ncx=1356
- ncy=45
+ ncx=1341
+ ncy=41
  x=0
  y=0
- cx=1356
- cy=45
+ cx=1341
+ cy=39
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1319,6 +1319,7 @@ windowlayout=573
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos.pas
  history=20
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consolesynth.pas
   /home/fred/strumpract/src/dockpanel1.pas
   /home/fred/alsa_sound/src/alsa_sound.pas
@@ -1338,7 +1339,6 @@ windowlayout=573
   /home/fred/freepascal-ootb_322/packages/graph/src/ptcgraph/ptccrt.pp
   /home/fred/roland/fontdata.inc
   /home/fred/roland/graph.inc
-  /home/fred/roland/graphh.inc
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1356,7 +1356,7 @@ windowlayout=573
  x=208
  y=0
  cx=1148
- cy=482
+ cy=483
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1397,9 +1397,9 @@ windowlayout=573
  ncx=0
  ncy=0
  x=0
- y=53
+ y=52
  cx=1356
- cy=482
+ cy=483
  rcx=0
  rcy=0
 [targetconsole]

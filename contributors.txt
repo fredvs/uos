@@ -4,7 +4,7 @@ Andrew Haines : All audio web streaming of uos => he did it.
 
 BigChimp : He is the one who converts me to oop. He never stops to help people.
 
-Blaazen : He knows digital audio and explains how it works. He is the Professor Audio.
+Blaazen : He knows digital audio and explains how it works. He is the Professor Audio, the uos-synthesizer is him.
 
 Dibo : Shows the best way to calculate time.
 
