@@ -6,7 +6,7 @@ program consolesynth;
    {$DEFINE UseCThreads}
 uses
  {$IFDEF UNIX}
-  cthreads, 
+  cthreads,
   {$ENDIF}
   Classes,
   SysUtils,
@@ -101,7 +101,7 @@ var
       if uos_CreatePlayer(PlayerIndex1) then
 
         inindex1 := uos_AddFromSynth(PlayerIndex1, -1, -1, -1, 420, 420, -1, -1,
-         -1, -1, 0, -1, -1, 1024 );
+         -1, -1, 0, -1, -1, -1 );
 
       // function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, WaveTypeR: integer;
       // FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; NbHarmonic: cint32;
@@ -116,7 +116,7 @@ var
       // FrequencyR : default : -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
       // VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
       // VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
-      // Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
+      // Duration : default :  -1 (= 0)  => duration in msec (0 = endless)
       // NbHarmonic : default :  -1 (= 0) Number of Harmonic (0 to 5)
       // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
       // SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
@@ -125,10 +125,9 @@ var
       //  result :  Input Index in array  -1 = error
 
     {$if defined(cpuarm)} // needs lower latency
-        if uos_AddIntoDevOut(PlayerIndex1,-1,0.3,-1,-1, 0,-1,-1) > - 1 then
+      if uos_AddIntoDevOut(PlayerIndex1,-1,0.3,-1,-1, 0,-1,-1) > - 1 then
        {$else}
       if uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0, -1, -1) > -1 then
-
        {$endif}
         //// add a Output into device with custom parameters
         //////////// PlayerIndex : Index of a existing Player

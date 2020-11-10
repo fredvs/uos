@@ -797,26 +797,35 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=LookupTableLeft
-findhistory=1
+finddtext=InputUpdateICY
+findhistory=5
+ InputUpdateICY
+ ReadDevice
+ mpg_read_stream
+ readsyn
  LookupTableLeft
 findoptions=1
-editpos=3
- 0,-1073741823
- 0,74
- 0,-1073741823
+editpos=4
+ 0,102
+ 0,9565
+ 0,206
+ 0,16
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
+bookmarks3=0
+sourcefiles=4
  ${PROJECTDIR}/consolesynth.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=3
+ ${PROJECTDIR}/define.inc
+relpaths=4
  consolesynth.pas
  uos.pas
  uos_flat.pas
-ismoduletexts=3
+ define.inc
+ismoduletexts=4
+ 0
  0
  0
  0
@@ -825,10 +834,15 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=4
+ 0
+ 1
+ 3
+ 2
 firsttab=0
-index=1
+index=2
 [layout]
-windowlayout=573
+windowlayout=578
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1303,11 +1317,11 @@ windowlayout=573
  nx=0
  ny=0
  ncx=1341
- ncy=41
+ ncy=37
  x=0
  y=0
  cx=1341
- cy=39
+ cy=35
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1317,7 +1331,7 @@ windowlayout=573
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/define.inc
  history=20
   /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consolesynth.pas
@@ -1360,8 +1374,13 @@ windowlayout=573
  rcx=0
  rcy=0
  [sourcefo.files_tab]
+ order=4
+  0
+  1
+  3
+  2
  firsttab=0
- index=1
+ index=2
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]

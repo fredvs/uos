@@ -1630,7 +1630,7 @@ begin
   Data.data.Free;
 end;
 
-{$IF DEFINED(portaudio) or DEFINED(sndfile)}
+{$IF DEFINED(sndfile) or DEFINED(mpg123)}
 function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; cdecl;
 var
   Stream: TStream absolute ahandle;
@@ -5732,7 +5732,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
    
   end; 
 
-{$IF DEFINED(portaudio) or DEFINED(sndfile)}  
+{$IF DEFINED(sndfile)}  
   function m_get_filelen(pms: PMemoryStream): tuos_count_t; cdecl; 
 begin
  Result:= pms^.Size;
@@ -6387,8 +6387,10 @@ begin
          if SampleFormat = -1 then
             StreamIn[x].Data.SampleFormat := 2
          else StreamIn[x].Data.SampleFormat := SampleFormat;
-
+         
+         
          case StreamIn[x].Data.LibOpen of
+            -1: ;
             {$IF DEFINED(sndfile)}
             0:  StreamIn[x].Data.ratio := StreamIn[x].Data.Channels;
             {$endif}
@@ -6412,6 +6414,7 @@ begin
             4 : StreamIn[x].Data.ratio :=  streamIn[x].Data.Channels;
             {$endif}
          end;
+         
          StreamIn[x].Data.Enabled := True;
       end;
    end;
@@ -7209,6 +7212,7 @@ begin
   else
 
   case StreamIn[x].Data.LibOpen of
+  -1: ;
   {$IF DEFINED(sndfile)}
   0: sf_seek(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Poseek, 0);
   {$endif}
@@ -7293,6 +7297,7 @@ begin
 // writeln('array length = ' + inttostr(length(uosLevelArray[index][x])));
 end;
 
+{$IF DEFINED(portaudio)}
 procedure Tuos_Player.ReadDevice(x : integer);  
 var
 x2 : integer;
@@ -7307,6 +7312,7 @@ begin
    StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
 //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;// if you want clean buffer
 end;
+{$endif}
 
 procedure Tuos_Player.DoDSPinBeforeBufProc(x: integer);  
 var
@@ -9557,11 +9563,13 @@ begin
 
 //----------------------------//
   SampleRate:= 44100;
+  {$IF DEFINED(synthesizer)}
   freqLsine:= 440;
   freqRsine:= freqLsine;
   dursine:= 0;
   posdursine:= 0;
   harmonic:= 0;
+  {$endif}
   SamplerateRoot:= SampleRate;
 //----------------------------//
 
