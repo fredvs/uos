@@ -391,38 +391,43 @@ function uos_AddFromEndlessMuted(PlayerIndex: cint32; Channels : cint32; FramesC
  
 {$IF DEFINED(synthesizer)}
 function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration : cint32; NbHarmonic: cint32;
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
+ duration : cint32; NbHarmonics: cint32; EvenHarmonics: cint32;
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
-// Channels : default : -1 (2) (1 = mono, 2 = stereo)
-// WaveTypeL : default : -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR : default : -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
-// FrequencyL : default : -1 (440 htz) (Left frequency, used for mono)
-// FrequencyR : default : -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
-// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
-// VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
-// Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
-// NbHarmonic : default :  -1 (= 0) Number of Harmonic (0 to 5)
-// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
-// SampleRate : delault : -1 (44100)
-// FramesCount : -1 default : 1024
-//  result :  Input Index in array  -1 = error
+// Channels: default: -1 (2) (1 = mono, 2 = stereo)
+// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
+// WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
+// FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
+// VolumeL: default: -1 (= 1) (from 0 to 1) => volume left
+// VolumeR: default: -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
+// Duration: default:  -1 (= 1000)  => duration in msec (0 = endless)
+// NbHarmonics: default:  -1 (= 0) Number of Harmonics
+// EvenHarmonics: default: -1 (= 0) (0 = all harmonics, 1 = Only even harmonics)
+// OutputIndex: Output index of used output
+            // -1: all output, -2: no output, other cint32 refer to 
+            // a existing OutputIndex 
+            // (if multi-output then OutName = name of each output separeted by ';')
+// SampleFormat: default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+// SampleRate: delault : -1 (44100)
+// FramesCount: -1 default : 1024
+//  result:  Input Index in array  -1 = error
 
 procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32;
-  NbHarmonic: cint32; Enable: boolean);
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; 
+  NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
 // InputIndex: one existing input index   
-// WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
-// FrequencyL : do not change: -1 (Left frequency, used for mono)
-// FrequencyR : do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
-// VolumeL : do not change: -1 (= 1) (from 0 to 1) => volume left
-// VolumeR : do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
-// Duration : in msec (-1 = do not change)
-// NbHarmonic : Number of Harmony (-1 not change) (0 to 5 harmonies)
-// Enable : true or false ;
-
+// WaveTypeL: do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
+// WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// FrequencyL: do not change: -1 (Left frequency, used for mono)
+// FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
+// VolumeL: do not change: -1 (= 1) (from 0 to 1) => volume left
+// VolumeR: do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
+// Duration: in msec (-1 = do not change)
+// NbHarmonic: Number of Harmonics (-1 not change)
+// EvenHarmonics: default: -1 (= 0) (0 = all harmonics, 1 = Only even harmonics)
+// Enable: true or false ;
 {$endif}
   
 procedure uos_BeginProc(PlayerIndex: cint32; Proc: TProc);
@@ -1257,53 +1262,59 @@ end;
 
 {$IF DEFINED(synthesizer)}
 function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; NbHarmonic: cint32;
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
+ duration : cint32; NbHarmonics: cint32; EvenHarmonics: cint32;
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
-// Channels : default : -1 (2) (1 = mono, 2 = stereo)
-// WaveTypeL : default : -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR : default : -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
-// FrequencyL : default : -1 (440 htz) (Left frequency, used for mono)
-// FrequencyR : default : -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
-// VolumeL : default : -1 (= 1) (from 0 to 1) => volume left
-// VolumeR : default : -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
-// Duration : default :  -1 (= 1000)  => duration in msec (0 = endless)
-// NbHarmonic : default :  -1 (= 0) Number of Harmonic (0 to 5)
-// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-// SampleFormat : default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
-// SampleRate : delault : -1 (44100)
-// FramesCount : -1 default : 1024
-//  result :  Input Index in array  -1 = error
+// Channels: default: -1 (2) (1 = mono, 2 = stereo)
+// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
+// WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
+// FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
+// VolumeL: default: -1 (= 1) (from 0 to 1) => volume left
+// VolumeR: default: -1 (= 1) (from 0 to 1) => volume rigth (ignored for mono)
+// Duration: default:  -1 (= 1000)  => duration in msec (0 = endless)
+// NbHarmonics: default:  -1 (= 0) Number of Harmonics
+// EvenHarmonics: default: -1 (= 0) (0 = all harmonics, 1 = Only even harmonics)
+// OutputIndex: Output index of used output
+            // -1: all output, -2: no output, other cint32 refer to 
+            // a existing OutputIndex 
+            // (if multi-output then OutName = name of each output separeted by ';')
+// SampleFormat: default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
+// SampleRate: delault : -1 (44100)
+// FramesCount: -1 default : 1024
+//  result:  Input Index in array  -1 = error
  begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
   Result :=  uosPlayers[PlayerIndex].AddFromSynth(Channels,WaveTypeL, WaveTypeR, FrequencyL,
-   FrequencyR, VolumeL, VolumeR, Duration, NbHarmonic, OutputIndex,
+   FrequencyR, VolumeL, VolumeR, Duration, NbHarmonics, EvenHarmonics, OutputIndex,
   SampleFormat, SampleRate,  FramesCount) ;
 end;
 
 procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
- FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32;
-  NbHarmonic: cint32; Enable: boolean);
+ FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; 
+  NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
 // InputIndex: one existing input index   
-// WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
-// FrequencyL : do not change: -1 (Left frequency, used for mono)
-// FrequencyR : do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
-// VolumeL : do not change: -1 (= 1) (from 0 to 1) => volume left
-// VolumeR : do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
-// Duration : in msec (-1 = do not change)
-// NbHarmonic : Number of Harmony (-1 not change) (0 to 5 harmonies)
-// Enable : true or false ;
+// WaveTypeL: do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
+// WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// FrequencyL: do not change: -1 (Left frequency, used for mono)
+// FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
+// VolumeL: do not change: -1 (= 1) (from 0 to 1) => volume left
+// VolumeR: do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
+// Duration: in msec (-1 = do not change)
+// NbHarmonic: Number of Harmonics (-1 not change)
+// EvenHarmonics: default: -1 (= 0) (0 = all harmonics, 1 = Only even harmonics)
+// Enable: true or false;
 
   begin
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSetSynth(InputIndex, WaveTypeL, WaveTypeR ,
-   FrequencyL, FrequencyR, VolumeL, VolumeR, Duration, NbHarmonic, Enable) ;
+   FrequencyL, FrequencyR, VolumeL, VolumeR, Duration, NbHarmonic, EvenHarmonics, Enable) ;
 end;
 {$endif}
 

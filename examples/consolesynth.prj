@@ -20,28 +20,44 @@ order17=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consolesynth.prj
-findinfiledialog=34
+findinfiledialog=50
  [findinfileadialogfo.subdirs]
+ value=0
+ [findinfileadialogfo.incurrentfile]
  value=0
  [findinfileadialogfo.inopenfiles]
  value=0
  [findinfileadialogfo.wholeword]
  value=0
- [findinfileadialogfo.casesensitive]
- value=0
  [findinfileadialogfo.indirectories]
  value=1
+ [findinfileadialogfo.inprojectdir]
+ value=0
+ [findinfileadialogfo.casesensitive]
+ value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
- filenames=0
+ filenamescust=0
+ filenames=1
+  /home/fred/uos/examples/
  filecolwidth=0
  x=0
  y=0
  cx=0
  cy=0
+ panel=0
+ noicon=0
+ compact=0
+ showhidden=0
+ colnamewidth=0
+ colsizewidth=0
+ colextwidth=0
+ coldatewidth=0
+ splitterplaces=0
+ splitterlateral=0
  filehistory=0
  filefilterindex=0
  filefilter=
@@ -50,11 +66,11 @@ findinfiledialog=34
  history=1
   
  [findinfileadialogfo]
- stackedunder=
+ stackedunder=finddialogfo
  x=386
  y=189
  cx=339
- cy=251
+ cy=308
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -797,34 +813,43 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=InputUpdateICY
-findhistory=5
+finddtext=FillLookupTable
+findhistory=9
+ FillLookupTable
+ addfroms
+ evenharm
+ lookup
+ readsyn
  InputUpdateICY
  ReadDevice
  mpg_read_stream
- readsyn
  LookupTableLeft
 findoptions=1
-editpos=4
- 0,102
- 0,9565
- 0,206
- 0,16
+editpos=5
+ 0,100
+ 6,7044
+ 0,-1073741823
+ 0,-1073741823
+ 0,1257
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/consolesynth.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
-relpaths=4
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=5
  consolesynth.pas
  uos.pas
  uos_flat.pas
  define.inc
-ismoduletexts=4
+ uos_flat.pas
+ismoduletexts=5
+ 0
  0
  0
  0
@@ -834,15 +859,16 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=4
+order=5
  0
  1
- 3
+ 4
  2
+ 3
 firsttab=0
-index=2
+index=1
 [layout]
-windowlayout=578
+windowlayout=579
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1317,11 +1343,11 @@ windowlayout=578
  nx=0
  ny=0
  ncx=1341
- ncy=37
+ ncy=33
  x=0
  y=0
  cx=1341
- cy=35
+ cy=31
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1331,10 +1357,11 @@ windowlayout=578
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/define.inc
+ value=/home/fred/uos/examples/uos.pas
  history=20
-  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consolesynth.pas
+  /home/fred/uos/examples/uos_flat.pas
+  /home/fred/uos/examples/uos.pas
   /home/fred/strumpract/src/dockpanel1.pas
   /home/fred/alsa_sound/src/alsa_sound.pas
   /home/fred/alsa_sound/README.md
@@ -1352,7 +1379,6 @@ windowlayout=578
   /home/fred/roland/ptccrt.pp
   /home/fred/freepascal-ootb_322/packages/graph/src/ptcgraph/ptccrt.pp
   /home/fred/roland/fontdata.inc
-  /home/fred/roland/graph.inc
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1374,13 +1400,14 @@ windowlayout=578
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=4
+ order=5
   0
   1
-  3
+  4
   2
+  3
  firsttab=0
- index=2
+ index=1
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
