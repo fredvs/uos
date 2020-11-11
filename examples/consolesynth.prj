@@ -826,11 +826,11 @@ findhistory=9
  LookupTableLeft
 findoptions=1
 editpos=5
- 0,100
- 6,7044
+ 0,-1073741823
+ 0,221
  0,-1073741823
  0,-1073741823
- 0,1257
+ 0,186
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -862,11 +862,11 @@ nomenumodules=0
 order=5
  0
  1
+ 3
  4
  2
- 3
 firsttab=0
-index=1
+index=3
 [layout]
 windowlayout=579
  [mainfo.basedock]
@@ -1343,11 +1343,11 @@ windowlayout=579
  nx=0
  ny=0
  ncx=1341
- ncy=33
+ ncy=31
  x=0
  y=0
  cx=1341
- cy=31
+ cy=29
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1357,11 +1357,11 @@ windowlayout=579
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/uos_flat.pas
  history=20
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consolesynth.pas
   /home/fred/uos/examples/uos_flat.pas
-  /home/fred/uos/examples/uos.pas
   /home/fred/strumpract/src/dockpanel1.pas
   /home/fred/alsa_sound/src/alsa_sound.pas
   /home/fred/alsa_sound/README.md
@@ -1403,11 +1403,11 @@ windowlayout=579
  order=5
   0
   1
+  3
   4
   2
-  3
  firsttab=0
- index=1
+ index=3
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
