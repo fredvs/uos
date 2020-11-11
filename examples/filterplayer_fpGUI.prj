@@ -16,10 +16,11 @@ order13=0
 order14=0
 order15=0
 order16=0
+order17=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/filterplayer_fpGUI.prj
-findinfiledialog=46
+findinfiledialog=59
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -28,30 +29,43 @@ findinfiledialog=46
  value=0
  [findinfileadialogfo.wholeword]
  value=0
- [findinfileadialogfo.inprojectdir]
- value=1
- [findinfileadialogfo.casesensitive]
- value=0
  [findinfileadialogfo.indirectories]
+ value=1
+ [findinfileadialogfo.inprojectdir]
+ value=0
+ [findinfileadialogfo.casesensitive]
  value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
+ filenamescust=0
  filenames=1
-  /home/fred/uos/examples/
- filecolwidth=0
+  /home/fred/Downloads/acs-3.0.1/
+ filecolwidth=150
  x=0
  y=0
  cx=0
  cy=0
- filehistory=0
+ panel=0
+ noicon=0
+ compact=0
+ showhidden=0
+ colnamewidth=203
+ colsizewidth=81
+ colextwidth=45
+ coldatewidth=126
+ splitterplaces=243
+ splitterlateral=126
+ filehistory=1
+  /home/fred/Downloads/acs-3.0.1/
  filefilterindex=0
- filefilter=
+ filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=defined(cpu64) and if defined(linux)
- history=8
+ value=filter
+ history=9
+  filter
   defined(cpu64) and if defined(linux)
   defined(cpu64) and defined(linux)
   (cpu32)
@@ -65,7 +79,7 @@ findinfiledialog=46
  x=386
  y=189
  cx=339
- cy=251
+ cy=308
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -74,7 +88,7 @@ finddialog=8
  x=775
  y=209
  cx=331
- cy=116
+ cy=269
 replacedialog=31
  [replacedialogfo.promptonreplace]
  value=1
@@ -114,33 +128,33 @@ options=114
   70
   70
  [projectoptionsfo.twidgetgrid3]
- propcolwidthref=740
+ propcolwidthref=722
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
  sortdescend3=0
- width4=345
+ width4=337
  sortdescend4=0
- width5=186
+ width5=181
  sortdescend5=0
- width6=158
+ width6=154
  sortdescend6=0
- width7=51
+ width7=50
  sortdescend7=0
  width8=1
  sortdescend8=0
- width9=302
+ width9=295
  sortdescend9=0
  [projectoptionsfo.twidgetgrid4]
- propcolwidthref=564
+ propcolwidthref=557
  width0=96
  sortdescend0=0
  sortdescend1=0
  width2=73
  sortdescend2=0
- width3=271
+ width3=268
  sortdescend3=0
- width4=283
+ width4=279
  sortdescend4=0
  sorted=0
  col=-1073741823
@@ -167,9 +181,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=143
+ y=176
  xprop=1
- yprop=0.33031674208145
+ yprop=0.33025830258303
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -196,19 +210,19 @@ options=114
  firsttab=0
  index=3
  [projectoptionsfo.exceptionsgrid]
- propcolwidthref=724
+ propcolwidthref=713
  width0=47
  sortdescend0=0
- width1=718
+ width1=707
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
  index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=632
+ propcolwidthref=734
  width0=112
  sortdescend0=0
- width1=625
+ width1=727
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
@@ -221,7 +235,7 @@ options=114
  x=292
  y=97
  cx=773
- cy=497
+ cy=601
 programparameters=18
  [programparametersfo.grid]
  propcolwidthref=304
@@ -295,9 +309,10 @@ targetfile=${PROJECTDIR}/filterplayer_fpGUI
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=7
+unitdirs=8
  ${FPGUIDIR}/lib/${TargetCPU}-${TargetOS}
  ${FPGUIDIR}
+ ${FPGUIDIR}/src/3rdparty/regex
  ${FPGUIDIR}/src/corelib/gdi
  ${FPGUIDIR}/src
  ${FPGUIDIR}/src/corelib/x11
@@ -429,15 +444,15 @@ newfosources=2
 newfoforms=2
  
  
-forcezorder=-1
+forcezorder=1
 stripmessageesc=0
 copymessages=0
 closemessages=0
 enablepurpose=0
 enablesource=0
 checkmethods=1
-colorerror=-1610612712
-colorwarning=-1610612717
+colorerror=-1610612717
+colorwarning=-1610612712
 colornote=-1610612716
 usercolors=30
  0
@@ -598,9 +613,10 @@ project_time=
 project_date=19:28:22 23/02/2017
 project_comment=
 aftcommandon=0
-unitdirson=7
+unitdirson=8
  196671
  196671
+ 987135
  0
  196671
  196671
@@ -654,9 +670,9 @@ fontoptions=0
 fontxscales=0
 expandprojectfilemacros=4
  1
- -1
- -1
- -1
+ 1
+ 1
+ 1
 loadprojectfile=4
  1
  0
@@ -866,6 +882,11 @@ units=
   a=0,8196,0,simpleplayer_fpGUI.pas
   )
   (
+  file=uos.pas
+  kind=1
+  a=0,8196,0,uos.pas
+  )
+  (
   file=uos_flat.pas
   kind=1
   a=0,8196,0,uos_flat.pas
@@ -874,11 +895,6 @@ units=
   file=uos_portaudio.pas
   kind=1
   a=0,8196,0,uos_portaudio.pas
-  )
-  (
-  file=uos.pas
-  kind=1
-  a=0,8196,0,uos.pas
   )
  )
 cmodules=
@@ -890,7 +906,7 @@ files=
  a=0,8229,6,Text Files
  )
 [componentstore]
-storedir=/home/fred/msegui/apps/ide/compstore/
+storedir=/home/fred/mseide-msegui/apps/ide/compstore/
 filename=
 [components]
 [selecteditpage]
@@ -906,8 +922,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=StreamIn[InputIndex].DSP[FilterIndex].fftdata.C := Tan(Pi * (HighFrequency - LowFrequency + 1) 
+finddtext=setfilter
 findhistory=20
+ setfilter
  StreamIn[InputIndex].DSP[FilterIndex].fftdata.C := Tan(Pi * (HighFrequency - LowFrequency + 1) 
  StreamIn[InputIndex].DSP[FilterIndex].fftdata
  treamIn[InputIndex].DSP[FilterIndex].fftdata.C := Tan(Pi * (HighFrequency - LowFre
@@ -927,31 +944,15 @@ findhistory=20
  inputget
  ifbuf
  alsobuf
- OU_FileName
 findoptions=1
-editpos=4
- 0,-1073741823
- 0,0
- 0,-1073741823
- 0,-1073741823
+editpos=1
+ 0,275
 bookmarks0=0
-bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-sourcefiles=4
- ${PROJECTDIR}/filterplayer_fpGUI.pas
- /home/fred/uos/examples/uos_flat.pas
- /home/fred/uos/src/uos.pas
- ${PROJECTDIR}/uos_flat.pas
-relpaths=4
+sourcefiles=1
+ /home/fred/uos/examples/filterplayer_fpGUI.pas
+relpaths=1
  filterplayer_fpGUI.pas
- uos_flat.pas
- src/uos.pas
- uos_flat.pas
-ismoduletexts=4
- 0
- 0
- 0
+ismoduletexts=1
  0
 modules=1
  /home/fred/ideu/src/guitemplates.mfm
@@ -962,15 +963,10 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=4
- 0
- 2
- 3
- 1
 firsttab=0
-index=3
+index=0
 [layout]
-windowlayout=561
+windowlayout=592
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -984,9 +980,9 @@ windowlayout=561
  ny=0
  ncx=0
  ncy=0
- x=125
- y=46
- cx=1157
+ x=34
+ y=53
+ cx=1224
  cy=621
  rcx=0
  rcy=0
@@ -1002,15 +998,15 @@ windowlayout=561
  ny=0
  ncx=0
  ncy=0
- x=677
- y=174
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1104,7 +1100,7 @@ windowlayout=561
  x=0
  y=0
  cx=205
- cy=456
+ cy=450
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1193,30 +1189,11 @@ windowlayout=561
  visible=0
  [breakpointsfo.bkptson]
  value=0
- [objectinspectorfo]
- splitdir=0
- useroptions=268451947
- stackedunder=
- parent=
- mdistate=0
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=316
- y=249
- cx=316
- cy=484
- rcx=0
- rcy=0
- wsize=0
- active=0
- visible=0
  [objectinspectorfo.grid]
- propcolwidthref=306
- width0=136
+ propcolwidthref=547
+ width0=243
  sortdescend0=0
- width1=164
+ width1=298
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1317,9 +1294,9 @@ windowlayout=561
  ncx=0
  ncy=0
  x=0
- y=513
- cx=1147
- cy=92
+ y=507
+ cx=1212
+ cy=93
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1351,6 +1328,7 @@ windowlayout=561
  width3=185
  sortdescend3=0
  [componentstorefo.storefiledialog]
+ filenamescust=0
  filenames=1
   /home/mse/test/msegui/apps/ide/compstore/
  filecolwidth=0
@@ -1358,11 +1336,22 @@ windowlayout=561
  y=0
  cx=0
  cy=0
+ panel=0
+ noicon=0
+ compact=0
+ showhidden=0
+ colnamewidth=0
+ colsizewidth=0
+ colextwidth=0
+ coldatewidth=0
+ splitterplaces=0
+ splitterlateral=0
  lastdir=/home/mse/test/msegui/apps/ide/compstore/
  filehistory=0
  filefilterindex=0
  filefilter=
  [componentstorefo.groupfiledialog]
+ filenamescust=0
  filenames=1
   /home/mse/test/msegui/apps/ide/compstore/
  filecolwidth=0
@@ -1370,17 +1359,38 @@ windowlayout=561
  y=0
  cx=0
  cy=0
+ panel=0
+ noicon=0
+ compact=0
+ showhidden=0
+ colnamewidth=0
+ colsizewidth=0
+ colextwidth=0
+ coldatewidth=0
+ splitterplaces=0
+ splitterlateral=0
  lastdir=/home/mse/test/msegui/apps/ide/compstore/
  filehistory=0
  filefilterindex=0
  filefilter=
  [componentstorefo.compfiledialog]
+ filenamescust=0
  filenames=0
  filecolwidth=0
  x=0
  y=0
  cx=0
  cy=0
+ panel=0
+ noicon=0
+ compact=0
+ showhidden=0
+ colnamewidth=0
+ colsizewidth=0
+ colextwidth=0
+ coldatewidth=0
+ splitterplaces=0
+ splitterlateral=0
  lastdir=
  filehistory=0
  filefilterindex=0
@@ -1418,7 +1428,7 @@ windowlayout=561
  ncy=0
  x=0
  y=0
- cx=1147
+ cx=1212
  cy=51
  rcx=0
  rcy=0
@@ -1430,12 +1440,12 @@ windowlayout=561
  mdistate=0
  nx=0
  ny=0
- ncx=1147
- ncy=54
+ ncx=1197
+ ncy=58
  x=0
  y=0
- cx=1147
- cy=54
+ cx=1212
+ cy=57
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1445,10 +1455,28 @@ windowlayout=561
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
- history=2
-  /home/fred/uos/examples/uos_flat.pas
+ value=/home/fred/uos/examples/filterplayer_fpGUI.pas
+ history=20
   /home/fred/uos/examples/filterplayer_fpGUI.pas
+  /home/fred/atest/test.prj
+  /home/fred/ideu/src/ideU.prj
+  /home/fred/mseide-msegui/apps/ide/mseide.prj
+  /home/fred/uos/examples/simpleplayer.prj
+  /home/fred/ideu_ok/src/ideU.prj
+  /home/fred/eschecs_mse/eschecs.prj
+  /home/fred/mselang-master/src/mselang.prj
+  /home/fred/mseide-msegui/apps/ide/mseide_zeos.prj
+  /home/fred/strumpract/src/strumpract.prj
+  /home/fred/ideu_badplug/src/demos/voiceassist/helloworld/helloworld.prj
+  /home/fred/xtop/src/ptop.prj
+  /home/fred/xtop/src/jtop.prj
+  /home/fred/idegraeme/mseide.prj
+  /home/fred/fptop/src/jtop.prj
+  /home/fred/fptop/src/ptop.prj
+  /home/fred/ptop_fred/ptop.prj
+  /home/fred/eschecs_mse_argh/eschecs.prj
+  /home/fred/Downloads/jcf-cli-master/CommandLine/Lazarus/jcf.prj
+  /home/fred/mseuniverse/samples/widgets/grids/chessboard/chessboard.prj
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1465,18 +1493,17 @@ windowlayout=561
  ncy=0
  x=208
  y=0
- cx=939
- cy=456
+ cx=1004
+ cy=450
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=4
-  0
-  2
-  3
-  1
  firsttab=0
- index=3
+ index=0
+ [confideufo.fontname]
+ value=stf_default
+ [confideufo.usedefaulteditoroptions]
+ value=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
@@ -1509,22 +1536,22 @@ windowlayout=561
  ncy=0
  x=0
  y=54
- cx=1147
- cy=456
+ cx=1212
+ cy=450
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=targetconsolefo
+ stackedunder=confdebuggerfo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=251
- y=194
+ x=432
+ y=250
  cx=493
  cy=132
  rcx=0

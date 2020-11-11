@@ -826,11 +826,11 @@ findhistory=9
  LookupTableLeft
 findoptions=1
 editpos=5
+ 0,4
  0,-1073741823
- 0,221
  0,-1073741823
  0,-1073741823
- 0,186
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -866,7 +866,7 @@ order=5
  4
  2
 firsttab=0
-index=3
+index=0
 [layout]
 windowlayout=579
  [mainfo.basedock]
@@ -882,13 +882,13 @@ windowlayout=579
  ny=0
  ncx=0
  ncy=0
- x=125
- y=46
- cx=1157
+ x=34
+ y=53
+ cx=1224
  cy=621
  rcx=0
  rcy=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [targetconsolefo]
@@ -900,8 +900,8 @@ windowlayout=579
  ny=0
  ncx=0
  ncy=0
- x=798
- y=200
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
@@ -1002,7 +1002,7 @@ windowlayout=579
  x=0
  y=0
  cx=205
- cy=483
+ cy=450
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1012,8 +1012,8 @@ windowlayout=579
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=4
+ col=1
+ row=-1073741823
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1196,9 +1196,9 @@ windowlayout=579
  ncx=0
  ncy=0
  x=0
- y=538
- cx=1356
- cy=151
+ y=507
+ cx=1212
+ cy=93
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1330,8 +1330,8 @@ windowlayout=579
  ncy=0
  x=0
  y=0
- cx=1356
- cy=49
+ cx=1212
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1342,12 +1342,12 @@ windowlayout=579
  mdistate=0
  nx=0
  ny=0
- ncx=1341
- ncy=31
+ ncx=1197
+ ncy=56
  x=0
  y=0
- cx=1341
- cy=29
+ cx=1212
+ cy=55
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1357,28 +1357,28 @@ windowlayout=579
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
+ value=/home/fred/uos/examples/consolesynth.pas
  history=20
-  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consolesynth.pas
-  /home/fred/uos/examples/uos_flat.pas
-  /home/fred/strumpract/src/dockpanel1.pas
-  /home/fred/alsa_sound/src/alsa_sound.pas
-  /home/fred/alsa_sound/README.md
-  /home/fred/mseide-msegui/apps/ide/main.pas
-  /home/fred/mseide-msegui/msegui.svg
-  /home/fred/strumpract/src/guitars.pas
-  /home/fred/strumpract/src/config.pas
-  /home/fred/uos/examples/deviceinfos_fpGUI.pas
-  /home/fred/uos/readme_examples.txt
-  /home/fred/freepascal-ootb_320test/rtl/unix/sysutils.pp
-  /home/fred/alsa_soundnew/src/alsa_sound.pas
-  /home/fred/freepascal-ootb_322test/rtl/objpas/math.pp
-  /home/fred/roland/ptcwrapper.pp
-  /home/fred/roland/nero5_test.pas
-  /home/fred/roland/ptccrt.pp
-  /home/fred/freepascal-ootb_322/packages/graph/src/ptcgraph/ptccrt.pp
-  /home/fred/roland/fontdata.inc
+  /home/fred/uos/examples/define.inc
+  /home/fred/atest/test.prj
+  /home/fred/ideu/src/ideU.prj
+  /home/fred/mseide-msegui/apps/ide/mseide.prj
+  /home/fred/uos/examples/simpleplayer.prj
+  /home/fred/ideu_ok/src/ideU.prj
+  /home/fred/eschecs_mse/eschecs.prj
+  /home/fred/mselang-master/src/mselang.prj
+  /home/fred/mseide-msegui/apps/ide/mseide_zeos.prj
+  /home/fred/strumpract/src/strumpract.prj
+  /home/fred/ideu_badplug/src/demos/voiceassist/helloworld/helloworld.prj
+  /home/fred/xtop/src/ptop.prj
+  /home/fred/xtop/src/jtop.prj
+  /home/fred/idegraeme/mseide.prj
+  /home/fred/fptop/src/jtop.prj
+  /home/fred/fptop/src/ptop.prj
+  /home/fred/ptop_fred/ptop.prj
+  /home/fred/eschecs_mse_argh/eschecs.prj
+  /home/fred/Downloads/jcf-cli-master/CommandLine/Lazarus/jcf.prj
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1395,8 +1395,8 @@ windowlayout=579
  ncy=0
  x=208
  y=0
- cx=1148
- cy=483
+ cx=1004
+ cy=450
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1407,7 +1407,7 @@ windowlayout=579
   4
   2
  firsttab=0
- index=3
+ index=0
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
@@ -1418,7 +1418,7 @@ windowlayout=579
  useroptions=268451947
  stackedunder=confdebuggerfo
  parent=
- mdistate=3
+ mdistate=0
  nx=0
  ny=0
  ncx=0
@@ -1443,9 +1443,9 @@ windowlayout=579
  ncx=0
  ncy=0
  x=0
- y=52
- cx=1356
- cy=483
+ y=54
+ cx=1212
+ cy=450
  rcx=0
  rcy=0
 [targetconsole]

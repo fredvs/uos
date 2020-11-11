@@ -3,7 +3,8 @@ program filterplayer_fpGUI;
 {$mode objfpc}{$H+}
   {$DEFINE UseCThreads}
 
-uses {$IFDEF UNIX} {$IFDEF UseCThreads}
+uses
+  {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
   SysUtils,
@@ -217,7 +218,7 @@ var
       ////////// HighFrequency : Highest frequency of filter
       ////////// Gain : gain to apply to filter ( 1 = no gain )
       ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-      /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+      /////////////////////////// fBandPass = 3, fLowPass = 4, fHighPass = 5)
       ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
       ////////// LoopProc : External procedure to execute after filter
       //  result : -1 nothing created, otherwise index of DSPIn in array
@@ -245,7 +246,7 @@ var
   ////////// HighFrequency : Highest frequency of filter ( default = -1 : current HighFrequency )
   ////////// Gain   : Gain to apply ( -1 = current gain)  ( 0 = silence, 1 = no gain, < 1 = less gain, > 1 = more gain)
   ////////// TypeFilter: Type of filter : ( default = -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-  /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+  /////////////////////////// fBandPass = 3, fLowPass = 4, fHighPass = 5)
   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
   ////////// Enable :  Filter enabled
 
@@ -286,13 +287,12 @@ var
     if radiobutton2.Checked = True then
       typfilt := 3;
     if radiobutton3.Checked = True then
-      typfilt := 4;
-    if radiobutton4.Checked = True then
       typfilt := 5;
+    if radiobutton4.Checked = True then
+      typfilt := 4;
     if (btnstart.Enabled = False) then
       uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, StrToInt(edit2.Text), StrToInt(edit1.Text),
         1, typfilt, True, checkbox2.Checked, nil);
-
   end;
 
   procedure TFilterplayer.TrackBar3proc;
@@ -368,8 +368,9 @@ var
   Name := 'Filterplayer';
   SetPosition(419, 72, 502, 371);
   WindowTitle := 'Filter player ';
-  Hint := '';
+  IconName := '';
   BackGroundColor := $80000001;
+  Hint := '';
   WindowPosition := wpScreenCenter;
   Ondestroy := @btnCloseClick;
 
@@ -388,8 +389,9 @@ var
     SetPosition(136, 0, 320, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of PortAudio Library';
+    Hint := '';
   end;
 
   btnLoad := TfpgButton.Create(self);
@@ -397,11 +399,12 @@ var
   begin
     Name := 'btnLoad';
     SetPosition(16, 128, 476, 23);
-    FontDesc := '#Label1';
-    Hint := '';
-    ImageName := '';
-    TabOrder := 0;
     Text := 'Load that libraries';
+    FontDesc := '#Label1';
+    ImageName := '';
+    ParentShowHint := False;
+    TabOrder := 0;
+    Hint := '';
     onclick := @btnLoadClick;
   end;
 
@@ -446,12 +449,13 @@ var
   begin
     Name := 'btnStart';
     SetPosition(104, 312, 44, 23);
+    Text := 'Play';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 6;
-    Text := 'Play';
+    Hint := '';
     onclick := @btnstartClick;
   end;
 
@@ -460,12 +464,13 @@ var
   begin
     Name := 'btnStop';
     SetPosition(316, 312, 80, 23);
+    Text := 'Stop';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 7;
-    Text := 'Stop';
+    Hint := '';
     onclick := @btnStopClick;
   end;
 
@@ -476,8 +481,9 @@ var
     SetPosition(372, 157, 104, 19);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'High Frequency';
+    Hint := '';
   end;
 
   Labelsnf := TfpgLabel.Create(self);
@@ -487,8 +493,9 @@ var
     SetPosition(140, 40, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of SndFile Library';
+    Hint := '';
   end;
 
   Labelmpg := TfpgLabel.Create(self);
@@ -498,8 +505,9 @@ var
     SetPosition(136, 80, 316, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Folder + filename of Mpg123 Library';
+    Hint := '';
   end;
 
   FilenameEdit3 := TfpgFileNameEdit.Create(self);
@@ -521,8 +529,9 @@ var
     SetPosition(376, 201, 104, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Low Frequency';
+    Hint := '';
   end;
 
   btnpause := TfpgButton.Create(self);
@@ -530,12 +539,13 @@ var
   begin
     Name := 'btnpause';
     SetPosition(164, 312, 52, 23);
+    Text := 'Pause';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 15;
-    Text := 'Pause';
+    Hint := '';
     onclick := @btnPauseClick;
   end;
 
@@ -544,12 +554,13 @@ var
   begin
     Name := 'btnresume';
     SetPosition(232, 312, 64, 23);
+    Text := 'Resume';
     Enabled := False;
     FontDesc := '#Label1';
-    Hint := '';
     ImageName := '';
+    ParentShowHint := False;
     TabOrder := 16;
-    Text := 'Resume';
+    Hint := '';
     onclick := @btnResumeClick;
   end;
 
@@ -560,9 +571,10 @@ var
     SetPosition(32, 252, 156, 19);
     Checked := True;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 17;
     Text := 'Enable Equalizer';
+    Hint := '';
     onchange := @CheckBox1Change;
   end;
 
@@ -574,9 +586,10 @@ var
     Checked := True;
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 18;
     Text := 'BandReject';
+    Hint := '';
     onchange := @RadioButton1Change;
   end;
 
@@ -587,9 +600,10 @@ var
     SetPosition(216, 200, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 19;
     Text := 'BandPass';
+    Hint := '';
     onchange := @RadioButton1Change;
   end;
 
@@ -597,12 +611,13 @@ var
   with RadioButton3 do
   begin
     Name := 'RadioButton3';
-    SetPosition(216, 222, 100, 19);
+    SetPosition(216, 246, 100, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 20;
     Text := 'HighPass';
+    Hint := '';
     onchange := @RadioButton1Change;
   end;
 
@@ -612,8 +627,9 @@ var
     Name := 'Label2';
     SetPosition(220, 160, 72, 19);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Filters';
+    Hint := '';
   end;
 
   TrackBar1 := TfpgTrackBar.Create(self);
@@ -621,11 +637,12 @@ var
   begin
     Name := 'TrackBar1';
     SetPosition(24, 160, 36, 74);
-    Hint := '';
     Max := 200;
     Orientation := orVertical;
+    ParentShowHint := False;
     Position := 100;
-     TabOrder := 22;
+    TabOrder := 22;
+    Hint := '';
     onchange := @TrackBar1Change;
   end;
 
@@ -634,11 +651,12 @@ var
   begin
     Name := 'TrackBar2';
     SetPosition(80, 160, 32, 74);
-    Hint := '';
     Max := 200;
     Orientation := orVertical;
+    ParentShowHint := False;
     Position := 100;
     TabOrder := 23;
+    Hint := '';
     onchange := @TrackBar2Change;
   end;
 
@@ -647,11 +665,12 @@ var
   begin
     Name := 'TrackBar3';
     SetPosition(136, 160, 28, 74);
-    Hint := '';
     Max := 200;
     Orientation := orVertical;
+    ParentShowHint := False;
     Position := 100;
     TabOrder := 24;
+    Hint := '';
     onchange := @TrackBar3Change;
   end;
 
@@ -662,8 +681,9 @@ var
     SetPosition(68, 232, 52, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Medium';
+    Hint := '';
   end;
 
   Label4 := TfpgLabel.Create(self);
@@ -673,8 +693,9 @@ var
     SetPosition(20, 232, 40, 15);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'Low';
+    Hint := '';
   end;
 
   Label5 := TfpgLabel.Create(self);
@@ -684,20 +705,22 @@ var
     SetPosition(128, 232, 36, 19);
     Alignment := taCenter;
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     Text := 'High';
+    Hint := '';
   end;
 
   RadioButton4 := TfpgRadioButton.Create(self);
   with RadioButton4 do
   begin
     Name := 'RadioButton4';
-    SetPosition(216, 244, 92, 19);
+    SetPosition(216, 224, 92, 19);
     FontDesc := '#Label1';
     GroupIndex := 0;
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 28;
     Text := 'LowPass';
+    Hint := '';
     onchange := @RadioButton1Change;
   end;
 
@@ -708,9 +731,10 @@ var
     SetPosition(368, 172, 116, 24);
     ExtraHint := '';
     FontDesc := '#Edit1';
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 29;
     Text := '15000';
+    Hint := '';
   end;
 
   Edit2 := TfpgEdit.Create(self);
@@ -720,9 +744,10 @@ var
     SetPosition(368, 216, 116, 24);
     ExtraHint := '';
     FontDesc := '#Edit1';
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 29;
     Text := '5000';
+    Hint := '';
   end;
 
   CheckBox2 := TfpgCheckBox.Create(self);
@@ -731,9 +756,10 @@ var
     Name := 'CheckBox2';
     SetPosition(368, 244, 120, 19);
     FontDesc := '#Label1';
-    Hint := '';
+    ParentShowHint := False;
     TabOrder := 30;
     Text := 'Enable Filter';
+    Hint := '';
     onchange := @RadioButton1Change;
   end;
 

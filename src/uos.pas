@@ -1144,7 +1144,7 @@ function InputAddFilter(InputIndex: cint32; LowFrequency: cint32;
 // HighFrequency : Highest frequency of filter
 // Gain : gain to apply to filter
 // TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
 //  result :  otherwise index of DSPIn in array
@@ -1159,7 +1159,7 @@ procedure InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
 // HighFrequency : Highest frequency of filter ( -1 : current HighFrequency )
 // Gain : gain to apply to filter
 // TypeFilter: Type of filter : ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
 // Enable :  Filter enabled
@@ -1173,7 +1173,7 @@ function OutputAddFilter(OutputIndex: cint32; LowFrequency: cint32;
 // HighFrequency : Highest frequency of filter
 // Gain : gain to apply to filter
 // TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
 //  result : index of DSPOut in array
@@ -1188,7 +1188,7 @@ procedure OutputSetFilter(OutputIndex: cint32; FilterIndex: cint32;
 // HighFrequency : Highest frequency of filter ( -1 : current HighFrequency )
 // Gain : gain to apply to filter
 // TypeFilter: Type of filter : ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // Enable :  Filter enabled
 // LoopProc : external procedure of object to synchronize after DSP done
@@ -2594,7 +2594,7 @@ procedure Tuos_Player.InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
 // HighFrequency : Highest frequency of filter ( default = -1 : current HighFrequency )
 // Gain  : Gain to apply ( -1 = current gain)  ( 0 = silence, 1 = no gain, < 1 = less gain, > 1 = more gain)
 // TypeFilter: Type of filter : ( default = -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
 // Enable :  Filter enabled
@@ -2720,7 +2720,7 @@ begin
   4://  DSPFFTLowPass
   begin
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
-  1 / Tan(Pi * HighFrequency / StreamIn[InputIndex].Data.SampleRate);
+  1 / Tan(Pi * LowFrequency / StreamIn[InputIndex].Data.SampleRate);
   
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.C +
@@ -2744,7 +2744,7 @@ begin
   5://  DSPFFTHighPass
   begin
    StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
-   Tan(Pi * LowFrequency / StreamIn[InputIndex].Data.SampleRate);
+   Tan(Pi * HighFrequency / StreamIn[InputIndex].Data.SampleRate);
   
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.C +
@@ -2779,7 +2779,7 @@ procedure Tuos_Player.OutputSetFilter(OutputIndex: cint32; FilterIndex: cint32;
 // LowFrequency : Lowest frequency of filter
 // HighFrequency : Highest frequency of filter
 // TypeFilter: Type of filter : default = -1 = actual filter (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // Enable :  Filter enabled
 // LoopProc : external procedure of object to synchronize after DSP done
@@ -2897,7 +2897,7 @@ begin
   4://  DSPFFTLowPass
   begin
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C :=
-  1 / Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  1 / Tan(Pi * (LowFrequency) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C +
@@ -2920,8 +2920,8 @@ begin
 
   5://  DSPFFTHighPass
   begin
-  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C :=
-  Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C := 
+  Tan(Pi * (HighFrequency) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C +
