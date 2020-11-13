@@ -167,33 +167,35 @@ var
         uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 610, 610 * 0.99, -1, -1, -1, 0, -1, True);
 
         sleep(300);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 0.99, -1, -1, -1, 1, -1, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 0.99, -1, -1, -1, 0, -1, True);
 
         sleep(150);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 420, 420 * 0.99, -1, -1, -1, 2, -1, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 420, 420 * 0.99, -1, -1, -1, 0, -1, True);
 
         sleep(300);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 320, 320 * 0.99, -1, -1, -1, 2, -1, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 320, 320 * 0.99, -1, -1, -1, 0, -1, True);
 
         sleep(150);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 660, 660 * 0.99, -1, -1, -1, 1, -1, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, 660, 660 * 0.99, -1, -1, -1, 0, -1, True);
 
         sleep(300);
 
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 0.99, -1, -1, -1, 6, 1, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 0.99, -1, -1, -1, 0, 1, True);
 
         sleep(300);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 1.01, -1, -1, -1, 6, 0, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 1.01, -1, -1, -1, 0, 0, True);
 
         sleep(300);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 0.99, -1, -1, -1, 6, 1, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 0.99, -1, -1, -1, 0, 1, True);
 
         sleep(300);
-        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 1.01, -1, -1, -1, 10, 0, True);
+        uos_InputSetSynth(PlayerIndex1, inindex1, -1, -1, la3, la3 * 1.01, -1, -1, -1, 0, 0, True);
 
         sleep(1500);
 
         uos_stop(PlayerIndex1);
+        
+        writeln(inttostr(GetCPUCount()));
 
       end;
     end;

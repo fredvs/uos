@@ -85,8 +85,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=775
- y=209
+ x=706
+ y=272
  cx=331
  cy=269
 replacedialog=31
@@ -542,12 +542,12 @@ makeoptionson=8
  48
  63
 compilerusedon=29
- 4095
+ 4087
  0
  0
  0
  0
- 0
+ 8
  0
  0
  0
@@ -579,9 +579,9 @@ debuggerusedon=6
  0
  7
 exeusedon=14
- 4095
+ 4087
  0
- 0
+ 8
  0
  0
  0
@@ -617,9 +617,9 @@ unitdirson=8
  196671
  196671
  987135
- 0
+ 8
  196671
- 196671
+ 196663
  196671
  196671
 macroon=5
@@ -836,8 +836,8 @@ path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/filterplayer_fpGUI.pas
 line=5
- 5805
- 5118
+ 5608
+ 4921
  110
  1549
  121
@@ -922,37 +922,57 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=setfilter
+finddtext=uos_BandFilter
 findhistory=20
- setfilter
+ uos_BandFilter
+ (Pi * (HighFrequency - LowFrequency + 1) 
  StreamIn[InputIndex].DSP[FilterIndex].fftdata.C := Tan(Pi * (HighFrequency - LowFrequency + 1) 
+ writeln
+ AddFilter
+ dsp
+ filter
+ setfilter
  StreamIn[InputIndex].DSP[FilterIndex].fftdata
  treamIn[InputIndex].DSP[FilterIndex].fftdata.C := Tan(Pi * (HighFrequency - LowFre
  InputSetLeve
  InputSetLeveArrayEnable
  InputSetArrayLevelEnable
  InputFiltersGetLevel
- uos_BandFilter
  levelfilters
  Levelfilters
  buffervi
  InputAddFilter
  inputgetlevel
  InputSetFilter
- dsp
- Inputsetfilter
- inputget
- ifbuf
- alsobuf
 findoptions=1
-editpos=1
- 0,275
+editpos=5
+ 0,-1073741823
+ 6,3670
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
-sourcefiles=1
- /home/fred/uos/examples/filterplayer_fpGUI.pas
-relpaths=1
+bookmarks1=0
+bookmarks2=0
+bookmarks3=0
+bookmarks4=0
+sourcefiles=5
+ ${PROJECTDIR}/filterplayer_fpGUI.pas
+ /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
+ /home/fred/Downloads/fpGUI-develop/src/corelib/x11/fpg_impl.pas
+ /home/fred/Downloads/fpGUI-develop/src/corelib/fpg_base.pas
+relpaths=5
  filterplayer_fpGUI.pas
-ismoduletexts=1
+ uos.pas
+ uos_flat.pas
+ Downloads/fpGUI-develop/src/corelib/x11/fpg_impl.pas
+ Downloads/fpGUI-develop/src/corelib/fpg_base.pas
+ismoduletexts=5
+ 0
+ 0
+ 0
+ 0
  0
 modules=1
  /home/fred/ideu/src/guitemplates.mfm
@@ -964,7 +984,7 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=592
  [mainfo.basedock]
@@ -986,7 +1006,7 @@ windowlayout=592
  cy=621
  rcx=0
  rcy=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -998,15 +1018,15 @@ windowlayout=592
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=103
+ y=451
  cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1100,7 +1120,7 @@ windowlayout=592
  x=0
  y=0
  cx=205
- cy=450
+ cy=526
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1110,8 +1130,8 @@ windowlayout=592
  width1=82
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=4
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1294,9 +1314,9 @@ windowlayout=592
  ncx=0
  ncy=0
  x=0
- y=507
- cx=1212
- cy=93
+ y=581
+ cx=1356
+ cy=108
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1428,8 +1448,8 @@ windowlayout=592
  ncy=0
  x=0
  y=0
- cx=1212
- cy=51
+ cx=1356
+ cy=49
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1440,12 +1460,12 @@ windowlayout=592
  mdistate=0
  nx=0
  ny=0
- ncx=1197
- ncy=58
+ ncx=1341
+ ncy=44
  x=0
  y=0
- cx=1212
- cy=57
+ cx=1341
+ cy=42
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1455,9 +1475,11 @@ windowlayout=592
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/filterplayer_fpGUI.pas
+ value=/home/fred/uos/examples/uos.pas
  history=20
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/filterplayer_fpGUI.pas
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/atest/test.prj
   /home/fred/ideu/src/ideU.prj
   /home/fred/mseide-msegui/apps/ide/mseide.prj
@@ -1475,8 +1497,6 @@ windowlayout=592
   /home/fred/fptop/src/ptop.prj
   /home/fred/ptop_fred/ptop.prj
   /home/fred/eschecs_mse_argh/eschecs.prj
-  /home/fred/Downloads/jcf-cli-master/CommandLine/Lazarus/jcf.prj
-  /home/fred/mseuniverse/samples/widgets/grids/chessboard/chessboard.prj
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1493,13 +1513,13 @@ windowlayout=592
  ncy=0
  x=208
  y=0
- cx=1004
- cy=450
+ cx=1148
+ cy=526
  rcx=0
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=0
+ index=1
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
@@ -1535,9 +1555,9 @@ windowlayout=592
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1212
- cy=450
+ y=52
+ cx=1356
+ cy=526
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

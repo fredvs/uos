@@ -183,7 +183,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=2
+ index=5
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=713
  width0=47
@@ -470,11 +470,11 @@ makeoptionson=8
  53
  63
 compilerusedon=21
- 4095
+ 4087
  0
  0
  0
- 0
+ 8
  0
  0
  0
@@ -499,9 +499,9 @@ debuggerusedon=6
  0
  13
 exeusedon=14
- 4095
+ 4087
  0
- 0
+ 8
  0
  0
  0
@@ -813,8 +813,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=FillLookupTable
-findhistory=9
+finddtext=inputaddf
+findhistory=11
+ inputaddf
+ addinputfil
  FillLookupTable
  addfroms
  evenharm
@@ -826,8 +828,8 @@ findhistory=9
  LookupTableLeft
 findoptions=1
 editpos=5
- 0,4
  0,-1073741823
+ 0,1146
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -862,11 +864,11 @@ nomenumodules=0
 order=5
  0
  1
- 3
  4
  2
+ 3
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=579
  [mainfo.basedock]
@@ -888,7 +890,7 @@ windowlayout=579
  cy=621
  rcx=0
  rcy=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -1002,7 +1004,7 @@ windowlayout=579
  x=0
  y=0
  cx=205
- cy=450
+ cy=524
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1013,7 +1015,7 @@ windowlayout=579
  sortdescend1=0
  sorted=0
  col=1
- row=-1073741823
+ row=7
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1196,9 +1198,9 @@ windowlayout=579
  ncx=0
  ncy=0
  x=0
- y=507
- cx=1212
- cy=93
+ y=581
+ cx=1356
+ cy=108
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1330,7 +1332,7 @@ windowlayout=579
  ncy=0
  x=0
  y=0
- cx=1212
+ cx=1356
  cy=51
  rcx=0
  rcy=0
@@ -1342,12 +1344,12 @@ windowlayout=579
  mdistate=0
  nx=0
  ny=0
- ncx=1197
- ncy=56
+ ncx=1341
+ ncy=54
  x=0
  y=0
- cx=1212
- cy=55
+ cx=1356
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1357,8 +1359,9 @@ windowlayout=579
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/consolesynth.pas
+ value=/home/fred/uos/examples/uos.pas
  history=20
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consolesynth.pas
   /home/fred/uos/examples/define.inc
   /home/fred/atest/test.prj
@@ -1378,9 +1381,8 @@ windowlayout=579
   /home/fred/fptop/src/ptop.prj
   /home/fred/ptop_fred/ptop.prj
   /home/fred/eschecs_mse_argh/eschecs.prj
-  /home/fred/Downloads/jcf-cli-master/CommandLine/Lazarus/jcf.prj
  [debuggerfo.project_options]
- value=1
+ value=2
  [debuggerfo.hints]
  value=1
  [sourcefo]
@@ -1395,19 +1397,19 @@ windowlayout=579
  ncy=0
  x=208
  y=0
- cx=1004
- cy=450
+ cx=1148
+ cy=524
  rcx=0
  rcy=0
  [sourcefo.files_tab]
  order=5
   0
   1
-  3
   4
   2
+  3
  firsttab=0
- index=0
+ index=1
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
@@ -1444,8 +1446,8 @@ windowlayout=579
  ncy=0
  x=0
  y=54
- cx=1212
- cy=450
+ cx=1356
+ cy=524
  rcx=0
  rcy=0
 [targetconsole]

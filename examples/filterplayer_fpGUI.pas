@@ -182,7 +182,6 @@ var
        uos_CreatePlayer(PlayerIndex1,sender);
     {$endif}
 
-
   //// Create the player.
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
@@ -211,7 +210,7 @@ var
   //////////// FramesCount : default : -1 (= 65536)
   // ChunkCount : default : -1 (= 512)
   
-       EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 1000, 1, 1, true, nil);
+       EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, 50, 1000, 1, 1, true, nil);
       //////////// PlayerIndex : Index of a existing Player
       ////////// In1Index : InputIndex of a existing Input
       ////////// LowFrequency : Lowest frequency of filter
@@ -223,8 +222,13 @@ var
       ////////// LoopProc : External procedure to execute after filter
       //  result : -1 nothing created, otherwise index of DSPIn in array
 
-      EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1000, 8000, 1, 1, true, nil);
-      EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 8000, 22000, 1, 1, true, nil);
+      EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1001, 5000, 1, 1, true, nil);
+     
+      EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 5001, 15000, 1, 1, true, nil);
+      
+      // the all range
+     //  uos_InputAddFilter(PlayerIndex1, In1Index, 20, 18000, 1, 1, true, nil);
+
 
     if radiobutton1.Checked = True then
       typfilt := 2;
@@ -234,7 +238,7 @@ var
       typfilt := 4;
     if radiobutton4.Checked = True then
       typfilt := 5;
-
+      
     FTIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, StrToInt(edit2.Text), StrToInt(edit1.Text),
     1, typfilt, true, nil);
 
@@ -262,6 +266,7 @@ var
     btnPause.Enabled := True;
     btnResume.Enabled := False;
     btnStop.Enabled := True;
+    
     TrackBar1proc;
     TrackBar2proc;
     TrackBar3proc;
@@ -295,50 +300,46 @@ var
         1, typfilt, True, checkbox2.Checked, nil);
   end;
 
-  procedure TFilterplayer.TrackBar3proc;
+   procedure TFilterplayer.TrackBar3proc;
   var
     gain: double;
+    tracpos : integer;
   begin
-    if (TrackBar3.Position) = 100 then
-      gain := 1
-    else
-    if (200 - TrackBar3.Position) > 100 then
-      gain := 1 + ((200 - TrackBar3.Position) / 25)
-    else
-      gain := (TrackBar3.Position) / 100;
-    if  (btnStart.Enabled = False) then
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, Gain, -1, True,
+  tracpos := -1*trackBar3.Position; 
+  
+      if (tracpos) = 0 then
+      gain := 0
+    else      gain := ((tracpos) / 40);   
+    //  if (btnStart.Enabled = true) then
+     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, Gain, -1, True,
         checkbox1.Checked, nil);
   end;
 
   procedure TFilterplayer.TrackBar2proc;
   var
     gain: double;
+    tracpos : integer;
   begin
-    if (TrackBar2.Position) = 100 then
-      gain := 1
+  tracpos := -1*trackBar2.Position; 
+      if (tracpos) = 0 then
+      gain := 0
     else
-    if (200 - TrackBar2.Position) > 100 then
-      gain := 1 + ((200 - TrackBar2.Position) / 25)
-    else
-      gain := (TrackBar2.Position) / 100;
-    if (btnStart.Enabled = False) then
+      gain := ((tracpos) / 40);
+     //  if (btnStart.Enabled = true) then
      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, Gain, -1, True,
         checkbox1.Checked, nil);
   end;
 
-  procedure TFilterplayer.TrackBar1proc;
+ procedure TFilterplayer.TrackBar1proc;
   var
     gain: double;
+    tracpos : integer;
   begin
-    if (TrackBar1.Position) = 100 then
-      gain := 1
-    else
-    if (200 - TrackBar1.Position) > 100 then
-      gain := 1 + ((200 - TrackBar1.Position) / 25)
-    else
-      gain := (TrackBar1.Position) / 100;
-    if (btnStart.Enabled = False) then
+  tracpos := -1*trackBar1.Position; 
+      if (tracpos) = 0 then
+      gain := 0
+    else      gain := ((tracpos) / 40);   
+    //  if (btnStart.Enabled = true) then
      uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, Gain, -1, True,
         checkbox1.Checked, nil);
   end;
@@ -637,10 +638,11 @@ var
   begin
     Name := 'TrackBar1';
     SetPosition(24, 160, 36, 74);
-    Max := 200;
+    Max := 100;
+    min := -100;
     Orientation := orVertical;
     ParentShowHint := False;
-    Position := 100;
+    Position := 0;
     TabOrder := 22;
     Hint := '';
     onchange := @TrackBar1Change;
@@ -651,10 +653,11 @@ var
   begin
     Name := 'TrackBar2';
     SetPosition(80, 160, 32, 74);
-    Max := 200;
+    Max := 100;
+    min := -100;
     Orientation := orVertical;
     ParentShowHint := False;
-    Position := 100;
+    Position := 0 ;
     TabOrder := 23;
     Hint := '';
     onchange := @TrackBar2Change;
@@ -665,10 +668,11 @@ var
   begin
     Name := 'TrackBar3';
     SetPosition(136, 160, 28, 74);
-    Max := 200;
+    Max := 100;
+    min := -100;
     Orientation := orVertical;
     ParentShowHint := False;
-    Position := 100;
+    Position := 0;
     TabOrder := 24;
     Hint := '';
     onchange := @TrackBar3Change;

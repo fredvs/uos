@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.10.0'
   object Shape3: TShape
     Left = 8
     Height = 65
@@ -280,10 +280,11 @@ object Form1: TForm1
     Height = 80
     Top = 154
     Width = 46
-    Max = 200
+    Max = 100
+    Min = -100
     OnChange = TrackBar1Change
     Orientation = trVertical
-    Position = 100
+    Position = 0
     Reversed = True
     TickStyle = tsNone
     TabOrder = 7
@@ -360,10 +361,11 @@ object Form1: TForm1
     Height = 80
     Top = 154
     Width = 46
-    Max = 200
+    Max = 100
+    Min = -100
     OnChange = TrackBar2Change
     Orientation = trVertical
-    Position = 100
+    Position = 0
     Reversed = True
     TickStyle = tsNone
     TabOrder = 12
@@ -385,10 +387,11 @@ object Form1: TForm1
     Height = 80
     Top = 154
     Width = 46
-    Max = 200
+    Max = 100
+    Min = -100
     OnChange = TrackBar3Change
     Orientation = trVertical
-    Position = 100
+    Position = 0
     Reversed = True
     TickStyle = tsNone
     TabOrder = 13
@@ -457,7 +460,7 @@ object Form1: TForm1
     TabOrder = 17
   end
   object OpenDialog1: TOpenDialog
-    left = 76
-    top = 36
+    Left = 76
+    Top = 36
   end
 end

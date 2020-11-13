@@ -98,16 +98,14 @@ end;
 procedure TForm1.TrackBar3Change(Sender: TObject);
 var
   gain: double;
+   tracpos : integer;
 begin
-  if TrackBar3.Position = 100 then
-    gain := 1
-  else
-  if TrackBar3.Position > 100 then
-    gain := 1 + ((100 - TrackBar3.Position) / 25)
-  else
-    gain := TrackBar3.Position / 100;
+   tracpos := -1*trackBar3.Position;
 
-  if (button3.Enabled = False) then
+  if (tracpos) = 0 then
+      gain := 0
+    else      gain := ((tracpos) / 40);
+
     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, Gain, -1, True,
       checkbox1.Checked, nil);
 end;
@@ -202,9 +200,9 @@ begin
   if radiobutton2.Checked = True then
     typfilt := 3;
   if radiobutton3.Checked = True then
-    typfilt := 4;
-  if radiobutton4.Checked = True then
     typfilt := 5;
+  if radiobutton4.Checked = True then
+    typfilt := 4;
   if (button3.Enabled = False) then
     uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, StrToInt(edit6.Text),
       StrToInt(edit5.Text),
@@ -217,16 +215,15 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 var
   gain: double;
+  tracpos : integer;
 begin
-  if TrackBar1.Position = 100 then
-    gain := 1
-  else
-  if TrackBar1.Position > 100 then
-    gain := 1 + ((100 - TrackBar1.Position) / 20)
-  else
-    gain := TrackBar1.Position / 100;
-  if (button3.Enabled = False) then
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, Gain, -1, True,
+   tracpos := -1*trackBar1.Position;
+
+  if (tracpos) = 0 then
+      gain := 0
+    else      gain := ((tracpos) / 40);
+
+   uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, Gain, -1, True,
       checkbox1.Checked, nil);
 end;
 
@@ -234,15 +231,13 @@ end;
 procedure TForm1.TrackBar2Change(Sender: TObject);
 var
   gain: double;
+  tracpos : integer;
 begin
-  if TrackBar2.Position = 100 then
-    gain := 1
-  else
-  if TrackBar2.Position > 100 then
-    gain := 1 + ((100 - TrackBar2.Position) / 25)
-  else
-    gain := TrackBar2.Position / 100;
-  if (button3.Enabled = False) then
+   tracpos := -1*trackBar2.Position;
+
+  if (tracpos) = 0 then
+      gain := 0
+    else      gain := ((tracpos) / 40);
     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, Gain, -1, True,
       checkbox1.Checked, nil);
 end;
@@ -338,7 +333,7 @@ begin
   //////////// FramesCount : default : -1 (= 65536)
   // ChunkCount : default : -1 (= 512)
 
-  EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 1000, 1, 1, True, nil);
+  EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, 50, 1000, 1, 1, True, nil);
   //////////// PlayerIndex : Index of a existing Player
   ////////// In1Index : InputIndex of a existing Input
   ////////// LowFrequency : Lowest frequency of filter
@@ -350,8 +345,8 @@ begin
   ////////// LoopProc : External procedure to execute after filter
   //  result : -1 nothing created, otherwise index of DSPIn in array
 
-  EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1000, 8000, 1, 1, True, nil);
-  EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 8000, 22000, 1, 1, True, nil);
+  EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1001, 5000, 1, 1, True, nil);
+  EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 5001, 15000, 1, 1, True, nil);
 
   if radiobutton1.Checked = True then
     typfilt := 2;
