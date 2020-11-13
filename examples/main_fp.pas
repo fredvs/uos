@@ -100,11 +100,13 @@ var
   gain: double;
    tracpos : integer;
 begin
-   tracpos := -1*trackBar3.Position;
+   tracpos := trackBar3.Position;
 
-  if (tracpos) = 0 then
-      gain := 0
-    else      gain := ((tracpos) / 40);
+   if (tracpos) = 0 then gain := 1
+  else
+  if tracpos > 0 then
+          gain := 1 + (abs(tracpos) / 33)
+          else gain := (abs(tracpos) / 100) ;
 
     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, Gain, -1, True,
       checkbox1.Checked, nil);
@@ -217,11 +219,13 @@ var
   gain: double;
   tracpos : integer;
 begin
-   tracpos := -1*trackBar1.Position;
+   tracpos := trackBar1.Position;
 
-  if (tracpos) = 0 then
-      gain := 0
-    else      gain := ((tracpos) / 40);
+  if (tracpos) = 0 then gain := 1
+  else
+  if tracpos > 0 then
+          gain := 1 + (abs(tracpos) / 33)
+          else gain := (abs(tracpos) / 100) ;
 
    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, Gain, -1, True,
       checkbox1.Checked, nil);
@@ -233,11 +237,13 @@ var
   gain: double;
   tracpos : integer;
 begin
-   tracpos := -1*trackBar2.Position;
+   tracpos := trackBar2.Position;
 
-  if (tracpos) = 0 then
-      gain := 0
-    else      gain := ((tracpos) / 40);
+  if (tracpos) = 0 then gain := 1
+  else
+  if tracpos > 0 then
+          gain := 1 + (abs(tracpos) / 33)
+          else gain := (abs(tracpos) / 100) ;
     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, Gain, -1, True,
       checkbox1.Checked, nil);
 end;
@@ -373,43 +379,15 @@ begin
   ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
   ////////// Enable :  Filter enabled
 
-
-  if TrackBar1.Position = 100 then
-    EqGain := 1
-  else
-  if TrackBar1.Position > 100 then
-    EqGain := 1 + ((100 - TrackBar1.Position) div 25)
-  else
-    EqGain := TrackBar1.Position div 100;
-
-  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, EqGain, -1, True,
-    checkbox1.Checked, nil);
-
-  if TrackBar2.Position = 100 then
-    EqGain := 1
-  else
-  if TrackBar2.Position > 100 then
-    EqGain := 1 + ((100 - TrackBar2.Position) div 25)
-  else
-    EqGain := TrackBar2.Position div 100;
-  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, EqGain, -1, True,
-    checkbox1.Checked, nil);
-
-  if TrackBar3.Position = 100 then
-    EqGain := 1
-  else
-  if TrackBar3.Position > 100 then
-    EqGain := 1 + ((100 - TrackBar3.Position) div 25)
-  else
-    EqGain := TrackBar3.Position div 100;
-  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, EqGain, -1, True,
-    checkbox1.Checked, nil);
-
   uos_EndProc(PlayerIndex1, @ClosePlayer1);
   ///// Assign the procedure of object to execute at end
   //////////// PlayerIndex : Index of a existing Player
   //////////// ClosePlayer1 : procedure of object to execute inside the loop
   /////// procedure to execute when stream is terminated
+
+  TrackBar1Change(sender);
+  TrackBar2Change(sender);
+  TrackBar3Change(sender);
 
   uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
 

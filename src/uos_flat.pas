@@ -1195,7 +1195,7 @@ function uos_InputAddFilter(PlayerIndex: cint32; InputIndex: cint32; LowFrequenc
 // HighFrequency : Highest frequency of filter
 // Gain : gain to apply to filter
 // TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : External procedure to execute after DSP done
 //  result :  index of DSPIn in array  -1 = error
@@ -1219,7 +1219,7 @@ procedure uos_InputSetFilter(PlayerIndex: cint32; InputIndex: cint32; FilterInde
 // HighFrequency : Highest frequency of filter ( -1 : current HighFrequency )
 // Gain : gain to apply to filter
 // TypeFilter: Type of filter : ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : External procedure to execute after DSP done
 // Enable :  Filter enabled
@@ -1241,7 +1241,7 @@ function uos_OutputAddFilter(PlayerIndex: cint32; OutputIndex: cint32; LowFreque
 // HighFrequency : Highest frequency of filter
 // Gain : gain to apply to filter
 // TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : External procedure to execute after DSP done
 //  result : index of DSPOut in array
@@ -1265,7 +1265,7 @@ procedure uos_OutputSetFilter(PlayerIndex: cint32; OutputIndex: cint32; FilterIn
 // HighFrequency : Highest frequency of filter ( -1 : current HighFrequency )
 // Gain : gain to apply to filter
 // TypeFilter: Type of filter : ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fHighPass = 4, fLowPass = 5)
+// fBandPass = 3, fLowPass = 4, fHighPass = 5)
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // Enable :  Filter enabled
 // LoopProc : External procedure to execute after DSP done

@@ -299,7 +299,7 @@ object Form1: TForm1
     TabOrder = 1
   end
   object Button3: TButton
-    Left = 202
+    Left = 176
     Height = 23
     Top = 322
     Width = 42
@@ -322,7 +322,7 @@ object Form1: TForm1
     TabOrder = 8
   end
   object Button5: TButton
-    Left = 252
+    Left = 248
     Height = 23
     Top = 322
     Width = 44
@@ -346,7 +346,7 @@ object Form1: TForm1
     TabOrder = 10
   end
   object Button2: TButton
-    Left = 104
+    Left = 24
     Height = 23
     Top = 320
     Width = 58

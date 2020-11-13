@@ -75,7 +75,7 @@ findinfiledialog=59
   endproconly
   
  [findinfileadialogfo]
- stackedunder=
+ stackedunder=finddialogfo
  x=386
  y=189
  cx=339
@@ -85,8 +85,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=706
- y=272
+ x=700
+ y=244
  cx=331
  cy=269
 replacedialog=31
@@ -836,10 +836,10 @@ path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/filterplayer_fpGUI.pas
 line=5
- 5608
- 4921
+ 5699
+ 5012
  110
- 1549
+ 1551
  121
 address=5
  4860417
@@ -922,32 +922,13 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=uos_BandFilter
-findhistory=20
- uos_BandFilter
- (Pi * (HighFrequency - LowFrequency + 1) 
- StreamIn[InputIndex].DSP[FilterIndex].fftdata.C := Tan(Pi * (HighFrequency - LowFrequency + 1) 
- writeln
- AddFilter
- dsp
- filter
+finddtext=setfilter
+findhistory=1
  setfilter
- StreamIn[InputIndex].DSP[FilterIndex].fftdata
- treamIn[InputIndex].DSP[FilterIndex].fftdata.C := Tan(Pi * (HighFrequency - LowFre
- InputSetLeve
- InputSetLeveArrayEnable
- InputSetArrayLevelEnable
- InputFiltersGetLevel
- levelfilters
- Levelfilters
- buffervi
- InputAddFilter
- inputgetlevel
- InputSetFilter
 findoptions=1
 editpos=5
+ 17,304
  0,-1073741823
- 6,3670
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -957,17 +938,17 @@ bookmarks2=0
 bookmarks3=0
 bookmarks4=0
 sourcefiles=5
- ${PROJECTDIR}/filterplayer_fpGUI.pas
- /home/fred/uos/examples/uos.pas
+ /home/fred/uos/examples/filterplayer_fpGUI.pas
+ ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  /home/fred/Downloads/fpGUI-develop/src/corelib/x11/fpg_impl.pas
- /home/fred/Downloads/fpGUI-develop/src/corelib/fpg_base.pas
+ /home/fred/Downloads/acs-3.0.1/src/filters/acs_filters.pas
 relpaths=5
  filterplayer_fpGUI.pas
  uos.pas
  uos_flat.pas
  Downloads/fpGUI-develop/src/corelib/x11/fpg_impl.pas
- Downloads/fpGUI-develop/src/corelib/fpg_base.pas
+ Downloads/acs-3.0.1/src/filters/acs_filters.pas
 ismoduletexts=5
  0
  0
@@ -984,7 +965,7 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=1
+index=0
 [layout]
 windowlayout=592
  [mainfo.basedock]
@@ -1018,7 +999,7 @@ windowlayout=592
  ny=0
  ncx=0
  ncy=0
- x=103
+ x=125
  y=451
  cx=497
  cy=314
@@ -1459,13 +1440,13 @@ windowlayout=592
  visible=1
  mdistate=0
  nx=0
- ny=0
+ ny=-1
  ncx=1341
- ncy=44
+ ncy=35
  x=0
- y=0
+ y=-1
  cx=1341
- cy=42
+ cy=33
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1475,28 +1456,28 @@ windowlayout=592
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/filterplayer_fpGUI.pas
  history=20
-  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/filterplayer_fpGUI.pas
-  /home/fred/uos/examples/uos_flat.pas
-  /home/fred/atest/test.prj
-  /home/fred/ideu/src/ideU.prj
-  /home/fred/mseide-msegui/apps/ide/mseide.prj
-  /home/fred/uos/examples/simpleplayer.prj
-  /home/fred/ideu_ok/src/ideU.prj
-  /home/fred/eschecs_mse/eschecs.prj
-  /home/fred/mselang-master/src/mselang.prj
-  /home/fred/mseide-msegui/apps/ide/mseide_zeos.prj
-  /home/fred/strumpract/src/strumpract.prj
-  /home/fred/ideu_badplug/src/demos/voiceassist/helloworld/helloworld.prj
-  /home/fred/xtop/src/ptop.prj
-  /home/fred/xtop/src/jtop.prj
-  /home/fred/idegraeme/mseide.prj
-  /home/fred/fptop/src/jtop.prj
-  /home/fred/fptop/src/ptop.prj
-  /home/fred/ptop_fred/ptop.prj
-  /home/fred/eschecs_mse_argh/eschecs.prj
+  /home/fred/uos/examples/uos.pas
+  /home/fred/Downloads/fpGUI-develop/src/corelib/fpg_base.pas
+  /home/fred/uos_squarewaveharmonics/src/uos.pas
+  /home/fred/Downloads/fpGUI-develop/src/corelib/x11/fpg_impl.pas
+  /home/fred/uos_squarewaveharmonics/license.txt
+  /home/fred/strumpract/src/uos_new.pas
+  /home/fred/strumpract/src/uos.pas
+  /home/fred/strumpract/src/define.inc
+  /home/fred/uos_blaazwave/src/uos.pas
+  /home/fred/strumpract/src/dockpanel1.pas
+  /home/fred/alsa_sound/src/alsa_sound.pas
+  /home/fred/alsa_sound/README.md
+  /home/fred/mseide-msegui/apps/ide/main.pas
+  /home/fred/mseide-msegui/msegui.svg
+  /home/fred/strumpract/src/guitars.pas
+  /home/fred/strumpract/src/config.pas
+  /home/fred/uos/examples/deviceinfos_fpGUI.pas
+  /home/fred/uos/readme_examples.txt
+  /home/fred/freepascal-ootb_320test/rtl/unix/sysutils.pp
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1519,7 +1500,7 @@ windowlayout=592
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=1
+ index=0
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
