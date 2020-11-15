@@ -50,6 +50,9 @@ type
     TrackBar1: TTrackBar;
     TrackBar2: TTrackBar;
     TrackBar3: TTrackBar;
+    TrackBar3R: TTrackBar;
+    TrackBar2R: TTrackBar;
+    TrackBar1R: TTrackBar;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -62,6 +65,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure RadioButton1Change(Sender: TObject);
+    procedure Shape1ChangeBounds(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure TrackBar2Change(Sender: TObject);
     procedure ClosePlayer1;
@@ -97,20 +101,28 @@ end;
 
 procedure TForm1.TrackBar3Change(Sender: TObject);
 var
-  gain: double;
-   tracpos : integer;
+  gainl, gainr: double;
+  tracposl, tracposr : integer;
 begin
-   tracpos := trackBar3.Position;
+   tracposl := trackBar3.Position;
+   tracposr := trackBar3r.Position;
 
-  if (tracpos) = 0 then
-      gain := 1
-    else if tracpos > 0 then
-      gain := 1 + (tracpos / 33)
+  if (tracposl) = 0 then
+      gainl := 1
+    else if tracposl > 0 then
+      gainl := 1 + (tracposl / 33)
     else
-      gain := ((100+tracpos) / 100);
-    //  if (btnStart.Enabled = true) then
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3,
-     -1, -1, -1, Gain, -1, -1, -1, Gain,
+      gainl := ((100+tracposl) / 100);
+
+   if (tracposr) = 0 then
+      gainr := 1
+    else if tracposr > 0 then
+      gainr := 1 + (tracposr / 33)
+    else
+      gainr := ((100+tracposr) / 100);
+
+   uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3,
+     -1, -1, -1, Gainl, -1, -1, -1, Gainr,
     True, nil, checkbox1.Checked);
 
 end;
@@ -215,24 +227,38 @@ begin
     True, nil, checkbox2.Checked);
 end;
 
+procedure TForm1.Shape1ChangeBounds(Sender: TObject);
+begin
+
+end;
+
 
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
 var
-  gain: double;
-  tracpos : integer;
+  gainl, gainr: double;
+  tracposl, tracposr : integer;
 begin
-   tracpos := trackBar1.Position;
+   tracposl := trackBar1.Position;
+   tracposr := trackBar1r.Position;
 
-  if (tracpos) = 0 then
-      gain := 1
-    else if tracpos > 0 then
-      gain := 1 + (tracpos / 33)
+  if (tracposl) = 0 then
+      gainl := 1
+    else if tracposl > 0 then
+      gainl := 1 + (tracposl / 33)
     else
-      gain := ((100+tracpos) / 100);
+      gainl := ((100+tracposl) / 100);
+
+   if (tracposr) = 0 then
+      gainr := 1
+    else if tracposr > 0 then
+      gainr := 1 + (tracposr / 33)
+    else
+      gainr := ((100+tracposr) / 100);
+
     //  if (btnStart.Enabled = true) then
     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1,
-     -1, -1, -1, Gain, -1, -1, -1, Gain,
+     -1, -1, -1, Gainl, -1, -1, -1, Gainr,
     True, nil, checkbox1.Checked);
 
 end;
@@ -240,20 +266,28 @@ end;
 
 procedure TForm1.TrackBar2Change(Sender: TObject);
 var
-  gain: double;
-  tracpos : integer;
+  gainl, gainr: double;
+  tracposl, tracposr : integer;
 begin
-   tracpos := trackBar2.Position;
+   tracposl := trackBar2.Position;
+   tracposr := trackBar2r.Position;
 
-  if (tracpos) = 0 then
-      gain := 1
-    else if tracpos > 0 then
-      gain := 1 + (tracpos / 33)
+  if (tracposl) = 0 then
+      gainl := 1
+    else if tracposl > 0 then
+      gainl := 1 + (tracposl / 33)
     else
-      gain := ((100+tracpos) / 100);
-    //  if (btnStart.Enabled = true) then
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2,
-     -1, -1, -1, Gain, -1, -1, -1, Gain,
+      gainl := ((100+tracposl) / 100);
+
+  if (tracposr) = 0 then
+      gainr := 1
+    else if tracposr > 0 then
+      gainr := 1 + (tracposr / 33)
+    else
+      gainr := ((100+tracposr) / 100);
+
+   uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2,
+     -1, -1, -1, Gainl, -1, -1, -1, Gainr,
     True, nil, checkbox1.Checked);
 end;
 

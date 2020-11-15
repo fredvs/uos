@@ -94,24 +94,25 @@ object Form1: TForm1
     Brush.Color = clSilver
   end
   object Shape2: TShape
-    Left = 186
+    Left = 240
     Height = 130
-    Top = 152
-    Width = 312
+    Top = 147
+    Width = 250
     Brush.Color = clSilver
   end
   object Shape1: TShape
-    Left = 8
+    Left = 32
     Height = 130
-    Top = 152
-    Width = 165
+    Top = 147
+    Width = 200
     Brush.Color = clSilver
+    OnChangeBounds = Shape1ChangeBounds
   end
   object RadioGroup1: TRadioGroup
-    Left = 214
+    Left = 248
     Height = 119
-    Top = 158
-    Width = 156
+    Top = 151
+    Width = 140
     AutoFill = True
     Caption = 'Filters'
     ChildSizing.LeftRightSpacing = 6
@@ -123,14 +124,14 @@ object Form1: TForm1
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
     ClientHeight = 98
-    ClientWidth = 152
+    ClientWidth = 136
     TabOrder = 16
     object RadioButton1: TRadioButton
       Tag = 2
       Left = 6
       Height = 22
       Top = 6
-      Width = 140
+      Width = 124
       Caption = 'BandReject'
       Checked = True
       OnChange = RadioButton1Change
@@ -142,7 +143,7 @@ object Form1: TForm1
       Left = 6
       Height = 22
       Top = 28
-      Width = 140
+      Width = 124
       Caption = 'BandPass'
       OnChange = RadioButton1Change
       TabOrder = 1
@@ -152,7 +153,7 @@ object Form1: TForm1
       Left = 6
       Height = 21
       Top = 50
-      Width = 140
+      Width = 124
       Caption = 'LowPass'
       OnChange = RadioButton1Change
       TabOrder = 2
@@ -162,7 +163,7 @@ object Form1: TForm1
       Left = 6
       Height = 21
       Top = 71
-      Width = 140
+      Width = 124
       Caption = 'HighPass'
       OnChange = RadioButton1Change
       TabOrder = 3
@@ -244,11 +245,11 @@ object Form1: TForm1
     TabOrder = 3
   end
   object CheckBox1: TCheckBox
-    Left = 24
+    Left = 55
     Height = 18
-    Top = 252
-    Width = 120
-    Caption = 'Enable Equalizer'
+    Top = 256
+    Width = 163
+    Caption = 'Enable Stereo Equalizer'
     Checked = True
     Font.Height = 12
     OnChange = CheckBox1Change
@@ -264,9 +265,9 @@ object Form1: TForm1
     OnPaint = PaintBox1Paint
   end
   object Label4: TLabel
-    Left = 24
+    Left = 56
     Height = 14
-    Top = 233
+    Top = 244
     Width = 22
     Alignment = taCenter
     Caption = 'Low'
@@ -276,10 +277,11 @@ object Form1: TForm1
     ParentFont = False
   end
   object TrackBar1: TTrackBar
-    Left = 16
-    Height = 80
-    Top = 154
-    Width = 46
+    Left = 40
+    Height = 90
+    Hint = 'Right Channel'
+    Top = 152
+    Width = 25
     Max = 100
     Min = -100
     OnChange = TrackBar1Change
@@ -287,6 +289,8 @@ object Form1: TForm1
     Position = 0
     Reversed = True
     TickStyle = tsNone
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 7
   end
   object Button1: TButton
@@ -357,10 +361,11 @@ object Form1: TForm1
     TabOrder = 11
   end
   object TrackBar2: TTrackBar
-    Left = 65
-    Height = 80
-    Top = 154
-    Width = 46
+    Left = 112
+    Height = 90
+    Hint = 'Left Channel'
+    Top = 152
+    Width = 23
     Max = 100
     Min = -100
     OnChange = TrackBar2Change
@@ -368,12 +373,14 @@ object Form1: TForm1
     Position = 0
     Reversed = True
     TickStyle = tsNone
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 12
   end
   object Label5: TLabel
-    Left = 64
+    Left = 112
     Height = 14
-    Top = 233
+    Top = 244
     Width = 44
     Alignment = taCenter
     Caption = 'Medium'
@@ -383,10 +390,11 @@ object Form1: TForm1
     ParentFont = False
   end
   object TrackBar3: TTrackBar
-    Left = 114
-    Height = 80
-    Top = 154
-    Width = 46
+    Left = 176
+    Height = 90
+    Hint = 'Left Channel'
+    Top = 152
+    Width = 22
     Max = 100
     Min = -100
     OnChange = TrackBar3Change
@@ -394,12 +402,14 @@ object Form1: TForm1
     Position = 0
     Reversed = True
     TickStyle = tsNone
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 13
   end
   object Label6: TLabel
-    Left = 125
+    Left = 184
     Height = 14
-    Top = 233
+    Top = 244
     Width = 25
     Alignment = taCenter
     Caption = 'High'
@@ -409,17 +419,17 @@ object Form1: TForm1
     ParentFont = False
   end
   object Edit5: TEdit
-    Left = 382
+    Left = 400
     Height = 29
-    Top = 166
+    Top = 168
     Width = 80
     TabOrder = 14
     Text = '15000'
   end
   object Label7: TLabel
-    Left = 388
+    Left = 397
     Height = 14
-    Top = 152
+    Top = 154
     Width = 87
     Alignment = taCenter
     Caption = 'High Frequency'
@@ -429,17 +439,17 @@ object Form1: TForm1
     ParentFont = False
   end
   object Edit6: TEdit
-    Left = 382
+    Left = 400
     Height = 29
-    Top = 212
+    Top = 216
     Width = 80
     TabOrder = 15
     Text = '5000'
   end
   object Label8: TLabel
-    Left = 388
+    Left = 400
     Height = 14
-    Top = 198
+    Top = 200
     Width = 84
     Alignment = taCenter
     Caption = 'Low Frequency'
@@ -449,15 +459,66 @@ object Form1: TForm1
     ParentFont = False
   end
   object CheckBox2: TCheckBox
-    Left = 374
+    Left = 390
     Height = 18
-    Top = 246
+    Top = 252
     Width = 94
     Caption = 'Enable Filter'
     Font.Height = 12
     OnChange = RadioButton1Change
     ParentFont = False
     TabOrder = 17
+  end
+  object TrackBar3R: TTrackBar
+    Left = 200
+    Height = 90
+    Hint = 'Right Channel'
+    Top = 152
+    Width = 22
+    Max = 100
+    Min = -100
+    OnChange = TrackBar3Change
+    Orientation = trVertical
+    Position = 0
+    Reversed = True
+    TickStyle = tsNone
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 18
+  end
+  object TrackBar2R: TTrackBar
+    Left = 136
+    Height = 90
+    Hint = 'Right Channel'
+    Top = 152
+    Width = 23
+    Max = 100
+    Min = -100
+    OnChange = TrackBar2Change
+    Orientation = trVertical
+    Position = 0
+    Reversed = True
+    TickStyle = tsNone
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 19
+  end
+  object TrackBar1R: TTrackBar
+    Left = 64
+    Height = 90
+    Hint = 'Left Channel'
+    Top = 152
+    Width = 25
+    Max = 100
+    Min = -100
+    OnChange = TrackBar1Change
+    Orientation = trVertical
+    Position = 0
+    Reversed = True
+    TickStyle = tsNone
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 20
   end
   object OpenDialog1: TOpenDialog
     Left = 76
