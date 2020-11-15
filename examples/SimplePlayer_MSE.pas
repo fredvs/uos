@@ -5,8 +5,8 @@ program SimplePlayer_MSE;
 {$endif}
 
 uses
- {$ifdef FPC}{$ifdef unix} cthreads,{$endif}{$endif} 
- msegui, mainmse_sp, SysUtils;
+ {$ifdef FPC}{$ifdef unix} cthreads,{$endif}{$endif}
+   msegui, mainmse_sp, SysUtils;
  
  var
  ordir: string;

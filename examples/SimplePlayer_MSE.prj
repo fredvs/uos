@@ -914,10 +914,10 @@ findhistory=20
  audio_object
 findoptions=1
 editpos=1
- 0,0
+ 3,89
 bookmarks0=0
 sourcefiles=1
- ${PROJECTDIR}/SimplePlayer_MSE.pas
+ /home/fred/uos/examples/SimplePlayer_MSE.pas
 relpaths=1
  SimplePlayer_MSE.pas
 ismoduletexts=1
@@ -930,7 +930,7 @@ nomenumodules=0
 firsttab=0
 index=0
 [layout]
-windowlayout=557
+windowlayout=565
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -944,9 +944,9 @@ windowlayout=557
  ny=0
  ncx=0
  ncy=0
- x=100
- y=113
- cx=1157
+ x=34
+ y=53
+ cx=1224
  cy=621
  rcx=0
  rcy=0
@@ -962,15 +962,15 @@ windowlayout=557
  ny=0
  ncx=0
  ncy=0
- x=0
- y=24
- cx=1360
- cy=711
+ x=493
+ y=171
+ cx=497
+ cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -988,7 +988,7 @@ windowlayout=557
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [memoryfo]
  splitdir=0
  useroptions=268451963
@@ -1064,7 +1064,7 @@ windowlayout=557
  x=0
  y=0
  cx=205
- cy=453
+ cy=450
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1094,7 +1094,7 @@ windowlayout=557
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [watchpointsfo]
  splitdir=0
  useroptions=268451945
@@ -1114,14 +1114,14 @@ windowlayout=557
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1130,7 +1130,7 @@ windowlayout=557
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1221,7 +1221,7 @@ windowlayout=557
  rcx=1262
  rcy=583
  [watchfo.grid]
- propcolwidthref=121
+ propcolwidthref=111
  values0=0
  values0_ci=-1
  sortdescend0=0
@@ -1250,9 +1250,9 @@ windowlayout=557
  ncx=0
  ncy=0
  x=0
- y=509
- cx=1145
- cy=91
+ y=507
+ cx=1212
+ cy=93
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1384,8 +1384,8 @@ windowlayout=557
  ncy=0
  x=0
  y=0
- cx=1145
- cy=50
+ cx=1212
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1396,12 +1396,12 @@ windowlayout=557
  mdistate=0
  nx=0
  ny=0
- ncx=1147
- ncy=54
+ ncx=1197
+ ncy=58
  x=0
  y=0
- cx=1207
- cy=54
+ cx=1212
+ cy=57
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1411,22 +1411,30 @@ windowlayout=557
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
- history=12
-  /home/fred/uos/examples/define.inc
-  /home/fred/msegui/lib/common/fpccompatibility/mclasses.pas
-  /home/fred/t_linux.pas
-  /home/fred/cfileutl.pas
-  /home/fred/uos/src/uos.pas
-  /home/fred/uos/examples/lib/Linux/32bit/LibPortaudio-32.so
-  /home/fred/uos/examples/deviceinfos_fpGUI.pas
-  /home/fred/strumpract/src/uos.pas
-  /home/fred/ideu/src/sourcepage.pas
-  /lib/crti.o
-  /usr/local/codetyphon/fpcsrc/compiler/systems/i_linux.pas
-  /home/fred/strumpract/src/config.pas
+ value=/home/fred/uos/examples/SimplePlayer_MSE.pas
+ history=20
+  /home/fred/uos/examples/SimplePlayer_MSE.pas
+  /home/fred/atest/test.prj
+  /home/fred/ideu/src/ideU.prj
+  /home/fred/mseide-msegui/apps/ide/mseide.prj
+  /home/fred/uos/examples/simpleplayer.prj
+  /home/fred/ideu_ok/src/ideU.prj
+  /home/fred/eschecs_mse/eschecs.prj
+  /home/fred/mselang-master/src/mselang.prj
+  /home/fred/mseide-msegui/apps/ide/mseide_zeos.prj
+  /home/fred/strumpract/src/strumpract.prj
+  /home/fred/ideu_badplug/src/demos/voiceassist/helloworld/helloworld.prj
+  /home/fred/xtop/src/ptop.prj
+  /home/fred/xtop/src/jtop.prj
+  /home/fred/idegraeme/mseide.prj
+  /home/fred/fptop/src/jtop.prj
+  /home/fred/fptop/src/ptop.prj
+  /home/fred/ptop_fred/ptop.prj
+  /home/fred/eschecs_mse_argh/eschecs.prj
+  /home/fred/Downloads/jcf-cli-master/CommandLine/Lazarus/jcf.prj
+  /home/fred/mseuniverse/samples/widgets/grids/chessboard/chessboard.prj
  [debuggerfo.project_options]
- value=2
+ value=1
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1441,8 +1449,8 @@ windowlayout=557
  ncy=0
  x=208
  y=0
- cx=937
- cy=453
+ cx=1004
+ cy=450
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1483,9 +1491,9 @@ windowlayout=557
  ncx=0
  ncy=0
  x=0
- y=53
- cx=1145
- cy=453
+ y=54
+ cx=1212
+ cy=450
  rcx=0
  rcy=0
 [targetconsole]

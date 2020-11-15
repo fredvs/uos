@@ -85,8 +85,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=700
- y=244
+ x=917
+ y=739
  cx=331
  cy=269
 replacedialog=31
@@ -836,10 +836,10 @@ path=5
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/filterplayer_fpGUI.pas
 line=5
- 5699
- 5012
+ 6111
+ 5424
  110
- 1551
+ 1586
  121
 address=5
  4860417
@@ -922,34 +922,59 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=setfilter
-findhistory=1
- setfilter
+finddtext=outputsetf
+findhistory=11
+ outputsetf
+ outputaddf
+ InputAddFilter
+ OutputAddFilter
+ OutputSetFilter
+ inputaddfi
+ InputSetFilter
+ FHighFreq
+ shr 1
+ LowFrequency
+ inputsetfi
 findoptions=1
-editpos=5
- 17,304
+editpos=8
+ 6,318
+ 0,1205
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
+ 0,-1073741823
+ 0,1351
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
- /home/fred/uos/examples/filterplayer_fpGUI.pas
+bookmarks5=0
+bookmarks6=0
+bookmarks7=0
+sourcefiles=8
+ ${PROJECTDIR}/filterplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  /home/fred/Downloads/fpGUI-develop/src/corelib/x11/fpg_impl.pas
  /home/fred/Downloads/acs-3.0.1/src/filters/acs_filters.pas
-relpaths=5
+ ${PROJECTDIR}/filterplayer_fpGUI.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos_flat.pas
+relpaths=8
  filterplayer_fpGUI.pas
  uos.pas
  uos_flat.pas
  Downloads/fpGUI-develop/src/corelib/x11/fpg_impl.pas
  Downloads/acs-3.0.1/src/filters/acs_filters.pas
-ismoduletexts=5
+ filterplayer_fpGUI.pas
+ uos_flat.pas
+ uos_flat.pas
+ismoduletexts=8
+ 0
+ 0
+ 0
  0
  0
  0
@@ -964,17 +989,26 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
+order=8
+ 0
+ 1
+ 7
+ 3
+ 6
+ 4
+ 5
+ 2
 firsttab=0
 index=0
 [layout]
-windowlayout=592
+windowlayout=601
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
  [mainfo]
  splitdir=0
  useroptions=301990011
- stackedunder=
+ stackedunder=finddialogfo
  parent=
  mdistate=0
  nx=0
@@ -999,8 +1033,8 @@ windowlayout=592
  ny=0
  ncx=0
  ncy=0
- x=125
- y=451
+ x=493
+ y=171
  cx=497
  cy=314
  rcx=0
@@ -1101,7 +1135,7 @@ windowlayout=592
  x=0
  y=0
  cx=205
- cy=526
+ cy=524
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1111,8 +1145,8 @@ windowlayout=592
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=4
+ col=1
+ row=-1073741823
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1430,7 +1464,7 @@ windowlayout=592
  x=0
  y=0
  cx=1356
- cy=49
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1440,13 +1474,13 @@ windowlayout=592
  visible=1
  mdistate=0
  nx=0
- ny=-1
- ncx=1341
- ncy=35
+ ny=0
+ ncx=1212
+ ncy=57
  x=0
- y=-1
- cx=1341
- cy=33
+ y=0
+ cx=1356
+ cy=57
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1459,25 +1493,25 @@ windowlayout=592
  value=/home/fred/uos/examples/filterplayer_fpGUI.pas
  history=20
   /home/fred/uos/examples/filterplayer_fpGUI.pas
-  /home/fred/uos/examples/uos.pas
-  /home/fred/Downloads/fpGUI-develop/src/corelib/fpg_base.pas
-  /home/fred/uos_squarewaveharmonics/src/uos.pas
-  /home/fred/Downloads/fpGUI-develop/src/corelib/x11/fpg_impl.pas
-  /home/fred/uos_squarewaveharmonics/license.txt
-  /home/fred/strumpract/src/uos_new.pas
-  /home/fred/strumpract/src/uos.pas
-  /home/fred/strumpract/src/define.inc
-  /home/fred/uos_blaazwave/src/uos.pas
-  /home/fred/strumpract/src/dockpanel1.pas
-  /home/fred/alsa_sound/src/alsa_sound.pas
-  /home/fred/alsa_sound/README.md
-  /home/fred/mseide-msegui/apps/ide/main.pas
-  /home/fred/mseide-msegui/msegui.svg
-  /home/fred/strumpract/src/guitars.pas
-  /home/fred/strumpract/src/config.pas
-  /home/fred/uos/examples/deviceinfos_fpGUI.pas
-  /home/fred/uos/readme_examples.txt
-  /home/fred/freepascal-ootb_320test/rtl/unix/sysutils.pp
+  /home/fred/atest/test.prj
+  /home/fred/ideu/src/ideU.prj
+  /home/fred/mseide-msegui/apps/ide/mseide.prj
+  /home/fred/uos/examples/simpleplayer.prj
+  /home/fred/ideu_ok/src/ideU.prj
+  /home/fred/eschecs_mse/eschecs.prj
+  /home/fred/mselang-master/src/mselang.prj
+  /home/fred/mseide-msegui/apps/ide/mseide_zeos.prj
+  /home/fred/strumpract/src/strumpract.prj
+  /home/fred/ideu_badplug/src/demos/voiceassist/helloworld/helloworld.prj
+  /home/fred/xtop/src/ptop.prj
+  /home/fred/xtop/src/jtop.prj
+  /home/fred/idegraeme/mseide.prj
+  /home/fred/fptop/src/jtop.prj
+  /home/fred/fptop/src/ptop.prj
+  /home/fred/ptop_fred/ptop.prj
+  /home/fred/eschecs_mse_argh/eschecs.prj
+  /home/fred/Downloads/jcf-cli-master/CommandLine/Lazarus/jcf.prj
+  /home/fred/mseuniverse/samples/widgets/grids/chessboard/chessboard.prj
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1495,10 +1529,19 @@ windowlayout=592
  x=208
  y=0
  cx=1148
- cy=526
+ cy=524
  rcx=0
  rcy=0
  [sourcefo.files_tab]
+ order=8
+  0
+  1
+  7
+  3
+  6
+  4
+  5
+  2
  firsttab=0
  index=0
  [confideufo.fontname]
@@ -1509,7 +1552,7 @@ windowlayout=592
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=confdebuggerfo
  parent=
  mdistate=0
  nx=0
@@ -1536,15 +1579,15 @@ windowlayout=592
  ncx=0
  ncy=0
  x=0
- y=52
+ y=54
  cx=1356
- cy=526
+ cy=524
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=confdebuggerfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0

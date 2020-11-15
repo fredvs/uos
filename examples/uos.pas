@@ -500,12 +500,23 @@ type
   
   Tuos_FFT = class(TObject)
   public
-  TypeFilter: integer;
-  LowFrequency, HighFrequency: cint32;
-  AlsoBuf: boolean;
+  
+  TypeFilterL, TypeFilterR: integer;
+  LowFrequencyL, HighFrequencyL: cfloat;
+  LowFrequencyR, HighFrequencyR: cfloat;
+  GainL, GainR: cfloat;
+  
+  // Left
   a3, a32: array[0..2] of cfloat;
   b2, x0, x1, y0, y1, b22, x02, x12, y02, y12: TArray01;
-  C, D, C2, D2, Gain, Leftlevel, Rightlevel: cfloat;
+  C, D, C2, D2 : cfloat;
+  
+  // Right
+  a3R, a32R: array[0..2] of cfloat;
+  b2R, x0R, x1R, y0R, y1R, b22R, x02R, x12R, y02R, y12R: TArray01;
+  CR, DR, C2R, D2R : cfloat;
+
+  AlsoBuf: boolean;
   VirtualBuffer: TDArFloat;
   levelstring : string;
    
@@ -1136,63 +1147,87 @@ procedure OutPutSetDSP(OutputIndex: cint32; DSPoutIndex: cint32; Enable: boolean
 // Enable :  DSP enabled
 // example : OutPutSetDSP(OutputIndex1,DSPoutIndex1,True);
 
-function InputAddFilter(InputIndex: cint32; LowFrequency: cint32;
-  HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
-  AlsoBuf: boolean; LoopProc: TProc): cint32;
+function InputAddFilter(InputIndex: cint32; 
+  TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
+  TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
+     AlsoBuf: boolean; LoopProc: TProc): cint32;
 // InputIndex : InputIndex of a existing Input
-// LowFrequency : Lowest frequency of filter
-// HighFrequency : Highest frequency of filter
-// Gain : gain to apply to filter
-// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fLowPass = 4, fHighPass = 5)
+// TypeFilterL: Type of filter left: 
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+          // fBandPass = 3, fLowPass = 4, fHighPass = 5)
+// LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+// HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+// GainL : gain left to apply to filter
+// TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+// HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+// GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
-//  result :  otherwise index of DSPIn in array
-// example :FilterInIndex1 := InputAddFilter(InputIndex1,6000,16000,1,2,true,nil);
+//  result :  index of DSPIn in array
 
 procedure InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
-  LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc );
+  TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
+  TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
+     AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
 // InputIndex : InputIndex of a existing Input
 // DSPInIndex : DSPInIndex of existing DSPIn
-// LowFrequency : Lowest frequency of filter ( -1 : current LowFrequency )
-// HighFrequency : Highest frequency of filter ( -1 : current HighFrequency )
-// Gain : gain to apply to filter
-// TypeFilter: Type of filter : ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fLowPass = 4, fHighPass = 5)
+// TypeFilterL: Type of filter left: 
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+          // fBandPass = 3, fLowPass = 4, fHighPass = 5)
+// LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+// HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+// GainL : gain left to apply to filter
+// TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+// HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+// GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
 // Enable :  Filter enabled
-// example : InputSetFilter(InputIndex1,FilterInIndex1,-1,-1,-1,False,True,nil);
 
-function OutputAddFilter(OutputIndex: cint32; LowFrequency: cint32;
-  HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32;
-  AlsoBuf: boolean; LoopProc: TProc ): cint32;
-// OutputIndex : OutputIndex of a existing Output
-// LowFrequency : Lowest frequency of filter
-// HighFrequency : Highest frequency of filter
-// Gain : gain to apply to filter
-// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fLowPass = 4, fHighPass = 5)
+function OutputAddFilter(OutputIndex: cint32;
+  TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
+  TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
+     AlsoBuf: boolean; LoopProc: TProc): cint32;
+// Output : InputIndex of a existing Output
+// TypeFilterL: Type of filter left: 
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+          // fBandPass = 3, fLowPass = 4, fHighPass = 5)
+// LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+// HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+// GainL : gain left to apply to filter
+// TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+// HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+// GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
-//  result : index of DSPOut in array
-// example :FilterOutIndex1 := OutputAddFilter(OutputIndex1,6000,16000,1,true,nil);
+//  result :  index of DSPIn in array
 
 procedure OutputSetFilter(OutputIndex: cint32; FilterIndex: cint32;
-  LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean;LoopProc: TProc );
-// OutputIndex : OutputIndex of a existing Output
-// FilterIndex : DSPOutIndex of existing DSPOut
-// LowFrequency : Lowest frequency of filter ( -1 : current LowFrequency )
-// HighFrequency : Highest frequency of filter ( -1 : current HighFrequency )
-// Gain : gain to apply to filter
-// TypeFilter: Type of filter : ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fLowPass = 4, fHighPass = 5)
+  TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
+  TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
+     AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
+// OuputIndex : InputIndex of a existing Output
+// DSPInIndex : DSPInIndex of existing DSPIn
+// TypeFilterL: Type of filter left: 
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+          // fBandPass = 3, fLowPass = 4, fHighPass = 5)
+// LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+// HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+// GainL : gain left to apply to filter
+// TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+// HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+// GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-// Enable :  Filter enabled
 // LoopProc : external procedure of object to synchronize after DSP done
-// example : OutputSetFilter(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,True,nil);
+// Enable :  Filter enabled
 
 function DSPLevel(Data: Tuos_Data): Tuos_Data;
 // to get level of buffer (volume)
@@ -2586,35 +2621,49 @@ begin
   Result := Length(StreamOut[OutputIndex].DSP) - 1;
  end;
 
-procedure Tuos_Player.InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
-  LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc );
+procedure Tuos_Player.InputSetFilter(InputIndex: cint32; FilterIndex: cint32; 
+  TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
+  TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
+     AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
 // InputIndex : InputIndex of a existing Input
 // DSPInIndex : DSPInIndex of existing DSPIn
-// LowFrequency : Lowest frequency of filter ( default = -1 : current LowFrequency )
-// HighFrequency : Highest frequency of filter ( default = -1 : current HighFrequency )
-// Gain  : Gain to apply ( -1 = current gain)  ( 0 = silence, 1 = no gain, < 1 = less gain, > 1 = more gain)
-// TypeFilter: Type of filter : ( default = -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fLowPass = 4, fHighPass = 5)
+// TypeFilterL: Type of filter left: 
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+// HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+// GainL : gain left to apply to filter
+// TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+// HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+// GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
 // Enable :  Filter enabled
-// example : InputSetFilter(InputIndex1,FilterInIndex1,1000,1500,-1,True,nil);
+
 begin
 if isAssigned = true then
 begin
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.AlsoBuf := AlsoBuf;
-  if LowFrequency = -1 then
-  LowFrequency := StreamIn[InputIndex].DSP[FilterIndex].fftdata.LowFrequency;
-  if HighFrequency = -1 then
-  HighFrequency := StreamIn[InputIndex].DSP[FilterIndex].fftdata.HighFrequency;
   StreamIn[InputIndex].DSP[FilterIndex].Enabled := Enable;
-  if Gain <> -1 then
-  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Gain := cfloat(Gain);
+ 
+  if LowFrequencyL = -1 then
+  LowFrequencyL := StreamIn[InputIndex].DSP[FilterIndex].fftdata.LowFrequencyL;
+  if LowFrequencyL = -1 then
+  LowFrequencyL := StreamIn[InputIndex].DSP[FilterIndex].fftdata.HighFrequencyL;
+  if GainL <> -1 then
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Gainl := cfloat(Gainl);
+  
+  if LowFrequencyR = -1 then
+  LowFrequencyR := StreamIn[InputIndex].DSP[FilterIndex].fftdata.LowFrequencyR;
+  if LowFrequencyR = -1 then
+  LowFrequencyR := StreamIn[InputIndex].DSP[FilterIndex].fftdata.HighFrequencyR; 
+  if GainR <> -1 then
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.GainR := cfloat(GainR);
 
-  if TypeFilter <> -1 then
+  if TypeFilterL <> -1 then
   begin
-  StreamIn[InputIndex].DSP[FilterIndex].fftdata.typefilter := TypeFilter;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.typefilterL := TypeFilterL;
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C := 0.0;
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.D := 0.0;
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] := 0.0;
@@ -2630,16 +2679,16 @@ begin
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.b22[0] := 0.0;
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.b22[1] := 0.0;
 
-  case TypeFilter of
+  case TypeFilterL of
   1:// DSPFFTBandSelect := DSPFFTBandReject + DSPFFTBandPass
   begin
 //  DSPFFTBandReject
     
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
-  Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  Tan(Pi * (HighFrequencyL - LowFrequencyl + 1) /
   StreamIn[InputIndex].Data.SampleRate);
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.D :=
-  2 * Cos(2 * Pi * ((HighFrequency + LowFrequency) shr 1) /
+  2 * Cos(2 * Pi * (round(HighFrequencyl + LowFrequencyl) shr 1) /
   StreamIn[InputIndex].Data.SampleRate);
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + StreamIn[InputIndex].DSP[FilterIndex].fftdata.C);
@@ -2655,10 +2704,10 @@ begin
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0];
 //  DSPFFTBandPass
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C2 :=
-  1 / Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  1 / Tan(Pi * (HighFrequencyl - LowFrequencyl + 1) /
   StreamIn[InputIndex].Data.SampleRate);
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.D2 :=
-  2 * Cos(2 * Pi * ((HighFrequency + LowFrequency) shr 1) /
+  2 * Cos(2 * Pi * (round(HighFrequencyl + LowFrequencyl) shr 1) /
   StreamIn[InputIndex].Data.SampleRate);
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32[0] :=
   1 / (1 + StreamIn[InputIndex].DSP[FilterIndex].fftdata.C2);
@@ -2678,10 +2727,10 @@ begin
   2://  DSPFFTBandReject
   begin
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
-  Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  Tan(Pi * (HighFrequencyl - LowFrequencyl + 1) /
   StreamIn[InputIndex].Data.SampleRate);
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.D :=
-  2 * Cos(2 * Pi * ((HighFrequency + LowFrequency) shr 1) /
+  2 * Cos(2 * Pi * (round(HighFrequencyl + LowFrequencyl) shr 1) /
   StreamIn[InputIndex].Data.SampleRate);
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + StreamIn[InputIndex].DSP[FilterIndex].fftdata.C);
@@ -2701,10 +2750,10 @@ begin
   begin
   
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
-  1 / Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  1 / Tan(Pi * (HighFrequencyl - LowFrequencyl + 1) /
   StreamIn[InputIndex].Data.SampleRate);
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.D :=
-  2 * Cos(2 * Pi * ((HighFrequency + LowFrequency) shr 1) /
+  2 * Cos(2 * Pi * (round(HighFrequencyl + LowFrequencyl) shr 1) /
   StreamIn[InputIndex].Data.SampleRate);
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + StreamIn[InputIndex].DSP[FilterIndex].fftdata.C);
@@ -2724,7 +2773,7 @@ begin
   begin
     
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
-  1 / Tan(Pi * LowFrequency / StreamIn[InputIndex].Data.SampleRate);
+  1 / Tan(Pi * LowFrequencyl / StreamIn[InputIndex].Data.SampleRate);
   
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.C +
@@ -2748,7 +2797,7 @@ begin
   5://  DSPFFTHighPass
   begin
    StreamIn[InputIndex].DSP[FilterIndex].fftdata.C :=
-   Tan(Pi * HighFrequency / StreamIn[InputIndex].Data.SampleRate);
+   Tan(Pi * HighFrequencyl / StreamIn[InputIndex].Data.SampleRate);
   
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.C +
@@ -2769,32 +2818,214 @@ begin
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.C) *
   StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0];
   end;
+  
   end;
   end;
-end;
+  
+  if TypeFilterR <> -1 then
+  begin
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.typefilterR := TypeFilterR;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[1] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.C2r := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.D2r := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32r[0] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32r[1] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32r[2] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b22r[0] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b22r[1] := 0.0;
 
+  case TypeFilterR of
+  1:// DSPFFTBandSelect := DSPFFTBandReject + DSPFFTBandPass
+  begin
+//  DSPFFTBandReject
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr :=
+  Tan(Pi * (HighFrequencyr - LowFrequencyr + 1) /
+  StreamIn[InputIndex].Data.SampleRate);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr :=
+  2 * Cos(2 * Pi * (round(HighFrequencyr + LowFrequencyr) shr 1) /
+  StreamIn[InputIndex].Data.SampleRate);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[1] :=
+  -StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[1];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (1 - StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+//  DSPFFTBandPass
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.C2r :=
+  1 / Tan(Pi * (HighFrequencyr - LowFrequencyr + 1) /
+  StreamIn[InputIndex].Data.SampleRate);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.D2r :=
+  2 * Cos(2 * Pi * (round(HighFrequencyr + LowFrequencyr) shr 1) /
+  StreamIn[InputIndex].Data.SampleRate);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32r[0] :=
+  1 / (1 + StreamIn[InputIndex].DSP[FilterIndex].fftdata.C2r);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32r[1] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32r[2] :=
+  -StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b22r[0] :=
+  -StreamIn[InputIndex].DSP[FilterIndex].fftdata.C2r *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.D2r *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b22r[1] :=
+  (StreamIn[InputIndex].DSP[FilterIndex].fftdata.C2r - 1) *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32r[0];
+//
+  end;
+
+  2://  DSPFFTBandReject
+  begin
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr :=
+  Tan(Pi * (HighFrequencyr - LowFrequencyr + 1) /
+  StreamIn[InputIndex].Data.SampleRate);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr :=
+  2 * Cos(2 * Pi * (round(HighFrequencyr + LowFrequencyr) shr 1) /
+  StreamIn[InputIndex].Data.SampleRate);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[1] :=
+  -StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[1];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (1 - StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  end;
+
+  3://  DSPFFTBandPass
+  begin
+  
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr :=
+  1 / Tan(Pi * (HighFrequencyr- LowFrequencyr + 1) /
+  StreamIn[InputIndex].Data.SampleRate);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr :=
+  2 * Cos(2 * Pi * (round(HighFrequencyr + LowFrequencyr) shr 1) /
+  StreamIn[InputIndex].Data.SampleRate);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[1] := 0.0;
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  -StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  -StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr - 1) *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  end;
+
+  4://  DSPFFTLowPass
+  begin
+    
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr :=
+  1 / Tan(Pi * LowFrequencyr / StreamIn[InputIndex].Data.SampleRate);
+  
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr +
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[1] :=
+  2 * StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  2 * (1 - StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (1 - Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr +
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  end;
+
+  5://  DSPFFTHighPass
+  begin
+   StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr :=
+   Tan(Pi * HighFrequencyr / StreamIn[InputIndex].Data.SampleRate);
+  
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr +
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[1] :=
+
+  -2 * StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  2 * (StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr - 1) *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (1 - Sqrt(2) * StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr +
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  end;
+  end;
+ end;
+ end;
 end;
 
 procedure Tuos_Player.OutputSetFilter(OutputIndex: cint32; FilterIndex: cint32;
-  LowFrequency: cint32; HighFrequency: cint32; Gain: cfloat;
-  TypeFilter: cint32; AlsoBuf: boolean; Enable: boolean; LoopProc: TProc);
-// OutputIndex : OutputIndex of a existing Output
-// FilterIndex : DSPOutIndex of existing DSPOut
-// LowFrequency : Lowest frequency of filter
-// HighFrequency : Highest frequency of filter
-// TypeFilter: Type of filter : default = -1 = actual filter (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fLowPass = 4, fHighPass = 5)
+  TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
+  TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
+     AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
+// OuputIndex : InputIndex of a existing Output
+// DSPInIndex : DSPInIndex of existing DSPIn
+// TypeFilterL: Type of filter left: 
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+          // fBandPass = 3, fLowPass = 4, fHighPass = 5)
+// LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+// HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+// GainL : gain left to apply to filter
+// TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+// HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+// GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-// Enable :  Filter enabled
 // LoopProc : external procedure of object to synchronize after DSP done
-// example : OutputSetFilter(OutputIndex1,FilterOutIndex1,1000,1500,-1,True,nil);
+// Enable :  Filter enabled
 begin
 if isAssigned = true then
 begin
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.AlsoBuf := AlsoBuf;
   StreamOut[OutputIndex].DSP[FilterIndex].Enabled := Enable;
-  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Gain := cfloat(Gain);
-  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.typefilter := TypeFilter;
+ 
+  if LowFrequencyL = -1 then
+  LowFrequencyL := StreamOut[OutputIndex].DSP[FilterIndex].fftdata.LowFrequencyL;
+  if LowFrequencyL = -1 then
+  LowFrequencyL := StreamOut[OutputIndex].DSP[FilterIndex].fftdata.HighFrequencyL;
+  if GainL <> -1 then
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Gainl := cfloat(Gainl);
+  
+  if LowFrequencyR = -1 then
+  LowFrequencyR := StreamOut[OutputIndex].DSP[FilterIndex].fftdata.LowFrequencyR;
+  if LowFrequencyR = -1 then
+  LowFrequencyR := StreamOut[OutputIndex].DSP[FilterIndex].fftdata.HighFrequencyR; 
+  if GainR <> -1 then
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.GainR := cfloat(GainR);
+
+  if TypeFilterL <> -1 then
+  begin
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.typefilterL := TypeFilterL;
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C := 0.0;
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D := 0.0;
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0] := 0.0;
@@ -2810,16 +3041,16 @@ begin
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b22[0] := 0.0;
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b22[1] := 0.0;
 
-  case TypeFilter of
+  case TypeFilterL of
   1:// DSPFFTBandSelect := DSPFFTBandReject + DSPFFTBandPass
   begin
 //  DSPFFTBandReject
-  
+    
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C :=
-  Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  Tan(Pi * (HighFrequencyL - LowFrequencyl + 1) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D :=
-  2 * Cos(2 * Pi * ((HighFrequency + LowFrequency) shr 1) /
+  2 * Cos(2 * Pi * (round(HighFrequencyl + LowFrequencyl) shr 1) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C);
@@ -2834,12 +3065,11 @@ begin
   (1 - StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C) *
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0];
 //  DSPFFTBandPass
- 
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C2 :=
-  1 / Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  1 / Tan(Pi * (HighFrequencyl - LowFrequencyl + 1) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D2 :=
-  2 * Cos(2 * Pi * ((HighFrequency + LowFrequency) shr 1) /
+  2 * Cos(2 * Pi * (round(HighFrequencyl + LowFrequencyl) shr 1) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32[0] :=
   1 / (1 + StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C2);
@@ -2859,10 +3089,10 @@ begin
   2://  DSPFFTBandReject
   begin
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C :=
-  Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  Tan(Pi * (HighFrequencyl - LowFrequencyl + 1) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D :=
-  2 * Cos(2 * Pi * ((HighFrequency + LowFrequency) shr 1) /
+  2 * Cos(2 * Pi * (round(HighFrequencyl + LowFrequencyl) shr 1) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C);
@@ -2880,12 +3110,12 @@ begin
 
   3://  DSPFFTBandPass
   begin
-   
+  
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C :=
-  1 / Tan(Pi * (HighFrequency - LowFrequency + 1) /
+  1 / Tan(Pi * (HighFrequencyl - LowFrequencyl + 1) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D :=
-  2 * Cos(2 * Pi * ((HighFrequency + LowFrequency) shr 1) /
+  2 * Cos(2 * Pi * (round(HighFrequencyl + LowFrequencyl) shr 1) /
   StreamOut[OutputIndex].Data.SampleRate);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C);
@@ -2903,9 +3133,10 @@ begin
 
   4://  DSPFFTLowPass
   begin
-   
+    
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C :=
-  1 / Tan(Pi * LowFrequency / StreamOut[OutputIndex].Data.SampleRate);
+  1 / Tan(Pi * LowFrequencyl / StreamOut[OutputIndex].Data.SampleRate);
+  
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C +
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C *
@@ -2927,14 +3158,15 @@ begin
 
   5://  DSPFFTHighPass
   begin
-   
-  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C :=
-  Tan(Pi * HighFrequency / StreamOut[OutputIndex].Data.SampleRate);
+   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C :=
+   Tan(Pi * HighFrequencyl / StreamOut[OutputIndex].Data.SampleRate);
+  
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0] :=
   1 / (1 + Sqrt(2) * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C +
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C *
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C);
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[1] :=
+
   -2 * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0];
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[2] :=
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0];
@@ -2948,9 +3180,169 @@ begin
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C) *
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3[0];
   end;
+  
   end;
-end;
+  end;
+  
+  if TypeFilterR <> -1 then
+  begin
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.typefilterR := TypeFilterR;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[1] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[2] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[0] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[1] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C2r := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D2r := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32r[0] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32r[1] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32r[2] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b22r[0] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b22r[1] := 0.0;
 
+  case TypeFilterR of
+  1:// DSPFFTBandSelect := DSPFFTBandReject + DSPFFTBandPass
+  begin
+//  DSPFFTBandReject
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr :=
+  Tan(Pi * (HighFrequencyr - LowFrequencyr + 1) /
+  StreamOut[OutputIndex].Data.SampleRate);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr :=
+  2 * Cos(2 * Pi * (round(HighFrequencyr + LowFrequencyr) shr 1) /
+  StreamOut[OutputIndex].Data.SampleRate);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[1] :=
+  -StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[1];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (1 - StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+//  DSPFFTBandPass
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C2r :=
+  1 / Tan(Pi * (HighFrequencyr - LowFrequencyr + 1) /
+  StreamOut[OutputIndex].Data.SampleRate);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D2r :=
+  2 * Cos(2 * Pi * (round(HighFrequencyr + LowFrequencyr) shr 1) /
+  StreamOut[OutputIndex].Data.SampleRate);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32r[0] :=
+  1 / (1 + StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C2r);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32r[1] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32r[2] :=
+  -StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b22r[0] :=
+  -StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C2r *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D2r *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b22r[1] :=
+  (StreamOut[OutputIndex].DSP[FilterIndex].fftdata.C2r - 1) *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a32r[0];
+//
+  end;
+
+  2://  DSPFFTBandReject
+  begin
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr :=
+  Tan(Pi * (HighFrequencyr - LowFrequencyr + 1) /
+  StreamOut[OutputIndex].Data.SampleRate);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr :=
+  2 * Cos(2 * Pi * (round(HighFrequencyr + LowFrequencyr) shr 1) /
+  StreamOut[OutputIndex].Data.SampleRate);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[1] :=
+  -StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[1];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (1 - StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  end;
+
+  3://  DSPFFTBandPass
+  begin
+  
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr :=
+  1 / Tan(Pi * (HighFrequencyr- LowFrequencyr + 1) /
+  StreamOut[OutputIndex].Data.SampleRate);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr :=
+  2 * Cos(2 * Pi * (round(HighFrequencyr + LowFrequencyr) shr 1) /
+  StreamOut[OutputIndex].Data.SampleRate);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[1] := 0.0;
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  -StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  -StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr - 1) *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  end;
+
+  4://  DSPFFTLowPass
+  begin
+    
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr :=
+  1 / Tan(Pi * LowFrequencyr / StreamOut[OutputIndex].Data.SampleRate);
+  
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + Sqrt(2) * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr +
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[1] :=
+  2 * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  2 * (1 - StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (1 - Sqrt(2) * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr +
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  end;
+
+  5://  DSPFFTHighPass
+  begin
+   StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr :=
+   Tan(Pi * HighFrequencyr / StreamOut[OutputIndex].Data.SampleRate);
+  
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0] :=
+  1 / (1 + Sqrt(2) * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr +
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr);
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[1] :=
+
+  -2 * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[2] :=
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[0] :=
+  2 * (StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr - 1) *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.b2r[1] :=
+  (1 - Sqrt(2) * StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr +
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Cr) *
+  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.a3r[0];
+  end;
+  end;
+ end;
+ end;
 end;
 
 {$IF DEFINED(soundtouch)}
@@ -3831,7 +4223,7 @@ begin
   res := fft.a3[0] * arg + fft.a3[1] * fft.x0[0] + fft.a3[2] *
   fft.x1[0] - fft.b2[0] * fft.y0[0] - fft.b2[1] * fft.y1[0];
  
-  if fft.typefilter = 1 then
+  if fft.typefilterL = 1 then
   begin
   res2 := fft.a32[0] * arg + fft.a32[1] * fft.x02[0] + fft.a32[2] *
   fft.x12[0] - fft.b22[0] * fft.y02[0] - fft.b22[1] * fft.y12[0];
@@ -3840,21 +4232,21 @@ begin
   2:
   begin
   if ifbuf = True then
-  ps^[i] := trunc((res * 1) + (res2 * fft.gain)) else
-  ps2^[i] := trunc((res * 1) + (res2 * fft.gain));
+  ps^[i] := trunc((res * 1) + (res2 * fft.gainl)) else
+  ps2^[i] := trunc((res * 1) + (res2 * fft.gainl));
   end;
   1:
   begin
   if ifbuf = True then
-  pl^[i] := trunc((res * 1) + (res2 * fft.gain)) else
-  pl2^[i] := trunc((res * 1) + (res2 * fft.gain));
+  pl^[i] := trunc((res * 1) + (res2 * fft.gainl)) else
+  pl2^[i] := trunc((res * 1) + (res2 * fft.gainl));
   end;
   0:
   begin
   
   if ifbuf = True then
-  pf^[i] := ((res * 1) + (res2 * fft.gain)) else
-  pf2^[i] := ((res * 1) + (res2 * fft.gain));
+  pf^[i] := ((res * 1) + (res2 * fft.gainl)) else
+  pf2^[i] := ((res * 1) + (res2 * fft.gainl));
   end;
   end;
 
@@ -3865,20 +4257,20 @@ begin
   begin
   
   if ifbuf = True then
-  ps^[i] := trunc((res * fft.gain)) else
-  ps2^[i] := trunc(res * fft.gain);
+  ps^[i] := trunc((res * fft.gainl)) else
+  ps2^[i] := trunc(res * fft.gainl);
   end;
   1:
   begin
   if ifbuf = True then
-  pl^[i] := trunc((res * fft.gain)) else
-  pl2^[i] := trunc(res * fft.gain);
+  pl^[i] := trunc((res * fft.gainl)) else
+  pl2^[i] := trunc(res * fft.gainl);
   end;
   0:
   begin
   if ifbuf = True then
-  pf^[i] := ((res * fft.gain)) else
-  pf2^[i] := ((res * fft.gain));
+  pf^[i] := ((res * fft.gainl)) else
+  pf2^[i] := ((res * fft.gainl));
   end;
   end;
 
@@ -3887,7 +4279,7 @@ begin
   fft.y1[0] := fft.y0[0];
   fft.y0[0] := res;
 
-  if fft.typefilter = 1 then
+  if fft.typefilterL = 1 then
   begin
   fft.x12[0] := fft.x02[0];
   fft.x02[0] := arg;
@@ -3903,33 +4295,33 @@ begin
   1: arg := pl^[i];
   0: arg := pf^[i];
   end;
-  res := fft.a3[0] * arg + fft.a3[1] * fft.x0[1] + fft.a3[2] *
-  fft.x1[1] - fft.b2[0] * fft.y0[1] - fft.b2[1] * fft.y1[1];
+  res := fft.a3r[0] * arg + fft.a3r[1] * fft.x0r[1] + fft.a3r[2] *
+  fft.x1r[1] - fft.b2r[0] * fft.y0r[1] - fft.b2r[1] * fft.y1r[1];
 
-  if fft.typefilter = 1 then
+  if fft.typefilterR = 1 then
   begin
-  res2 := fft.a32[0] * arg + fft.a32[1] * fft.x02[1] +
-  fft.a32[2] * fft.x12[1] - fft.b22[0] * fft.y02[1] -
-  fft.b22[1] * fft.y12[1];
+  res2 := fft.a32r[0] * arg + fft.a32r[1] * fft.x02r[1] +
+  fft.a32r[2] * fft.x12r[1] - fft.b22r[0] * fft.y02r[1] -
+  fft.b22r[1] * fft.y12r[1];
 
   case Data.SampleFormat of
   2:
   begin
   if ifbuf = True then
-  ps^[i] := trunc((res * 1) + (res2 * fft.gain)) else
-  ps2^[i] := trunc((res * 1) + (res2 * fft.gain));
+  ps^[i] := trunc((res * 1) + (res2 * fft.gainr)) else
+  ps2^[i] := trunc((res * 1) + (res2 * fft.gainr));
   end;
   1:
   begin
   if ifbuf = True then
-  pl^[i] := trunc((res * 1) + (res2 * fft.gain)) else
-  pl2^[i] := trunc((res * 1) + (res2 * fft.gain));
+  pl^[i] := trunc((res * 1) + (res2 * fft.gainr)) else
+  pl2^[i] := trunc((res * 1) + (res2 * fft.gainr));
   end;
   0:
   begin
   if ifbuf = True then
-  pf^[i] := ((res * 1) + (res2 * fft.gain)) else
-  pf2^[i] := ((res * 1) + (res2 * fft.gain));
+  pf^[i] := ((res * 1) + (res2 * fft.gainr)) else
+  pf2^[i] := ((res * 1) + (res2 * fft.gainr));
   end;
   end;
 
@@ -3939,34 +4331,34 @@ begin
   2:
   begin
   if ifbuf = True then
-  ps^[i] := trunc((res * fft.gain)) else
-  ps2^[i] := trunc((res * fft.gain));
+  ps^[i] := trunc((res * fft.gainr)) else
+  ps2^[i] := trunc((res * fft.gainr));
   end;
   1:
   begin
   if ifbuf = True then
-  pl^[i] := trunc((res * fft.gain)) else
-  pl2^[i] := trunc((res * fft.gain));
+  pl^[i] := trunc((res * fft.gainr)) else
+  pl2^[i] := trunc((res * fft.gainr));
   end;
   0:
   begin
   if ifbuf = True then
-  pf^[i] := ((res * fft.gain)) else
-  pf2^[i] := ((res * fft.gain));
+  pf^[i] := ((res * fft.gainr)) else
+  pf2^[i] := ((res * fft.gainr));
   end;
   end;
 
-  fft.x1[1] := fft.x0[1];
-  fft.x0[1] := arg;
-  fft.y1[1] := fft.y0[1];
-  fft.y0[1] := res;
+  fft.x1r[1] := fft.x0r[1];
+  fft.x0r[1] := arg;
+  fft.y1r[1] := fft.y0r[1];
+  fft.y0r[1] := res;
 
-  if fft.typefilter = 1 then
+  if fft.typefilterR = 1 then
   begin
-  fft.x12[1] := fft.x02[1];
-  fft.x02[1] := arg;
-  fft.y12[1] := fft.y02[1];
-  fft.y02[1] := res2;
+  fft.x12r[1] := fft.x02r[1];
+  fft.x02r[1] := arg;
+  fft.y12r[1] := fft.y02r[1];
+  fft.y02r[1] := res2;
   end;
 
   end;
@@ -4239,19 +4631,25 @@ begin
   StreamOut[OutputIndex].DSP[DSPVolIndex].Enabled := Enable;
 end;
 
-function Tuos_Player.InputAddFilter(InputIndex: cint32; LowFrequency: cint32;
-  HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32; AlsoBuf: boolean;
-  LoopProc: TProc ): cint32;
+function Tuos_Player.InputAddFilter(InputIndex: cint32; 
+  TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
+  TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
+     AlsoBuf: boolean; LoopProc: TProc): cint32;
 // InputIndex : InputIndex of a existing Input
-// LowFrequency : Lowest frequency of filter
-// HighFrequency : Highest frequency of filter
-// Gain : gain to apply to filter ( 1 = no gain )
-// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fLowPass = 4, fHighPass = 5)
+// TypeFilterL: Type of filter left: 
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+// HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+// GainL : gain left to apply to filter
+// TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+// HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+// GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
-//  result : index of DSPIn in array
-// example :FilterInIndex1 := InputAddFilter(InputIndex1,6000,16000,1,1,True,nil);
+//  result :  index of DSPIn in array
+
 var
   FilterIndex: cint32;
 begin
@@ -4268,46 +4666,60 @@ begin
   
   setlength(StreamIn[InputIndex].DSP[FilterIndex].fftdata.Virtualbuffer, length(StreamIn[InputIndex].data.buffer));
    
-  if TypeFilter = -1 then  TypeFilter := 1;
-  InputSetFilter(InputIndex, FilterIndex, LowFrequency, HighFrequency,
-  Gain, TypeFilter, AlsoBuf, True, LoopProc);
+  if TypeFilterL = -1 then  TypeFilterL := 1;
+  if TypeFilterR = -1 then  TypeFilterR := 1; 
+ 
+   InputSetFilter(InputIndex, FilterIndex, TypeFilterL, LowFrequencyL, HighFrequencyL, GainL,
+       TypeFilterR, LowFrequencyR, HighFrequencyR, GainR, AlsoBuf, LoopProc, True);
 
   Result := FilterIndex;
 end;
 
-function Tuos_Player.OutputAddFilter(OutputIndex: cint32; LowFrequency: cint32;
-  HighFrequency: cint32; Gain: cfloat; TypeFilter: cint32; AlsoBuf: boolean;
- LoopProc: TProc): cint32;
-// OutputIndex : OutputIndex of a existing Output
-// LowFrequency : Lowest frequency of filter
-// HighFrequency : Highest frequency of filter
-// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-// fBandPass = 3, fLowPass = 4, fHighPass = 5)
+function Tuos_Player.OutputAddFilter(OutputIndex: cint32; 
+  TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
+  TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
+     AlsoBuf: boolean; LoopProc: TProc): cint32;
+// OutputIndex : InputIndex of a existing Output
+// TypeFilterL: Type of filter left: 
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+// HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+// GainL : gain left to apply to filter
+// TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+// LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+// HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+// GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
-//  result :  index of DSPOut in array
-// example :FilterOutIndex1 := OutputAddFilter(OutputIndex1,6000,16000,1,true);
+//  result :  index of DSPIn in array
+
 var
   FilterIndex: cint32;
 begin
   FilterIndex := OutputAddDSP(OutputIndex, nil, @uos_BandFilter, nil, LoopProc);
   
-   if alsobuf = false then
+ if alsobuf = false then
  begin
-  StreamIn[OutputIndex].data.hasfilters := true;  
-   inc(StreamIn[OutputIndex].data.nbfilters);
+  StreamOut[OutputIndex].data.hasfilters := true;
+   inc(StreamOut[OutputIndex].data.nbfilters);
  end;
-  
+ 
   StreamOut[OutputIndex].DSP[FilterIndex].fftdata :=
   Tuos_FFT.Create();
   
-  if TypeFilter = -1 then  TypeFilter := 1;
-  
-  OutputSetFilter(OutputIndex, FilterIndex, LowFrequency, HighFrequency,
-  Gain, TypeFilter, AlsoBuf, True, LoopProc);
+  setlength(StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Virtualbuffer,
+   length(StreamOut[OutputIndex].data.buffer));
+   
+  if TypeFilterL = -1 then  TypeFilterL := 1;
+  if TypeFilterR = -1 then  TypeFilterR := 1; 
+ 
+   OutputSetFilter(OutputIndex, FilterIndex, TypeFilterL, LowFrequencyL, HighFrequencyL, GainL,
+       TypeFilterR, LowFrequencyR, HighFrequencyR, GainR, AlsoBuf, LoopProc, True);
 
   Result := FilterIndex;
 end;
+
 
 {$IF DEFINED(portaudio)}
 function Tuos_Player.AddFromDevIn(Device: cint32; Latency: CDouble;
@@ -9741,12 +10153,14 @@ var
   i: Integer;
 begin
   inherited;
-
-  TypeFilter:= 0;
-  LowFrequency:= 0;
-  HighFrequency:= 0;
+  
   AlsoBuf:= False;
-
+  
+  TypeFilterL:= 0;
+  LowFrequencyL:= 0;
+  HighFrequencyL:= 0;
+  GainL:= 0;
+   
   for i:= 0 to High(a3) do
     a3[i]:= 0;
   for i:= 0 to High(a32) do
@@ -9770,8 +10184,35 @@ begin
   D:= 0;
   C2:= 0;
   D2:= 0;
-  Gain:= 0;
   
+  TypeFilterR:= 0;
+  LowFrequencyR:= 0;
+  HighFrequencyR:= 0;
+  GainR:= 0;   
+  for i:= 0 to High(a3r) do
+    a3r[i]:= 0;
+  for i:= 0 to High(a32r) do
+    a32r[i]:= 0;
+
+  for i:= 0 to High(TArray01) do
+  begin
+    b2r[i]:= 0;
+    x0r[i]:= 0;
+    x1r[i]:= 0;
+    y0r[i]:= 0;
+    y1r[i]:= 0;
+    b22r[i]:= 0;
+    x02r[i]:= 0;
+    x12r[i]:= 0;
+    y02r[i]:= 0;
+    y12r[i]:= 0;
+  end;
+
+  Cr:= 0;
+  Dr:= 0;
+  C2r:= 0;
+  D2r:= 0;
+
   levelstring := '';
  
   {$IF DEFINED(noiseremoval)}

@@ -102,14 +102,17 @@ var
 begin
    tracpos := trackBar3.Position;
 
-   if (tracpos) = 0 then gain := 1
-  else
-  if tracpos > 0 then
-          gain := 1 + (abs(tracpos) / 33)
-          else gain := (abs(tracpos) / 100) ;
+  if (tracpos) = 0 then
+      gain := 1
+    else if tracpos > 0 then
+      gain := 1 + (tracpos / 33)
+    else
+      gain := ((100+tracpos) / 100);
+    //  if (btnStart.Enabled = true) then
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3,
+     -1, -1, -1, Gain, -1, -1, -1, Gain,
+    True, nil, checkbox1.Checked);
 
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, Gain, -1, True,
-      checkbox1.Checked, nil);
 end;
 
 procedure TForm1.FormActivate(Sender: TObject);
@@ -205,11 +208,11 @@ begin
     typfilt := 5;
   if radiobutton4.Checked = True then
     typfilt := 4;
-  if (button3.Enabled = False) then
-    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, StrToInt(edit6.Text),
-      StrToInt(edit5.Text),
-      1, typfilt, True, checkbox2.Checked, nil);
 
+    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1,
+    typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
+    typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
+    True, nil, checkbox2.Checked);
 end;
 
 
@@ -221,14 +224,17 @@ var
 begin
    tracpos := trackBar1.Position;
 
-  if (tracpos) = 0 then gain := 1
-  else
-  if tracpos > 0 then
-          gain := 1 + (abs(tracpos) / 33)
-          else gain := (abs(tracpos) / 100) ;
+  if (tracpos) = 0 then
+      gain := 1
+    else if tracpos > 0 then
+      gain := 1 + (tracpos / 33)
+    else
+      gain := ((100+tracpos) / 100);
+    //  if (btnStart.Enabled = true) then
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1,
+     -1, -1, -1, Gain, -1, -1, -1, Gain,
+    True, nil, checkbox1.Checked);
 
-   uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, Gain, -1, True,
-      checkbox1.Checked, nil);
 end;
 
 
@@ -239,13 +245,16 @@ var
 begin
    tracpos := trackBar2.Position;
 
-  if (tracpos) = 0 then gain := 1
-  else
-  if tracpos > 0 then
-          gain := 1 + (abs(tracpos) / 33)
-          else gain := (abs(tracpos) / 100) ;
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, Gain, -1, True,
-      checkbox1.Checked, nil);
+  if (tracpos) = 0 then
+      gain := 1
+    else if tracpos > 0 then
+      gain := 1 + (tracpos / 33)
+    else
+      gain := ((100+tracpos) / 100);
+    //  if (btnStart.Enabled = true) then
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2,
+     -1, -1, -1, Gain, -1, -1, -1, Gain,
+    True, nil, checkbox1.Checked);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -339,20 +348,30 @@ begin
   //////////// FramesCount : default : -1 (= 65536)
   // ChunkCount : default : -1 (= 512)
 
-  EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, 50, 1000, 1, 1, True, nil);
-  //////////// PlayerIndex : Index of a existing Player
-  ////////// In1Index : InputIndex of a existing Input
-  ////////// LowFrequency : Lowest frequency of filter
-  ////////// HighFrequency : Highest frequency of filter
-  ////////// Gain : gain to apply to filter ( 1 = no gain )
-  ////////// TypeFilter: Type of filter : default = -1 = fBandSelect (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-  /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
-  ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-  ////////// LoopProc : External procedure to execute after filter
-  //  result : -1 nothing created, otherwise index of DSPIn in array
+   EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index,
+                                   1, 50, 800, 1,
+                                   1, 50, 800, 1, true, nil);
+   // Player Index add filter
+   // InputIndex : InputIndex of a existing Input
+   // TypeFilterL: Type of filter left:
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+          // fBandPass = 3, fLowPass = 4, fHighPass = 5)
+   // LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+   // HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+   // GainL : gain left to apply to filter
+   // TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+   // LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+   // HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+   // GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
+   // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+   //  result :  index of DSPIn in array
 
-  EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1001, 5000, 1, 1, True, nil);
-  EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 5001, 15000, 1, 1, True, nil);
+    EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 801, 3000, 1,
+                                   1, 801, 3000, 1, True, nil);
+
+    EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 3001, 10000, 1,
+                                   1, 3001, 10000, 1, True, nil);
 
   if radiobutton1.Checked = True then
     typfilt := 2;
@@ -363,21 +382,30 @@ begin
   if radiobutton4.Checked = True then
     typfilt := 5;
 
-  FTIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index, StrToInt(edit6.Text),
-    StrToInt(edit5.Text), 1, typfilt, True, nil);
+    FTIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index,
+      typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
+      typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
+       true, nil);
 
-  uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1,
-    True, checkbox2.Checked, nil);
-  //////////// PlayerIndex : Index of a existing Player
-  ////////// InputIndex : InputIndex of a existing Input
-  ////////// DSPInIndex : DSPInIndex of existing DSPIn
-  ////////// LowFrequency : Lowest frequency of filter ( default = -1 : current LowFrequency )
-  ////////// HighFrequency : Highest frequency of filter ( default = -1 : current HighFrequency )
-  ////////// Gain   : Gain to apply ( -1 = current gain)  ( 0 = silence, 1 = no gain, < 1 = less gain, > 1 = more gain)
-  ////////// TypeFilter: Type of filter : ( default = -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-  /////////////////////////// fBandPass = 3, fHighPass = 4, fLowPass = 5)
-  ////////// AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-  ////////// Enable :  Filter enabled
+    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1,
+     -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox2.Checked);
+
+    // InputIndex : InputIndex of a existing Input
+    // DSPInIndex : DSPInIndex of existing DSPIn
+    // TypeFilterL: Type of filter left:
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+          // fBandPass = 3, fLowPass = 4, fHighPass = 5)
+    // LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+    // HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+    // GainL : gain left to apply to filter
+    // TypeFilterR: Type of filter right (ignored if mono):
+          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+    // LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+    // HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+    // GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
+    // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+    // LoopProc : external procedure of object to synchronize after DSP done
+    // Enable :  Filter enabled
 
   uos_EndProc(PlayerIndex1, @ClosePlayer1);
   ///// Assign the procedure of object to execute at end
@@ -414,15 +442,12 @@ end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
-  if (button3.Enabled = False) then
-  begin
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, -1, -1, True,
-      checkbox1.Checked, nil);
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, -1, -1, True,
-      checkbox1.Checked, nil);
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, -1, -1, True,
-      checkbox1.Checked, nil);
-  end;
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1,
+       -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox1.Checked);
+    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2,
+       -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox1.Checked);
+     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3,
+       -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox1.Checked);
 end;
 
 procedure uos_logo();

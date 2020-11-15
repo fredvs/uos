@@ -153,7 +153,7 @@ object Form1: TForm1
       Height = 21
       Top = 50
       Width = 140
-      Caption = 'HighPass'
+      Caption = 'LowPass'
       OnChange = RadioButton1Change
       TabOrder = 2
     end
@@ -163,7 +163,7 @@ object Form1: TForm1
       Height = 21
       Top = 71
       Width = 140
-      Caption = 'LowPass'
+      Caption = 'HighPass'
       OnChange = RadioButton1Change
       TabOrder = 3
     end
