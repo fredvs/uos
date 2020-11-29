@@ -139,7 +139,7 @@ finddialog=8
  x=365
  y=219
  cx=331
- cy=116
+ cy=269
 replacedialog=18
  [replacedialogfo.promptonreplace]
  value=1
@@ -559,9 +559,12 @@ settingsstorage=0
 settingsprojecttree=0
 settingsautoload=0
 settingsautosave=0
-modulenames=0
-moduletypes=0
-modulefiles=0
+modulenames=1
+ SIMPLE_PLAYER
+moduletypes=1
+ TMAINFO
+modulefiles=1
+ /home/fred/uos/examples/mainmse_sp.mfm
 befcommandon=0
 makeoptionson=8
  2559
@@ -570,7 +573,7 @@ makeoptionson=8
  0
  8
  1023
- 2527
+ 2523
  2303
 compilerusedon=29
  3895
@@ -890,8 +893,9 @@ envvarons=0
 [edit]
 hintwidth=314
 hintheight=214
-finddtext=tstrings
+finddtext=reverse
 findhistory=20
+ reverse
  tstrings
  tcomponent
  fpcv3
@@ -899,7 +903,6 @@ findhistory=20
  queue
  endproc
  mono
- reverse
  soundtou
  object_
  flush
@@ -913,24 +916,33 @@ findhistory=20
  uos_loadlib
  audio_object
 findoptions=1
-editpos=1
- 3,89
+editpos=2
+ 0,8
+ 0,516
 bookmarks0=0
-sourcefiles=1
+bookmarks1=0
+sourcefiles=2
  /home/fred/uos/examples/SimplePlayer_MSE.pas
-relpaths=1
+ /home/fred/uos/examples/mainmse_sp.pas
+relpaths=2
  SimplePlayer_MSE.pas
-ismoduletexts=1
+ mainmse_sp.pas
+ismoduletexts=2
  0
-modules=0
-moduleoptions=0
-visiblemodules=0
-nomenumodules=0
+ 0
+modules=1
+ /home/fred/uos/examples/mainmse_sp.mfm
+moduleoptions=1
+ 0
+visiblemodules=1
+ -1
+nomenumodules=1
+ 0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=1
 [layout]
-windowlayout=565
+windowlayout=584
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -970,7 +982,7 @@ windowlayout=565
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1411,7 +1423,7 @@ windowlayout=565
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/SimplePlayer_MSE.pas
+ value=/home/fred/uos/examples/mainmse_sp.pas
  history=20
   /home/fred/uos/examples/SimplePlayer_MSE.pas
   /home/fred/atest/test.prj
@@ -1455,7 +1467,7 @@ windowlayout=565
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=0
+ index=1
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
@@ -1496,6 +1508,25 @@ windowlayout=565
  cy=450
  rcx=0
  rcy=0
+ [_mse_simple_player_mse_]
+ splitdir=0
+ useroptions=268451963
+ stackedunder=mainfo
+ parent=
+ mdistate=3
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=398
+ y=128
+ cx=491
+ cy=404
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=1
 [targetconsole]
 finddtext=
 findhistory=0

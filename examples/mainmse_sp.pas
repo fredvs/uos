@@ -154,7 +154,8 @@ uses
   begin
    
     if (Data.position > Data.OutFrames div Data.channels) then
-     uos_InputSeek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
+     uos_InputSeek(PlayerIndex1, InputIndex1, Data.position - 
+     (Length(Data.buffer) div 4));
    end;
 
   function DSPReverseAfter(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
@@ -167,10 +168,10 @@ uses
    begin
      SetLength(arfl, Data.outframes);
  
-        while x < Data.outframes -1  do
+        while x < (Data.outframes) -1  do
           begin
-      arfl[x] := Data.Buffer[Data.outframes - x - 1] ;
-      arfl[x+1] := Data.Buffer[Data.outframes - x ]  ;
+      arfl[x] := Data.Buffer[(Data.outframes) - x - 1] ;
+      arfl[x+1] := Data.Buffer[(Data.outframes) - x ]  ;
       x := x +2;
           end;
     Result := arfl;

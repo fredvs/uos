@@ -8634,7 +8634,7 @@ if err > 0 then
   if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 1) then
   begin
   StreamOut[x].FileBuffer.Data.WriteBuffer(
-  StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.ratio * rat);
+  StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.ratio * rat * 2);
   end else
 
   StreamOut[x].FileBuffer.Data.WriteBuffer(

@@ -937,14 +937,14 @@ findhistory=11
  inputsetfi
 findoptions=1
 editpos=8
- 6,318
- 0,1205
+ 0,245
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,1351
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -954,7 +954,7 @@ bookmarks5=0
 bookmarks6=0
 bookmarks7=0
 sourcefiles=8
- ${PROJECTDIR}/filterplayer_fpGUI.pas
+ /home/fred/uos/examples/filterplayer_fpGUI.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
  /home/fred/Downloads/fpGUI-develop/src/corelib/x11/fpg_impl.pas
@@ -992,12 +992,12 @@ nomenumodules=1
 order=8
  0
  1
- 7
+ 2
  3
+ 5
  6
  4
- 5
- 2
+ 7
 firsttab=0
 index=0
 [layout]
@@ -1008,7 +1008,7 @@ windowlayout=601
  [mainfo]
  splitdir=0
  useroptions=301990011
- stackedunder=finddialogfo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1536,12 +1536,12 @@ windowlayout=601
  order=8
   0
   1
-  7
+  2
   3
+  5
   6
   4
-  5
-  2
+  7
  firsttab=0
  index=0
  [confideufo.fontname]
@@ -1587,7 +1587,7 @@ windowlayout=601
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=targetconsolefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0

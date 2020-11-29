@@ -54,7 +54,7 @@ var
  {$if defined(cpu64) and defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
-    SoundFilename := ordir + 'sound/test.flac';
+    SoundFilename := ordir + 'sound/test.wav';
    {$ENDIF}
    
   {$if defined(cpu86) and defined(linux)}
@@ -103,13 +103,13 @@ var
    res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil, nil) ;
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
-
-   if res = 0 then begin
+    
+     if res = 0 then begin
 
        PlayerIndex1 := 0;
 
     // Create a memory buffer from a audio file
-    thebuffer := uos_File2Buffer(pchar(SoundFilename), 0, thebufferinfos, -1, -1);
+    thebuffer := uos_File2Buffer(pchar(SoundFilename), 1, thebufferinfos, -1, -1);
           
     // You may store that buffer into ressource...
     // ... and when you get the buffer from ressource....
@@ -120,7 +120,7 @@ var
   input1 := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024);
 
    // add a Output into device with default parameters
-    
+
   {$if defined(cpuarm)} // needs lower latency
         uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,input1), 
   uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024, -1);
@@ -128,6 +128,10 @@ var
      uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,input1), 
   uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024, -1);
        {$endif}
+      
+       
+  // uos_addIntoFile(PlayerIndex1, Pchar(ordir + 'testwav.wav'), -1,1,1,1024,1 ); //
+    
  
     /////// everything is ready, here we are, lets play it...
 

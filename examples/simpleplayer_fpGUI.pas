@@ -352,7 +352,8 @@ loadok : boolean = false;
   begin
    
     if (Data.position > Data.OutFrames div Data.channels) then
-     uos_InputSeek(PlayerIndex1, InputIndex1, Data.position - (Data.OutFrames div Data.channels))
+     uos_InputSeek(PlayerIndex1, InputIndex1, Data.position - 
+     (Data.OutFrames div Data.channels));     
    end;
 
   function DSPReverseAfter(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;

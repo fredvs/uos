@@ -368,7 +368,8 @@ function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar; OutputI
  {$IF DEFINED(shout)}
 function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: cint; SampleFormat: cint;
  EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
-// Add a Output into a IceCast server for audio-web-streaming// SampleRate : delault : -1 (48100)
+// Add a Output into a IceCast server for audio-web-streaming
+// SampleRate : delault : -1 (48100)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // EncodeType : default : -1 (0:Music) (0: Music, 1:Voice)
 // SampleFormat : -1 default : float32 : (0:float32, 1:Int16)
