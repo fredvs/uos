@@ -54,7 +54,7 @@ var
  {$if defined(cpu64) and defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
-    SoundFilename := ordir + 'sound/test.wav';
+    SoundFilename := ordir + 'sound/test.flac';
    {$ENDIF}
    
   {$if defined(cpu86) and defined(linux)}
@@ -129,9 +129,11 @@ var
   uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024, -1);
        {$endif}
       
-       
-  // uos_addIntoFile(PlayerIndex1, Pchar(ordir + 'testwav.wav'), -1,1,1,1024,1 ); //
-    
+ {  // Save to file     
+   uos_addIntoFile(PlayerIndex1, Pchar(ordir + 'testwav.wav'), 
+   uos_inputgetSampleRate(PlayerIndex1,input1),
+   uos_inputgetChannels(PlayerIndex1,input1),1,1024,-1 ); //
+  }  
  
     /////// everything is ready, here we are, lets play it...
 

@@ -897,8 +897,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=wChannels
+finddtext=addfromm
 findhistory=20
+ addfromm
  wChannels
  addIntoFile
  save2file
@@ -918,15 +919,14 @@ findhistory=20
  wBlockAlign
  wBitsPerSample
  FileBuffer
- write
 findoptions=1
 editpos=9
  0,0
  0,8613
  0,-1073741823
- 0,106
- 0,398
- 0,-1073741823
+ 0,131
+ 0,1618
+ 0,0
  0,-1073741823
  0,-1073741823
  0,0
