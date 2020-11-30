@@ -107,8 +107,8 @@ var
      if res = 0 then begin
 
        PlayerIndex1 := 0;
-
-    // Create a memory buffer from a audio file
+       
+     // Create a memory buffer from a audio file
     thebuffer := uos_File2Buffer(pchar(SoundFilename), 1, thebufferinfos, -1, -1);
           
     // You may store that buffer into ressource...
@@ -123,17 +123,17 @@ var
 
   {$if defined(cpuarm)} // needs lower latency
         uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,input1), 
-  uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024, -1);
+  uos_inputgetChannels(PlayerIndex1,input1) , 1, 1024, -1);
        {$else}
      uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,input1), 
-  uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024, -1);
+  uos_inputgetChannels(PlayerIndex1,input1) , 1, 1024, -1);
        {$endif}
       
- {  // Save to file     
+ { // Save to file     
    uos_addIntoFile(PlayerIndex1, Pchar(ordir + 'testwav.wav'), 
    uos_inputgetSampleRate(PlayerIndex1,input1),
    uos_inputgetChannels(PlayerIndex1,input1),1,1024,-1 ); //
-  }  
+//}  
  
     /////// everything is ready, here we are, lets play it...
 

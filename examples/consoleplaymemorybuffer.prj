@@ -20,7 +20,7 @@ order17=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplaymemorybuffer.prj
-findinfiledialog=42
+findinfiledialog=53
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -29,17 +29,18 @@ findinfiledialog=42
  value=0
  [findinfileadialogfo.wholeword]
  value=0
+ [findinfileadialogfo.indirectories]
+ value=0
  [findinfileadialogfo.inprojectdir]
  value=1
  [findinfileadialogfo.casesensitive]
- value=0
- [findinfileadialogfo.indirectories]
  value=0
  [findinfileadialogfo.mask]
  value="*.pas" "*.pp" "*.inc"
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.dir]
+ filenamescust=0
  filenames=1
   /home/fred/uos/examples/
  filecolwidth=0
@@ -47,6 +48,16 @@ findinfiledialog=42
  y=0
  cx=0
  cy=0
+ panel=0
+ noicon=0
+ compact=0
+ showhidden=0
+ colnamewidth=0
+ colsizewidth=0
+ colextwidth=0
+ coldatewidth=0
+ splitterplaces=0
+ splitterlateral=0
  filehistory=0
  filefilterindex=0
  filefilter=
@@ -58,11 +69,11 @@ findinfiledialog=42
   samplerate
   
  [findinfileadialogfo]
- stackedunder=
+ stackedunder=finddialogfo
  x=386
  y=189
  cx=339
- cy=251
+ cy=308
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -897,10 +908,11 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=addfromm
+finddtext=wChannels
 findhistory=20
- addfromm
  wChannels
+ addfromm
+ File2Buffer
  addIntoFile
  save2file
  savetofile
@@ -918,18 +930,17 @@ findhistory=20
  uos_
  wBlockAlign
  wBitsPerSample
- FileBuffer
 findoptions=1
 editpos=9
- 0,0
- 0,8613
- 0,-1073741823
- 0,131
- 0,1618
- 0,0
  0,-1073741823
  0,-1073741823
- 0,0
+ 0,-1073741823
+ 0,128
+ 0,-1073741823
+ 0,-1073741823
+ 0,8593
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1027,7 +1038,7 @@ windowlayout=583
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1462,11 +1473,11 @@ windowlayout=583
  nx=0
  ny=0
  ncx=1341
- ncy=43
+ ncy=35
  x=0
  y=0
  cx=1341
- cy=41
+ cy=33
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1478,9 +1489,9 @@ windowlayout=583
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consoleplaymemorybuffer.pas
  history=20
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consoleplaymemorybuffer.pas
   /home/fred/uos/examples/uos_flat.pas
-  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/simpleplayer_fpGUI.pas
   /home/fred/uos/examples/simpleplayer_fpGUI
   /usr/lib32/libharfbuzz.so.0.10800.4
