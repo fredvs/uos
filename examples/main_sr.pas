@@ -6,8 +6,17 @@ unit main_sr;
 interface
 
 uses
-  uos_flat, ctypes, Forms, Dialogs, SysUtils, Graphics,
-  StdCtrls, ComCtrls, ExtCtrls, Classes, Controls;
+  uos_flat,
+  ctypes,
+  Forms,
+  Dialogs,
+  SysUtils,
+  Graphics,
+  StdCtrls,
+  ComCtrls,
+  ExtCtrls,
+  Classes,
+  Controls;
 
 type
   { TForm1 }
@@ -55,11 +64,11 @@ var
   Form1: TForm1;
   BufferBMP: TBitmap;
   PlayerIndex1: cardinal;
-  In1Index, out1index : integer;
-  thebuffer : array of cfloat;
-  thebufferinfos : TuosF_BufferInfos;
-  thememorystream : Tmemorystream;
- 
+  In1Index, out1index: integer;
+  thebuffer: array of cfloat;
+  thebufferinfos: TuosF_BufferInfos;
+  thememorystream: Tmemorystream;
+
 implementation
 
 {$R *.lfm}
@@ -68,11 +77,11 @@ implementation
 
 procedure TForm1.ClosePlayer1;
 begin
-   sleep(500);
+  sleep(500);
   application.ProcessMessages;
-  button2.Enabled := True;
-  button3.Enabled := False;
-  button5.Enabled := False;
+  button2.Enabled   := True;
+  button3.Enabled   := False;
+  button5.Enabled   := False;
   CheckBox1.Enabled := True;
   CheckBox2.Enabled := True;
   if CheckBox2.Checked = True then
@@ -120,8 +129,8 @@ begin
   Edit3.Text := application.Location + '/sound/testrecord.wav';
    {$ENDIF}
     {$ENDIF}
-   
-    {$if defined(cpu64) and defined(linux) }
+
+    {$if defined(CPUAMD64) and defined(linux) }
   Edit1.Text :=  application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text :=  application.Location + 'lib/Linux/64bit/LibSndFile-64.so';
    Edit3.Text := application.Location + 'sound/testrecord.wav';
@@ -134,6 +143,11 @@ begin
    {$if defined(linux) and defined(cpuarm)}
   Edit1.Text :=  application.Location + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit2.Text :=  application.Location + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+   Edit3.Text := application.Location + 'sound/testrecord.wav';
+  {$ENDIF}
+   {$if defined(linux) and defined(cpuaarch64)}
+  Edit1.Text := application.Location + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  Edit2.Text := application.Location + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
    Edit3.Text := application.Location + 'sound/testrecord.wav';
   {$ENDIF}
 
@@ -161,17 +175,17 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // Load the libraries
-//function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
+  //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
   // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
-  if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), nil, nil, nil, nil) = 0 then
-   begin
+  if uos_LoadLib(PChar(edit1.Text), PChar(edit2.Text), nil, nil, nil, nil) = 0 then
+  begin
     form1.hide;
     button1.Caption := 'PortAudio and SndFile libraries are loaded...';
     button1.Enabled := False;
-    edit1.ReadOnly := True;
-    edit2.ReadOnly := True;
-    form1.Height := 318;
-    form1.Position := poScreenCenter;
+    edit1.ReadOnly  := True;
+    edit2.ReadOnly  := True;
+    form1.Height    := 318;
+    form1.Position  := poScreenCenter;
     form1.Show;
   end
   else
@@ -205,21 +219,21 @@ begin
     //uos_AddIntoFileFromMem(PlayerIndex1, Pchar(edit3.Text));
     //// add Output into wav file (save record) from TMemoryStream  with default parameters
 
-      // saving in a file using a File-Stream:
-      uos_AddIntoFile(PlayerIndex1, Pchar(edit3.Text));
+    // saving in a file using a File-Stream:
+    uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text));
     //// add Output into wav file (save record) from TFileStream  with default parameters
-   
-  // saving in a Memory-Buffer:  
-  // SetLength(thebuffer, 0);
-  // uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
-  
- // saving in a Memory-Stream:  
- // if thememorystream = nil then thememorystream := tmemorystream.create;
- // uos_AddIntoMemoryStream(PlayerIndex1, (thememorystream),-1,-1,-1,-1);
-    
-  // saving in a file using a Menory-Stream:   
-  // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
-  //// add Output into wav file (save record)  with default parameters
+
+    // saving in a Memory-Buffer:  
+    // SetLength(thebuffer, 0);
+    // uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
+
+    // saving in a Memory-Stream:  
+    // if thememorystream = nil then thememorystream := tmemorystream.create;
+    // uos_AddIntoMemoryStream(PlayerIndex1, (thememorystream),-1,-1,-1,-1);
+
+    // saving in a file using a Menory-Stream:   
+    // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
+    //// add Output into wav file (save record)  with default parameters
 
     //   uos_addIntoFile(PlayerIndex1, Pchar(edit3.Text) ,8000,1,1,-1 ); //  add a Output into wav with custom parameters mono radio-quality
     //////////// PlayerIndex : Index of a existing Player
@@ -229,20 +243,20 @@ begin
     //////////// SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)  (only int16 and int32 are implemented)
     //////////// FramesCount : -1 default : 65536
 
-     //// add a Output into OUT device with default parameters
-  
-  
-  {$if defined(cpuarm)} // needs lower latency
-      out1index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1) ;
+    //// add a Output into OUT device with default parameters
+
+
+       {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+    out1index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1) ;
        {$else}
-      out1index := uos_AddIntoDevOut(PlayerIndex1);
+    out1index := uos_AddIntoDevOut(PlayerIndex1);
        {$endif}
-  
-  
-    uos_outputsetenable(PlayerIndex1,out1index,checkbox1.checked);
 
 
-   // uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536, -1);   //// add a Output into device with custom parameters
+    uos_outputsetenable(PlayerIndex1, out1index, checkbox1.Checked);
+
+
+    // uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536, -1);   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -250,9 +264,9 @@ begin
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 65536
-      // ChunkCount : default : -1 (= 512)
+    // ChunkCount : default : -1 (= 512)
 
-   In1Index := uos_AddFromDevIn(PlayerIndex1);  /// add Input from mic into IN device with default parameters
+    In1Index := uos_AddFromDevIn(PlayerIndex1);  /// add Input from mic into IN device with default parameters
 
     // In1Index := uos_AddFromDevIn(PlayerIndex1, -1, -1, 8000, -1, 1, 4096);   //// add input from mic with custom parameters
     //////////// PlayerIndex : Index of a existing Player
@@ -281,9 +295,9 @@ begin
 
     uos_Play(PlayerIndex1);  /////// everything is ready to play...
 
-    Button2.Enabled := False;
-    Button3.Enabled := True;
-    Button4.Enabled := False;
+    Button2.Enabled   := False;
+    Button3.Enabled   := True;
+    Button4.Enabled   := False;
     //CheckBox1.Enabled := False;
     CheckBox2.Enabled := False;
   end;
@@ -292,7 +306,7 @@ end;
 procedure TForm1.Button3Click(Sender: TObject);
 begin
   uos_Stop(PlayerIndex1);
-   ClosePlayer1;
+  ClosePlayer1;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -306,25 +320,25 @@ begin
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
-  In1Index := uos_AddFromFile(PlayerIndex1, Pchar(Edit3.Text));
-   //// add input from audio file with default parameters
-   // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
-   //////////// PlayerIndex : Index of a existing Player
-   ////////// FileName : filename of audio file
-   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+  In1Index := uos_AddFromFile(PlayerIndex1, PChar(Edit3.Text));
+  //// add input from audio file with default parameters
+  // In1Index := Player1.AddFromFile(0, Edit3.Text, -1, 0);  //// add input from audio file with custom parameters
+  //////////// PlayerIndex : Index of a existing Player
+  ////////// FileName : filename of audio file
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
 
-//  uos_AddIntoDevOut(PlayerIndex1); //// add a Output into OUT device with default parameters
+  //  uos_AddIntoDevOut(PlayerIndex1); //// add a Output into OUT device with default parameters
 
-{$if defined(cpuarm)} // needs lower latency
-       uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+     {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+    uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index),
     uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1, -1);
        {$else}
-        uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+  uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
     uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1, -1);
        {$endif}
 
-     //// add a Output into device with custom parameters
+  //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
   //////////// Latency  ( -1 is latency suggested ) )
@@ -334,14 +348,14 @@ begin
   //////////// FramesCount : -1 default : 65536
   // ChunkCount : default : -1 (= 512)
 
-   uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, In1Index);
-   /////  Convert mono channel to stereo channels.
-    //// If the input is stereo, original buffer is keeped.
-    ////////// InputIndex : InputIndex of a existing Input
-    //  result :  index of DSPIn in array
-    ////////// example  DSPIndex1 := uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, InputIndex1);
+  uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, In1Index);
+  /////  Convert mono channel to stereo channels.
+  //// If the input is stereo, original buffer is keeped.
+  ////////// InputIndex : InputIndex of a existing Input
+  //  result :  index of DSPIn in array
+  ////////// example  DSPIndex1 := uos_InputAddDSP1ChanTo2Chan(PlayerIndex1, InputIndex1);
 
-   uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
+  uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
   ///// DSP Volume changer
   //////////// PlayerIndex : Index of a existing Player
   ////////// In1Index : InputIndex of a existing input
@@ -360,16 +374,16 @@ begin
 
   uos_Play(PlayerIndex1);  /////// everything is ready to play...
 
-  button4.Enabled := False;
-  button5.Enabled := True;
-  button2.Enabled := False;
+  button4.Enabled   := False;
+  button5.Enabled   := True;
+  button2.Enabled   := False;
   CheckBox1.Enabled := False;
   CheckBox2.Enabled := False;
 end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
- uos_outputsetenable(0,out1index,checkbox1.checked);
+  uos_outputsetenable(0, out1index, checkbox1.Checked);
 end;
 
 procedure uos_logo();
@@ -377,17 +391,17 @@ var
   xpos, ypos: integer;
   ratio: double;
 begin
-  xpos := 0;
-  ypos := 0;
-  ratio := 1;
+  xpos      := 0;
+  ypos      := 0;
+  ratio     := 1;
   BufferBMP := TBitmap.Create;
   with form1 do
   begin
     form1.PaintBox1.Parent.DoubleBuffered := True;
     PaintBox1.Height := round(ratio * 116);
-    PaintBox1.Width := round(ratio * 100);
+    PaintBox1.Width  := round(ratio * 100);
     BufferBMP.Height := PaintBox1.Height;
-    BufferBMP.Width := PaintBox1.Width;
+    BufferBMP.Width  := PaintBox1.Width;
     BufferBMP.Canvas.AntialiasingMode := amOn;
     BufferBMP.Canvas.Pen.Width := round(ratio * 6);
     BufferBMP.Canvas.brush.Color := clmoneygreen;
@@ -441,8 +455,9 @@ begin
     Button3.Click;
     sleep(500);
   end;
-   if button1.Enabled = False then
-   uos_free;
+  if button1.Enabled = False then
+    uos_free;
 end;
 
 end.
+

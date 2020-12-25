@@ -7,7 +7,7 @@ program consolesynth;
 uses
  {$IFDEF UNIX}
   cthreads,
-    {$ENDIF}
+     {$ENDIF}
   Classes,
   SysUtils,
   CustApp,
@@ -45,7 +45,7 @@ var
      {$endif}
  {$ENDIF}
 
-  {$if defined(cpu64) and  defined(linux) }
+  {$if defined(CPUAMD64) and  defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   {$ENDIF}
 
@@ -55,6 +55,10 @@ var
 
   {$if defined(linux) and defined(cpuarm)}
     PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
+  {$ENDIF}
+
+  {$if defined(linux) and defined(cpuaarch64)}
+  PA_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
   {$ENDIF}
 
  {$IFDEF freebsd}
@@ -98,8 +102,9 @@ var
       PlayerIndex1 := 0;
       inindex1     := -1;
 
-      if uos_CreatePlayer(PlayerIndex1) then inindex1 := 
-   uos_AddFromSynth(PlayerIndex1, -1, -1, -1, 420, 420, -1, -1, -1, -1, -1, 0, -1, -1, -1);
+      if uos_CreatePlayer(PlayerIndex1) then
+        inindex1 :=
+          uos_AddFromSynth(PlayerIndex1, -1, -1, -1, 420, 420, -1, -1, -1, -1, -1, 0, -1, -1, -1);
 
 { function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, WaveTypeR: integer;
                            FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
@@ -128,7 +133,7 @@ var
 //  result:  Input Index in array  -1 = error
 }
 
-    {$if defined(cpuarm)} // needs lower latency
+     {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
       if uos_AddIntoDevOut(PlayerIndex1,-1,0.3,-1,-1, 0,-1,-1) > - 1 then
        {$else}
       if uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, 0, -1, -1) > -1 then
@@ -194,8 +199,8 @@ var
         sleep(1500);
 
         uos_stop(PlayerIndex1);
-        
-        writeln(inttostr(GetCPUCount()));
+
+        writeln(IntToStr(GetCPUCount()));
 
       end;
     end;

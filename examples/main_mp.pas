@@ -9,7 +9,13 @@ unit main_mp;
 interface
 
 uses
-  uos_flat, Forms, Dialogs, Graphics, StdCtrls, ExtCtrls, Classes;
+  uos_flat,
+  Forms,
+  Dialogs,
+  Graphics,
+  StdCtrls,
+  ExtCtrls,
+  Classes;
 
 type
 
@@ -119,21 +125,21 @@ procedure TForm1.ClosePlayer0;
 begin
   button16.Enabled := False;
   button15.Enabled := False;
-  button3.Enabled := False;
+  button3.Enabled  := False;
 end;
 
 procedure TForm1.ClosePlayer1;
 begin
   button17.Enabled := False;
   button18.Enabled := False;
-  button6.Enabled := False;
+  button6.Enabled  := False;
 end;
 
 procedure TForm1.ClosePlayer2;
 begin
   button19.Enabled := False;
   button20.Enabled := False;
-  button9.Enabled := False;
+  button9.Enabled  := False;
 end;
 
 procedure TForm1.ClosePlayer3;
@@ -183,7 +189,7 @@ begin
    {$ENDIF}
     {$ENDIF}
 
-    {$if defined(cpu64) and defined(linux) }
+    {$if defined(CPUAMD64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
@@ -197,7 +203,13 @@ begin
   Edit8.text := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
   Edit9.text := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
  {$endif}
-   
+
+ {$if defined(linux) and defined(cpuaarch64)}
+  Edit1.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  Edit2.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
+  Edit3.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
+ {$ENDIF}
+
     {$if defined(linux) and defined(cpuarm)}
   Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit2.Text := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
@@ -237,24 +249,23 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
-
 begin
   // Load the libraries
   //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
   // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
-  if uos_LoadLib(Pchar(Edit1.text), Pchar(Edit2.text),
-     Pchar(Edit3.text), Pchar(Edit8.text), Pchar(Edit9.text), nil) = 0 then
- begin
+  if uos_LoadLib(PChar(Edit1.Text), PChar(Edit2.Text),
+    PChar(Edit3.Text), PChar(Edit8.Text), PChar(Edit9.Text), nil) = 0 then
+  begin
     form1.hide;
-    form1.Position := podefault;
+    form1.Position  := podefault;
     button1.Caption := 'PortAudio, SndFile and Mpg123 libraries are loaded...';
     button1.Enabled := False;
-    edit1.ReadOnly := True;
-    edit2.ReadOnly := True;
-    edit3.ReadOnly := True;
-    form1.Height := 566;
-    form1.Position := poScreenCenter;
+    edit1.ReadOnly  := True;
+    edit2.ReadOnly  := True;
+    edit3.ReadOnly  := True;
+    form1.Height    := 566;
+    form1.Position  := poScreenCenter;
     form1.Show;
   end
   else
@@ -304,14 +315,14 @@ begin
 end;
 
 procedure TForm1.Button11Click(Sender: TObject);
- var
-  InIndex : integer ;
+var
+  InIndex: integer;
 begin
   PlayerIndex3 := 3;
 
   uos_CreatePlayer(PlayerIndex3);
-  
- InIndex := uos_AddFromFile(PlayerIndex3, pchar(Edit7.Text), -1, 0, -1);
+
+  InIndex := uos_AddFromFile(PlayerIndex3, PChar(Edit7.Text), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
@@ -320,13 +331,12 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
-
-   {$if defined(cpuarm)} // needs lower latency
+    {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
    uos_AddIntoDevOut(PlayerIndex3, -1, 0.3, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1, -1,);
       {$else}
   uos_AddIntoDevOut(PlayerIndex3, -1, -1, uos_InputGetSampleRate(PlayerIndex3, InIndex), -1, 0, -1, -1);
        {$endif}
-  
+
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -336,11 +346,11 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
-    // ChunkCount : default : -1 (= 512)
+  // ChunkCount : default : -1 (= 512)
   //  result : -1 nothing created, otherwise Output Index in array
 
 
-   /////// procedure to execute when stream is terminated
+  /////// procedure to execute when stream is terminated
   uos_EndProc(PlayerIndex3, @ClosePlayer3);
   ///// Assign the procedure of object to execute at end
   //////////// PlayerIndex : Index of a existing Player
@@ -411,13 +421,13 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 var
-  InIndex : integer ;
+  InIndex: integer;
 begin
   PlayerIndex0 := 0;
 
   uos_CreatePlayer(PlayerIndex0);
-  
-   InIndex := uos_AddFromFile(PlayerIndex0, pchar(Edit4.Text), -1, 0, -1);
+
+  InIndex := uos_AddFromFile(PlayerIndex0, PChar(Edit4.Text), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
@@ -426,12 +436,12 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
-   {$if defined(cpuarm)} // needs lower latency
+   {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
    uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1, -1);
       {$else}
   uos_AddIntoDevOut(PlayerIndex0, -1, -1, uos_InputGetSampleRate(PlayerIndex0, InIndex), -1, 0, -1, -1);
        {$endif}
-  
+
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -441,7 +451,7 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
-    // ChunkCount : default : -1 (= 512)
+  // ChunkCount : default : -1 (= 512)
   //  result : -1 nothing created, otherwise Output Index in array
 
 
@@ -456,7 +466,7 @@ begin
 
 
   button15.Enabled := True;
-  button3.Enabled := True;
+  button3.Enabled  := True;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -472,14 +482,13 @@ end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 var
-InIndex : integer ;
-
+  InIndex: integer;
 begin
   PlayerIndex1 := 1;
 
   uos_CreatePlayer(PlayerIndex1);
 
- InIndex := uos_AddFromFile(PlayerIndex1, pchar(Edit5.Text), -1, 0, -1);
+  InIndex := uos_AddFromFile(PlayerIndex1, PChar(Edit5.Text), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
@@ -488,12 +497,12 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
-   {$if defined(cpuarm)} // needs lower latency
+     {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
    uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0,-1, -1);
       {$else}
   uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InIndex), -1, 0, -1, -1);
        {$endif}
-  
+
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -505,7 +514,7 @@ begin
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Output Index in array
   /////// procedure to execute when stream is terminated
-  
+
   uos_EndProc(PlayerIndex1, @ClosePlayer1);
   ///// Assign the procedure of object to execute at end
   //////////// PlayerIndex : Index of a existing Player
@@ -515,7 +524,7 @@ begin
   ////// Ok let start it
 
   button17.Enabled := True;
-  button6.Enabled := True;
+  button6.Enabled  := True;
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
@@ -530,14 +539,14 @@ begin
 end;
 
 procedure TForm1.Button8Click(Sender: TObject);
- var
-  InIndex : integer ;
+var
+  InIndex: integer;
 begin
   PlayerIndex2 := 2;
 
   uos_CreatePlayer(PlayerIndex2);
 
-InIndex := uos_AddFromFile(PlayerIndex2, pchar(Edit6.Text), -1, 0, -1);
+  InIndex := uos_AddFromFile(PlayerIndex2, PChar(Edit6.Text), -1, 0, -1);
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
   //////////// PlayerIndex : Index of a existing Player
@@ -546,12 +555,12 @@ InIndex := uos_AddFromFile(PlayerIndex2, pchar(Edit6.Text), -1, 0, -1);
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
 
-   {$if defined(cpuarm)} // needs lower latency
+     {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
    uos_AddIntoDevOut(PlayerIndex2, -1, 0.3, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1, -1);
       {$else}
   uos_AddIntoDevOut(PlayerIndex2, -1, -1, uos_InputGetSampleRate(PlayerIndex2, InIndex), -1, 0, -1, -1);
        {$endif}
-  
+
   //// add a Output with custom parameters
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -563,7 +572,7 @@ InIndex := uos_AddFromFile(PlayerIndex2, pchar(Edit6.Text), -1, 0, -1);
   //////////// FramesCount : default : -1 (65536)
   // ChunkCount : default : -1 (= 512)
   //  result : -1 nothing created, otherwise Output Index in array
-  
+
   /////// procedure to execute when stream is terminated
   uos_EndProc(PlayerIndex2, @ClosePlayer2);
   ///// Assign the procedure of object to execute at end
@@ -574,7 +583,7 @@ InIndex := uos_AddFromFile(PlayerIndex2, pchar(Edit6.Text), -1, 0, -1);
   ////// Ok let start it
   ////// Ok let start it
   button19.Enabled := True;
-  button9.Enabled := True;
+  button9.Enabled  := True;
 end;
 
 procedure TForm1.Button9Click(Sender: TObject);
@@ -587,17 +596,17 @@ var
   xpos, ypos: integer;
   ratio: double;
 begin
-  xpos := 0;
-  ypos := 0;
-  ratio := 1;
+  xpos      := 0;
+  ypos      := 0;
+  ratio     := 1;
   BufferBMP := TBitmap.Create;
   with form1 do
   begin
     form1.PaintBox1.Parent.DoubleBuffered := True;
     PaintBox1.Height := round(ratio * 116);
-    PaintBox1.Width := round(ratio * 100);
+    PaintBox1.Width  := round(ratio * 100);
     BufferBMP.Height := PaintBox1.Height;
-    BufferBMP.Width := PaintBox1.Width;
+    BufferBMP.Width  := PaintBox1.Width;
     BufferBMP.Canvas.AntialiasingMode := amOn;
     BufferBMP.Canvas.Pen.Width := round(ratio * 6);
     BufferBMP.Canvas.brush.Color := clmoneygreen;
@@ -653,8 +662,9 @@ begin
   if button12.Enabled = True then
     uos_Stop(PlayerIndex3);
   if button1.Enabled = False then
-  uos_free;
-  BufferBMP.free;
+    uos_free;
+  BufferBMP.Free;
 end;
 
 end.
+

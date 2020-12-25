@@ -2,8 +2,9 @@ program waveform_fpGUI;
 
 {$mode objfpc}{$H+}
 
-uses {$IFDEF UNIX}
-  cthreads, {$ENDIF}
+uses
+ {$IFDEF UNIX}
+  cthreads,  {$ENDIF}
   SysUtils,
   Classes,
   fpg_base,
@@ -50,11 +51,11 @@ var
 
   procedure Twaveform.DrawWaveForm;
   begin
-    waveformdata := uos_InputGetLevelArray(PlayerIndex1, In1Index);
+    waveformdata    := uos_InputGetLevelArray(PlayerIndex1, In1Index);
     fpgapplication.ProcessMessages;
-    button1.tag := 1;
+    button1.tag     := 1;
     custom1.Visible := True;
-  
+
   end;
 
   procedure Twaveform.btndrawclick(Sender: TObject);
@@ -64,8 +65,8 @@ var
     windowtitle := 'Wave Form.    uos version ' + IntToStr(uos_getversion());
 
     PlayerIndex1 := 0;
-    
-        //// Create the player.
+
+    //// Create the player.
     uos_CreatePlayer(PlayerIndex1);
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
@@ -79,9 +80,9 @@ var
     filelength := uos_InputLength(PlayerIndex1, In1Index);
 
     chan := uos_InputGetChannels(PlayerIndex1, In1Index);
-    
-   // writeln('chan = ' + inttostr(chan));
-   //  writeln('filelength = ' + inttostr(filelength));
+
+    // writeln('chan = ' + inttostr(chan));
+    //  writeln('filelength = ' + inttostr(filelength));
 
     ///// set calculation of level/volume into array (usefull for wave form procedure)
     uos_InputSetLevelArrayEnable(PlayerIndex1, In1Index, 2);
@@ -92,10 +93,10 @@ var
 
     //// determine how much frame will be designed
     framewanted := filelength div custom1.Width;
-       
+
     uos_InputSetFrameCount(PlayerIndex1, In1Index, framewanted);
 
-     ///// Assign the procedure of object to execute at end of stream
+    ///// Assign the procedure of object to execute at end of stream
     uos_EndProc(PlayerIndex1, @DrawWaveForm);
 
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets do it...
@@ -125,7 +126,7 @@ var
 
           Custom1.Canvas.drawLine(poswav, Custom1.Height div 2, poswav, ((Custom1.Height div 2) - 1) - round(
             (waveformdata[poswav * 2]) * (Custom1.Height / 2) - 1));
-         
+
           Custom1.Canvas.setcolor(clred);
           Custom1.Canvas.drawLine(poswav, (Custom1.Height div 2) + 2, poswav, ((Custom1.Height div 2) + 1) + round(
             (waveformdata[(poswav * 2) + 1]) * (Custom1.Height / 2) + 1));
@@ -157,54 +158,54 @@ var
     {%region 'Auto-generated GUI code' -fold}
 
     {@VFD_BODY_BEGIN: waveform}
-    Name := 'waveform';
+    Name           := 'waveform';
     SetPosition(267, 185, 841, 475);
-    WindowTitle := 'Wave Form';
-    IconName := '';
-    Hint := '';
+    WindowTitle    := 'Wave Form';
+    IconName       := '';
+    Hint           := '';
     WindowPosition := wpScreenCenter;
     BackgroundColor := clmoneygreen;
-    Ondestroy := @btnCloseClick;
+    Ondestroy      := @btnCloseClick;
 
     FilenameEdit1 := TfpgFileNameEdit.Create(self);
     with FilenameEdit1 do
     begin
-      Name := 'FilenameEdit1';
+      Name       := 'FilenameEdit1';
       SetPosition(28, 28, 360, 24);
-      ExtraHint := '';
-      FileName := '';
-      Filter := '';
+      ExtraHint  := '';
+      FileName   := '';
+      Filter     := '';
       InitialDir := '';
-      TabOrder := 1;
+      TabOrder   := 1;
     end;
 
     Label1 := TfpgLabel.Create(self);
     with Label1 do
     begin
-      Name := 'Label1';
+      Name     := 'Label1';
       SetPosition(164, 12, 80, 15);
       FontDesc := '#Label1';
-      Hint := '';
-      Text := 'Audio file';
+      Hint     := '';
+      Text     := 'Audio file';
     end;
 
     Button1 := TfpgButton.Create(self);
     with Button1 do
     begin
-      Name := 'Button1';
+      Name      := 'Button1';
       SetPosition(400, 28, 412, 23);
-      FontDesc := '#Label1';
-      Hint := '';
+      FontDesc  := '#Label1';
+      Hint      := '';
       ImageName := '';
-      TabOrder := 3;
-      Text := 'Draw Wave Form';
-      onclick := @btndrawClick;
+      TabOrder  := 3;
+      Text      := 'Draw Wave Form';
+      onclick   := @btndrawClick;
     end;
 
     Custom1 := TfpgWidget.Create(self);
     with Custom1 do
     begin
-      Name := 'Custom1';
+      Name    := 'Custom1';
       SetPosition(2, 68, 836, 404);
       OnPaint := @drawwave;
     end;
@@ -245,7 +246,7 @@ var
    {$ENDIF}
 
 
-   {$if defined(cpu64) and defined(linux) }
+   {$if defined(CPUAMD64) and defined(linux) }
     fnsf := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     fnmp := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
    FilenameEdit1.FileName := ordir + 'sound/test.mp3';
@@ -261,6 +262,12 @@ var
      FilenameEdit1.FileName := ordir + 'sound/test.mp3';
     {$ENDIF}
 
+     {$if defined(linux) and defined(cpuaarch64)}
+     fnsf := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+     fnmp := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
+     FilenameEdit1.FileName := ordir + 'sound/test.mp3';
+    {$ENDIF}
+
  {$IFDEF freebsd}
     {$if defined(cpu64)}
     fnsf := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
@@ -272,12 +279,12 @@ var
     FilenameEdit1.FileName := ordir + 'sound/test.mp3';
  {$ENDIF}
 
-    if uos_LoadLib(nil, PChar(fnsf), PChar(fnmp),nil, nil, nil) = 0 then
+    if uos_LoadLib(nil, PChar(fnsf), PChar(fnmp), nil, nil, nil) = 0 then
       button1.Enabled := True
     else
     begin
       button1.Enabled := False;
-      button1.Text := 'Error while loading libraries   :-(';
+      button1.Text    := 'Error while loading libraries   :-(';
     end;
 
   end;
@@ -289,7 +296,7 @@ var
     fpgApplication.Initialize;
     try
       if fpgStyleManager.SetStyle('Chrome silver flat menu') then
-          fpgStyle := fpgStyleManager.Style;
+        fpgStyle := fpgStyleManager.Style;
       fpgApplication.CreateForm(Twaveform, frm);
       fpgApplication.MainForm := frm;
       frm.Show;
@@ -303,3 +310,4 @@ var
 begin
   MainProc;
 end.
+

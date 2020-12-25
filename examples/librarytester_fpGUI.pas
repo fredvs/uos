@@ -4,12 +4,12 @@ program librarytester_fpGUI;
   {$DEFINE UseCThreads}
 
 uses
-  {$IFDEF UNIX} 
+ {$IFDEF UNIX} 
   cthreads,
   cwstring,
-  {$ENDIF}
+   {$ENDIF}
   SysUtils,
-    dynlibs,
+  dynlibs,
   uos_bs2b,
   ctypes,
   Math,
@@ -41,56 +41,64 @@ type
     {@VFD_HEAD_END: Simpleplayer}
   public
     procedure AfterCreate; override;
-     procedure btnCloseClick(Sender: TObject);
-     procedure btnLoadClick(Sender: TObject);
-     end;
+    procedure btnCloseClick(Sender: TObject);
+    procedure btnLoadClick(Sender: TObject);
+  end;
 
   {@VFD_NEWFORM_DECL}
 
   {@VFD_NEWFORM_IMPL}
 
 var
- ordir, opath: string;
- Pa_Handle:TLibHandle=dynlibs.NilHandle;
+  ordir, opath: string;
+  Pa_Handle: TLibHandle = dynlibs.NilHandle;
 
-procedure TSimpleplayer.btnCloseClick(Sender: TObject);
+  procedure TSimpleplayer.btnCloseClick(Sender: TObject);
   begin
-  	if Pa_Handle <> DynLibs.NilHandle then   DynLibs.UnloadLibrary(Pa_Handle);
-    Pa_Handle:=DynLibs.NilHandle;
+    if Pa_Handle <> DynLibs.NilHandle then
+      DynLibs.UnloadLibrary(Pa_Handle);
+    Pa_Handle := DynLibs.NilHandle;
   end;
 
   procedure TSimpleplayer.btnLoadClick(Sender: TObject);
-
   begin
 
-    Pa_Handle:=DynLibs.SafeLoadLibrary(FilenameEdit1.FileName); // obtain the handle we want
-  	if Pa_Handle <> DynLibs.NilHandle then
+    Pa_Handle := DynLibs.SafeLoadLibrary(FilenameEdit1.FileName); // obtain the handle we want
+    if Pa_Handle <> DynLibs.NilHandle then
 
-                        btnLoad.Text :=  'PortAudio=OK '
-           else btnLoad.Text := 'PortAudio not load ';
+      btnLoad.Text := 'PortAudio=OK '
+    else
+      btnLoad.Text := 'PortAudio not load ';
 
-    	if Pa_Handle <> DynLibs.NilHandle then  DynLibs.UnloadLibrary(Pa_Handle);
+    if Pa_Handle <> DynLibs.NilHandle then
+      DynLibs.UnloadLibrary(Pa_Handle);
 
-      Pa_Handle:=DynLibs.SafeLoadLibrary(FilenameEdit2.FileName); // obtain the handle we want
-  	if Pa_Handle <> DynLibs.NilHandle then
-                        btnLoad.Text := btnLoad.Text + 'SndFile=OK '
-           else btnLoad.Text := btnLoad.Text + 'SndFile not load ' ;
+    Pa_Handle      := DynLibs.SafeLoadLibrary(FilenameEdit2.FileName); // obtain the handle we want
+    if Pa_Handle <> DynLibs.NilHandle then
+      btnLoad.Text := btnLoad.Text + 'SndFile=OK '
+    else
+      btnLoad.Text := btnLoad.Text + 'SndFile not load ';
 
-    	if Pa_Handle <> DynLibs.NilHandle then DynLibs.UnloadLibrary(Pa_Handle);
+    if Pa_Handle <> DynLibs.NilHandle then
+      DynLibs.UnloadLibrary(Pa_Handle);
 
-      Pa_Handle:=DynLibs.SafeLoadLibrary(FilenameEdit3.FileName); // obtain the handle we want
-  	if Pa_Handle <> DynLibs.NilHandle then
-                        btnLoad.Text := btnLoad.Text + 'MPG123=OK '
-           else btnLoad.Text := btnLoad.Text + 'MPG123 not load ' ;
+    Pa_Handle      := DynLibs.SafeLoadLibrary(FilenameEdit3.FileName); // obtain the handle we want
+    if Pa_Handle <> DynLibs.NilHandle then
+      btnLoad.Text := btnLoad.Text + 'MPG123=OK '
+    else
+      btnLoad.Text := btnLoad.Text + 'MPG123 not load ';
 
-    	if Pa_Handle <> DynLibs.NilHandle then  DynLibs.UnloadLibrary(Pa_Handle);
+    if Pa_Handle <> DynLibs.NilHandle then
+      DynLibs.UnloadLibrary(Pa_Handle);
 
-      Pa_Handle:=DynLibs.SafeLoadLibrary(FilenameEdit5.FileName); // obtain the handle we want
-  	if Pa_Handle <> DynLibs.NilHandle then
-                        btnLoad.Text := btnLoad.Text + 'SoundTouch=OK'
-           else btnLoad.Text := btnLoad.Text + 'SoundTouch not load' ;
+    Pa_Handle      := DynLibs.SafeLoadLibrary(FilenameEdit5.FileName); // obtain the handle we want
+    if Pa_Handle <> DynLibs.NilHandle then
+      btnLoad.Text := btnLoad.Text + 'SoundTouch=OK'
+    else
+      btnLoad.Text := btnLoad.Text + 'SoundTouch not load';
 
-    	if Pa_Handle <> DynLibs.NilHandle then DynLibs.UnloadLibrary(Pa_Handle);
+    if Pa_Handle <> DynLibs.NilHandle then
+      DynLibs.UnloadLibrary(Pa_Handle);
 
   end;
 
@@ -99,139 +107,139 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
     {%region 'Auto-generated GUI code' -fold}
 
     {@VFD_BODY_BEGIN: Simpleplayer}
-  Name := 'Simpleplayer';
-  SetPosition(491, 214, 502, 206);
-  WindowTitle := 'Libraries Tester';
-  IconName := '';
-  BackGroundColor := $80000001;
-  Hint := '';
-  WindowPosition := wpScreenCenter;
-  Ondestroy := @btnCloseClick;
+    Name           := 'Simpleplayer';
+    SetPosition(491, 214, 502, 206);
+    WindowTitle    := 'Libraries Tester';
+    IconName       := '';
+    BackGroundColor := $80000001;
+    Hint           := '';
+    WindowPosition := wpScreenCenter;
+    Ondestroy      := @btnCloseClick;
 
-  Custom1 := TfpgWidget.Create(self);
-  with Custom1 do
-  begin
-    Name := 'Custom1';
-    SetPosition(10, 8, 115, 155);
-    OnPaint := @uos_logo;
-  end;
+    Custom1 := TfpgWidget.Create(self);
+    with Custom1 do
+    begin
+      Name    := 'Custom1';
+      SetPosition(10, 8, 115, 155);
+      OnPaint := @uos_logo;
+    end;
 
-  Labelport := TfpgLabel.Create(self);
-  with Labelport do
-  begin
-    Name := 'Labelport';
-    SetPosition(136, 0, 320, 15);
-    Alignment := taCenter;
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Folder + filename of PortAudio Library';
-    Hint := '';
-  end;
+    Labelport := TfpgLabel.Create(self);
+    with Labelport do
+    begin
+      Name           := 'Labelport';
+      SetPosition(136, 0, 320, 15);
+      Alignment      := taCenter;
+      FontDesc       := '#Label1';
+      ParentShowHint := False;
+      Text           := 'Folder + filename of PortAudio Library';
+      Hint           := '';
+    end;
 
-  btnLoad := TfpgButton.Create(self);
-  with btnLoad do
-  begin
-    Name := 'btnLoad';
-    SetPosition(16, 168, 476, 31);
-    Text := 'Test to load that libraries';
-    FontDesc := '#Label1';
-    ImageName := '';
-    ParentShowHint := False;
-    TabOrder := 0;
-    Hint := '';
-    onclick := @btnLoadClick;
-  end;
+    btnLoad := TfpgButton.Create(self);
+    with btnLoad do
+    begin
+      Name           := 'btnLoad';
+      SetPosition(16, 168, 476, 31);
+      Text           := 'Test to load that libraries';
+      FontDesc       := '#Label1';
+      ImageName      := '';
+      ParentShowHint := False;
+      TabOrder       := 0;
+      Hint           := '';
+      onclick        := @btnLoadClick;
+    end;
 
-  FilenameEdit1 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit1 do
-  begin
-    Name := 'FilenameEdit1';
-    SetPosition(136, 16, 356, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 3;
-  end;
+    FilenameEdit1 := TfpgFileNameEdit.Create(self);
+    with FilenameEdit1 do
+    begin
+      Name       := 'FilenameEdit1';
+      SetPosition(136, 16, 356, 24);
+      ExtraHint  := '';
+      FileName   := '';
+      Filter     := '';
+      InitialDir := '';
+      TabOrder   := 3;
+    end;
 
-  FilenameEdit2 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit2 do
-  begin
-    Name := 'FilenameEdit2';
-    SetPosition(136, 56, 356, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 4;
-  end;
+    FilenameEdit2 := TfpgFileNameEdit.Create(self);
+    with FilenameEdit2 do
+    begin
+      Name       := 'FilenameEdit2';
+      SetPosition(136, 56, 356, 24);
+      ExtraHint  := '';
+      FileName   := '';
+      Filter     := '';
+      InitialDir := '';
+      TabOrder   := 4;
+    end;
 
-  Labelsnf := TfpgLabel.Create(self);
-  with Labelsnf do
-  begin
-    Name := 'Labelsnf';
-    SetPosition(140, 40, 316, 15);
-    Alignment := taCenter;
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Folder + filename of SndFile Library';
-    Hint := '';
-  end;
+    Labelsnf := TfpgLabel.Create(self);
+    with Labelsnf do
+    begin
+      Name           := 'Labelsnf';
+      SetPosition(140, 40, 316, 15);
+      Alignment      := taCenter;
+      FontDesc       := '#Label1';
+      ParentShowHint := False;
+      Text           := 'Folder + filename of SndFile Library';
+      Hint           := '';
+    end;
 
-  Labelmpg := TfpgLabel.Create(self);
-  with Labelmpg do
-  begin
-    Name := 'Labelmpg';
-    SetPosition(136, 80, 316, 15);
-    Alignment := taCenter;
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Folder + filename of Mpg123 Library';
-    Hint := '';
-  end;
+    Labelmpg := TfpgLabel.Create(self);
+    with Labelmpg do
+    begin
+      Name           := 'Labelmpg';
+      SetPosition(136, 80, 316, 15);
+      Alignment      := taCenter;
+      FontDesc       := '#Label1';
+      ParentShowHint := False;
+      Text           := 'Folder + filename of Mpg123 Library';
+      Hint           := '';
+    end;
 
-  Labelst := TfpgLabel.Create(self);
-  with Labelst do
-  begin
-    Name := 'Labelst';
-    SetPosition(136, 120, 316, 15);
-    Alignment := taCenter;
-    FontDesc := '#Label1';
-    ParentShowHint := False;
-    Text := 'Folder + filename of SoundTouch Library';
-    Hint := '';
-  end;
+    Labelst := TfpgLabel.Create(self);
+    with Labelst do
+    begin
+      Name           := 'Labelst';
+      SetPosition(136, 120, 316, 15);
+      Alignment      := taCenter;
+      FontDesc       := '#Label1';
+      ParentShowHint := False;
+      Text           := 'Folder + filename of SoundTouch Library';
+      Hint           := '';
+    end;
 
-  FilenameEdit3 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit3 do
-  begin
-    Name := 'FilenameEdit3';
-    SetPosition(136, 96, 356, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 12;
-  end;
+    FilenameEdit3 := TfpgFileNameEdit.Create(self);
+    with FilenameEdit3 do
+    begin
+      Name       := 'FilenameEdit3';
+      SetPosition(136, 96, 356, 24);
+      ExtraHint  := '';
+      FileName   := '';
+      Filter     := '';
+      InitialDir := '';
+      TabOrder   := 12;
+    end;
 
-  FilenameEdit5 := TfpgFileNameEdit.Create(self);
-  with FilenameEdit5 do
-  begin
-    Name := 'FilenameEdit5';
-    SetPosition(136, 136, 356, 24);
-    ExtraHint := '';
-    FileName := '';
-    Filter := '';
-    InitialDir := '';
-    TabOrder := 12;
-  end;
+    FilenameEdit5 := TfpgFileNameEdit.Create(self);
+    with FilenameEdit5 do
+    begin
+      Name       := 'FilenameEdit5';
+      SetPosition(136, 136, 356, 24);
+      ExtraHint  := '';
+      FileName   := '';
+      Filter     := '';
+      InitialDir := '';
+      TabOrder   := 12;
+    end;
 
-  {@VFD_BODY_END: Simpleplayer}
+    {@VFD_BODY_END: Simpleplayer}
     {%endregion}
 
     //////////////////////
 
-    ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
+    ordir  := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
     Height := 197;
              {$IFDEF Windows}
      {$if defined(cpu64)}
@@ -255,10 +263,9 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
     FilenameEdit2.FileName := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
     FilenameEdit3.FileName := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
     FilenameEdit5.FileName := opath + '/lib/Mac/32bit/LibSoundTouch-32.dylib';
+    {$ENDIF}
 
-            {$ENDIF}
-
-     {$if defined(cpu64) and defined(linux) }
+     {$if defined(CPUAMD64) and defined(linux) }
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
@@ -271,12 +278,19 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
     FilenameEdit3.FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
     FilenameEdit5.FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
     {$ENDIF}
-   
+
     {$if defined(linux) and defined(cpuarm)}
     FilenameEdit1.FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
     FilenameEdit3.FileName := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
     {$ENDIF}
+
+   {$if defined(linux) and defined(cpuaarch64)}
+  FilenameEdit1 := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  FilenameEdit2 := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
+  FilenameEdit3 := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
+  FilenameEdit5 := ordir + 'lib/Linux/aarch64_raspberrypi/plugin/libsoundtouch_aarch64.so';
+  {$ENDIF}
 
   {$IFDEF freebsd}
     {$if defined(cpu64)}
@@ -301,8 +315,8 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
   end;
 
   procedure TSimpleplayer.uos_logo(Sender: TObject);
-   begin
-     with Custom1 do
+  begin
+    with Custom1 do
     begin
       Canvas.GradientFill(GetClientRect, clgreen, clBlack, gdVertical);
       Canvas.TextColor := clWhite;
@@ -315,8 +329,8 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
     frm: TSimpleplayer;
   begin
     fpgApplication.Initialize;
- //   frm := TSimpleplayer.Create(nil);
-       fpgApplication.CreateForm(TSimpleplayer, frm);
+    //   frm := TSimpleplayer.Create(nil);
+    fpgApplication.CreateForm(TSimpleplayer, frm);
     try
       frm.Show;
       fpgApplication.Run;
@@ -328,3 +342,4 @@ procedure TSimpleplayer.btnCloseClick(Sender: TObject);
 begin
   MainProc;
 end.
+

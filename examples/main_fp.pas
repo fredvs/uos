@@ -9,8 +9,16 @@ unit main_fp;
 interface
 
 uses
-  uos_flat, Forms, Dialogs, SysUtils, Graphics,
-  StdCtrls, ComCtrls, ExtCtrls, Classes, Controls;
+  uos_flat,
+  Forms,
+  Dialogs,
+  SysUtils,
+  Graphics,
+  StdCtrls,
+  ComCtrls,
+  ExtCtrls,
+  Classes,
+  Controls;
 
 type
   { TForm1 }
@@ -79,7 +87,7 @@ type
 procedure uos_logo();
 
 var
-  test : ttimer;
+  test: ttimer;
   Form1: TForm1;
   BufferBMP: TBitmap;
   PlayerIndex1: cardinal;
@@ -102,27 +110,26 @@ end;
 procedure TForm1.TrackBar3Change(Sender: TObject);
 var
   gainl, gainr: double;
-  tracposl, tracposr : integer;
+  tracposl, tracposr: integer;
 begin
-   tracposl := trackBar3.Position;
-   tracposr := trackBar3r.Position;
+  tracposl := trackBar3.Position;
+  tracposr := trackBar3r.Position;
 
   if (tracposl) = 0 then
-      gainl := 1
-    else if tracposl > 0 then
-      gainl := 1 + (tracposl / 33)
-    else
-      gainl := ((100+tracposl) / 100);
+    gainl := 1
+  else if tracposl > 0 then
+    gainl := 1 + (tracposl / 33)
+  else
+    gainl := ((100 + tracposl) / 100);
 
-   if (tracposr) = 0 then
-      gainr := 1
-    else if tracposr > 0 then
-      gainr := 1 + (tracposr / 33)
-    else
-      gainr := ((100+tracposr) / 100);
+  if (tracposr) = 0 then
+    gainr := 1
+  else if tracposr > 0 then
+    gainr := 1 + (tracposr / 33)
+  else
+    gainr := ((100 + tracposr) / 100);
 
-   uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3,
-     -1, -1, -1, Gainl, -1, -1, -1, Gainr,
+  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, -1, Gainl, -1, -1, -1, Gainr,
     True, nil, checkbox1.Checked);
 
 end;
@@ -168,7 +175,7 @@ begin
    {$ENDIF}
     {$ENDIF}
 
-    {$if defined(cpu64) and defined(linux) }
+    {$if defined(CPUAMD64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
@@ -180,13 +187,19 @@ begin
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
   Edit4.Text := ordir + 'sound/test.mp3';
   {$ENDIF}
+  {$if defined(linux) and defined(cpuaarch64)}
+  Edit1.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  Edit2.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
+  Edit3.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
+  Edit4.Text := ordir + 'sound/test.mp3';
+  {$ENDIF}
    {$if defined(linux) and defined(cpuarm)}
     Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit2.Text := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
   Edit3.Text := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
   Edit4.Text := ordir + 'sound/test.mp3';
   {$ENDIF}
-  
+
  {$IFDEF freebsd}
     {$if defined(cpu64)}
    Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
@@ -221,7 +234,7 @@ begin
   if radiobutton4.Checked = True then
     typfilt := 4;
 
-    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1,
+  uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1,
     typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
     typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
     True, nil, checkbox2.Checked);
@@ -233,32 +246,30 @@ begin
 end;
 
 
-
 procedure TForm1.TrackBar1Change(Sender: TObject);
 var
   gainl, gainr: double;
-  tracposl, tracposr : integer;
+  tracposl, tracposr: integer;
 begin
-   tracposl := trackBar1.Position;
-   tracposr := trackBar1r.Position;
+  tracposl := trackBar1.Position;
+  tracposr := trackBar1r.Position;
 
   if (tracposl) = 0 then
-      gainl := 1
-    else if tracposl > 0 then
-      gainl := 1 + (tracposl / 33)
-    else
-      gainl := ((100+tracposl) / 100);
+    gainl := 1
+  else if tracposl > 0 then
+    gainl := 1 + (tracposl / 33)
+  else
+    gainl := ((100 + tracposl) / 100);
 
-   if (tracposr) = 0 then
-      gainr := 1
-    else if tracposr > 0 then
-      gainr := 1 + (tracposr / 33)
-    else
-      gainr := ((100+tracposr) / 100);
+  if (tracposr) = 0 then
+    gainr := 1
+  else if tracposr > 0 then
+    gainr := 1 + (tracposr / 33)
+  else
+    gainr := ((100 + tracposr) / 100);
 
-    //  if (btnStart.Enabled = true) then
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1,
-     -1, -1, -1, Gainl, -1, -1, -1, Gainr,
+  //  if (btnStart.Enabled = true) then
+  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, -1, Gainl, -1, -1, -1, Gainr,
     True, nil, checkbox1.Checked);
 
 end;
@@ -267,27 +278,26 @@ end;
 procedure TForm1.TrackBar2Change(Sender: TObject);
 var
   gainl, gainr: double;
-  tracposl, tracposr : integer;
+  tracposl, tracposr: integer;
 begin
-   tracposl := trackBar2.Position;
-   tracposr := trackBar2r.Position;
+  tracposl := trackBar2.Position;
+  tracposr := trackBar2r.Position;
 
   if (tracposl) = 0 then
-      gainl := 1
-    else if tracposl > 0 then
-      gainl := 1 + (tracposl / 33)
-    else
-      gainl := ((100+tracposl) / 100);
+    gainl := 1
+  else if tracposl > 0 then
+    gainl := 1 + (tracposl / 33)
+  else
+    gainl := ((100 + tracposl) / 100);
 
   if (tracposr) = 0 then
-      gainr := 1
-    else if tracposr > 0 then
-      gainr := 1 + (tracposr / 33)
-    else
-      gainr := ((100+tracposr) / 100);
+    gainr := 1
+  else if tracposr > 0 then
+    gainr := 1 + (tracposr / 33)
+  else
+    gainr := ((100 + tracposr) / 100);
 
-   uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2,
-     -1, -1, -1, Gainl, -1, -1, -1, Gainr,
+  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, -1, Gainl, -1, -1, -1, Gainr,
     True, nil, checkbox1.Checked);
 end;
 
@@ -297,16 +307,16 @@ begin
   // Load the libraries
   //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
   // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
-     if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), pchar(edit3.Text), nil, nil, nil) = 0 then
+  if uos_LoadLib(PChar(edit1.Text), PChar(edit2.Text), PChar(edit3.Text), nil, nil, nil) = 0 then
   begin
     form1.hide;
     button1.Caption := 'PortAudio, SndFile and Mpg123 libraries are loaded...';
     button1.Enabled := False;
-    edit1.ReadOnly := True;
-    edit2.ReadOnly := True;
-    edit3.ReadOnly := True;
-    form1.Height := 352;
-    form1.Position := poScreenCenter;
+    edit1.ReadOnly  := True;
+    edit2.ReadOnly  := True;
+    edit3.ReadOnly  := True;
+    form1.Height    := 352;
+    form1.Position  := poScreenCenter;
     form1.Show;
   end
   else
@@ -351,12 +361,12 @@ begin
   // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
   // If PlayerIndex exists already, it will be overwritten...
 
-    uos_CreatePlayer(PlayerIndex1);
+  uos_CreatePlayer(PlayerIndex1);
   //// Create the player.
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
-  In1Index := uos_AddFromFile(PlayerIndex1, pchar(Edit4.Text), -1, 0, -1);
+  In1Index := uos_AddFromFile(PlayerIndex1, PChar(Edit4.Text), -1, 0, -1);
   //// add input from audio file with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   ////////// FileName : filename of audio file
@@ -364,76 +374,76 @@ begin
   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
   ////////// FramesCount : default: -1 (= 65536)
 
-  if  In1Index > -1 then begin
+  if In1Index > -1 then
+  begin
 
-    {$if defined(cpuarm)} // needs lower latency
+  {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
    Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, 0, -1, -1);
       {$else}
-   Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, 0, -1, -1);
+    Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index), -1, 0, -1, -1);
   {$endif}
-  
-  //// add a Output into device with custom parameters
-  //////////// PlayerIndex : Index of a existing Player
-  //////////// Device ( -1 is default Output device )
-  //////////// Latency  ( -1 is latency suggested ) )
-  //////////// SampleRate : delault : -1 (44100)
-  //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-  //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-  //////////// FramesCount : default : -1 (= 65536)
-  // ChunkCount : default : -1 (= 512)
 
-   EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index,
-                                   1, 50, 800, 1,
-                                   1, 50, 800, 1, true, nil);
-   // Player Index add filter
-   // InputIndex : InputIndex of a existing Input
-   // TypeFilterL: Type of filter left:
-          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-          // fBandPass = 3, fLowPass = 4, fHighPass = 5)
-   // LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
-   // HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
-   // GainL : gain left to apply to filter
-   // TypeFilterR: Type of filter right (ignored if mono):
-          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-   // LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
-   // HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
-   // GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
-   // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
-   //  result :  index of DSPIn in array
+    //// add a Output into device with custom parameters
+    //////////// PlayerIndex : Index of a existing Player
+    //////////// Device ( -1 is default Output device )
+    //////////// Latency  ( -1 is latency suggested ) )
+    //////////// SampleRate : delault : -1 (44100)
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    //////////// FramesCount : default : -1 (= 65536)
+    // ChunkCount : default : -1 (= 512)
 
-    EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 801, 3000, 1,
-                                   1, 801, 3000, 1, True, nil);
-
-    EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 3001, 10000, 1,
-                                   1, 3001, 10000, 1, True, nil);
-
-  if radiobutton1.Checked = True then
-    typfilt := 2;
-  if radiobutton2.Checked = True then
-    typfilt := 3;
-  if radiobutton3.Checked = True then
-    typfilt := 4;
-  if radiobutton4.Checked = True then
-    typfilt := 5;
-
-    FTIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index,
-      typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
-      typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
-       true, nil);
-
-    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1,
-     -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox2.Checked);
-
+    EQIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index,
+      1, 50, 800, 1,
+      1, 50, 800, 1, True, nil);
+    // Player Index add filter
     // InputIndex : InputIndex of a existing Input
-    // DSPInIndex : DSPInIndex of existing DSPIn
     // TypeFilterL: Type of filter left:
-          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
-          // fBandPass = 3, fLowPass = 4, fHighPass = 5)
+    // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+    // fBandPass = 3, fLowPass = 4, fHighPass = 5)
     // LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
     // HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
     // GainL : gain left to apply to filter
     // TypeFilterR: Type of filter right (ignored if mono):
-          // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+    // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+    // LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
+    // HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
+    // GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
+    // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
+    //  result :  index of DSPIn in array
+
+    EQIndex2 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 801, 3000, 1,
+      1, 801, 3000, 1, True, nil);
+
+    EQIndex3 := uos_InputAddFilter(PlayerIndex1, In1Index, 1, 3001, 10000, 1,
+      1, 3001, 10000, 1, True, nil);
+
+    if radiobutton1.Checked = True then
+      typfilt := 2;
+    if radiobutton2.Checked = True then
+      typfilt := 3;
+    if radiobutton3.Checked = True then
+      typfilt := 4;
+    if radiobutton4.Checked = True then
+      typfilt := 5;
+
+    FTIndex1 := uos_InputAddFilter(PlayerIndex1, In1Index,
+      typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
+      typfilt, StrToInt(edit6.Text), StrToInt(edit5.Text), 1,
+      True, nil);
+
+    uos_InputSetFilter(PlayerIndex1, In1Index, FTIndex1, -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox2.Checked);
+
+    // InputIndex : InputIndex of a existing Input
+    // DSPInIndex : DSPInIndex of existing DSPIn
+    // TypeFilterL: Type of filter left:
+    // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
+    // fBandPass = 3, fLowPass = 4, fHighPass = 5)
+    // LowFrequencyL : Lowest frequency left( -1 : current LowFrequency )
+    // HighFrequencyL : Highest frequency left( -1 : current HighFrequency )
+    // GainL : gain left to apply to filter
+    // TypeFilterR: Type of filter right (ignored if mono):
+    // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
     // LowFrequencyR : Lowest frequency Right (ignored if mono) ( -1 : current LowFrequency )
     // HighFrequencyR : Highest frequency left( -1 : current HighFrequency )
     // GainR : gain right (ignored if mono) to apply to filter ( 0 to what reasonable )
@@ -441,24 +451,24 @@ begin
     // LoopProc : external procedure of object to synchronize after DSP done
     // Enable :  Filter enabled
 
-  uos_EndProc(PlayerIndex1, @ClosePlayer1);
-  ///// Assign the procedure of object to execute at end
-  //////////// PlayerIndex : Index of a existing Player
-  //////////// ClosePlayer1 : procedure of object to execute inside the loop
-  /////// procedure to execute when stream is terminated
+    uos_EndProc(PlayerIndex1, @ClosePlayer1);
+    ///// Assign the procedure of object to execute at end
+    //////////// PlayerIndex : Index of a existing Player
+    //////////// ClosePlayer1 : procedure of object to execute inside the loop
+    /////// procedure to execute when stream is terminated
 
-  TrackBar1Change(sender);
-  TrackBar2Change(sender);
-  TrackBar3Change(sender);
+    TrackBar1Change(Sender);
+    TrackBar2Change(Sender);
+    TrackBar3Change(Sender);
 
-  uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
+    uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
 
-  trackbar2.Enabled := True;
-  Button3.Enabled := False;
-  Button4.Enabled := False;
-  Button6.Enabled := True;
-  Button5.Enabled := True;
-  CheckBox1.Enabled := True;
+    trackbar2.Enabled := True;
+    Button3.Enabled   := False;
+    Button4.Enabled   := False;
+    Button6.Enabled   := True;
+    Button5.Enabled   := True;
+    CheckBox1.Enabled := True;
 
   end;
 end;
@@ -476,12 +486,9 @@ end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1,
-       -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox1.Checked);
-    uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2,
-       -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox1.Checked);
-     uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3,
-       -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox1.Checked);
+  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex1, -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox1.Checked);
+  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex2, -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox1.Checked);
+  uos_InputSetFilter(PlayerIndex1, In1Index, EQIndex3, -1, -1, -1, -1, -1, -1, -1, -1, True, nil, checkbox1.Checked);
 end;
 
 procedure uos_logo();
@@ -489,17 +496,17 @@ var
   xpos, ypos: integer;
   ratio: double;
 begin
-  xpos := 0;
-  ypos := 0;
-  ratio := 1;
+  xpos      := 0;
+  ypos      := 0;
+  ratio     := 1;
   BufferBMP := TBitmap.Create;
   with form1 do
   begin
     form1.PaintBox1.Parent.DoubleBuffered := True;
     PaintBox1.Height := round(ratio * 116);
-    PaintBox1.Width := round(ratio * 100);
+    PaintBox1.Width  := round(ratio * 100);
     BufferBMP.Height := PaintBox1.Height;
-    BufferBMP.Width := PaintBox1.Width;
+    BufferBMP.Width  := PaintBox1.Width;
     BufferBMP.Canvas.AntialiasingMode := amOn;
     BufferBMP.Canvas.Pen.Width := round(ratio * 6);
     BufferBMP.Canvas.brush.Color := clmoneygreen;
@@ -552,7 +559,8 @@ begin
     sleep(500);
   end;
   if button1.Enabled = False then
-   uos_free;
+    uos_free;
 end;
 
 end.
+

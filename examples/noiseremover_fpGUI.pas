@@ -184,7 +184,7 @@ nil, nil, nil, nil) = 0 then
 
       // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
-   {$if defined(cpuarm)} // needs lower latency
+    {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
         OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
      uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
         {$else}
@@ -429,7 +429,7 @@ nil, nil, nil, nil) = 0 then
     FilenameEdit4.FileName := opath + 'sound/noisyvoice.ogg';
             {$ENDIF}
 
-   {$if defined(cpu64) and defined(linux) }
+   {$if defined(CPUAMD64) and defined(linux) }
     FilenameEdit1.FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     FilenameEdit2.FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     FilenameEdit4.FileName := ordir + 'sound/noisyvoice.ogg';
@@ -440,6 +440,12 @@ nil, nil, nil, nil) = 0 then
     FilenameEdit2.FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
     FilenameEdit4.FileName := ordir + 'sound/noisyvoice.ogg';
     {$ENDIF}
+    
+     {$if defined(linux) and defined(cpuaarch64)}
+  FilenameEdit1.FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  FilenameEdit2.FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
+  FilenameEdit4.FileName := ordir + 'sound/noisyvoice.ogg';
+  {$ENDIF}
    
     {$if defined(linux) and defined(cpuarm)}
     FilenameEdit1.FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';

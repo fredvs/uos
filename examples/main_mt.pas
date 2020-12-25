@@ -5,8 +5,12 @@ unit main_mt;
 interface
 
 uses
-  SysUtils, Forms, StdCtrls,
-  Buttons, uos_flat, Classes;
+  SysUtils,
+  Forms,
+  StdCtrls,
+  Buttons,
+  uos_flat,
+  Classes;
 
 type
 
@@ -22,11 +26,11 @@ type
     Label3: TLabel;
     Memo1: TMemo;
 
-     procedure BitBtnPlayClick(Sender: TObject);
-     procedure ButtonQuitClick(Sender: TObject);
-     procedure FormActivate(Sender: TObject);
-     procedure FormDestroy(Sender: TObject);
-     procedure CreateMorsePlayer();
+    procedure BitBtnPlayClick(Sender: TObject);
+    procedure ButtonQuitClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure CreateMorsePlayer();
 
   private
     { private declarations }
@@ -36,8 +40,9 @@ type
 
 var
   Form1: TForm1;
-  i :  cardinal;
-  ordir : string;
+  i: cardinal;
+  ordir: string;
+
 implementation
 
 {$R *.lfm}
@@ -45,74 +50,79 @@ implementation
 
 procedure TForm1.CreateMorsePlayer();
 var
-filetoplay, fileerror : string;
-chara : string;
-player : cardinal;
+  filetoplay, fileerror: string;
+  chara: string;
+  player: cardinal;
 begin
-if i <= length(Memo1.Text) then
-begin
-chara := copy(Memo1.Text,i,1);
+  if i <= length(Memo1.Text) then
+  begin
+    chara := copy(Memo1.Text, i, 1);
 
-fileerror := ordir + 'sound' + directoryseparator + 'morse_audio'+  directoryseparator +'0.mp3' ;
+    fileerror := ordir + 'sound' + directoryseparator + 'morse_audio' + directoryseparator + '0.mp3';
 
-if odd(i) then player := 0 else player := 1;  ///// to switch between player1 <> player2
+    if odd(i) then
+      player := 0
+    else
+      player := 1;  ///// to switch between player1 <> player2
 
     if chara <> ' ' then
-   begin
-   uos_CreatePlayer(player);
-   
-      {$if defined(cpuarm)} // needs lower latency
-       uos_AddIntoDevOut(player, -1, 0.08, -1, -1, -1, -1, -1) ;
+    begin
+      uos_CreatePlayer(player);
+
+        {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+      uos_AddIntoDevOut(player, -1, 0.08, -1, -1, -1, -1, -1) ;
        {$else}
-       uos_AddIntoDevOut(player);
+      uos_AddIntoDevOut(player);
        {$endif}
- 
-  filetoplay := ordir + 'sound' + directoryseparator + 'morse_audio'+  directoryseparator + lowercase(chara) + '.mp3' ;
 
-       if fileexists(pchar(filetoplay)) then
-  uos_AddFromFile(player,pchar(filetoplay)) else
-  uos_AddFromFile(player,pchar(fileerror)) ;  /// if not existing char
-  if length(Memo1.text) > i then  uos_EndProc(player, @CreateMorsePlayer);        /// assign EndProc
-     sleep(strtoint(interchar.Text)) ;     ///// the pause between each character
-    uos_Play(player);
-    inc(i);
-   end
-  else
-  begin
-   sleep(strtoint(interspace.Text)) ;   ///// the pause if space character
-   inc(i);
-  if length(Memo1.text) >= i then CreateMorsePlayer;
+      filetoplay := ordir + 'sound' + directoryseparator + 'morse_audio' + directoryseparator + lowercase(chara) + '.mp3';
+
+      if fileexists(PChar(filetoplay)) then
+        uos_AddFromFile(player, PChar(filetoplay))
+      else
+        uos_AddFromFile(player, PChar(fileerror));  /// if not existing char
+      if length(Memo1.Text) > i then
+        uos_EndProc(player, @CreateMorsePlayer);        /// assign EndProc
+      sleep(StrToInt(interchar.Text));     ///// the pause between each character
+      uos_Play(player);
+      Inc(i);
+    end
+    else
+    begin
+      sleep(StrToInt(interspace.Text));   ///// the pause if space character
+      Inc(i);
+      if length(Memo1.Text) >= i then
+        CreateMorsePlayer;
+    end;
+
   end;
-
- end;
 end;
 
 procedure TForm1.BitBtnPlayClick(Sender: TObject);
 var
-charac : string;
+  charac: string;
 begin
- if Memo1.Text <> '' then
- begin
-  i := 1 ;
- CreateMorsePlayer();
- end;
+  if Memo1.Text <> '' then
+  begin
+    i := 1;
+    CreateMorsePlayer();
+  end;
 
 end;
 
 procedure TForm1.ButtonQuitClick(Sender: TObject);
 begin
-  close;
+  Close;
 end;
 
 procedure TForm1.FormActivate(Sender: TObject);
 var
-PA_FileName, MP_FileName : string;
+  PA_FileName, MP_FileName: string;
 begin
-     memo1.Text:='';
-     ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
-
-
-              {$IFDEF Windows}
+  memo1.Text := '';
+  ordir      := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
+  
+  {$IFDEF Windows}
      {$if defined(cpu64)}
      PA_FileName := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
      MP_FileName := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
@@ -122,7 +132,7 @@ begin
    {$endif}
    {$ENDIF}
 
-     {$if defined(cpu64) and defined(linux) }
+     {$if defined(CPUAMD64) and defined(linux) }
    PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
    MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
    {$ENDIF}
@@ -135,6 +145,11 @@ begin
   MP_FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
    {$ENDIF}
 
+    {$if defined(linux) and defined(cpuaarch64)}
+  PA_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  MP_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
+   {$ENDIF}
+
   {$IFDEF freebsd}
     {$if defined(cpu64)}
    PA_FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
@@ -145,14 +160,14 @@ begin
    {$endif}
    {$ENDIF}
 
-uos_LoadLib(Pchar(PA_FileName), nil, pchar(MP_FileName), nil, nil, nil);
+  uos_LoadLib(PChar(PA_FileName), nil, PChar(MP_FileName), nil, nil, nil);
 
-   end;
+end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
   uos_free;    /// for release dynamic loaded libraries
-  end;
+end;
 
 end.
 

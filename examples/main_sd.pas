@@ -5,8 +5,12 @@ unit main_sd;
 interface
 
 uses
-  SysUtils, Forms, Classes, StdCtrls,
-  ExtCtrls,  uos_flat;
+  SysUtils,
+  Forms,
+  Classes,
+  StdCtrls,
+  ExtCtrls,
+  uos_flat;
 
 type
 
@@ -26,7 +30,7 @@ type
   private
     { private declarations }
     sound: array[0..2] of string;
-    ms :  array[0..2] of Tmemorystream; 
+    ms: array[0..2] of Tmemorystream;
     posi: integer;
     drum_beats: array[0..2] of string;
   public
@@ -35,11 +39,11 @@ type
 
 var
   Form1: TForm1;
-  stopit :boolean = false;
-  allok : boolean = false;
+  stopit: Boolean = False;
+  allok: Boolean = False;
   x: integer = 0;
-  channels : cardinal = 2 ; // stereo output
-   
+  channels: cardinal = 2; // stereo output
+
 implementation
 
 {$R *.lfm}
@@ -47,55 +51,56 @@ implementation
 { TForm1 }
 
 procedure TForm1.Timer1Timer(Sender: TObject);
-  var i: integer;
-   ge : boolean = false;
+var
+  i: integer;
+  ge: Boolean = False;
 begin
- Timer1.Enabled := false;
-if stopit = false then
- begin
+  Timer1.Enabled := False;
+  if stopit = False then
+  begin
 
     for i := 0 to 2 do
-    if(Copy(drum_beats[i], posi, 1) = 'x') then
-    begin
-     // uos_InputSetDSPVolume(i,0,0.5,0.5,true);
-     uos_PlaynofreePaused(i) ;
-     end;
-     
-     application.processmessages;  // yes or no ?
-    
+      if (Copy(drum_beats[i], posi, 1) = 'x') then
+        uos_PlaynofreePaused(i)// uos_InputSetDSPVolume(i,0,0.5,0.5,true);
+    ;
+
+    application.ProcessMessages;  // yes or no ?
+
     // if uos_SetGlobalEvent(true) was executed --> This set events (like pause/replay threads) to global.
     // One event (for example uos_replay) will have impact on all players.
-     for i := 0 to 2 do
-    if(ge = false) and (Copy(drum_beats[i], posi, 1) = 'x') then 
-    begin
-    uos_RePlay(i); 
-    ge := true; // A uos_replay() of each player will have impact on all players.
-    end;
-  
- inc(posi);
- if(posi > 16) then posi := 1;
- Timer1.Enabled := true;
+    for i := 0 to 2 do
+      if (ge = False) and (Copy(drum_beats[i], posi, 1) = 'x') then
+      begin
+        uos_RePlay(i);
+        ge := True; // A uos_replay() of each player will have impact on all players.
+      end;
+
+    Inc(posi);
+    if (posi > 16) then
+      posi         := 1;
+    Timer1.Enabled := True;
   end;
- 
- end;
+
+end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
- Timer1.interval := strtoint(edit1.Text);
- stopit := false;
- posi := 1;
- Timer1.Enabled := true;
- end;
+  Timer1.interval := StrToInt(edit1.Text);
+  stopit         := False;
+  posi           := 1;
+  Timer1.Enabled := True;
+end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  stopit := true;
+  stopit := True;
 end;
 
 procedure TForm1.FormActivate(Sender: TObject);
-var ordir: string;
-    lib1, lib2: string;
-    i : integer;
+var
+  ordir: string;
+  lib1, lib2: string;
+  i: integer;
 begin
   ordir := Application.Location;
 
@@ -109,7 +114,7 @@ begin
          {$endif}
      {$ENDIF}
 
-    {$if defined(cpu64) and defined(linux) }
+    {$if defined(CPUAMD64) and defined(linux) }
    lib1 := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   lib2 := ordir + 'lib/Linux/64bit/LibSndFile-64.so'; 
   {$ENDIF}
@@ -120,6 +125,11 @@ begin
    {$if defined(linux) and defined(cpuarm)}
   lib1 := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   lib2 := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+  {$ENDIF}
+
+  {$if defined(linux) and defined(cpuaarch64)}
+  lib1 := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  lib2 := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
   {$ENDIF}
 
      {$IFDEF freebsd}
@@ -145,70 +155,68 @@ begin
     {$ENDIF}
     {$ENDIF}
 
-uos_LoadLib(Pchar(lib1),  Pchar(lib2), nil, nil, nil,nil);
+  uos_LoadLib(PChar(lib1), PChar(lib2), nil, nil, nil, nil);
 
-sound[0] := Application.Location + 'sound' + directoryseparator +  'drums' + directoryseparator + 'HH.wav';
-sound[1] := Application.Location + 'sound' + directoryseparator +  'drums' + directoryseparator + 'SD.wav';
-sound[2] := Application.Location + 'sound' + directoryseparator +  'drums' + directoryseparator + 'BD.wav';
+  sound[0] := Application.Location + 'sound' + directoryseparator + 'drums' + directoryseparator + 'HH.wav';
+  sound[1] := Application.Location + 'sound' + directoryseparator + 'drums' + directoryseparator + 'SD.wav';
+  sound[2] := Application.Location + 'sound' + directoryseparator + 'drums' + directoryseparator + 'BD.wav';
 
-// {  // using memorystream
-ms[0] := TMemoryStream.Create; 
-ms[0].LoadFromFile(pchar(sound[0]));  
-ms[0].Position:= 0;
+  // {  // using memorystream
+  ms[0]          := TMemoryStream.Create;
+  ms[0].LoadFromFile(PChar(sound[0]));
+  ms[0].Position := 0;
 
-ms[1] := TMemoryStream.Create; 
-ms[1].LoadFromFile(pchar(sound[1]));  
-ms[1].Position:= 0;
+  ms[1]          := TMemoryStream.Create;
+  ms[1].LoadFromFile(PChar(sound[1]));
+  ms[1].Position := 0;
 
-ms[2] := TMemoryStream.Create; 
-ms[2].LoadFromFile(pchar(sound[2]));  
-ms[2].Position:= 0;
-// }
+  ms[2]          := TMemoryStream.Create;
+  ms[2].LoadFromFile(PChar(sound[2]));
+  ms[2].Position := 0;
+  // }
 
-drum_beats[0] := 'x0x0x0x0x0x0x0x0'; // hat
-drum_beats[1] := '0000x0000000x000'; // snare
-drum_beats[2] := 'x0000000x0x00000'; // kick
+  drum_beats[0] := 'x0x0x0x0x0x0x0x0'; // hat
+  drum_beats[1] := '0000x0000000x000'; // snare
+  drum_beats[2] := 'x0000000x0x00000'; // kick
 
-posi := 1;
+  posi := 1;
 
-     for i := 0 to 2 do   
- begin
-  if uos_CreatePlayer(i) then
-  
-   if uos_SetGlobalEvent(i, true) then
-  // This set events (like pause/replay thread) to global.
-  //One event (for example replay) will have impact on all players.  
-   
-   // using memorystream
-  if uos_AddFromMemoryStream(i,ms[i],0,-1,0,256) > -1 then
-   
-   // using file
-   // if uos_AddFromfile(i,pchar(sound[i]),-1,0,256) > -1 then
-   
-  //  if uos_InputAddDSPVolume(i,0,1,1) > -1 then
- 
-   if uos_AddFromEndlessMuted(i, channels, 256) > -1 then 
- // this for a dummy endless input, must be last input
- 
-   {$if defined(cpuarm)} // needs lower latency
+  for i := 0 to 2 do
+    if uos_CreatePlayer(i) then
+
+      if uos_SetGlobalEvent(i, True) then
+        // This set events (like pause/replay thread) to global.
+        //One event (for example replay) will have impact on all players.  
+
+        // using memorystream
+        if uos_AddFromMemoryStream(i, ms[i], 0, -1, 0, 256) > -1 then
+
+          // using file
+          // if uos_AddFromfile(i,pchar(sound[i]),-1,0,256) > -1 then
+          //  if uos_InputAddDSPVolume(i,0,1,1) > -1 then
+
+          if uos_AddFromEndlessMuted(i, channels, 256) > -1 then
+            // this for a dummy endless input, must be last input
+
+  {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
     if uos_AddIntoDevOut(i, -1, 0.08, -1, -1, 0, 256, -1) > -1 then // stereo output
        {$else}
-   if uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256, -1) > -1 then // stereo output
+            if uos_AddIntoDevOut(i, -1, 0.03, -1, -1, 0, 256, -1) > -1 then // stereo output
        {$endif}
-  
- begin
-  uos_PlayNoFree(i);
-  sleep(250);
-  allok := true;
- end else allok := false; 
- end;
- 
-// if allok = false then application.terminate;
-end;                                            
+            begin
+              uos_PlayNoFree(i);
+              sleep(250);
+              allok := True;
+            end
+            else
+              allok := False;
+
+  // if allok = false then application.terminate;
+end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-uos_free();
+  uos_free();
 end;
 
 end.

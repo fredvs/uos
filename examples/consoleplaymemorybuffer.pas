@@ -5,9 +5,9 @@ program consoleplaymemorybuffer;
 {$mode objfpc}{$H+}
    {$DEFINE UseCThreads}
 uses
-{$IFDEF UNIX}
+ {$IFDEF UNIX}
   cthreads,
-  cwstring, {$ENDIF}
+  cwstring,  {$ENDIF}
   Classes,
   ctypes,
   SysUtils,
@@ -30,9 +30,9 @@ type
 var
   res, i: integer;
   ordir, opath, st, SoundFilename, PA_FileName, SF_FileName: string;
-  PlayerIndex1, input1 : integer;
-  thebuffer : array of cfloat;
-  thebufferinfos : TuosF_BufferInfos;
+  PlayerIndex1, input1: integer;
+  thebuffer: array of cfloat;
+  thebufferinfos: TuosF_BufferInfos;
 
   { TuosConsole }
 
@@ -51,19 +51,25 @@ var
     SoundFilename := ordir + 'sound\test.flac';
  {$ENDIF}
 
- {$if defined(cpu64) and defined(linux) }
+ {$if defined(CPUAMD64) and defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     SoundFilename := ordir + 'sound/test.flac';
    {$ENDIF}
-   
+
   {$if defined(cpu86) and defined(linux)}
     PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
    SoundFilename := ordir + 'sound/test.flac';
  {$ENDIF}
- 
-  {$if defined(linux) and defined(cpuarm)}
+
+  {$if defined(linux) and defined(cpuaarch64)}
+  PA_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  SF_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
+  SoundFilename := ordir + 'sound/test.flac';
+  {$ENDIF}
+
+   {$if defined(linux) and defined(cpuarm)}
     PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
     SF_FileName := ordir + ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
       SoundFilename := ordir + 'sound/test.flac';
@@ -98,60 +104,61 @@ var
     {$ENDIF}  
  {$ENDIF}
 
-  // Load the libraries
-   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
-   res := uos_LoadLib(Pchar(PA_FileName), Pchar(SF_FileName), nil, nil, nil, nil) ;
+    // Load the libraries
+    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
+    res := uos_LoadLib(PChar(PA_FileName), PChar(SF_FileName), nil, nil, nil, nil);
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
-    
-     if res = 0 then begin
 
-       PlayerIndex1 := 0;
-       
-     // Create a memory buffer from a audio file
-    thebuffer := uos_File2Buffer(pchar(SoundFilename), 1, thebufferinfos, -1, -1);
-          
-    // You may store that buffer into ressource...
-    // ... and when you get the buffer from ressource....
-   
-    uos_CreatePlayer(PlayerIndex1);
-    
-    // Add a input from memory buffer with custom parameters
-  input1 := uos_AddFromMemoryBuffer(PlayerIndex1,thebuffer,thebufferinfos, -1, 1024);
+    if res = 0 then
+    begin
 
-   // add a Output into device with default parameters
+      PlayerIndex1 := 0;
 
-  {$if defined(cpuarm)} // needs lower latency
-        uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,input1), 
-  uos_inputgetChannels(PlayerIndex1,input1) , 1, 1024, -1);
+      // Create a memory buffer from a audio file
+      thebuffer := uos_File2Buffer(PChar(SoundFilename), 1, thebufferinfos, -1, -1);
+
+      // You may store that buffer into ressource...
+      // ... and when you get the buffer from ressource....
+
+      uos_CreatePlayer(PlayerIndex1);
+
+      // Add a input from memory buffer with custom parameters
+      input1 := uos_AddFromMemoryBuffer(PlayerIndex1, thebuffer, thebufferinfos, -1, 1024);
+
+      // add a Output into device with default parameters
+
+     {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+       uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,input1), 
+         uos_inputgetChannels(PlayerIndex1,input1) , 1, 1024, -1);
        {$else}
-     uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,input1), 
-  uos_inputgetChannels(PlayerIndex1,input1) , 1, 1024, -1);
+      uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1, input1),
+        uos_inputgetChannels(PlayerIndex1, input1), 1, 1024, -1);
        {$endif}
-      
+
  { // Save to file     
    uos_addIntoFile(PlayerIndex1, Pchar(ordir + 'testwav.wav'), 
    uos_inputgetSampleRate(PlayerIndex1,input1),
    uos_inputgetChannels(PlayerIndex1,input1),1,1024,-1 ); //
-//}  
- 
-    /////// everything is ready, here we are, lets play it...
+//}
 
- uos_Play(PlayerIndex1);
- 
-    sleep(2000);
+      /////// everything is ready, here we are, lets play it...
+
+      uos_Play(PlayerIndex1);
+
+      sleep(2000);
     end;
 
- end;
+  end;
 
   procedure TuosConsole.doRun;
   begin
     ConsolePlay;
     uos_free();
     Terminate;
-    end;
-    
-constructor TuosConsole.Create(TheOwner: TComponent);
+  end;
+
+  constructor TuosConsole.Create(TheOwner: TComponent);
   begin
     inherited Create(TheOwner);
     StopOnException := True;
@@ -160,7 +167,7 @@ constructor TuosConsole.Create(TheOwner: TComponent);
 var
   Application: TUOSConsole;
 begin
-  Application := TUOSConsole.Create(nil);
+  Application       := TUOSConsole.Create(nil);
   Application.Title := 'Console Player from Buffer-Memory';
   Application.Run;
   Application.Free;

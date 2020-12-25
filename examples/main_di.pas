@@ -9,8 +9,15 @@ unit main_di;
 interface
 
 uses
-  uos_flat, Forms, Dialogs, SysUtils, Graphics,
-  StdCtrls, ExtCtrls, Grids, Classes;
+  uos_flat,
+  Forms,
+  Dialogs,
+  SysUtils,
+  Graphics,
+  StdCtrls,
+  ExtCtrls,
+  Grids,
+  Classes;
 
 type
   { TForm1 }
@@ -78,20 +85,24 @@ begin
   opath := copy(opath, 1, Pos('/uos', opath) - 1);
   Edit1.Text := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
     {$ENDIF}
-    {$ENDIF}          
+    {$ENDIF}
 
-    {$if defined(cpu64) and defined(linux) }
+  {$if defined(CPUAMD64) and defined(linux) }
   edit1.Text := application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
-{$endif}
+  {$endif}
 
 {$if defined(cpu86) and defined(linux)}
   edit1.Text := application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
 {$endif}
- 
+
   {$if defined(linux) and defined(cpuarm)}
   edit1.Text := application.Location + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
 {$endif}
- 
+
+ {$if defined(linux) and defined(cpuaarch64)}
+  edit1.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  {$ENDIF}
+
  {$IFDEF freebsd}
     {$if defined(cpu64)}
   edit1.Text := application.Location + 'lib/FreeBSD/64bit/libportaudio-64.so';
@@ -127,10 +138,10 @@ begin
 
   x := 1;
 
-  while x < uosDeviceCount + 1  do
+  while x < uosDeviceCount + 1 do
   begin
 
-      stringgrid1.Cells[0, x] := IntToStr(uosDeviceInfos[x - 1].DeviceNum);
+    stringgrid1.Cells[0, x] := IntToStr(uosDeviceInfos[x - 1].DeviceNum);
     stringgrid1.Cells[1, x] := uosDeviceInfos[x - 1].DeviceName;
     if uosDeviceInfos[x - 1].DefaultDevIn = True then
       stringgrid1.Cells[2, x] := 'Yes'
@@ -142,39 +153,38 @@ begin
     else
       stringgrid1.Cells[3, x] := 'No';
 
-    stringgrid1.Cells[4, x] := IntToStr(uosDeviceInfos[x - 1].ChannelsIn);
-    stringgrid1.Cells[5, x] := IntToStr(uosDeviceInfos[x - 1].ChannelsOut);
-    stringgrid1.Cells[6, x] := floattostrf(uosDeviceInfos[x - 1].SampleRate, ffFixed, 15, 0);
-    stringgrid1.Cells[7, x] := floattostrf(uosDeviceInfos[x - 1].LatencyHighIn, ffFixed, 15, 8);
-    stringgrid1.Cells[8, x] := floattostrf(uosDeviceInfos[x - 1].LatencyHighOut,
+    stringgrid1.Cells[4, x]  := IntToStr(uosDeviceInfos[x - 1].ChannelsIn);
+    stringgrid1.Cells[5, x]  := IntToStr(uosDeviceInfos[x - 1].ChannelsOut);
+    stringgrid1.Cells[6, x]  := floattostrf(uosDeviceInfos[x - 1].SampleRate, ffFixed, 15, 0);
+    stringgrid1.Cells[7, x]  := floattostrf(uosDeviceInfos[x - 1].LatencyHighIn, ffFixed, 15, 8);
+    stringgrid1.Cells[8, x]  := floattostrf(uosDeviceInfos[x - 1].LatencyHighOut,
       ffFixed, 15, 8);
-    stringgrid1.Cells[9, x] := floattostrf(uosDeviceInfos[x - 1].LatencyLowIn, ffFixed, 15, 8);
+    stringgrid1.Cells[9, x]  := floattostrf(uosDeviceInfos[x - 1].LatencyLowIn, ffFixed, 15, 8);
     stringgrid1.Cells[10, x] :=
       floattostrf(uosDeviceInfos[x - 1].LatencyLowOut, ffFixed, 15, 8);
     stringgrid1.Cells[11, x] := uosDeviceInfos[x - 1].HostAPIName;
     stringgrid1.Cells[12, x] := uosDeviceInfos[x - 1].DeviceType;
 
-     Inc(x);
+    Inc(x);
   end;
 
 end;
 
 
-
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // Load the library
- //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
+  //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
-  if uos_LoadLib(pchar(edit1.Text), nil, nil, nil, nil, nil) = 0 then
+  if uos_LoadLib(PChar(edit1.Text), nil, nil, nil, nil, nil) = 0 then
   begin
     form1.hide;
     button1.Caption := 'PortAudio is loaded...';
     button1.Enabled := False;
-    edit1.ReadOnly := True;
+    edit1.ReadOnly  := True;
 
-     CheckInfos();
-    form1.Height := 388;
+    CheckInfos();
+    form1.Height   := 388;
     form1.Position := poScreenCenter;
     form1.Show;
   end
@@ -198,17 +208,17 @@ var
   xpos, ypos: integer;
   ratio: double;
 begin
-  xpos := 0;
-  ypos := 0;
-  ratio := 1;
+  xpos      := 0;
+  ypos      := 0;
+  ratio     := 1;
   BufferBMP := TBitmap.Create;
   with form1 do
   begin
     form1.PaintBox1.Parent.DoubleBuffered := True;
     PaintBox1.Height := round(ratio * 116);
-    PaintBox1.Width := round(ratio * 100);
+    PaintBox1.Width  := round(ratio * 100);
     BufferBMP.Height := PaintBox1.Height;
-    BufferBMP.Width := PaintBox1.Width;
+    BufferBMP.Width  := PaintBox1.Width;
     BufferBMP.Canvas.AntialiasingMode := amOn;
     BufferBMP.Canvas.Pen.Width := round(ratio * 6);
     BufferBMP.Canvas.brush.Color := clmoneygreen;
@@ -249,7 +259,6 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
-
 begin
   Form1.Height := 150;
 end;
@@ -261,3 +270,4 @@ begin
 end;
 
 end.
+

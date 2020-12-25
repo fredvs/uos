@@ -60,7 +60,7 @@ var
     SoundFilename := ordir + 'sound\test.mp3';
  {$ENDIF}
 
- {$if defined(cpu64) and defined(linux) }
+ {$if defined(CPUAMD64) and defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     ST_FileName := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
@@ -75,13 +75,21 @@ var
     ST_FileName := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
     SoundFilename := ordir + 'sound/test.mp3';
  {$ENDIF}
- 
+
+  {$if defined(linux) and defined(cpuaarch64)}
+  PA_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  SF_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
+  MP_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
+  ST_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/plugin/libsoundtouch_aarch64.so';
+  SoundFilename := ordir + 'sound/test.mp3';
+  {$ENDIF}
+   
   {$if defined(linux) and defined(cpuarm)}
     PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
     SF_FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
     MP_FileName := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
     ST_FileName := ordir + 'lib/Linux/arm_raspberrypi/plugin/libsoundtouch-arm.so';
-      SoundFilename := ordir + 'sound/test.mp3';
+    SoundFilename := ordir + 'sound/test.mp3';
  {$ENDIF}
 
  {$IFDEF freebsd}

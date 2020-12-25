@@ -9,8 +9,18 @@ unit main_mi;
 interface
 
 uses
-  uos_flat, Forms, Dialogs, SysUtils, fileutil, Graphics, ctypes,
-  StdCtrls, ComCtrls, ExtCtrls, Classes, Controls;
+  uos_flat,
+  Forms,
+  Dialogs,
+  SysUtils,
+  fileutil,
+  Graphics,
+  ctypes,
+  StdCtrls,
+  ComCtrls,
+  ExtCtrls,
+  Classes,
+  Controls;
 
 type
 
@@ -130,8 +140,7 @@ procedure uos_logo();
 var
   Form1: TForm1;
   BufferBMP: TBitmap;
-  PlayerIndex0, inindex1, inindex2, inindex3, inindex4,
-  mut, inindex5, inindex6, inindex7, inindex8, channels : cardinal;
+  PlayerIndex0, inindex1, inindex2, inindex3, inindex4, mut, inindex5, inindex6, inindex7, inindex8, channels: cardinal;
 
 
 implementation
@@ -144,21 +153,21 @@ procedure TForm1.ClosePlayer0;
 begin
   button16.Enabled := False;
   button15.Enabled := False;
-  button3.Enabled := false;
-  button14.Enabled := false;
-  button2.Enabled := true;
+  button3.Enabled  := False;
+  button14.Enabled := False;
+  button2.Enabled  := True;
 end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
-   if (button14.Enabled = False) then
+  if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex1, TrackBar1.position / 100,
       TrackBar1.position / 100, True);
 end;
 
 procedure TForm1.TrackBar2Change(Sender: TObject);
 begin
-    if (button14.Enabled = False) then
+  if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex2, TrackBar2.position / 100,
       TrackBar2.position / 100, True);
 
@@ -166,7 +175,7 @@ end;
 
 procedure TForm1.TrackBar3Change(Sender: TObject);
 begin
-    if (button14.Enabled = False) then
+  if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex3, TrackBar3.position / 100,
       TrackBar3.position / 100, True);
 
@@ -174,14 +183,14 @@ end;
 
 procedure TForm1.TrackBar4Change(Sender: TObject);
 begin
-    if (button14.Enabled = False) then
+  if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex4, TrackBar4.position / 100,
       TrackBar4.position / 100, True);
 end;
 
 procedure TForm1.TrackBar5Change(Sender: TObject);
 begin
-   if (button14.Enabled = False) then
+  if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex8, TrackBar5.position / 100,
       TrackBar5.position / 100, True);
 
@@ -189,7 +198,7 @@ end;
 
 procedure TForm1.TrackBar6Change(Sender: TObject);
 begin
-   if (button14.Enabled = False) then
+  if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex5, TrackBar6.position / 100,
       TrackBar6.position / 100, True);
 
@@ -197,7 +206,7 @@ end;
 
 procedure TForm1.TrackBar7Change(Sender: TObject);
 begin
-   if (button14.Enabled = False) then
+  if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex6, TrackBar7.position / 100,
       TrackBar7.position / 100, True);
 
@@ -205,7 +214,7 @@ end;
 
 procedure TForm1.TrackBar8Change(Sender: TObject);
 begin
-   if (button14.Enabled = False) then
+  if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex7, TrackBar8.position / 100,
       TrackBar8.position / 100, True);
 
@@ -273,12 +282,12 @@ begin
 
   opendialog1.Initialdir := application.Location + 'sound';
 
-  Edit4.Text := application.Location + 'sound' + directoryseparator + 'test.wav';
-  Edit5.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
-  Edit6.Text := application.Location + 'sound' + directoryseparator + 'test.wav';
-  Edit7.Text := application.Location + 'sound' + directoryseparator + 'test.flac';
-  Edit8.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
-  Edit9.Text := application.Location + 'sound' + directoryseparator + 'test.flac';
+  Edit4.Text  := application.Location + 'sound' + directoryseparator + 'test.wav';
+  Edit5.Text  := application.Location + 'sound' + directoryseparator + 'test.ogg';
+  Edit6.Text  := application.Location + 'sound' + directoryseparator + 'test.wav';
+  Edit7.Text  := application.Location + 'sound' + directoryseparator + 'test.flac';
+  Edit8.Text  := application.Location + 'sound' + directoryseparator + 'test.ogg';
+  Edit9.Text  := application.Location + 'sound' + directoryseparator + 'test.flac';
   Edit10.Text := application.Location + 'sound' + directoryseparator + 'test.wav';
   Edit11.Text := application.Location + 'sound' + directoryseparator + 'test.ogg';
 
@@ -295,24 +304,23 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
-
 begin
   // Load the libraries
   //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
   // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
-   if uos_LoadLib(Pchar(edit1.Text), pchar(edit2.Text), nil, nil, nil, nil) = 0 then
+  if uos_LoadLib(PChar(edit1.Text), PChar(edit2.Text), nil, nil, nil, nil) = 0 then
   begin
     form1.hide;
-    form1.Position := podefault;
+    form1.Position  := podefault;
     button1.Caption := 'PortAudio and SndFile libraries are loaded...';
     button1.Enabled := False;
-    edit1.ReadOnly := True;
-    edit2.ReadOnly := True;
-    form1.Height := 478;
-    form1.Position := poScreenCenter;
+    edit1.ReadOnly  := True;
+    edit2.ReadOnly  := True;
+    form1.Height    := 478;
+    form1.Position  := poScreenCenter;
     button2.click;
-     form1.Show;
+    form1.Show;
   end
   else
   begin
@@ -326,19 +334,19 @@ begin
     if uosLoadResult.SFloaderror = 2 then
       MessageDlg(edit2.Text + ' do not load...', mtWarning, [mbYes], 0);
 
-    end;
+  end;
 
 end;
 
 procedure TForm1.Button11Click(Sender: TObject);
 begin
-   if opendialog1.Execute then
+  if opendialog1.Execute then
     edit10.Text := opendialog1.FileName;
 end;
 
 procedure TForm1.Button17Click(Sender: TObject);
 begin
-   if opendialog1.Execute then
+  if opendialog1.Execute then
     edit11.Text := opendialog1.FileName;
 end;
 
@@ -358,22 +366,22 @@ procedure TForm1.Button14Click(Sender: TObject);
 begin
 
   button15.Enabled := True;
-  button3.Enabled := True;
-  button14.Enabled := false;
-  button16.Enabled := false;
-  button2.Enabled := false;
-  
+  button3.Enabled  := True;
+  button14.Enabled := False;
+  button16.Enabled := False;
+  button2.Enabled  := False;
+
   // set the volume from the sliders.
   TrackBar1Change(self);
   TrackBar2Change(self);
-   TrackBar3Change(self);
-    TrackBar4Change(self);
-     TrackBar5Change(self);
-      TrackBar6Change(self);
-       TrackBar7Change(self);
-        TrackBar8Change(self);
-        
-  
+  TrackBar3Change(self);
+  TrackBar4Change(self);
+  TrackBar5Change(self);
+  TrackBar6Change(self);
+  TrackBar7Change(self);
+  TrackBar8Change(self);
+
+
   uos_PlayNoFree(PlayerIndex0);
   ////// Ok let start it
 
@@ -383,7 +391,7 @@ procedure TForm1.Button15Click(Sender: TObject);
 begin
   uos_Pause(PlayerIndex0);
   button15.Enabled := False;
-  button16.Enabled := true;
+  button16.Enabled := True;
 
 end;
 
@@ -397,38 +405,38 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-   PlayerIndex0 := 0;
-   
-   channels := 2 ; // (stereo output)
+  PlayerIndex0 := 0;
 
- uos_CreatePlayer(PlayerIndex0);
+  channels := 2; // (stereo output)
+
+  uos_CreatePlayer(PlayerIndex0);
 
   //// add input from audio file with custom parameters
   //////////// PlayerIndex : Index of a existing Player
-   ////////// FileName : filename of audio file
-   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// FileName : filename of audio file
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
   //////////// FramesCount : default : -1 (65536)
   //  result : -1 nothing created, otherwise Input Index in array
- inindex1 := uos_AddFromFile(PlayerIndex0, pchar(Edit4.Text), -1, 0, 1024);
- inindex2 := uos_AddFromFile(PlayerIndex0, pchar(Edit5.Text), -1, 0, 1024);
- inindex3 := uos_AddFromFile(PlayerIndex0, pchar(Edit6.Text), -1, 0, 1024);
- inindex4 := uos_AddFromFile(PlayerIndex0, pchar(Edit7.Text), -1, 0, 1024);
- inindex5 := uos_AddFromFile(PlayerIndex0, pchar(Edit8.Text), -1, 0, 1024);
- inindex6 := uos_AddFromFile(PlayerIndex0, pchar(Edit9.Text), -1, 0, 1024);
- inindex7 := uos_AddFromFile(PlayerIndex0, pchar(Edit10.Text), -1, 0, 1024);
- inindex8 := uos_AddFromFile(PlayerIndex0, pchar(Edit11.Text), -1, 0, 1024);
+  inindex1 := uos_AddFromFile(PlayerIndex0, PChar(Edit4.Text), -1, 0, 1024);
+  inindex2 := uos_AddFromFile(PlayerIndex0, PChar(Edit5.Text), -1, 0, 1024);
+  inindex3 := uos_AddFromFile(PlayerIndex0, PChar(Edit6.Text), -1, 0, 1024);
+  inindex4 := uos_AddFromFile(PlayerIndex0, PChar(Edit7.Text), -1, 0, 1024);
+  inindex5 := uos_AddFromFile(PlayerIndex0, PChar(Edit8.Text), -1, 0, 1024);
+  inindex6 := uos_AddFromFile(PlayerIndex0, PChar(Edit9.Text), -1, 0, 1024);
+  inindex7 := uos_AddFromFile(PlayerIndex0, PChar(Edit10.Text), -1, 0, 1024);
+  inindex8 := uos_AddFromFile(PlayerIndex0, PChar(Edit11.Text), -1, 0, 1024);
 
- // This for a dummy endless input, set enable to false, must be last input
- // Needed to make work EndProc if all input reach the end. 
-  mut := uos_AddFromEndlessMuted(PlayerIndex0, channels, 1024) ;
-  uos_inputsetenable(PlayerIndex0, mut, false);
- 
-    ///// DSP Volume changer
-    ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing input
-    ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
-    ////////// VolRight : Right volume
+  // This for a dummy endless input, set enable to false, must be last input
+  // Needed to make work EndProc if all input reach the end. 
+  mut := uos_AddFromEndlessMuted(PlayerIndex0, channels, 1024);
+  uos_inputsetenable(PlayerIndex0, mut, False);
+
+  ///// DSP Volume changer
+  ////////// PlayerIndex1 : Index of a existing Player
+  ////////// In1Index : InputIndex of a existing input
+  ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
+  ////////// VolRight : Right volume
   uos_InputAddDSPVolume(PlayerIndex0, InIndex1, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex2, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex3, 1, 1);
@@ -437,9 +445,7 @@ begin
   uos_InputAddDSPVolume(PlayerIndex0, InIndex6, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex7, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex8, 1, 1);
- 
- 
-  //// add a Output with custom parameters
+
   //// add a Output into device with custom parameters
   //////////// PlayerIndex : Index of a existing Player
   //////////// Device ( -1 is default Output device )
@@ -448,14 +454,14 @@ begin
   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (65536)
-    // ChunkCount : default : -1 (= 512)
+  // ChunkCount : default : -1 (= 512)
   //  result : -1 nothing created, otherwise Output Index in array
-  {$if defined(cpuarm)} // needs lower latency
+ {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
    uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, -1, -1, 0, 1024, -1);
      {$else}
   uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, 1024, -1);
   {$endif}
-   
+
   CheckBox1Change(Sender);
   CheckBox2Change(Sender);
   CheckBox3Change(Sender);
@@ -464,16 +470,16 @@ begin
   CheckBox6Change(Sender);
   CheckBox7Change(Sender);
   CheckBox8Change(Sender);
-  
+
   /////// procedure to execute when stream is terminated
-    uos_EndProc(PlayerIndex0, @ClosePlayer0);
+  uos_EndProc(PlayerIndex0, @ClosePlayer0);
   ///// Assign the procedure of object to execute at end
   //////////// PlayerIndex : Index of a existing Player
   //////////// ClosePlayer1 : procedure of object to execute inside the loop
- 
-    application.ProcessMessages;
-   
-   button14.Enabled := true;
+
+  application.ProcessMessages;
+
+  button14.Enabled := True;
 end;
 
 
@@ -481,8 +487,8 @@ procedure TForm1.Button3Click(Sender: TObject);
 begin
   uos_Stop(PlayerIndex0);
   sleep(100);
-  button2.Enabled:=true;
-  button3.Enabled:=false;
+  button2.Enabled := True;
+  button3.Enabled := False;
   ClosePlayer0;
 end;
 
@@ -494,7 +500,7 @@ end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 begin
-   if opendialog1.Execute then
+  if opendialog1.Execute then
     edit8.Text := opendialog1.FileName;
 end;
 
@@ -507,48 +513,48 @@ end;
 
 procedure TForm1.Button8Click(Sender: TObject);
 begin
-   if opendialog1.Execute then
+  if opendialog1.Execute then
     edit9.Text := opendialog1.FileName;
 end;
 
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
-    uos_InputSetEnable(PlayerIndex0, InIndex1, checkbox1.checked);
+  uos_InputSetEnable(PlayerIndex0, InIndex1, checkbox1.Checked);
 end;
 
 procedure TForm1.CheckBox2Change(Sender: TObject);
 begin
-   uos_InputSetEnable(PlayerIndex0, InIndex2, checkbox2.checked);
+  uos_InputSetEnable(PlayerIndex0, InIndex2, checkbox2.Checked);
 end;
 
 procedure TForm1.CheckBox3Change(Sender: TObject);
 begin
-   uos_InputSetEnable(PlayerIndex0, InIndex5, checkbox3.checked);
+  uos_InputSetEnable(PlayerIndex0, InIndex5, checkbox3.Checked);
 end;
 
 procedure TForm1.CheckBox4Change(Sender: TObject);
 begin
-   uos_InputSetEnable(PlayerIndex0, InIndex6, checkbox4.checked);
+  uos_InputSetEnable(PlayerIndex0, InIndex6, checkbox4.Checked);
 end;
 
 procedure TForm1.CheckBox5Change(Sender: TObject);
 begin
-   uos_InputSetEnable(PlayerIndex0, InIndex3, checkbox5.checked);
+  uos_InputSetEnable(PlayerIndex0, InIndex3, checkbox5.Checked);
 end;
 
 procedure TForm1.CheckBox6Change(Sender: TObject);
 begin
-    uos_InputSetEnable(PlayerIndex0, InIndex4, checkbox6.checked);
+  uos_InputSetEnable(PlayerIndex0, InIndex4, checkbox6.Checked);
 end;
 
 procedure TForm1.CheckBox7Change(Sender: TObject);
 begin
-   uos_InputSetEnable(PlayerIndex0, InIndex7, checkbox7.checked);
+  uos_InputSetEnable(PlayerIndex0, InIndex7, checkbox7.Checked);
 end;
 
 procedure TForm1.CheckBox8Change(Sender: TObject);
 begin
-   uos_InputSetEnable(PlayerIndex0, InIndex8, checkbox8.checked);
+  uos_InputSetEnable(PlayerIndex0, InIndex8, checkbox8.Checked);
 end;
 
 
@@ -557,17 +563,17 @@ var
   xpos, ypos: integer;
   ratio: double;
 begin
-  xpos := 0;
-  ypos := 0;
-  ratio := 1;
+  xpos      := 0;
+  ypos      := 0;
+  ratio     := 1;
   BufferBMP := TBitmap.Create;
   with form1 do
   begin
     form1.PaintBox1.Parent.DoubleBuffered := True;
     PaintBox1.Height := round(ratio * 116);
-    PaintBox1.Width := round(ratio * 100);
+    PaintBox1.Width  := round(ratio * 100);
     BufferBMP.Height := PaintBox1.Height;
-    BufferBMP.Width := PaintBox1.Width;
+    BufferBMP.Width  := PaintBox1.Width;
     BufferBMP.Canvas.AntialiasingMode := amOn;
     BufferBMP.Canvas.Pen.Width := round(ratio * 6);
     BufferBMP.Canvas.brush.Color := clmoneygreen;
@@ -614,7 +620,8 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-    uos_free;
+  uos_free;
 end;
 
 end.
+

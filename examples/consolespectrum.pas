@@ -50,7 +50,7 @@ var
     SoundFilename := ordir + 'sound\test.ogg';
  {$ENDIF}
 
-     {$if defined(cpu64) and defined(linux) }
+     {$if defined(CPUAMD64) and defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
     SoundFilename := ordir + 'sound/test.ogg';
@@ -61,6 +61,12 @@ var
     SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
    SoundFilename := ordir + 'sound/test.ogg';
  {$ENDIF}
+ 
+  {$if defined(linux) and defined(cpuaarch64)}
+  PA_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  SF_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
+  SoundFilename := ordir + 'sound/test.ogg';
+  {$ENDIF}
  
   {$if defined(linux) and defined(cpuarm)}
     PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';

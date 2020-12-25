@@ -8,8 +8,18 @@ unit main_nr;
 interface
 
 uses
-  uos_flat, Forms, Dialogs, SysUtils, fileutil, Graphics, ctypes,
-  StdCtrls, ComCtrls, ExtCtrls, Classes, Controls;
+  uos_flat,
+  Forms,
+  Dialogs,
+  SysUtils,
+  fileutil,
+  Graphics,
+  ctypes,
+  StdCtrls,
+  ComCtrls,
+  ExtCtrls,
+  Classes,
+  Controls;
 
 type
   { TForm1 }
@@ -47,7 +57,7 @@ type
     procedure PaintBox1Paint(Sender: TObject);
     procedure Panel1Click(Sender: TObject);
     procedure ClosePlayer1;
-    private
+  private
     { private declarations }
   public
     { public declarations }
@@ -61,8 +71,8 @@ var
   BufferBMP: TBitmap;
   PlayerIndex1: integer;
   OutputIndex1, InputIndex1, DSPIndex1, DSPIndex2, PluginIndex1, PluginIndex2: integer;
-  plugsoundtouch : boolean = false;
-  plugbs2b : boolean = false;
+  plugsoundtouch: Boolean = False;
+  plugbs2b: Boolean = False;
 
 implementation
 
@@ -126,8 +136,8 @@ begin
   Edit4.Text := ordir + '/sound/noisyvoice.ogg';
    {$ENDIF}
     {$ENDIF}
-    
-  {$if defined(cpu64) and defined(linux) }
+
+  {$if defined(CPUAMD64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so'; 
    Edit4.Text := ordir + 'sound/noisyvoice.ogg';
@@ -141,6 +151,12 @@ begin
   Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit2.Text := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
    Edit4.Text := ordir + 'sound/noisyvoice.ogg';
+  {$ENDIF}
+
+  {$if defined(linux) and defined(cpuaarch64)}
+  Edit1.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
+  Edit2.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
+  Edit4.Text := ordir + 'sound/test.mp3';
   {$ENDIF}
 
   opendialog1.Initialdir := application.Location + 'sound';
@@ -160,34 +176,35 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
-loadok : boolean = false;
+  loadok: Boolean = False;
 begin
   // Load the libraries
   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
-  if uos_LoadLib(Pchar(Edit1.text), Pchar(Edit2.text), nil, nil, nil, nil) = 0 then
-  // You may load one or more libraries . When you want... :
-
- begin
+  if uos_LoadLib(PChar(Edit1.Text), PChar(Edit2.Text), nil, nil, nil, nil) = 0 then
+    // You may load one or more libraries . When you want... :
+  begin
     form1.hide;
-    loadok := true;
+    loadok          := True;
     button1.Enabled := False;
-    edit1.ReadOnly := True;
-    edit2.ReadOnly := True;
+    edit1.ReadOnly  := True;
+    edit2.ReadOnly  := True;
 
-          button1.Caption :=
-        'PortAudio and SndFile libraries are loaded...'  ;
-      Height := 82;
-     panel1.left := 0;
-      panel1.top := 0;
-    panel1.height :=  form1.Height;
-     panel1.width :=  form1.width;
-      panel1.visible := true;
-    Position := poScreenCenter;
-    Caption := 'Noise Remover.    uos version ' + inttostr(uos_getversion());
+    button1.Caption :=
+      'PortAudio and SndFile libraries are loaded...';
+    Height          := 82;
+    panel1.left     := 0;
+    panel1.top      := 0;
+    panel1.Height   := form1.Height;
+    panel1.Width    := form1.Width;
+    panel1.Visible  := True;
+    Position        := poScreenCenter;
+    Caption         := 'Noise Remover.    uos version ' + IntToStr(uos_getversion());
     Show;
-      end else  MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
-  end;
+  end
+  else
+    MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
+end;
 
 
 procedure TForm1.Button5Click(Sender: TObject);
@@ -208,76 +225,76 @@ end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 var
-   samformat: shortint;
+  samformat: shortint;
+begin
 
- begin
+  samformat := 0;
 
-     samformat := 0;
-
-   PlayerIndex1 := 0;
-   // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
-   // If PlayerIndex exists already, it will be overwritten...
+  PlayerIndex1 := 0;
+  // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
+  // If PlayerIndex exists already, it will be overwritten...
 
    {$IF (FPC_FULLVERSION >= 20701) or DEFINED(Windows)}
-    uos_CreatePlayer(PlayerIndex1);
+  uos_CreatePlayer(PlayerIndex1);
     {$else}
    uos_CreatePlayer(PlayerIndex1,self);
    {$endif}
-   //// Create the player.
-   //// PlayerIndex : from 0 to what your computer can do !
-   //// If PlayerIndex exists already, it will be overwriten...
+  //// Create the player.
+  //// PlayerIndex : from 0 to what your computer can do !
+  //// If PlayerIndex exists already, it will be overwriten...
 
-    InputIndex1 := uos_AddFromFile(PlayerIndex1, pchar(Edit4.text), -1,
+  InputIndex1 := uos_AddFromFile(PlayerIndex1, PChar(Edit4.Text), -1,
     samformat, -1);
-   //// add input from audio file with custom parameters
-   ////////// FileName : filename of audio file
-   //////////// PlayerIndex : Index of a existing Player
-   ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-   ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-   //////////// FramesCount : default : -1 (65536 div channels)
-   //  result : -1 nothing created, otherwise Input Index in array
+  //// add input from audio file with custom parameters
+  ////////// FileName : filename of audio file
+  //////////// PlayerIndex : Index of a existing Player
+  ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+  ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+  //////////// FramesCount : default : -1 (65536 div channels)
+  //  result : -1 nothing created, otherwise Input Index in array
 
-   if InputIndex1 > -1 then begin
+  if InputIndex1 > -1 then
+  begin
 
-     // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
-   //// add a Output into device with default parameters
-  
-  {$if defined(cpuarm)} // needs lower latency
+    // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
+    //// add a Output into device with default parameters
+
+     {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
        OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1,-1);
        {$else}
-     OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-    uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1,-1);
+    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
+      uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
        {$endif}
-  
-  //// add a Output into device with custom parameters
-   //////////// PlayerIndex : Index of a existing Player
-   //////////// Device ( -1 is default Output device )
-   //////////// Latency  ( -1 is latency suggested ) )
-   //////////// SampleRate : delault : -1 (44100)   /// here default samplerate of input
-   //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-   //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-   //////////// FramesCount : default : -1 (65536)
-   //  result : -1 nothing created, otherwise Output Index in array
+
+    //// add a Output into device with custom parameters
+    //////////// PlayerIndex : Index of a existing Player
+    //////////// Device ( -1 is default Output device )
+    //////////// Latency  ( -1 is latency suggested ) )
+    //////////// SampleRate : delault : -1 (44100)   /// here default samplerate of input
+    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    //////////// FramesCount : default : -1 (65536)
+    //  result : -1 nothing created, otherwise Output Index in array
 
 
- uos_InputAddDSPNoiseRemoval(PlayerIndex1, InputIndex1);
- uos_InputSetDSPNoiseRemoval(PlayerIndex1, InputIndex1, chknoise.Checked);
+    uos_InputAddDSPNoiseRemoval(PlayerIndex1, InputIndex1);
+    uos_InputSetDSPNoiseRemoval(PlayerIndex1, InputIndex1, chknoise.Checked);
     /// Add DSP Noise removal. First chunck will be the noise sample.
 
-   /////// procedure to execute when stream is terminated
-   uos_EndProc(PlayerIndex1, @ClosePlayer1);
-   ///// Assign the procedure of object to execute at end
-   //////////// PlayerIndex : Index of a existing Player
-   //////////// ClosePlayer1 : procedure of object to execute inside the general loop
+    /////// procedure to execute when stream is terminated
+    uos_EndProc(PlayerIndex1, @ClosePlayer1);
+    ///// Assign the procedure of object to execute at end
+    //////////// PlayerIndex : Index of a existing Player
+    //////////// ClosePlayer1 : procedure of object to execute inside the general loop
 
-   button3.Enabled := False;
-   button6.Enabled := True;
-   button5.Enabled := True;
-   button4.Enabled := False;
+    button3.Enabled := False;
+    button6.Enabled := True;
+    button5.Enabled := True;
+    button4.Enabled := False;
 
-   uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
-   end;
+    uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
+  end;
 
 end;
 
@@ -296,7 +313,7 @@ end;
 procedure TForm1.ChknoiseChange(Sender: TObject);
 begin
   if button3.Enabled = False then
-  uos_InputSetDSPNoiseRemoval(PlayerIndex1, InputIndex1, chknoise.Checked);
+    uos_InputSetDSPNoiseRemoval(PlayerIndex1, InputIndex1, chknoise.Checked);
 end;
 
 
@@ -305,17 +322,17 @@ var
   xpos, ypos: integer;
   ratio: double;
 begin
-  xpos := 0;
-  ypos := 0;
-  ratio := 1;
+  xpos      := 0;
+  ypos      := 0;
+  ratio     := 1;
   BufferBMP := TBitmap.Create;
   with form1 do
   begin
     form1.PaintBox1.Parent.DoubleBuffered := True;
     PaintBox1.Height := round(ratio * 116);
-    PaintBox1.Width := round(ratio * 100);
+    PaintBox1.Width  := round(ratio * 100);
     BufferBMP.Height := PaintBox1.Height;
-    BufferBMP.Width := PaintBox1.Width;
+    BufferBMP.Width  := PaintBox1.Width;
     BufferBMP.Canvas.AntialiasingMode := amOn;
     BufferBMP.Canvas.Pen.Width := round(ratio * 6);
     BufferBMP.Canvas.brush.Color := clmoneygreen;
@@ -368,9 +385,10 @@ begin
     button6.Click;
     sleep(500);
   end;
-    uos_free;
-    BufferBMP.free;
-  end;
+  uos_free;
+  BufferBMP.Free;
+end;
 
 
 end.
+
