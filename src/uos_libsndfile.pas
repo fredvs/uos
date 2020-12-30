@@ -73,6 +73,8 @@ const
   SF_FORMAT_SD2 = $160000;    // Sound Designer 2
   SF_FORMAT_FLAC = $170000;    // FLAC lossless file format
   SF_FORMAT_CAF = $180000;    // Core Audio File format
+  SF_FORMAT_OGG = $200000;   // Xiph OGG container
+        
 
 const
   //Subtypes from here on.
@@ -105,6 +107,9 @@ const
 
   SF_FORMAT_DPCM_8 = $0050;    // 8 bit differential PCM (XI only)
   SF_FORMAT_DPCM_16 = $0051;    // 16 bit differential PCM (XI only)
+
+  SF_FORMAT_VORBIS  = $0060;   // Xiph Vorbis encoding.
+
 
 const
   //* Endian-ness options. *//

@@ -150,9 +150,11 @@ var
           //OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1);
           OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, -1, -1);
        {$endif}
-
+       
           writeln('OutputIndex1 = ' + IntToStr(OutputIndex1));
-
+          
+          // uos_AddIntoFile(PlayerIndex1,pchar('/home/fred/mytest.ogg'), -1, -1, -1, -1, 3);
+ 
           if OutputIndex1 > -1 then
           begin
 
@@ -169,7 +171,6 @@ var
             writeln;
 
             sleep(2000);
-
           end;
         end;
       end;

@@ -47,6 +47,7 @@
 * 32 th changes: 2018-02-06 (Added InputFiltersGetLevel and spectrum features)    * 
 * 33 th changes: 2020-11-10 (Synthesizer uses LookupTable, thanks to Blaazen.)    * 
 * 34 th changes: 2020-12-25 (Aarch64-Linux compatible, updated all examples)      * 
+* 35 th changes: 2020-12-30 (uos_AddIntoFile() can encode in ogg format)          * 
 *                                                                                 *
 ***********************************************************************************}
 

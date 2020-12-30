@@ -368,7 +368,8 @@ function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar; OutputI
  {$IF DEFINED(shout)}
 function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: cint; SampleFormat: cint;
  EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
-// Add a Output into a IceCast server for audio-web-streaming// SampleRate : delault : -1 (48100)
+// Add a Output into a IceCast server for audio-web-streaming
+// SampleRate : delault : -1 (48100)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // EncodeType : default : -1 (0:Music) (0: Music, 1:Voice)
 // SampleFormat : -1 default : float32 : (0:float32, 1:Int16)
@@ -404,7 +405,7 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint3
 // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (2:Int16) (1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 65536)
-// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
+// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom, 3:ogg);
 //  result :Output Index in array  -1 = error
 // example : OutputIndex1 := uos_AddIntoFile(0,edit5.Text,-1,-1, 0, 1);
 
@@ -1441,7 +1442,7 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint3
 // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (2:Int16) (1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 65536)
-// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
+// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom, 3:ogg);
 //  result :Output Index in array  -1 = error
 // example : OutputIndex1 := uos_AddIntoFile(0,edit5.Text,-1,-1, 0, 1);
 begin

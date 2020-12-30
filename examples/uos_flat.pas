@@ -405,7 +405,7 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint3
 // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (2:Int16) (1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 65536)
-// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
+// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom, 3:ogg);
 //  result :Output Index in array  -1 = error
 // example : OutputIndex1 := uos_AddIntoFile(0,edit5.Text,-1,-1, 0, 1);
 
@@ -1442,7 +1442,7 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint3
 // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (2:Int16) (1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 65536)
-// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
+// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom, 3:ogg);
 //  result :Output Index in array  -1 = error
 // example : OutputIndex1 := uos_AddIntoFile(0,edit5.Text,-1,-1, 0, 1);
 begin

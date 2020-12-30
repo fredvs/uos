@@ -395,7 +395,8 @@ type
 //              2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer,
 //              5: from endless-muted, 6: from decoded memorystream
 // for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
-//              3: into memory buffer, 4: into wav file from memorystream, 5: into memorystream
+//              3: into memory buffer, 4: into wav file from memorystream, 5: into memorystream,
+//              6: into ogg file from filestream
     
   Seekable: boolean;
   Status: integer;
@@ -5294,7 +5295,7 @@ function Tuos_Player.AddIntoFile(Filename: PChar; SampleRate: cint32;
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
 // FramesCount : default : -1 (= 4096)
-// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom);
+// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom, 3:ogg);
 //  result : Output Index in array  -1 = error
 // example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1, -1);
 var
@@ -5303,6 +5304,10 @@ var
   wFileSize: cint32;
   IDwav: array[0..3] of char;
   Header: Tuos_WaveHeaderChunk;
+  {$IF DEFINED(sndfile)}
+  sfInfo: TSF_INFO;
+  {$endif}
+
 
 begin
   result := -1 ;
@@ -5312,7 +5317,6 @@ begin
   x := Length(StreamOut) - 1;
    StreamOut[x].Data.Enabled := false;
   StreamOut[x].FileBuffer.ERROR := 0;
-  StreamOut[x].Data.TypePut := 0 ;
   StreamOut[x].Data.Filename := filename;
   if (FileFormat = -1) or (FileFormat = 0) then 
   StreamOut[x].FileBuffer.FileFormat := 0 else StreamOut[x].FileBuffer.FileFormat := FileFormat;
@@ -5365,6 +5369,7 @@ begin
   
   if StreamOut[x].FileBuffer.FileFormat = 0 then 
   begin// wav file
+  StreamOut[x].Data.TypePut := 0 ;
   IDwav := 'RIFF';
   StreamOut[x].FileBuffer.Data.WriteBuffer(IDwav, 4);
   wFileSize := 0;
@@ -5392,6 +5397,20 @@ begin
   wChunkSize:= 0;
   StreamOut[x].FileBuffer.Data.WriteBuffer(wChunkSize, 4);
   StreamOut[x].Data.Enabled := True;
+  end;
+  
+  if fileformat = 3 then 
+  begin// ogg file
+  {$IF DEFINED(sndfile)}
+  StreamOut[x].FileBuffer.FileFormat := 3;
+  StreamOut[x].Data.TypePut := 6 ;
+  sfInfo.format := SF_FORMAT_OGG or SF_FORMAT_VORBIS;
+  sfInfo.channels := StreamOut[x].Data.Channels;
+  sfInfo.frames := StreamOut[x].Data.Wantframes;
+  SFinfo.samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
+  SFinfo.seekable := 0;
+  StreamOut[x].Data.HandleSt := sf_open(pchar(FileName), SFM_WRITE, sfInfo);
+  {$endif}
   end;
   
   except
@@ -8063,6 +8082,11 @@ begin
 // StreamOut[x].FileBuffer.Data.Free;
   end;
   
+  if (StreamOut[x].Data.TypePut = 6) then
+  begin
+   sf_close(StreamOut[x].Data.HandleSt); 
+  end;
+  
  {$IF DEFINED(mse)}
  if EndProc <> nil then
    begin
@@ -8269,7 +8293,11 @@ begin
    WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
     StreamOut[x].FileBuffer.Data.Free;
    end;
-
+   
+   if (StreamOut[x].Data.TypePut = 6) then
+  begin
+  sf_close( StreamOut[x].Data.HandleSt); 
+  end;
 
    end;
    
@@ -8430,6 +8458,9 @@ begin
  {$IF DEFINED(debug) and DEFINED(unix)}
  writeln('Finally give buffer to output');
  {$endif}
+ 
+ // writeln(inttostr(StreamOut[x].Data.TypePut));
+ 
 // Finally give buffer to output
   case StreamOut[x].Data.TypePut of
   {$IF DEFINED(portaudio)}
@@ -8612,10 +8643,26 @@ if err > 0 then
   StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels * rat);
    
   end;
+    
+  6: // give to ogg file from Tfilestream
+  begin
+ // writeln('ok ogg');
+ case StreamOut[x].Data.SampleFormat of
+ 0: StreamOut[x].Data.OutFrames :=
+ sf_write_float(StreamOut[x].Data.HandleSt,
+ @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes);
+ 1: StreamOut[x].Data.OutFrames :=
+ sf_write_int(StreamOut[x].Data.HandleSt,
+ @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes);
+ 2: StreamOut[x].Data.OutFrames :=
+ sf_write_short(StreamOut[x].Data.HandleSt,
+ @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes);
+ end;
+ // writeln(inttostr(StreamOut[x].Data.OutFrames));
+ end;
 
   0:// Give to wav file from TFileStream
   begin
-
   case StreamOut[x].Data.SampleFormat of
   0: rat := 2 ;
   1: rat := 2 ;
