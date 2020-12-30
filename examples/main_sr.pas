@@ -38,6 +38,8 @@ type
     Label6: TLabel;
     Label7: TLabel;
     PaintBox1: TPaintBox;
+    bwav: TRadioButton;
+    bogg: TRadioButton;
     Shape1: TShape;
     TrackBar1: TTrackBar;
     TrackBar3: TTrackBar;
@@ -51,6 +53,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure ClosePlayer1;
+    procedure bwavChange(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
   private
     { private declarations }
@@ -86,6 +89,11 @@ begin
   CheckBox2.Enabled := True;
   if CheckBox2.Checked = True then
     Button4.Enabled := True;
+end;
+
+procedure TForm1.bwavChange(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
@@ -203,6 +211,9 @@ end;
 
 
 procedure TForm1.Button2Click(Sender: TObject);
+var
+   outformatst : string;
+   outformat :integer;
 begin
   if (checkbox1.Checked = True) or (checkbox2.Checked = True) then
   begin
@@ -219,9 +230,34 @@ begin
     //uos_AddIntoFileFromMem(PlayerIndex1, Pchar(edit3.Text));
     //// add Output into wav file (save record) from TMemoryStream  with default parameters
 
+     if bwav.checked then
+     begin
+    outformatst := '.wav';
+    outformat := 0;
+    end else
+    begin
+    outformatst := '.ogg';
+    outformat := 3;
+    end;
+
+     edit3.Text := 'rec_' +  UTF8Decode(formatdatetime('YY_MM_DD_HH_mm_ss', now)) + outformatst ;
+
     // saving in a file using a File-Stream:
-    uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text));
-    //// add Output into wav file (save record) from TFileStream  with default parameters
+
+   uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text), -1, -1, -1, 4096, outformat);
+
+ //   function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
+ // Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
+// Add a Output into audio wav file with custom parameters from TFileStream
+// PlayerIndex : Index of a existing Player
+// FileName : filename of saved audio wav file
+// SampleRate : delault : -1 (44100)
+// Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...)
+// SampleFormat : default : -1 (2:Int16) (1:Int32, 2:Int16)
+// FramesCount : default : -1 (= 65536)
+// FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom, 3:ogg);
+
+    //// add Output into wav or ogg file (save record) from TFileStream
 
     // saving in a Memory-Buffer:  
     // SetLength(thebuffer, 0);
@@ -235,28 +271,15 @@ begin
     // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
     //// add Output into wav file (save record)  with default parameters
 
-    //   uos_addIntoFile(PlayerIndex1, Pchar(edit3.Text) ,8000,1,1,-1 ); //  add a Output into wav with custom parameters mono radio-quality
-    //////////// PlayerIndex : Index of a existing Player
-    //////////// Filename : name of new file for recording
-    //////////// SampleRate : delault : -1 (44100)
-    //////////// Channels : delault : -1 (2:stereo) ( 1:mono, 2:stereo)
-    //////////// SampleFormat : -1 default : Int16 : (1:Int32, 2:Int16)  (only int16 and int32 are implemented)
-    //////////// FramesCount : -1 default : 65536
-
-    //// add a Output into OUT device with default parameters
-
-
-       {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+      {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
     out1index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1) ;
        {$else}
     out1index := uos_AddIntoDevOut(PlayerIndex1);
        {$endif}
 
-
     uos_outputsetenable(PlayerIndex1, out1index, checkbox1.Checked);
 
-
-    // uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536, -1);   //// add a Output into device with custom parameters
+     // uos_AddIntoDevOut(PlayerIndex1, -1, -1, 8000, -1, -1,65536, -1);   //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Output device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -266,9 +289,9 @@ begin
     //////////// FramesCount : -1 default : 65536
     // ChunkCount : default : -1 (= 512)
 
-    In1Index := uos_AddFromDevIn(PlayerIndex1);  /// add Input from mic into IN device with default parameters
+   In1Index := uos_AddFromDevIn(PlayerIndex1);
 
-    // In1Index := uos_AddFromDevIn(PlayerIndex1, -1, -1, 8000, -1, 1, 4096);   //// add input from mic with custom parameters
+    //// add input from mic with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Input device )
     //////////// Latency  ( -1 is latency suggested ) )
@@ -277,7 +300,7 @@ begin
     //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
 
-    uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
+   uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
     ///// DSP Volume changer
     //////////// PlayerIndex : Index of a existing Player
     ////////// In1Index : InputIndex of a existing input
@@ -285,7 +308,7 @@ begin
     ////////// VolRight : Right volume
 
     uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
-      TrackBar3.position / 100, True); /// Set volume
+    TrackBar3.position / 100, True); /// Set volume
 
     /////// procedure to execute when stream is terminated
     //   uos_EndProc(PlayerIndex1, @ClosePlayer1);
