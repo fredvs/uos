@@ -143,17 +143,16 @@ var
           //////////// PlayerIndex : Index of a existing Player
           //  result : -1 nothing created, otherwise Output Index in array
 
-    {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+       {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
         OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, -1, -1, -1, -1, -1) ;
        {$else}
-
-          //OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1);
+         //OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1);
           OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, -1, -1, -1, -1);
        {$endif}
        
           writeln('OutputIndex1 = ' + IntToStr(OutputIndex1));
           
-          // uos_AddIntoFile(PlayerIndex1,pchar('/home/fred/mytest.ogg'), -1, -1, -1, -1, 3);
+        //   uos_AddIntoFile(PlayerIndex1,pchar('/home/fred/mytest.ogg'), -1, -1, -1, -1, 3);
  
           if OutputIndex1 > -1 then
           begin

@@ -908,15 +908,15 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=WriteOut
+finddtext=SF_FORMAT_OGG
 findhistory=20
+ SF_FORMAT_OGG
  WriteOut
  sf_close
  the error =
  ok ogg
  sf_format_check
  sf_open(
- SF_FORMAT_OGG
  StreamOut[x].Data.TypePut
  StreamOut[x].Data.TypePut =
  uos_AddIntoFile
@@ -932,11 +932,11 @@ findhistory=20
  write
 findoptions=1
 editpos=5
- 0,8645
+ 0,5410
+ 0,272
+ 0,154
  0,-1073741823
- 0,155
- 0,-1073741823
- 0,-1073741823
+ 0,692
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -969,16 +969,10 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=5
- 0
- 3
- 4
- 1
- 2
 firsttab=0
-index=4
+index=2
 [layout]
-windowlayout=598
+windowlayout=592
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1453,11 +1447,11 @@ windowlayout=598
  nx=0
  ny=0
  ncx=1341
- ncy=54
+ ncy=53
  x=0
  y=0
  cx=1356
- cy=53
+ cy=52
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1469,6 +1463,7 @@ windowlayout=598
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consoleplay.pas
  history=20
+  /home/fred/uos/examples/uos_libsndfile.pas
   /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consoleplay.pas
   /home/fred/uos/examples/uos_dsp_utils.pas
@@ -1488,7 +1483,6 @@ windowlayout=598
   /home/fred/eschecs/libraries/uos/define.inc
   /home/fred/eschecs/libraries/uos/uos.pas
   /home/fred/strumpract/src/drums.pas
-  /home/fred/strumpract/src/main.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1510,14 +1504,8 @@ windowlayout=598
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=5
-  0
-  3
-  4
-  1
-  2
  firsttab=0
- index=4
+ index=2
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]

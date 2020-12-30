@@ -5406,7 +5406,7 @@ begin
   StreamOut[x].Data.TypePut := 6 ;
   sfInfo.format := SF_FORMAT_OGG or SF_FORMAT_VORBIS;
   sfInfo.channels := StreamOut[x].Data.Channels;
-  sfInfo.frames := StreamOut[x].Data.Wantframes;
+  sfInfo.frames :=  streamOut[x].Data.Wantframes;
   SFinfo.samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
   SFinfo.seekable := 0;
   StreamOut[x].Data.HandleSt := sf_open(pchar(FileName), SFM_WRITE, sfInfo);
@@ -8647,6 +8647,9 @@ if err > 0 then
   6: // give to ogg file from Tfilestream
   begin
  // writeln('ok ogg');
+ 
+ if StreamIn[x2].Data.outframes = StreamOut[x].Data.Wantframes then
+ 
  case StreamOut[x].Data.SampleFormat of
  0: StreamOut[x].Data.OutFrames :=
  sf_write_float(StreamOut[x].Data.HandleSt,
@@ -8658,6 +8661,7 @@ if err > 0 then
  sf_write_short(StreamOut[x].Data.HandleSt,
  @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes);
  end;
+
  // writeln(inttostr(StreamOut[x].Data.OutFrames));
  end;
 
