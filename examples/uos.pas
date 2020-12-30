@@ -8647,19 +8647,17 @@ if err > 0 then
   6: // give to ogg file from Tfilestream
   begin
  // writeln('ok ogg');
- 
- if StreamIn[x2].Data.outframes = StreamOut[x].Data.Wantframes then
- 
- case StreamOut[x].Data.SampleFormat of
+ // if StreamIn[x2].Data.outframes = StreamOut[x].Data.Wantframes * StreamOut[x].Data.channels then
+   case StreamOut[x].Data.SampleFormat of
  0: StreamOut[x].Data.OutFrames :=
  sf_write_float(StreamOut[x].Data.HandleSt,
- @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes);
+ @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes * StreamOut[x].Data.channels);
  1: StreamOut[x].Data.OutFrames :=
  sf_write_int(StreamOut[x].Data.HandleSt,
- @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes);
+ @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes * StreamOut[x].Data.channels);
  2: StreamOut[x].Data.OutFrames :=
  sf_write_short(StreamOut[x].Data.HandleSt,
- @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes);
+ @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes * StreamOut[x].Data.channels);
  end;
 
  // writeln(inttostr(StreamOut[x].Data.OutFrames));
