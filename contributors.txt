@@ -27,4 +27,3 @@ Andrei Borovsky : FFT code of uos_filters is from him.
 And many others from fpc, fpGUI, MSE, Lazarus, CodeTyphon forum.
 
 Fred van Stappen : fiens@hotmail.com
-
