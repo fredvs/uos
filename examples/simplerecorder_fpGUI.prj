@@ -863,7 +863,9 @@ findhistory=20
  uos_AddIntoMemoryStream
 findoptions=1
 editpos=10
- 0,612
+ 0,-1073741823
+ 0,-1073741823
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -871,8 +873,6 @@ editpos=10
  0,-1073741823
  0,-1073741823
  0,-1073741823
- 0,-1073741823
- 0,1005
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -886,7 +886,7 @@ bookmarks9=0
 sourcefiles=10
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
+ /home/fred/uos/examples/uos_flat.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
@@ -904,7 +904,7 @@ relpaths=10
  uos_shout.pas
  define.inc
  main_sr.pas
- ../Downloads/fpGUI-develop/src/corelib/fpg_base.pas
+ Downloads/fpGUI-develop/src/corelib/fpg_base.pas
 ismoduletexts=10
  0
  0
@@ -923,19 +923,19 @@ nomenumodules=0
 [sourcefo.files_tab]
 order=10
  0
- 9
- 5
- 4
  2
- 8
  1
- 7
+ 8
  6
+ 9
+ 4
+ 7
  3
+ 5
 firsttab=0
 index=1
 [layout]
-windowlayout=565
+windowlayout=567
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1409,12 +1409,12 @@ windowlayout=565
  mdistate=0
  nx=0
  ny=0
- ncx=1147
- ncy=54
+ ncx=1140
+ ncy=52
  x=0
  y=0
  cx=1207
- cy=54
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1424,8 +1424,10 @@ windowlayout=565
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/Downloads/fpGUI-develop/src/corelib/fpg_base.pas
- history=1
+ value=/home/fred/uos/examples/uos_flat.pas
+ history=3
+  /home/fred/uos/examples/uos_flat.pas
+  /home/fred/uos/examples/uos_portaudio.pas
   /home/fred/uos/examples/simplerecorder_fpGUI.pas
  [debuggerfo.project_options]
  value=1
@@ -1450,15 +1452,15 @@ windowlayout=565
  [sourcefo.files_tab]
  order=10
   0
-  9
-  5
-  4
   2
-  8
   1
-  7
+  8
   6
+  9
+  4
+  7
   3
+  5
  firsttab=0
  index=1
  [confideufo.fontname]

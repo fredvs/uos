@@ -15,7 +15,7 @@ With uos you can:
 
 . Do internet audio streaming of mp3 and opus files.
 
-. Record all types of input into wav file with 16 or 32 bit resolution.
+. Record all types of input into wav or ogg file with 16 or 32 bit resolution.
 
 . Add DSP effects and filters, however many you want and record it.
 
