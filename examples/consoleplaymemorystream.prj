@@ -912,8 +912,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=typ
+finddtext=5:// Give to MemoryStream
 findhistory=20
+ 5:// Give to MemoryStream
  typ
  PlayerIndex1 
  BufferTag
@@ -933,11 +934,10 @@ findhistory=20
      
       
  op_test_callbacks
- addfromfil
 findoptions=1
 editpos=2
- 0,111
- 5,391
+ 0,-1073741823
+ 0,8752
 bookmarks0=0
 bookmarks1=0
 sourcefiles=2
@@ -961,7 +961,7 @@ nomenumodules=1
 firsttab=0
 index=1
 [layout]
-windowlayout=569
+windowlayout=570
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1001,7 +1001,7 @@ windowlayout=569
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1432,11 +1432,11 @@ windowlayout=569
  nx=0
  ny=0
  ncx=1140
- ncy=54
+ ncy=52
  x=-72
  y=0
  cx=1207
- cy=52
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1447,7 +1447,8 @@ windowlayout=569
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos.pas
- history=1
+ history=2
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consoleplaymemorystream.pas
  [debuggerfo.project_options]
  value=B

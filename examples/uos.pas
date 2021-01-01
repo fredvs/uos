@@ -74,7 +74,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const
-  uos_version : cint32 = 2201106;
+  uos_version : cint32 = 2201231;
   
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -8668,17 +8668,11 @@ if err > 0 then
   StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels * rat);
   end;
 
- 5:// Give to MemoryStream ogg format
+ 5:// Give to MemoryStream
   begin
   
- // writeln('MemoryStream ogg format');
+ // writeln('MemoryStream');
   
-   case StreamOut[x].Data.SampleFormat of
-  0: rat := 2 ;
-  1: rat := 2 ;
-  2: rat := 1 ;
-  end;
-
  if assigned(StreamOut[x].MemorySteamOut) then
  
    case StreamOut[x].Data.SampleFormat of
@@ -8692,9 +8686,7 @@ if err > 0 then
  sf_write_short(StreamOut[x].Data.HandleSt,
  @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes );
  end;
- 
  end;
-
       
   6: // give to ogg file from Tfilestream
   begin
