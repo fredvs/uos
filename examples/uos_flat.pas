@@ -313,14 +313,15 @@ function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; Sam
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // FramesCount : default : -1 (= 1024 * 2)
 
-function uos_AddIntoMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; SampleRate: LongInt; 
-       SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt): LongInt;  
+function uos_AddIntoMemoryStream(PlayerIndex: cint32; var MemoryStream: TMemoryStream; SampleRate: LongInt; 
+       SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt; Audioformat: cint32): LongInt;  
 // Add a Output into TMemoryStream
 // MemoryStream : the TMemoryStream to use to store memory.
 // SampleRate : delault : -1 (44100)
 // SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // FramesCount : default : -1 (= 4096)
+// AudioFormat : default : -1 (wav) (0:wav, 1:ogg);
 
 function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; Bufferinfos: Tuos_bufferinfos;
  OutputIndex: cint32; FramesCount: cint32): cint32;
@@ -332,7 +333,7 @@ function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; B
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := AddFromMemoryBuffer(mybuffer, buffinfos,-1,1024); 
 
-function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; 
+function uos_AddFromMemoryStream(PlayerIndex: cint32; var MemoryStream: TMemoryStream; 
          TypeAudio: cint32; OutputIndex: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
 // MemoryStream : Memory stream of encoded audio.
 // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
@@ -1599,22 +1600,23 @@ function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; Sam
   Result :=  uosPlayers[PlayerIndex].AddIntoMemoryBuffer(outmemory, SampleRate,SampleFormat,Channels,FramesCount);
 end;
 
-function uos_AddIntoMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; SampleRate: LongInt; 
-       SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt): LongInt;  
+function uos_AddIntoMemoryStream(PlayerIndex: cint32; var MemoryStream: TMemoryStream; SampleRate: LongInt; 
+       SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt; Audioformat: cint32): LongInt;  
 // Add a Output into TMemoryStream
 // MemoryStream : the TMemoryStream to use to store memory.
 // SampleRate : delault : -1 (44100)
 // SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // FramesCount : default : -1 (= 4096)
+// AudioFormat : default : -1 (wav) (0:wav, 1:ogg);
 begin
   result := -1 ;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
-  Result :=  uosPlayers[PlayerIndex].AddIntoMemoryStream(MemoryStream, SampleRate,SampleFormat,Channels,FramesCount);
+  Result :=  uosPlayers[PlayerIndex].AddIntoMemoryStream(MemoryStream, 
+     SampleRate,SampleFormat,Channels,FramesCount, AudioFormat);
 end;
-
 
 function uos_AddFromMemoryBuffer(PlayerIndex: cint32; MemoryBuffer: TDArFloat; Bufferinfos: Tuos_bufferinfos;
  OutputIndex: cint32; FramesCount: cint32): cint32;
@@ -1633,7 +1635,7 @@ begin
   Result := uosPlayers[PlayerIndex].AddFromMemoryBuffer(MemoryBuffer, Bufferinfos, OutputIndex, FramesCount);
 end;
 
-function uos_AddFromMemoryStream(PlayerIndex: cint32; MemoryStream: TMemoryStream; 
+function uos_AddFromMemoryStream(PlayerIndex: cint32; var MemoryStream: TMemoryStream; 
          TypeAudio: cint32; OutputIndex: cint32; SampleFormat: cint32 ; FramesCount: cint32): cint32;
 // MemoryStream : Memory stream of encoded audio.
 // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
