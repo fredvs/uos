@@ -823,7 +823,7 @@ path=6
 line=6
  5788
  5085
- 124
+ 118
  409
  45
  4261
@@ -936,7 +936,7 @@ findhistory=20
  ratio
 findoptions=1
 editpos=5
- 0,186
+ 0,31
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -1488,7 +1488,7 @@ windowlayout=592
   /home/fred/ptop_fred/ptop.prj
   /home/fred/eschecs_mse_argh/eschecs.prj
  [debuggerfo.project_options]
- value=B
+ value=1
  [debuggerfo.hints]
  value=0
  [sourcefo]
