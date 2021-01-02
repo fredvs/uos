@@ -443,7 +443,7 @@ function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
 // SampleRate : delault : -1 (44100)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
-// FramesCount : default : -1 (65536)
+// FramesCount : default : -1 (4096)
 // ChunkCount : default : -1 (= 512)
 //  result :  Output Index in array
 // example : OutputIndex1 := uos_AddFromDevIn(0,-1,-1,-1,-1,-1,-1);

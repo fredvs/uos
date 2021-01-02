@@ -115,8 +115,11 @@ var
       thememorystream1.Position := 0;
 
       if uos_CreatePlayer(PlayerIndex1) then
-
-        InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1, thememorystream1, -1, -1, -1, 1024 * 8);
+      
+     //  InputIndex1 :=  uos_AddFromDevIN(PlayerIndex1, -1, -1, -1, -1, -1, 1024 * 4, -1);
+        // Add a input from device mic with custom parameters
+     
+       InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1, thememorystream1, -1, -1, -1, 1024 * 4);
       // Add a input from memory stream with custom parameters
       // MemoryStream : Memory stream of encoded audio.
       // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
@@ -135,21 +138,24 @@ var
 
         // add a Output into device with custom parameters
 
-       {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+        {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
        uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,InputIndex1), 
        uos_inputgetChannels(PlayerIndex1,input1) , 0, -1, -1);
        {$else}
        uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1, InputIndex1),
-       uos_inputgetChannels(PlayerIndex1, InputIndex1), 0, 1024 * 8, -1);
+       uos_inputgetChannels(PlayerIndex1, InputIndex1), 0, 1024 * 4, -1);
        {$endif}
 
         // create a other memorystream from the first one encoding in ogg format.
-        uos_AddIntoMemoryStream(PlayerIndex1, thememorystream2, -1, -1, -1, 1024 * 8, 1);
+        uos_AddIntoMemoryStream(PlayerIndex1, thememorystream2, -1, -1, -1, 1024 * 4, 1);
 
         /////// everything is ready, here we are, lets play it...
         uos_Play(PlayerIndex1);
 
-        sleep(2500);
+        sleep(3000);
+        
+         //   uos_Stop(PlayerIndex1); // This if device mic was used
+         //   sleep(500);
 
         // OK, let's use the new ogg-memorystream.
          

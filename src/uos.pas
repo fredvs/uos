@@ -8676,7 +8676,10 @@ if err > 0 then
 
  5:// Give to MemoryStream
   begin
-  
+ 
+ if StreamIn[x2].Data.TypePut = 1 then rat := StreamIn[x2].Data.Channels
+ else rat := 1;
+   
  // writeln('MemoryStream');
   
  if assigned(StreamOut[x].MemorySteamOut) then
@@ -8684,13 +8687,13 @@ if err > 0 then
    case StreamOut[x].Data.SampleFormat of
  0: StreamOut[x].Data.OutFrames :=
  sf_write_float(StreamOut[x].Data.HandleSt,
- @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes );
+ @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes *rat );
  1: StreamOut[x].Data.OutFrames :=
  sf_write_int(StreamOut[x].Data.HandleSt,
- @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes );
+ @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes *rat );
  2: StreamOut[x].Data.OutFrames :=
  sf_write_short(StreamOut[x].Data.HandleSt,
- @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes );
+ @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes *rat);
  end;
   end;
       
