@@ -452,6 +452,7 @@ type
   SampleRate: longword;
   SampleFormat: cint32;
   Channels: cint32;
+  lastbuf: shortint;
   
 // audio file data
   HandleSt: pointer;
@@ -6146,6 +6147,7 @@ function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
   StreamIn[x].Data.Enabled := false;
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.typeput := 4;
+  StreamIn[x].Data.lastbuf := 0;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
 // StreamIn[x].Data.wantframes := FramesCount;
@@ -6362,6 +6364,7 @@ begin
       StreamIn[x].Data.Output := OutputIndex;
          StreamIn[x].Data.Status := 1;
          StreamIn[x].Data.Position := 0;
+         StreamIn[x].Data.lastbuf := -1;
          StreamIn[x].Data.OutFrames := 0;
          StreamIn[x].Data.Poseek := -1;
          StreamIn[x].Data.TypePut := 6;
@@ -6480,6 +6483,7 @@ begin
       err := -1;
       StreamIn[x].Data.Enabled := false;
       StreamIn[x].Data.LibOpen := -1;
+      StreamIn[x].Data.lastbuf := -1;
       StreamIn[x].Data.levelEnable := 0;
       StreamIn[x].Data.positionEnable := 0;
       StreamIn[x].Data.levelArrayEnable := 0;
@@ -7034,6 +7038,7 @@ begin
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
+  StreamIn[x].Data.lastbuf := 0;
 
  {$IF DEFINED(debug) and DEFINED(unix)}
   WriteLn('Length(StreamIn) = '+ inttostr(x));  
@@ -7710,6 +7715,8 @@ begin
 * StreamIn[x].Data.Channels) else
  wantframestemp := length(StreamIn[x].Data.memorybuffer) - StreamIn[x].Data.posmem;
 
+// wantframestemp := StreamIn[x].Data.wantframes;
+
 {$IF DEFINED(debug) and DEFINED(unix)}
 writeln('length(StreamIn[x].Data.MemoryBuffer) = '+inttostr(length(StreamIn[x].Data.MemoryBuffer))) ;
 writeln('StreamIn[x].Data.posmem = '+inttostr(StreamIn[x].Data.posmem)) ;
@@ -7762,7 +7769,6 @@ writeln('length(StreamIn[x].MemoryStreamDec) = '+inttostr(StreamIn[x].MemoryStre
 writeln('StreamIn[x].Data.posmem = '+inttostr(StreamIn[x].Data.posmem)) ;
 writeln('wantframestemp = '+inttostr(wantframestemp)) ;
 {$endif}
-
 
 StreamIn[x].Data.OutFrames := StreamIn[x].MemoryStreamDec.Read(StreamIn[x].Data.Buffer[0] ,wantframestemp);
 
@@ -8118,7 +8124,7 @@ begin
    
  if (StreamOut[x].Data.TypePut = 5) then
   begin
-    sf_close(StreamOut[x].Data.HandleSt); 
+   sf_close(StreamOut[x].Data.HandleSt); 
   end;
    
  {$IF DEFINED(mse)}
@@ -8686,7 +8692,7 @@ if err > 0 then
  sf_write_short(StreamOut[x].Data.HandleSt,
  @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes );
  end;
- end;
+  end;
       
   6: // give to ogg file from Tfilestream
   begin
@@ -9080,6 +9086,7 @@ i : integer;
  st : string;
 {$endif}
 begin
+
  if length(StreamIn[x].Data.Buffer) <> StreamIn[x].Data.Wantframes then
  setlength(StreamIn[x].Data.Buffer,StreamIn[x].Data.Wantframes);
 
@@ -9101,25 +9108,36 @@ begin
  2: StreamIn[x].Data.OutFrames :=
  sf_read_short(StreamIn[x].Data.HandleSt,
  @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes);
- end;
+   end;
 
  {$IF DEFINED(debug) and DEFINED(unix)}
+ writeln(inttostr(StreamIn[x].Data.lastbuf));
   WriteLn('after sf_read');
  {$endif}
  if  StreamIn[x].Data.outframes < 0 then  StreamIn[x].Data.outframes := 0 ;
+ 
+ if (StreamIn[x].Data.lastbuf < 0) and (StreamIn[x].Data.outframes < StreamIn[x].Data.wantframes) then
+ begin
+ StreamIn[x].Data.outframes := StreamIn[x].Data.wantframes;
+ StreamIn[x].Data.lastbuf := StreamIn[x].Data.lastbuf -1;
+ if StreamIn[x].Data.lastbuf = -9 then StreamIn[x].Data.lastbuf := 0;
+ end; 
+ 
  setlength(StreamIn[x].data.Buffer,StreamIn[x].Data.outframes);
 
- {$IF DEFINED(debug) and DEFINED(unix)}
+{$IF DEFINED(debug) and DEFINED(unix)}
  st := '';
+
  for i := 0 to length(StreamIn[x].data.Buffer) -1 do
  case StreamIn[x].Data.SampleFormat of
  0: st := st + '|' + inttostr(i) + '=' + floattostr(StreamIn[x].data.Buffer[i]);
  1: st := st + '|' + inttostr(i) + '=' + inttostr(cint32(StreamIn[x].data.Buffer[i]));
  2: st := st + '|' + inttostr(i) + '=' + inttostr(cint16(cint32(StreamIn[x].data.Buffer[i])));
  end;
+ 
  WriteLn('OUTPUT DATA sf_read_() ---------------------------');
  WriteLn('StreamIn[x].Data.outframes = ' + inttostr(StreamIn[x].Data.outframes));
-// WriteLn(st);
+ WriteLn(st);
  {$endif}
 
  end;
@@ -9244,11 +9262,10 @@ begin
  WriteLn('OUTPUT DATA op_read_ ---------------------------');
 // WriteLn(st);
  {$endif}
-
- if  StreamIn[x].Data.outframes < 0 then  StreamIn[x].Data.outframes := 0 ;
-
- StreamIn[x].Data.outframes :=  StreamIn[x].Data.outframes * StreamIn[x].Data.Channels ;
-
+  
+  if  StreamIn[x].Data.outframes < 0 then  StreamIn[x].Data.outframes := 0 ;
+  StreamIn[x].Data.outframes :=  StreamIn[x].Data.outframes * StreamIn[x].Data.Channels ;
+ 
  end;
  {$endif}
 
