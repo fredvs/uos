@@ -932,11 +932,11 @@ findhistory=20
  write
 findoptions=1
 editpos=5
- 0,5410
- 0,272
+ 0,-1073741823
+ 0,-1073741823
  0,154
  0,-1073741823
- 0,692
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -945,7 +945,7 @@ bookmarks4=0
 sourcefiles=5
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/consoleplay.pas
+ /home/fred/uos/examples/consoleplay.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_libsndfile.pas
 relpaths=5
@@ -1106,7 +1106,7 @@ windowlayout=592
  x=0
  y=0
  cx=205
- cy=526
+ cy=528
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1435,7 +1435,7 @@ windowlayout=592
  x=0
  y=0
  cx=1356
- cy=51
+ cy=49
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1447,11 +1447,11 @@ windowlayout=592
  nx=0
  ny=0
  ncx=1341
- ncy=53
+ ncy=51
  x=0
  y=0
- cx=1356
- cy=52
+ cx=1341
+ cy=49
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1463,9 +1463,9 @@ windowlayout=592
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consoleplay.pas
  history=20
+  /home/fred/uos/examples/consoleplay.pas
   /home/fred/uos/examples/uos_libsndfile.pas
   /home/fred/uos/examples/uos.pas
-  /home/fred/uos/examples/consoleplay.pas
   /home/fred/uos/examples/uos_dsp_utils.pas
   /home/fred/uos/examples/uos_dsp_noiseremoval.pas
   /home/fred/uos/examples/uos_httpgetthread.pas
@@ -1500,7 +1500,7 @@ windowlayout=592
  x=208
  y=0
  cx=1148
- cy=526
+ cy=528
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1541,9 +1541,9 @@ windowlayout=592
  ncx=0
  ncy=0
  x=0
- y=54
+ y=52
  cx=1356
- cy=526
+ cy=528
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]

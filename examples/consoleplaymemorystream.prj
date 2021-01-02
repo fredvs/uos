@@ -71,8 +71,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=775
- y=209
+ x=889
+ y=453
  cx=331
  cy=269
 replacedialog=30
@@ -113,33 +113,33 @@ options=114
   70
   70
  [projectoptionsfo.twidgetgrid3]
- propcolwidthref=740
+ propcolwidthref=722
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
  sortdescend3=0
- width4=345
+ width4=337
  sortdescend4=0
- width5=186
+ width5=181
  sortdescend5=0
- width6=158
+ width6=154
  sortdescend6=0
- width7=51
+ width7=50
  sortdescend7=0
  width8=1
  sortdescend8=0
- width9=302
+ width9=295
  sortdescend9=0
  [projectoptionsfo.twidgetgrid4]
- propcolwidthref=564
+ propcolwidthref=557
  width0=96
  sortdescend0=0
  sortdescend1=0
  width2=73
  sortdescend2=0
- width3=271
+ width3=268
  sortdescend3=0
- width4=283
+ width4=279
  sortdescend4=0
  sorted=0
  col=-1073741823
@@ -166,9 +166,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=142
+ y=141
  xprop=1
- yprop=0.32805429864253
+ yprop=0.32876712328767
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -195,19 +195,19 @@ options=114
  firsttab=0
  index=2
  [projectoptionsfo.exceptionsgrid]
- propcolwidthref=724
+ propcolwidthref=713
  width0=47
  sortdescend0=0
- width1=718
+ width1=707
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
  index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=632
+ propcolwidthref=734
  width0=112
  sortdescend0=0
- width1=625
+ width1=727
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
@@ -216,7 +216,7 @@ options=114
  firsttab=0
  index=2
  [projectoptionsfo]
- stackedunder=
+ stackedunder=finddialogfo
  x=292
  y=97
  cx=773
@@ -435,8 +435,8 @@ closemessages=0
 enablepurpose=0
 enablesource=0
 checkmethods=1
-colorerror=-1610612712
-colorwarning=-1610612717
+colorerror=-1610612717
+colorwarning=-1610612712
 colornote=-1610612716
 usercolors=30
  0
@@ -522,7 +522,7 @@ makeoptionson=8
  255
  255
  3
- 224
+ 226
  240
  255
 compilerusedon=29
@@ -653,9 +653,9 @@ fontoptions=0
 fontxscales=0
 expandprojectfilemacros=4
  1
- 255
- 255
- 255
+ 1
+ 1
+ 1
 loadprojectfile=4
  1
  0
@@ -821,19 +821,19 @@ path=6
  /home/fred/uos/examples/uos_libsndfile.pas
  /home/fred/uos/examples/uos.pas
 line=6
- 5787
- 5084
+ 5788
+ 5085
  124
  409
  45
- 4260
+ 4261
 address=6
- 0
- 0
- 4198424
- 0
- 0
- 0
+ 4907402
+ 4898698
+ 4200016
+ 4831341
+ 4981616
+ 4887555
 addbkpt=6
  0
  0
@@ -912,41 +912,56 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=5:// Give to MemoryStream
+finddtext=Before sf_read
 findhistory=20
+ Before sf_read
+ AddFromMemoryStream
+ AddFromfile
+ Wantframes
+ readfile
+ TypePut = 0
+ TypePut = 4
+ readmem
+ sf_r
+ sf_w
+ sf_cl
+ StreamIn[x].MemoryStream
+ uos_AddIntoMemoryStream
  5:// Give to MemoryStream
  typ
  PlayerIndex1 
  BufferTag
  mpinfo: Tmpg123_frameinfo
  mpinfo
- AddFromMemoryStream
  ratio
- addfromf
- FreePlayer
- mpg_seek_stream
- nofree
- setlength
- ddFromurl
- BufferURL
- BufferTMP
- ddFromMemoryStream
-     
-      
- op_test_callbacks
 findoptions=1
-editpos=2
+editpos=5
+ 0,186
  0,-1073741823
- 0,8752
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
-sourcefiles=2
+bookmarks2=0
+bookmarks3=0
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/consoleplaymemorystream.pas
  ${PROJECTDIR}/uos.pas
-relpaths=2
+ ${PROJECTDIR}/uos_flat.pas
+ /home/fred/uos/src/uos.lpk
+ /home/fred/uos/src/uos_flat.pas
+relpaths=5
  consoleplaymemorystream.pas
  uos.pas
-ismoduletexts=2
+ uos_flat.pas
+ src/uos.lpk
+ src/uos_flat.pas
+ismoduletexts=5
+ 0
+ 0
+ 0
  0
  0
 modules=1
@@ -959,9 +974,9 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=1
+index=0
 [layout]
-windowlayout=570
+windowlayout=592
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -975,13 +990,13 @@ windowlayout=570
  ny=0
  ncx=0
  ncy=0
- x=125
- y=46
- cx=1160
+ x=34
+ y=53
+ cx=1224
  cy=621
  rcx=0
  rcy=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [targetconsolefo]
@@ -993,8 +1008,8 @@ windowlayout=570
  ny=0
  ncx=0
  ncy=0
- x=493
- y=171
+ x=333
+ y=319
  cx=497
  cy=314
  rcx=0
@@ -1095,7 +1110,7 @@ windowlayout=570
  x=0
  y=0
  cx=205
- cy=452
+ cy=525
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1105,8 +1120,8 @@ windowlayout=570
  width1=82
  sortdescend1=0
  sorted=0
- col=0
- row=5
+ col=1
+ row=7
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1211,7 +1226,11 @@ windowlayout=570
  visible=0
  [symbolfo.grid]
  propcolwidthref=207
- values0=14
+ values0=18
+  
+  
+  
+  
   
   
   
@@ -1285,9 +1304,9 @@ windowlayout=570
  ncx=0
  ncy=0
  x=0
- y=509
- cx=1148
- cy=91
+ y=580
+ cx=1356
+ cy=109
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1419,8 +1438,8 @@ windowlayout=570
  ncy=0
  x=0
  y=0
- cx=1148
- cy=51
+ cx=1356
+ cy=49
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1431,12 +1450,12 @@ windowlayout=570
  mdistate=0
  nx=0
  ny=0
- ncx=1140
- ncy=52
- x=-72
+ ncx=1341
+ ncy=50
+ x=0
  y=0
- cx=1207
- cy=50
+ cx=1341
+ cy=48
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1446,10 +1465,28 @@ windowlayout=570
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
- history=2
-  /home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/consoleplaymemorystream.pas
+ history=20
   /home/fred/uos/examples/consoleplaymemorystream.pas
+  /home/fred/uos/examples/uos.pas
+  /home/fred/uos/src/uos_flat.pas
+  /home/fred/atest/test.prj
+  /home/fred/ideu/src/ideU.prj
+  /home/fred/mseide-msegui/apps/ide/mseide.prj
+  /home/fred/uos/examples/simpleplayer.prj
+  /home/fred/ideu_ok/src/ideU.prj
+  /home/fred/eschecs_mse/eschecs.prj
+  /home/fred/mselang-master/src/mselang.prj
+  /home/fred/mseide-msegui/apps/ide/mseide_zeos.prj
+  /home/fred/strumpract/src/strumpract.prj
+  /home/fred/ideu_badplug/src/demos/voiceassist/helloworld/helloworld.prj
+  /home/fred/xtop/src/ptop.prj
+  /home/fred/xtop/src/jtop.prj
+  /home/fred/idegraeme/mseide.prj
+  /home/fred/fptop/src/jtop.prj
+  /home/fred/fptop/src/ptop.prj
+  /home/fred/ptop_fred/ptop.prj
+  /home/fred/eschecs_mse_argh/eschecs.prj
  [debuggerfo.project_options]
  value=B
  [debuggerfo.hints]
@@ -1466,13 +1503,13 @@ windowlayout=570
  ncy=0
  x=208
  y=0
- cx=940
- cy=452
+ cx=1148
+ cy=525
  rcx=0
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=1
+ index=0
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
@@ -1481,7 +1518,7 @@ windowlayout=570
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=confdebuggerfo
  parent=
  mdistate=0
  nx=0
@@ -1508,15 +1545,15 @@ windowlayout=570
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1148
- cy=452
+ y=52
+ cx=1356
+ cy=525
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=confdebuggerfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0

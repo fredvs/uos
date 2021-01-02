@@ -32,6 +32,8 @@ var
   ordir, opath, SoundFilename, PA_FileName, SF_FileName, MP_FileName, OF_FileName: string;
   PlayerIndex1, InputIndex1 : integer;
   thememorystream : Tmemorystream;
+  
+  thememorystream2 : Tmemorystream;
   { TuosConsole }
 
   procedure TuosConsole.ConsolePlay;
@@ -111,14 +113,14 @@ var
     InputIndex1 := -1 ;
     PlayerIndex1 := 0;
     
-    // Create a memory stream from a audio file
+  //   Create a memory stream from a audio file
     thememorystream:= TMemoryStream.Create; 
     thememorystream.LoadFromFile(pchar(SoundFilename)); 
     thememorystream.Position:= 0; 
     
     if uos_CreatePlayer(PlayerIndex1) then
    
-    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,-1,-1,0,-1);
+    InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1,thememorystream,-1,-1,-1,1024*8);
   // Add a input from memory stream with custom parameters
   // MemoryStream : Memory stream of encoded audio.
   // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
@@ -140,15 +142,50 @@ var
   uos_inputgetChannels(PlayerIndex1,input1) , 0, -1, -1);
        {$else}
      uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1,InputIndex1), 
-  uos_inputgetChannels(PlayerIndex1,InputIndex1) , 0, -1, -1);
+  uos_inputgetChannels(PlayerIndex1,InputIndex1) , 0, 1024*8, -1);
        {$endif}   
 
+   // create a other memorystream
+  uos_AddIntoMemoryStream(PlayerIndex1,thememorystream2,-1,-1,-1,1024*8,1);
+  
   /////// everything is ready, here we are, lets play it...
 
   uos_Play(PlayerIndex1);
    
-  sleep(2000);
+  sleep(3000);
   
+   PlayerIndex1 := 1;
+   
+    thememorystream2.Position:= 0; 
+   
+     // creata a new player
+      if uos_CreatePlayer(PlayerIndex1) then
+   
+    uos_AddFromMemoryStream(PlayerIndex1,thememorystream2, -1,-1,-1,1024*4);
+  // Add a input from memory stream with custom parameters
+  // MemoryStream : Memory stream of encoded audio.
+  // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
+  // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+  // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+  // FramesCount : default : -1 (4096)
+  //  result :  Input Index in array  -1 = error
+  // example : InputIndex1 := uos_AddFromMemoryStream(mymemorystream,-1,-1,2,44100,0,1024);
+    
+     // add a Output into device with custom parameters
+      {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+   uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,InputIndex1), 
+  uos_inputgetChannels(PlayerIndex1,input1) , 0, -1, -1);
+       {$else}     uos_AddIntoDevOut(PlayerIndex1, -1, -1, 44100, 2 , -1, -1, 1024*4);
+       {$endif}   
+  
+  /////// everything is ready, here we are, lets play it...
+
+  uos_Play(PlayerIndex1);
+  
+  sleep(3000);
+  
+
+    
   end else  writeln('uos_AddFromMemoryStream(...) did not work... '); 
 
   end;
@@ -179,4 +216,5 @@ end.
 
 begin
 end.
+
 
