@@ -145,7 +145,7 @@ begin
     //////////// Latency  ( -1 is latency suggested )
     //////////// SampleRate : delault : -1 (44100)
     //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+    //////////// SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
     //////////// FramesCount : default : -1 (= 4096)
     // ChunkCount : default : -1 (= 512)
 

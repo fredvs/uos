@@ -116,17 +116,17 @@ var
 
       if uos_CreatePlayer(PlayerIndex1) then
       
-     //  InputIndex1 :=  uos_AddFromDevIN(PlayerIndex1, -1, -1, -1, -1, -1, 1024 * 4, -1);
-        // Add a input from device mic with custom parameters
-     
-       InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1, thememorystream1, -1, -1, -1, 1024 * 4);
+      // Add a input from device mic with custom parameters
+         // InputIndex1 :=  uos_AddFromDevIN(PlayerIndex1, -1, -1, -1, -1, 0, 1024 * 8, -1);
+       
+      InputIndex1 := uos_AddFromMemoryStream(PlayerIndex1, thememorystream1, -1, -1, 2, 1024 * 8);
       // Add a input from memory stream with custom parameters
       // MemoryStream : Memory stream of encoded audio.
       // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
       // OutputIndex : Output index of used output
               // -1: all output, -2: no output, other a existing OutputIndex 
                // (if multi-output then OutName = name of each output separeted by ';')
-      // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+      // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default : -1 (4096)
       //  Result :  Input Index in array  -1 = error
       // example : InputIndex1 := uos_AddFromMemoryStream(mymemorystream,-1,-1,2,44100,0,1024);
@@ -136,26 +136,24 @@ var
 
         writeln('uos_InputLength = ' + IntToStr(uos_inputlength(0, 0)));
 
-        // add a Output into device with custom parameters
-
+      // add a Output into device with custom parameters
         {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
        uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,InputIndex1), 
        uos_inputgetChannels(PlayerIndex1,input1) , 0, -1, -1);
        {$else}
        uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1, InputIndex1),
-       uos_inputgetChannels(PlayerIndex1, InputIndex1), 0, 1024 * 4, -1);
+       uos_inputgetChannels(PlayerIndex1, InputIndex1), 2, 1024 * 4, -1);
        {$endif}
 
-        // create a other memorystream from the first one encoding in ogg format.
-        uos_AddIntoMemoryStream(PlayerIndex1, thememorystream2, -1, -1, -1, 1024 * 4, 1);
+      // create a other memorystream from the first one encoding in ogg format.
+       uos_AddIntoMemoryStream(PlayerIndex1, thememorystream2, -1, 2, 2, 1024 * 8, 1);
 
-        /////// everything is ready, here we are, lets play it...
-        uos_Play(PlayerIndex1);
-
-        sleep(3000);
+     /////// everything is ready, here we are, lets play it...
+       uos_Play(PlayerIndex1);
+       sleep(3000);
         
-         //   uos_Stop(PlayerIndex1); // This if device mic was used
-         //   sleep(500);
+       uos_Stop(PlayerIndex1); // This if device mic was used
+       sleep(500);
 
         // OK, let's use the new ogg-memorystream.
          
@@ -166,18 +164,18 @@ var
         // creata a new player
         if uos_CreatePlayer(PlayerIndex1) then
 
-          uos_AddFromMemoryStream(PlayerIndex1, thememorystream2, -1, -1, -1, 1024 * 4);
+          uos_AddFromMemoryStream(PlayerIndex1, thememorystream2, -1, -1, 2, 1024 * 4);
         // Add a input from memory stream with custom parameters
         // MemoryStream : Memory stream of encoded audio.
         // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
         // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
-        // SampleFormat : default : -1 (1:Int16) (0: Float32, 1:Int32, 2:Int16)
+        // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
         // FramesCount : default : -1 (4096)
         //  result :  Input Index in array  -1 = error
         // example : InputIndex1 := uos_AddFromMemoryStream(mymemorystream,-1,-1,2,44100,0,1024);
 
         // add a Output into device with custom parameters
-         uos_AddIntoDevOut(PlayerIndex1, -1, -1, 44100, 2, -1, -1, 1024 * 4);
+         uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, 2, 2, 1024 * 4, -1);
    
         /////// everything is ready, here we are, lets play it...
          uos_Play(PlayerIndex1);
