@@ -139,10 +139,10 @@ var
       // add a Output into device with custom parameters
         {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
        uos_AddIntoDevOut(PlayerIndex1, -1, 0,3, uos_inputgetSampleRate(PlayerIndex1,InputIndex1), 
-       uos_inputgetChannels(PlayerIndex1,input1) , 0, -1, -1);
+       uos_inputgetChannels(PlayerIndex1,input1) , 0, 1024 * 8, -1);
        {$else}
        uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_inputgetSampleRate(PlayerIndex1, InputIndex1),
-       uos_inputgetChannels(PlayerIndex1, InputIndex1), 2, 1024 * 4, -1);
+       uos_inputgetChannels(PlayerIndex1, InputIndex1), 2, 1024 * 8, -1);
        {$endif}
 
       // create a other memorystream from the first one encoding in ogg format.
