@@ -6306,8 +6306,9 @@ function Tuos_Player.AddIntoMemoryStream(var MemoryStream: TMemoryStream; Sample
   Streamout[x].Data.posmem := 0;
    
   StreamOut[x].Data.TypePut := 5;
-  
-  with sfVirtual do begin
+
+  {$IF DEFINED(sndfile)}
+   with sfVirtual do begin
             sf_vio_get_filelen  := @m_get_filelen;
             seek  := @m_seek;
             read  := @m_read;
@@ -6326,7 +6327,7 @@ function Tuos_Player.AddIntoMemoryStream(var MemoryStream: TMemoryStream; Sample
   SFinfo.seekable := 0;
   StreamOut[x].Data.HandleSt := sf_open_virtual(@sfVirtual, SFM_WRITE, @sfInfo,
    @StreamOut[x].MemorySteamOut);
-
+   {$endif}
    result := x;
    StreamOut[x].Data.Enabled := True;
   end;
@@ -8121,16 +8122,18 @@ begin
   WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
 // StreamOut[x].FileBuffer.Data.Free;
   end;
-  
+
+    {$IF DEFINED(sndfile)}
   if (StreamOut[x].Data.TypePut = 6) then
   begin
    sf_close(StreamOut[x].Data.HandleSt); 
   end;
-   
+
  if (StreamOut[x].Data.TypePut = 5) then
   begin
    sf_close(StreamOut[x].Data.HandleSt); 
   end;
+  {$endif}
    
  {$IF DEFINED(mse)}
  if EndProc <> nil then
@@ -8338,7 +8341,9 @@ begin
    WriteWaveFromMem(StreamOut[x].Data.Filename, StreamOut[x].FileBuffer);
     StreamOut[x].FileBuffer.Data.Free;
    end;
-   
+
+    {$IF DEFINED(sndfile)}
+
    if (StreamOut[x].Data.TypePut = 6) then
   begin
   sf_close( StreamOut[x].Data.HandleSt); 
@@ -8348,6 +8353,7 @@ begin
   begin
   sf_close( StreamOut[x].Data.HandleSt); 
   end;
+    {$endif}
 
    end;
    
@@ -8679,6 +8685,7 @@ if err > 0 then
   StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.outframes * StreamIn[x2].Data.Channels * rat);
   end;
 
+  {$IF DEFINED(sndfile)}
  5:// Give to MemoryStream
   begin
  
@@ -8690,6 +8697,7 @@ if err > 0 then
  if assigned(StreamOut[x].MemorySteamOut) then
  
    case StreamOut[x].Data.SampleFormat of
+
  0: StreamOut[x].Data.OutFrames :=
  sf_write_float(StreamOut[x].Data.HandleSt,
  @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes *rat );
@@ -8720,6 +8728,9 @@ if err > 0 then
 
  // writeln(inttostr(StreamOut[x].Data.OutFrames));
  end;
+
+ {$endif}
+
 
   0:// Give to wav file from TFileStream
   begin
