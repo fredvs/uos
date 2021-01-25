@@ -288,8 +288,8 @@ type
   Encoding: cint32;
   bitrate: cint32;
   Length: cint32;//  length samples total ;
-  LibOpen: integer; 
-  Ratio: integer;  
+  LibOpen: shortint; 
+  Ratio: byte;  
 end;  
 
 type
@@ -380,7 +380,7 @@ type
   wSamplesPerSec: cint32;
   wBitsPerSample: word;
   wChannels: word;
-  FileFormat: integer;
+  FileFormat: shortint;
   Data: TFileStream;
   DataMS: TMemoryStream;
   end;
@@ -389,7 +389,7 @@ type
   Tuos_Data = record// Global data
   Enabled: boolean;
   
-  TypePut: integer;
+  TypePut: shortint;
 // -1 : nothing. 
 // for Input  : 0: from audio encoded file, 1: from input device (like mic),
 //              2: from internet audio stream, 3: from Synthesizer, 4: from memory buffer,
@@ -398,7 +398,7 @@ type
 //              3: into memory buffer, 4: into wav file from memorystream, 5: into memorystream,
 //              6: into ogg file from filestream, 7: into ogg memorystream    
   Seekable: boolean;
-  Status: integer;
+  Status: byte;
   
   Buffer: TDArFloat;
   MemoryBuffer: TDArFloat;
@@ -425,10 +425,10 @@ type
   
   levelfiltersar : TDArFloat;
 
-  PositionEnable : integer;
-  LevelEnable : integer;
+  PositionEnable : shortint;
+  LevelEnable : shortint;
   LevelLeft, LevelRight: cfloat;
-  levelArrayEnable : integer;
+  levelArrayEnable : shortint;
   
 {$IF DEFINED(synthesizer)}
   LookupTableLeft, LookupTableRight: array [0..1023] of  CFloat;
@@ -479,8 +479,8 @@ type
   Encoding: cint32;
   bitrate: cint32;
   Length: cint32;//  length samples total 
-  LibOpen: integer;// -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom, 4: opus
-  Ratio: integer;//  if mpg123 or aac then ratio := 2
+  LibOpen: shortint;// -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom, 4: opus
+  Ratio: byte;//  if mpg123 or aac then ratio := 2
   
   BPM : cfloat;
   numbuf : integer;
@@ -502,7 +502,7 @@ type
   Tuos_FFT = class(TObject)
   public
   
-  TypeFilterL, TypeFilterR: integer;
+  TypeFilterL, TypeFilterR: byte;
   LowFrequencyL, HighFrequencyL: cfloat;
   LowFrequencyR, HighFrequencyR: cfloat;
   GainL, GainR: cfloat;
@@ -881,7 +881,7 @@ function AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
 // Channels = Channels of input-to-follow.
 
 {$IF DEFINED(synthesizer)}
-function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: integer;
+function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: shortint;
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
  duration : cint32; NbHarmonics: cint32; EvenHarmonics: cint32;
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
@@ -905,7 +905,7 @@ function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: integer;
 // FramesCount: -1 default : 1024
 //  result:  Input Index in array  -1 = error
   
-procedure InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
+procedure InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: shortint;
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; 
   NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
 // InputIndex: one existing input index   
@@ -3352,7 +3352,7 @@ function SoundTouchPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_
   notused1: float; notused2: float; notused3: float;  notused4: float;
   notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
- ratio : integer;
+ ratio : shortint;
  numoutbuf, x1, x2: cint32;
   BufferplugFLTMP: TDArFloat;
   BufferplugFL: TDArFloat;
@@ -3468,7 +3468,7 @@ function GetBPMPlug(bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2b
   numframes: float; loop: float; notused3: float;  notused4: float;
   notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var
- ratio : integer;
+ ratio : shortint;
  begin
  
  case inputData.LibOpen of
@@ -4869,7 +4869,7 @@ begin
 end;
 
 {$IF DEFINED(synthesizer)}
-function Tuos_Player.AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: integer;
+function Tuos_Player.AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: shortint;
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
  duration : cint32; NbHarmonics: cint32; EvenHarmonics: cint32;
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
@@ -4977,7 +4977,7 @@ begin
   Result := x;
 end;
 
-procedure Tuos_Player.InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: integer;
+procedure Tuos_Player.InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: shortint;
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; 
   NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
 // InputIndex: one existing input index   
