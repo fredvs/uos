@@ -465,8 +465,8 @@ function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, Wav
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
-// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// WaveTypeL: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, used for mono and stereo) 
+// WaveTypeR: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, used for stereo, ignored for mono) 
 // FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
 // FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL: default: -1 (= 1) (from 0 to 1) => volume left
@@ -487,8 +487,8 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, 
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; 
   NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
 // InputIndex: one existing input index   
-// WaveTypeL: do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// WaveTypeL: default: -1 (0) (0 = sine-wave 1, = square-wave, 2= triangle, used for mono and stereo) 
+// WaveTypeR: default: -1 (0) (0 = sine-wave 1, = square-wave, 2= triangle, used for stereo, ignored for mono) 
 // FrequencyL: do not change: -1 (Left frequency, used for mono)
 // FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL: do not change: -1 (= 1) (from 0 to 1) => volume left
@@ -646,6 +646,9 @@ function uos_InputAddFilter(PlayerIndex: cint32; InputIndex: cint32;
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
 //  result :  index of DSPIn in array
+
+function uos_InputGetBuffer(PlayerIndex: cint32; InputIndex: cint32): TDArFloat;
+// Get current buffer
 
 procedure uos_InputSetFilter(PlayerIndex: cint32; InputIndex: cint32; FilterIndex: cint32;  TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
   TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
@@ -1818,6 +1821,15 @@ begin
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
   uosPlayers[PlayerIndex].InputSeekTime(InputIndex, pos);
+end;
+
+function uos_InputGetBuffer(PlayerIndex: cint32; InputIndex: cint32): TDArFloat;
+// Get current buffer
+begin
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
+ result := uosPlayers[PlayerIndex].InputGetBuffer(InputIndex) ;
 end;
 
 function uos_InputLength(PlayerIndex: cint32; InputIndex: cint32): cint32;

@@ -863,9 +863,9 @@ findhistory=20
  uos_AddIntoMemoryStream
 findoptions=1
 editpos=10
+ 16,14
  0,-1073741823
  0,-1073741823
- 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -886,7 +886,7 @@ bookmarks9=0
 sourcefiles=10
  ${PROJECTDIR}/simplerecorder_fpGUI.pas
  ${PROJECTDIR}/uos.pas
- /home/fred/uos/examples/uos_flat.pas
+ ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_portaudio.pas
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
@@ -921,21 +921,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=10
- 0
- 2
- 1
- 8
- 6
- 9
- 4
- 7
- 3
- 5
 firsttab=0
-index=1
+index=0
 [layout]
-windowlayout=567
+windowlayout=557
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1079,8 +1068,8 @@ windowlayout=567
  width1=82
  sortdescend1=0
  sorted=0
- col=1
- row=-1073741823
+ col=0
+ row=8
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1159,10 +1148,10 @@ windowlayout=567
  [breakpointsfo.bkptson]
  value=0
  [objectinspectorfo.grid]
- propcolwidthref=547
- width0=243
+ propcolwidthref=538
+ width0=239
  sortdescend0=0
- width1=298
+ width1=293
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1410,11 +1399,11 @@ windowlayout=567
  nx=0
  ny=0
  ncx=1140
- ncy=52
+ ncy=48
  x=0
  y=0
  cx=1207
- cy=50
+ cy=46
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1424,11 +1413,12 @@ windowlayout=567
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
- history=3
+ value=/home/fred/uos/examples/simplerecorder_fpGUI.pas
+ history=4
+  /home/fred/uos/examples/simplerecorder_fpGUI.pas
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/uos_portaudio.pas
-  /home/fred/uos/examples/simplerecorder_fpGUI.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1450,19 +1440,8 @@ windowlayout=567
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=10
-  0
-  2
-  1
-  8
-  6
-  9
-  4
-  7
-  3
-  5
  firsttab=0
- index=1
+ index=0
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]

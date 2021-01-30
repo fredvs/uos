@@ -887,8 +887,8 @@ function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: shortint;
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
-// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// WaveTypeL: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, used for mono and stereo) 
+// WaveTypeR: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, used for stereo, ignored for mono) 
 // FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
 // FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL: default: -1 (= 1) (from 0 to 1) => volume left
@@ -1017,6 +1017,9 @@ procedure SetPluginBs2b(PluginIndex: cint32; level: CInt32; fcut: CInt32;
 function GetStatus() : cint32 ;
 // Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, 
 // -1 => error or not yet played, only created.
+
+function InputGetBuffer(InputIndex: cint32): TDArFloat;
+// Get current buffer
 
 procedure InputSeek(InputIndex: cint32; pos: Tcount_t);
 // change position in sample
@@ -4875,8 +4878,8 @@ function Tuos_Player.AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: short
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
-// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, 2 = triangle, used for mono and stereo) 
+// WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave,2 = triangle used, used for stereo, ignored for mono) 
 // FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
 // FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL: default: -1 (= 1) (from 0 to 1) => volume left
@@ -4926,11 +4929,11 @@ begin
   
   if WaveTypeL < 1 then 
   StreamIn[x].Data.typLsine := 0 else
-  StreamIn[x].Data.typLsine := 1;
+  StreamIn[x].Data.typLsine := WaveTypeL;
   
   if WaveTypeR < 1 then 
   StreamIn[x].Data.typRsine := 0 else
-  StreamIn[x].Data.typRsine := 1;
+  StreamIn[x].Data.typRsine := WaveTypeR;
   
   StreamIn[x].Data.PosInTableLeft := 0;
   StreamIn[x].Data.PosInTableRight := 0;
@@ -4975,6 +4978,12 @@ begin
   FillLookupTable(x, StreamIn[x].Data.typRsine, 2,StreamIn[x].data.harmonic, StreamIn[x].data.evenharm);
     
   Result := x;
+end;
+
+function Tuos_Player.InputGetBuffer(InputIndex: cint32): TDArFloat;
+// Get current buffer
+begin
+result := StreamIn[InputIndex].data.Buffer;
 end;
 
 procedure Tuos_Player.InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: shortint;
@@ -7551,7 +7560,7 @@ begin
   
 for i:=0 to l-1 do  
 begin 
-  if typewave = 0 then
+  if typewave = 0 then // square
   begin
    if channel = 1 then
     StreamIn[x].Data.LookupTableLeft[i]:=sin(i*nPI_l);
@@ -7559,7 +7568,7 @@ begin
     StreamIn[x].Data.LookupTableRight[i]:=sin(i*nPI_l);
   end;
   
-  if typewave = 1 then
+  if typewave = 1 then // square
   begin
    if channel = 1 then
    begin
@@ -7574,6 +7583,19 @@ begin
     StreamIn[x].Data.LookupTableRight[i]:=-1 ;
     end; 
   end;
+  
+  if typewave = 2 then // triangle
+  begin
+   if channel = 1 then
+   begin
+    StreamIn[x].Data.LookupTableLeft[i]:= (round((l - i)/(l/2)) -1);
+   end; 
+   if channel = 2 then
+   begin
+   StreamIn[x].Data.LookupTableRight[i]:= (round((l - i)/(l/2)) -1);
+    end; 
+  end;
+    
 end;
     
  if AHarmonics > 0 then   
