@@ -904,6 +904,9 @@ function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: shortint;
 // SampleRate: delault : -1 (44100)
 // FramesCount: -1 default : 1024
 //  result:  Input Index in array  -1 = error
+
+function InputGetBuffer(InputIndex: cint32): TDArFloat;
+// Get current buffer
   
 procedure InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: shortint;
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; 
@@ -1018,9 +1021,6 @@ function GetStatus() : cint32 ;
 // Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, 
 // -1 => error or not yet played, only created.
 
-function InputGetBuffer(InputIndex: cint32): TDArFloat;
-// Get current buffer
-
 procedure InputSeek(InputIndex: cint32; pos: Tcount_t);
 // change position in sample
 
@@ -1048,6 +1048,14 @@ function InputLengthTime(InputIndex: cint32): TTime;
 function InputPosition(InputIndex: cint32): cint32;
 // InputIndex : InputIndex of existing input
 // result : current postion in sample
+
+function InputPositionSeconds(InputIndex: cint32): float;
+// InputIndex : InputIndex of existing input
+//  result : current postion of Input in seconds
+
+function InputPositionTime(InputIndex: cint32): TTime;
+// InputIndex : InputIndex of existing input
+//  result : current postion of Input in time format
 
 procedure InputSetFrameCount(InputIndex: cint32 ; framecount : cint32);
 // set number of frames to be done. (usefull for recording and level precision)
@@ -1093,14 +1101,6 @@ function InputGetBPM(InputIndex: cint32): float;
 // InputIndex : InputIndex of existing input
 // result : left level from 0 to 1
 {$endif}   
-
-function InputPositionSeconds(InputIndex: cint32): float;
-// InputIndex : InputIndex of existing input
-//  result : current postion of Input in seconds
-
-function InputPositionTime(InputIndex: cint32): TTime;
-// InputIndex : InputIndex of existing input
-//  result : current postion of Input in time format
 
 function InputUpdateTag(InputIndex: cint32): boolean;
 
@@ -4967,7 +4967,11 @@ begin
   StreamIn[x].Data.Status := 1;
   StreamIn[x].Data.TypePut := 3;
   StreamIn[x].Data.HandleSt := pchar('synth');
-  StreamIn[x].Data.ratio := 2;
+ 
+  if (StreamIn[x].Data.SampleFormat = 2) then
+  StreamIn[x].Data.ratio := StreamIn[x].data.channels
+  else StreamIn[x].Data.ratio := 2;
+ 
   StreamIn[x].Data.Output := OutputIndex;
   StreamIn[x].Data.seekable := False;
   StreamIn[x].Data.LibOpen := -1;
@@ -7560,7 +7564,7 @@ begin
   
 for i:=0 to l-1 do  
 begin 
-  if typewave = 0 then // square
+  if typewave = 0 then // sine
   begin
    if channel = 1 then
     StreamIn[x].Data.LookupTableLeft[i]:=sin(i*nPI_l);
@@ -7588,11 +7592,11 @@ begin
   begin
    if channel = 1 then
    begin
-    StreamIn[x].Data.LookupTableLeft[i]:= (round((l - i)/(l/2)) -1);
+    StreamIn[x].Data.LookupTableLeft[i]:= ((l - i)/(l/2))-1;
    end; 
    if channel = 2 then
    begin
-   StreamIn[x].Data.LookupTableRight[i]:= (round((l - i)/(l/2)) -1);
+   StreamIn[x].Data.LookupTableRight[i]:= ((l - i)/(l/2))-1;
     end; 
   end;
     
@@ -7683,8 +7687,8 @@ begin
   if (StreamIn[x].Data.posdursine <= StreamIn[x].Data.dursine) or (StreamIn[x].Data.dursine = 0) then
   begin
  
-  while x2 < (length(StreamIn[x].Data.Buffer)) - (chan * 512)  do
-  begin
+  while x2 < (length(StreamIn[x].Data.Buffer) div chan)  do
+ begin
   
   sf2:= 0;
   sf1:= 0;
@@ -7872,7 +7876,7 @@ begin
   {$IF not DEFINED(Library)}
   if (StreamOut[x].DSP[x3].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,StreamOut[x].DSP[x3].LoopProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,StreamOut[x].DSP[x3].LoopProc);
   {$else}
  {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
  begin
@@ -7881,7 +7885,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
  {$else}
-  thethread.synchronize(thethread,StreamOut[x].DSP[x3].LoopProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,StreamOut[x].DSP[x3].LoopProc);
   {$endif}
   {$endif}
 
@@ -7891,9 +7895,9 @@ begin
   {$else}
   if (StreamOut[x].DSP[x3].LoopProc <> nil) then
   {$IF FPC_FULLVERSION >= 20701}
-  thethread.synchronize(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
   {$else}
-  thethread.synchronize(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@StreamOut[x].DSP[x3].LoopProcjava);
   {$endif}
   {$endif}
   
@@ -7972,7 +7976,7 @@ begin
     {$IF not DEFINED(Library)}
   if (StreamIn[x].DSP[x2].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,StreamIn[x].DSP[x2].LoopProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,StreamIn[x].DSP[x2].LoopProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -7981,7 +7985,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
   {$else}
-  thethread.synchronize(thethread,StreamIn[x].DSP[x2].LoopProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,StreamIn[x].DSP[x2].LoopProc);
   {$endif}
   {$endif}
   {$elseif not DEFINED(java)}
@@ -7990,9 +7994,9 @@ begin
   {$else}
   if (StreamIn[x].DSP[x2].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,@Streamin[x].DSP[x2].LoopProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@Streamin[x].DSP[x2].LoopProcjava);
   {$else}
-  thethread.synchronize(thethread,@Streamin[x].DSP[x2].LoopProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@Streamin[x].DSP[x2].LoopProcjava);
   {$endif}
   {$endif}
   {$endif}
@@ -8061,7 +8065,7 @@ begin
 
 //  Execute LoopEndProc procedure
    {$IF FPC_FULLVERSION>=20701}
-   thethread.synchronize(thethread,LoopEndProc);
+   thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,LoopEndProc);
    {$else}
    {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
    begin
@@ -8069,7 +8073,7 @@ begin
    fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
    end;
    {$else}
-   thethread.synchronize(thethread,LoopEndProc);
+   thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,LoopEndProc);
    {$endif}
    {$endif}
    {$elseif not DEFINED(java)}
@@ -8079,9 +8083,9 @@ begin
    if LoopEndProc <> nil then
 
    {$IF FPC_FULLVERSION>=20701}
-   thethread.synchronize(thethread,@endprocjava);
+   thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@endprocjava);
    {$else}
-   thethread.synchronize(thethread,@endprocjava);//  Execute EndProc procedure
+   thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@endprocjava);//  Execute EndProc procedure
    {$endif}
    {$endif}
    {$endif}
@@ -8096,7 +8100,7 @@ begin
 
  {$IF not DEFINED(Library)}
   if EndProc <> nil then
-   thethread.synchronize(thethread,EndProc);//  Execute EndProc procedure
+   thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,EndProc);//  Execute EndProc procedure
 
    //thethread.queue(thethread,EndProc);//  Execute EndProc procedure
 
@@ -8105,7 +8109,7 @@ begin
   EndProc;
   {$else}
   if (EndProc <> nil) then
-  thethread.synchronize(thethread,@endprocjava);//  Execute EndProc procedure
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@endprocjava);//  Execute EndProc procedure
  
   {$endif}
 
@@ -8167,9 +8171,9 @@ begin
   {$IF not DEFINED(Library)}
   if EndProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,EndProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,EndProc);
   {$else}
-  thethread.synchronize(thethread,EndProc);//  Execute EndProc procedure
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,EndProc);//  Execute EndProc procedure
   {$endif}
 
   {$elseif not DEFINED(java)}
@@ -8178,9 +8182,9 @@ begin
   {$else}
   if (EndProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,@endprocjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@endprocjava);
   {$else}
-  thethread.synchronize(thethread,@endprocjava);//  Execute EndProc procedure
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@endprocjava);//  Execute EndProc procedure
   {$endif}
 
   {$endif}
@@ -8400,7 +8404,7 @@ begin
   {$IF not DEFINED(Library)}
   if StreamIn[x].LoopProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,StreamIn[x].LoopProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,StreamIn[x].LoopProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -8409,7 +8413,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
   {$else}
-  thethread.synchronize(thethread,StreamIn[x].LoopProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,StreamIn[x].LoopProc);
   {$endif}
   {$endif}
 
@@ -8419,9 +8423,9 @@ begin
   {$else}
   if (StreamIn[x].LoopProc <> nil) then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,@Streamin[x].LoopProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@Streamin[x].LoopProcjava);
   {$else}
-  thethread.synchronize(thethread,@Streamin[x].LoopProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@Streamin[x].LoopProcjava);
   {$endif}
   {$endif}
    {$endif}
@@ -8444,7 +8448,7 @@ begin
   if BeginProc <> nil then
 //  Execute BeginProc procedure
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,BeginProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,BeginProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -8452,7 +8456,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
   {$else}
-  thethread.synchronize(thethread,BeginProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,BeginProc);
   {$endif}
   {$endif}
   {$elseif not DEFINED(java)}
@@ -8461,9 +8465,9 @@ begin
   {$else}
   if BeginProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,@BeginProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@BeginProcjava);
   {$else}
-  thethread.synchronize(thethread,@BeginProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@BeginProcjava);
   {$endif}
   {$endif}
   {$endif}
@@ -8485,7 +8489,7 @@ begin
   if LoopBeginProc <> nil then
 //  Execute BeginProc procedure
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,LoopBeginProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,LoopBeginProc);
   {$else}
   {$IF (FPC_FULLVERSION < 20701) and DEFINED(fpgui)}
   begin
@@ -8493,7 +8497,7 @@ begin
   fpgPostMessage(self, refer, MSG_CUSTOM1, msg);
   end;
   {$else}
-  thethread.synchronize(thethread,LoopBeginProc);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,LoopBeginProc);
   {$endif}
   {$endif}
   {$elseif not DEFINED(java)}
@@ -8502,9 +8506,9 @@ begin
   {$else}
   if loopBeginProc <> nil then
   {$IF FPC_FULLVERSION>=20701}
-  thethread.synchronize(thethread,@loopBeginProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@loopBeginProcjava);
   {$else}
-  thethread.synchronize(thethread,@loopBeginProcjava);
+  thethread.{$IF DEFINED(usequeue)}Queue{$else}Synchronize{$endif}(thethread,@loopBeginProcjava);
   {$endif}
   {$endif}
   {$endif}
