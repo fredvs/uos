@@ -24,6 +24,8 @@ Phoenix : He decrypts sf_open_virtual to enable TMemoryStream as input.
 
 Andrei Borovsky : FFT code of uos_filters is from him.
 
+Winni: The synthesizer waves type (sine, square, triangle, sawtooth).
+
 And many others from fpc, fpGUI, MSE, Lazarus, CodeTyphon forum.
 
 Fred van Stappen : fiens@hotmail.com

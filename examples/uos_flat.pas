@@ -465,8 +465,8 @@ function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, Wav
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
-// WaveTypeL: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, used for mono and stereo) 
-// WaveTypeR: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, used for stereo, ignored for mono) 
+// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo) 
+// WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for stereo, ignored for mono) 
 // FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
 // FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL: default: -1 (= 1) (from 0 to 1) => volume left
@@ -487,8 +487,8 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, 
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; 
   NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
 // InputIndex: one existing input index   
-// WaveTypeL: default: -1 (0) (0 = sine-wave 1, = square-wave, 2= triangle, used for mono and stereo) 
-// WaveTypeR: default: -1 (0) (0 = sine-wave 1, = square-wave, 2= triangle, used for stereo, ignored for mono) 
+// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo) 
+// WaveTypeR: default: -1 (0) (00 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for stereo, ignored for mono) 
 // FrequencyL: do not change: -1 (Left frequency, used for mono)
 // FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL: do not change: -1 (= 1) (from 0 to 1) => volume left
@@ -1386,8 +1386,8 @@ function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, Wav
  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
-// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo) 
+// WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for stereo, ignored for mono) 
 // FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
 // FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL: default: -1 (= 1) (from 0 to 1) => volume left
@@ -1417,8 +1417,8 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, 
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; 
   NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
 // InputIndex: one existing input index   
-// WaveTypeL: do not change: -1 (0 = sine-wave 1 = square-wave, used for mono and stereo) 
-// WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, used for stereo, ignored for mono) 
+// WaveTypeL: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo) 
+// WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for stereo, ignored for mono) 
 // FrequencyL: do not change: -1 (Left frequency, used for mono)
 // FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
 // VolumeL: do not change: -1 (= 1) (from 0 to 1) => volume left

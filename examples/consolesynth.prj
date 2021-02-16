@@ -183,7 +183,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=5
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=713
  width0=47
@@ -466,7 +466,7 @@ makeoptionson=8
  63
  63
  38
- 8
+ 0
  53
  63
 compilerusedon=21
@@ -813,8 +813,10 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=inputaddf
-findhistory=11
+finddtext=saw
+findhistory=13
+ saw
+ square
  inputaddf
  addinputfil
  FillLookupTable
@@ -827,9 +829,8 @@ findhistory=11
  mpg_read_stream
  LookupTableLeft
 findoptions=1
-editpos=5
- 0,-1073741823
- 0,1136
+editpos=4
+ 0,7
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -837,21 +838,17 @@ bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-bookmarks4=0
-sourcefiles=5
+sourcefiles=4
  ${PROJECTDIR}/consolesynth.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_flat.pas
-relpaths=5
+ ${PROJECTDIR}/uos.pas
+relpaths=4
  consolesynth.pas
- uos.pas
- uos_flat.pas
  define.inc
  uos_flat.pas
-ismoduletexts=5
- 0
+ uos.pas
+ismoduletexts=4
  0
  0
  0
@@ -861,16 +858,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=5
- 0
- 1
- 3
- 4
- 2
 firsttab=0
-index=1
+index=0
 [layout]
-windowlayout=579
+windowlayout=573
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1094,10 +1085,10 @@ windowlayout=579
  [breakpointsfo.bkptson]
  value=0
  [objectinspectorfo.grid]
- propcolwidthref=547
- width0=243
+ propcolwidthref=553
+ width0=246
  sortdescend0=0
- width1=298
+ width1=301
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1345,11 +1336,11 @@ windowlayout=579
  nx=0
  ny=0
  ncx=1341
- ncy=53
+ ncy=50
  x=0
  y=0
  cx=1356
- cy=52
+ cy=49
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1359,30 +1350,30 @@ windowlayout=579
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/consolesynth.pas
  history=20
-  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consolesynth.pas
   /home/fred/uos/examples/define.inc
-  /home/fred/atest/test.prj
-  /home/fred/ideu/src/ideU.prj
-  /home/fred/mseide-msegui/apps/ide/mseide.prj
-  /home/fred/uos/examples/simpleplayer.prj
-  /home/fred/ideu_ok/src/ideU.prj
-  /home/fred/eschecs_mse/eschecs.prj
-  /home/fred/mselang-master/src/mselang.prj
-  /home/fred/mseide-msegui/apps/ide/mseide_zeos.prj
-  /home/fred/strumpract/src/strumpract.prj
-  /home/fred/ideu_badplug/src/demos/voiceassist/helloworld/helloworld.prj
-  /home/fred/xtop/src/ptop.prj
-  /home/fred/xtop/src/jtop.prj
-  /home/fred/idegraeme/mseide.prj
-  /home/fred/fptop/src/jtop.prj
-  /home/fred/fptop/src/ptop.prj
-  /home/fred/ptop_fred/ptop.prj
-  /home/fred/eschecs_mse_argh/eschecs.prj
+  /home/fred/uos/src/uos.pas
+  /home/fred/uos/examples/uos.pas
+  /home/fred/uossawtooth/src/uos.pas
+  /home/fred/uossawtooth/src/uos_cdrom.pas
+  /home/fred/WavvieW_14 (copie 1)/src/uos_msesigaudio.pas
+  /home/fred/WavvieW/src/uos_portaudio.pas
+  /home/fred/WavvieW/src/msesigfftgui.pas
+  /home/fred/WavvieW/src/main.pas
+  /home/fred/WavvieW/src/about.pas
+  /home/fred/WavvieW/src/msefftw.pas
+  /home/fred/WavvieW/src/uos_msefftw.pas
+  /home/fred/WavvieW/src/wavview.pas
+  /home/fred/WavvieW_pr/src/wavview.pas
+  /home/fred/WavvieW/src/uos_msesigaudionew.pas
+  /home/fred/WavvieW/src/msesignal.pas
+  /home/fred/WavvieW/src/uos_msesignal.pas
+  /home/fred/NoiseGenerator/src/msesignal.pas
+  /home/fred/noisegenerator/src/noisegenerator.pas
  [debuggerfo.project_options]
- value=2
+ value=1
  [debuggerfo.hints]
  value=1
  [sourcefo]
@@ -1402,14 +1393,8 @@ windowlayout=579
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=5
-  0
-  1
-  3
-  4
-  2
  firsttab=0
- index=1
+ index=0
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
