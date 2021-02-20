@@ -8702,9 +8702,11 @@ if err > 0 then
   inc(theinc);
   if theinc > StreamIn[x2].Data.numbuf then status := 0 ;
   end;
-
+   
    SetLength(Streamout[x].BufferOut^,length(Streamout[x].BufferOut^) + wantframestemp );
-
+   
+  Streamout[x].Data.posmem := length(Streamout[x].BufferOut^) -  wantframestemp;
+      
   for x2 := 0 to (wantframestemp) -1 do begin
    Streamout[x].BufferOut^[Streamout[x].Data.posmem + x2] := StreamOut[x].Data.Buffer[x2];
   end;
