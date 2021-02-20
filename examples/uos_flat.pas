@@ -1826,10 +1826,12 @@ end;
 function uos_InputGetBuffer(PlayerIndex: cint32; InputIndex: cint32): TDArFloat;
 // Get current buffer
 begin
+//{
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
   if  uosPlayersStat[PlayerIndex] = 1 then
   if assigned(uosPlayers[PlayerIndex]) then
  result := uosPlayers[PlayerIndex].InputGetBuffer(InputIndex) ;
+// }
 end;
 
 function uos_InputLength(PlayerIndex: cint32; InputIndex: cint32): cint32;

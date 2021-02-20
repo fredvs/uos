@@ -128,38 +128,38 @@ options=114
   70
   70
  [projectoptionsfo.twidgetgrid3]
- propcolwidthref=740
+ propcolwidthref=722
  sortdescend0=0
  sortdescend1=0
  sortdescend2=0
  sortdescend3=0
- width4=345
+ width4=337
  sortdescend4=0
- width5=186
+ width5=181
  sortdescend5=0
- width6=158
+ width6=154
  sortdescend6=0
- width7=51
+ width7=50
  sortdescend7=0
  width8=1
  sortdescend8=0
- width9=302
+ width9=295
  sortdescend9=0
  [projectoptionsfo.twidgetgrid4]
- propcolwidthref=564
+ propcolwidthref=557
  width0=96
  sortdescend0=0
  sortdescend1=0
  width2=73
  sortdescend2=0
- width3=271
+ width3=268
  sortdescend3=0
- width4=283
+ width4=279
  sortdescend4=0
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=16
+ rowheight=17
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -181,9 +181,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=144
+ y=142
  xprop=1
- yprop=0.33031674208145
+ yprop=0.3310502283105
  [projectoptionsfo.macrogrid]
  propcolwidthref=495
  sortdescend0=0
@@ -208,21 +208,21 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=0
+ index=2
  [projectoptionsfo.exceptionsgrid]
- propcolwidthref=724
+ propcolwidthref=713
  width0=47
  sortdescend0=0
- width1=718
+ width1=707
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
  index=0
  [projectoptionsfo.filefiltergrid]
- propcolwidthref=632
+ propcolwidthref=734
  width0=112
  sortdescend0=0
- width1=625
+ width1=727
  sortdescend1=0
  [projectoptionsfo.ttabwidget2]
  firsttab=0
@@ -532,7 +532,7 @@ makeoptionson=8
  63
  63
  3
- 34
+ 38
  48
  63
 compilerusedon=29
@@ -663,9 +663,9 @@ fontoptions=0
 fontxscales=0
 expandprojectfilemacros=4
  1
- 255
- 255
- 255
+ 1
+ 1
+ 1
 loadprojectfile=4
  1
  0
@@ -908,8 +908,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=SF_FORMAT_OGG
+finddtext=buffer
 findhistory=20
+ buffer
  SF_FORMAT_OGG
  WriteOut
  sf_close
@@ -929,12 +930,11 @@ findhistory=20
  TypePut
  SFM_WRITE
  write(
- write
 findoptions=1
 editpos=5
  0,-1073741823
- 0,-1073741823
- 0,154
+ 0,647
+ 0,141
  0,-1073741823
  0,-1073741823
 bookmarks0=0
@@ -944,7 +944,7 @@ bookmarks3=0
 bookmarks4=0
 sourcefiles=5
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
+ /home/fred/uos/examples/uos_flat.pas
  /home/fred/uos/examples/consoleplay.pas
  ${PROJECTDIR}/define.inc
  ${PROJECTDIR}/uos_libsndfile.pas
@@ -970,7 +970,7 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=2
+index=1
 [layout]
 windowlayout=592
  [mainfo.basedock]
@@ -1196,10 +1196,10 @@ windowlayout=592
  [breakpointsfo.bkptson]
  value=0
  [objectinspectorfo.grid]
- propcolwidthref=547
- width0=243
+ propcolwidthref=598
+ width0=266
  sortdescend0=0
- width1=298
+ width1=326
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1447,7 +1447,7 @@ windowlayout=592
  nx=0
  ny=0
  ncx=1341
- ncy=51
+ ncy=49
  x=0
  y=0
  cx=1341
@@ -1461,7 +1461,7 @@ windowlayout=592
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/consoleplay.pas
+ value=/home/fred/uos/examples/uos_flat.pas
  history=20
   /home/fred/uos/examples/consoleplay.pas
   /home/fred/uos/examples/uos_libsndfile.pas
@@ -1505,7 +1505,7 @@ windowlayout=592
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=2
+ index=1
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
@@ -1514,7 +1514,7 @@ windowlayout=592
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=confdebuggerfo
  parent=
  mdistate=0
  nx=0
@@ -1549,7 +1549,7 @@ windowlayout=592
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=confdebuggerfo
+ stackedunder=threadsfo
  parent=
  mdistate=0
  nx=0

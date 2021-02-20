@@ -954,10 +954,10 @@ sourcefiles=9
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplaymemorybuffer.pas
- ${PROJECTDIR}/consoleplaymemorybuffer.pas
+ /home/fred/uos/examples/consoleplaymemorybuffer.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/uos.pas
  ${PROJECTDIR}/simpleplayer_fpGUI.pas
  ${PROJECTDIR}/consoleplaymemorystream.pas
 relpaths=9
@@ -1038,7 +1038,7 @@ windowlayout=583
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945

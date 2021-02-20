@@ -880,6 +880,9 @@ function AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
 // FramesCount = FramesCount of input-to-follow 
 // Channels = Channels of input-to-follow.
 
+function InputGetBuffer(InputIndex: cint32): TDArFloat;
+// Get current buffer
+
 {$IF DEFINED(synthesizer)}
 function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: shortint;
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
@@ -905,9 +908,6 @@ function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: shortint;
 // FramesCount: -1 default : 1024
 //  result:  Input Index in array  -1 = error
 
-function InputGetBuffer(InputIndex: cint32): TDArFloat;
-// Get current buffer
-  
 procedure InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: shortint;
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float; duration: cint32; 
   NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
@@ -4819,6 +4819,12 @@ begin
 end;
 {$endif}
 
+function Tuos_Player.InputGetBuffer(InputIndex: cint32): TDArFloat;
+// Get current buffer
+begin
+result := StreamIn[InputIndex].data.Buffer;
+end;
+
 function Tuos_Player.AddFromEndlessMuted(Channels : cint32; FramesCount: cint32): cint32;
 // Add a input from Endless Muted dummy sine wav
 // FramesCountByChan = FramesCount of input-to-follow div channels of input-to-follow.
@@ -4982,12 +4988,6 @@ begin
   FillLookupTable(x, StreamIn[x].Data.typRsine, 2,StreamIn[x].data.harmonic, StreamIn[x].data.evenharm);
     
   Result := x;
-end;
-
-function Tuos_Player.InputGetBuffer(InputIndex: cint32): TDArFloat;
-// Get current buffer
-begin
-result := StreamIn[InputIndex].data.Buffer;
 end;
 
 procedure Tuos_Player.InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: shortint;
