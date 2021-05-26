@@ -1,6 +1,4 @@
-
-/////////////////// Demo how to use United Openlib of Sound ////////////////////
-
+/////////////////// Demo how to use Multi-Input with uos ////////////////////
 
 unit main_mi;
 
@@ -173,7 +171,6 @@ begin
   if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex2, TrackBar2.position / 100,
       TrackBar2.position / 100, True);
-
 end;
 
 procedure TForm1.TrackBar3Change(Sender: TObject);
@@ -181,7 +178,6 @@ begin
   if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex3, TrackBar3.position / 100,
       TrackBar3.position / 100, True);
-
 end;
 
 procedure TForm1.TrackBar4Change(Sender: TObject);
@@ -196,7 +192,6 @@ begin
   if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex8, TrackBar5.position / 100,
       TrackBar5.position / 100, True);
-
 end;
 
 procedure TForm1.TrackBar6Change(Sender: TObject);
@@ -204,7 +199,6 @@ begin
   if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex5, TrackBar6.position / 100,
       TrackBar6.position / 100, True);
-
 end;
 
 procedure TForm1.TrackBar7Change(Sender: TObject);
@@ -212,7 +206,6 @@ begin
   if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex6, TrackBar7.position / 100,
       TrackBar7.position / 100, True);
-
 end;
 
 procedure TForm1.TrackBar8Change(Sender: TObject);
@@ -220,7 +213,6 @@ begin
   if (button14.Enabled = False) then
     uos_InputSetDSPVolume(PlayerIndex0, InIndex7, TrackBar8.position / 100,
       TrackBar8.position / 100, True);
-
 end;
 
 
@@ -315,7 +307,7 @@ begin
   //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
   // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
- if uos_LoadLib(PChar(edit1.Text), PChar(edit2.Text), PChar(edit3.Text), nil, nil, nil) = 0 then
+  if uos_LoadLib(PChar(edit1.Text), PChar(edit2.Text), PChar(edit3.Text), nil, nil, nil) = 0 then
   begin
     form1.hide;
     form1.Position  := podefault;
@@ -387,18 +379,16 @@ begin
   TrackBar6Change(self);
   TrackBar7Change(self);
   TrackBar8Change(self);
-
+  
+  // Ok let start it
   uos_Play(PlayerIndex0);
-  ////// Ok let start it
-
-end;
+ end;
 
 procedure TForm1.Button15Click(Sender: TObject);
 begin
   uos_Pause(PlayerIndex0);
   button15.Enabled := False;
   button16.Enabled := True;
-
 end;
 
 
@@ -411,20 +401,22 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 var
-  ratioendlessloop : shortint;
+  ratioendlessloop: shortint;
 begin
   PlayerIndex0 := 0;
 
   channels := 2; // (stereo output)
 
-   uos_Stop(PlayerIndex0);
-   sleep(100);
-   application.ProcessMessages;
+  uos_Stop(PlayerIndex0);
+  sleep(100);
+  application.ProcessMessages;
 
-   uos_CreatePlayer(PlayerIndex0);
+  uos_CreatePlayer(PlayerIndex0);
 
-   if mp3input.Checked then ratioendlessloop := 4 else
-     ratioendlessloop := 1;
+  if mp3input.Checked then
+    ratioendlessloop := 4
+  else
+    ratioendlessloop := 1;
 
   //// add input from audio file with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -446,7 +438,7 @@ begin
   // Needed to make all input reach the end.
 
   mut := uos_AddFromEndlessMuted(PlayerIndex0, 2, 1024 div ratioendlessloop);
-  uos_inputsetenable(PlayerIndex0, mut, true);
+  uos_inputsetenable(PlayerIndex0, mut, True);
 
   ///// DSP Volume changer
   ////////// PlayerIndex1 : Index of a existing Player
@@ -641,4 +633,3 @@ begin
 end;
 
 end.
-
