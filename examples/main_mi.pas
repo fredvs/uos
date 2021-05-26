@@ -310,8 +310,6 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
-var
-  mpg3lib : string;
 begin
   // Load the libraries
   //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
@@ -390,7 +388,6 @@ begin
   TrackBar7Change(self);
   TrackBar8Change(self);
 
- // uos_PlayNoFree(PlayerIndex0);
   uos_Play(PlayerIndex0);
   ////// Ok let start it
 
@@ -445,8 +442,8 @@ begin
   inindex7 := uos_AddFromFile(PlayerIndex0, PChar(Edit10.Text), -1, 0, 1024);
   inindex8 := uos_AddFromFile(PlayerIndex0, PChar(Edit11.Text), -1, 0, 1024);
 
-  // This for a dummy endless input, set enable to false, must be last input
-  // Needed to make work EndProc if all input reach the end. 
+  // This for a dummy endless input, set enable to true, must be last input
+  // Needed to make all input reach the end.
 
   mut := uos_AddFromEndlessMuted(PlayerIndex0, 2, 1024 div ratioendlessloop);
   uos_inputsetenable(PlayerIndex0, mut, true);
