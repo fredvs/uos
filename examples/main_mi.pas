@@ -49,10 +49,13 @@ type
     CheckBox6: TCheckBox;
     CheckBox7: TCheckBox;
     CheckBox8: TCheckBox;
+    Label12: TLabel;
+    mp3input: TCheckBox;
     Edit1: TEdit;
     Edit10: TEdit;
     Edit11: TEdit;
     Edit2: TEdit;
+    Edit3: TEdit;
     Edit4: TEdit;
     Edit5: TEdit;
     Edit6: TEdit;
@@ -63,6 +66,7 @@ type
     Label10: TLabel;
     Label11: TLabel;
     Label2: TLabel;
+    Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
@@ -111,7 +115,6 @@ type
     procedure CheckBox7Change(Sender: TObject);
     procedure CheckBox8Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure FormClose(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
@@ -230,13 +233,15 @@ var
 begin
   uos_logo();
   ordir := application.Location;
-                  {$IFDEF Windows}
+  {$IFDEF Windows}
      {$if defined(cpu64)}
   Edit1.Text := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
   Edit2.Text := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
+  Edit3.Text := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
    {$else}
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
+  Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
    {$endif}
   {$ENDIF}
 
@@ -246,39 +251,45 @@ begin
   opath := copy(opath, 1, Pos('/uos', opath) - 1);
   Edit1.Text := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
   Edit2.Text := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
- 
+  Edit3.Text := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
+
    {$ENDIF}
     {$IFDEF CPU64}
   opath := ordir;
   opath := copy(opath, 1, Pos('/uos', opath) - 1);
   Edit1.Text := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
   Edit2.Text := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
+  Edit3.Text := opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
     {$ENDIF}
     {$ENDIF}
 
     {$if defined(cpu64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
+  Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
  {$ENDIF}
 {$if defined(cpu86) and defined(linux)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
+  Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
   {$ENDIF}
    {$if defined(linux) and defined(cpuarm)}
   Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit2.Text := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+  Edit3.Text := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
   {$ENDIF}
 
 {$IFDEF freebsd}
     {$if defined(cpu64)}
    Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
    Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+   Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
   {$else}
   Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
   Edit2.Text := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
+  Edit3.Text := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
   {$endif}
     {$ENDIF}
-
 
   opendialog1.Initialdir := application.Location + 'sound';
 
@@ -293,30 +304,28 @@ begin
 
 end;
 
-procedure TForm1.FormClose(Sender: TObject);
-begin
-
-end;
-
 procedure TForm1.PaintBox1Paint(Sender: TObject);
 begin
   PaintBox1.Canvas.Draw(0, 0, BufferBMP);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+  mpg3lib : string;
 begin
   // Load the libraries
   //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
   // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
 
-  if uos_LoadLib(PChar(edit1.Text), PChar(edit2.Text), nil, nil, nil, nil) = 0 then
+ if uos_LoadLib(PChar(edit1.Text), PChar(edit2.Text), PChar(edit3.Text), nil, nil, nil) = 0 then
   begin
     form1.hide;
     form1.Position  := podefault;
-    button1.Caption := 'PortAudio and SndFile libraries are loaded...';
+    button1.Caption := 'Libraries are loaded...';
     button1.Enabled := False;
     edit1.ReadOnly  := True;
     edit2.ReadOnly  := True;
+    edit3.ReadOnly  := True;
     form1.Height    := 478;
     form1.Position  := poScreenCenter;
     button2.click;
@@ -381,8 +390,8 @@ begin
   TrackBar7Change(self);
   TrackBar8Change(self);
 
-
-  uos_PlayNoFree(PlayerIndex0);
+ // uos_PlayNoFree(PlayerIndex0);
+  uos_Play(PlayerIndex0);
   ////// Ok let start it
 
 end;
@@ -404,12 +413,21 @@ begin
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
+var
+  ratioendlessloop : shortint;
 begin
   PlayerIndex0 := 0;
 
   channels := 2; // (stereo output)
 
-  uos_CreatePlayer(PlayerIndex0);
+   uos_Stop(PlayerIndex0);
+   sleep(100);
+   application.ProcessMessages;
+
+   uos_CreatePlayer(PlayerIndex0);
+
+   if mp3input.Checked then ratioendlessloop := 4 else
+     ratioendlessloop := 1;
 
   //// add input from audio file with custom parameters
   //////////// PlayerIndex : Index of a existing Player
@@ -429,14 +447,16 @@ begin
 
   // This for a dummy endless input, set enable to false, must be last input
   // Needed to make work EndProc if all input reach the end. 
-  mut := uos_AddFromEndlessMuted(PlayerIndex0, channels, 1024);
-  uos_inputsetenable(PlayerIndex0, mut, False);
+
+  mut := uos_AddFromEndlessMuted(PlayerIndex0, 2, 1024 div ratioendlessloop);
+  uos_inputsetenable(PlayerIndex0, mut, true);
 
   ///// DSP Volume changer
   ////////// PlayerIndex1 : Index of a existing Player
   ////////// In1Index : InputIndex of a existing input
   ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
   ////////// VolRight : Right volume
+
   uos_InputAddDSPVolume(PlayerIndex0, InIndex1, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex2, 1, 1);
   uos_InputAddDSPVolume(PlayerIndex0, InIndex3, 1, 1);
@@ -459,7 +479,7 @@ begin
  {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
    uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, -1, -1, 0, 1024, -1);
      {$else}
-  uos_AddIntoDevOut(PlayerIndex0, -1, -1, -1, -1, 0, 1024, -1);
+  uos_AddIntoDevOut(PlayerIndex0, -1, 0.3, -1, -1, 0, 1024, -1);
   {$endif}
 
   CheckBox1Change(Sender);
