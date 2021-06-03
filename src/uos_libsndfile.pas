@@ -258,7 +258,7 @@ type
   Tuos_count_t = off_t;
 
 const
-  SF_COUNT_MAX = ctypes.clong($7FFFFFFFFFFFFFFF);
+  SF_COUNT_MAX = ctypes.clonglong($7FFFFFFFFFFFFFFF);
 
 {
 ** A pointer to a SF_INFO structure is passed to sf_open_read () and filled in.
