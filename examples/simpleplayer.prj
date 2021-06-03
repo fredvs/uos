@@ -85,10 +85,10 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=319
- y=205
+ x=864
+ y=220
  cx=312
- cy=114
+ cy=269
 options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -765,8 +765,9 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=uos_Addfrom
-findhistory=9
+finddtext=clong
+findhistory=10
+ clong
  uos_Addfrom
  uos_AddInto
  application_name
@@ -777,52 +778,22 @@ findhistory=9
  PCAUDIOLIB
  my_audio
 findoptions=1
-editpos=9
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,1532
- 0,143
+editpos=3
+ 0,0
+ 0,260
+ 1,262
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-sourcefiles=9
+sourcefiles=3
  ${PROJECTDIR}/simpleplayer.lpr
- ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/simpleplayer.lpr
- /home/fred/msegui/lib/common/kernel/msetypes.pas
- ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/main_sp.pas
- ${PROJECTDIR}/simpleplayer.lpr
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/main_sp.pas
-relpaths=9
+ ${PROJECTDIR}/uos_libsndfile.pas
+ /home/fred/uos/uos_libsndfile.pas
+relpaths=3
  simpleplayer.lpr
- main_sp.pas
- simpleplayer.lpr
- msegui/lib/common/kernel/msetypes.pas
- main_sp.pas
- main_sp.pas
- simpleplayer.lpr
- uos_flat.pas
- main_sp.pas
-ismoduletexts=9
- 0
- 0
- 0
- 0
- 0
- 0
+ uos_libsndfile.pas
+ uos_libsndfile.pas
+ismoduletexts=3
  0
  0
  0
@@ -832,9 +803,9 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=8
+index=2
 [layout]
-windowlayout=544
+windowlayout=602
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -857,6 +828,15 @@ windowlayout=544
  wsize=0
  active=1
  visible=1
+ [findmessagefo.findtext]
+ value=mysqldyn
+ history=2
+  mysqldyn
+  linux
+ [findmessagefo.casesensitive]
+ value=0
+ [findmessagefo.copytoclip]
+ value=0
  [targetconsolefo]
  splitdir=0
  useroptions=268451945
@@ -968,7 +948,7 @@ windowlayout=544
  x=0
  y=0
  cx=205
- cy=424
+ cy=448
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1058,10 +1038,10 @@ windowlayout=544
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=547
- width0=243
+ propcolwidthref=448
+ width0=199
  sortdescend0=0
- width1=298
+ width1=243
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1154,9 +1134,9 @@ windowlayout=544
  ncx=0
  ncy=0
  x=0
- y=509
+ y=504
  cx=1145
- cy=91
+ cy=96
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1287,7 +1267,7 @@ windowlayout=544
  x=0
  y=0
  cx=1145
- cy=79
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1298,12 +1278,12 @@ windowlayout=544
  mdistate=0
  nx=0
  ny=0
- ncx=1111
- ncy=52
- x=0
+ ncx=1145
+ ncy=54
+ x=-75
  y=0
  cx=1207
- cy=68
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1313,9 +1293,58 @@ windowlayout=544
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/main_sp.pas
- history=1
-  /home/fred/uos/examples/uos_flat.pas
+ value=/home/fred/uos/uos_libsndfile.pas
+ history=50
+  /home/fred/uos/src/uos.pas
+  /home/fred/uidesigner_ext/src/fpg_main.pas
+  /home/fred/uidesigner_ext/src/pthread.inc
+  /home/fred/uidesigner_ext/src/pthread_ori.inc
+  /home/fred/cthreads.pas
+  /home/fred/fpGUIlib/src/fpgui.pas
+  /home/fred/fpGUIlib/src/fpglib_class.pas
+  /home/fred/demo_mse/test__med/msebufdataset.pas
+  /home/fred/mseide-msegui/apps/ide/main.pas
+  /home/fred/mseide-msegui/lib/common/db/msedbf.pas
+  /home/fred/mseide-msegui/lib/common/fpccompatibility/mse_dbf_prssupp.pas
+  /home/fred/mseide-msegui/lib/common/fpccompatibility/mse_dbf_common.pas
+  /home/fred/demo_mse/mse_fb3_new/main.pas
+  /home/fred/mseide-msegui/lib/common/db/msefirebird.pas
+  /home/fred/mseide-msegui/lib/common/db/firebird.pas
+  /home/fred/mseide-msegui/lib/common/db/msedb.pas
+  /home/fred/mseide-msegui/lib/common/fpccompatibility/mdbf.pas
+  /home/fred/mseide-msegui/lib/common/fpccompatibility/mdb.pas
+  /home/fred/demo_mse/problast52/main.pas
+  /home/fred/mseuniverse/samples/db/simplemysql/main.pas
+  /home/fred/ideu/src/messageform.pas
+  /home/fred/ideu/src/finddialogform.pas
+  /home/fred/ideu/src/targetconsole.pas
+  /home/fred/Downloads/eschecs-master/source/connect.pas
+  /home/fred/demo_mse/dynx_msegui/mseguiintf.pas
+  /home/fred/demo_mse/dynx_msegui/xlib.pp
+  /home/fred/dynx_msegui/msex11gdi.pas
+  /home/fred/dynx_msegui/mseguiintf.pas
+  /home/fred/dynx_msegui/msegui.pas
+  /home/fred/dynx_msegui/xdynload.pas
+  /home/fred/mseguiintf.pas
+  /home/fred/synedit/main.pas
+  /home/fred/ideu/src/dialogfiles.pas
+  /home/fred/mseuniverse/samples/memomse/src/memomse.prj
+  /home/fred/ideu/src/msetabs.pas
+  /home/fred/ideu/src/componentpaletteform.pas
+  /home/fred/ideu/src/confcompiler.pas
+  /home/fred/mseide-msegui/lib/common/dialogx/msefiledialogx.pas
+  /home/fred/ideu/src/msefiledialog.pas
+  /home/fred/ideu/src/confcompiler.mfm
+  /home/fred/ideu/src/ideusettings.pas
+  /home/fred/ideu/src/confideu.mfm
+  /home/fred/mseide-msegui/apps/ide/componentpaletteform.pas
+  /home/fred/mseide-msegui/apps/ide/actionsmodule.pas
+  /home/fred/componentpaletteform.pas
+  /home/fred/ideu/src/actionsmodule.pas
+  /home/fred/mseide-msegui/apps/ide/debuggerform.pas
+  /home/fred/ideu/src/projecttreeform.pas
+  /home/fred/getgraphicdriver/ggd.pas
+  /home/fred/ideu/src/sak_mse.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1333,12 +1362,12 @@ windowlayout=544
  x=208
  y=0
  cx=937
- cy=424
+ cy=448
  rcx=0
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=8
+ index=2
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
@@ -1374,9 +1403,9 @@ windowlayout=544
  ncx=0
  ncy=0
  x=0
- y=82
+ y=53
  cx=1145
- cy=424
+ cy=448
  rcx=0
  rcy=0
 [targetconsole]
