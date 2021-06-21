@@ -777,14 +777,16 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=AddIntoFile(
+finddtext=sf_write
 findhistory=20
+ sf_write
+ StreamOut[x].Data.Filename
+ AddIntoFileFromMem
  AddIntoFile(
  filename,fmCreate
  AddIntoFile
  filename
  rec_
- sf_write
  sf_close
  sf_strerr
  sf_err
@@ -797,33 +799,36 @@ findhistory=20
  windows
  SFM_write
  HandleSt
- TSNDFILE_HANDLE
- SFM_RDWR
 findoptions=1
-editpos=5
- 0,11
- 0,0
- 0,275
- 0,0
- 0,19
+editpos=6
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,13
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+sourcefiles=6
  ${PROJECTDIR}/simplerecorder.lpr
  ${PROJECTDIR}/uos_libsndfile.pas
  ${PROJECTDIR}/main_sr.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/simplerecorder.lpr
-relpaths=5
+ ${PROJECTDIR}/uos.pas
+relpaths=6
  simplerecorder.lpr
  uos_libsndfile.pas
  main_sr.pas
  uos_flat.pas
  simplerecorder.lpr
-ismoduletexts=5
+ uos.pas
+ismoduletexts=6
+ 0
  0
  0
  0
@@ -834,16 +839,17 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=5
+order=6
  0
  1
  2
- 5
  4
+ 5
+ 3
 firsttab=0
-index=0
+index=3
 [layout]
-windowlayout=545
+windowlayout=546
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -863,7 +869,7 @@ windowlayout=545
  cy=710
  rcx=0
  rcy=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [findmessagefo.findtext]
@@ -1173,7 +1179,7 @@ windowlayout=545
  ncy=0
  x=0
  y=582
- cx=1356
+ cx=1350
  cy=107
  rcx=0
  rcy=0
@@ -1271,7 +1277,7 @@ windowlayout=545
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=59
  rcx=0
  rcy=0
@@ -1283,11 +1289,11 @@ windowlayout=545
  mdistate=0
  nx=0
  ny=0
- ncx=1350
+ ncx=1356
  ncy=63
  x=0
  y=0
- cx=1356
+ cx=1350
  cy=63
  rcx=0
  rcy=0
@@ -1300,7 +1306,6 @@ windowlayout=545
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/simplerecorder.lpr
  history=20
-  /home/fred/uos/examples/main_sr.pas
   /home/fred/uos/examples/simplerecorder.lpr
   /home/fred/uos/examples/uos.pas
   /home/fred/strumpract/src/uos.pas
@@ -1320,8 +1325,9 @@ windowlayout=545
   /home/fred/ideu/src/confmsegui.pas
   /home/fred/ideu/src/confideu.pas
   /home/fred/ideu/src/conffpgui.pas
+  /home/fred/ideu/src/confdebugger.pas
  [debuggerfo.project_options]
- value=1
+ value=5
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1336,19 +1342,20 @@ windowlayout=545
  ncy=0
  x=208
  y=0
- cx=1148
+ cx=1142
  cy=517
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=5
+ order=6
   0
   1
   2
-  5
   4
+  5
+  3
  firsttab=0
- index=0
+ index=3
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
@@ -1385,7 +1392,7 @@ windowlayout=545
  ncy=0
  x=0
  y=62
- cx=1356
+ cx=1350
  cy=517
  rcx=0
  rcy=0

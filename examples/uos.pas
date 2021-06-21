@@ -807,7 +807,7 @@ type
 //  result : Output Index in array  -1 = error
 // example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1, -1);
 
-  function AddIntoFileFromMem(Filename: PChar; SampleRate: LongInt;  
+  function AddIntoFileFromMem(Filenamepath: PChar; SampleRate: LongInt;  
       Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt;  
 // Add a Output into audio wav file with custom parameters from TMemoryStream
 /// FileName : filename of saved audio wav file
@@ -5237,7 +5237,7 @@ begin
 end; 
 
 
-function Tuos_Player.AddIntoFileFromMem(Filename: PChar; SampleRate: LongInt;
+function Tuos_Player.AddIntoFileFromMem(Filenamepath: PChar; SampleRate: LongInt;
   Channels: LongInt; SampleFormat: LongInt; FramesCount: LongInt; FileFormat: cint32): LongInt;
 // Add a Output into audio wav file with Custom parameters
 // FileName : filename of saved audio wav file
@@ -5258,7 +5258,7 @@ begin
   x := Length(StreamOut) - 1;
    StreamOut[x].Data.Enabled := false;
   StreamOut[x].FileBuffer.ERROR := 0;
-  StreamOut[x].Data.Filename := filename;
+  StreamOut[x].Data.Filename := Filenamepath;
   if (FileFormat = -1) or (FileFormat = 0) then 
   StreamOut[x].FileBuffer.FileFormat := 0 else StreamOut[x].FileBuffer.FileFormat := FileFormat;
   StreamOut[x].Data.TypePut := 4;
@@ -5330,7 +5330,7 @@ begin
   x := Length(StreamOut) - 1;
    StreamOut[x].Data.Enabled := false;
   StreamOut[x].FileBuffer.ERROR := 0;
-  //StreamOut[x].Data.Filename := filename;
+  StreamOut[x].Data.Filename := filenamepath;
   if (FileFormat = -1) or (FileFormat = 0) then 
   StreamOut[x].FileBuffer.FileFormat := 0 else StreamOut[x].FileBuffer.FileFormat := FileFormat;
   
@@ -8187,11 +8187,13 @@ begin
     {$IF DEFINED(sndfile)}
   if (StreamOut[x].Data.TypePut = 6) then
   begin
+   sf_write_sync(StreamOut[x].Data.HandleSt); 
    sf_close(StreamOut[x].Data.HandleSt); 
   end;
 
  if (StreamOut[x].Data.TypePut = 5) then
   begin
+   sf_write_sync(StreamOut[x].Data.HandleSt); 
    sf_close(StreamOut[x].Data.HandleSt); 
   end;
   {$endif}
@@ -8788,7 +8790,7 @@ if err > 0 then
  sf_write_short(StreamOut[x].Data.HandleSt,
  @StreamOut[x].Data.Buffer[0], StreamOut[x].Data.Wantframes * StreamOut[x].Data.channels);
  end;
-
+ sf_write_sync(StreamOut[x].Data.HandleSt); 
  // writeln(inttostr(StreamOut[x].Data.OutFrames));
  end;
 
