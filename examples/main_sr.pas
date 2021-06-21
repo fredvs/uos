@@ -48,6 +48,7 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
+    procedure CheckBox2Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -244,7 +245,7 @@ begin
 
     // saving in a file using a File-Stream:
 
-   uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text), -1, -1, -1, 4096, outformat);
+     uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text), -1, -1, -1, 4096, outformat);
 
  //   function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
  // Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
@@ -272,7 +273,7 @@ begin
     //// add Output into wav file (save record)  with default parameters
 
       {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
-    out1index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.08, -1, -1, -1, -1) ;
+    out1index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.8, -1, -1, -1, -1) ;
        {$else}
     out1index := uos_AddIntoDevOut(PlayerIndex1);
        {$endif}
@@ -407,6 +408,11 @@ end;
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
   uos_outputsetenable(0, out1index, checkbox1.Checked);
+end;
+
+procedure TForm1.CheckBox2Change(Sender: TObject);
+begin
+
 end;
 
 procedure uos_logo();

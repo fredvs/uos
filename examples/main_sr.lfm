@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '2.0.10.0'
+  LCLVersion = '2.0.12.0'
   object Shape1: TShape
     Left = 11
     Height = 158
@@ -239,7 +239,7 @@ object Form1: TForm1
     Left = 112
     Height = 21
     Top = 224
-    Width = 102
+    Width = 105
     Caption = 'Listen MIC'
     Checked = True
     OnChange = CheckBox1Change
@@ -274,9 +274,10 @@ object Form1: TForm1
     Left = 112
     Height = 21
     Top = 248
-    Width = 109
+    Width = 112
     Caption = 'Save to file'
     Checked = True
+    OnChange = CheckBox2Change
     State = cbChecked
     TabOrder = 9
   end
@@ -304,7 +305,7 @@ object Form1: TForm1
     Left = 240
     Height = 21
     Top = 224
-    Width = 57
+    Width = 60
     Caption = '.wav'
     Checked = True
     OnChange = bwavChange
@@ -315,7 +316,7 @@ object Form1: TForm1
     Left = 240
     Height = 21
     Top = 248
-    Width = 55
+    Width = 58
     Caption = '.ogg'
     OnChange = bwavChange
     TabOrder = 12

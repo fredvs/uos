@@ -11,7 +11,7 @@ uses
   Forms,
   main_sr { you can add units after this };
 
-{$R *.res}
+//{$R *.res}
 
 begin
   Application.Initialize;
