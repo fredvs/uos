@@ -35,5 +35,10 @@ FreeBSD.
 
 See you at uos forum: http://uos.2369694.n4.nabble.com
 
+WARNING: Nabble will move his server soon.
+The new address of uos forum is:
+http://uos-forum.108.s1.nabble.com
+
+
 Fred van Stappen fiens@hotmail.com
 
