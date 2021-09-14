@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="laz_uos"/>
+    <Author Value="Fred van Stappen"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="uos : United OpenLib of Sound.
+uos unifies the best open-source audio libraries.
+For fpc, fpGUI, MSEgui and LCL.
+With uos you can:
+  Listen to mp3, ogg, wav, flac, m4a, opus, cda ... audio files.
+  Deal with 16, 32 integer or float 32 bit resolution.
+  Do internet audio streaming.
+  Record all types of input into wav file with 16 or 32 bit resolution.
+  Add DSP effects and filters, however many you want and record it.
+  Listen to multiple input and output.
+  Produce sound from built-in synthesizer.
+uos can use:
+PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile audio libraries and
+SoundTouch, Bs2b audio-effect libraries.
+
+Included in the package:
+  Examples fpGUI, MSEgui, LCL and console.
+  Binaries of libraries for Linux, arm-Rapsberry Pi, Windows, Mac osX, FreeBSD."/>
+    <License Value="GNU Library or &quot;Lesser&quot; General Public License (LGPL)"/>
+    <Version Major="1"/>
+    <CompatibilityMode Value="True"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="FCL"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
