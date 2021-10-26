@@ -33,11 +33,7 @@ Included in the package:
 . Binaries of libraries included for Linux, arm-aarch64 Rapsberry Pi, Windows, Mac OSX,
 FreeBSD.
 
-See you at uos forum: http://uos.2369694.n4.nabble.com
-
-WARNING: Nabble will move his server soon.
-The new address of uos forum is:
-http://uos-forum.108.s1.nabble.com
+See you at uos forum: http://uos-forum.108.s1.nabble.com
 
 
 Fred van Stappen fiens@hotmail.com
