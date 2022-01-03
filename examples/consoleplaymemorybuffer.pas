@@ -1,6 +1,6 @@
 program consoleplaymemorybuffer;
 
-///WARNING : if FPC version < 2.7.1 => Do not forget to uncoment {$DEFINE consoleapp} in define.inc !
+///WARNING : if FPC version < 2.7.1 => Do not forget to uncoment {$DEFINE consoleapp} in uos_define.inc !
 
 {$mode objfpc}{$H+}
    {$DEFINE UseCThreads}

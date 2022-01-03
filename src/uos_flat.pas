@@ -10,8 +10,8 @@ unit uos_flat;
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}
 
-// For custom configuration of directive to compiler --->  define.inc
-{$I define.inc}
+// For custom configuration of directive to compiler --->  uos_define.inc
+{$I uos_define.inc}
 
 interface
 

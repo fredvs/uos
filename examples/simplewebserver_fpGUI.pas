@@ -1,5 +1,5 @@
  // WARNING: in development. For Unix only (Not yet for Windows)
- // Please uncomment {$DEFINE shout} in define.inc
+ // Please uncomment {$DEFINE shout} in uos_define.inc
 
 program simplewebserver_fpGUI;
 
