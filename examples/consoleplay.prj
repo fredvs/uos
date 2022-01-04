@@ -834,9 +834,9 @@ path=4
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
 line=4
- 5976
- 5273
- 1548
+ 5932
+ 5237
+ 1528
  147
 address=4
  4839991
@@ -933,47 +933,22 @@ findhistory=20
  TypePut
  SFM_WRITE
 findoptions=1
-editpos=8
- 0,-1073741823
+editpos=3
+ 0,11922
+ 0,13
  0,0
- 0,-1073741823
- 0,0
- 0,-1073741823
- 0,1524
- 0,244
- 0,316
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-sourcefiles=8
+sourcefiles=3
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
- ${PROJECTDIR}/uos_define.inc
- ${PROJECTDIR}/consoleplay.pas
- ${PROJECTDIR}/consoleplay.pas
- /home/fred/uos/src/uos.pas
- /home/fred/uos/src/uos_flat.pas
  ${PROJECTDIR}/uos_flat.pas
-relpaths=8
+relpaths=3
  uos.pas
  consoleplay.pas
- uos_define.inc
- consoleplay.pas
- consoleplay.pas
- src/uos.pas
- src/uos_flat.pas
  uos_flat.pas
-ismoduletexts=8
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=3
  0
  0
  0
@@ -986,19 +961,10 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=8
- 6
- 7
- 2
- 3
- 1
- 4
- 0
- 5
 firsttab=0
-index=1
+index=2
 [layout]
-windowlayout=608
+windowlayout=599
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1048,7 +1014,7 @@ windowlayout=608
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1450,11 +1416,11 @@ windowlayout=608
  nx=0
  ny=0
  ncx=1341
- ncy=37
+ ncy=33
  x=0
  y=0
  cx=1356
- cy=35
+ cy=31
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1466,6 +1432,7 @@ windowlayout=608
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos_flat.pas
  history=50
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/src/uos_flat.pas
   /home/fred/uos/src/uos.pas
   /home/fred/uos/examples/consoleplay.pas
@@ -1515,7 +1482,6 @@ windowlayout=608
   /home/fred/fpd/src/fpdcommand.pas
   /home/fred/Azote/tests/Test.pas
   /home/fred/Azote/source/disasm/arch/AArch64/aarch64-adt-asm.inc
-  /home/fred/Azote/clt/Azote.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1537,17 +1503,8 @@ windowlayout=608
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=8
-  6
-  7
-  2
-  3
-  1
-  4
-  0
-  5
  firsttab=0
- index=1
+ index=2
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]

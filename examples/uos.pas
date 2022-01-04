@@ -75,7 +75,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2210621;
+  uos_version : cint32 = 2220104;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -794,8 +794,7 @@ type
       function IsLooped: Boolean;
 
       function SetGlobalEvent(isenabled : boolean) : boolean;
-
-// Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
+      // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
       // result : true if set ok. 
 
       // Audio methods
@@ -860,7 +859,7 @@ type
                                   Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt;
                                   FileFormat: cint32): LongInt;
       // Add a Output into audio wav file with custom parameters from TMemoryStream
-      /// FileName : filename of saved audio wav file
+      // FileName : filename of saved audio wav file
       // SampleRate : delault : -1 (44100)
       // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
       // SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
@@ -955,8 +954,8 @@ type
       // NbHarmonics: default:  -1 (= 0) Number of Harmonics
       // EvenHarmonics: default: -1 (= 0) (0 = all harmonics, 1 = Only even harmonics)
       // OutputIndex: Output index of used output
-      // -1: all output, -2: no output, other cint32 refer to 
-      // a existing OutputIndex 
+        // -1: all output, -2: no output, other cint32 refer to 
+        // a existing OutputIndex 
       // (if multi-output then OutName = name of each output separeted by ';')
       // SampleFormat: default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
       // SampleRate: delault : -1 (44100)
@@ -969,11 +968,9 @@ type
                               NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
       // InputIndex: one existing input index   
       // WaveTypeL: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo) 
-
-// WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for stereo, ignored for mono) 
+      // WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for stereo, ignored for mono) 
       // FrequencyL: do not change: -1 (Left frequency, used for mono)
-
-     // FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
+      // FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
       // VolumeL: do not change: -1 (= 1) (from 0 to 1) => volume left
       // VolumeR: do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
       // Duration: in msec (-1 = do not change)
@@ -986,25 +983,20 @@ type
                            SampleFormat: cint32 ; FramesCount: cint32): cint32;
       // Add a input from audio file with custom parameters
       // FileName : filename of audio file
-
-// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+      // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
       // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default : -1 (4096)
       //  result :  Input Index in array  -1 = error
       // example : InputIndex1 := AddFromFile(edit5.Text,-1,0,-1);
 
       function AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
-                                     SampleFormat: cint32 ; FramesCount: cint32 ; numbuf : cint):
-                                                                                              cint32
-      ;
+                                     SampleFormat: cint32 ; FramesCount: cint32 ; numbuf : cint): cint32;
       // Add a input from audio file and store it into memory with custom parameters
       // FileName : filename of audio file
-
-// OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
+      // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
       // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default : -1 (4096)
-
-// numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers) 
+      // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers) 
       //  result :  Input Index in array  -1 = error
       // example : InputIndex1 := AddFromFileIntoMemory(edit5.Text,-1,0,-1, -1);
 
@@ -1040,23 +1032,15 @@ type
 
 {$IF DEFINED(webstream)}
       function AddFromURL(URL: PChar; OutputIndex: cint32;
-                          SampleFormat: cint32 ; FramesCount: cint32 ; AudioFormat: cint32 ; ICYon :
+                          SampleFormat: cint32 ; FramesCount: cint32 ; AudioFormat: cint32 ; ICYon:
                           boolean): cint32;
       // Add a Input from Audio URL
       // URL : URL of audio file
-
-// OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
+      // OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
       // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default : -1 (4096)
       // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
       // ICYon : ICY data on/off
-      // Add a Input from Audio URL
-      // URL : URL of audio file
-
-// OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
-      // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
-      // FramesCount : default : -1 (4096)
-      // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
       // example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1,false);
 {$ENDIF}
 
@@ -1441,16 +1425,13 @@ function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; Var bufferinfos
 // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos, -1, -1);
 
 function uos_Stream2Buffer(AudioFile: TMemoryStream; SampleFormat: int32 ; Var outmemory: TDArFloat;
-                           Var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint):
-                                                                                           TDArFloat
-;
+                           Var bufferinfos: Tuos_BufferInfos ; frompos : cint; numbuf : cint): TDArFloat;
 // Create a memory buffer of a audio file.
 // FileName : filename of audio file
 // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // Outmemory : the buffer to store data.
 // bufferinfos : the infos of the buffer.
 // frompos : from position (default : -1 = from begining, otherwise position in song) 
-
 // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers)
 //  result :  The memory buffer
 // example : buffmem := uos__Stream2Buffer(edit5.Text,0,buffmem, buffinfos, -1, -1);
@@ -1475,7 +1456,6 @@ procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsP
 
 procedure uos_CustBufferInfos(Var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat
                               : cint32; Channels: cint32 ; Length: cint32);
-
 // to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
 // all infos refer to the buffer used ---> length = length of the buffer div channels.
 
@@ -1897,14 +1877,12 @@ function Filetobuffer(Filename: Pchar; OutputIndex: cint32;
                       Var bufferinfos: Tuos_BufferInfos; frompos: cint; numbuf : cint ): TDArFloat;
 // Add a input from audio file with custom parameters
 // FileName : filename of audio file
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (4096)
 // Outmemory : the buffer to store data.
 // bufferinfos : the infos of the buffer
 // frompos : from position (default : -1 = from begining, otherwise position in song) 
-
 // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers) 
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := Filetobuffer(edit5.Text,-1,0,-1, buffmem, buffinfos, -1);
@@ -1989,14 +1967,9 @@ begin
   else ch := Channels;
 
   BPMhandle := bpm_createInstance(ch,sr);
-
-  // writeln('BPMhandle = ok'); 
-
   bpm_putSamples(BPMhandle,  pcfloat(thebuffer),  length(thebuffer) div Channels);
 
   result := bpm_getBpm(BPMhandle);
-
-  // writeln('Detected BPM = ' + inttostr(round(result)));  
 
   bpm_destroyInstance(BPMhandle);
 
@@ -2010,7 +1983,6 @@ function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; Var bufferinfos
 // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // bufferinfos : the infos of the buffer.
 // frompos : from position (default : -1 = from begining, otherwise position in song) 
-
 // numbuf : number of frames to add to outmemory (default : -1 = all, otherwise number max of frames) 
 //  result :  The memory buffer
 // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos, -1, -1);
@@ -2023,8 +1995,6 @@ begin
 
   result :=  Filetobuffer(Filename,-1, SampleFormat, 1024, result, bufferinfos, frompos, numbuf);
 
-  // writeln('tempoutmemory = '+ inttostr(length(tempoutmemory)));
-
   {$IF DEFINED(uos_debug) and DEFINED(unix)}
   writeln('After Filetobuffer');
   writeln('length(result) =' +inttostr(length(result)));
@@ -2035,8 +2005,7 @@ begin
   WriteLn(st);
   {$endif}
 
-  // result := tempoutmemory;
-end;
+ end;
 
 function Streamtobuffer(AudioFile:TMemoryStream; OutputIndex: cint32;SampleFormat: cint32 ;
                         FramesCount: cint32;
@@ -2044,14 +2013,12 @@ function Streamtobuffer(AudioFile:TMemoryStream; OutputIndex: cint32;SampleForma
                         numbuf : cint): TDArFloat;
 // Add a input from audio file with custom parameters
 // FileName : filename of audio file
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (4096)
 // Outmemory : the buffer to store data.
 // bufferinfos : the infos of the buffer
 // frompos : from position (default : -1 = from begining, otherwise position in song) 
-
 // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers)
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := streamtobuffer(edit5.Text,-1,0,-1, buffmem, buffinfos, -1);
@@ -2131,7 +2098,6 @@ function uos_Stream2Buffer(AudioFile: TMemoryStream; SampleFormat: int32 ;
 // Outmemory : the buffer to store data.
 // bufferinfos : the infos of the buffer.
 // frompos : from position (default : -1 = from begining, otherwise position in song) 
-
 // numbuf : number of buffer to add to outmemory (default : -1 = all, otherwise number max of buffers)
 //  result :  The memory buffer
 // example : buffmem := uos_File2buffer(edit5.Text,0,buffmem, buffinfos, -1);
@@ -2145,7 +2111,6 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
 // FileNameIN : filename of audio file IN (ogg, flac, wav, mp3, opus, aac,...)
 // FileNameOUT : filename of audio file OUT (wav, pcm, custom)
 // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
-
 // typeout : Type of out file (-1:default=wav, 0:wav, 1:pcm, 2:custom)// example : InputIndex1 := uos_File2File(edit5.Text,0,buffmem); 
 var 
   theplayer : Tuos_Player;
@@ -3052,7 +3017,6 @@ begin
                                                                         StreamIn[InputIndex].DSP[
                                                                         FilterIndex].fftdata.a3[0];
                end;
-
           end;
         end;
 
@@ -3325,7 +3289,7 @@ begin
                                                                          FilterIndex].fftdata.a3r[0]
                  ;
                end;
-          end;
+           end;
         end;
     end;
 end;
@@ -3941,7 +3905,7 @@ begin
                                                                            DSP[FilterIndex].fftdata.
                                                                            a3r[0];
                end;
-          end;
+           end;
         end;
     end;
 end;
@@ -5440,14 +5404,11 @@ end;
 {$IF DEFINED(portaudio)}
 function Tuos_Player.AddFromDevIn(Device: cint32; Latency: CDouble;
                                   SampleRate: cint32; OutputIndex: cint32;
-                                  SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32):
-                                                                                              cint32
-;
+                                  SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
 // Add Input from IN device with custom parameters
 // Device ( -1 is default Input device )
 // Latency  ( -1 is latency suggested ) )
 // SampleRate : delault : -1 (44100)
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex
 // (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
@@ -5603,9 +5564,7 @@ function Tuos_Player.AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: short
                                   FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
-
 // WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, 2 = triangle, 2= triangle, 3=sawtooth used for mono and stereo) 
-
 // WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave,2 = triangle, 2= triangle, 3=sawtooth used, used for stereo, ignored for mono) 
 // FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
 // FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
@@ -5614,7 +5573,6 @@ function Tuos_Player.AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: short
 // Duration: default:  -1 (= 1000)  => duration in msec (0 = endless)
 // NbHarmonics: default:  -1 (= 0) Number of Harmonies
 // EvenHarmonics: default: -1 (= 0) (0 = all harmonics, 1 = Only even harmonics)
-
 // OutputIndex: Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat: default : -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
 // SampleRate: delault : -1 (44100)
@@ -5729,9 +5687,7 @@ procedure Tuos_Player.InputSetSynth(InputIndex: cint32; WaveTypeL, WaveTypeR: sh
                                     : cint32;
                                     NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
 // InputIndex: one existing input index   
-
 // WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, 2 = triangle, 2= triangle, 3=sawtooth used for mono and stereo) 
-
 // WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, 2 = triangle, 2= triangle, 3=sawtooth used for stereo, ignored for mono) 
 // FrequencyL : do not change: -1 (Left frequency, used for mono)
 // FrequencyR : do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
@@ -6393,7 +6349,6 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
                                 ICYon : boolean): cint32;
 // Add a Input from Audio URL
 // URL : URL of audio file
-
 // OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
 // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (4096)
@@ -6821,7 +6776,6 @@ function Tuos_Player.AddFromMemoryBuffer(Var MemoryBuffer: TDArFloat; Var Buffer
 // Add a input from memory buffer with custom parameters
 // MemoryBuffer : the buffer
 // Bufferinfos : infos of the buffer
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)// SampleRate : delault : -1 (44100)
 // FramesCount : default : -1 (65536 div Channels)
 //  result :  Input Index in array  -1 = error
@@ -6857,7 +6811,6 @@ begin
   StreamIn[x].Data.typeput := 4;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
-
 
 {  
   setlength(StreamIn[x].Data.memorybuffer, length(MemoryBuffer));
@@ -6927,11 +6880,9 @@ begin
 end;
 
 function Tuos_Player.AddFromFileIntoMemory(Filename: Pchar; OutputIndex: cint32;
-                                           SampleFormat: cint32 ; FramesCount: cint32; numbuf : cint
-): cint32;
+                                           SampleFormat: cint32 ; FramesCount: cint32; numbuf : cint): cint32;
 // Add a input from audio file and store it into memory with custom parameters
 // FileName : filename of audio file
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (4096)
@@ -7168,7 +7119,6 @@ function Tuos_Player.AddFromMemoryStreamDec(Var MemoryStream: TMemoryStream; Var
                                             OutputIndex: cint32; FramesCount: cint32): cint32;
 // MemoryStream : Memory-stream of decoded audio (like created by AddIntoMemoryStream)
 // Bufferinfos : infos of the Memory-stream
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // FramesCount : default : -1 (4096)
 //  result :  Input Index in array  -1 = error
@@ -7268,7 +7218,6 @@ function Tuos_Player.AddFromMemoryStream(Var MemoryStream: TMemoryStream;
                                          cint32 ; FramesCount: cint32): cint32;
 // MemoryStream : Memory stream of encoded audio file.
 // TypeAudio : default : -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus ; 3:decoded Tmemory-stream)
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex  (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : default : -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (4096)
@@ -7614,7 +7563,6 @@ begin
         totsamples := 4096
       else totsamples := FramesCount;
 
-      // PipeBufferSize := totsamples * sizeOf(Single);// * 2
       PipeBufferSize := StreamIn[x].Data.MemoryStream.size;
 
          {$IF DEFINED(uos_debug) and DEFINED(unix)}
@@ -7748,7 +7696,6 @@ begin
          {$IF DEFINED(uos_debug) and DEFINED(unix)}
       WriteLn('TAACInfo.Create() = ok');
          {$endif}
-
 
 {
          Case SampleFormat of
@@ -7937,7 +7884,6 @@ function Tuos_Player.AddFromFile(Filename: PChar; OutputIndex: cint32;
                                  SampleFormat: cint32 ; FramesCount: cint32 ): cint32;
 // Add a Input from Audio file with Custom parameters
 // FileName : filename of audio file
-
 // OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
 // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (65536 div channels)
@@ -8245,7 +8191,6 @@ begin
                             end;
                         end;
                     end;
-
 
            //  WriteLn((Format('op_bitrate = %d', [op_bitrate(StreamIn[x].Data.HandleOP, nil)])));  
 
@@ -8808,7 +8753,6 @@ begin
 * StreamIn[x].Data.Channels) else
  wantframestemp := length(StreamIn[x].Data.MemoryStream) - StreamIn[x].Data.posmem;
 }
-
 
   wantframestemp := (StreamIn[x].Data.WantFrames * StreamIn[x].Data.channels);
 
