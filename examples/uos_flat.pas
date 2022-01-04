@@ -2407,7 +2407,7 @@ begin
  setlength(uosLevelArray,PlayerIndex + 1) ;
 end;
 
- {$IF DEFINED(debug) and DEFINED(unix)}
+ {$IF DEFINED(uos_debug) and DEFINED(unix)}
  writeln('before uosPlayers[PlayerIndex] <> nil ');
  {$endif}  
   
@@ -2423,7 +2423,7 @@ end;
   
   end;
 
-{$IF DEFINED(debug) and DEFINED(unix)}
+{$IF DEFINED(uos_debug) and DEFINED(unix)}
  writeln('after uosPlayers[PlayerIndex] <> nil ');
 {$endif}  
 

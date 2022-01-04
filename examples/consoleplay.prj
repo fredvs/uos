@@ -21,7 +21,7 @@ order18=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/consoleplay.prj
-findinfiledialog=59
+findinfiledialog=62
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -56,8 +56,12 @@ findinfiledialog=59
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc" "*.h" "*.c"
  [findinfileadialogfo.findtext]
- value=define.inc
- history=17
+ value=debug}
+ history=20
+  debug}
+  (debug)
+  $IF DEFINED(debug)
+  debug
   define.inc
   sf_count_t
   SEEK_SET
@@ -74,7 +78,6 @@ findinfiledialog=59
   {$if defined(cpu64)}
   addfromf
   endproconly
-  
  [findinfileadialogfo]
  stackedunder=
  x=386
@@ -96,8 +99,9 @@ replacedialog=33
  [replacedialogfo.selectedonly]
  value=0
  [replacedialogfo.replacetext]
- value=uos_count_t
+ value=$IF DEFINED(uos_debug)
  history=20
+  $IF DEFINED(uos_debug)
   uos_count_t
   :Pcst_item
   :Pcst_val
@@ -117,13 +121,12 @@ replacedialog=33
   uosInit.uosDefaultDevice
   uosInit.uosDeviceInfos
   uosInit.uosLoadResult
-  uosInit.uosLevelArray
  [replacedialogfo]
  stackedunder=
  x=377
  y=315
  cx=437
- cy=171
+ cy=200
 options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -860,16 +863,11 @@ panels=1
 units=
  (
  a=0,8245,6,Pascal Units
- c=5
+ c=4
   (
   file=define.inc
   kind=1
   a=0,8196,0,define.inc
-  )
-  (
-  file=sak_fpGUI_test.lpr
-  kind=1
-  a=0,8196,0,simpleplayer_fpGUI.pas
   )
   (
   file=uos.pas
@@ -912,8 +910,9 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=buffer
+finddtext=$IF DEFINED(debug)
 findhistory=20
+ $IF DEFINED(debug)
  buffer
  SF_FORMAT_OGG
  WriteOut
@@ -933,88 +932,27 @@ findhistory=20
  sf_read
  TypePut
  SFM_WRITE
- write(
 findoptions=1
-editpos=16
- 0,-1073741823
- 0,13
- 0,6
+editpos=4
  0,-1073741823
  0,-1073741823
- 0,2
- 0,2
- 0,2
- 0,2
- 0,2
- 0,2
- 0,10
- 0,1
- 0,11
- 0,11
- 18,13
+ 0,0
+ 0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-bookmarks10=0
-bookmarks11=0
-bookmarks12=0
-bookmarks13=0
-bookmarks14=0
-bookmarks15=0
-sourcefiles=16
+sourcefiles=4
  ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/consoleplay.pas
- ${PROJECTDIR}/define.inc
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/consolebpmdetect.pas
- ${PROJECTDIR}/consoleplayloop.pas
- ${PROJECTDIR}/consoleplaymemorybuffer.pas
- ${PROJECTDIR}/consoleplaymemorystream.pas
- ${PROJECTDIR}/consolespectrum.pas
- ${PROJECTDIR}/consolesynth.pas
- ${PROJECTDIR}/fpg_style_chrome_silver_flatmenu.pas
- ${PROJECTDIR}/simplewebserver_fpGUI.pas
- ${PROJECTDIR}/uos.pas
- /home/fred/uos/src/uos.pas
- /home/fred/uos/src/uos_flat.pas
-relpaths=16
+ ${PROJECTDIR}/uos_define.inc
+ ${PROJECTDIR}/consoleplay.pas
+relpaths=4
  uos.pas
- uos_flat.pas
  consoleplay.pas
- define.inc
- uos_libsndfile.pas
- consolebpmdetect.pas
- consoleplayloop.pas
- consoleplaymemorybuffer.pas
- consoleplaymemorystream.pas
- consolespectrum.pas
- consolesynth.pas
- fpg_style_chrome_silver_flatmenu.pas
- simplewebserver_fpGUI.pas
- uos.pas
- src/uos.pas
- src/uos_flat.pas
-ismoduletexts=16
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ uos_define.inc
+ consoleplay.pas
+ismoduletexts=4
  0
  0
  0
@@ -1028,27 +966,10 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
-order=16
- 0
- 1
- 14
- 15
- 2
- 6
- 7
- 8
- 9
- 10
- 11
- 12
- 13
- 5
- 3
- 4
-firsttab=1
+firsttab=0
 index=3
 [layout]
-windowlayout=611
+windowlayout=569
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1098,7 +1019,7 @@ windowlayout=611
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1173,8 +1094,8 @@ windowlayout=611
  ny=0
  ncx=0
  ncy=0
- x=239
- y=115
+ x=231
+ y=119
  cx=1018
  cy=414
  rcx=0
@@ -1203,7 +1124,7 @@ windowlayout=611
  sortdescend1=0
  sorted=0
  col=0
- row=1
+ row=2
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1500,11 +1421,11 @@ windowlayout=611
  nx=0
  ny=0
  ncx=1341
- ncy=49
+ ncy=45
  x=0
  y=0
  cx=1356
- cy=49
+ cy=43
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1514,8 +1435,12 @@ windowlayout=611
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/src/uos_flat.pas
- history=45
+ value=/home/fred/uos/examples/consoleplay.pas
+ history=20
+  /home/fred/uos/examples/uos_define.inc
+  /home/fred/uos/src/uos_define.inc
+  /home/fred/eschecs-master/source/aboutform.pas
+  /home/fred/uos/src/define.inc
   /home/fred/uos/src/uos_portaudio.pas
   /home/fred/roulette/cairo_dyn.pas
   /home/fred/roulette/cairo.pp
@@ -1532,35 +1457,6 @@ windowlayout=611
   /home/fred/fpd/src/fpdebug/fpdbgdisasavr.pp
   /home/fred/fpd/src/fpdbglinuxarmclasses.pas
   /home/fred/fpd/src/fpd.lpr
-  /home/fred/fpd/src/Azote/aarch64-oprnds.inc
-  /home/fred/fpd/src/Azote/aarch64-lookup.inc
-  /home/fred/fpd/src/Azote/aarch64-insns.inc
-  /home/fred/fpd/src/Azote/aarch64-fields.inc
-  /home/fred/fpd/src/Azote/aarch64-aliascond.inc
-  /home/fred/fpd/src/Azote/aarch64-adt-pp.inc
-  /home/fred/fpd/src/Azote/aarch64-adt-asm.inc
-  /home/fred/fpd/src/Azote/aarch64-tbl.inc
-  /home/fred/fpd/src/Azote/Azote.pas
-  /home/fred/Azote/source/Config.inc
-  /home/fred/fpd/src/fpdbgdisasarm.pas
-  /home/fred/Azote_fred/source/disasm/arch/AArch64/Azote.Disassembler.AArch64.pas
-  /home/fred/fpd/src/fpdebug/fpdbgdisasx86.pp
-  /home/fred/fpd/src/fpdebug/fpimgreaderelf.pas
-  /home/fred/fpd/src/fpdebug/fpimgreaderelftypes.pas
-  /home/fred/fpd/src/fpdebug/fpdbglinuxclasses.pas
-  /home/fred/fpd/src/fpdebug/fpdbgavrclasses.pas
-  /home/fred/fpd/src/fpdebug_fred/fpdbgcommon.pas
-  /home/fred/fpd/src/fpdebug_fred/fpdbgcallcontextinfo.pas
-  /home/fred/fpd/src/fpdebug/fpdbgclasses.pp
-  /home/fred/fpd/src/fpdebug/fpdbgcommon.pas
-  /home/fred/fpd/src/fpdebug/fpdbgsymtablecontext.pas
-  /home/fred/Azote/clt/Azote.dpr
-  /home/fred/fpd/src/fpdcommand.pas
-  /home/fred/Azote/tests/Test.pas
-  /home/fred/Azote/source/disasm/arch/AArch64/aarch64-adt-asm.inc
-  /home/fred/Azote/clt/Azote.pas
-  /home/fred/fpd/src/fpdloop.pas
-  /home/fred/fpd/src/fpdglobal.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1582,24 +1478,7 @@ windowlayout=611
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=16
-  0
-  1
-  14
-  15
-  2
-  6
-  7
-  8
-  9
-  10
-  11
-  12
-  13
-  5
-  3
-  4
- firsttab=1
+ firsttab=0
  index=3
  [confideufo.fontname]
  value=stf_default
@@ -1609,7 +1488,7 @@ windowlayout=611
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=confdebuggerfo
+ stackedunder=_mse_guitemplatesmo_mse_
  parent=
  mdistate=0
  nx=0
@@ -1644,7 +1523,7 @@ windowlayout=611
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=componentpalettefo
+ stackedunder=confdebuggerfo
  parent=
  mdistate=0
  nx=0
