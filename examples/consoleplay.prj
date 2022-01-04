@@ -933,22 +933,27 @@ findhistory=20
  TypePut
  SFM_WRITE
 findoptions=1
-editpos=3
- 0,11922
- 0,13
+editpos=4
+ 0,-1073741823
+ 0,-1073741823
+ 0,0
  0,0
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
+bookmarks3=0
+sourcefiles=4
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/consoleplay.pas
- ${PROJECTDIR}/uos_flat.pas
-relpaths=3
+ /home/fred/uos/examples/uos_flat.pas
+ /home/fred/uos/examples/consoleplay.pas
+relpaths=4
  uos.pas
  consoleplay.pas
  uos_flat.pas
-ismoduletexts=3
+ consoleplay.pas
+ismoduletexts=4
+ 0
  0
  0
  0
@@ -962,9 +967,9 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=2
+index=3
 [layout]
-windowlayout=599
+windowlayout=569
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1416,11 +1421,11 @@ windowlayout=599
  nx=0
  ny=0
  ncx=1341
- ncy=33
+ ncy=31
  x=0
  y=0
  cx=1356
- cy=31
+ cy=29
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1430,8 +1435,8 @@ windowlayout=599
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
- history=50
+ value=/home/fred/uos/examples/consoleplay.pas
+ history=20
   /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/src/uos_flat.pas
   /home/fred/uos/src/uos.pas
@@ -1452,36 +1457,6 @@ windowlayout=599
   /home/fred/fpd/src/Azote/aarch64-classes.inc
   /home/fred/fpd/src/Azote/aarch64-regs.inc
   /home/fred/fpd/src/fpdtype.pas
-  /home/fred/fpd/src/fpdebug/fpdbglinux_arm_classes.pas
-  /home/fred/fpd/src/fpdebug/fpdbgdisasavr.pp
-  /home/fred/fpd/src/fpdbglinuxarmclasses.pas
-  /home/fred/fpd/src/fpd.lpr
-  /home/fred/fpd/src/Azote/aarch64-oprnds.inc
-  /home/fred/fpd/src/Azote/aarch64-lookup.inc
-  /home/fred/fpd/src/Azote/aarch64-insns.inc
-  /home/fred/fpd/src/Azote/aarch64-fields.inc
-  /home/fred/fpd/src/Azote/aarch64-aliascond.inc
-  /home/fred/fpd/src/Azote/aarch64-adt-pp.inc
-  /home/fred/fpd/src/Azote/aarch64-adt-asm.inc
-  /home/fred/fpd/src/Azote/aarch64-tbl.inc
-  /home/fred/fpd/src/Azote/Azote.pas
-  /home/fred/Azote/source/Config.inc
-  /home/fred/fpd/src/fpdbgdisasarm.pas
-  /home/fred/Azote_fred/source/disasm/arch/AArch64/Azote.Disassembler.AArch64.pas
-  /home/fred/fpd/src/fpdebug/fpdbgdisasx86.pp
-  /home/fred/fpd/src/fpdebug/fpimgreaderelf.pas
-  /home/fred/fpd/src/fpdebug/fpimgreaderelftypes.pas
-  /home/fred/fpd/src/fpdebug/fpdbglinuxclasses.pas
-  /home/fred/fpd/src/fpdebug/fpdbgavrclasses.pas
-  /home/fred/fpd/src/fpdebug_fred/fpdbgcommon.pas
-  /home/fred/fpd/src/fpdebug_fred/fpdbgcallcontextinfo.pas
-  /home/fred/fpd/src/fpdebug/fpdbgclasses.pp
-  /home/fred/fpd/src/fpdebug/fpdbgcommon.pas
-  /home/fred/fpd/src/fpdebug/fpdbgsymtablecontext.pas
-  /home/fred/Azote/clt/Azote.dpr
-  /home/fred/fpd/src/fpdcommand.pas
-  /home/fred/Azote/tests/Test.pas
-  /home/fred/Azote/source/disasm/arch/AArch64/aarch64-adt-asm.inc
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1504,7 +1479,7 @@ windowlayout=599
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=2
+ index=3
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
