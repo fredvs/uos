@@ -7361,7 +7361,8 @@ begin
           StreamIn[x].Data.date := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_DATE);
           StreamIn[x].Data.track := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_TRACKNUMBER);
           StreamIn[x].Data.genre := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_GENRE);
-         
+          StreamIn[x].Data.album := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_ALBUM);
+          
           StreamIn[x].Data.Length := sfInfo.frames;
           err := 0;
             {$IF DEFINED(uos_debug) and DEFINED(unix)}
@@ -8383,7 +8384,7 @@ begin
               StreamIn[x].Data.tag[0]  := #0;
               StreamIn[x].Data.tag[1]  := #0;
               StreamIn[x].Data.tag[2]  := #0;
-              StreamIn[x].Data.genre  := 0;
+              StreamIn[x].Data.genre  := '0';
               StreamIn[x].Data.samplerateroot := StreamIn[x].pCD^.SampleRate;
               StreamIn[x].Data.hdformat  := 0;
               StreamIn[x].Data.frames  := 0;
