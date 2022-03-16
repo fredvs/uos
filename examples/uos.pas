@@ -7532,7 +7532,7 @@ begin
                StreamIn[x].Data.album := refmpid3v1.album;
                StreamIn[x].Data.date := refmpid3v1.year;
                StreamIn[x].Data.comment := refmpid3v1.comment;
-               StreamIn[x].Data.track := refmpid3v1.comment;
+               //StreamIn[x].Data.track := refmpid3v1.comment;
                StreamIn[x].Data.tag := refmpid3v1.tag;
                StreamIn[x].Data.genre := inttostr(refmpid3v1.genre);
             end;

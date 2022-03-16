@@ -89,8 +89,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=644
- y=254
+ x=449
+ y=388
  cx=331
  cy=269
 replacedialog=33
@@ -907,27 +907,38 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=SF_STR_ALBUM
-findhistory=2
+finddtext=SF_STR_TITLE
+findhistory=3
+ SF_STR_TITLE
  SF_STR_ALBUM
  album
 findoptions=1
-editpos=3
- 0,3
- 89,7363
+editpos=5
+ 0,0
+ 0,7534
  0,208
+ 0,0
+ 0,633
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
+bookmarks3=0
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/consoleplay.pas
  ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/uos_libsndfile.pas
-relpaths=3
+ ${PROJECTDIR}/consoleplay.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+relpaths=5
  consoleplay.pas
  uos.pas
  uos_libsndfile.pas
-ismoduletexts=3
+ consoleplay.pas
+ uos_mpg123.pas
+ismoduletexts=5
+ 0
+ 0
  0
  0
  0
@@ -936,10 +947,16 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=5
+ 0
+ 1
+ 4
+ 3
+ 2
 firsttab=0
 index=1
 [layout]
-windowlayout=519
+windowlayout=525
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -955,7 +972,7 @@ windowlayout=519
  ncy=0
  x=27
  y=52
- cx=1224
+ cx=1333
  cy=621
  rcx=0
  rcy=0
@@ -1008,7 +1025,7 @@ windowlayout=519
  [memoryfo]
  splitdir=0
  useroptions=268451963
- stackedunder=findmessagefo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1080,7 +1097,7 @@ windowlayout=519
  x=0
  y=0
  cx=205
- cy=450
+ cy=451
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1267,7 +1284,7 @@ windowlayout=519
  ncy=0
  x=0
  y=507
- cx=1212
+ cx=1321
  cy=93
  rcx=0
  rcy=0
@@ -1337,7 +1354,7 @@ windowlayout=519
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=objectinspectorfo
+ stackedunder=
  parent=
  mdistate=3
  nx=0
@@ -1367,8 +1384,8 @@ windowlayout=519
  ncy=0
  x=0
  y=0
- cx=1212
- cy=51
+ cx=1321
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1383,8 +1400,8 @@ windowlayout=519
  ncy=64
  x=0
  y=0
- cx=1212
- cy=58
+ cx=1321
+ cy=57
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1414,11 +1431,17 @@ windowlayout=519
  ncy=0
  x=208
  y=0
- cx=1004
- cy=450
+ cx=1113
+ cy=451
  rcx=0
  rcy=0
  [sourcefo.files_tab]
+ order=5
+  0
+  1
+  4
+  3
+  2
  firsttab=0
  index=1
  [confideufo.usedefaulteditoroptions]
@@ -1427,7 +1450,7 @@ windowlayout=519
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=componentpalettefo
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -1454,9 +1477,9 @@ windowlayout=519
  ncx=0
  ncy=0
  x=0
- y=54
- cx=1212
- cy=450
+ y=53
+ cx=1321
+ cy=451
  rcx=0
  rcy=0
 [targetconsole]
