@@ -75,7 +75,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2220104;
+  uos_version : cint32 = 2220316;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -289,13 +289,14 @@ type
     Date: string;
     Tag: array[0..2] of char;
     Album: UTF8String;
-    Genre: byte;
+    Genre: string;
+    Track: string;
     HDFormat: cint32;
     Sections: cint32;
     Encoding: cint32;
     bitrate: cint32;
     Length: cint32;
-    //  length samples total ;
+    //  length samples total
     LibOpen: shortint;
     Ratio: byte;
   end;
@@ -480,7 +481,8 @@ type
     Date: string;
     Tag: array[0..2] of char;
     Album: UTF8String;
-    Genre: byte;
+    Genre: String;
+    Track: string;
     HDFormat: cint32;
   {$IF DEFINED(sndfile)}
     Frames: Tcount_t;
@@ -1165,6 +1167,8 @@ type
       function InputGetTagAlbum(InputIndex: cint32): pchar;
       function InputGetTagDate(InputIndex: cint32): pchar;
       function InputGetTagComment(InputIndex: cint32): pchar;
+      function InputGetTagTrack(InputIndex: cint32): pchar;
+      function InputGetTagGenre(InputIndex: cint32): pchar;
       function InputGetTagTag(InputIndex: cint32): pchar;
       // Tag infos
 
@@ -1926,7 +1930,8 @@ begin
       bufferinfos.Date := theplayer.StreamIn[in1].Data.Date;
       bufferinfos.Tag := theplayer.StreamIn[in1].Data.Tag;
       bufferinfos.Album := theplayer.StreamIn[in1].Data.Album;
-      bufferinfos.Genre := theplayer.StreamIn[in1].Data.Genre;
+      bufferinfos.Genre :=  theplayer.StreamIn[in1].Data.Genre;
+      bufferinfos.Track :=  theplayer.StreamIn[in1].Data.Track;
       bufferinfos.HDFormat := theplayer.StreamIn[in1].Data.HDFormat;
       bufferinfos.Sections := theplayer.StreamIn[in1].Data.Sections;
       bufferinfos.Encoding := theplayer.StreamIn[in1].Data.Encoding;
@@ -2064,6 +2069,7 @@ begin
       bufferinfos.Date := theplayer.StreamIn[in1].Data.Date;
       bufferinfos.Tag := theplayer.StreamIn[in1].Data.Tag;
       bufferinfos.Album := theplayer.StreamIn[in1].Data.Album;
+      bufferinfos.Track := theplayer.StreamIn[in1].Data.Track;
       bufferinfos.Genre := theplayer.StreamIn[in1].Data.Genre;
       bufferinfos.HDFormat := theplayer.StreamIn[in1].Data.HDFormat;
       bufferinfos.Sections := theplayer.StreamIn[in1].Data.Sections;
@@ -2571,7 +2577,7 @@ begin
           StreamIn[InputIndex].Data.date :=  copy(BufferTag, 94, 4);
           StreamIn[InputIndex].Data.comment := copy(BufferTag, 98, 30);
           StreamIn[InputIndex].Data.tag :=  copy(BufferTag, 1, 3);
-          StreamIn[InputIndex].Data.genre := ord(BufferTag[128]);
+          StreamIn[InputIndex].Data.genre := inttostr(ord(BufferTag[128]));
 
           Result := true;
           // ?  freeandnil(MPinfo);
@@ -2658,6 +2664,18 @@ function Tuos_Player.InputGetTagComment(InputIndex: cint32): pchar;
 begin
   Result := Nil;
   if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.comment);
+end;
+
+function Tuos_Player.InputGetTagTrack(InputIndex: cint32): pchar;
+begin
+  Result := Nil;
+  if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.track);
+end;
+
+function Tuos_Player.InputGetTagGenre(InputIndex: cint32): pchar;
+begin
+  Result := Nil;
+  if (isAssigned = True) then Result := pchar(StreamIn[InputIndex].Data.genre);
 end;
 
 function Tuos_Player.InputGetTagTag(InputIndex: cint32): pchar;
@@ -6856,6 +6874,7 @@ begin
   StreamIn[x].Data.Comment := BufferInfos.Comment;
   StreamIn[x].Data.Date := BufferInfos.Date;
   StreamIn[x].Data.Tag := BufferInfos.Tag;
+  StreamIn[x].Data.track := BufferInfos.track;
   StreamIn[x].Data.Album := BufferInfos.Album;
   StreamIn[x].Data.Genre := BufferInfos.Genre;
   StreamIn[x].Data.HDFormat := BufferInfos.HDFormat;
@@ -6979,6 +6998,7 @@ begin
       StreamIn[x].Data.Tag := BufferInfos.Tag;
       StreamIn[x].Data.Album := BufferInfos.Album;
       StreamIn[x].Data.Genre := BufferInfos.Genre;
+      StreamIn[x].Data.track := BufferInfos.track;
       StreamIn[x].Data.HDFormat := BufferInfos.HDFormat;
       StreamIn[x].Data.Sections := BufferInfos.Sections;
       StreamIn[x].Data.Encoding := BufferInfos.Encoding;
@@ -7175,6 +7195,7 @@ begin
       StreamIn[x].Data.Date := BufferInfos.Date;
       StreamIn[x].Data.Tag := BufferInfos.Tag;
       StreamIn[x].Data.Album := BufferInfos.Album;
+      StreamIn[x].Data.Track := BufferInfos.Track;
       StreamIn[x].Data.Genre := BufferInfos.Genre;
       StreamIn[x].Data.HDFormat := BufferInfos.HDFormat;
       StreamIn[x].Data.Sections := BufferInfos.Sections;
@@ -7245,9 +7266,9 @@ var
       {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
   // problems with mpg123
-  // mpid3v1: PPmpg123_id3v1;
-  // refmpid3v1: Tmpg123_id3v1;
-  // mpid3v2: Tmpg123_id3v2;
+   mpid3v1: PPmpg123_id3v1;
+   refmpid3v1: Tmpg123_id3v1;
+   mpid3v2: Tmpg123_id3v2;
       {$endif}
 
 begin
@@ -7338,6 +7359,9 @@ begin
           StreamIn[x].Data.artist := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_ARTIST);
           StreamIn[x].Data.title := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_TITLE);
           StreamIn[x].Data.date := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_DATE);
+          StreamIn[x].Data.track := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_TRACKNUMBER);
+          StreamIn[x].Data.genre := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_GENRE);
+         
           StreamIn[x].Data.Length := sfInfo.frames;
           err := 0;
             {$IF DEFINED(uos_debug) and DEFINED(unix)}
@@ -7497,8 +7521,8 @@ begin
                                                     mpg123_info(StreamIn[x].Data.HandleSt, MPinfo);
 
 
-{// problems with mpg123 library
-            mpg123_id3(StreamIn[x].Data.HandleSt, mpid3v1, @mpid3v2);
+// problems with mpg123 library
+            mpg123_id3(StreamIn[x].Data.HandleSt, @mpid3v1, @mpid3v2);
         // to do : add id2v2
             if (mpid3v1 <> nil) and  (mpid3v1^ <> nil)  then begin
                refmpid3v1 := mpid3v1^^;
@@ -7507,11 +7531,11 @@ begin
                StreamIn[x].Data.album := refmpid3v1.album;
                StreamIn[x].Data.date := refmpid3v1.year;
                StreamIn[x].Data.comment := refmpid3v1.comment;
+               StreamIn[x].Data.track := refmpid3v1.comment;
                StreamIn[x].Data.tag := refmpid3v1.tag;
-               StreamIn[x].Data.genre := refmpid3v1.genre;
+               StreamIn[x].Data.genre := inttostr(refmpid3v1.genre);
             end;
-            }
-
+     
                                                     StreamIn[x].Data.samplerateroot :=  StreamIn[x].
                                                                                        Data.
                                                                                        samplerate ;
@@ -7748,7 +7772,7 @@ begin
           StreamIn[x].Data.tag[0]  := #0;
           StreamIn[x].Data.tag[1]  := #0;
           StreamIn[x].Data.tag[2]  := #0;
-          StreamIn[x].Data.genre  := StrToIntDef(StreamIn[x].AACI.Genre, 0);
+          StreamIn[x].Data.genre  := StreamIn[x].AACI.Genre;
           StreamIn[x].Data.samplerateroot := StreamIn[x].AACI.SampleRate;
           StreamIn[x].Data.hdformat  := 0;
           StreamIn[x].Data.frames  := 0;
@@ -8102,7 +8126,7 @@ begin
               StreamIn[x].Data.date :=  copy(BufferTag, 94, 4);
               StreamIn[x].Data.comment := copy(BufferTag, 98, 30);
               StreamIn[x].Data.tag := copy(BufferTag, 1, 3);
-              StreamIn[x].Data.genre := ord(BufferTag[128]);
+              StreamIn[x].Data.genre := inttostr(ord(BufferTag[128]));
 
               StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;
               StreamIn[x].Data.hdformat := MPinfo.layer;
@@ -8289,7 +8313,7 @@ begin
               StreamIn[x].Data.tag[0]  := #0;
               StreamIn[x].Data.tag[1]  := #0;
               StreamIn[x].Data.tag[2]  := #0;
-              StreamIn[x].Data.genre  := StrToIntDef(StreamIn[x].AACI.Genre, 0);
+              StreamIn[x].Data.genre  := StreamIn[x].AACI.Genre;
               StreamIn[x].Data.samplerateroot := StreamIn[x].AACI.SampleRate;
               StreamIn[x].Data.hdformat  := 0;
               StreamIn[x].Data.frames  := 0;
@@ -11461,7 +11485,7 @@ begin
       for i:= 0 to High(Tag) do
         Tag[i] := #0;
       Album := '';
-      Genre := 0;
+      Genre := '';
       HDFormat := 0;
       Frames := 0;
       Sections := 0;

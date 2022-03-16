@@ -206,13 +206,17 @@ const
   SF_STR_ARTIST = $04;
   SF_STR_COMMENT = $05;
   SF_STR_DATE = $06;
+  SF_STR_ALBUM = $07;
+  SF_STR_LICENSE = $08;
+  SF_STR_TRACKNUMBER = $09;
+  SF_STR_GENRE = $10;
 
 {
 ** Use the following as the start and end index when doing metadata
 ** transcoding.
 }
   SF_STR_FIRST = SF_STR_TITLE;
-  SF_STR_LAST = SF_STR_DATE;
+  SF_STR_LAST = SF_STR_GENRE;
 
 const
   // True and false

@@ -51,7 +51,9 @@ var
      {$if defined(CPUAMD64) and defined(linux) }
   SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
-    SoundFilename := ordir + 'sound/test.ogg';
+  MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+ // SoundFilename :=   '/home/fred/Music/imagetag/14 annie mae.mp3';
+   SoundFilename := ordir + 'sound/test.ogg'; 
    {$ENDIF}
 
    {$if defined(cpu86) and defined(linux)}
@@ -104,7 +106,7 @@ var
     // Load the libraries
     // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
 
-    res := uos_LoadLib(PChar(PA_FileName), PChar(SF_FileName), nil, nil, nil, nil);
+    res := uos_LoadLib(PChar(PA_FileName), PChar(SF_FileName),  nil, nil, nil, nil);
 
     writeln;
     if res = 0 then

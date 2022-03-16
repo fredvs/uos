@@ -19,6 +19,7 @@ object simple_player: tmainfo
   )
   options = [fo_main, fo_terminateonclose, fo_screencentered, fo_autoreadstat, fo_autowritestat, fo_savepos, fo_savezorder, fo_savestate]
   caption = 'Simple Player'
+  windowopacity = -Inf
   onclose = closeit
   moduleclassname = 'tmainform'
   object padir: tfilenameedit
@@ -425,7 +426,6 @@ object simple_player: tmainfo
       bounds_x = 120
       bounds_y = 66
       bounds_cx = 356
-      value = 0
       scrollbar.options = [sbo_moveauto, sbo_showauto, sbo_valuekeys]
       scrollbar.buttonendlength = 11
       scrollbar.face.localprops = []

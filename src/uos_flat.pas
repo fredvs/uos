@@ -842,6 +842,8 @@ function uos_InputGetTagAlbum(PlayerIndex: cint32; InputIndex: cint32): pchar;
 function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32): pchar;
 function uos_InputGetTagComment(PlayerIndex: cint32; InputIndex: cint32): pchar;
 function uos_InputGetTagTag(PlayerIndex: cint32; InputIndex: cint32): pchar;
+function uos_InputGetTagTrack(PlayerIndex: cint32; InputIndex: cint32): pchar;
+function uos_InputGetTagGenre(PlayerIndex: cint32; InputIndex: cint32): pchar;
 // Tag infos
 
 function uos_InputGetSampleRate(PlayerIndex: cint32; InputIndex: cint32): cint32;
@@ -1137,6 +1139,24 @@ function uos_InputGetTagTag(PlayerIndex: cint32; InputIndex: cint32): pchar;
   if assigned(uosPlayers[PlayerIndex]) then
 result := uosPlayers[PlayerIndex].InputGetTagTag(InputIndex) ;
  end;
+ 
+function uos_InputGetTagTrack(PlayerIndex: cint32; InputIndex: cint32): pchar;
+ begin
+ Result := nil;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
+result := uosPlayers[PlayerIndex].InputGetTagTrack(InputIndex) ;
+ end;
+ 
+function uos_InputGetTagGenre(PlayerIndex: cint32; InputIndex: cint32): pchar;
+ begin
+ Result := nil;
+  if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
+  if  uosPlayersStat[PlayerIndex] = 1 then
+  if assigned(uosPlayers[PlayerIndex]) then
+result := uosPlayers[PlayerIndex].InputGetTagGenre(InputIndex) ;
+ end;  
  
 function uos_InputGetTagDate(PlayerIndex: cint32; InputIndex: cint32): pchar;
  begin

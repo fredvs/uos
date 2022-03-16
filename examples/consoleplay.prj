@@ -834,10 +834,10 @@ path=4
  /home/fred/uos/examples/uos.pas
  /home/fred/uos/examples/consoleplay.pas
 line=4
- 5932
- 5237
- 1528
- 147
+ 5950
+ 5255
+ 1532
+ 149
 address=4
  4839991
  4832172
@@ -910,8 +910,15 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=19
-finddtext=$IF DEFINED(debug)
+finddtext=InputGetTagTag
 findhistory=20
+ InputGetTagTag
+ album
+ track
+ algum
+ SF_STR_TITLE
+ StreamIn[x].Data.title
+ problems with mpg123 library
  $IF DEFINED(debug)
  buffer
  SF_FORMAT_OGG
@@ -925,34 +932,32 @@ findhistory=20
  StreamOut[x].Data.TypePut =
  uos_AddIntoFile
  AddIntoFile
- sf_read_
- sf_read_double
- 
- sf_write
- sf_read
- TypePut
- SFM_WRITE
 findoptions=1
-editpos=4
- 0,-1073741823
- 0,-1073741823
- 0,0
- 0,0
+editpos=5
+ 0,102
+ 0,1157
+ 14,102
+ 0,5
+ 0,643
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/consoleplay.pas
- /home/fred/uos/examples/uos_flat.pas
- /home/fred/uos/examples/consoleplay.pas
-relpaths=4
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+relpaths=5
  uos.pas
- consoleplay.pas
  uos_flat.pas
  consoleplay.pas
-ismoduletexts=4
+ uos_libsndfile.pas
+ uos_mpg123.pas
+ismoduletexts=5
+ 0
  0
  0
  0
@@ -966,10 +971,16 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.files_tab]
+order=5
+ 0
+ 4
+ 5
+ 2
+ 3
 firsttab=0
-index=3
+index=4
 [layout]
-windowlayout=569
+windowlayout=560
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -983,13 +994,13 @@ windowlayout=569
  ny=0
  ncx=0
  ncy=0
- x=19
- y=56
- cx=1157
+ x=50
+ y=80
+ cx=1224
  cy=621
  rcx=0
  rcy=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [findmessagefo.findtext]
@@ -1019,7 +1030,7 @@ windowlayout=569
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1037,11 +1048,11 @@ windowlayout=569
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [memoryfo]
  splitdir=0
  useroptions=268451963
- stackedunder=dialogfilesfo
+ stackedunder=findmessagefo
  parent=
  mdistate=0
  nx=0
@@ -1094,9 +1105,9 @@ windowlayout=569
  ny=0
  ncx=0
  ncy=0
- x=231
- y=119
- cx=1018
+ x=239
+ y=115
+ cx=678
  cy=414
  rcx=0
  rcy=0
@@ -1113,7 +1124,7 @@ windowlayout=569
  x=0
  y=0
  cx=205
- cy=528
+ cy=450
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1123,8 +1134,8 @@ windowlayout=569
  width1=86
  sortdescend1=0
  sorted=0
- col=0
- row=2
+ col=1
+ row=-1073741823
  rowheight=16
  [stackfo]
  splitdir=0
@@ -1163,14 +1174,14 @@ windowlayout=569
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1179,7 +1190,7 @@ windowlayout=569
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1203,10 +1214,10 @@ windowlayout=569
  [breakpointsfo.bkptson]
  value=0
  [objectinspectorfo.grid]
- propcolwidthref=469
- width0=209
+ propcolwidthref=242
+ width0=107
  sortdescend0=0
- width1=254
+ width1=129
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1307,9 +1318,9 @@ windowlayout=569
  ncx=0
  ncy=0
  x=0
- y=584
- cx=1356
- cy=106
+ y=507
+ cx=1212
+ cy=93
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1378,7 +1389,7 @@ windowlayout=569
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=
+ stackedunder=threadsfo
  parent=
  mdistate=3
  nx=0
@@ -1408,8 +1419,8 @@ windowlayout=569
  ncy=0
  x=0
  y=0
- cx=1356
- cy=50
+ cx=1212
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1420,12 +1431,12 @@ windowlayout=569
  mdistate=0
  nx=0
  ny=0
- ncx=1341
- ncy=31
+ ncx=1111
+ ncy=52
  x=0
  y=0
- cx=1356
- cy=29
+ cx=1212
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1436,27 +1447,14 @@ windowlayout=569
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consoleplay.pas
- history=20
-  /home/fred/uos/examples/uos_flat.pas
-  /home/fred/uos/src/uos_flat.pas
-  /home/fred/uos/src/uos.pas
-  /home/fred/uos/examples/consoleplay.pas
-  /home/fred/uos/examples/uos_define.inc
-  /home/fred/uos/src/uos_define.inc
-  /home/fred/eschecs-master/source/aboutform.pas
-  /home/fred/uos/src/define.inc
-  /home/fred/uos/src/uos_portaudio.pas
-  /home/fred/roulette/cairo_dyn.pas
-  /home/fred/roulette/cairo.pp
-  /home/fred/roulette/roulette4.pas
-  /home/fred/fpd/src/fpdebug/fpdbglinuxextra.pas
-  /home/fred/fpdlast/src/fpdebug/fpdbglinuxextra.pas
-  /home/fred/fpdlast/src/fpdebug/fpdbglinuxclasses.pas
-  /home/fred/fpdlast/src/fpdebug/fpdbgcallcontextinfo.pas
-  /home/fred/fpd/src/Azote/az_aarch64.pas
-  /home/fred/fpd/src/Azote/aarch64-classes.inc
-  /home/fred/fpd/src/Azote/aarch64-regs.inc
-  /home/fred/fpd/src/fpdtype.pas
+ history=7
+  /home/fred/uos/examples/uos_libsndfile.pas
+  /home/fred/mseide-msegui/tools/POtools/MOdemo/mo2arrays.pas
+  /home/fred/mseide-msegui/tools/POtools/MOdemo/modemo.pas
+  /home/fred/ideu/src/mo4stock.pas
+  /home/fred/mseide-msegui/tools/POtools/POdemo/podemo.pas
+  /home/fred/mseide-msegui/tools/POtools/MOdemo/form_potools.pas
+  /home/fred/strumpract/src/conflang.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1473,22 +1471,26 @@ windowlayout=569
  ncy=0
  x=208
  y=0
- cx=1148
- cy=528
+ cx=1004
+ cy=450
  rcx=0
  rcy=0
  [sourcefo.files_tab]
+ order=5
+  0
+  4
+  5
+  2
+  3
  firsttab=0
- index=3
- [confideufo.fontname]
- value=stf_default
+ index=4
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_guitemplatesmo_mse_
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1515,15 +1517,15 @@ windowlayout=569
  ncx=0
  ncy=0
  x=0
- y=53
- cx=1356
- cy=528
+ y=54
+ cx=1212
+ cy=450
  rcx=0
  rcy=0
  [_mse_guitemplatesmo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=confdebuggerfo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
