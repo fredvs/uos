@@ -75,7 +75,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2220316;
+  uos_version : cint32 = 2220319;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -2538,11 +2538,11 @@ var
  {$endif}
 
  {$IF DEFINED(mpg123)}
+  // problems with mpg123 
   mpinfo: Tmpg123_frameinfo;
+  // mpid3v2: Tmpg123_id3v2;
   BufferTag: array[1..128] of char;
   F: file;
-  // problems with mpg123 
-  // mpid3v2: Tmpg123_id3v2;
   {$endif}
 
   {$IF DEFINED(opus)}
@@ -2561,7 +2561,7 @@ begin
  {$IF DEFINED(mpg123)}
       if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
         begin
-          mpg123_info(StreamIn[InputIndex].Data.HandleSt, MPinfo);
+          //mpg123_info(StreamIn[InputIndex].Data.HandleSt, MPinfo);
           // custom code for reading ID3Tag ---> problems with  mpg123_id3() 
 
           AssignFile(F, StreamIn[InputIndex].Data.Filename);
@@ -2570,13 +2570,14 @@ begin
           Seek(F, FileSize(F) - 128);
           BlockRead(F, BufferTag, SizeOf(BufferTag));
           CloseFile(F);
-
+          
+          StreamIn[InputIndex].Data.tag :=  copy(BufferTag, 1, 3);
           StreamIn[InputIndex].Data.title := copy(BufferTag, 4, 30);
           StreamIn[InputIndex].Data.artist := copy(BufferTag, 34, 30);
           StreamIn[InputIndex].Data.album := copy(BufferTag, 64, 30);
           StreamIn[InputIndex].Data.date :=  copy(BufferTag, 94, 4);
-          StreamIn[InputIndex].Data.comment := copy(BufferTag, 98, 30);
-          StreamIn[InputIndex].Data.tag :=  copy(BufferTag, 1, 3);
+          StreamIn[InputIndex].Data.comment := copy(BufferTag, 98, 29);
+          StreamIn[InputIndex].Data.track := inttostr(ord(BufferTag[127]));
           StreamIn[InputIndex].Data.genre := inttostr(ord(BufferTag[128]));
 
           Result := true;
@@ -8125,13 +8126,14 @@ begin
               Seek(F, FileSize(F) - 128);
               BlockRead(F, BufferTag, SizeOf(BufferTag));
               CloseFile(F);
-
+            
+              StreamIn[x].Data.tag := copy(BufferTag, 1, 3);
               StreamIn[x].Data.title := copy(BufferTag, 4, 30);
               StreamIn[x].Data.artist := copy(BufferTag, 34, 30);
               StreamIn[x].Data.album := copy(BufferTag, 64, 30);
               StreamIn[x].Data.date :=  copy(BufferTag, 94, 4);
               StreamIn[x].Data.comment := copy(BufferTag, 98, 30);
-              StreamIn[x].Data.tag := copy(BufferTag, 1, 3);
+              StreamIn[x].Data.track := inttostr(ord(BufferTag[127]));
               StreamIn[x].Data.genre := inttostr(ord(BufferTag[128]));
 
               StreamIn[x].Data.samplerateroot :=  StreamIn[x].Data.samplerate ;

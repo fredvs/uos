@@ -859,7 +859,7 @@ finddtext=
 findhistory=0
 findoptions=1
 editpos=1
- 0,0
+ 0,7
 bookmarks0=0
 sourcefiles=1
  ${PROJECTDIR}/SimplePlayer_MSE.pas
@@ -875,7 +875,7 @@ nomenumodules=0
 firsttab=0
 index=0
 [layout]
-windowlayout=521
+windowlayout=522
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -889,8 +889,8 @@ windowlayout=521
  ny=0
  ncx=0
  ncy=0
- x=65
- y=70
+ x=99
+ y=71
  cx=1231
  cy=621
  rcx=0
@@ -944,7 +944,7 @@ windowlayout=521
  [memoryfo]
  splitdir=0
  useroptions=268451963
- stackedunder=findmessagefo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1006,7 +1006,7 @@ windowlayout=521
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=mainfo
+ stackedunder=conflangfo
  parent=
  mdistate=3
  nx=0
@@ -1023,15 +1023,15 @@ windowlayout=521
  active=0
  visible=0
  [projecttreefo.grid]
- propcolwidthref=30
+ propcolwidthref=28
  width0=141
  sortdescend0=0
- width1=28
+ width1=26
  sortdescend1=0
  sorted=0
  col=1
  row=0
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1090,7 +1090,7 @@ windowlayout=521
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=conflangfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -1109,10 +1109,10 @@ windowlayout=521
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=394
- width0=94
+ propcolwidthref=242
+ width0=58
  sortdescend0=0
- width1=294
+ width1=178
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1206,7 +1206,7 @@ windowlayout=521
  ncy=0
  x=0
  y=512
- cx=1221
+ cx=1219
  cy=88
  rcx=0
  rcy=0
@@ -1276,7 +1276,7 @@ windowlayout=521
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1306,8 +1306,8 @@ windowlayout=521
  ncy=0
  x=0
  y=0
- cx=1221
- cy=69
+ cx=1219
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1318,12 +1318,12 @@ windowlayout=521
  mdistate=0
  nx=0
  ny=0
- ncx=1221
- ncy=77
+ ncx=1219
+ ncy=58
  x=0
  y=0
- cx=1221
- cy=77
+ cx=1219
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1334,7 +1334,8 @@ windowlayout=521
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/SimplePlayer_MSE.pas
- history=1
+ history=2
+  /home/fred/uos/examples/SimplePlayer_MSE.pas
   ${PROJECTDIR}/main.pas
  [debuggerfo.project_options]
  value=1
@@ -1352,8 +1353,8 @@ windowlayout=521
  ncy=0
  x=0
  y=0
- cx=1221
- cy=437
+ cx=1219
+ cy=456
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1365,7 +1366,7 @@ windowlayout=521
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=componentpalettefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1392,9 +1393,9 @@ windowlayout=521
  ncx=0
  ncy=0
  x=0
- y=72
- cx=1221
- cy=437
+ y=53
+ cx=1219
+ cy=456
  rcx=0
  rcy=0
 [targetconsole]

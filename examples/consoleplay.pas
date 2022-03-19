@@ -51,9 +51,8 @@ var
      {$if defined(CPUAMD64) and defined(linux) }
   SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
-  MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
- // SoundFilename :=   '/home/fred/Music/imagetag/14 annie mae.mp3';
-   SoundFilename := ordir + 'sound/test.ogg'; 
+  // MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+  SoundFilename := ordir + 'sound/test.ogg'; 
    {$ENDIF}
 
    {$if defined(cpu86) and defined(linux)}
@@ -170,8 +169,7 @@ var
             writeln();
             writeln('Artist: ' + uos_InputGetTagArtist(PlayerIndex1, InputIndex1));
             writeln;
-
-            sleep(2000);
+                     
           end;
         end;
       end;

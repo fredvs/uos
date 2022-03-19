@@ -171,8 +171,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=789
- y=197
+ x=979
+ y=223
  cx=298
  cy=269
 replacedialog=33
@@ -1561,8 +1561,11 @@ envvarons=0
 [edit]
 hintwidth=382
 hintheight=0
-finddtext=caption
+finddtext=Data.comment
 findhistory=20
+ Data.comment
+ MPinfo
+ album
  caption
  ANSI_CHARSET
  GetCharSet
@@ -1580,18 +1583,30 @@ findhistory=20
  createnewlang
  font
  conflangfo.sh
- conflangfo.ok
- setlangi
- uses
 findoptions=1
-editpos=1
- 0,0
+editpos=4
+ 0,171
+ 0,27
+ 0,2577
+ 0,633
 bookmarks0=0
-sourcefiles=1
+bookmarks1=0
+bookmarks2=0
+bookmarks3=0
+sourcefiles=4
  ${PROJECTDIR}/consoleplay.pas
-relpaths=1
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_mpg123.pas
+relpaths=4
  consoleplay.pas
-ismoduletexts=1
+ uos_flat.pas
+ uos.pas
+ uos_mpg123.pas
+ismoduletexts=4
+ 0
+ 0
+ 0
  0
 modules=0
 moduleoptions=0
@@ -1615,8 +1630,8 @@ windowlayout=522
  ny=0
  ncx=0
  ncy=0
- x=65
- y=70
+ x=88
+ y=29
  cx=1231
  cy=621
  rcx=0
@@ -1732,7 +1747,7 @@ windowlayout=522
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=conflangfo
+ stackedunder=componentpalettefo
  parent=
  mdistate=3
  nx=0
@@ -1749,15 +1764,15 @@ windowlayout=522
  active=0
  visible=0
  [projecttreefo.grid]
- propcolwidthref=28
+ propcolwidthref=30
  width0=141
  sortdescend0=0
- width1=26
+ width1=28
  sortdescend1=0
  sorted=0
  col=1
  row=0
- rowheight=16
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1816,7 +1831,7 @@ windowlayout=522
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=projecttreefo
+ stackedunder=conflangfo
  parent=
  mdistate=0
  nx=0
@@ -1932,7 +1947,7 @@ windowlayout=522
  ncy=0
  x=0
  y=512
- cx=1219
+ cx=1221
  cy=88
  rcx=0
  rcy=0
@@ -2002,7 +2017,7 @@ windowlayout=522
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -2032,7 +2047,7 @@ windowlayout=522
  ncy=0
  x=0
  y=0
- cx=1219
+ cx=1221
  cy=52
  rcx=0
  rcy=0
@@ -2044,11 +2059,11 @@ windowlayout=522
  mdistate=0
  nx=0
  ny=0
- ncx=1221
- ncy=77
+ ncx=1219
+ ncy=60
  x=0
  y=0
- cx=1219
+ cx=1206
  cy=60
  rcx=0
  rcy=0
@@ -2079,7 +2094,7 @@ windowlayout=522
  ncy=0
  x=0
  y=0
- cx=1219
+ cx=1221
  cy=454
  rcx=0
  rcy=0
@@ -2092,7 +2107,7 @@ windowlayout=522
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=objectinspectorfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -2120,7 +2135,7 @@ windowlayout=522
  ncy=0
  x=0
  y=55
- cx=1219
+ cx=1221
  cy=454
  rcx=0
  rcy=0
