@@ -2539,7 +2539,7 @@ var
 
  {$IF DEFINED(mpg123)}
   // problems with mpg123 
-  mpinfo: Tmpg123_frameinfo;
+  // mpinfo: Tmpg123_frameinfo;
   // mpid3v2: Tmpg123_id3v2;
   BufferTag: array[1..128] of char;
   F: file;
