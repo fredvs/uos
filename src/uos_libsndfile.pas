@@ -677,7 +677,7 @@ function sf_Load(const libfilename: string): boolean; // load the lib
 procedure sf_Unload();
 // unload and frees the lib from memory : do not forget to call it before close application.
 
-function sf_IsLoaded: boolean; inline;
+function sf_IsLoaded: boolean;
 
 implementation
 

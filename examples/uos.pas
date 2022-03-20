@@ -6,7 +6,7 @@
 
 unit uos;
 
-{$mode objfpc}{$H+}
+{$mode objfpc}{$H+}{$inline on}
 {$PACKRECORDS C}
 
 // For custom configuration of directive to compiler --->  uos_define.inc
@@ -75,7 +75,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2220319;
+  uos_version : cint32 = 2220320;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -707,40 +707,40 @@ type
    {$endif}
       evPause: PRTLEvent;
       // for pausing
-      procedure ReadFile(x : integer);
+      procedure ReadFile(x : integer); inline;
   {$IF DEFINED(webstream)}
-      procedure ReadUrl(x : integer);
+      procedure ReadUrl(x : integer); inline;
   {$endif}
   {$IF DEFINED(synthesizer)}
-      procedure ReadSynth(x : integer);
+      procedure ReadSynth(x : integer); inline;
       procedure FillLookupTable(x, typewave, channel,
-                                AHarmonics: Integer; EvenHarmonics: shortint);
+                                AHarmonics: Integer; EvenHarmonics: shortint); inline;
   {$endif}
-      procedure ReadEndless(x : integer);
-      procedure ReadMem(x : integer);
-      procedure ReadMemDec(x : integer);
+      procedure ReadEndless(x : integer); inline;
+      procedure ReadMem(x : integer); inline;
+      procedure ReadMemDec(x : integer); inline;
   {$IF DEFINED(portaudio)}
-      procedure ReadDevice(x : integer);
+      procedure ReadDevice(x : integer); inline;
   {$endif}
-      procedure WriteOutPlug(x:integer;  x2 : integer);
-      procedure WriteOut(x:integer;  x2 : integer);
-      procedure CheckIfPaused ;
-      procedure DoBeginMethods;
-      procedure DoLoopBeginMethods;
-      procedure DoLoopEndMethods;
-      procedure DoArrayLevel(x: integer);
-      procedure DoSeek(x: integer);
-      procedure DoDSPinBeforeBufProc(x: integer);
-      procedure DoDSPinAfterBufProc(x: integer);
-      procedure DoDSPOutAfterBufProc(x: integer);
-      procedure DoMainLoopProc(x: integer);
-      procedure SeekIfTerminated;
-      procedure DoTerminateNoFreePlayer;
-      procedure DoTerminatePlayer;
-      procedure DoEndProc;
+      procedure WriteOutPlug(x:integer;  x2 : integer); inline;
+      procedure WriteOut(x:integer;  x2 : integer); inline;
+      procedure CheckIfPaused ; inline;
+      procedure DoBeginMethods; inline;
+      procedure DoLoopBeginMethods; inline;
+      procedure DoLoopEndMethods; inline;
+      procedure DoArrayLevel(x: integer); inline;
+      procedure DoSeek(x: integer); inline;
+      procedure DoDSPinBeforeBufProc(x: integer); inline;
+      procedure DoDSPinAfterBufProc(x: integer); inline;
+      procedure DoDSPOutAfterBufProc(x: integer); inline;
+      procedure DoMainLoopProc(x: integer); inline;
+      procedure SeekIfTerminated; inline;
+      procedure DoTerminateNoFreePlayer; inline;
+      procedure DoTerminatePlayer; inline;
+      procedure DoEndProc; inline;
 
   {$IF DEFINED(mse)}
-      function execute(thread: tmsethread): integer;
+      function execute(thread: tmsethread): integer; inline;
   {$endif}
 
     public 
@@ -801,31 +801,31 @@ type
 
       // Audio methods
 
-      procedure PlayEx(no_free: Boolean; nloop: Integer; paused: boolean= false);
+      procedure PlayEx(no_free: Boolean; nloop: Integer; paused: boolean= false); 
       // Start playing with free at end as parameter and assign loop
 
-      procedure Play(nloop: Integer = 0) ;
+      procedure Play(nloop: Integer = 0) ; 
       // Start playing with loop
 
-      procedure PlayPaused(nloop: Integer = 0) ;
+      procedure PlayPaused(nloop: Integer = 0) ; 
       // Start play paused with loop
 
-      procedure RePlay();
+      procedure RePlay(); 
       // Resume playing after pause
 
-      procedure Stop();
+      procedure Stop(); 
       // Stop playing and free thread
 
-      procedure Pause();
+      procedure Pause(); 
       // Pause playing
 
-      procedure PlayNoFree(nloop: Integer = 0) ;
+      procedure PlayNoFree(nloop: Integer = 0) ; 
       // Starting but do not free the player after stop with loop
 
-      procedure PlayNoFreePaused(nloop: Integer = 0) ;
+      procedure PlayNoFreePaused(nloop: Integer = 0) ; 
       // Start play paused with loop but not free player at end
 
-      procedure FreePlayer() ;
+      procedure FreePlayer() ; 
       // Free the player: works only when PlayNoFree() was called.
 
  {$IF DEFINED(portaudio)}
@@ -1075,105 +1075,105 @@ type
       // Get the status of the player : 0 => has stopped, 1 => is running, 2 => is paused, 
       // -1 => error or not yet played, only created.
 
-      procedure InputSeek(InputIndex: cint32; pos: Tcount_t);
+      procedure InputSeek(InputIndex:  cint32; pos: Tcount_t); 
       // change position in sample
 
-      procedure InputSeekSeconds(InputIndex: cint32; pos: cfloat);
+      procedure InputSeekSeconds(InputIndex: cint32; pos: cfloat); 
       // change position in seconds
 
-      procedure InputSeekTime(InputIndex: cint32; pos: TTime);
+      procedure InputSeekTime(InputIndex: cint32; pos: TTime); 
       // change position in time format
 
-      procedure InputSetEnable(InputIndex: cint32; enabled: boolean);
+      procedure InputSetEnable(InputIndex: cint32; enabled: boolean); 
       // set enable true or false
 
-      function InputLength(InputIndex: cint32): cint32;
+      function InputLength(InputIndex: cint32): cint32; inline;
       // InputIndex : InputIndex of existing input
       //  result : Length of Input in samples
 
-      function InputLengthSeconds(InputIndex: cint32): cfloat;
+      function InputLengthSeconds(InputIndex: cint32): cfloat; inline;
       // InputIndex : InputIndex of existing input
       //  result : Length of Input in seconds
 
-      function InputLengthTime(InputIndex: cint32): TTime;
+      function InputLengthTime(InputIndex: cint32): TTime; inline;
       // InputIndex : InputIndex of existing input
       //  result : Length of Input in time format
 
-      function InputPosition(InputIndex: cint32): cint32;
+      function InputPosition(InputIndex: cint32): cint32; inline;
       // InputIndex : InputIndex of existing input
       // result : current postion in sample
 
-      function InputPositionSeconds(InputIndex: cint32): float;
+      function InputPositionSeconds(InputIndex: cint32): float; inline;
       // InputIndex : InputIndex of existing input
       //  result : current postion of Input in seconds
 
-      function InputPositionTime(InputIndex: cint32): TTime;
+      function InputPositionTime(InputIndex: cint32): TTime; inline;
       // InputIndex : InputIndex of existing input
       //  result : current postion of Input in time format
 
-      procedure InputSetFrameCount(InputIndex: cint32 ; framecount : cint32);
+      procedure InputSetFrameCount(InputIndex: cint32 ; framecount : cint32); inline;
       // set number of frames to be done. (usefull for recording and level precision)
 
-      procedure InputSetLevelEnable(InputIndex: cint32 ; levelcalc : cint32);
+      procedure InputSetLevelEnable(InputIndex: cint32 ; levelcalc : cint32); 
       // set level calculation (default is 0)
       // 0 => no calcul
       // 1 => calcul before all DSP procedures.
       // 2 => calcul after all DSP procedures.
       // 3 => calcul before and after all DSP procedures.
 
-      procedure InputSetPositionEnable(InputIndex: cint32 ; poscalc : cint32);
+      procedure InputSetPositionEnable(InputIndex: cint32 ; poscalc : cint32); 
       // set position calculation (default is 0)
       // 0 => no calcul
       // 1 => calcul of position.
 
-      procedure InputSetLevelArrayEnable(InputIndex: cint32 ; levelcalc : cint32);
+      procedure InputSetLevelArrayEnable(InputIndex: cint32 ; levelcalc : cint32); 
       // set add level calculation in level-array (default is 0)
       // 0 => no calcul
       // 1 => calcul before all DSP procedures.
       // 2 => calcul after all DSP procedures.
 
-      function InputGetLevelLeft(InputIndex: cint32): double;
+      function InputGetLevelLeft(InputIndex: cint32): double; inline;
       // InputIndex : InputIndex of existing input
       // result : left level from 0 to 1
 
-      function InputGetLevelRight(InputIndex: cint32): double;
+      function InputGetLevelRight(InputIndex: cint32): double; inline;
       // InputIndex : InputIndex of existing input
       // result : right level from 0 to 1
 
-      function InputFiltersGetLevelString(InputIndex: cint32): string;
+      function InputFiltersGetLevelString(InputIndex: cint32): string; inline;
       // InputIndex : InputIndex of existing input
       // filterIndex : Filterindex of existing filter
       // result : list of left|right levels separed by $ character
 
-      function InputFiltersGetLevelArray(InputIndex: cint32): TDArFloat;
+      function InputFiltersGetLevelArray(InputIndex: cint32): TDArFloat; inline;
       // InputIndex : InputIndex of existing input
       // result : array of float of each filter. 
       //in format levelfilter0left,levelfilter0right,levelfilter1left,levelfilter2right,...
 
 {$IF DEFINED(soundtouch)}
-      function InputGetBPM(InputIndex: cint32): float;
+      function InputGetBPM(InputIndex: cint32): float; inline;
       // InputIndex : InputIndex of existing input
       // result : left level from 0 to 1
 {$endif}
 
-      function InputUpdateTag(InputIndex: cint32): boolean;
+      function InputUpdateTag(InputIndex: cint32): boolean; inline;
 
 {$IF DEFINED(webstream) and DEFINED(mpg123)}
-      function InputUpdateICY(InputIndex: cint32; Var icy_data : pchar): integer;
+      function InputUpdateICY(InputIndex: cint32; Var icy_data : pchar): integer; inline;
 {$endif}
 
-      function InputGetTagTitle(InputIndex: cint32): pchar;
-      function InputGetTagArtist(InputIndex: cint32): pchar;
-      function InputGetTagAlbum(InputIndex: cint32): pchar;
-      function InputGetTagDate(InputIndex: cint32): pchar;
-      function InputGetTagComment(InputIndex: cint32): pchar;
-      function InputGetTagTrack(InputIndex: cint32): pchar;
-      function InputGetTagGenre(InputIndex: cint32): pchar;
-      function InputGetTagTag(InputIndex: cint32): pchar;
+      function InputGetTagTitle(InputIndex: cint32): pchar; inline;
+      function InputGetTagArtist(InputIndex: cint32): pchar; inline;
+      function InputGetTagAlbum(InputIndex: cint32): pchar; inline;
+      function InputGetTagDate(InputIndex: cint32): pchar; inline;
+      function InputGetTagComment(InputIndex: cint32): pchar; inline;
+      function InputGetTagTrack(InputIndex: cint32): pchar; inline;
+      function InputGetTagGenre(InputIndex: cint32): pchar; inline;
+      function InputGetTagTag(InputIndex: cint32): pchar; inline;
       // Tag infos
 
       function InputAddDSP(InputIndex: cint32; BeforeFunc: TFunc;
-                           AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc ): cint32;
+                           AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc ): cint32; 
       // add a DSP procedure for input
       // InputIndex d: Input Index of a existing input
       // BeforeFunc : function to do before the buffer is filled
@@ -1183,17 +1183,17 @@ type
       //  result :  index of DSPin in array  (DSPinIndex)
       // example : DSPinIndex1 := InputAddDSP(InputIndex1,@beforereverse,@afterreverse,nil);
 
-      procedure InputSetDSP(InputIndex: cint32; DSPinIndex: cint32; Enable: boolean);
+      procedure InputSetDSP(InputIndex: cint32; DSPinIndex: cint32; Enable: boolean); 
       // InputIndex : Input Index of a existing input
       // DSPIndexIn : DSP Index of a existing DSP In
       // Enable :  DSP enabled
       // example : InputSetDSP(InputIndex1,DSPinIndex1,True);
 
-      procedure OutputSetEnable(OutputIndex: cint32; enabled: boolean);
+      procedure OutputSetEnable(OutputIndex: cint32; enabled: boolean); 
       // set enable true or false
 
       function OutputAddDSP(OutputIndex: cint32; BeforeFunc: TFunc;
-                            AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
+                            AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32; 
       // usefull if multi output
       // OutputIndex : OutputIndex of a existing Output
       // BeforeFunc : function to do before the buffer is filled
@@ -1212,7 +1212,7 @@ type
       function InputAddFilter(InputIndex: cint32;
                               TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
                               TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
-                              AlsoBuf: boolean; LoopProc: TProc): cint32;
+                              AlsoBuf: boolean; LoopProc: TProc): cint32; 
       // InputIndex : InputIndex of a existing Input
       // TypeFilterL: Type of filter left: 
       // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
@@ -1232,7 +1232,7 @@ type
       procedure InputSetFilter(InputIndex: cint32; FilterIndex: cint32;
                                TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
                                TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
-                               AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
+                               AlsoBuf: boolean; LoopProc: TProc; Enable: boolean); 
       // InputIndex : InputIndex of a existing Input
       // DSPInIndex : DSPInIndex of existing DSPIn
       // TypeFilterL: Type of filter left: 
@@ -1253,7 +1253,7 @@ type
       function OutputAddFilter(OutputIndex: cint32;
                                TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
                                TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
-                               AlsoBuf: boolean; LoopProc: TProc): cint32;
+                               AlsoBuf: boolean; LoopProc: TProc): cint32; 
       // Output : InputIndex of a existing Output
       // TypeFilterL: Type of filter left: 
       // ( -1 = current filter ) (fBandAll = 0, fBandSelect = 1, fBandReject = 2
@@ -1273,7 +1273,7 @@ type
       procedure OutputSetFilter(OutputIndex: cint32; FilterIndex: cint32;
                                 TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL: cfloat;
                                 TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR: cfloat;
-                                AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
+                                AlsoBuf: boolean; LoopProc: TProc; Enable: boolean); 
       // OuputIndex : InputIndex of a existing Output
       // DSPInIndex : DSPInIndex of existing DSPIn
       // TypeFilterL: Type of filter left: 
@@ -1291,10 +1291,10 @@ type
       // LoopProc : external procedure of object to synchronize after DSP done
       // Enable :  Filter enabled
 
-      function DSPLevel(Data: Tuos_Data): Tuos_Data;
+      function DSPLevel(Data: Tuos_Data): Tuos_Data; inline;
       // to get level of buffer (volume)
 
-      function InputAddDSP1ChanTo2Chan(InputIndex: cint32): cint32;
+      function InputAddDSP1ChanTo2Chan(InputIndex: cint32): cint32; 
       //  Convert mono 1 channel input to stereo 2 channels input.
       // Works only if the input is mono 1 channel othewise stereo 2 chan is keeped.
       // InputIndex : InputIndex of a existing Input
@@ -1302,7 +1302,7 @@ type
       // example  DSPIndex1 := InputAddDSP1ChanTo2Chan(InputIndex1);
 
       function InputAddDSPVolume(InputIndex: cint32; VolLeft: double;
-                                 VolRight: double): cint32;
+                                 VolRight: double): cint32; 
       // DSP Volume changer
       // InputIndex : InputIndex of a existing Input
       // VolLeft : Left volume
@@ -1311,7 +1311,7 @@ type
       // example  DSPIndex1 := InputAddDSPVolume(InputIndex1,1,1);
 
       function OutputAddDSPVolume(OutputIndex: cint32; VolLeft: double;
-                                  VolRight: double): cint32;
+                                  VolRight: double): cint32; 
       // DSP Volume changer
       // OutputIndex : OutputIndex of a existing Output
       // VolLeft : Left volume
@@ -1320,25 +1320,25 @@ type
       // example  DSPIndex1 := OutputAddDSPVolume(InputIndex1,1,1);
 
 {$IF DEFINED(noiseremoval)}
-      function InputAddDSPNoiseRemoval(InputIndex: cint32): cint32;
+      function InputAddDSPNoiseRemoval(InputIndex: cint32): cint32; 
       // DSP Noise Removal
       // InputIndex : InputIndex of a existing Input
       //  result :  otherwise index of DSPIn in array
       // example  DSPIndex1 := InputAddDSPNoiseRemoval(InputIndex1);
 
-      procedure InputSetDSPNoiseRemoval(InputIndex: cint32; Enable: boolean);
+      procedure InputSetDSPNoiseRemoval(InputIndex: cint32; Enable: boolean); 
 
-      function OutputAddDSPNoiseRemoval(OutputIndex: cint32): cint32;
+      function OutputAddDSPNoiseRemoval(OutputIndex: cint32): cint32; 
       // DSP Noise Removal
       // InputIndex : OutputIndex of a existing Output
       //  result :  otherwise index of DSPOut in array
       // example  DSPIndex1 := OutputAddDSPNoiseRemoval(OutputIndex1);
 
-      procedure OutputSetDSPNoiseRemoval(OutputIndex: cint32; Enable: boolean);
+      procedure OutputSetDSPNoiseRemoval(OutputIndex: cint32; Enable: boolean); 
 {$endif}
 
       procedure InputSetDSPVolume(InputIndex: cint32; DSPVolIndex: cint32;
-                                  VolLeft: double; VolRight: double; Enable: boolean);
+                                  VolLeft: double; VolRight: double; Enable: boolean); inline;
       // InputIndex : InputIndex of a existing Input
       // DSPIndex : DSPIndex of a existing DSP
       // VolLeft : Left volume
@@ -1347,7 +1347,7 @@ type
       // example  InputSetDSPVolume(InputIndex1,DSPIndex1,1,0.8,True);
 
       procedure OutputSetDSPVolume(OutputIndex: cint32; DSPVolIndex: cint32;
-                                   VolLeft: double; VolRight: double; Enable: boolean);
+                                   VolLeft: double; VolRight: double; Enable: boolean); inline;
       // OutputIndex : OutputIndex of a existing Output
       // DSPIndex : DSPIndex of a existing DSP
       // VolLeft : Left volume
@@ -1359,13 +1359,13 @@ type
 
   // General public procedure/function (accessible for library uos too)
 
-function uos_GetInfoLibraries() : Pansichar ;
+function uos_GetInfoLibraries() : Pansichar ; inline;
 
  {$IF DEFINED(portaudio)}
-procedure uos_GetInfoDevice();
+procedure uos_GetInfoDevice(); inline;
 
-function uos_GetInfoDeviceStr() : Pansichar ;
-  {$endif}
+function uos_GetInfoDeviceStr() : Pansichar ; inline;
+  {$endif} 
 
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
                      , opusfileFileName : PChar) : cint32;
@@ -1402,7 +1402,7 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
 // load plugin...
 
 {$IF DEFINED(soundtouch)}
-function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
+function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat; inline;
 // From SoundTouch plugin
 {$endif}
 
@@ -1413,7 +1413,7 @@ procedure uos_Free();
 // To call at end of application.
 // If uos_flat.pas was used, it will free all the uos_player created.
 
-function uos_GetVersion() : cint32 ;
+function uos_GetVersion() : cint32 ; inline;
 // version of uos
 
 function uos_File2Buffer(Filename: Pchar; SampleFormat: cint32 ; Var bufferinfos: Tuos_BufferInfos ;
@@ -1459,7 +1459,7 @@ procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsP
 // samplerate : sample rate
 
 procedure uos_CustBufferInfos(Var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat
-                              : cint32; Channels: cint32 ; Length: cint32);
+                              : cint32; Channels: cint32 ; Length: cint32); inline;
 // to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
 // all infos refer to the buffer used ---> length = length of the buffer div channels.
 
@@ -1540,7 +1540,7 @@ begin
   Terminate;
 end;
 
-function FormatBuf(Inbuf: TDArFloat; format: cint32): TDArFloat;
+function FormatBuf(Inbuf: TDArFloat; format: cint32): TDArFloat; inline;
 var 
   x: cint32;
   ps: PDArShort;
@@ -1574,7 +1574,7 @@ begin
   Result := Inbuf;
 end;
 
-function CvFloat32ToInt16(Inbuf: TDArFloat): TDArShort;
+function CvFloat32ToInt16(Inbuf: TDArFloat): TDArShort; inline;
 var 
   x, i: cint32;
   arsh: TDArShort;
@@ -1593,7 +1593,7 @@ begin
   Result := arsh;
 end;
 
-function CvFloat32ToInt32(Inbuf: TDArFloat): TDArLong;
+function CvFloat32ToInt32(Inbuf: TDArFloat): TDArLong; inline;
 var 
   i: int64;
   x : cint32;
@@ -1613,7 +1613,7 @@ begin
   Result := arlo;
 end;
 
-function CvFloat32ToInt32fl(Inbuf: TDArFloat; nb:integer): TDArFloat;
+function CvFloat32ToInt32fl(Inbuf: TDArFloat; nb:integer): TDArFloat; inline;
 var 
   x : cint32;
   pl2: PDArLong;
@@ -1634,7 +1634,7 @@ begin
   Result := buffer2;
 end;
 
-function CvInt16ToFloat32(Inbuf: TDArFloat): TDArFloat;
+function CvInt16ToFloat32(Inbuf: TDArFloat): TDArFloat; inline;
 var 
   x: cint32;
   arfl: TDArFloat;
@@ -1647,7 +1647,7 @@ begin
   Result := arfl;
 end;
 
-function CvSteroToMono(Inbuf: TDArFloat; len : cint32): TDArFloat;
+function CvSteroToMono(Inbuf: TDArFloat; len : cint32): TDArFloat; inline;
 var 
   x, y: cint32;
   arsh: TDArFloat;
@@ -1677,7 +1677,7 @@ begin
   else Result := Inbuf;
 end;
 
-function CvInt32ToFloat32(Inbuf: TDArFloat): TDArFloat;
+function CvInt32ToFloat32(Inbuf: TDArFloat): TDArFloat; inline;
 var 
   x: cint32;
   arfl: TDArFloat;
@@ -1824,7 +1824,7 @@ begin
 end;
 
 {$IF DEFINED(sndfile) or DEFINED(mpg123)}
-function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer;
+function mpg_read_stream(ahandle: Pointer; AData: Pointer; ACount: Integer): Integer; inline;
 cdecl;
 var 
   Stream: TStream absolute ahandle;
@@ -1959,7 +1959,7 @@ begin
 end;
 
  {$IF DEFINED(soundtouch)}
-function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
+function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat; inline;
 // From SoundTouch plugin
 var 
   BPMhandle : THandle;
@@ -2162,7 +2162,7 @@ begin
 end;
  {$endif}
 
-function Tuos_Player.GetStatus() : cint32 ;
+function Tuos_Player.GetStatus() : cint32 ; 
 
 // Get the status of the player : -1 => error or not yet played, 0 => has stopped, 1 => is running, 2 => is paused.
 begin
@@ -2171,13 +2171,13 @@ begin
   else result := -1 ;
 end;
 
-function Tuos_Player.IsLooped: Boolean;
+function Tuos_Player.IsLooped: Boolean; inline;
 begin
   Result := (NLooped <> 0) And
             (NLooped <> 1);
 end;
 
-procedure Tuos_Player.PlayEx(no_free: Boolean; nloop: Integer; paused: boolean= false);
+procedure Tuos_Player.PlayEx(no_free: Boolean; nloop: Integer; paused: boolean= false); 
 var 
   x: cint32;
 begin
@@ -2238,24 +2238,24 @@ begin
     end;
 end;
 
-procedure Tuos_Player.PlayPaused(nloop: Integer = 0) ;
+procedure Tuos_Player.PlayPaused(nloop: Integer = 0) ; inline;
 // Start play paused with loop
 begin
   PlayEx(False,nloop,true);
 end;
 
-procedure Tuos_Player.PlayNoFreePaused(nloop: Integer = 0) ;
+procedure Tuos_Player.PlayNoFreePaused(nloop: Integer = 0) ; inline;
 // Start play paused with loop and not free player at end
 begin
   PlayEx(true,nloop,true);
 end;
 
-procedure Tuos_Player.Play(nloop: Integer = 0) ;
+procedure Tuos_Player.Play(nloop: Integer = 0) ; inline;
 begin
   PlayEx(False,nloop);
 end;
 
-procedure Tuos_Player.PlayNoFree(nloop: Integer = 0) ;
+procedure Tuos_Player.PlayNoFree(nloop: Integer = 0) ; inline;
 begin
   PlayEx(True,nloop);
 end;
@@ -2315,7 +2315,7 @@ begin
     end;
 end;
 
-procedure Tuos_Player.InputSeek(InputIndex:cint32; pos: Tcount_t);
+procedure Tuos_Player.InputSeek(InputIndex:cint32; pos: Tcount_t); 
 // change position in samples
 begin
   if (isAssigned = True) then StreamIn[InputIndex].Data.Poseek := pos;
@@ -5255,7 +5255,7 @@ end;
 {$endif}
 
 function Tuos_Player.InputAddDSPVolume(InputIndex: cint32; VolLeft: double;
-                                       VolRight: double): cint32;
+                                       VolRight: double): cint32; 
 // DSP Volume changer
 // InputIndex : InputIndex of a existing Input
 // VolLeft : Left volume

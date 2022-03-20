@@ -7,7 +7,7 @@
 
 unit uos_flat;
 
-{$mode objfpc}{$H+}
+{$mode objfpc}{$H+}{$inline on}
 {$PACKRECORDS C}
 
 // For custom configuration of directive to compiler --->  uos_define.inc
@@ -552,7 +552,7 @@ function uos_InputAddDSP1ChanTo2Chan(PlayerIndex: cint32; InputIndex: cint32): c
 // example  DSPIndex1 := InputAddDSP1ChanTo2Chan(InputIndex1);
   
 function uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
-  VolRight: double) : cint32 ;
+  VolRight: double) : cint32 ; inline;
 // DSP Volume changer
 // PlayerIndex : Index of a existing Player
 // InputIndex : InputIndex of a existing Input
@@ -1008,7 +1008,7 @@ result := uosPlayers[PlayerIndex].SetGlobalEvent(isenabled);
 end;
 
 function uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
-  VolRight: double) : cint32;
+  VolRight: double) : cint32; 
 begin
 result:= -1;
   if (length(uosPlayers) > 0) and (PlayerIndex +1 <= length(uosPlayers)) then
