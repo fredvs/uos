@@ -552,7 +552,7 @@ function uos_InputAddDSP1ChanTo2Chan(PlayerIndex: cint32; InputIndex: cint32): c
 // example  DSPIndex1 := InputAddDSP1ChanTo2Chan(InputIndex1);
   
 function uos_InputAddDSPVolume(PlayerIndex: cint32; InputIndex: cint32; VolLeft: double;
-  VolRight: double) : cint32 ; inline;
+  VolRight: double) : cint32 ;
 // DSP Volume changer
 // PlayerIndex : Index of a existing Player
 // InputIndex : InputIndex of a existing Input
