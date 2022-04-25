@@ -95,7 +95,7 @@ var
       infos_grid.Cells[12, x] := UOSDeviceInfos[x].DeviceType;
       Inc(x);
     end;
-       MouseCursor := mcnone;
+      
  
   end;
 
@@ -126,7 +126,7 @@ var
       sleep(500);
       Show;
     end;
-       MouseCursor := mcNone;
+      
  
   end;
 
@@ -270,8 +270,6 @@ var
     {@VFD_BODY_END: DevicesInfos}
     {%endregion}
 
-   MouseCursor := mcNone;
- 
     //////////////////////
 
     ordir  := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));

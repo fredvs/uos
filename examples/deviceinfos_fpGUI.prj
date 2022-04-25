@@ -1561,8 +1561,9 @@ envvarons=0
 [edit]
 hintwidth=382
 hintheight=0
-finddtext=DoSetMouseCursor
+finddtext=none
 findhistory=20
+ none
  DoSetMouseCursor
  TMouseCursor
  case FMouseCursor of
@@ -1582,26 +1583,25 @@ findhistory=20
  po_
  po_font
  createnewlang
- font
 findoptions=1
 editpos=4
- 0,78
+ 0,271
  0,-1073741823
- 0,0
+ 0,-1073741823
  0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 sourcefiles=4
- /home/fred/uos/examples/deviceinfos_fpGUI.pas
+ ${PROJECTDIR}/deviceinfos_fpGUI.pas
  /home/fred/fpGUI-maint/src/corelib/fpg_base.pas
  /home/fred/mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
  /home/fred/fpGUI/src/corelib/gdi/fpg_gdi.pas
 relpaths=4
  deviceinfos_fpGUI.pas
  fpGUI-maint/src/corelib/fpg_base.pas
- ../mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
+ mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
  fpGUI/src/corelib/gdi/fpg_gdi.pas
 ismoduletexts=4
  0
@@ -1747,7 +1747,7 @@ windowlayout=540
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=conflangfo
+ stackedunder=componentpalettefo
  parent=
  mdistate=3
  nx=0
@@ -1764,15 +1764,15 @@ windowlayout=540
  active=0
  visible=0
  [projecttreefo.grid]
- propcolwidthref=30
+ propcolwidthref=28
  width0=141
  sortdescend0=0
- width1=28
+ width1=26
  sortdescend1=0
  sorted=0
  col=1
  row=0
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1831,7 +1831,7 @@ windowlayout=540
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=projecttreefo
+ stackedunder=conflangfo
  parent=
  mdistate=0
  nx=0
@@ -1850,10 +1850,10 @@ windowlayout=540
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=369
- width0=88
+ propcolwidthref=338
+ width0=81
  sortdescend0=0
- width1=275
+ width1=251
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1947,7 +1947,7 @@ windowlayout=540
  ncy=0
  x=0
  y=602
- cx=1358
+ cx=1356
  cy=88
  rcx=0
  rcy=0
@@ -2017,7 +2017,7 @@ windowlayout=540
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=0
  nx=0
@@ -2047,7 +2047,7 @@ windowlayout=540
  ncy=0
  x=0
  y=0
- cx=1358
+ cx=1356
  cy=54
  rcx=0
  rcy=0
@@ -2063,7 +2063,7 @@ windowlayout=540
  ncy=62
  x=0
  y=0
- cx=1358
+ cx=1356
  cy=62
  rcx=0
  rcy=0
@@ -2074,8 +2074,9 @@ windowlayout=540
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/fpGUI-maint/src/corelib/fpg_base.pas
+ value=/home/fred/uos/examples/deviceinfos_fpGUI.pas
  history=20
+  /home/fred/uos/examples/deviceinfos_fpGUI.pas
   /home/fred/fpGUI-maint/src/corelib/fpg_base.pas
   /home/fred/Downloads/fpGUI-develop/src/corelib/x11/fpg_x11.pas
   /home/fred/Downloads/fpGUI-develop/src/corelib/fpg_base.pas
@@ -2095,7 +2096,6 @@ windowlayout=540
   /home/fred/strumpract/src/infos.pas
   /home/fred/strumpract/src/conflang.pas
   /home/fred/ideu/src/conflang.pas
-  /home/fred/ideu/src/mo4stock.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -2112,7 +2112,7 @@ windowlayout=540
  ncy=0
  x=0
  y=0
- cx=1358
+ cx=1356
  cy=542
  rcx=0
  rcy=0
@@ -2125,7 +2125,7 @@ windowlayout=540
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -2153,7 +2153,7 @@ windowlayout=540
  ncy=0
  x=0
  y=57
- cx=1358
+ cx=1356
  cy=542
  rcx=0
  rcy=0
