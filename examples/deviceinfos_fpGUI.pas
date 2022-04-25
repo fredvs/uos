@@ -95,6 +95,8 @@ var
       infos_grid.Cells[12, x] := UOSDeviceInfos[x].DeviceType;
       Inc(x);
     end;
+       MouseCursor := mcnone;
+ 
   end;
 
 
@@ -124,6 +126,8 @@ var
       sleep(500);
       Show;
     end;
+       MouseCursor := mcNone;
+ 
   end;
 
   procedure TDevicesInfos.btnReLoadClick(Sender: TObject);
@@ -266,7 +270,8 @@ var
     {@VFD_BODY_END: DevicesInfos}
     {%endregion}
 
-
+   MouseCursor := mcNone;
+ 
     //////////////////////
 
     ordir  := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
@@ -319,11 +324,14 @@ var
   FilenameEdit1.FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
   {$ENDIF}
     FilenameEdit1.Initialdir := ordir + 'lib';
+    
 
   end;
 
   procedure TDevicesInfos.UOS_logo(Sender: TObject);
   begin
+  
+ 
 
     with Custom1 do
     begin

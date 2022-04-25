@@ -1561,8 +1561,9 @@ envvarons=0
 [edit]
 hintwidth=382
 hintheight=0
-finddtext=InputUpdateTag
+finddtext=inline
 findhistory=20
+ inline
  InputUpdateTag
  Data.comment
  MPinfo
@@ -1582,31 +1583,15 @@ findhistory=20
  po_
  po_font
  createnewlang
- font
 findoptions=1
-editpos=4
- 0,171
- 0,-1073741823
- 0,2545
- 0,-1073741823
+editpos=1
+ 0,0
 bookmarks0=0
-bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-sourcefiles=4
+sourcefiles=1
  /home/fred/uos/examples/consoleplay.pas
- ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/examples/uos.pas
- ${PROJECTDIR}/uos_mpg123.pas
-relpaths=4
+relpaths=1
  consoleplay.pas
- uos_flat.pas
- uos.pas
- uos_mpg123.pas
-ismoduletexts=4
- 0
- 0
- 0
+ismoduletexts=1
  0
 modules=0
 moduleoptions=0
@@ -1614,9 +1599,9 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=2
+index=0
 [layout]
-windowlayout=522
+windowlayout=524
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -2048,7 +2033,7 @@ windowlayout=522
  x=0
  y=0
  cx=1221
- cy=52
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -2059,11 +2044,11 @@ windowlayout=522
  mdistate=0
  nx=0
  ny=0
- ncx=1219
+ ncx=1221
  ncy=60
  x=0
  y=0
- cx=1206
+ cx=1221
  cy=60
  rcx=0
  rcy=0
@@ -2074,8 +2059,10 @@ windowlayout=522
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
- history=2
+ value=/home/fred/uos/examples/uos_flat.pas
+ history=4
+  /home/fred/uos/examples/uos_flat.pas
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/consoleplay.pas
   ${PROJECTDIR}/main.pas
  [debuggerfo.project_options]
@@ -2095,12 +2082,12 @@ windowlayout=522
  x=0
  y=0
  cx=1221
- cy=454
+ cy=452
  rcx=0
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=2
+ index=0
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
@@ -2134,9 +2121,9 @@ windowlayout=522
  ncx=0
  ncy=0
  x=0
- y=55
+ y=57
  cx=1221
- cy=454
+ cy=452
  rcx=0
  rcy=0
 [targetconsole]
