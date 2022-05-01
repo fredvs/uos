@@ -69,7 +69,7 @@ var
 
   {$if defined(linux) and defined(cpuarm)}
     PA_FileName := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
-    SF_FileName := ordir + ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
+    SF_FileName := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
       SoundFilename := ordir + 'sound/test.ogg';
    {$ENDIF}
 
@@ -169,6 +169,7 @@ var
             writeln();
             writeln('Artist: ' + uos_InputGetTagArtist(PlayerIndex1, InputIndex1));
             writeln;
+            sleep(2000);
                      
           end;
         end;
