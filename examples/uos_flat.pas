@@ -271,7 +271,7 @@ function uos_AddIntoDevOut(PlayerIndex: cint32): cint32;
 
 // Add a Output into Device Output with custom parameters
  function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+  SampleRate: CDouble; Channels: cint32; SampleFormat: cint32 ;
    FramesCount: cint32 ; ChunkCount: cint32): cint32;
 // Add a Output into Device Output
 // Device ( -1 is default device )
@@ -304,7 +304,7 @@ function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : ci
 // outmemory : pointer of buffer to use to store memory.
 // example : OutputIndex1 := uos_AddIntoMemoryBuffer(0, pointer(bufmemory));
 
-function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; SampleRate: LongInt;  SampleFormat: LongInt;
+function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; SampleRate: CDouble;  SampleFormat: LongInt;
       Channels: LongInt; FramesCount: LongInt): LongInt;  
 // Add a Output into memory buffer with custom parameters
 // outmemory : pointer of buffer to use to store memory.
@@ -313,8 +313,8 @@ function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; Sam
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // FramesCount : default : -1 (= 1024 * 2)
 
-function uos_AddIntoMemoryStream(PlayerIndex: cint32; var MemoryStream: TMemoryStream; SampleRate: LongInt; 
-       SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt; Audioformat: cint32): LongInt;  
+function uos_AddIntoMemoryStream(PlayerIndex: cint32; var MemoryStream: TMemoryStream;
+ SampleRate: CDouble; SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt; Audioformat: cint32): LongInt;  
 // Add a Output into TMemoryStream
 // MemoryStream : the TMemoryStream to use to store memory.
 // SampleRate : delault : -1 (44100)
@@ -367,7 +367,7 @@ function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar; OutputI
 // example : InputIndex1 := uos_AddFromFile(0, edit5.Text,-1,0,-1);  
 
  {$IF DEFINED(shout)}
-function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: cint; SampleFormat: cint;
+function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : CDouble; Channels: cint; SampleFormat: cint;
  EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
 // Add a Output into a IceCast server for audio-web-streaming
 // SampleRate : delault : -1 (48100)
@@ -397,7 +397,7 @@ function uos_AddFromURL(PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
 // example : InputIndex := AddFromURL(0,'http://someserver/somesound.mp3',-1,-1,-1,-1);
 {$ENDIF}
 
-function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
+function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: CDouble;
   Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
 // Add a Output into audio wav file with custom parameters from TFileStream
 // PlayerIndex : Index of a existing Player
@@ -415,7 +415,7 @@ function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar): cint32;
 // PlayerIndex : Index of a existing Player
 // FileName : filename of saved audio wav file
 
-function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate: LongInt;  
+function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate: CDouble;  
       Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt;  
   // Add a Output into audio wav file with Custom parameters from TMemoryStream
 // FileName : filename of saved audio wav file
@@ -434,7 +434,7 @@ function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
 
 {$IF DEFINED(portaudio)}
 function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; OutputIndex: cint32;
+  SampleRate: CDouble; OutputIndex: cint32;
   SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
 // Add a Input from Device Input with custom parameters
 // PlayerIndex : Index of a existing Player
@@ -462,7 +462,7 @@ function uos_AddFromEndlessMuted(PlayerIndex: cint32; Channels : cint32; FramesC
 function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, WaveTypeR: shortint;
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
  duration : cint32; NbHarmonics: cint32; EvenHarmonics: cint32;
- OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
+ OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: CDouble ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
 // WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo) 
@@ -711,7 +711,7 @@ procedure uos_OutputSetFilter(PlayerIndex: cint32; OutputIndex: cint32; FilterIn
 // LoopProc : external procedure of object to synchronize after DSP done
 // Enable :  Filter enabled
 
-function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: cint32;
+function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: CDouble;
   Channels: cint32): cint32 ;
 // Add a plugin , result is PluginIndex
 // PlayerIndex : Index of a existing Player
@@ -815,7 +815,7 @@ function uos_InputFiltersGetLevelArray(PlayerIndex: cint32; InputIndex: cint32):
          //in format levelfilter0left,levelfilter0right,levelfilter1left,levelfilter2right,...
   
 {$IF DEFINED(soundtouch)}
-function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): float;
+function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): CDouble;
 // InputIndex : InputIndex of existing input
 // result : Beats per minuts
 {$endif}     
@@ -846,7 +846,7 @@ function uos_InputGetTagTrack(PlayerIndex: cint32; InputIndex: cint32): pchar;
 function uos_InputGetTagGenre(PlayerIndex: cint32; InputIndex: cint32): pchar;
 // Tag infos
 
-function uos_InputGetSampleRate(PlayerIndex: cint32; InputIndex: cint32): cint32;
+function uos_InputGetSampleRate(PlayerIndex: cint32; InputIndex: cint32): CDouble;
 // InputIndex : InputIndex of existing input
 // result : default sample rate
 
@@ -880,7 +880,7 @@ function uos_SetGlobalEvent(PlayerIndex: cint32; isenabled : boolean) : boolean;
 // result : true if set ok.
  
  {$IF DEFINED(soundtouch)}
-function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
+function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: CDouble) : CDouble;
 // From SoundTouch plugin  
 {$endif}
 
@@ -913,7 +913,8 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
 // typeout : Type of out file (-1:default=wav, 0:wav, 1:pcm, 2:custom)  
 // example : InputIndex1 := uos_File2File(edit5.Text,0,buffmem); 
 
-procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan, samplerate : integer);
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan : integer;
+ samplerate: CDouble);
 // Create a audio wav file from a TMemoryStream.
 // FileName : filename of wav saved file
 // data : the memorystream
@@ -921,7 +922,7 @@ procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsP
 // chan : number of channels
 // samplerate : sample rate
 
-procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: CDouble; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
 // to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
 // all infos refer to the buffer used ---> length = length of the buffer div channels.
 
@@ -1352,7 +1353,7 @@ end;
 
 {$IF DEFINED(portaudio)}
 function uos_AddFromDevIn(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; OutputIndex: cint32;
+  SampleRate: CDouble; OutputIndex: cint32;
   SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
 // Add a Input from Device Input with custom parameters
 // PlayerIndex : Index of a existing Player
@@ -1403,7 +1404,7 @@ end;
 function uos_AddFromSynth(PlayerIndex: cint32; Channels: integer; WaveTypeL, WaveTypeR: shortint;
  FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
  duration : cint32; NbHarmonics: cint32; EvenHarmonics: cint32;
- OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ; FramesCount : cint32): cint32;
+ OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: CDouble ; FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
 // WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo) 
@@ -1457,7 +1458,7 @@ procedure uos_InputSetSynth(PlayerIndex: cint32; InputIndex: cint32; WaveTypeL, 
 end;
 {$endif}
 
-function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
+function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: CDouble;
   Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
 // Add a Output into audio wav file with custom parameters
 // PlayerIndex : Index of a existing Player
@@ -1489,7 +1490,7 @@ function uos_AddIntoFile(PlayerIndex: cint32;  Filename: PChar): cint32;
  Result :=  uosPlayers[PlayerIndex].AddIntoFile(Filename, -1, -1, -1, -1, -1);
 end;
 
-function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate: LongInt;  
+function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar; SampleRate: CDouble;  
       Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt; FileFormat: cint32): LongInt;  
 // Add a Output into audio wav file with Custom parameters
 // FileName : filename of saved audio wav file
@@ -1521,7 +1522,7 @@ function uos_AddIntoFileFromMem(PlayerIndex: cint32; Filename: PChar): cint32;
 end;
 
  {$IF DEFINED(shout)}
-function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : cint; Channels: cint; SampleFormat: cint;
+function uos_AddIntoIceServer(PlayerIndex: cint32; SampleRate : CDouble; Channels: cint; SampleFormat: cint;
  EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
 // Add a Output into a IceCast server for audio-web-streaming// SampleRate : delault : -1 (48100)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
@@ -1545,7 +1546,7 @@ end;
 
 {$IF DEFINED(portaudio)}
  function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
-  SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+  SampleRate: CDouble; Channels: cint32; SampleFormat: cint32 ;
    FramesCount: cint32 ; ChunkCount: cint32): cint32;
 // Add a Output into Device Output with custom parameters
 begin
@@ -1607,7 +1608,7 @@ function uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat) : ci
   Result :=  uosPlayers[PlayerIndex].AddIntoMemoryBuffer(outmemory);
 end;
 
-function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; SampleRate: LongInt;  SampleFormat: LongInt;
+function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; SampleRate: CDouble;  SampleFormat: LongInt;
       Channels: LongInt; FramesCount: LongInt): LongInt;  
 // Add a Output into TMemoryStream
 // outmemory : pointer of buffer to use to store memory.
@@ -1623,8 +1624,8 @@ function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; Sam
   Result :=  uosPlayers[PlayerIndex].AddIntoMemoryBuffer(outmemory, SampleRate,SampleFormat,Channels,FramesCount);
 end;
 
-function uos_AddIntoMemoryStream(PlayerIndex: cint32; var MemoryStream: TMemoryStream; SampleRate: LongInt; 
-       SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt; Audioformat: cint32): LongInt;  
+function uos_AddIntoMemoryStream(PlayerIndex: cint32; var MemoryStream: TMemoryStream; 
+SampleRate: CDouble; SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt; Audioformat: cint32): LongInt;  
 // Add a Output into TMemoryStream
 // MemoryStream : the TMemoryStream to use to store memory.
 // SampleRate : delault : -1 (44100)
@@ -1753,7 +1754,7 @@ begin
 end;
 {$ENDIF}
 
-function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: cint32;
+function uos_AddPlugin(PlayerIndex: cint32; PlugName: PChar; SampleRate: CDouble;
   Channels: cint32): cint32;
 // Add a plugin , result is PluginIndex
 // PlayerIndex : Index of a existing Player
@@ -2000,7 +2001,7 @@ begin
  result := uosPlayers[PlayerIndex].InputFiltersGetLevelArray(InputIndex) ;
 end;         
 
-function uos_InputGetSampleRate(PlayerIndex: cint32; InputIndex: cint32): cint32;
+function uos_InputGetSampleRate(PlayerIndex: cint32; InputIndex: cint32): CDouble;
 // InputIndex : InputIndex of existing input
 // result : default sample rate
 begin
@@ -2038,7 +2039,7 @@ begin
 end;
 
 {$IF DEFINED(soundtouch)}
-function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): float;
+function uos_InputGetBPM(PlayerIndex: cint32; InputIndex: cint32): CDouble;
 // InputIndex : InputIndex of existing input
 // result : Beats per minuts
 begin
@@ -2269,14 +2270,14 @@ result := uos.uos_Stream2Buffer(AudioFile, SampleFormat, outmemory, bufferinfos,
   end; 
   
 {$IF DEFINED(soundtouch)}
-function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat;
+function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: CDouble) : CDouble;
 // From SoundTouch plugin  
 begin
   result := uos.uos_GetBPM(TheBuffer, Channels, SampleRate);
   end; 
 {$endif}  
 
-procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
+procedure uos_CustBufferInfos(var bufferinfos: Tuos_BufferInfos; SampleRate: CDouble; SampleFormat : cint32; Channels: cint32 ; Length: cint32);
 // to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
 // all infos refer to the buffer used ---> length = length of the buffer div channels.
 begin
@@ -2293,7 +2294,8 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
   uos.uos_File2File(FilenameIN, FilenameOUT, SampleFormat, typeout);
   end;
   
-procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan, samplerate : integer);
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample,
+ chan: integer; samplerate : CDouble);
 // Create a audio wav file from a TMemoryStream.
 // FileName : filename of wav saved file
 // data : the memorystream

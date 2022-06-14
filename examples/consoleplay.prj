@@ -108,16 +108,16 @@ findinfiledialog=94
   "*.pas" "*.pp" "*.inc" "*.prj"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/lazarus/
+  /home/fred/mseide-msegui/
  filecolwidth=150
  x=466
  y=190
  cx=608
  cy=346
  filehistory=20
+  /home/fred/mseide-msegui/
   /home/fred/lazarus/
   /home/fred/fpc-ootb_322/
-  /home/fred/mseide-msegui/
   /home/fred/strumpract/
   /home/fred/bgrabitmap-11.4/
   /home/fred/fpc-ootb_322/installer/
@@ -138,8 +138,13 @@ findinfiledialog=94
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=DEFAULT_PITCH
+ value=cfloat
  history=20
+  cfloat
+  invalid_
+  invalid
+  invalidpoint
+  invalid pointer
   DEFAULT_PITCH
   Screen.Fonts
   fonts.
@@ -155,11 +160,6 @@ findinfiledialog=94
   editfontname
   deflayout
   encoding
-  fontname
-  backupfilecount
-  confideufo.encoding
-  fonts
-  TMSEFontRenderer
  [findinfileadialogfo]
  stackedunder=
  x=594
@@ -171,8 +171,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=979
- y=223
+ x=808
+ y=461
  cx=298
  cy=269
 replacedialog=33
@@ -936,17 +936,17 @@ modulefiles=0
 befcommandon=0
 makeoptionson=15
  4095
- 4095
+ 4091
  17
- 130
+ 134
  2046
  4095
  192
  0
  0
  0
- 4095
- 4095
+ 4091
+ 4091
  2047
  4095
  0
@@ -1024,13 +1024,13 @@ project_comment=
 aftcommandon=0
 unitdirson=8
  983048
- 983095
- 198655
+ 983091
+ 198651
  196800
  65536
- 65855
- 198655
- 67583
+ 65851
+ 198651
+ 67576
 macroon=0
 macronames=0
 macrovalues=0
@@ -1561,8 +1561,9 @@ envvarons=0
 [edit]
 hintwidth=382
 hintheight=0
-finddtext=inline
+finddtext=uos_MemStream2Wavfile
 findhistory=20
+ samplerate
  inline
  InputUpdateTag
  Data.comment
@@ -1582,16 +1583,25 @@ findhistory=20
  font name
  po_
  po_font
- createnewlang
 findoptions=1
-editpos=1
- 0,0
+editpos=3
+ 0,150
+ 0,27
+ 0,8144
 bookmarks0=0
-sourcefiles=1
- /home/fred/uos/examples/consoleplay.pas
-relpaths=1
+bookmarks1=0
+bookmarks2=0
+sourcefiles=3
+ ${PROJECTDIR}/consoleplay.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos.pas
+relpaths=3
  consoleplay.pas
-ismoduletexts=1
+ uos_flat.pas
+ uos.pas
+ismoduletexts=3
+ 0
+ 0
  0
 modules=0
 moduleoptions=0
@@ -1599,7 +1609,7 @@ visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=2
 [layout]
 windowlayout=524
  [mainfo.basedock]
@@ -1642,13 +1652,13 @@ windowlayout=524
  ncy=0
  x=495
  y=172
- cx=497
+ cx=855
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1725,14 +1735,14 @@ windowlayout=524
  ncy=0
  x=239
  y=115
- cx=678
+ cx=914
  cy=414
  rcx=0
  rcy=0
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=conflangfo
+ stackedunder=componentpalettefo
  parent=
  mdistate=3
  nx=0
@@ -1749,15 +1759,15 @@ windowlayout=524
  active=0
  visible=0
  [projecttreefo.grid]
- propcolwidthref=30
+ propcolwidthref=28
  width0=141
  sortdescend0=0
- width1=28
+ width1=26
  sortdescend1=0
  sorted=0
  col=1
  row=0
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1816,7 +1826,7 @@ windowlayout=524
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=projecttreefo
+ stackedunder=conflangfo
  parent=
  mdistate=0
  nx=0
@@ -1932,7 +1942,7 @@ windowlayout=524
  ncy=0
  x=0
  y=512
- cx=1221
+ cx=1219
  cy=88
  rcx=0
  rcy=0
@@ -2002,7 +2012,7 @@ windowlayout=524
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -2032,7 +2042,7 @@ windowlayout=524
  ncy=0
  x=0
  y=0
- cx=1221
+ cx=1219
  cy=54
  rcx=0
  rcy=0
@@ -2048,7 +2058,7 @@ windowlayout=524
  ncy=60
  x=0
  y=0
- cx=1221
+ cx=1219
  cy=60
  rcx=0
  rcy=0
@@ -2059,11 +2069,11 @@ windowlayout=524
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos_flat.pas
+ value=/home/fred/uos/examples/uos.pas
  history=4
+  /home/fred/uos/examples/consoleplay.pas
   /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/uos.pas
-  /home/fred/uos/examples/consoleplay.pas
   ${PROJECTDIR}/main.pas
  [debuggerfo.project_options]
  value=1
@@ -2081,20 +2091,20 @@ windowlayout=524
  ncy=0
  x=0
  y=0
- cx=1221
+ cx=1219
  cy=452
  rcx=0
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=0
+ index=2
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=mainfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -2122,7 +2132,7 @@ windowlayout=524
  ncy=0
  x=0
  y=57
- cx=1221
+ cx=1219
  cy=452
  rcx=0
  rcy=0

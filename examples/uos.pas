@@ -276,8 +276,8 @@ type
 
 type 
   Tuos_BufferInfos = record
-    SampleRate: longword;
-    SampleRateRoot: longword;
+    SampleRate: CDouble;
+    SampleRateRoot: CDouble;
     SampleFormat: cint32;
     Channels: cint32;
     Filename: UTF8String;
@@ -461,8 +461,8 @@ type
     OutFrames: cint32;
 {$endif}
 
-    SamplerateRoot: longword;
-    SampleRate: longword;
+    SamplerateRoot: CDouble;
+    SampleRate: CDouble;
     SampleFormat: cint32;
     Channels: cint32;
     lastbuf: shortint;
@@ -830,7 +830,7 @@ type
 
  {$IF DEFINED(portaudio)}
       function AddIntoDevOut(Device: cint32; Latency: CDouble;
-                             SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+                             SampleRate: CDouble; Channels: cint32; SampleFormat: cint32 ;
                              FramesCount: cint32 ; ChunkCount: cint32 ): cint32;
       // Add a Output into Device Output
       // Device ( -1 is default device )
@@ -844,7 +844,7 @@ type
       // example : OutputIndex1 := AddIntoDevOut(-1,-1,-1,-1,0,-1,-1);  
 {$endif}
 
-      function AddIntoFile(Filenamepath: PChar; SampleRate: cint32;
+      function AddIntoFile(Filenamepath: PChar; SampleRate: CDouble;
                            Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat
                            : cint32): cint32;
       // Add a Output into audio wav file with custom parameters from TFileStream
@@ -857,7 +857,7 @@ type
       //  result : Output Index in array  -1 = error
       // example : OutputIndex1 := AddIntoFile(edit5.Text,-1,-1, 0, -1, -1);
 
-      function AddIntoFileFromMem(Filenamepath: PChar; SampleRate: LongInt;
+      function AddIntoFileFromMem(Filenamepath: PChar; SampleRate: CDouble;
                                   Channels: LongInt; SampleFormat: LongInt ; FramesCount: LongInt;
                                   FileFormat: cint32): LongInt;
       // Add a Output into audio wav file with custom parameters from TMemoryStream
@@ -875,7 +875,7 @@ type
       // outmemory : pointer of buffer to use to store memory.
       // example : OutputIndex1 := AddIntoMemoryBuffer(bufmemory);
 
-      function  AddIntoMemoryBuffer(outmemory: PDArFloat; SampleRate: LongInt;  SampleFormat:
+      function  AddIntoMemoryBuffer(outmemory: PDArFloat; SampleRate: CDouble;  SampleFormat:
                                     LongInt;
                                     Channels: LongInt; FramesCount: LongInt): LongInt;
       // Add a Output into TMemoryStream
@@ -885,7 +885,7 @@ type
       // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
       // FramesCount : default : -1 (= 1024 * 2) 
 
-      function AddIntoMemoryStream(Var MemoryStream: TMemoryStream; SampleRate: LongInt;
+      function AddIntoMemoryStream(Var MemoryStream: TMemoryStream; SampleRate: CDouble;
                                    SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt;
                                    AudioFormat: cint32): LongInt;
       // Add a Output into TMemoryStream
@@ -897,7 +897,7 @@ type
       // AudioFormat : default : -1 (wav) (0:wav, 1:ogg);
 
  {$IF DEFINED(shout)}
-      function AddIntoIceServer(SampleRate : cint; Channels: cint; SampleFormat: cint;
+      function AddIntoIceServer(SampleRate : CDouble; Channels: cint; SampleFormat: cint;
                                 EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password:
                                 pchar; MountFile :pchar): cint32;
       // Add a Output into a IceCast server for audio-web-streaming 
@@ -915,7 +915,7 @@ type
 
 {$IF DEFINED(portaudio)}
       function AddFromDevIn(Device: cint32; Latency: CDouble;
-                            SampleRate: cint32; OutputIndex: cint32;
+                            SampleRate: CDouble; OutputIndex: cint32;
                             SampleFormat: cint32; FramesCount : cint32 ; ChunkCount: cint32): cint32;
       
       // Add a Input from Device Input with custom parameters
@@ -942,7 +942,7 @@ type
       function AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: shortint;
                             FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
                             duration : cint32; NbHarmonics: cint32; EvenHarmonics: cint32;
-                            OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ;
+                            OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: CDouble ;
                             FramesCount : cint32): cint32;
       // Add a input from Synthesizer with custom parameters
       // Channels: default: -1 (2) (1 = mono, 2 = stereo)
@@ -1046,7 +1046,7 @@ type
       // example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1,false);
 {$ENDIF}
 
-      function AddPlugin(PlugName: Pchar; SampleRate: cint32;
+      function AddPlugin(PlugName: Pchar; SampleRate: CDouble;
                          Channels: cint32): cint32;
       // Add a plugin , result is PluginIndex
       // SampleRate : delault : -1 (44100)
@@ -1151,7 +1151,7 @@ type
       //in format levelfilter0left,levelfilter0right,levelfilter1left,levelfilter2right,...
 
 {$IF DEFINED(soundtouch)}
-      function InputGetBPM(InputIndex: cint32): float; inline;
+      function InputGetBPM(InputIndex: cint32): CDouble; inline;
       // InputIndex : InputIndex of existing input
       // result : left level from 0 to 1
 {$endif}
@@ -1402,7 +1402,7 @@ function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
 // load plugin...
 
 {$IF DEFINED(soundtouch)}
-function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat; inline;
+function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: CDouble) : CDouble; inline;
 // From SoundTouch plugin
 {$endif}
 
@@ -1449,8 +1449,8 @@ procedure uos_File2File(FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cin
 // typeout : Type of out file (-1:default=wav, 0:wav, 1:pcm, 2:custom)
 // example : InputIndex1 := uos_File2File(edit5.Text,0,buffmem);
 
-procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan,
-                                samplerate : integer);
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan: integer;
+                                samplerate : CDouble);
 // Create a audio wav file from a TMemoryStream.
 // FileName : filename of wav saved file
 // data : the memorystream
@@ -1458,7 +1458,7 @@ procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsP
 // chan : number of channels
 // samplerate : sample rate
 
-procedure uos_CustBufferInfos(Var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat
+procedure uos_CustBufferInfos(Var bufferinfos: Tuos_BufferInfos; SampleRate: CDouble; SampleFormat
                               : cint32; Channels: cint32 ; Length: cint32); inline;
 // to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
 // all infos refer to the buffer used ---> length = length of the buffer div channels.
@@ -1511,7 +1511,8 @@ var
   paversion : UTF8String = '';
   sfversion : UTF8String = '';
   mpversion : UTF8String = '';
-  tempSamplerate, tempSampleFormat, tempchan, tempratio, tempLibOpen, tempLength : cint32;
+  tempSamplerate : CDouble;
+  tempSampleFormat, tempchan, tempratio, tempLibOpen, tempLength : cint32;
   tempoutmemory: TDArFloat;
   uosPlayers: array of Tuos_Player;
   uosPlayersStat : array of cint32;
@@ -1691,8 +1692,8 @@ begin
 end;
 
 // convert a Tmemory stream into a wav file.
-procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan,
-                                samplerate : integer);
+procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan: integer;
+                                samplerate : CDouble);
 var 
   f: TFileStream;
   wFileSize: LongInt;
@@ -1718,13 +1719,13 @@ begin
 
     Header.wChannels := chan;
 
-    Header.wSamplesPerSec := samplerate;
+    Header.wSamplesPerSec := round(samplerate);
 
     Header.wBitsPerSample := BitsPerSample;
 
     Header.wBlockAlign := chan * (BitsPerSample Div 8);
 
-    Header.wAvgBytesPerSec := samplerate * Header.wBlockAlign;
+    Header.wAvgBytesPerSec := round(samplerate) * Header.wBlockAlign;
 
     Header.wcbSize := 0;
     f.WriteBuffer(Header, SizeOf(Header));
@@ -1959,7 +1960,7 @@ begin
 end;
 
  {$IF DEFINED(soundtouch)}
-function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: cint32) : cfloat; inline;
+function uos_GetBPM(TheBuffer: TDArFloat;  Channels: cint32; SampleRate: CDouble) : CDouble; inline;
 // From SoundTouch plugin
 var 
   BPMhandle : THandle;
@@ -1967,7 +1968,7 @@ var
 begin
 
   if SampleRate = -1 then sr := 44100
-  else sr := SampleRate;
+  else sr := round(SampleRate);
   if Channels = -1 then ch := 2
   else ch := Channels;
 
@@ -2487,7 +2488,7 @@ begin
 end;
 
 {$IF DEFINED(soundtouch)}
-function Tuos_Player.InputGetBPM(InputIndex: cint32): float;
+function Tuos_Player.InputGetBPM(InputIndex: cint32): CDouble;
 // InputIndex : InputIndex of existing input
 // result : Beat per minuts
 begin
@@ -4163,7 +4164,7 @@ begin
 end;
 {$endif}
 
-function Tuos_Player.AddPlugin(PlugName: PChar; SampleRate: cint32;
+function Tuos_Player.AddPlugin(PlugName: PChar; SampleRate: CDouble;
                                Channels: cint32): cint32;
 // SampleRate : delault : -1 (44100)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
@@ -4194,7 +4195,7 @@ begin
       if SampleRate = -1 then
         soundtouch_setSampleRate(Plugin[x].PlugHandle, 44100)
       else
-        soundtouch_setSampleRate(Plugin[x].PlugHandle, SampleRate);
+        soundtouch_setSampleRate(Plugin[x].PlugHandle, round(SampleRate));
       if Channels = -1 then
         soundtouch_setChannels(Plugin[x].PlugHandle, 2)
       else
@@ -4225,7 +4226,7 @@ begin
       if SampleRate = -1 then
         sr := 44100
       else
-        sr := SampleRate;
+        sr := round(SampleRate);
       if Channels = -1 then
         chan := 2
       else
@@ -4251,7 +4252,7 @@ begin
       if SampleRate = -1 then
         bs2b_set_srate(Plugin[x].Abs2b, 44100)
       else
-        bs2b_set_srate(Plugin[x].Abs2b, SampleRate);
+        bs2b_set_srate(Plugin[x].Abs2b, round(SampleRate));
 
       Plugin[x].param1 := -1;
       Plugin[x].param2 := -1;
@@ -5197,11 +5198,11 @@ begin
 
   StreamIn[InputIndex].DSP[result].fftdata.FNoise := 
                                                      TuosNoiseRemoval.Create(StreamIn[InputIndex].
-                                                     data.Channels,StreamIn[InputIndex].data.
-                                                     SampleRate);
+                                                     data.Channels,round(StreamIn[InputIndex].data.
+                                                     SampleRate));
 
   StreamIn[InputIndex].DSP[result].fftdata.FNoise.samprate := 
-                                                              StreamIn[InputIndex].data.SampleRate;
+                                                              round(StreamIn[InputIndex].data.SampleRate);
 
   StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteProc := 
                                                                @StreamIn[InputIndex].DSP[result].
@@ -5232,12 +5233,12 @@ begin
 
   StreamOut[OutputIndex].DSP[result].fftdata.FNoise := 
                                                        TuosNoiseRemoval.Create(StreamOut[OutputIndex
-                                                       ].data.Channels,StreamOut[OutputIndex].data.
-                                                       SampleRate);
+                                                       ].data.Channels,round(StreamOut[OutputIndex].data.
+                                                       SampleRate));
 
   StreamOut[OutputIndex].DSP[result].fftdata.FNoise.samprate := 
-                                                                StreamOut[OutputIndex].data.
-                                                                SampleRate;
+                                                                round(StreamOut[OutputIndex].data.
+                                                                SampleRate);
 
   StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteProc := 
                                                                  @StreamOut[OutputIndex].DSP[result]
@@ -5422,7 +5423,7 @@ end;
 
 {$IF DEFINED(portaudio)}
 function Tuos_Player.AddFromDevIn(Device: cint32; Latency: CDouble;
-                                  SampleRate: cint32; OutputIndex: cint32;
+                                  SampleRate: CDouble; OutputIndex: cint32;
                                   SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
 // Add Input from IN device with custom parameters
 // Device ( -1 is default Input device )
@@ -5579,7 +5580,7 @@ end;
 function Tuos_Player.AddFromSynth(Channels: integer; WaveTypeL, WaveTypeR: shortint;
                                   FrequencyL, FrequencyR: float; VolumeL, VolumeR: float;
                                   duration : cint32; NbHarmonics: cint32; EvenHarmonics: cint32;
-                                  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: cint32 ;
+                                  OutputIndex: cint32;  SampleFormat: cint32 ; SampleRate: CDouble ;
                                   FramesCount : cint32): cint32;
 // Add a input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
@@ -5785,7 +5786,7 @@ end;
 {$endif}
 
 {$IF DEFINED(shout)}
-function Tuos_Player.AddIntoIceServer(SampleRate : cint; Channels: cint; SampleFormat: cint;
+function Tuos_Player.AddIntoIceServer(SampleRate : CDouble; Channels: cint; SampleFormat: cint;
                                       EncodeType: cint; Port: cint; Host: pchar; User: pchar;
                                       Password: pchar; MountFile :pchar): cint32;
 // Add a Output into a IceCast server for audio-web-streaming 
@@ -5959,7 +5960,7 @@ begin
 end;
  {$endif}
 
-procedure uos_CustBufferInfos(Var bufferinfos: Tuos_BufferInfos; SampleRate: longword; SampleFormat
+procedure uos_CustBufferInfos(Var bufferinfos: Tuos_BufferInfos; SampleRate: CDouble; SampleFormat
                               : cint32; Channels: cint32 ; Length: cint32);
 begin
   bufferinfos.SampleRate := Samplerate;
@@ -5972,7 +5973,7 @@ begin
 end;
 
 
-function Tuos_Player.AddIntoFileFromMem(Filenamepath: PChar; SampleRate: LongInt;
+function Tuos_Player.AddIntoFileFromMem(Filenamepath: PChar; SampleRate: CDouble;
                                         Channels: LongInt; SampleFormat: LongInt; FramesCount:
                                         LongInt; FileFormat: cint32): LongInt;
 // Add a Output into audio wav file with Custom parameters
@@ -6032,14 +6033,14 @@ begin
   if SampleRate = -1 then
     StreamOut[x].FileBuffer.wSamplesPerSec := 44100
   else
-    StreamOut[x].FileBuffer.wSamplesPerSec := samplerate;
+    StreamOut[x].FileBuffer.wSamplesPerSec := round(samplerate);
 
   StreamOut[x].Data.Samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
   StreamOut[x].LoopProc := Nil;
   StreamOut[x].Data.Enabled := True;
 end;
 
-function Tuos_Player.AddIntoFile(Filenamepath: PChar; SampleRate: cint32;
+function Tuos_Player.AddIntoFile(Filenamepath: PChar; SampleRate: CDouble;
                                  Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ;
                                  FileFormat: cint32): cint32;
 // Add a Output into audio wav file with custom parameters
@@ -6112,7 +6113,7 @@ begin
   if SampleRate = -1 then
     StreamOut[x].FileBuffer.wSamplesPerSec := 44100
   else
-    StreamOut[x].FileBuffer.wSamplesPerSec := samplerate;
+    StreamOut[x].FileBuffer.wSamplesPerSec := round(samplerate);
 
   StreamOut[x].Data.Samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
   StreamOut[x].LoopProc := Nil;
@@ -6196,7 +6197,7 @@ begin
   StreamOut[x].Data.Enabled := True;
 end;
 
-function  Tuos_Player.AddIntoMemoryBuffer(outmemory: PDArFloat; SampleRate: LongInt;  SampleFormat:
+function  Tuos_Player.AddIntoMemoryBuffer(outmemory: PDArFloat; SampleRate: CDouble;  SampleFormat:
                                           LongInt;
                                           Channels: LongInt; FramesCount: LongInt): LongInt;
 // Add a Output into TMemoryStream
@@ -6228,7 +6229,7 @@ begin
   else fr := FramesCount;
   StreamOut[x].Data.Wantframes := fr ;
   if SampleRate = -1 then sr := 44100
-  else sr := SampleRate;
+  else sr := round(SampleRate);
   StreamOut[x].Data.SampleRate := sr ;
 
   SetLength(StreamOut[x].Data.Buffer,fr*ch);
@@ -6240,7 +6241,7 @@ end;
 
   {$IF DEFINED(portaudio)}
 function Tuos_Player.AddIntoDevOut(Device: cint32; Latency: CDouble;
-                                   SampleRate: cint32; Channels: cint32; SampleFormat: cint32 ;
+                                   SampleRate: CDouble; Channels: cint32; SampleFormat: cint32 ;
                                    FramesCount: cint32 ; ChunkCount: cint32): cint32;
 // Add a Output into Device Output
 // Device ( -1 is default device )
@@ -6379,6 +6380,7 @@ var
   x, err, len, len2, i : cint32;
   PipeBufferSize, totsamples : integer;
   buffadd : tbytes;
+  samprat : cint32;
 
    {$IF DEFINED(sndfile)}
   //  sfInfo: TSF_INFO;
@@ -6693,9 +6695,11 @@ begin
           StreamIn[x].Data.TypePut := 2;
           StreamIn[x].Data.seekable := false;
           StreamIn[x].LoopProc := Nil;
+          
+          samprat := round(StreamIn[x].Data.samplerate);
 
           Err := mpg123_getformat(StreamIn[x].Data.HandleSt,
-                 StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
+                 samprat, StreamIn[x].Data.channels,
                  StreamIn[x].Data.encoding);
 
   {$IF DEFINED(uos_debug) and DEFINED(unix)}
@@ -6708,8 +6712,10 @@ begin
           if err <> 0 then
             begin
               sleep(50);
+              samprat := round(StreamIn[x].Data.samplerate);
+                     
               Err := mpg123_getformat(StreamIn[x].Data.HandleSt,
-                     StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
+                     samprat, StreamIn[x].Data.channels,
                      StreamIn[x].Data.encoding);
 
             end;
@@ -7059,7 +7065,7 @@ begin
 end;
 {$endif}
 
-function Tuos_Player.AddIntoMemoryStream(Var MemoryStream: TMemoryStream; SampleRate: LongInt;
+function Tuos_Player.AddIntoMemoryStream(Var MemoryStream: TMemoryStream; SampleRate: CDouble;
                                          SampleFormat: LongInt ; Channels: LongInt; FramesCount:
                                          LongInt; AudioFormat: cint32): LongInt;
 // Add a Output into TMemoryStream
@@ -7095,7 +7101,7 @@ begin
   else fr := FramesCount;
   StreamOut[x].Data.Wantframes := fr ;
   if SampleRate = -1 then sr := 44100
-  else sr := SampleRate;
+  else sr := round(SampleRate);
   StreamOut[x].Data.SampleRate := sr ;
 
   SetLength(StreamOut[x].Data.Buffer, StreamOut[x].Data.Wantframes*StreamOut[x].Data.Channels);
@@ -7126,7 +7132,7 @@ begin
 
   sfInfo.channels := StreamOut[x].Data.Channels;
   sfInfo.frames :=  streamOut[x].Data.Wantframes;
-  SFinfo.samplerate := StreamOut[x].Data.SampleRate;
+  SFinfo.samplerate := round(StreamOut[x].Data.SampleRate);
   SFinfo.seekable := 0;
   StreamOut[x].Data.HandleSt := sf_open_virtual(@sfVirtual, SFM_WRITE, @sfInfo,
                                 @StreamOut[x].MemorySteamOut);
@@ -7250,6 +7256,8 @@ var
   x, err, len, len2, i : cint32;
   PipeBufferSize, totsamples : integer;
   buffadd : tbytes;
+  samprat : cint32;
+      
 
       {$IF DEFINED(sndfile)}
   sfInfo: TSF_INFO;
@@ -7438,10 +7446,12 @@ begin
                                                   begin
                                                     StreamIn[x].Data.LibOpen := -1;
                                                   end;
-
+                                                
+                                                samprat := round(StreamIn[x].Data.samplerate);
+             
                                                 if Err = 0 then Err := mpg123_getformat(StreamIn[x].
                                                                        Data.HandleSt,
-                                                                       StreamIn[x].Data.samplerate,
+                                                                       samprat,
                                                                        StreamIn[x].Data.channels,
                                                                        StreamIn[x].Data.encoding);
 
@@ -7472,17 +7482,21 @@ begin
                                                                                  );
 
                                                     mpg123_format_none(StreamIn[x].Data.HandleSt);
+                                                    
+                                                    samprat := round(StreamIn[x].Data.samplerate);
+             
+                                                    
                                                     case StreamIn[x].Data.SampleFormat of 
                                                       0: mpg123_format(StreamIn[x].Data.HandleSt,
-                                                                       StreamIn[x].Data.samplerate,
+                                                                       samprat,
                                                                        StreamIn[x].Data.channels,
                                                                        StreamIn[x].Data.encoding);
                                                       1: mpg123_format(StreamIn[x].Data.HandleSt,
-                                                                       StreamIn[x].Data.samplerate,
+                                                                       samprat,
                                                                        StreamIn[x].Data.channels,
                                                                        StreamIn[x].Data.encoding);
                                                       2: mpg123_format(StreamIn[x].Data.HandleSt,
-                                                                       StreamIn[x].Data.samplerate,
+                                                                       samprat,
                                                                        StreamIn[x].Data.channels,
                                                                        StreamIn[x].Data.encoding);
                                                     end;
@@ -7504,9 +7518,11 @@ begin
                                                     Err :=  mpg123_open_handle(StreamIn[x].Data.
                                                            HandleSt, pointer(StreamIn[x].Data.
                                                            MemoryStream));
+                                                           
+                                                    samprat := round(StreamIn[x].Data.samplerate);      
 
                                                     mpg123_getformat(StreamIn[x].Data.HandleSt,
-                                                                     StreamIn[x].Data.samplerate,
+                                                                     samprat,
                                                                      StreamIn[x].Data.channels,
                                                                      StreamIn[x].Data.encoding);
 
@@ -7916,6 +7932,8 @@ function Tuos_Player.AddFromFile(Filename: PChar; OutputIndex: cint32;
 // example : InputIndex := AddFromFile('/usr/home/test.ogg',-1,-1,-1);
 var 
   x, x2, err: cint32;
+  
+  samprat : integer; 
 
   {$IF DEFINED(sndfile)}
   sfInfo: TSF_INFO;
@@ -8077,10 +8095,12 @@ begin
             begin
               StreamIn[x].Data.LibOpen := -1;
             end;
-
+           
+           samprat := round(StreamIn[x].Data.samplerate); 
+           
           if Err = 0 then
             Err := mpg123_getformat(StreamIn[x].Data.HandleSt,
-                   StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
+                   samprat, StreamIn[x].Data.channels,
                    StreamIn[x].Data.encoding);
 
           if Err = 0 then
@@ -8092,16 +8112,16 @@ begin
 
               mpg123_format_none(StreamIn[x].Data.HandleSt);
               case StreamIn[x].Data.SampleFormat of 
-                0: mpg123_format(StreamIn[x].Data.HandleSt, StreamIn[x].Data.samplerate,
+                0: mpg123_format(StreamIn[x].Data.HandleSt, samprat,
                                  StreamIn[x].Data.channels, StreamIn[x].Data.encoding);
-                1: mpg123_format(StreamIn[x].Data.HandleSt, StreamIn[x].Data.samplerate,
+                1: mpg123_format(StreamIn[x].Data.HandleSt, samprat,
                                  StreamIn[x].Data.channels, StreamIn[x].Data.encoding);
-                2: mpg123_format(StreamIn[x].Data.HandleSt, StreamIn[x].Data.samplerate,
+                2: mpg123_format(StreamIn[x].Data.HandleSt, samprat,
                                  StreamIn[x].Data.channels, StreamIn[x].Data.encoding);
               end;
               mpg123_open(StreamIn[x].Data.HandleSt, (PChar(FileName)));
               mpg123_getformat(StreamIn[x].Data.HandleSt,
-                               StreamIn[x].Data.samplerate, StreamIn[x].Data.channels,
+                               samprat, StreamIn[x].Data.channels,
                                StreamIn[x].Data.encoding);
               StreamIn[x].Data.filename := filename;
 
