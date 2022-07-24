@@ -127,9 +127,11 @@ begin
       begin
         // Spectrum : create  bandpass filters with alsobuf set to false, how many you want:
         for i := 1 to 10 do
-          uos_InputAddFilter(PlayerIndex1, InputIndex1, Equalizer_Bands[i].lo_freq, Equalizer_Bands[i].hi_freq, 1, 3, False, nil);
-        uos_EndProc(PlayerIndex1, @ClosePlayer);
-        uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer);
+            uos_InputAddFilter(PlayerIndex1, InputIndex1,
+            3, Equalizer_Bands[i].lo_freq, Equalizer_Bands[i].hi_freq, 1,
+            3, Equalizer_Bands[i].lo_freq, Equalizer_Bands[i].hi_freq, 1, False, nil);
+   
+       uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer);
         /////// everything is ready, here we are, lets play it...
         uos_Play(PlayerIndex1);
         Button1.Enabled := False;

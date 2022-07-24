@@ -150,18 +150,42 @@ var
     begin
 
     // Spectrum : create  bandpass filters with alsobuf set to false, how many you want:
-     uos_InputAddFilter(PlayerIndex1, InputIndex1, 10000,20000, 1, 3, false, nil);
-     uos_InputAddFilter(PlayerIndex1, InputIndex1, 6000,10000, 1, 3, false, nil);
-     uos_InputAddFilter(PlayerIndex1, InputIndex1, 4000,6000, 1, 3, false, nil);
-     uos_InputAddFilter(PlayerIndex1, InputIndex1, 2500,4000, 1, 3, false, nil);
-     uos_InputAddFilter(PlayerIndex1, InputIndex1, 1000,2500, 1, 3, false, nil);
-     uos_InputAddFilter(PlayerIndex1, InputIndex1, 700,1000, 1, 3, false, nil);
-     uos_InputAddFilter(PlayerIndex1, InputIndex1, 500,700, 1, 3, false, nil);
-     uos_InputAddFilter(PlayerIndex1, InputIndex1, 300,500, 1, 3, false, nil);
+      
+        uos_InputAddFilter(PlayerIndex1, InputIndex1,
+            3, 10000,20000, 1,
+            3, 10000,20000, 1, False, nil);
 
+        uos_InputAddFilter(PlayerIndex1, InputIndex1,
+            3, 6000,10000, 1,
+            3, 6000,10000, 1, False, nil);
+
+        uos_InputAddFilter(PlayerIndex1, InputIndex1,
+            3, 4000,6000, 1,
+            3, 4000,6000, 1, False, nil);
+            
+           uos_InputAddFilter(PlayerIndex1, InputIndex1,
+            3, 2500,4000, 1,
+            3, 2500,4000, 1, False, nil);
+
+        uos_InputAddFilter(PlayerIndex1, InputIndex1,
+            3, 1000, 2500, 1,
+            3, 1000, 2500, 1, False, nil);
+
+        uos_InputAddFilter(PlayerIndex1, InputIndex1,
+            3, 700,1000, 1,
+            3, 700,1000, 1, False, nil);
+            
+           uos_InputAddFilter(PlayerIndex1, InputIndex1,
+            3, 500,700, 1,
+            3, 500,700, 1, False, nil);
+
+        uos_InputAddFilter(PlayerIndex1, InputIndex1,
+            3, 300,500, 1,
+            3, 300,500, 1, False, nil);
+     
     /////// everything is ready, here we are, lets play it...
     uos_Play(PlayerIndex1);
-
+    
     writeln();
 
 // you may, of course, use a player-loop procedure insteed.

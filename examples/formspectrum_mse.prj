@@ -71,6 +71,121 @@ order18=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/formspectrum_mse.prj
+options=114
+ [projectoptionsfo.toolshortcuts]
+ dropdowncolwidths=3
+  70
+  70
+  70
+ [projectoptionsfo.twidgetgrid3]
+ propcolwidthref=764
+ sortdescend0=0
+ sortdescend1=0
+ sortdescend2=0
+ sortdescend3=0
+ width4=104
+ sortdescend4=0
+ width5=92
+ sortdescend5=0
+ width6=86
+ sortdescend6=0
+ width7=77
+ sortdescend7=0
+ width8=39
+ sortdescend8=0
+ width9=285
+ sortdescend9=0
+ [projectoptionsfo.twidgetgrid4]
+ propcolwidthref=572
+ width0=96
+ sortdescend0=0
+ sortdescend1=0
+ width2=100
+ sortdescend2=0
+ width3=275
+ sortdescend3=0
+ width4=287
+ sortdescend4=0
+ sorted=0
+ col=-1073741823
+ row=-1073741823
+ rowheight=17
+ [projectoptionsfo.newfile]
+ firsttab=0
+ index=0
+ [projectoptionsfo.fontaliasgrid]
+ propcolwidthref=315
+ width0=143
+ sortdescend0=0
+ width1=304
+ sortdescend1=0
+ width2=66
+ sortdescend2=0
+ width3=54
+ sortdescend3=0
+ width4=62
+ sortdescend4=0
+ width5=70
+ sortdescend5=0
+ width6=103
+ sortdescend6=0
+ [projectoptionsfo.macrosplitter]
+ x=0
+ y=201
+ xprop=1
+ yprop=0.37294332723949
+ [projectoptionsfo.macrogrid]
+ propcolwidthref=537
+ sortdescend0=0
+ sortdescend1=0
+ sortdescend2=0
+ sortdescend3=0
+ sortdescend4=0
+ sortdescend5=0
+ sortdescend6=0
+ sortdescend7=0
+ sortdescend8=0
+ sortdescend9=0
+ width10=146
+ sortdescend10=0
+ width11=521
+ sortdescend11=0
+ [projectoptionsfo.comment_1]
+ value=
+ [projectoptionsfo.comment_B]
+ value=
+ [projectoptionsfo.comment_M]
+ value=
+ [projectoptionsfo.makegroupbox]
+ firsttab=0
+ index=2
+ [projectoptionsfo.exceptionsgrid]
+ propcolwidthref=725
+ width0=77
+ sortdescend0=0
+ width1=719
+ sortdescend1=0
+ [projectoptionsfo.ttabwidget1]
+ firsttab=0
+ index=0
+ [projectoptionsfo.filefiltergrid]
+ propcolwidthref=660
+ width0=186
+ sortdescend0=0
+ width1=653
+ sortdescend1=0
+ [projectoptionsfo.ttabwidget2]
+ firsttab=0
+ index=0
+ [projectoptionsfo.setting_tab]
+ firsttab=0
+ index=2
+ [projectoptionsfo]
+ stackedunder=
+ x=212
+ y=56
+ cx=815
+ cy=606
 settings=8
  [settings_form]
  x=492
@@ -226,7 +341,12 @@ makeoptions=5
  -B
  -FUunits
  -O2 -XX -CX -Xs
-makeoptpurpose=0
+makeoptpurpose=5
+ 
+ 
+ 
+ 
+ 
 compilerused=29
  ${COMPILER} (Default)
  Pascal 1
@@ -357,7 +477,7 @@ newfoforms=11
 forcezorder=0
 stripmessageesc=0
 copymessages=0
-closemessages=1
+closemessages=0
 enablepurpose=0
 enablesource=0
 checkmethods=1
@@ -365,8 +485,68 @@ colorerror=-1610612717
 colorwarning=-1610612712
 colornote=-1610612716
 colorhint=15134207
-usercolors=0
-usercolorcomment=0
+usercolors=30
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+usercolorcomment=30
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 formatmacronames=0
 formatmacrovalues=0
 settingsfile=
@@ -382,12 +562,12 @@ modulefiles=0
 befcommandon=0
 makeoptionson=5
  4095
- 4095
+ 4047
  4063
- 34
+ 4095
  32
 compilerusedon=29
- 69631
+ 4095
  0
  0
  0
@@ -417,14 +597,14 @@ compilerusedon=29
  0
  0
 debuggerusedon=6
- 69631
+ 4095
  0
  0
  0
  0
  0
 exeusedon=15
- 69631
+ 4095
  0
  0
  0
@@ -456,7 +636,7 @@ project_creator=
 project_copyright=
 project_license=
 project_time=
-project_date=
+project_date=00:53:32 25/07/22
 project_comment=
 aftcommandon=0
 unitdirson=2
@@ -466,7 +646,17 @@ macroon=0
 macronames=0
 macrovalues=0
 macrogroup=0
-groupcomments=0
+groupcomments=10
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 toolsave=0
 toolhide=0
 toolparse=0
@@ -875,7 +1065,7 @@ nomenumodules=0
 firsttab=0
 index=0
 [layout]
-windowlayout=521
+windowlayout=522
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -889,10 +1079,10 @@ windowlayout=521
  ny=0
  ncx=0
  ncy=0
- x=65
- y=70
- cx=1231
- cy=621
+ x=0
+ y=29
+ cx=1360
+ cy=708
  rcx=0
  rcy=0
  wsize=0
@@ -944,7 +1134,7 @@ windowlayout=521
  [memoryfo]
  splitdir=0
  useroptions=268451963
- stackedunder=findmessagefo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1006,7 +1196,7 @@ windowlayout=521
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=mainfo
+ stackedunder=conflangfo
  parent=
  mdistate=3
  nx=0
@@ -1090,7 +1280,7 @@ windowlayout=521
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=conflangfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -1109,10 +1299,10 @@ windowlayout=521
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=394
- width0=94
+ propcolwidthref=242
+ width0=58
  sortdescend0=0
- width1=294
+ width1=178
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1205,8 +1395,8 @@ windowlayout=521
  ncx=0
  ncy=0
  x=0
- y=512
- cx=1221
+ y=599
+ cx=1350
  cy=88
  rcx=0
  rcy=0
@@ -1276,7 +1466,7 @@ windowlayout=521
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -1306,8 +1496,8 @@ windowlayout=521
  ncy=0
  x=0
  y=0
- cx=1221
- cy=69
+ cx=1350
+ cy=57
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1318,12 +1508,12 @@ windowlayout=521
  mdistate=0
  nx=0
  ny=0
- ncx=1221
- ncy=77
+ ncx=1348
+ ncy=65
  x=0
  y=0
- cx=1221
- cy=77
+ cx=1350
+ cy=65
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1334,7 +1524,8 @@ windowlayout=521
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/formspectrum_mse.pas
- history=1
+ history=2
+  /home/fred/uos/examples/formspectrum_mse.pas
   ${PROJECTDIR}/main.pas
  [debuggerfo.project_options]
  value=1
@@ -1352,8 +1543,8 @@ windowlayout=521
  ncy=0
  x=0
  y=0
- cx=1221
- cy=437
+ cx=1350
+ cy=536
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1365,7 +1556,7 @@ windowlayout=521
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=componentpalettefo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -1392,9 +1583,9 @@ windowlayout=521
  ncx=0
  ncy=0
  x=0
- y=72
- cx=1221
- cy=437
+ y=60
+ cx=1350
+ cy=536
  rcx=0
  rcy=0
 [targetconsole]

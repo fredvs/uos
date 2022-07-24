@@ -108,13 +108,14 @@ findinfiledialog=94
   "*.pas" "*.pp" "*.inc" "*.prj"
  [findinfileadialogfo.dir]
  filenames=1
-  /home/fred/lazarus/
+  /home/fred/strumpract/src/
  filecolwidth=150
  x=466
  y=190
  cx=608
  cy=346
  filehistory=20
+  /home/fred/strumpract/src/
   /home/fred/lazarus/
   /home/fred/fpc-ootb_322/
   /home/fred/mseide-msegui/
@@ -124,7 +125,6 @@ findinfiledialog=94
   /home/fred/ideu_po/
   /home/fred/ideu_bin/
   /home/fred/fpc331trunk/
-  /home/fred/strumpract/src/
   /home/fred/ideu_github/
   /home/fred/mseuniverse/
   /home/fred/freepascal-ootb_320test/
@@ -138,8 +138,9 @@ findinfiledialog=94
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=DEFAULT_PITCH
+ value=uos_InputAddFilter
  history=20
+  uos_InputAddFilter
   DEFAULT_PITCH
   Screen.Fonts
   fonts.
@@ -159,7 +160,6 @@ findinfiledialog=94
   backupfilecount
   confideufo.encoding
   fonts
-  TMSEFontRenderer
  [findinfileadialogfo]
  stackedunder=
  x=594
@@ -686,7 +686,7 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=15
+makeoptions=14
  -Mobjfpc -Sh -Fcutf8
  -dmse_with_zeoslib
  -gl
@@ -697,12 +697,11 @@ makeoptions=15
  -Cg -k-pie -k-znow
  -k--gc-sections
  -dmorecomponents
- -dmse_dynpo
  -SIcorba
  -FUunits
  -vewinhq
  -dclass_bridge
-makeoptpurpose=15
+makeoptpurpose=14
  Define Object Pascal
  Zeos components
  Debug infos
@@ -713,7 +712,6 @@ makeoptpurpose=15
  Make a PIE executable
  Garbage collector
  Add extended components
- Use dynamic loading of po files
  Cobra Interface
  Output of units
  Verbosity
@@ -934,7 +932,7 @@ modulenames=0
 moduletypes=0
 modulefiles=0
 befcommandon=0
-makeoptionson=15
+makeoptionson=14
  4095
  4095
  17
@@ -945,7 +943,6 @@ makeoptionson=15
  0
  0
  0
- 4095
  4095
  2047
  4095
@@ -1561,8 +1558,9 @@ envvarons=0
 [edit]
 hintwidth=382
 hintheight=0
-finddtext=caption
+finddtext=uos_InputAddFilter
 findhistory=20
+ uos_InputAddFilter
  caption
  ANSI_CHARSET
  GetCharSet
@@ -1582,16 +1580,35 @@ findhistory=20
  conflangfo.sh
  conflangfo.ok
  setlangi
- uses
 findoptions=1
-editpos=1
- 0,0
+editpos=5
+ 0,173
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 4,133
 bookmarks0=0
-sourcefiles=1
+bookmarks1=0
+bookmarks2=0
+bookmarks3=0
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/consolespectrum.pas
-relpaths=1
+ /home/fred/strumpract/src/recorder.pas
+ /home/fred/strumpract/src/recorder.mfm
+ ${PROJECTDIR}/main_spectrum_mse.pas
+ ${PROJECTDIR}/formspectrum_unit.pas
+relpaths=5
  consolespectrum.pas
-ismoduletexts=1
+ strumpract/src/recorder.pas
+ strumpract/src/recorder.mfm
+ main_spectrum_mse.pas
+ formspectrum_unit.pas
+ismoduletexts=5
+ 0
+ 0
+ -1
+ 0
  0
 modules=0
 moduleoptions=0
@@ -1601,7 +1618,7 @@ nomenumodules=0
 firsttab=0
 index=0
 [layout]
-windowlayout=521
+windowlayout=522
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1670,7 +1687,7 @@ windowlayout=521
  [memoryfo]
  splitdir=0
  useroptions=268451963
- stackedunder=findmessagefo
+ stackedunder=dialogfilesfo
  parent=
  mdistate=0
  nx=0
@@ -1732,7 +1749,7 @@ windowlayout=521
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=mainfo
+ stackedunder=conflangfo
  parent=
  mdistate=3
  nx=0
@@ -1749,15 +1766,15 @@ windowlayout=521
  active=0
  visible=0
  [projecttreefo.grid]
- propcolwidthref=30
+ propcolwidthref=28
  width0=141
  sortdescend0=0
- width1=28
+ width1=26
  sortdescend1=0
  sorted=0
  col=1
  row=0
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1816,7 +1833,7 @@ windowlayout=521
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=conflangfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -1835,10 +1852,10 @@ windowlayout=521
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=394
- width0=94
+ propcolwidthref=242
+ width0=58
  sortdescend0=0
- width1=294
+ width1=178
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1932,7 +1949,7 @@ windowlayout=521
  ncy=0
  x=0
  y=512
- cx=1221
+ cx=1219
  cy=88
  rcx=0
  rcy=0
@@ -2002,7 +2019,7 @@ windowlayout=521
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=
  parent=
  mdistate=0
  nx=0
@@ -2032,8 +2049,8 @@ windowlayout=521
  ncy=0
  x=0
  y=0
- cx=1221
- cy=69
+ cx=1219
+ cy=56
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -2048,8 +2065,8 @@ windowlayout=521
  ncy=77
  x=0
  y=0
- cx=1221
- cy=77
+ cx=1219
+ cy=64
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -2060,8 +2077,9 @@ windowlayout=521
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/consolespectrum.pas
- history=1
-  ${PROJECTDIR}/main.pas
+ history=2
+  /home/fred/uos/examples/formspectrum_unit.pas
+  /home/fred/uos/examples/main_spectrum_mse.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -2078,8 +2096,8 @@ windowlayout=521
  ncy=0
  x=0
  y=0
- cx=1221
- cy=437
+ cx=1219
+ cy=450
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -2091,7 +2109,7 @@ windowlayout=521
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=componentpalettefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -2118,9 +2136,9 @@ windowlayout=521
  ncx=0
  ncy=0
  x=0
- y=72
- cx=1221
- cy=437
+ y=59
+ cx=1219
+ cy=450
  rcx=0
  rcy=0
 [targetconsole]
