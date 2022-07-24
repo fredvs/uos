@@ -43,6 +43,7 @@ type
     procedure closeplayer;
     procedure FormDestroy(Sender: TObject);
     procedure LoopProcPlayer;
+    procedure endprocedure;
   private
 
   public
@@ -130,9 +131,13 @@ begin
             uos_InputAddFilter(PlayerIndex1, InputIndex1,
             3, Equalizer_Bands[i].lo_freq, Equalizer_Bands[i].hi_freq, 1,
             3, Equalizer_Bands[i].lo_freq, Equalizer_Bands[i].hi_freq, 1, False, nil);
-   
+
+       uos_Endproc(PlayerIndex1,@endprocedure);
+
        uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer);
         /////// everything is ready, here we are, lets play it...
+
+
         uos_Play(PlayerIndex1);
         Button1.Enabled := False;
       end;
@@ -143,6 +148,11 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   uos_stop(PlayerIndex1);
+  Button1.Enabled := True;
+end;
+
+procedure TForm1.endprocedure;
+begin
   Button1.Enabled := True;
 end;
 
