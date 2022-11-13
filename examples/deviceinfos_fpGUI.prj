@@ -171,8 +171,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=789
- y=197
+ x=1031
+ y=134
  cx=298
  cy=269
 replacedialog=33
@@ -296,7 +296,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=3
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=860
  width0=47
@@ -305,7 +305,7 @@ options=114
  sortdescend1=0
  [projectoptionsfo.ttabwidget1]
  firsttab=0
- index=0
+ index=1
  [projectoptionsfo.filefiltergrid]
  propcolwidthref=779
  width0=112
@@ -675,10 +675,10 @@ unitdirs=8
  /usr/lib/gcc/x86_64-linux-gnu/10
  ${FPGUIDIR}/src/corelib/x11
  ${FPGUIDIR}/src/corelib/gdi
- /home/fred/Downloads/fpGUI-develop/src/corelib
+ ${FPGUIDIR}/src/corelib
  ${FPGUIDIR}/src/*
  ${FPGUIDIR}/src
- /home/fred/Downloads/fpGUI-develop/src/3rdparty/regex
+ ${FPGUIDIR}/src/3rdparty/regex
 unitpref=-Fu
 incpref=-Fi
 libpref=-Fl
@@ -938,7 +938,7 @@ makeoptionson=15
  4095
  4095
  17
- 134
+ 130
  2046
  4095
  192
@@ -1146,8 +1146,10 @@ beforeload=
 afterload=
 beforerun=
 sourcebase=
-sourcedirs=11
- 
+sourcedirs=13
+ ${FPGUIDIR}/src/corelib/x11/
+ ${FPGUIDIR}/src/corelib/
+ ${FPGUIDIR}/src/
  ${FPCSRCDIR}/
  ${FPCSRCDIR}/*/
  ${FPCSRCDIR}/*/*/
@@ -1561,8 +1563,12 @@ envvarons=0
 [edit]
 hintwidth=382
 hintheight=0
-finddtext=none
+finddtext=uos_GetInfoDevice
 findhistory=20
+ uos_GetInfoDevice
+ portaudio
+ uos_LoadLib
+ var
  none
  DoSetMouseCursor
  TMouseCursor
@@ -1579,34 +1585,15 @@ findhistory=20
  fontenumcallback
  defaultfontinfo
  se_fontname
- font name
- po_
- po_font
- createnewlang
 findoptions=1
-editpos=4
- 0,271
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+editpos=1
+ 2,132
 bookmarks0=0
-bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-sourcefiles=4
+sourcefiles=1
  ${PROJECTDIR}/deviceinfos_fpGUI.pas
- /home/fred/fpGUI-maint/src/corelib/fpg_base.pas
- /home/fred/mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
- /home/fred/fpGUI/src/corelib/gdi/fpg_gdi.pas
-relpaths=4
+relpaths=1
  deviceinfos_fpGUI.pas
- fpGUI-maint/src/corelib/fpg_base.pas
- mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
- fpGUI/src/corelib/gdi/fpg_gdi.pas
-ismoduletexts=4
- 0
- 0
- 0
+ismoduletexts=1
  0
 modules=0
 moduleoptions=0
@@ -1616,7 +1603,7 @@ nomenumodules=0
 firsttab=0
 index=0
 [layout]
-windowlayout=540
+windowlayout=538
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1630,8 +1617,8 @@ windowlayout=540
  ny=0
  ncx=0
  ncy=0
- x=132
- y=109
+ x=51
+ y=44
  cx=1231
  cy=621
  rcx=0
@@ -1655,8 +1642,8 @@ windowlayout=540
  ny=0
  ncx=0
  ncy=0
- x=495
- y=172
+ x=577
+ y=159
  cx=497
  cy=314
  rcx=0
@@ -1740,14 +1727,14 @@ windowlayout=540
  ncy=0
  x=0
  y=29
- cx=1368
+ cx=1366
  cy=711
  rcx=0
  rcy=0
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=componentpalettefo
+ stackedunder=conflangfo
  parent=
  mdistate=3
  nx=0
@@ -1831,7 +1818,7 @@ windowlayout=540
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=conflangfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -1850,10 +1837,10 @@ windowlayout=540
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=338
- width0=81
+ propcolwidthref=242
+ width0=58
  sortdescend0=0
- width1=251
+ width1=178
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1947,7 +1934,7 @@ windowlayout=540
  ncy=0
  x=0
  y=602
- cx=1356
+ cx=1354
  cy=88
  rcx=0
  rcy=0
@@ -2017,7 +2004,7 @@ windowlayout=540
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=targetconsolefo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -2047,7 +2034,7 @@ windowlayout=540
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1354
  cy=54
  rcx=0
  rcy=0
@@ -2059,11 +2046,11 @@ windowlayout=540
  mdistate=0
  nx=0
  ny=0
- ncx=1356
+ ncx=1354
  ncy=62
  x=0
  y=0
- cx=1356
+ cx=1354
  cy=62
  rcx=0
  rcy=0
@@ -2075,27 +2062,25 @@ windowlayout=540
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/deviceinfos_fpGUI.pas
- history=20
+ history=18
   /home/fred/uos/examples/deviceinfos_fpGUI.pas
-  /home/fred/fpGUI-maint/src/corelib/fpg_base.pas
-  /home/fred/Downloads/fpGUI-develop/src/corelib/x11/fpg_x11.pas
-  /home/fred/Downloads/fpGUI-develop/src/corelib/fpg_base.pas
-  /home/fred/fpGUI/src/corelib/gdi/fpg_gdi.pas
-  /home/fred/fpGUI/src/corelib/x11/fpg_x11.pas
-  /home/fred/fpGUI/src/corelib/fpg_base.pas
-  /home/fred/fpGUI-maint/src/corelib/gdi/fpg_gdi.pas
+  /home/fred/uos/examples/uos_flat.pas
+  /home/fred/uos/examples/uos.pas
   /home/fred/mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
-  /home/fred/mseide-msegui/lib/common/kernel/linux/mseuniintf.pas
-  /home/fred/mseide-msegui/lib/common/kernel/linux/msesysintf.pas
   /home/fred/mseide-msegui/lib/common/kernel/msectypes.pas
-  /home/fred/cafecentral/cc_backuplast.bat
-  /home/fred/ideu/src/ideU (copy 1).pas
-  /home/fred/strumpract/src/uos_flat.pas
-  /home/fred/uos/src/uos.pas
-  /home/fred/strumpract/src/uos.pas
-  /home/fred/strumpract/src/infos.pas
-  /home/fred/strumpract/src/conflang.pas
-  /home/fred/ideu/src/conflang.pas
+  /home/fred/strumpract/src/uos_soundtouch.pas
+  /home/fred/testfpc/dbfilter2/main.pas
+  /home/fred/testfpc/dbfilter2/dbfilter.pas
+  /home/fred/testfpc/dbfilter3/msedbedit.pas
+  /home/fred/mseide-msegui/lib/common/dialogx/msefiledialogx.pas
+  /home/fred/mseide-msegui/lib/common/kernel/msegui.pas
+  /home/fred/mseide-msegui/lib/common/dialogs/msefiledialog.pas
+  /home/fred/mseide-msegui/apps/ide/sourcepage.pas
+  /home/fred/mseide-msegui/lib/common/dialogs/msedirtreesub_mfm.pas
+  /home/fred/mseide-msegui/apps/ide/make.pas
+  /home/fred/ideU/src/msefiledialogx.pas
+  /home/fred/mseide-msegui/apps/ide/sourceform.pas
+  /home/fred/strumpract/src/drums.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -2112,7 +2097,7 @@ windowlayout=540
  ncy=0
  x=0
  y=0
- cx=1356
+ cx=1354
  cy=542
  rcx=0
  rcy=0
@@ -2125,7 +2110,7 @@ windowlayout=540
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=projecttreefo
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -2153,7 +2138,7 @@ windowlayout=540
  ncy=0
  x=0
  y=57
- cx=1356
+ cx=1354
  cy=542
  rcx=0
  rcy=0

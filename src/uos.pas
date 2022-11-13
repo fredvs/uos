@@ -1362,6 +1362,9 @@ type
 function uos_GetInfoLibraries() : Pansichar ; inline;
 
  {$IF DEFINED(portaudio)}
+
+procedure uos_UpdateDevice(); inline;
+ 
 procedure uos_GetInfoDevice(); inline;
 
 function uos_GetInfoDeviceStr() : Pansichar ; inline;
@@ -1524,6 +1527,7 @@ var
   uosDefaultDeviceOut: cint32 = -1;
   uosInit: Tuos_Init = nil;
   uosisactif : boolean = true;
+  uos_papath : string = '';
 
  {$IF DEFINED(windows)}
   old8087cw: word;
@@ -11281,6 +11285,14 @@ begin
 end;
 
 {$IF DEFINED(portaudio)}
+procedure uos_UpdateDevice();
+begin
+ Pa_Unload();
+ Pa_Load(uosInit.PA_FileName);
+ Pa_Initialize();
+end;
+
+
 procedure uos_GetInfoDevice();
 var 
   x: cint32;
@@ -11290,7 +11302,9 @@ begin
   x := 0;
   uosDeviceCount := 0;
   SetLength(uosDeviceInfos, 0);
-
+  
+  uos_UpdateDevice();
+  
   if Pa_GetDeviceCount() > 0 then
     begin
       uosDeviceCount := Pa_GetDeviceCount();

@@ -126,15 +126,12 @@ var
       sleep(500);
       Show;
     end;
-      
- 
   end;
 
   procedure TDevicesInfos.btnReLoadClick(Sender: TObject);
   begin
-    CheckInfos();
+     CheckInfos();
   end;
-
 
   procedure TDevicesInfos.AfterCreate;
   begin

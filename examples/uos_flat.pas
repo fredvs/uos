@@ -219,6 +219,8 @@ function uos_GetInfoLibraries() : PansiChar ;
 {$IF DEFINED(portaudio)}
 procedure uos_GetInfoDevice();
 
+procedure uos_UpdateDevice();
+
 function uos_GetInfoDeviceStr() : Pansichar ;
 {$endif}
 
@@ -2394,6 +2396,14 @@ setlength(uosDeviceInfos,length(uos.uosDeviceInfos));
 
 uosDeviceInfos := uos.uosDeviceInfos;
 
+uosDeviceCount:= uos.uosDeviceCount;
+uosDefaultDeviceIn:= uos.uosDefaultDeviceIn;
+uosDefaultDeviceOut:= uos.uosDefaultDeviceOut;
+end;
+
+procedure uos_UpdateDevice();
+begin
+uos.uos_UpdateDevice();
 uosDeviceCount:= uos.uosDeviceCount;
 uosDefaultDeviceIn:= uos.uosDefaultDeviceIn;
 uosDefaultDeviceOut:= uos.uosDefaultDeviceOut;
