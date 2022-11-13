@@ -1527,7 +1527,6 @@ var
   uosDefaultDeviceOut: cint32 = -1;
   uosInit: Tuos_Init = nil;
   uosisactif : boolean = true;
-  uos_papath : string = '';
 
  {$IF DEFINED(windows)}
   old8087cw: word;

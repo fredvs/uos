@@ -171,8 +171,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=1031
- y=134
+ x=835
+ y=206
  cx=298
  cy=269
 replacedialog=33
@@ -1566,7 +1566,6 @@ hintheight=0
 finddtext=uos_GetInfoDevice
 findhistory=20
  uos_GetInfoDevice
- portaudio
  uos_LoadLib
  var
  none
@@ -1585,15 +1584,36 @@ findhistory=20
  fontenumcallback
  defaultfontinfo
  se_fontname
+ font name
 findoptions=1
-editpos=1
- 2,132
+editpos=5
+ 0,0
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
+ 0,-1073741823
 bookmarks0=0
-sourcefiles=1
- ${PROJECTDIR}/deviceinfos_fpGUI.pas
-relpaths=1
- deviceinfos_fpGUI.pas
-ismoduletexts=1
+bookmarks1=0
+bookmarks2=0
+bookmarks3=0
+bookmarks4=0
+sourcefiles=5
+ /home/fred/mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
+ /home/fred/fpGUI/src/corelib/gdi/fpg_gdi.pas
+ ${PROJECTDIR}/uos_flat.pas
+ ${PROJECTDIR}/uos.pas
+ ${PROJECTDIR}/uos_portaudio.pas
+relpaths=5
+ ../mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
+ fpGUI/src/corelib/gdi/fpg_gdi.pas
+ uos/examples/uos_flat.pas
+ uos/examples/uos.pas
+ uos/examples/uos_portaudio.pas
+ismoduletexts=5
+ 0
+ 0
+ 0
+ 0
  0
 modules=0
 moduleoptions=0
@@ -1603,7 +1623,7 @@ nomenumodules=0
 firsttab=0
 index=0
 [layout]
-windowlayout=538
+windowlayout=536
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1617,13 +1637,13 @@ windowlayout=538
  ny=0
  ncx=0
  ncy=0
- x=51
- y=44
+ x=95
+ y=70
  cx=1231
  cy=621
  rcx=0
  rcy=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [findmessagefo.findtext]
@@ -1642,8 +1662,8 @@ windowlayout=538
  ny=0
  ncx=0
  ncy=0
- x=577
- y=159
+ x=495
+ y=172
  cx=497
  cy=314
  rcx=0
@@ -1751,15 +1771,15 @@ windowlayout=538
  active=0
  visible=0
  [projecttreefo.grid]
- propcolwidthref=28
+ propcolwidthref=30
  width0=141
  sortdescend0=0
- width1=26
+ width1=28
  sortdescend1=0
  sorted=0
  col=1
  row=0
- rowheight=16
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1933,8 +1953,8 @@ windowlayout=538
  ncx=0
  ncy=0
  x=0
- y=602
- cx=1354
+ y=512
+ cx=1221
  cy=88
  rcx=0
  rcy=0
@@ -2004,7 +2024,7 @@ windowlayout=538
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=objectinspectorfo
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
@@ -2034,8 +2054,8 @@ windowlayout=538
  ncy=0
  x=0
  y=0
- cx=1354
- cy=54
+ cx=1221
+ cy=53
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -2046,11 +2066,11 @@ windowlayout=538
  mdistate=0
  nx=0
  ny=0
- ncx=1354
+ ncx=1204
  ncy=62
  x=0
  y=0
- cx=1354
+ cx=1206
  cy=62
  rcx=0
  rcy=0
@@ -2061,10 +2081,8 @@ windowlayout=538
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/deviceinfos_fpGUI.pas
- history=18
-  /home/fred/uos/examples/deviceinfos_fpGUI.pas
-  /home/fred/uos/examples/uos_flat.pas
+ value=/home/fred/uos/examples/uos.pas
+ history=16
   /home/fred/uos/examples/uos.pas
   /home/fred/mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
   /home/fred/mseide-msegui/lib/common/kernel/msectypes.pas
@@ -2097,8 +2115,8 @@ windowlayout=538
  ncy=0
  x=0
  y=0
- cx=1354
- cy=542
+ cx=1221
+ cy=453
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -2137,9 +2155,9 @@ windowlayout=538
  ncx=0
  ncy=0
  x=0
- y=57
- cx=1354
- cy=542
+ y=56
+ cx=1221
+ cy=453
  rcx=0
  rcy=0
 [targetconsole]
