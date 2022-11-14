@@ -1754,7 +1754,7 @@ windowlayout=536
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=conflangfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1771,15 +1771,15 @@ windowlayout=536
  active=0
  visible=0
  [projecttreefo.grid]
- propcolwidthref=30
+ propcolwidthref=28
  width0=141
  sortdescend0=0
- width1=28
+ width1=26
  sortdescend1=0
  sorted=0
  col=1
  row=0
- rowheight=17
+ rowheight=16
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1838,7 +1838,7 @@ windowlayout=536
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=projecttreefo
+ stackedunder=conflangfo
  parent=
  mdistate=0
  nx=0
@@ -1954,7 +1954,7 @@ windowlayout=536
  ncy=0
  x=0
  y=512
- cx=1221
+ cx=1219
  cy=88
  rcx=0
  rcy=0
@@ -2024,7 +2024,7 @@ windowlayout=536
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=mainfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -2054,8 +2054,8 @@ windowlayout=536
  ncy=0
  x=0
  y=0
- cx=1221
- cy=53
+ cx=1219
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -2070,7 +2070,7 @@ windowlayout=536
  ncy=62
  x=0
  y=0
- cx=1206
+ cx=1219
  cy=62
  rcx=0
  rcy=0
@@ -2081,10 +2081,10 @@ windowlayout=536
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
  history=16
-  /home/fred/uos/examples/uos.pas
   /home/fred/mseide-msegui/lib/common/kernel/linux/mseguiintf.pas
+  /home/fred/uos/examples/uos.pas
   /home/fred/mseide-msegui/lib/common/kernel/msectypes.pas
   /home/fred/strumpract/src/uos_soundtouch.pas
   /home/fred/testfpc/dbfilter2/main.pas
@@ -2115,8 +2115,8 @@ windowlayout=536
  ncy=0
  x=0
  y=0
- cx=1221
- cy=453
+ cx=1219
+ cy=452
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -2155,9 +2155,9 @@ windowlayout=536
  ncx=0
  ncy=0
  x=0
- y=56
- cx=1221
- cy=453
+ y=57
+ cx=1219
+ cy=452
  rcx=0
  rcy=0
 [targetconsole]

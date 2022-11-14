@@ -1527,8 +1527,7 @@ var
   uosDefaultDeviceOut: cint32 = -1;
   uosInit: Tuos_Init = nil;
   uosisactif : boolean = true;
-  uospapath : string = '';
-
+  
  {$IF DEFINED(windows)}
   old8087cw: word;
  {$endif}
@@ -11036,7 +11035,6 @@ begin
   if (PA_FileName <>  nil) and (PA_FileName <>  '') then
     begin
       if PA_FileName =  'system' then PA_FileName :=  '' ;
-      uospapath :=  PA_FileName;
       if Pa_Load(PA_FileName) then
         begin
           //  {
@@ -11288,8 +11286,7 @@ end;
 {$IF DEFINED(portaudio)}
 procedure uos_UpdateDevice();
 begin
- Pa_Unload();
- Pa_Load(uospapath);
+ Pa_Terminate();
  Pa_Initialize();
 end;
 

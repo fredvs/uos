@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <General>
-      <MainUnit Value="0"/>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <Title Value="deviceinfos"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
@@ -270,6 +272,7 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <TopLine Value="4663"/>
         <CursorPos X="2" Y="4673"/>
@@ -350,8 +353,7 @@ install:
       </Unit35>
       <Unit36>
         <Filename Value="uos_portaudio.pas"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="65"/>
         <CursorPos X="5" Y="76"/>
         <UsageCount Value="17"/>
@@ -390,7 +392,7 @@ install:
       </Unit42>
       <Unit43>
         <Filename Value="uos_flat.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="568"/>
         <CursorPos X="3" Y="580"/>
         <UsageCount Value="12"/>
@@ -402,10 +404,9 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="TimePopup"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="94" Y="13"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit44>
     </Units>
