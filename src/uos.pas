@@ -1359,15 +1359,15 @@ type
 
   // General public procedure/function (accessible for library uos too)
 
-function uos_GetInfoLibraries() : Pansichar ; inline;
+function uos_GetInfoLibraries() : Pansichar ;
 
  {$IF DEFINED(portaudio)}
 
-procedure uos_UpdateDevice(); inline;
+procedure uos_UpdateDevice();
  
-procedure uos_GetInfoDevice(); inline;
+procedure uos_GetInfoDevice();
 
-function uos_GetInfoDeviceStr() : Pansichar ; inline;
+function uos_GetInfoDeviceStr() : Pansichar ;
   {$endif} 
 
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
@@ -1527,6 +1527,7 @@ var
   uosDefaultDeviceOut: cint32 = -1;
   uosInit: Tuos_Init = nil;
   uosisactif : boolean = true;
+  uospapath : string = '';
 
  {$IF DEFINED(windows)}
   old8087cw: word;
@@ -11035,6 +11036,7 @@ begin
   if (PA_FileName <>  nil) and (PA_FileName <>  '') then
     begin
       if PA_FileName =  'system' then PA_FileName :=  '' ;
+      uospapath :=  PA_FileName;
       if Pa_Load(PA_FileName) then
         begin
           //  {
@@ -11287,10 +11289,9 @@ end;
 procedure uos_UpdateDevice();
 begin
  Pa_Unload();
- Pa_Load(uosInit.PA_FileName);
+ Pa_Load(uospapath);
  Pa_Initialize();
 end;
-
 
 procedure uos_GetInfoDevice();
 var 
