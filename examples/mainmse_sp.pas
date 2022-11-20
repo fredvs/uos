@@ -449,6 +449,8 @@ begin
 
     // OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
     //// add a Output into device with default parameters
+    
+    devused := -1;
 
   {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, devused, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
