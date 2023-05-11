@@ -7580,7 +7580,7 @@ begin
                                                     writeln('StreamIn[x].Data.frames = ' + inttostr(
                                                             StreamIn[x].Data.frames));
                                                     writeln('END StreamIn[x].Data.samplerate = ' +
-                                                            inttostr(StreamIn[x].Data.samplerate));
+                                                            inttostr(round(StreamIn[x].Data.samplerate)));
                                                     writeln('END StreamIn[x].Data.channels = ' +
                                                             inttostr(StreamIn[x].Data.channels));
             {$endif}
