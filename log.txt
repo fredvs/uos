@@ -49,7 +49,8 @@
 * 34 th changes: 2020-12-25 (Aarch64-Linux compatible, updated all examples)      * 
 * 35 th changes: 2020-12-30 (uos_AddIntoFile() can encode in ogg format)          * 
 * 36 th changes: 2021-20-16 (Synth waves sine, triangle, square and sawtooth)     * 
-* 37 th changes: 2022-03-16 (Added missing Album and Track tag)     * 
-* 38 th changes: 2022-03-20 (Methods inlined)     * 
-*                                                                                 *
+* 37 th changes: 2022-03-16 (Added missing Album and Track tag)     *             *
+* 38 th changes: 2022-03-20 (Methods inlined)                                     * 
+* 39 th changes: 2023-12-27 (Added uos_UpdateDevice(). Sample rate is float)      * 
+
 ***********************************************************************************}
