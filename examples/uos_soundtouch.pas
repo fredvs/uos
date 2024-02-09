@@ -22,8 +22,12 @@ uses
  
 const
 libst=
+ 
+{$IFDEF darwin}
+ 'libSoundTouchDLL.dylib';
+  {$ELSE}
  {$IFDEF unix}
- 'SoundTouchDll.so';
+ 'libSoundTouch.so.1';
   {$ELSE}
   {$if defined(cpu64)}
    'SoundTouch_x64.dll';
@@ -31,6 +35,7 @@ libst=
    'SoundTouch.dll';
      {$endif}
   {$ENDIF}     
+   {$ENDIF} 
 
 {$IF not DEFINED(windows)}
 type
