@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <General>
-      <MainUnit Value="0"/>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <Title Value="SimplePlayer"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
@@ -140,7 +142,6 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="108"/>
         <CursorPos Y="120"/>
         <UsageCount Value="200"/>
@@ -270,6 +271,7 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="4810"/>
         <CursorPos X="19" Y="4817"/>
@@ -472,10 +474,9 @@ install:
       </Unit55>
       <Unit56>
         <Filename Value="define.inc"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="19"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
       </Unit56>
       <Unit57>
         <Filename Value="mcwAAC.pas"/>

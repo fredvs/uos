@@ -7732,7 +7732,7 @@ begin
       {$endif}
 
       {$IF DEFINED(neaac)}
-  if (1 =2) and (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.AAloadERROR = 0) then
+  if (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.AAloadERROR = 0) then
     begin
       Err := -1;
 
@@ -7815,7 +7815,7 @@ begin
       {$endif}
 
       {$IF DEFINED(cdrom)}
-  if (1 =2) and (StreamIn[x].Data.LibOpen = -1) then
+  if (StreamIn[x].Data.LibOpen = -1) then
     begin
       Err := -1;
       StreamIn[x].pCD := Nil;
