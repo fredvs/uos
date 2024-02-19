@@ -1,7 +1,7 @@
 object simple_player: tmainfo
   color = 10734762
-  bounds_x = 398
-  bounds_y = 128
+  bounds_x = 810
+  bounds_y = 58
   bounds_cx = 481
   bounds_cy = 404
   container.optionswidget1 = []

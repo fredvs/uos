@@ -75,7 +75,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2240219;
+  uos_version : cint32 = 2240220;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -7987,9 +7987,85 @@ begin
  {$IF DEFINED(uos_debug) and DEFINED(unix)}
       WriteLn('Length(StreamIn) = '+ inttostr(x));
  {$endif}
- 
- {$IF DEFINED(mpg123)}
-    if  (uosLoadResult.MPloadERROR = 0) then
+
+  {$IF DEFINED(sndfile)}
+      if (uosLoadResult.SFloadERROR = 0) then
+        begin
+
+          StreamIn[x].Data.HandleSt := sf_open(FileName, SFM_READ, sfInfo);
+
+  (* try to open the file *)
+          if StreamIn[x].Data.HandleSt = nil then
+            begin
+              StreamIn[x].Data.LibOpen := -1;
+              err := -1;
+  {$IF DEFINED(uos_debug) and DEFINED(unix)}
+              WriteLn('sf_open NOT OK');
+  {$endif}
+            end
+          else
+            begin
+  {$IF DEFINED(uos_debug) and DEFINED(unix)}
+              WriteLn('sf_open OK');
+  {$endif}
+              StreamIn[x].Data.LibOpen := 0;
+              StreamIn[x].Data.filename := FileName;
+              StreamIn[x].Data.channels := SFinfo.channels;
+
+              if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 65536 Div StreamIn[x].Data.
+                                                                       Channels
+              else
+                StreamIn[x].Data.Wantframes := FramesCount ;
+
+              SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.
+                        Channels);
+              x2 := 0 ;
+              while x2 < Length(Streamin[x].Data.Buffer) do
+                begin
+                  Streamin[x].Data.Buffer[x2] := 0.0 ;
+                  inc(x2);
+                end;
+
+              StreamIn[x].Data.hdformat := SFinfo.format;
+              StreamIn[x].Data.frames := SFinfo.frames;
+              StreamIn[x].Data.samplerate := SFinfo.samplerate;
+              StreamIn[x].Data.samplerateroot := SFinfo.samplerate;
+              StreamIn[x].Data.sections := SFinfo.sections;
+              StreamIn[x].Data.title := 
+                                        sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_TITLE);
+              StreamIn[x].Data.copyright := 
+                                            sf_get_string(StreamIn[x].Data.HandleSt,
+                                            SF_STR_COPYRIGHT);
+              StreamIn[x].Data.software := 
+                                           sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_SOFTWARE)
+              ;
+              StreamIn[x].Data.comment := 
+                                          sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_COMMENT);
+              StreamIn[x].Data.artist := 
+                                         sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_ARTIST);
+              StreamIn[x].Data.date := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_DATE);
+              
+               StreamIn[x].Data.track := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_TRACKNUMBER);
+          StreamIn[x].Data.genre := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_GENRE);
+          StreamIn[x].Data.album := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_ALBUM);
+              
+              StreamIn[x].Data.Length := sfInfo.frames;
+              err := 0;
+  {$IF DEFINED(uos_debug) and DEFINED(unix)}
+              WriteLn('sf_open END OK');
+  {$endif}
+            end;
+        end;
+
+  {$endif}
+
+ {$IF DEFINED(uos_debug) and DEFINED(unix)}
+      WriteLn('sf StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));
+      WriteLn('sf err = ' + inttostr(err));
+ {$endif}
+
+  {$IF DEFINED(mpg123)}
+      if ((StreamIn[x].Data.LibOpen = -1)) and (uosLoadResult.MPloadERROR = 0) then
         begin
           Err := -1;
 
@@ -8100,82 +8176,6 @@ begin
  {$IF DEFINED(uos_debug) and DEFINED(unix)}
       WriteLn('mp StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));
       WriteLn('mp err = ' + inttostr(err));
- {$endif}
- 
-  {$IF DEFINED(sndfile)}
-    if ((StreamIn[x].Data.LibOpen = -1)) and (uosLoadResult.SFloadERROR = 0) then
-       begin
-
-          StreamIn[x].Data.HandleSt := sf_open(FileName, SFM_READ, sfInfo);
-
-  (* try to open the file *)
-          if StreamIn[x].Data.HandleSt = nil then
-            begin
-              StreamIn[x].Data.LibOpen := -1;
-              err := -1;
-  {$IF DEFINED(uos_debug) and DEFINED(unix)}
-              WriteLn('sf_open NOT OK');
-  {$endif}
-            end
-          else
-            begin
-  {$IF DEFINED(uos_debug) and DEFINED(unix)}
-              WriteLn('sf_open OK');
-  {$endif}
-              StreamIn[x].Data.LibOpen := 0;
-              StreamIn[x].Data.filename := FileName;
-              StreamIn[x].Data.channels := SFinfo.channels;
-
-              if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 65536 Div StreamIn[x].Data.
-                                                                       Channels
-              else
-                StreamIn[x].Data.Wantframes := FramesCount ;
-
-              SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.
-                        Channels);
-              x2 := 0 ;
-              while x2 < Length(Streamin[x].Data.Buffer) do
-                begin
-                  Streamin[x].Data.Buffer[x2] := 0.0 ;
-                  inc(x2);
-                end;
-
-              StreamIn[x].Data.hdformat := SFinfo.format;
-              StreamIn[x].Data.frames := SFinfo.frames;
-              StreamIn[x].Data.samplerate := SFinfo.samplerate;
-              StreamIn[x].Data.samplerateroot := SFinfo.samplerate;
-              StreamIn[x].Data.sections := SFinfo.sections;
-              StreamIn[x].Data.title := 
-                                        sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_TITLE);
-              StreamIn[x].Data.copyright := 
-                                            sf_get_string(StreamIn[x].Data.HandleSt,
-                                            SF_STR_COPYRIGHT);
-              StreamIn[x].Data.software := 
-                                           sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_SOFTWARE)
-              ;
-              StreamIn[x].Data.comment := 
-                                          sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_COMMENT);
-              StreamIn[x].Data.artist := 
-                                         sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_ARTIST);
-              StreamIn[x].Data.date := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_DATE);
-              
-               StreamIn[x].Data.track := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_TRACKNUMBER);
-          StreamIn[x].Data.genre := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_GENRE);
-          StreamIn[x].Data.album := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_ALBUM);
-              
-              StreamIn[x].Data.Length := sfInfo.frames;
-              err := 0;
-  {$IF DEFINED(uos_debug) and DEFINED(unix)}
-              WriteLn('sf_open END OK');
-  {$endif}
-            end;
-        end;
-
-  {$endif}
-
- {$IF DEFINED(uos_debug) and DEFINED(unix)}
-      WriteLn('sf StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));
-      WriteLn('sf err = ' + inttostr(err));
  {$endif}
 
   {$IF DEFINED(opus)}
@@ -8498,7 +8498,7 @@ begin
   WriteLn('result = ' + inttostr(result));
   WriteLn('cd err = ' + inttostr(err));
   {$endif}
-end;
+end;  
 
 procedure Tuos_Player.ReadEndless(x : integer);
 begin
