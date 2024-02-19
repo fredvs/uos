@@ -7,7 +7,6 @@ object Form1: TForm1
   ClientHeight = 258
   ClientWidth = 268
   OnActivate = FormActivate
-  OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '3.0.0.3'
   object ProgressBar2: TProgressBar
@@ -153,7 +152,6 @@ object Form1: TForm1
     Height = 228
     Top = 28
     Width = 19
-    OnContextPopup = ProgressBar1ContextPopup
     Orientation = pbVertical
     ParentShowHint = False
     ShowHint = True

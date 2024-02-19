@@ -39,14 +39,11 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure closeplayer;
     procedure FormDestroy(Sender: TObject);
     procedure LoopProcPlayer;
     procedure endprocedure;
-    procedure ProgressBar1ContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
-  private
+    private
 
   public
 
@@ -157,13 +154,6 @@ procedure TForm1.endprocedure;
 begin
   Button1.Enabled := True;
 end;
-
-procedure TForm1.ProgressBar1ContextPopup(Sender: TObject; MousePos: TPoint;
-  var Handled: Boolean);
-begin
-
-end;
-
 
 procedure TForm1.FormActivate(Sender: TObject);
 var
@@ -284,10 +274,6 @@ begin
     Inc(i);
   end;
 
-end;
-
-procedure TForm1.FormCreate(Sender: TObject);
-begin
 end;
 
 end.
