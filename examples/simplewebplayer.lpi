@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <General>
-      <MainUnit Value="0"/>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <Title Value="SimpleWebPlayer"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
@@ -130,7 +132,7 @@ install:
       <Unit0>
         <Filename Value="simplewebplayer.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
         <CursorPos Y="4"/>
         <UsageCount Value="200"/>
@@ -453,21 +455,21 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="269"/>
-        <CursorPos X="5" Y="289"/>
+        <TopLine Value="271"/>
+        <CursorPos X="3" Y="281"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit53>
       <Unit54>
         <Filename Value="uos_httpgetthread.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
         <TopLine Value="21"/>
-        <CursorPos X="15" Y="36"/>
+        <CursorPos X="71" Y="32"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
       </Unit54>
@@ -520,18 +522,16 @@ install:
       </Unit60>
       <Unit61>
         <Filename Value="/usr/local/codetyphon/fpcsrc/packages/fcl-web/src/base/fphttpclient.pp"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit61>
       <Unit62>
         <Filename Value="/usr/local/codetyphon/fpcsrc/packages/fcl-web/src/base/fphttpserver.pp"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="32"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit62>
     </Units>
     <JumpHistory Count="27" HistoryIndex="26">

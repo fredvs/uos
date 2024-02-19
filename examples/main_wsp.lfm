@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '3.0.0.3'
   object Shape1: TShape
     Left = 10
     Height = 216
@@ -171,7 +171,7 @@ object Form1: TForm1
     Left = 30
     Height = 14
     Top = 358
-    Width = 27
+    Width = 26
     Alignment = taCenter
     Caption = 'Vol L'
     Font.Height = -11
@@ -185,8 +185,8 @@ object Form1: TForm1
     Top = 164
     Width = 483
     Caption = 'Load that libraries'
-    OnClick = Button1Click
     TabOrder = 2
+    OnClick = Button1Click
   end
   object Button3: TButton
     Left = 128
@@ -195,9 +195,9 @@ object Form1: TForm1
     Width = 58
     Caption = 'Play'
     Font.Height = 12
-    OnClick = Button3Click
     ParentFont = False
     TabOrder = 1
+    OnClick = Button3Click
   end
   object Button4: TButton
     Left = 316
@@ -207,9 +207,9 @@ object Form1: TForm1
     Caption = 'Resume'
     Enabled = False
     Font.Height = 12
-    OnClick = Button4Click
     ParentFont = False
     TabOrder = 6
+    OnClick = Button4Click
   end
   object Button5: TButton
     Left = 218
@@ -219,9 +219,9 @@ object Form1: TForm1
     Caption = 'Pause'
     Enabled = False
     Font.Height = 12
-    OnClick = Button5Click
     ParentFont = False
     TabOrder = 7
+    OnClick = Button5Click
   end
   object Button6: TButton
     Left = 410
@@ -231,9 +231,9 @@ object Form1: TForm1
     Caption = 'Stop'
     Enabled = False
     Font.Height = 12
-    OnClick = Button6Click
     ParentFont = False
     TabOrder = 8
+    OnClick = Button6Click
   end
   object TrackBar3: TTrackBar
     Left = 89
@@ -252,7 +252,7 @@ object Form1: TForm1
     Left = 86
     Height = 14
     Top = 358
-    Width = 29
+    Width = 28
     Alignment = taCenter
     Caption = 'Vol R'
     Font.Height = -11
@@ -279,6 +279,7 @@ object Form1: TForm1
     ClientWidth = 116
     Color = clSilver
     Font.Height = 12
+    ParentBackground = False
     ParentFont = False
     ParentColor = False
     TabOrder = 10
@@ -357,14 +358,14 @@ object Form1: TForm1
   end
   object CheckBox2: TCheckBox
     Left = 274
-    Height = 18
+    Height = 21
     Top = 282
-    Width = 180
+    Width = 183
     Caption = 'Enable SoundTouch Plugin'
     Font.Height = 12
-    OnChange = ChangePlugSet
     ParentFont = False
     TabOrder = 12
+    OnChange = ChangePlugSet
   end
   object Button7: TButton
     Left = 280
@@ -373,9 +374,9 @@ object Form1: TForm1
     Width = 55
     Caption = 'Reset'
     Font.Height = 12
-    OnClick = ResetPlugClick
     ParentFont = False
     TabOrder = 13
+    OnClick = ResetPlugClick
   end
   object Label7: TLabel
     Left = 280
@@ -461,7 +462,7 @@ object Form1: TForm1
     Left = 160
     Height = 21
     Top = 250
-    Width = 116
+    Width = 100
     Caption = 'mp3 format'
     Checked = True
     TabOrder = 18
@@ -471,7 +472,7 @@ object Form1: TForm1
     Left = 308
     Height = 21
     Top = 250
-    Width = 118
+    Width = 102
     Caption = 'opus format'
     TabOrder = 17
   end

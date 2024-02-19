@@ -276,11 +276,11 @@ begin
     form1.Caption   := 'Simple Web Player.    uos version ' + IntToStr(uos_getversion());
 
     // Some audio web streaming
-    edit4.Text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
-    //  edit4.text := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
-    //  edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
-    //  edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
-    //   edit4.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+ //   edit4.Text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
+   //  edit4.text := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
+      edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
+  //    edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
+      // edit4.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
 
     form1.Show;
   end;

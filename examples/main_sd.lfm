@@ -8,15 +8,15 @@ object Form1: TForm1
   ClientWidth = 221
   OnActivate = FormActivate
   OnClose = FormClose
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '3.0.0.3'
   object Button1: TButton
     Left = 76
     Height = 25
     Top = 76
     Width = 75
     Caption = 'Play'
-    OnClick = Button1Click
     TabOrder = 0
+    OnClick = Button1Click
   end
   object Button2: TButton
     Left = 76
@@ -24,12 +24,12 @@ object Form1: TForm1
     Top = 112
     Width = 75
     Caption = 'Stop'
-    OnClick = Button2Click
     TabOrder = 1
+    OnClick = Button2Click
   end
   object Edit1: TEdit
     Left = 84
-    Height = 21
+    Height = 27
     Top = 38
     Width = 56
     Alignment = taCenter
@@ -38,9 +38,9 @@ object Form1: TForm1
   end
   object Label1: TLabel
     Left = 72
-    Height = 13
+    Height = 17
     Top = 6
-    Width = 71
+    Width = 90
     Caption = 'Interval in ms'
     ParentColor = False
   end
@@ -48,7 +48,7 @@ object Form1: TForm1
     Enabled = False
     Interval = 100
     OnTimer = Timer1Timer
-    left = 272
-    top = 232
+    Left = 272
+    Top = 232
   end
 end

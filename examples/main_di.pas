@@ -30,7 +30,6 @@ type
     Label3: TLabel;
     Label4: TLabel;
     PaintBox1: TPaintBox;
-    Shape1: TShape;
     StringGrid1: TStringGrid;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -184,7 +183,7 @@ begin
     edit1.ReadOnly  := True;
 
     CheckInfos();
-    form1.Height   := 388;
+    form1.Height   := 688;
     form1.Position := poScreenCenter;
     form1.Show;
   end
@@ -260,7 +259,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Form1.Height := 150;
+  Form1.Height := 126;
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);

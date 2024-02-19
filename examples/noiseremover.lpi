@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <General>
-      <MainUnit Value="0"/>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <Title Value="NoiseRemover"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
@@ -141,7 +143,6 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="295"/>
         <CursorPos X="3" Y="298"/>
         <UsageCount Value="200"/>
@@ -271,9 +272,10 @@ install:
       </Unit22>
       <Unit23>
         <Filename Value="uos.pas"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="6149"/>
-        <CursorPos X="31" Y="6161"/>
+        <TopLine Value="63"/>
+        <CursorPos X="33" Y="78"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -474,10 +476,9 @@ install:
       </Unit55>
       <Unit56>
         <Filename Value="define.inc"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="78" Y="10"/>
         <UsageCount Value="19"/>
-        <Loaded Value="True"/>
       </Unit56>
       <Unit57>
         <Filename Value="mcwAAC.pas"/>

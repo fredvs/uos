@@ -1,12 +1,12 @@
 object Form1: TForm1
-  Left = 142
-  Height = 388
-  Top = 150
-  Width = 589
+  Left = 112
+  Height = 687
+  Top = 21
+  Width = 1374
   BorderIcons = [biSystemMenu]
   Caption = 'Devices Infos'
-  ClientHeight = 388
-  ClientWidth = 589
+  ClientHeight = 687
+  ClientWidth = 1374
   Color = clMoneyGreen
   Icon.Data = {
     BE0800000000010001002020000001000800A808000016000000280000002000
@@ -85,27 +85,20 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '2.0.6.0'
-  object Shape1: TShape
-    Left = 10
-    Height = 192
-    Top = 150
-    Width = 569
-    Brush.Color = clSilver
-  end
+  LCLVersion = '3.0.0.3'
   object Edit1: TEdit
-    Left = 136
+    Left = 424
     Height = 27
-    Top = 60
-    Width = 416
+    Top = 32
+    Width = 552
     Alignment = taCenter
     AutoSize = False
     TabOrder = 1
   end
   object Label1: TLabel
-    Left = 160
+    Left = 524
     Height = 18
-    Top = 40
+    Top = 16
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -116,32 +109,31 @@ object Form1: TForm1
     ParentFont = False
   end
   object PaintBox1: TPaintBox
-    Left = 17
+    Left = 280
     Height = 105
-    Top = 2
+    Top = 8
     Width = 105
     OnPaint = PaintBox1Paint
   end
   object Button1: TButton
-    Left = 18
+    Left = 424
     Height = 28
-    Top = 116
+    Top = 71
     Width = 554
     Caption = 'Load that library'
-    OnClick = Button1Click
     TabOrder = 0
+    OnClick = Button1Click
   end
   object StringGrid1: TStringGrid
-    Left = 18
-    Height = 164
-    Top = 164
-    Width = 550
+    Left = 8
+    Height = 504
+    Top = 128
+    Width = 1360
     ColCount = 13
     FixedCols = 0
     Font.Height = 12
     ParentFont = False
     TabOrder = 2
-    TitleFont.Height = 12
     ColWidths = (
       36
       262
@@ -201,18 +193,18 @@ object Form1: TForm1
     )
   end
   object Button2: TButton
-    Left = 494
+    Left = 960
     Height = 25
-    Top = 351
+    Top = 640
     Width = 83
     Caption = 'Re-load'
-    OnClick = Button2Click
     TabOrder = 3
+    OnClick = Button2Click
   end
   object Label2: TLabel
-    Left = 12
+    Left = 176
     Height = 15
-    Top = 356
+    Top = 650
     Width = 118
     Caption = 'Device Count =  99'
     Font.Height = 12
@@ -220,9 +212,9 @@ object Form1: TForm1
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 152
+    Left = 440
     Height = 15
-    Top = 356
+    Top = 650
     Width = 146
     Caption = 'Default Device  IN =  99'
     Font.Height = 12
@@ -230,9 +222,9 @@ object Form1: TForm1
     ParentFont = False
   end
   object Label4: TLabel
-    Left = 320
+    Left = 672
     Height = 15
-    Top = 356
+    Top = 650
     Width = 158
     Caption = 'Default Device OUT  =  99'
     Font.Height = 12

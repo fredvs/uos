@@ -144,7 +144,7 @@ install:
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="418"/>
+        <TopLine Value="251"/>
         <CursorPos X="105" Y="251"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>

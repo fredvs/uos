@@ -15,7 +15,7 @@ uses
   Dialogs,
   ComCtrls,
   StdCtrls,
-  EditBtn;
+  EditBtn, Types;
 
 type
 
@@ -44,6 +44,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure LoopProcPlayer;
     procedure endprocedure;
+    procedure ProgressBar1ContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
   private
 
   public
@@ -154,6 +156,12 @@ end;
 procedure TForm1.endprocedure;
 begin
   Button1.Enabled := True;
+end;
+
+procedure TForm1.ProgressBar1ContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+
 end;
 
 

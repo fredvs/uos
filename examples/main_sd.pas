@@ -89,11 +89,13 @@ begin
   stopit         := False;
   posi           := 1;
   Timer1.Enabled := True;
+  edit1.Enabled:=false;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   stopit := True;
+  edit1.Enabled:=true;
 end;
 
 procedure TForm1.FormActivate(Sender: TObject);
