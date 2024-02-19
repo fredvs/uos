@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '3.0.0.3'
   object Edit1: TEdit
     Left = 130
     Height = 27
@@ -166,8 +166,8 @@ object Form1: TForm1
     Top = 344
     Width = 483
     Caption = 'Load that libraries'
-    OnClick = Button1Click
     TabOrder = 0
+    OnClick = Button1Click
   end
   object Edit5: TEdit
     Left = 130
@@ -176,8 +176,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
-    OnChange = Edit5Change
     TabOrder = 4
+    OnChange = Edit5Change
   end
   object Label6: TLabel
     Left = 130
@@ -234,8 +234,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
-    OnChange = Edit5Change
     TabOrder = 6
+    OnChange = Edit5Change
   end
   object Label12: TLabel
     Left = 130
@@ -289,6 +289,7 @@ object Form1: TForm1
     ClientHeight = 232
     ClientWidth = 498
     Color = clMoneyGreen
+    ParentBackground = False
     ParentColor = False
     TabOrder = 9
     Visible = False
@@ -304,14 +305,14 @@ object Form1: TForm1
     end
     object CheckBox1: TCheckBox
       Left = 122
-      Height = 18
+      Height = 21
       Top = 138
-      Width = 94
+      Width = 98
       Caption = 'Play Reverse'
       Font.Height = 12
-      OnChange = CheckBox1Change
       ParentFont = False
       TabOrder = 1
+      OnChange = CheckBox1Change
     end
     object TrackBar2: TTrackBar
       Left = 120
@@ -330,7 +331,7 @@ object Form1: TForm1
       Left = 12
       Height = 14
       Top = 115
-      Width = 27
+      Width = 26
       Alignment = taCenter
       Caption = 'Vol L'
       Font.Height = -11
@@ -344,8 +345,8 @@ object Form1: TForm1
       Top = 187
       Width = 75
       Caption = 'Play'
-      OnClick = Button3Click
       TabOrder = 3
+      OnClick = Button3Click
     end
     object Button4: TButton
       Left = 304
@@ -354,8 +355,8 @@ object Form1: TForm1
       Width = 80
       Caption = 'Resume'
       Enabled = False
-      OnClick = Button4Click
       TabOrder = 4
+      OnClick = Button4Click
     end
     object Button5: TButton
       Left = 216
@@ -364,8 +365,8 @@ object Form1: TForm1
       Width = 76
       Caption = 'Pause'
       Enabled = False
-      OnClick = Button5Click
       TabOrder = 5
+      OnClick = Button5Click
     end
     object Button6: TButton
       Left = 400
@@ -374,8 +375,8 @@ object Form1: TForm1
       Width = 63
       Caption = 'Stop'
       Enabled = False
-      OnClick = Button6Click
       TabOrder = 6
+      OnClick = Button6Click
     end
     object Button2: TButton
       Left = 406
@@ -383,8 +384,8 @@ object Form1: TForm1
       Top = 10
       Width = 66
       Caption = 'Choose'
-      OnClick = Button2Click
       TabOrder = 7
+      OnClick = Button2Click
     end
     object TrackBar3: TTrackBar
       Left = 76
@@ -403,7 +404,7 @@ object Form1: TForm1
       Left = 76
       Height = 14
       Top = 115
-      Width = 29
+      Width = 28
       Alignment = taCenter
       Caption = 'Vol R'
       Font.Height = -11
@@ -430,6 +431,7 @@ object Form1: TForm1
       ClientWidth = 103
       Color = clMoneyGreen
       Font.Height = 12
+      ParentBackground = False
       ParentFont = False
       ParentColor = False
       TabOrder = 9
@@ -512,14 +514,14 @@ object Form1: TForm1
     end
     object CheckBox2: TCheckBox
       Left = 266
-      Height = 18
+      Height = 21
       Top = 94
-      Width = 180
+      Width = 183
       Caption = 'Enable SoundTouch Plugin'
       Font.Height = 12
-      OnChange = ChangePlugSet
       ParentFont = False
       TabOrder = 10
+      OnChange = ChangePlugSet
     end
     object Button7: TButton
       Left = 270
@@ -527,8 +529,8 @@ object Form1: TForm1
       Top = 145
       Width = 55
       Caption = 'Reset'
-      OnClick = ResetPlugClick
       TabOrder = 11
+      OnClick = ResetPlugClick
     end
     object Label7: TLabel
       Left = 270
@@ -558,7 +560,7 @@ object Form1: TForm1
       Max = 100
       OnChange = ChangePlugSet
       Orientation = trVertical
-      Position = 100
+      Position = 50
       Reversed = True
       TickStyle = tsNone
       TabOrder = 12
@@ -578,37 +580,37 @@ object Form1: TForm1
     end
     object CheckBox3: TCheckBox
       Left = 122
-      Height = 18
+      Height = 21
       Top = 96
-      Width = 129
+      Width = 132
       Caption = 'Stereo to BinAural'
       Font.Height = 12
-      OnChange = CheckBox3Change
       ParentFont = False
       TabOrder = 14
+      OnChange = CheckBox3Change
     end
     object Chknoise: TCheckBox
       Left = 122
-      Height = 18
+      Height = 21
       Top = 160
-      Width = 108
+      Width = 112
       Caption = 'Noise Remover'
       Font.Height = 12
-      OnChange = ChknoiseChange
       ParentFont = False
       TabOrder = 15
       Visible = False
+      OnChange = ChknoiseChange
     end
     object chkstereo2mono: TCheckBox
       Left = 122
-      Height = 18
+      Height = 21
       Top = 115
-      Width = 111
+      Width = 114
       Caption = 'Stereo to Mono'
       Font.Height = 12
-      OnChange = chkstereo2monoChange
       ParentFont = False
       TabOrder = 16
+      OnChange = chkstereo2monoChange
     end
     object TrackBar1: TTrackBar
       Left = 8
@@ -625,7 +627,7 @@ object Form1: TForm1
     end
   end
   object OpenDialog1: TOpenDialog
-    left = 76
-    top = 36
+    Left = 76
+    Top = 36
   end
 end

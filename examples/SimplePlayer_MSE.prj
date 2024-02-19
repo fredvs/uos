@@ -1063,18 +1063,18 @@ findhistory=1
 findoptions=1
 editpos=4
  0,10
- 0,6
- 0,27
+ 0,-1073741823
+ 0,-1073741823
  0,8494
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 sourcefiles=4
- ${PROJECTDIR}/SimplePlayer_MSE.pas
+ /home/fred/uos/examples/SimplePlayer_MSE.pas
  ${PROJECTDIR}/mainmse_sp.pas
  ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
+ /home/fred/uos/examples/uos.pas
 relpaths=4
  SimplePlayer_MSE.pas
  mainmse_sp.pas
@@ -1095,9 +1095,9 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=3
+index=0
 [layout]
-windowlayout=542
+windowlayout=543
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1111,8 +1111,8 @@ windowlayout=542
  ny=0
  ncx=0
  ncy=0
- x=219
- y=76
+ x=188
+ y=153
  cx=1231
  cy=621
  rcx=0
@@ -1228,7 +1228,7 @@ windowlayout=542
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=componentpalettefo
+ stackedunder=conflangfo
  parent=
  mdistate=3
  nx=0
@@ -1312,7 +1312,7 @@ windowlayout=542
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=conflangfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -1498,7 +1498,7 @@ windowlayout=542
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=objectinspectorfo
+ stackedunder=confdebuggerfo
  parent=
  mdistate=0
  nx=0
@@ -1529,7 +1529,7 @@ windowlayout=542
  x=0
  y=0
  cx=1217
- cy=59
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1540,12 +1540,12 @@ windowlayout=542
  mdistate=0
  nx=0
  ny=2
- ncx=1206
+ ncx=1217
  ncy=59
  x=0
  y=2
- cx=1202
- cy=59
+ cx=1217
+ cy=60
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1556,7 +1556,8 @@ windowlayout=542
  value=Pascal
  [debuggerfo.file_history]
  value=/home/fred/uos/examples/uos.pas
- history=3
+ history=4
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/SimplePlayer_MSE.pas
   /home/fred/uos/examples/mainmse_sp.pas
   ${PROJECTDIR}/main.pas
@@ -1577,19 +1578,19 @@ windowlayout=542
  x=0
  y=0
  cx=1217
- cy=445
+ cy=444
  rcx=0
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=3
+ index=0
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=confdebuggerfo
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1616,9 +1617,9 @@ windowlayout=542
  ncx=0
  ncy=0
  x=0
- y=62
+ y=63
  cx=1217
- cy=445
+ cy=444
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
