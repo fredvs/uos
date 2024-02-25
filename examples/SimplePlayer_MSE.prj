@@ -1065,16 +1065,16 @@ editpos=4
  0,10
  0,-1073741823
  0,-1073741823
- 0,8494
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 sourcefiles=4
- /home/fred/uos/examples/SimplePlayer_MSE.pas
+ ${PROJECTDIR}/SimplePlayer_MSE.pas
  ${PROJECTDIR}/mainmse_sp.pas
  ${PROJECTDIR}/uos_flat.pas
- /home/fred/uos/examples/uos.pas
+ ${PROJECTDIR}/uos.pas
 relpaths=4
  SimplePlayer_MSE.pas
  mainmse_sp.pas
@@ -1111,8 +1111,8 @@ windowlayout=543
  ny=0
  ncx=0
  ncy=0
- x=188
- y=153
+ x=217
+ y=122
  cx=1231
  cy=621
  rcx=0
@@ -1228,7 +1228,7 @@ windowlayout=543
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=conflangfo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=3
  nx=0
@@ -1312,7 +1312,7 @@ windowlayout=543
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=projecttreefo
+ stackedunder=conflangfo
  parent=
  mdistate=0
  nx=0
@@ -1541,7 +1541,7 @@ windowlayout=543
  nx=0
  ny=2
  ncx=1217
- ncy=59
+ ncy=60
  x=0
  y=2
  cx=1217
@@ -1555,10 +1555,10 @@ windowlayout=543
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/SimplePlayer_MSE.pas
  history=4
-  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/SimplePlayer_MSE.pas
+  /home/fred/uos/examples/uos.pas
   /home/fred/uos/examples/mainmse_sp.pas
   ${PROJECTDIR}/main.pas
  [debuggerfo.project_options]

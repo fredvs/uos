@@ -1722,13 +1722,13 @@ begin
 
     Header.wChannels := chan;
 
-    Header.wSamplesPerSec := round(samplerate);
+    Header.wSamplesPerSec := floor(samplerate);
 
     Header.wBitsPerSample := BitsPerSample;
 
     Header.wBlockAlign := chan * (BitsPerSample Div 8);
 
-    Header.wAvgBytesPerSec := round(samplerate) * Header.wBlockAlign;
+    Header.wAvgBytesPerSec := floor(samplerate) * Header.wBlockAlign;
 
     Header.wcbSize := 0;
     f.WriteBuffer(Header, SizeOf(Header));
@@ -1971,7 +1971,7 @@ var
 begin
 
   if SampleRate = -1 then sr := 44100
-  else sr := round(SampleRate);
+  else sr := floor(SampleRate);
   if Channels = -1 then ch := 2
   else ch := Channels;
 
@@ -2818,7 +2818,7 @@ begin
                                                                     StreamIn[InputIndex].Data.
                                                                     SampleRate);
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.D := 
-                                                                    2 * Cos(2 * Pi * (round(
+                                                                    2 * Cos(2 * Pi * (floor(
                                                                     HighFrequencyl + LowFrequencyl)
                                                                     shr 1) /
                                                                     StreamIn[InputIndex].Data.
@@ -2851,7 +2851,7 @@ begin
                                                                      StreamIn[InputIndex].Data.
                                                                      SampleRate);
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.D2 := 
-                                                                     2 * Cos(2 * Pi * (round(
+                                                                     2 * Cos(2 * Pi * (floor(
                                                                      HighFrequencyl + LowFrequencyl)
                                                                      shr 1) /
                                                                      StreamIn[InputIndex].Data.
@@ -2891,7 +2891,7 @@ begin
                                                                     StreamIn[InputIndex].Data.
                                                                     SampleRate);
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.D := 
-                                                                    2 * Cos(2 * Pi * (round(
+                                                                    2 * Cos(2 * Pi * (floor(
                                                                     HighFrequencyl + LowFrequencyl)
                                                                     shr 1) /
                                                                     StreamIn[InputIndex].Data.
@@ -2928,7 +2928,7 @@ begin
                                                                     StreamIn[InputIndex].Data.
                                                                     SampleRate);
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.D := 
-                                                                    2 * Cos(2 * Pi * (round(
+                                                                    2 * Cos(2 * Pi * (floor(
                                                                     HighFrequencyl + LowFrequencyl)
                                                                     shr 1) /
                                                                     StreamIn[InputIndex].Data.
@@ -3071,7 +3071,7 @@ begin
                                                                      StreamIn[InputIndex].Data.
                                                                      SampleRate);
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr := 
-                                                                     2 * Cos(2 * Pi * (round(
+                                                                     2 * Cos(2 * Pi * (floor(
                                                                      HighFrequencyr + LowFrequencyr)
                                                                      shr 1) /
                                                                      StreamIn[InputIndex].Data.
@@ -3108,7 +3108,7 @@ begin
                                                                       StreamIn[InputIndex].Data.
                                                                       SampleRate);
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.D2r := 
-                                                                      2 * Cos(2 * Pi * (round(
+                                                                      2 * Cos(2 * Pi * (floor(
                                                                       HighFrequencyr + LowFrequencyr
                                                                       ) shr 1) /
                                                                       StreamIn[InputIndex].Data.
@@ -3148,7 +3148,7 @@ begin
                                                                      StreamIn[InputIndex].Data.
                                                                      SampleRate);
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr := 
-                                                                     2 * Cos(2 * Pi * (round(
+                                                                     2 * Cos(2 * Pi * (floor(
                                                                      HighFrequencyr + LowFrequencyr)
                                                                      shr 1) /
                                                                      StreamIn[InputIndex].Data.
@@ -3189,7 +3189,7 @@ begin
                                                                      StreamIn[InputIndex].Data.
                                                                      SampleRate);
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.Dr := 
-                                                                     2 * Cos(2 * Pi * (round(
+                                                                     2 * Cos(2 * Pi * (floor(
                                                                      HighFrequencyr + LowFrequencyr)
                                                                      shr 1) /
                                                                      StreamIn[InputIndex].Data.
@@ -3388,7 +3388,7 @@ begin
                                                                       StreamOut[OutputIndex].Data.
                                                                       SampleRate);
                  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D := 
-                                                                      2 * Cos(2 * Pi * (round(
+                                                                      2 * Cos(2 * Pi * (floor(
                                                                       HighFrequencyl + LowFrequencyl
                                                                       ) shr 1) /
                                                                       StreamOut[OutputIndex].Data.
@@ -3426,7 +3426,7 @@ begin
                                                                        StreamOut[OutputIndex].Data.
                                                                        SampleRate);
                  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D2 := 
-                                                                       2 * Cos(2 * Pi * (round(
+                                                                       2 * Cos(2 * Pi * (floor(
                                                                        HighFrequencyl +
                                                                        LowFrequencyl) shr 1) /
                                                                        StreamOut[OutputIndex].Data.
@@ -3468,7 +3468,7 @@ begin
                                                                       StreamOut[OutputIndex].Data.
                                                                       SampleRate);
                  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D := 
-                                                                      2 * Cos(2 * Pi * (round(
+                                                                      2 * Cos(2 * Pi * (floor(
                                                                       HighFrequencyl + LowFrequencyl
                                                                       ) shr 1) /
                                                                       StreamOut[OutputIndex].Data.
@@ -3510,7 +3510,7 @@ begin
                                                                       StreamOut[OutputIndex].Data.
                                                                       SampleRate);
                  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D := 
-                                                                      2 * Cos(2 * Pi * (round(
+                                                                      2 * Cos(2 * Pi * (floor(
                                                                       HighFrequencyl + LowFrequencyl
                                                                       ) shr 1) /
                                                                       StreamOut[OutputIndex].Data.
@@ -3666,7 +3666,7 @@ begin
                                                                        StreamOut[OutputIndex].Data.
                                                                        SampleRate);
                  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr := 
-                                                                       2 * Cos(2 * Pi * (round(
+                                                                       2 * Cos(2 * Pi * (floor(
                                                                        HighFrequencyr +
                                                                        LowFrequencyr) shr 1) /
                                                                        StreamOut[OutputIndex].Data.
@@ -3705,7 +3705,7 @@ begin
                                                                         StreamOut[OutputIndex].Data.
                                                                         SampleRate);
                  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.D2r := 
-                                                                        2 * Cos(2 * Pi * (round(
+                                                                        2 * Cos(2 * Pi * (floor(
                                                                         HighFrequencyr +
                                                                         LowFrequencyr) shr 1) /
                                                                         StreamOut[OutputIndex].Data.
@@ -3748,7 +3748,7 @@ begin
                                                                        StreamOut[OutputIndex].Data.
                                                                        SampleRate);
                  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr := 
-                                                                       2 * Cos(2 * Pi * (round(
+                                                                       2 * Cos(2 * Pi * (floor(
                                                                        HighFrequencyr +
                                                                        LowFrequencyr) shr 1) /
                                                                        StreamOut[OutputIndex].Data.
@@ -3791,7 +3791,7 @@ begin
                                                                        StreamOut[OutputIndex].Data.
                                                                        SampleRate);
                  StreamOut[OutputIndex].DSP[FilterIndex].fftdata.Dr := 
-                                                                       2 * Cos(2 * Pi * (round(
+                                                                       2 * Cos(2 * Pi * (floor(
                                                                        HighFrequencyr +
                                                                        LowFrequencyr) shr 1) /
                                                                        StreamOut[OutputIndex].Data.
@@ -4198,7 +4198,7 @@ begin
       if SampleRate = -1 then
         soundtouch_setSampleRate(Plugin[x].PlugHandle, 44100)
       else
-        soundtouch_setSampleRate(Plugin[x].PlugHandle, round(SampleRate));
+        soundtouch_setSampleRate(Plugin[x].PlugHandle, floor(SampleRate));
       if Channels = -1 then
         soundtouch_setChannels(Plugin[x].PlugHandle, 2)
       else
@@ -4229,7 +4229,7 @@ begin
       if SampleRate = -1 then
         sr := 44100
       else
-        sr := round(SampleRate);
+        sr := floor(SampleRate);
       if Channels = -1 then
         chan := 2
       else
@@ -4255,7 +4255,7 @@ begin
       if SampleRate = -1 then
         bs2b_set_srate(Plugin[x].Abs2b, 44100)
       else
-        bs2b_set_srate(Plugin[x].Abs2b, round(SampleRate));
+        bs2b_set_srate(Plugin[x].Abs2b, floor(SampleRate));
 
       Plugin[x].param1 := -1;
       Plugin[x].param2 := -1;
@@ -5201,11 +5201,11 @@ begin
 
   StreamIn[InputIndex].DSP[result].fftdata.FNoise := 
                                                      TuosNoiseRemoval.Create(StreamIn[InputIndex].
-                                                     data.Channels,round(StreamIn[InputIndex].data.
+                                                     data.Channels,floor(StreamIn[InputIndex].data.
                                                      SampleRate));
 
   StreamIn[InputIndex].DSP[result].fftdata.FNoise.samprate := 
-                                                              round(StreamIn[InputIndex].data.SampleRate);
+                                                              floor(StreamIn[InputIndex].data.SampleRate);
 
   StreamIn[InputIndex].DSP[result].fftdata.FNoise.WriteProc := 
                                                                @StreamIn[InputIndex].DSP[result].
@@ -5236,11 +5236,11 @@ begin
 
   StreamOut[OutputIndex].DSP[result].fftdata.FNoise := 
                                                        TuosNoiseRemoval.Create(StreamOut[OutputIndex
-                                                       ].data.Channels,round(StreamOut[OutputIndex].data.
+                                                       ].data.Channels,floor(StreamOut[OutputIndex].data.
                                                        SampleRate));
 
   StreamOut[OutputIndex].DSP[result].fftdata.FNoise.samprate := 
-                                                                round(StreamOut[OutputIndex].data.
+                                                                floor(StreamOut[OutputIndex].data.
                                                                 SampleRate);
 
   StreamOut[OutputIndex].DSP[result].fftdata.FNoise.WriteProc := 
@@ -6036,7 +6036,7 @@ begin
   if SampleRate = -1 then
     StreamOut[x].FileBuffer.wSamplesPerSec := 44100
   else
-    StreamOut[x].FileBuffer.wSamplesPerSec := round(samplerate);
+    StreamOut[x].FileBuffer.wSamplesPerSec := floor(samplerate);
 
   StreamOut[x].Data.Samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
   StreamOut[x].LoopProc := Nil;
@@ -6116,7 +6116,7 @@ begin
   if SampleRate = -1 then
     StreamOut[x].FileBuffer.wSamplesPerSec := 44100
   else
-    StreamOut[x].FileBuffer.wSamplesPerSec := round(samplerate);
+    StreamOut[x].FileBuffer.wSamplesPerSec := floor(samplerate);
 
   StreamOut[x].Data.Samplerate := StreamOut[x].FileBuffer.wSamplesPerSec;
   StreamOut[x].LoopProc := Nil;
@@ -6232,7 +6232,7 @@ begin
   else fr := FramesCount;
   StreamOut[x].Data.Wantframes := fr ;
   if SampleRate = -1 then sr := 44100
-  else sr := round(SampleRate);
+  else sr := floor(SampleRate);
   StreamOut[x].Data.SampleRate := sr ;
 
   SetLength(StreamOut[x].Data.Buffer,fr*ch);
@@ -6699,7 +6699,7 @@ begin
           StreamIn[x].Data.seekable := false;
           StreamIn[x].LoopProc := Nil;
           
-          samprat := round(StreamIn[x].Data.samplerate);
+          samprat := floor(StreamIn[x].Data.samplerate);
 
           Err := mpg123_getformat(StreamIn[x].Data.HandleSt,
                  samprat, StreamIn[x].Data.channels,
@@ -6715,7 +6715,7 @@ begin
           if err <> 0 then
             begin
               sleep(50);
-              samprat := round(StreamIn[x].Data.samplerate);
+              samprat := floor(StreamIn[x].Data.samplerate);
                      
               Err := mpg123_getformat(StreamIn[x].Data.HandleSt,
                      samprat, StreamIn[x].Data.channels,
@@ -7104,7 +7104,7 @@ begin
   else fr := FramesCount;
   StreamOut[x].Data.Wantframes := fr ;
   if SampleRate = -1 then sr := 44100
-  else sr := round(SampleRate);
+  else sr := floor(SampleRate);
   StreamOut[x].Data.SampleRate := sr ;
 
   SetLength(StreamOut[x].Data.Buffer, StreamOut[x].Data.Wantframes*StreamOut[x].Data.Channels);
@@ -7135,7 +7135,7 @@ begin
 
   sfInfo.channels := StreamOut[x].Data.Channels;
   sfInfo.frames :=  streamOut[x].Data.Wantframes;
-  SFinfo.samplerate := round(StreamOut[x].Data.SampleRate);
+  SFinfo.samplerate := floor(StreamOut[x].Data.SampleRate);
   SFinfo.seekable := 0;
   StreamOut[x].Data.HandleSt := sf_open_virtual(@sfVirtual, SFM_WRITE, @sfInfo,
                                 @StreamOut[x].MemorySteamOut);
@@ -7450,7 +7450,7 @@ begin
                                                     StreamIn[x].Data.LibOpen := -1;
                                                   end;
                                                 
-                                                samprat := round(StreamIn[x].Data.samplerate);
+                                                samprat := floor(StreamIn[x].Data.samplerate);
              
                                                 if Err = 0 then Err := mpg123_getformat(StreamIn[x].
                                                                        Data.HandleSt,
@@ -7486,7 +7486,7 @@ begin
 
                                                     mpg123_format_none(StreamIn[x].Data.HandleSt);
                                                     
-                                                    samprat := round(StreamIn[x].Data.samplerate);
+                                                    samprat := floor(StreamIn[x].Data.samplerate);
              
                                                     
                                                     case StreamIn[x].Data.SampleFormat of 
@@ -7522,7 +7522,7 @@ begin
                                                            HandleSt, pointer(StreamIn[x].Data.
                                                            MemoryStream));
                                                            
-                                                    samprat := round(StreamIn[x].Data.samplerate);      
+                                                    samprat := floor(StreamIn[x].Data.samplerate);      
 
                                                     mpg123_getformat(StreamIn[x].Data.HandleSt,
                                                                      samprat,
@@ -7580,7 +7580,7 @@ begin
                                                     writeln('StreamIn[x].Data.frames = ' + inttostr(
                                                             StreamIn[x].Data.frames));
                                                     writeln('END StreamIn[x].Data.samplerate = ' +
-                                                            inttostr(round(StreamIn[x].Data.samplerate)));
+                                                            inttostr(floor(StreamIn[x].Data.samplerate)));
                                                     writeln('END StreamIn[x].Data.channels = ' +
                                                             inttostr(StreamIn[x].Data.channels));
             {$endif}
@@ -8099,7 +8099,7 @@ begin
               StreamIn[x].Data.LibOpen := -1;
             end;
            
-           samprat := round(StreamIn[x].Data.samplerate); 
+           samprat := floor(StreamIn[x].Data.samplerate); 
            
           if Err = 0 then
             Err := mpg123_getformat(StreamIn[x].Data.HandleSt,

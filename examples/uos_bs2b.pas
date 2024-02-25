@@ -239,7 +239,7 @@ implementation
 
 function bs2b_level_delay(fcut : longint) : longint;
 begin
-  result:=round((18700/fcut)*10);
+  result:=floor((18700/fcut)*10);
 end;
 
   var

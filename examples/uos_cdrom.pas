@@ -371,7 +371,7 @@ Begin
   Result^.BufEnd               := 0;
   Result^.BufSize              := BUF_SIZE;
   Result^.TotalSamples         := Result^.Size div 4;
-  Result^.TotalTime            := Round(Result^.TotalSamples / 44100);
+  Result^.TotalTime            := floor(Result^.TotalSamples / 44100);
 
   Inc(Result^.fHandleVaild);
 
@@ -637,7 +637,7 @@ Begin
   Result^.BufEnd          := 0;
   Result^.BufSize         := BUF_SIZE;
   Result^.TotalSamples    := Result^.Size div 4;
-  Result^.TotalTime       := Round(Result^.TotalSamples / 44100);
+  Result^.TotalTime       := floor(Result^.TotalSamples / 44100);
 
   Inc(Result^.fHandleVaild);
 end;
