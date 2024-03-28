@@ -17,7 +17,7 @@ unit uos_bs2b;
 interface
 
 uses
-  SysUtils, dynlibs, ctypes;
+  SysUtils, dynlibs, ctypes, math;
   
 const
 libsb=
