@@ -19,7 +19,7 @@ uses
 {$IFDEF unix}
  baseunix,
 {$ENDIF}
- Classes, SysUtils;
+ Classes, SysUtils, math;
 
   Const
   CDROM_OK = 0;
