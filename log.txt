@@ -52,5 +52,6 @@
 * 37 th changes: 2022-03-16 (Added missing Album and Track tag)     *             *
 * 38 th changes: 2022-03-20 (Methods inlined)                                     * 
 * 39 th changes: 2023-12-27 (Added uos_UpdateDevice(). Sample rate is float)      * 
+* 40 th changes: 2024-04-22 (Changed all round() with roundmath()                 * 
 
 ***********************************************************************************}

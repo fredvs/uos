@@ -8,6 +8,8 @@ Blaazen : He knows digital audio and explains how it works. He is the Professor 
 
 Dibo : Shows the best way to calculate time.
 
+DomingoGP: introduced roundmath() vs round().
+
 Franklyn A. Harlow : AAC and CD audio -> he did it.
 
 KpjComp : He gives the way to link PortAudio with SndFile and shows the best way to pause a thread.
