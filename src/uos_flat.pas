@@ -311,7 +311,7 @@ function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; Sam
 // Add a Output into memory buffer with custom parameters
 // outmemory : pointer of buffer to use to store memory.
 // SampleRate : delault : -1 (44100)
-// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// SampleFormat : default : -1 (0:float32) ( 1:Int32, 2:Int16)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // FramesCount : default : -1 (= 1024 * 2)
 
@@ -1612,10 +1612,10 @@ end;
 
 function  uos_AddIntoMemoryBuffer(PlayerIndex: cint32; outmemory: PDArFloat; SampleRate: CDouble;  SampleFormat: LongInt;
       Channels: LongInt; FramesCount: LongInt): LongInt;  
-// Add a Output into TMemoryStream
+// Add a Output into memory buffer
 // outmemory : pointer of buffer to use to store memory.
 // SampleRate : delault : -1 (44100)
-// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// SampleFormat : default : -1 (0:float32) ( 1:Int32, 2:Int16)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
 // FramesCount : default : -1 (= 1024 * 2)
  begin
