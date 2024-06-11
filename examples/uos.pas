@@ -881,9 +881,9 @@ type
       // Add a Output into TMemoryStream
       // outmemory : pointer of buffer to use to store memory.
       // SampleRate : delault : -1 (44100)
-      // SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+      // SampleFormat : default : -1 (0:float32) ( 1:Int32, 2:Int16)
       // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-      // FramesCount : default : -1 (= 1024 * 2) 
+      // FramesCount : default : -1 (= 65536) 
 
       function AddIntoMemoryStream(Var MemoryStream: TMemoryStream; SampleRate: CDouble;
                                    SampleFormat: LongInt ; Channels: LongInt; FramesCount: LongInt;
@@ -5446,18 +5446,24 @@ function Tuos_Player.AddFromDevIn(Device: cint32; Latency: CDouble;
                                   SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
 // Add Input from IN device with custom parameters
 // Device ( -1 is default Input device )
-// Latency  ( -1 is latency suggested ) )
+// Latency  ( -1 is latency suggested ) 
 // SampleRate : delault : -1 (44100)
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to a existing OutputIndex
 // (if multi-output then OutName = name of each output separeted by ';')
 // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : -1 default : 4096
 // ChunkCount : default : -1 (= 512)
-// example : AddFromDevIn(-1,-1,-1,-1);
 var 
   x, err: cint32;
 begin
   result := -1 ;
+
+  if device = -1 then
+   err :=  Pa_GetDefaultInputDevice();
+  if err = -1 then result := -2;
+
+ if result <> -2 then
+ begin
   x := 0;
   err := -1;
   SetLength(StreamIn, Length(StreamIn) + 1);
@@ -5532,6 +5538,7 @@ begin
       StreamIn[x].Data.Enabled := True;
       Result := x;
     end;
+ end else Result := -1;  
 end;
 {$endif}
 
@@ -6207,9 +6214,11 @@ begin
   StreamOut[x].Data.TypePut := 3;
   Streamout[x].Data.posmem := 0;
   Streamout[x].BufferOut := outmemory;
-  StreamOut[x].Data.Wantframes := 1024*2 ;
+  StreamOut[x].Data.channels := 2;
+  StreamOut[x].Data.Wantframes := 65536 ;
+  StreamOut[x].Data.SampleFormat := 0;
   StreamOut[x].Data.SampleRate := 44100 ;
-  SetLength(StreamOut[x].Data.Buffer,1024*4);
+  SetLength(StreamOut[x].Data.Buffer,65536*2);
   intobuf := true;
   // to check, why ?
   result := x;
@@ -6219,12 +6228,12 @@ end;
 function  Tuos_Player.AddIntoMemoryBuffer(outmemory: PDArFloat; SampleRate: CDouble;  SampleFormat:
                                           LongInt;
                                           Channels: LongInt; FramesCount: LongInt): LongInt;
-// Add a Output into TMemoryStream
+// Add a Output into Memory Buffer with parameters.
 // outmemory : pointer of buffer to use to store memory.
 // SampleRate : delault : -1 (44100)
-// SampleFormat : default : -1 (2:Int16) ( 1:Int32, 2:Int16)
+// SampleFormat : default : -1 (0:Float32) ( 1:Int32, 2:Int16)
 // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-// FramesCount : default : -1 (= 1024 * 2) 
+// FramesCount : default : -1 (= 65536) 
 
 var 
   x, ch, sr, sf, fr: integer;
@@ -6241,10 +6250,10 @@ begin
   if channels = -1 then ch := 2
   else ch := channels;
   StreamOut[x].Data.channels := ch;
-  if SampleFormat = -1 then sf := 2
+  if SampleFormat = -1 then sf := 0
   else sf := SampleFormat;
   StreamOut[x].Data.SampleFormat := sf;
-  if FramesCount = -1 then fr := 1024 *2
+  if FramesCount = -1 then fr := 65536
   else fr := FramesCount;
   StreamOut[x].Data.Wantframes := fr ;
   if SampleRate = -1 then sr := 44100
@@ -6277,6 +6286,13 @@ var
 
 begin
   result := -1 ;
+
+  if device = -1 then
+   err := Pa_GetDefaultOutputDevice();
+  if err = -1 then result := -2;
+ 
+ if result <> -2 then
+ begin
   x := 0;
   err := -1;
   SetLength(StreamOut, Length(StreamOut) + 1);
@@ -6377,6 +6393,7 @@ begin
       StreamOut[x].Data.Enabled := True;
       Result := x;
     end;
+ end else Result := -1;    
 end;
 
  {$endif}

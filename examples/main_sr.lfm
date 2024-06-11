@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 350
+  Left = 680
   Height = 311
-  Top = 195
+  Top = 266
   Width = 505
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Recorder U0S'
@@ -85,7 +85,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '2.0.12.0'
+  LCLVersion = '2.2.4.0'
   object Shape1: TShape
     Left = 11
     Height = 158
@@ -139,7 +139,7 @@ object Form1: TForm1
     Left = 24
     Height = 14
     Top = 286
-    Width = 27
+    Width = 26
     Alignment = taCenter
     Caption = 'Vol L'
     Font.Height = -11
@@ -205,7 +205,7 @@ object Form1: TForm1
     Left = 70
     Height = 14
     Top = 286
-    Width = 29
+    Width = 28
     Alignment = taCenter
     Caption = 'Vol R'
     Font.Height = -11
@@ -237,9 +237,9 @@ object Form1: TForm1
   end
   object CheckBox1: TCheckBox
     Left = 112
-    Height = 21
+    Height = 23
     Top = 224
-    Width = 105
+    Width = 94
     Caption = 'Listen MIC'
     Checked = True
     OnChange = CheckBox1Change
@@ -272,12 +272,11 @@ object Form1: TForm1
   end
   object CheckBox2: TCheckBox
     Left = 112
-    Height = 21
+    Height = 23
     Top = 248
-    Width = 112
+    Width = 99
     Caption = 'Save to file'
     Checked = True
-    OnChange = CheckBox2Change
     State = cbChecked
     TabOrder = 9
   end
@@ -303,22 +302,20 @@ object Form1: TForm1
   end
   object bwav: TRadioButton
     Left = 240
-    Height = 21
+    Height = 23
     Top = 224
-    Width = 60
+    Width = 57
     Caption = '.wav'
     Checked = True
-    OnChange = bwavChange
     TabOrder = 13
     TabStop = True
   end
   object bogg: TRadioButton
     Left = 240
-    Height = 21
+    Height = 23
     Top = 248
-    Width = 58
+    Width = 54
     Caption = '.ogg'
-    OnChange = bwavChange
     TabOrder = 12
   end
 end

@@ -7,6 +7,7 @@ interface
 
 uses
   uos_flat,
+  uos,
   ctypes,
   Forms,
   Dialogs,
@@ -16,7 +17,7 @@ uses
   ComCtrls,
   ExtCtrls,
   Classes,
-  Controls;
+  Controls, Grids;
 
 type
   { TForm1 }
@@ -48,13 +49,11 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
-    procedure CheckBox2Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure ClosePlayer1;
-    procedure bwavChange(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
   private
     { private declarations }
@@ -92,11 +91,6 @@ begin
     Button4.Enabled := True;
 end;
 
-procedure TForm1.bwavChange(Sender: TObject);
-begin
-
-end;
-
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (Button2.Enabled = False) then
@@ -108,7 +102,7 @@ procedure TForm1.FormActivate(Sender: TObject);
 {$IFDEF Darwin}
 var
   opath: string;
-            {$ENDIF}
+{$ENDIF}
 begin
   uos_logo();
       {$IFDEF Windows}
@@ -247,8 +241,8 @@ begin
 
      uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text), -1, -1, -1, 4096, outformat);
 
- //   function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
- // Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
+//   function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
+// Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
 // Add a Output into audio wav file with custom parameters from TFileStream
 // PlayerIndex : Index of a existing Player
 // FileName : filename of saved audio wav file
@@ -258,11 +252,9 @@ begin
 // FramesCount : default : -1 (= 65536)
 // FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom, 3:ogg);
 
-    //// add Output into wav or ogg file (save record) from TFileStream
-
-    // saving in a Memory-Buffer:  
-    // SetLength(thebuffer, 0);
-    // uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
+     //  saving in a Memory-Buffer:
+     //  SetLength(thebuffer, 0);
+     //  uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
 
     // saving in a Memory-Stream:  
     // if thememorystream = nil then thememorystream := tmemorystream.create;
@@ -273,10 +265,10 @@ begin
     //// add Output into wav file (save record)  with default parameters
 
       {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
-    out1index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.8, -1, -1, -1, -1) ;
-       {$else}
-    out1index := uos_AddIntoDevOut(PlayerIndex1);
-       {$endif}
+    out1index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.8, -1, -1, -1, -1, -1) ;
+         {$else}
+     out1index := uos_AddIntoDevOut(PlayerIndex1) ;
+     {$endif}
 
     uos_outputsetenable(PlayerIndex1, out1index, checkbox1.Checked);
 
@@ -291,7 +283,6 @@ begin
     // ChunkCount : default : -1 (= 512)
 
    In1Index := uos_AddFromDevIn(PlayerIndex1);
-
     //// add input from mic with custom parameters
     //////////// PlayerIndex : Index of a existing Player
     //////////// Device ( -1 is default Input device )
@@ -408,11 +399,6 @@ end;
 procedure TForm1.CheckBox1Change(Sender: TObject);
 begin
   uos_outputsetenable(0, out1index, checkbox1.Checked);
-end;
-
-procedure TForm1.CheckBox2Change(Sender: TObject);
-begin
-
 end;
 
 procedure uos_logo();

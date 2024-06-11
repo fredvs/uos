@@ -17,6 +17,7 @@ order14=0
 order15=0
 order16=0
 order17=0
+order18=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simpleplayer.prj
@@ -85,8 +86,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=864
- y=220
+ x=655
+ y=516
  cx=312
  cy=269
 options=114
@@ -389,6 +390,7 @@ checkmethods=1
 colorerror=-1610612712
 colorwarning=-1610612717
 colornote=-1610612716
+colorhint=15134207
 usercolors=30
  0
  0
@@ -765,8 +767,11 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=clong
-findhistory=10
+finddtext=showlevel
+findhistory=13
+ showlevel
+ showpos
+ LoopProcPlayer1
  clong
  uos_Addfrom
  uos_AddInto
@@ -778,22 +783,32 @@ findhistory=10
  PCAUDIOLIB
  my_audio
 findoptions=1
-editpos=3
+editpos=5
+ 0,12
+ 0,-1073741823
+ 0,262
  0,0
- 0,260
- 1,262
+ 4,678
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
-sourcefiles=3
+bookmarks3=0
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/simpleplayer.lpr
  ${PROJECTDIR}/uos_libsndfile.pas
- /home/fred/uos/uos_libsndfile.pas
-relpaths=3
+ ${PROJECTDIR}/uos_libsndfile.pas
+ ${PROJECTDIR}/simpleplayer.lpr
+ ${PROJECTDIR}/main_sp.pas
+relpaths=5
  simpleplayer.lpr
  uos_libsndfile.pas
  uos_libsndfile.pas
-ismoduletexts=3
+ simpleplayer.lpr
+ main_sp.pas
+ismoduletexts=5
+ 0
+ 0
  0
  0
  0
@@ -802,10 +817,16 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=5
+ 0
+ 4
+ 1
+ 2
+ 3
 firsttab=0
-index=2
+index=1
 [layout]
-windowlayout=602
+windowlayout=543
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -948,14 +969,14 @@ windowlayout=602
  x=0
  y=0
  cx=205
- cy=448
+ cy=445
  rcx=0
  rcy=0
  [projecttreefo.grid]
  propcolwidthref=88
  width0=117
  sortdescend0=0
- width1=82
+ width1=86
  sortdescend1=0
  sorted=0
  col=1
@@ -1019,7 +1040,7 @@ windowlayout=602
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=memoryfo
+ stackedunder=conflangfo
  parent=
  mdistate=0
  nx=0
@@ -1038,10 +1059,10 @@ windowlayout=602
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=448
+ propcolwidthref=449
  width0=199
  sortdescend0=0
- width1=243
+ width1=244
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1134,9 +1155,9 @@ windowlayout=602
  ncx=0
  ncy=0
  x=0
- y=504
+ y=505
  cx=1145
- cy=96
+ cy=95
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1168,67 +1189,34 @@ windowlayout=602
  width3=185
  sortdescend3=0
  [componentstorefo.storefiledialog]
- filenamescust=0
  filenames=0
  filecolwidth=0
  x=0
  y=0
  cx=0
  cy=0
- panel=0
- noicon=0
- compact=0
- showhidden=0
- colnamewidth=0
- colsizewidth=0
- colextwidth=0
- coldatewidth=0
- splitterplaces=0
- splitterlateral=0
  lastdir=
  filehistory=0
  filefilterindex=0
  filefilter=
  [componentstorefo.groupfiledialog]
- filenamescust=0
  filenames=0
  filecolwidth=0
  x=0
  y=0
  cx=0
  cy=0
- panel=0
- noicon=0
- compact=0
- showhidden=0
- colnamewidth=0
- colsizewidth=0
- colextwidth=0
- coldatewidth=0
- splitterplaces=0
- splitterlateral=0
  lastdir=
  filehistory=0
  filefilterindex=0
  filefilter=
  [componentstorefo.compfiledialog]
- filenamescust=0
  filenames=0
  filecolwidth=0
  x=0
  y=0
  cx=0
  cy=0
- panel=0
- noicon=0
- compact=0
- showhidden=0
- colnamewidth=0
- colsizewidth=0
- colextwidth=0
- coldatewidth=0
- splitterplaces=0
- splitterlateral=0
  lastdir=
  filehistory=0
  filefilterindex=0
@@ -1236,7 +1224,7 @@ windowlayout=602
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1267,7 +1255,7 @@ windowlayout=602
  x=0
  y=0
  cx=1145
- cy=50
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1280,9 +1268,9 @@ windowlayout=602
  ny=0
  ncx=1145
  ncy=54
- x=-75
+ x=0
  y=0
- cx=1207
+ cx=1145
  cy=51
  rcx=0
  rcy=0
@@ -1293,8 +1281,9 @@ windowlayout=602
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/uos_libsndfile.pas
- history=50
+ value=/home/fred/uos/examples/main_sp.pas
+ history=20
+  /home/fred/uos/examples/uos_libsndfile.pas
   /home/fred/uos/src/uos.pas
   /home/fred/uidesigner_ext/src/fpg_main.pas
   /home/fred/uidesigner_ext/src/pthread.inc
@@ -1314,37 +1303,6 @@ windowlayout=602
   /home/fred/mseide-msegui/lib/common/fpccompatibility/mdbf.pas
   /home/fred/mseide-msegui/lib/common/fpccompatibility/mdb.pas
   /home/fred/demo_mse/problast52/main.pas
-  /home/fred/mseuniverse/samples/db/simplemysql/main.pas
-  /home/fred/ideu/src/messageform.pas
-  /home/fred/ideu/src/finddialogform.pas
-  /home/fred/ideu/src/targetconsole.pas
-  /home/fred/Downloads/eschecs-master/source/connect.pas
-  /home/fred/demo_mse/dynx_msegui/mseguiintf.pas
-  /home/fred/demo_mse/dynx_msegui/xlib.pp
-  /home/fred/dynx_msegui/msex11gdi.pas
-  /home/fred/dynx_msegui/mseguiintf.pas
-  /home/fred/dynx_msegui/msegui.pas
-  /home/fred/dynx_msegui/xdynload.pas
-  /home/fred/mseguiintf.pas
-  /home/fred/synedit/main.pas
-  /home/fred/ideu/src/dialogfiles.pas
-  /home/fred/mseuniverse/samples/memomse/src/memomse.prj
-  /home/fred/ideu/src/msetabs.pas
-  /home/fred/ideu/src/componentpaletteform.pas
-  /home/fred/ideu/src/confcompiler.pas
-  /home/fred/mseide-msegui/lib/common/dialogx/msefiledialogx.pas
-  /home/fred/ideu/src/msefiledialog.pas
-  /home/fred/ideu/src/confcompiler.mfm
-  /home/fred/ideu/src/ideusettings.pas
-  /home/fred/ideu/src/confideu.mfm
-  /home/fred/mseide-msegui/apps/ide/componentpaletteform.pas
-  /home/fred/mseide-msegui/apps/ide/actionsmodule.pas
-  /home/fred/componentpaletteform.pas
-  /home/fred/ideu/src/actionsmodule.pas
-  /home/fred/mseide-msegui/apps/ide/debuggerform.pas
-  /home/fred/ideu/src/projecttreeform.pas
-  /home/fred/getgraphicdriver/ggd.pas
-  /home/fred/ideu/src/sak_mse.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1362,21 +1320,25 @@ windowlayout=602
  x=208
  y=0
  cx=937
- cy=448
+ cy=445
  rcx=0
  rcy=0
  [sourcefo.files_tab]
+ order=5
+  0
+  4
+  1
+  2
+  3
  firsttab=0
- index=2
- [confideufo.fontname]
- value=stf_default
+ index=1
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=confdebuggerfo
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1403,9 +1365,9 @@ windowlayout=602
  ncx=0
  ncy=0
  x=0
- y=53
+ y=57
  cx=1145
- cy=448
+ cy=445
  rcx=0
  rcy=0
 [targetconsole]

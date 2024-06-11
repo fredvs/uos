@@ -17,6 +17,7 @@ order14=0
 order15=0
 order16=0
 order17=0
+order18=0
 [projectoptions]
 projectdir=/home/fred/uos/examples
 projectfilename=/home/fred/uos/examples/simplerecorder.prj
@@ -85,8 +86,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=476
- y=467
+ x=885
+ y=259
  cx=312
  cy=269
 options=114
@@ -197,7 +198,7 @@ options=114
  index=1
  [projectoptionsfo.setting_tab]
  firsttab=0
- index=2
+ index=0
  [projectoptionsfo]
  stackedunder=
  x=341
@@ -390,11 +391,12 @@ stripmessageesc=0
 copymessages=0
 closemessages=0
 enablepurpose=0
-enablesource=0
+enablesource=1
 checkmethods=1
 colorerror=-1610612717
 colorwarning=-1610612712
 colornote=-1610612716
+colorhint=15134207
 usercolors=30
  0
  0
@@ -474,7 +476,7 @@ makeoptionson=8
  127
  2
  0
- 7
+ 3
  2
  61
  4095
@@ -777,79 +779,47 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=sf_write
+finddtext=AddIntoMemoryBuffer
 findhistory=20
+ AddIntoMemoryBuffer
+ writeln('De
+ AddFromDevIn
+ AddIntoDevOut
+ uos_UpdateDevice
+ Pa_GetDefaultOutputDevice
+ convert
+ InputGetChannels
+ uos_AddIntoMemoryBuffer
+ FramesCount
+ 65
+ getbuffer
+ looppro
+ loop
  sf_write
  StreamOut[x].Data.Filename
  AddIntoFileFromMem
  AddIntoFile(
  filename,fmCreate
  AddIntoFile
- filename
- rec_
- sf_close
- sf_strerr
- sf_err
- no error
- noerror
- sf_wchar_open
- sf_open(
- LPCWSTR
- sf_open
- windows
- SFM_write
- HandleSt
 findoptions=1
-editpos=6
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,13
- 0,-1073741823
+editpos=1
+ 0,0
 bookmarks0=0
-bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-sourcefiles=6
+sourcefiles=1
  ${PROJECTDIR}/simplerecorder.lpr
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/main_sr.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/simplerecorder.lpr
- ${PROJECTDIR}/uos.pas
-relpaths=6
+relpaths=1
  simplerecorder.lpr
- uos_libsndfile.pas
- main_sr.pas
- uos_flat.pas
- simplerecorder.lpr
- uos.pas
-ismoduletexts=6
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=1
  0
 modules=0
 moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=6
- 0
- 1
- 2
- 4
- 5
- 3
 firsttab=0
-index=3
+index=0
 [layout]
-windowlayout=546
+windowlayout=537
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -863,13 +833,13 @@ windowlayout=546
  ny=0
  ncx=0
  ncy=0
- x=3
+ x=5
  y=29
- cx=1362
+ cx=1356
  cy=710
  rcx=0
  rcy=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [findmessagefo.findtext]
@@ -992,14 +962,14 @@ windowlayout=546
  x=0
  y=0
  cx=205
- cy=517
+ cy=522
  rcx=0
  rcy=0
  [projecttreefo.grid]
  propcolwidthref=88
  width0=117
  sortdescend0=0
- width1=82
+ width1=86
  sortdescend1=0
  sorted=0
  col=1
@@ -1063,7 +1033,7 @@ windowlayout=546
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=memoryfo
+ stackedunder=conflangfo
  parent=
  mdistate=0
  nx=0
@@ -1082,10 +1052,10 @@ windowlayout=546
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=448
+ propcolwidthref=449
  width0=199
  sortdescend0=0
- width1=243
+ width1=244
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1179,8 +1149,8 @@ windowlayout=546
  ncy=0
  x=0
  y=582
- cx=1350
- cy=107
+ cx=1354
+ cy=108
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1247,7 +1217,7 @@ windowlayout=546
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=
+ stackedunder=objectinspectorfo
  parent=
  mdistate=3
  nx=0
@@ -1277,8 +1247,8 @@ windowlayout=546
  ncy=0
  x=0
  y=0
- cx=1350
- cy=59
+ cx=1354
+ cy=54
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1289,12 +1259,12 @@ windowlayout=546
  mdistate=0
  nx=0
  ny=0
- ncx=1356
- ncy=63
+ ncx=1354
+ ncy=58
  x=0
  y=0
- cx=1350
- cy=63
+ cx=1354
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1304,9 +1274,11 @@ windowlayout=546
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/simplerecorder.lpr
+ value=/home/fred/uos/examples/uos.pas
  history=20
   /home/fred/uos/examples/simplerecorder.lpr
+  /home/fred/uos/examples/main_sr.pas
+  /home/fred/uos/examples/uos_flat.pas
   /home/fred/uos/examples/uos.pas
   /home/fred/strumpract/src/uos.pas
   /home/fred/ideu/src/msefiledialogx.pas
@@ -1324,10 +1296,8 @@ windowlayout=546
   /home/fred/ideu/src/findinfileform.pas
   /home/fred/ideu/src/confmsegui.pas
   /home/fred/ideu/src/confideu.pas
-  /home/fred/ideu/src/conffpgui.pas
-  /home/fred/ideu/src/confdebugger.pas
  [debuggerfo.project_options]
- value=5
+ value=1
  [debuggerfo.hints]
  value=0
  [sourcefo]
@@ -1342,29 +1312,20 @@ windowlayout=546
  ncy=0
  x=208
  y=0
- cx=1142
- cy=517
+ cx=1146
+ cy=522
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=6
-  0
-  1
-  2
-  4
-  5
-  3
  firsttab=0
- index=3
- [confideufo.fontname]
- value=stf_default
+ index=0
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=confdebuggerfo
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1391,9 +1352,9 @@ windowlayout=546
  ncx=0
  ncy=0
  x=0
- y=62
- cx=1350
- cy=517
+ y=57
+ cx=1354
+ cy=522
  rcx=0
  rcy=0
 [targetconsole]
