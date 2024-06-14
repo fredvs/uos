@@ -89,7 +89,7 @@ finddialog=8
  x=885
  y=259
  cx=312
- cy=269
+ cy=291
 options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -208,9 +208,9 @@ options=114
 settings=8
  [settings_form]
  x=447
- y=148
- cx=471
- cy=490
+ y=138
+ cx=518
+ cy=724
  wsize=0
  active=1
  visible=1
@@ -779,7 +779,7 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=AddIntoMemoryBuffer
+finddtext=AddFrom
 findhistory=20
  AddIntoMemoryBuffer
  writeln('De
@@ -802,14 +802,24 @@ findhistory=20
  filename,fmCreate
  AddIntoFile
 findoptions=1
-editpos=1
- 0,0
+editpos=3
+ 0,9
+ 0,-1073741823
+ 0,289
 bookmarks0=0
-sourcefiles=1
- ${PROJECTDIR}/simplerecorder.lpr
-relpaths=1
+bookmarks1=0
+bookmarks2=0
+sourcefiles=3
+ /home/fred/uos/examples/simplerecorder.lpr
+ /home/fred/uos/examples/main_sr.pas
+ /home/fred/uos/examples/uos_flat.pas
+relpaths=3
  simplerecorder.lpr
-ismoduletexts=1
+ main_sr.pas
+ uos_flat.pas
+ismoduletexts=3
+ 0
+ 0
  0
 modules=0
 moduleoptions=0
@@ -962,7 +972,7 @@ windowlayout=537
  x=0
  y=0
  cx=205
- cy=522
+ cy=620
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -974,7 +984,7 @@ windowlayout=537
  sorted=0
  col=1
  row=-1073741823
- rowheight=16
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1148,9 +1158,9 @@ windowlayout=537
  ncx=0
  ncy=0
  x=0
- y=582
- cx=1354
- cy=108
+ y=691
+ cx=1586
+ cy=129
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1217,7 +1227,7 @@ windowlayout=537
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=objectinspectorfo
+ stackedunder=confdebuggerfo
  parent=
  mdistate=3
  nx=0
@@ -1247,8 +1257,8 @@ windowlayout=537
  ncy=0
  x=0
  y=0
- cx=1354
- cy=54
+ cx=1586
+ cy=65
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1263,8 +1273,8 @@ windowlayout=537
  ncy=58
  x=0
  y=0
- cx=1354
- cy=58
+ cx=1586
+ cy=63
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1274,28 +1284,28 @@ windowlayout=537
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/uos.pas
+ value=/home/fred/uos/examples/simplerecorder.lpr
  history=20
-  /home/fred/uos/examples/simplerecorder.lpr
-  /home/fred/uos/examples/main_sr.pas
   /home/fred/uos/examples/uos_flat.pas
-  /home/fred/uos/examples/uos.pas
-  /home/fred/strumpract/src/uos.pas
-  /home/fred/ideu/src/msefiledialogx.pas
-  /home/fred/mseide-msegui/lib/common/dialogx/msefiledialogx.pas
-  /home/fred/mseide-msegui/lib/common/image/mseformatgifread.pas
-  /home/fred/mseide-msegui/lib/common/fpccompatibility/msefpreadgif.pas
-  /home/fred/Pictures/415x380.png
-  /home/fred/ideu/src/confcompiler.pas
+  /home/fred/sdl4msegui/testsdl/form2.pas
+  /home/fred/sdl4msegui/testsdl/testsdl.pas
+  /home/fred/mseide-msegui/lib/common/kernel/msegui.pas
+  /home/fred/mseide-msegui/lib/common/kernel/msectypes.pas
+  /home/fred/mseide-msegui_sdl/lib/common/kernel/msegui.pas
+  /home/fred/msegui_form_savetofile/form2file.pas
+  /home/fred/mseide-msegui_sdl/lib/common/kernel/linux/msesocketintf.pas
+  /home/fred/mseide-msegui_sdl/lib/common/kernel/sdl/msesocketintf.pas
+  /home/fred/mseide-msegui_sdl/lib/common/kernel/sdl/sdl2_types.inc
+  /home/fred/mseide-msegui_sdl/lib/common/kernel/mseclasses.pas
+  /home/fred/sdl4msegui/testsdl/main.pas
+  /home/fred/mseide-msegui_sdl/lib/common/widgets/msewidgets.pas
+  /home/fred/mseuniverse-main/sdl4msegui/lib/common/kernel/sdl/msesysintf1.pas
+  /home/fred/mseuniverse-main/sdl4msegui/lib/common/kernel/sdl/msesysintfhlinux.inc
+  /home/fred/mseide-msegui_sdl/lib/common/kernel/msesysintf.inc
+  /home/fred/mseide-msegui_sdl/lib/common/kernel/sdl/msesysintflinux.inc
+  /home/fred/mseide-msegui/lib/common/fpccompatibility/msefpwritepng.pas
   /home/fred/ideu/src/ideusettings.pas
-  /home/fred/ideu/src/dialogfiles.pas
-  /home/fred/ideu/src/finddialogform.pas
-  /home/fred/ideu/src/panelform.pas
-  /home/fred/ideu/src/findmessage.pas
-  /home/fred/ideu/src/findinfilepage.pas
-  /home/fred/ideu/src/findinfileform.pas
-  /home/fred/ideu/src/confmsegui.pas
-  /home/fred/ideu/src/confideu.pas
+  /home/fred/ideu_stadialogx/src/ideusettings.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1312,8 +1322,8 @@ windowlayout=537
  ncy=0
  x=208
  y=0
- cx=1146
- cy=522
+ cx=1378
+ cy=620
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1352,9 +1362,9 @@ windowlayout=537
  ncx=0
  ncy=0
  x=0
- y=57
- cx=1354
- cy=522
+ y=68
+ cx=1586
+ cy=620
  rcx=0
  rcy=0
 [targetconsole]
