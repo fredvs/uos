@@ -47,6 +47,19 @@ begin
     mainfo.bsdir.value := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
     mainfo.songdir.value := ordir + 'sound/test.ogg';
     {$ENDIF}
+
+    {$if defined(CPUAMD64) and defined(openbsd) }
+    mainfo.padir.value := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+    mainfo.sfdir.value := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so';
+    mainfo.mpdir.value := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
+    mainfo.m4dir.value :=  '' ;
+    mainfo.fadir.value := '' ;
+    mainfo.ofdir.value :=  '' ;
+    mainfo.stdir.value := ordir + 'lib/OpenBSD/64bit/plugin/LibSoundTouch-64.so';
+    mainfo.bsdir.value := '' ;
+    mainfo.songdir.value := ordir + 'sound/test.ogg';
+    {$ENDIF}
+ 
 {$if defined(cpu86) and defined(linux)}
     mainfo.padir.value := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
     mainfo.sfdir.value := ordir + 'lib/Linux/32bit/LibSndFile-32.so';

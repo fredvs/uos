@@ -175,12 +175,20 @@ begin
    {$ENDIF}
     {$ENDIF}
 
-    {$if defined(CPUAMD64) and defined(linux) }
+ {$if defined(CPUAMD64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/Linux/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   Edit4.Text := ordir + 'sound/test.mp3';
  {$ENDIF}
+
+  {$if defined(CPUAMD64) and defined(openbsd) }
+  Edit1.Text := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+  Edit2.Text := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so';
+  Edit3.Text := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
+  Edit4.Text := ordir + 'sound/test.mp3';
+ {$ENDIF}
+
 {$if defined(cpu86) and defined(linux)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';

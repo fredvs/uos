@@ -134,6 +134,11 @@ begin
   lib2 := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
   {$ENDIF}
 
+     {$if defined(CPUAMD64) and defined(openbsd) }
+   lib1 := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+  lib2 := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so'; 
+  {$ENDIF}
+
      {$IFDEF freebsd}
         {$if defined(cpu64)}
          lib1 :=  ordir + 'lib/FreeBSD/64bit/libportaudio-64.so'    ;

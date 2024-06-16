@@ -60,6 +60,14 @@ var
     SoundFilename := ordir + 'sound\test.mp3';
  {$ENDIF}
 
+  {$if defined(CPUAMD64) and defined(openbsd) }
+  SF_FileName := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so';
+  PA_FileName := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+  MP_FileName := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
+  ST_FileName := ordir + 'lib/OpenBSD/64bit/plugin/LibSoundTouch-64.so';
+  SoundFilename := ordir + 'sound/test.mp3';
+ {$ENDIF}
+
  {$if defined(CPUAMD64) and defined(linux) }
     PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
     SF_FileName := ordir + 'lib/Linux/64bit/LibSndFile-64.so';

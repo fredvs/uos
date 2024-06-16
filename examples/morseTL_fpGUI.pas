@@ -272,6 +272,12 @@ var
   PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
  MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
  {$ENDIF}
+
+ {$if defined(cpu64) and defined(openbsd) }
+  PA_FileName := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+ MP_FileName := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
+ {$ENDIF}
+
 {$if defined(cpu86) and defined(linux)}
   PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   MP_FileName := ordir + 'lib/Linux/32bit/LibMpg123-32.so';

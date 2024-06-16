@@ -61,6 +61,13 @@ begin
   SoundFilename := ordir + 'sound/test.ogg';
  {$ENDIF}
 
+ {$if defined(CPUAMD64) and defined(openbsd) }
+  SF_FileName := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so';
+  PA_FileName := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+  // MP_FileName := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
+  SoundFilename := ordir + 'sound/test.ogg';
+ {$ENDIF}
+
  {$if defined(cpu86) and defined(linux)}
   PA_FileName := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   SF_FileName := ordir + 'lib/Linux/32bit/LibSndFile-32.so';

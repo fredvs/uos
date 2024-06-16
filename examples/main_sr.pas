@@ -154,6 +154,12 @@ begin
    Edit3.Text := application.Location + 'sound/testrecord.wav';
   {$ENDIF}
 
+  {$if defined(CPUAMD64) and defined(openbsd) }
+  Edit1.Text :=  application.Location + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+  Edit2.Text :=  application.Location + 'lib/OpenBSD/64bit/LibSndFile-64.so';
+   Edit3.Text := application.Location + 'sound/testrecord.wav';
+  {$ENDIF}
+
    {$IFDEF freebsd}
    {$if defined(cpu64)}
    Edit1.Text := application.Location +  'lib/FreeBSD/64bit/libportaudio-64.so';

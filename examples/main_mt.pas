@@ -132,6 +132,11 @@ begin
    {$endif}
    {$ENDIF}
 
+   {$if defined(CPUAMD64) and defined(openbsd) }
+   PA_FileName := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+   MP_FileName := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
+   {$ENDIF}
+
      {$if defined(CPUAMD64) and defined(linux) }
    PA_FileName := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
    MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
@@ -149,6 +154,7 @@ begin
   PA_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
   MP_FileName := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
    {$ENDIF}
+
 
   {$IFDEF freebsd}
     {$if defined(cpu64)}

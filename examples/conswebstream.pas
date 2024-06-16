@@ -56,6 +56,11 @@ begin
     MP_FileName := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
    {$ENDIF}
 
+ {$if defined(CPUAMD64) and defined(openbsd) }
+  SF_FileName := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so';
+  MP_FileName := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+ {$ENDIF}
+
  {$IFDEF freebsd}
     {$if defined(cpu64)}
     PA_FileName := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';

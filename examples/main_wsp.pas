@@ -203,6 +203,13 @@ begin
   Edit5.Text := ordir + 'lib/Linux/arm_raspberrypi/plugin/libsoundtouch-arm.so'; 
   {$ENDIF}
 
+{$if defined(CPUAMD64) and defined(openbsd) }
+  Edit1.Text := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+  Edit3.Text := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
+  Edit5.Text := ordir + 'lib/OpenBSD/64bit/plugin/LibSoundTouch-64.so';
+  Edit6.Text := ordir + 'lib/OpenBSD/64bit/LibOpusFile-64.so';
+{$ENDIF}
+
 {$IFDEF freebsd}
     {$if defined(cpu64)}
   Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';

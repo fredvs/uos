@@ -86,6 +86,10 @@ begin
     {$ENDIF}
     {$ENDIF}
 
+ {$if defined(CPUAMD64) and defined(openbsd) }
+ edit1.Text := application.Location + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+ {$ENDIF}
+
   {$if defined(CPUAMD64) and defined(linux) }
   edit1.Text := application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
   {$endif}

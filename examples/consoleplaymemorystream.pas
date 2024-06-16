@@ -78,6 +78,13 @@ var
     SoundFilename := ordir + 'sound/test.flac';
  {$ENDIF}
 
+  {$if defined(CPUAMD64) and defined(openbsd) }
+  SF_FileName := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so';
+  PA_FileName := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+  MP_FileName := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
+  SoundFilename := ordir + 'sound/test.flac';
+ {$ENDIF}
+
 {$IFDEF Darwin}
   {$IFDEF CPU32}
     opath := ordir;
