@@ -30,8 +30,7 @@ Included in the package:
 
 . Examples fpGUI, MSEgui, LCL and console.
 
-. Binaries of libraries included for Linux, arm32-aarch64 Rapsberry Pi, Windows, Mac OSX,
-FreeBSD.
+. Binaries of libraries included for Linux, arm32-aarch64 Rapsberry Pi, Windows, Mac OSX, OpenBSD and FreeBSD.
 
 See you at uos forum: http://uos-forum.108.s1.nabble.com
 
