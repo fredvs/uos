@@ -458,8 +458,9 @@ install:
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="271"/>
-        <CursorPos X="3" Y="281"/>
+        <TopLine Value="260"/>
+        <CursorPos X="64" Y="288"/>
+        <ComponentState Value="1"/>
         <UsageCount Value="11"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>

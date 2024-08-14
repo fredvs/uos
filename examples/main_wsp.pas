@@ -283,9 +283,10 @@ begin
     form1.Caption   := 'Simple Web Player.    uos version ' + IntToStr(uos_getversion());
 
     // Some audio web streaming
+  //  edit4.text :=  'https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden';
  //   edit4.Text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
-   //  edit4.text := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
-      edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
+     edit4.text := 'http://stream-uk1.radioparadise.com/mp3-128' ;
+    //  edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
   //    edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
       // edit4.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
 
@@ -355,13 +356,8 @@ begin
 
     radiogroup1.Enabled := False;
 
-    {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
-     Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-    uos_InputGetChannels(PlayerIndex1, In1Index),samformat, -1, -1);
-       {$else}
-    Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-      uos_InputGetChannels(PlayerIndex1, In1Index), samformat, -1, -1);
-       {$endif}
+    Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.8, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+     uos_InputGetChannels(PlayerIndex1, In1Index), samformat, -1, -1);
 
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
