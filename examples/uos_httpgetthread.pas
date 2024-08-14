@@ -40,7 +40,10 @@ type
 
 implementation
 uses
-  fphttpclient;
+  fphttpclient,
+  openssl, { This implements the procedure InitSSLInterface }
+  opensslsockets;
+
 
 { TThreadHttpGetter }
 
@@ -82,7 +85,9 @@ var
   Http: TFPHTTPClient;
   URL: String;
 begin
+  InitSSLInterface;
   Http := TFPHTTPClient.Create(nil);
+  http.AllowRedirect := true;
   URL := FWantedURL;
   repeat
   try
