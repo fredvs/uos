@@ -54,5 +54,6 @@
 * 39 th changes: 2023-12-27 (Added uos_UpdateDevice(). Sample rate is float)      * 
 * 40 th changes: 2024-04-22 (Changed all round() with roundmath())                *
 * 41 th changes: 2024-06-16 (Added OpenBSD compatibility and libraries)           *
+* 42 th changes: 2024-08-15 (Webstreamning for https too.)                        *
 
 ***********************************************************************************}
