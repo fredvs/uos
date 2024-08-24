@@ -120,7 +120,7 @@ begin
   until False;
 
   try
-    FOutStream.Free;
+    //FOutStream.Free;
     Http.Free;
   finally
    // make sure this is set to false when done

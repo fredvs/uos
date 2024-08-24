@@ -75,7 +75,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2240815;
+  uos_version : cint32 = 2240824;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -6485,7 +6485,7 @@ begin
       StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
 
       StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
-
+      StreamIn[x].httpget.freeonterminate := true;
       StreamIn[x].httpget.ICYenabled := false;
       // TODO
 
@@ -6651,6 +6651,7 @@ begin
       StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
 
       StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
+      StreamIn[x].httpget.freeonterminate := true;
 
       StreamIn[x].httpget.ICYenabled := ICYon;
 
@@ -6695,7 +6696,7 @@ begin
           StreamIn[x].httpget.Start;
 
           if StreamIn[x].httpget.ICYenabled = true then
-            CheckSynchronize(10000);
+            CheckSynchronize(1000);
 
 
           Err :=  mpg123_open_handle(StreamIn[x].Data.HandleSt, Pointer(StreamIn[x].InPipe));
@@ -6794,7 +6795,7 @@ begin
               if StreamIn[x].Data.SampleFormat = 0 then
                 mpg123_param(StreamIn[x].Data.HandleSt, StreamIn[x].Data.Channels,
                              MPG123_FORCE_FLOAT, 0);
-
+                             
               StreamIn[x].Data.Enabled := True;
   {$IF DEFINED(uos_debug) and DEFINED(unix)}
               writeln('===> mpg123_infos end => ok');
@@ -9412,8 +9413,9 @@ begin
                                                        begin
                                                          StreamIn[x].httpget.Terminate;
                                                          sleep(100);
-                                                         StreamIn[x].httpget.Free;
-
+                                                         StreamIn[x].inpipe.destroy;
+                                                         StreamIn[x].outpipe.destroy;
+                                                      
                                                          case StreamIn[x].Data.LibOpen of 
    {$IF DEFINED(mpg123)}
                                                            1:
