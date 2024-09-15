@@ -36,6 +36,10 @@ uos_httpgetthread, Pipes,
 uos_portaudio, 
 {$endif}
 
+{$IF DEFINED(xmp)}
+uos_libxmp, 
+{$endif}
+
 {$IF DEFINED(sndfile)}
 uos_LibSndFile, 
 {$endif}
@@ -75,7 +79,7 @@ uos_cdrom,
 Classes, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2240824;
+  uos_version : cint32 = 2240915;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -318,6 +322,7 @@ type
     BSloadError: shortint;
     AAloadError: shortint;
     OPloadError: shortint;
+    XMloadError: shortint;
     PAinitError: shortint;
     MPinitError: shortint;
   end;
@@ -343,7 +348,8 @@ type
       // Mp4ff
       OF_FileName : PChar;
       // opusfile
-
+      XM_FileName : PChar;
+      // XMP
       Plug_ST_FileName: pchar;
       // Plugin SoundTouch + GetBMP
       Plug_BS_FileName: pchar;
@@ -360,7 +366,7 @@ type
 
       function loadlib: cint32;
       procedure unloadlib;
-      procedure unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
+      procedure unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp: boolean);
       function InitLib: cint32;
       procedure unloadPlugin(PluginName: Pchar);
   end;
@@ -495,7 +501,7 @@ type
     Length: cint32;
     //  length samples total 
     LibOpen: shortint;
-    // -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom, 4: opus
+    // -1: nothing open, 0: sndfile open, 1: mpg123 open, 2: aac open, 3: cdrom, 4: opus, 5: xmp
     Ratio: byte;
     //  if mpg123 or aac then ratio := 2
 
@@ -1385,6 +1391,11 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
 
 // for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName)
 
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
+                     , opusfileFileName, XMPFileName : PChar) : cint32;
+// The same but with libxmp added.                     
+
+
 procedure uos_unloadlib();
 // Unload all libraries... Do not forget to call it before close application...
 
@@ -1397,7 +1408,7 @@ procedure uos_unloadServerLib();
 // Unload server libraries... Do not forget to call it before close application...
 {$endif}
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp: boolean);
 
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
@@ -3986,6 +3997,8 @@ begin
     // cdrom
     4: ratio := 1;
     // opus
+    5: ratio := 1;
+    // xmp
   end;
 
   if inputData.LibOpen <> 4 then//not working yet for opus files
@@ -4117,6 +4130,8 @@ begin
     // cdrom
     4: ratio := 1;
     // opus
+    5: ratio := 1;
+    // xmp
   end;
 
   if inputData.LibOpen <> 4 then//not working yet for opus files
@@ -4159,7 +4174,7 @@ var
 begin
 
   if (inputData.libopen = 0) or (inputData.libopen = 2)  or (inputData.libopen = 3) or (inputData.
-     libopen = 4) then
+     libopen = 4) or (inputData.libopen = 5) then
     x2 := trunc(inputData.ratio * (inputData.outframes Div trunc(inputData.channels))) ;
 
   if (inputData.libopen = 1)  then
@@ -4372,6 +4387,8 @@ begin
     // cdrom
     4: ratio := 1;
     // opus
+    5: ratio := 1;
+    // xmp
   end;
 
   if Data.SampleFormat = 0 then// TODO for Array of integer.
@@ -4468,6 +4485,8 @@ begin
            // cdrom
            4: ratio := 1;
            // opus
+           5: ratio := 1;
+           // xmp
          end;
 
          pf := @Data.Buffer;
@@ -4680,6 +4699,8 @@ begin
            // cdrom
            4: ratio := 2;
            // opus
+           5: ratio := 1;
+           // xmp
          end;
 
          minf[0] := 1;
@@ -4895,6 +4916,8 @@ begin
            // cdrom
            4: ratio := 2;
            // opus
+           5: ratio := 1;
+           // xmp
          end;
          pf := @Data.Buffer;
          pf2 := @fft.VirtualBuffer;
@@ -7986,6 +8009,10 @@ var
   LComment: PPAnsiChar;
   LcommentLength: PInteger;
   {$endif}
+  
+  {$IF DEFINED(xmp)}
+  mi: xmp_module_info;
+  {$endif}        
 
   {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
@@ -8062,6 +8089,11 @@ begin
                   Streamin[x].Data.Buffer[x2] := 0.0 ;
                   inc(x2);
                 end;
+                
+                if SampleFormat = -1 then
+                StreamIn[x].Data.SampleFormat := 2
+              else
+                StreamIn[x].Data.SampleFormat := SampleFormat;           
 
               StreamIn[x].Data.hdformat := SFinfo.format;
               StreamIn[x].Data.frames := SFinfo.frames;
@@ -8083,8 +8115,8 @@ begin
               StreamIn[x].Data.date := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_DATE);
               
                StreamIn[x].Data.track := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_TRACKNUMBER);
-          StreamIn[x].Data.genre := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_GENRE);
-          StreamIn[x].Data.album := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_ALBUM);
+              StreamIn[x].Data.genre := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_GENRE);
+               StreamIn[x].Data.album := sf_get_string(StreamIn[x].Data.HandleSt, SF_STR_ALBUM);
               
               StreamIn[x].Data.Length := sfInfo.frames;
               err := 0;
@@ -8100,7 +8132,97 @@ begin
       WriteLn('sf StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));
       WriteLn('sf err = ' + inttostr(err));
  {$endif}
+ 
+ //// XMP
+   {$IF DEFINED(xmp)}
+      if (StreamIn[x].Data.LibOpen = -1) and (uosLoadResult.XMloadERROR = 0) then
+        begin
+          Err := -1;
 
+          StreamIn[x].Data.HandleSt := xmp_create_context();
+          {$IF DEFINED(uos_debug) and DEFINED(unix)}
+            if StreamIn[x].Data.HandleSt = nil then  WriteLn(' xmp_create_context() NOT OK')
+            else   WriteLn(' xmp_create_context() OK');
+            {$endif}
+          
+          if xmp_load_module(StreamIn[x].Data.HandleSt, PChar(FileName)) <> 0 then
+            begin
+              StreamIn[x].Data.LibOpen := -1;
+              err := -1;
+             {$IF DEFINED(uos_debug) and DEFINED(unix)}
+              WriteLn('xmp_load_module NOT OK');
+            {$endif}
+            end
+          else
+            begin  
+
+          {$IF DEFINED(uos_debug) and DEFINED(unix)}
+          WriteLn('xmp_load_module() = ok');
+         {$endif}
+              xmp_start_player(StreamIn[x].Data.HandleSt, 44100, 0);
+              xmp_get_module_info(StreamIn[x].Data.HandleSt, mi);
+             // xmp_get_frame_info(StreamIn[x].Data.HandleSt , fi);
+                           
+              StreamIn[x].Data.LibOpen := 5;
+              StreamIn[x].Data.filename := FileName;
+              StreamIn[x].Data.channels := 2; // todo
+             
+              if SampleFormat = -1 then
+                StreamIn[x].Data.SampleFormat := 2
+              else
+                StreamIn[x].Data.SampleFormat := SampleFormat;
+                 // Need conversion because xmp is always 16 bit     
+            
+              if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 65536 Div StreamIn[x].Data.
+                                                                       Channels
+              else
+                StreamIn[x].Data.Wantframes := FramesCount ;
+
+              SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.
+                        Channels);
+              x2 := 0 ;
+              while x2 < Length(Streamin[x].Data.Buffer) do
+                begin
+                  Streamin[x].Data.Buffer[x2] := 0.0 ;
+                  inc(x2);
+                end;
+
+            //  StreamIn[x].Data.hdformat := SFinfo.format;
+            //  StreamIn[x].Data.frames := SFinfo.frames;
+              StreamIn[x].Data.samplerate := 44100;
+              StreamIn[x].Data.samplerateroot := 44100;
+            //  StreamIn[x].Data.sections := SFinfo.sections;
+              StreamIn[x].Data.title := string(mi.module^.Name);
+                                        
+              StreamIn[x].Data.copyright := '';
+              StreamIn[x].Data.software := '';
+              
+              StreamIn[x].Data.comment := string(mi.module^.typ);
+              StreamIn[x].Data.artist := string(mi.comment);
+              StreamIn[x].Data.date := '';
+              
+               StreamIn[x].Data.track := '';
+              StreamIn[x].Data.genre := '';
+              StreamIn[x].Data.album := '';
+              
+              StreamIn[x].Data.Length := 0;
+              
+           
+              err := 0;
+  {$IF DEFINED(uos_debug) and DEFINED(unix)}
+              WriteLn('XMP_open END OK');
+  {$endif}
+            end;
+         end;
+  {$endif}
+
+ {$IF DEFINED(uos_debug) and DEFINED(unix)}
+      WriteLn('XMP StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));
+      WriteLn('XMP err = ' + inttostr(err));
+ {$endif}
+ 
+ ////
+ 
   {$IF DEFINED(mpg123)}
       if ((StreamIn[x].Data.LibOpen = -1)) and (uosLoadResult.MPloadERROR = 0) then
         begin
@@ -8406,7 +8528,8 @@ begin
       WriteLn('ac StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));
       WriteLn('ac err = ' + inttostr(err));
  {$endif}
-
+ 
+ 
   {$IF DEFINED(cdrom)}
       if (StreamIn[x].Data.LibOpen = -1) then
         begin
@@ -8524,6 +8647,9 @@ begin
   {$endif}
   {$IF DEFINED(opus)}
             4 : StreamIn[x].Data.ratio :=  streamIn[x].Data.Channels;
+  {$endif}
+  {$IF DEFINED(xmp)}
+            5 : StreamIn[x].Data.ratio :=  streamIn[x].Data.Channels;
   {$endif}
           end;
           StreamIn[x].Data.Enabled := True;
@@ -9393,6 +9519,15 @@ begin
                                                               op_free(StreamIn[x].Data.HandleOP);
                                                               sleep(50);
                                                               // needed ?
+                                                            end;
+   {$ENDIF}
+   
+    {$IF DEFINED(xmp)}
+                                                         5:
+                                                            begin
+                                                               xmp_end_player(StreamIn[x].Data.HandleSt);
+                                                               xmp_release_module(StreamIn[x].Data.HandleSt);
+                                                               xmp_free_context(StreamIn[x].Data.HandleSt);
                                                             end;
    {$ENDIF}
 
@@ -10510,6 +10645,53 @@ begin
 
        end;
  {$endif}
+ 
+  {$IF DEFINED(xmp)}
+    5:
+       begin
+ {$IF DEFINED(uos_debug) and DEFINED(unix)}
+         WriteLn('Before xmp_play_buffer ' + inttostr(StreamIn[x].Data.Wantframes) +
+         ' length(StreamIn[x].Data.Buffer ' +
+         inttostr(length(StreamIn[x].Data.Buffer)));
+ {$endif}
+ 
+        if xmp_play_buffer(StreamIn[x].Data.HandleSt,
+        @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels , 0) < 0 then
+        StreamIn[x].Data.outframes := 0 else 
+        begin       
+        StreamIn[x].Data.outframes := StreamIn[x].Data.Wantframes;
+      
+        if StreamIn[x].Data.SampleFormat < 2 then 
+        begin                
+        StreamIn[x].Data.Buffer := CvInt16ToFloat32(StreamIn[x].Data.Buffer);
+        if StreamIn[x].Data.SampleFormat = 1 then 
+        StreamIn[x].Data.Buffer := CvFloat32toInt32fl(StreamIn[x].Data.Buffer, length(StreamIn[x].Data.Buffer));
+        end;
+        end;
+       
+   {$IF DEFINED(uos_debug) and DEFINED(unix)}
+         writeln(inttostr(StreamIn[x].Data.lastbuf));
+         WriteLn('after xmp_play_buffer');
+   {$endif}
+         setlength(StreamIn[x].data.Buffer,StreamIn[x].Data.outframes);
+
+   {$IF DEFINED(uos_debug) and DEFINED(unix)}
+      
+         st := '';
+
+         for i := 0 to length(StreamIn[x].data.Buffer) -1 do
+         begin
+          st := st + '|' + inttostr(i) + '=' + inttostr(cint16(cint32(StreamIn[x].data.Buffer[
+                      i])));
+           end;
+         
+         WriteLn('OUTPUT DATA xmp_read_ ---------------------------');
+         WriteLn('StreamIn[x].Data.outframes = ' + inttostr(StreamIn[x].Data.outframes));
+         WriteLn(st);
+  {$endif}
+
+       end;
+ {$endif}
 
     99: // if nothing was defined
   end;
@@ -10987,6 +11169,9 @@ begin
   {$IF DEFINED(mpg123)}
   Mp_Unload();
   {$endif}
+  {$IF DEFINED(xmp)}
+  xmp_Unload();
+  {$endif}
   {$IF DEFINED(portaudio)}
   Pa_Unload();
   {$endif}
@@ -11048,13 +11233,19 @@ begin
   {$endif}
 
    {$IF DEFINED(sndfile)}
-  if (uosLoadResult.SFloadERROR = 0) then sfversion := UTF8Decode(sf_version_string());
-   {$endif}
-
-  if (Result = -1) and (uosLoadResult.SFloadERROR = 0) then
+   if (Result = -1) and (uosLoadResult.SFloadERROR = 0) then
     begin
+      sfversion := UTF8Decode(sf_version_string());
       Result := 0;
     end;
+   {$endif} 
+    
+   {$IF DEFINED(xmp)}
+  if (Result = -1) and (uosLoadResult.XMloadERROR = 0) then 
+  begin
+   Result := 0;
+  end;
+  {$endif}  
 
 end;
 
@@ -11068,6 +11259,7 @@ begin
   uosLoadResult.OPloadERROR := -1;
   uosLoadResult.STloadERROR := -1;
   uosLoadResult.BSloadERROR := -1;
+  uosLoadResult.XMloadERROR := -1;
 
   {$IF DEFINED(portaudio)}
   if (PA_FileName <>  nil) and (PA_FileName <>  '') then
@@ -11175,6 +11367,29 @@ begin
   else
     uosLoadResult.OPloadERROR := -1;
   {$endif}
+  
+  {$IF DEFINED(xmp)}
+   if (XM_FileName <> nil) and (XM_FileName <>  '') then
+    begin
+      if XM_FileName =  'system' then XM_FileName :=  '' ;
+      if (xmp_Load(UTF8String(XM_FileName)))  then
+        begin
+          uosLoadResult.XMloadERROR := 0;
+          if (uosLoadResult.MPloadERROR = -1) and (uosLoadResult.PAloadERROR = -1) and
+             (uosLoadResult.SFloadERROR = -1) and (uosLoadResult.AAloadERROR = -1) and
+              (uosLoadResult.OPloadERROR = -1)
+            then
+            Result := 0;
+        end
+      else
+        begin
+          uosLoadResult.XMloadERROR := 2;
+          Result := -1;
+        end;
+    end
+  else
+    uosLoadResult.XMloadERROR := -1;
+  {$endif}
 
   if Result = 0 then  Result := InitLib();
 end;
@@ -11252,8 +11467,9 @@ begin
 end;
 {$endif}
 
+
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
-                     , opusfileFileName: PChar) : cint32;
+                     , opusfileFileName, XMPFileName : PChar) : cint32;
 begin
   result := -1 ;
   if not assigned(uosInit) then
@@ -11274,8 +11490,19 @@ begin
   uosInit.AA_FileName := FaadFileName;
   uosInit.M4_FileName := Mp4ffFileName;
   uosInit.OF_FileName := opusfileFileName;
+  uosInit.XM_FileName := XMPFileName;
+
 
   result := uosInit.loadlib ;
+end;
+
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
+                     , opusfileFileName: PChar) : cint32;
+begin
+result := uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
+                     , opusfileFileName, nil);
+
+
 end;
 
 function uos_GetVersion() : cint32 ;
@@ -11303,11 +11530,11 @@ begin
     end;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp: boolean);
 
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
-  uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus) ;
+  uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus, xmp) ;
 end;
 
 procedure uos_UnloadPlugin(PluginName: PChar);
@@ -11816,6 +12043,7 @@ begin
   uosLoadResult.MPloadERROR := -1;
   uosLoadResult.AAloadERROR := -1;
   uosLoadResult.OPloadERROR := -1;
+  uosLoadResult.XMloadERROR := -1;
   uosLoadResult.PAinitError := -1;
   uosLoadResult.MPinitError := -1;
 
@@ -11831,6 +12059,8 @@ begin
   // Mp4ff
   OF_FileName := Nil;
   // opusfile
+  XM_FileName := Nil;
+  // XMP
   Plug_ST_FileName := Nil;
   // Plugin SoundTouch
   Plug_BS_FileName := Nil;
@@ -11975,7 +12205,7 @@ begin
   inherited Destroy;
 end;
 
-procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc, opus: boolean);
+procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc, opus, xmp: boolean);
 
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
@@ -11987,6 +12217,9 @@ begin
   {$endif}
   {$IF DEFINED(mpg123)}
   if Mpg123 = true then  mp_Unload();
+  {$endif}
+  {$IF DEFINED(xmp)}
+  if xmp = true then  xmp_Unload();
   {$endif}
   {$IF DEFINED(neaac)}
   if AAC = True then aa_Unload();

@@ -3,7 +3,7 @@ object simple_player: tmainfo
   bounds_x = 810
   bounds_y = 58
   bounds_cx = 481
-  bounds_cy = 404
+  bounds_cy = 400
   container.optionswidget1 = []
   container.frame.localprops = []
   container.frame.localprops1 = []
@@ -15,77 +15,25 @@ object simple_player: tmainfo
     0
     0
     481
-    404
+    400
   )
   options = [fo_main, fo_terminateonclose, fo_screencentered, fo_autoreadstat, fo_autowritestat, fo_savepos, fo_savezorder, fo_savestate]
   caption = 'Simple Player'
   windowopacity = -Inf
   onclose = closeit
   moduleclassname = 'tmainform'
-  object padir: tfilenameedit
-    frame.caption = 'Folder + filename of PortAudio library'
-    frame.captiontextflags = [tf_bottom]
-    frame.localprops = []
-    frame.localprops1 = []
-    frame.buttons.count = 1
-    frame.buttons.items = <    
-      item
-        imagenr = 17
-      end>
-    frame.button.imagenr = 17
-    frame.outerframe = (
-      0
-      18
-      0
-      0
-    )
-    taborder = 1
-    bounds_x = 8
-    bounds_y = 6
-    bounds_cx = 466
-    bounds_cy = 39
-    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
-    reffontheight = 15
-  end
-  object pcdir: tfilenameedit
-    frame.caption = 'Folder + filename of PCAudio library'
-    frame.captiontextflags = [tf_bottom]
-    frame.localprops = []
-    frame.localprops1 = []
-    frame.buttons.count = 1
-    frame.buttons.items = <    
-      item
-        imagenr = 17
-      end>
-    frame.button.imagenr = 17
-    frame.outerframe = (
-      0
-      18
-      0
-      0
-    )
-    taborder = 10
-    visible = False
-    bounds_x = 8
-    bounds_y = 48
-    bounds_cx = 466
-    bounds_cy = 39
-    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
-    reffontheight = 15
-  end
   object btnload: tbutton
     color = 15132390
     bounds_x = 8
-    bounds_y = 376
+    bounds_y = 368
     bounds_cx = 466
     bounds_cy = 21
     state = [as_localcaption, as_localcolor, as_localonexecute]
     caption = 'Load that libraries'
     onexecute = loadlibr
   end
-  object sfdir: tfilenameedit
-    frame.caption = 'Folder + filename of SndFile library'
-    frame.captiontextflags = [tf_bottom]
+  object padir: tfilenameeditx
+    frame.caption = 'Folder + filename of PortAudio library'
     frame.localprops = []
     frame.localprops1 = []
     frame.buttons.count = 1
@@ -102,15 +50,24 @@ object simple_player: tmainfo
     )
     taborder = 2
     bounds_x = 8
-    bounds_y = 86
-    bounds_cx = 466
+    bounds_y = -2
+    bounds_cx = 460
     bounds_cy = 39
-    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    controller.fontheight = 0
+    controller.fontname = 'stf_default'
+    controller.fontcolor = -1610612734
+    controller.backcolor = -2147483647
+    controller.nopanel = False
+    controller.compact = False
+    controller.showoptions = False
+    controller.hidehistory = False
+    controller.hideicons = False
+    controller.showhidden = False
+    controller.options = [fdo_sysfilename, fdo_savelastdir]
     reffontheight = 15
   end
-  object mpdir: tfilenameedit
-    frame.caption = 'Folder + filename of Mpg123 library'
-    frame.captiontextflags = [tf_bottom]
+  object sfdir: tfilenameeditx
+    frame.caption = 'Folder + filename of SndFile library'
     frame.localprops = []
     frame.localprops1 = []
     frame.buttons.count = 1
@@ -127,15 +84,24 @@ object simple_player: tmainfo
     )
     taborder = 3
     bounds_x = 8
-    bounds_y = 126
-    bounds_cx = 466
+    bounds_y = 42
+    bounds_cx = 460
     bounds_cy = 39
-    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    controller.fontheight = 0
+    controller.fontname = 'stf_default'
+    controller.fontcolor = -1610612734
+    controller.backcolor = -2147483647
+    controller.nopanel = False
+    controller.compact = False
+    controller.showoptions = False
+    controller.hidehistory = False
+    controller.hideicons = False
+    controller.showhidden = False
+    controller.options = [fdo_sysfilename, fdo_savelastdir]
     reffontheight = 15
   end
-  object bsdir: tfilenameedit
-    frame.caption = 'Folder + filename of bs2b Plugin library'
-    frame.captiontextflags = [tf_bottom]
+  object mpdir: tfilenameeditx
+    frame.caption = 'Folder + filename of Mpg123 library'
     frame.localprops = []
     frame.localprops1 = []
     frame.buttons.count = 1
@@ -152,15 +118,24 @@ object simple_player: tmainfo
     )
     taborder = 4
     bounds_x = 8
-    bounds_y = 326
-    bounds_cx = 466
+    bounds_y = 82
+    bounds_cx = 460
     bounds_cy = 39
-    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    controller.fontheight = 0
+    controller.fontname = 'stf_default'
+    controller.fontcolor = -1610612734
+    controller.backcolor = -2147483647
+    controller.nopanel = False
+    controller.compact = False
+    controller.showoptions = False
+    controller.hidehistory = False
+    controller.hideicons = False
+    controller.showhidden = False
+    controller.options = [fdo_sysfilename, fdo_savelastdir]
     reffontheight = 15
   end
-  object m4dir: tfilenameedit
+  object m4dir: tfilenameeditx
     frame.caption = 'Folder + filename of mp4ff library'
-    frame.captiontextflags = [tf_bottom]
     frame.localprops = []
     frame.localprops1 = []
     frame.buttons.count = 1
@@ -177,15 +152,24 @@ object simple_player: tmainfo
     )
     taborder = 5
     bounds_x = 8
-    bounds_y = 166
-    bounds_cx = 466
+    bounds_y = 122
+    bounds_cx = 460
     bounds_cy = 39
-    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    controller.fontheight = 0
+    controller.fontname = 'stf_default'
+    controller.fontcolor = -1610612734
+    controller.backcolor = -2147483647
+    controller.nopanel = False
+    controller.compact = False
+    controller.showoptions = False
+    controller.hidehistory = False
+    controller.hideicons = False
+    controller.showhidden = False
+    controller.options = [fdo_sysfilename, fdo_savelastdir]
     reffontheight = 15
   end
-  object stdir: tfilenameedit
-    frame.caption = 'Folder + filename of SoundTouch Plugin library'
-    frame.captiontextflags = [tf_bottom]
+  object fadir: tfilenameeditx
+    frame.caption = 'Folder + filename of faad2 library'
     frame.localprops = []
     frame.localprops1 = []
     frame.buttons.count = 1
@@ -202,40 +186,24 @@ object simple_player: tmainfo
     )
     taborder = 6
     bounds_x = 8
-    bounds_y = 286
-    bounds_cx = 466
+    bounds_y = 162
+    bounds_cx = 460
     bounds_cy = 39
-    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    controller.fontheight = 0
+    controller.fontname = 'stf_default'
+    controller.fontcolor = -1610612734
+    controller.backcolor = -2147483647
+    controller.nopanel = False
+    controller.compact = False
+    controller.showoptions = False
+    controller.hidehistory = False
+    controller.hideicons = False
+    controller.showhidden = False
+    controller.options = [fdo_sysfilename, fdo_savelastdir]
     reffontheight = 15
   end
-  object fadir: tfilenameedit
-    frame.caption = 'Folder + filename of faad2 library'
-    frame.captiontextflags = [tf_bottom]
-    frame.localprops = []
-    frame.localprops1 = []
-    frame.buttons.count = 1
-    frame.buttons.items = <    
-      item
-        imagenr = 17
-      end>
-    frame.button.imagenr = 17
-    frame.outerframe = (
-      0
-      18
-      0
-      0
-    )
-    taborder = 8
-    bounds_x = 8
-    bounds_y = 206
-    bounds_cx = 466
-    bounds_cy = 39
-    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
-    reffontheight = 15
-  end
-  object ofdir: tfilenameedit
+  object ofdir: tfilenameeditx
     frame.caption = 'Folder + filename of OpusFile library'
-    frame.captiontextflags = [tf_bottom]
     frame.localprops = []
     frame.localprops1 = []
     frame.buttons.count = 1
@@ -250,19 +218,29 @@ object simple_player: tmainfo
       0
       0
     )
-    taborder = 9
+    taborder = 7
     bounds_x = 8
-    bounds_y = 248
-    bounds_cx = 466
+    bounds_y = 202
+    bounds_cx = 460
     bounds_cy = 39
-    controller.lastdir = '/home/fred/uos/examples/lib/Linux/64bit/LibPortaudio-64.so/'
+    controller.fontheight = 0
+    controller.fontname = 'stf_default'
+    controller.fontcolor = -1610612734
+    controller.backcolor = -2147483647
+    controller.nopanel = False
+    controller.compact = False
+    controller.showoptions = False
+    controller.hidehistory = False
+    controller.hideicons = False
+    controller.showhidden = False
+    controller.options = [fdo_sysfilename, fdo_savelastdir]
     reffontheight = 15
   end
   object panel1: tdockpanel
-    taborder = 7
+    taborder = 1
     visible = False
-    bounds_x = -96
-    bounds_y = 160
+    bounds_x = -8
+    bounds_y = 0
     bounds_cx = 490
     bounds_cy = 210
     object usealsa: tbooleanedit
@@ -275,7 +253,7 @@ object simple_player: tmainfo
         26
         2
       )
-      taborder = 26
+      taborder = 25
       hint = 'Use alsa vs pulse audio driver.'
       bounds_x = 408
       bounds_y = 46
@@ -296,7 +274,7 @@ object simple_player: tmainfo
         0
         0
       )
-      taborder = 25
+      taborder = 24
       visible = False
       bounds_x = 392
       bounds_y = 0
@@ -393,36 +371,11 @@ object simple_player: tmainfo
       scrollbar.face.localprops = []
       direction = gd_up
     end
-    object songdir: tfilenameedit
-      frame.caption = 'File to play'
-      frame.captiontextflags = [tf_bottom]
-      frame.localprops = []
-      frame.localprops1 = []
-      frame.buttons.count = 1
-      frame.buttons.items = <      
-        item
-          imagenr = 17
-        end>
-      frame.button.imagenr = 17
-      frame.outerframe = (
-        0
-        18
-        0
-        0
-      )
-      taborder = 5
-      bounds_x = 120
-      bounds_y = 11
-      bounds_cx = 356
-      bounds_cy = 39
-      controller.options = [fdo_sysfilename, fdo_savelastdir]
-      reffontheight = 15
-    end
     object trackbar1: tslider
       color = 15132390
       frame.localprops = [frl_fileft, frl_fitop, frl_firight, frl_fibottom]
       frame.localprops1 = []
-      taborder = 6
+      taborder = 5
       bounds_x = 120
       bounds_y = 66
       bounds_cx = 356
@@ -441,7 +394,7 @@ object simple_player: tmainfo
         78
         2
       )
-      taborder = 7
+      taborder = 6
       bounds_x = 144
       bounds_y = 161
       bounds_cx = 91
@@ -450,7 +403,7 @@ object simple_player: tmainfo
     end
     object btnstart: tbutton
       color = 15132390
-      taborder = 8
+      taborder = 7
       bounds_x = 128
       bounds_y = 189
       bounds_cx = 82
@@ -461,7 +414,7 @@ object simple_player: tmainfo
     end
     object btnresume: tbutton
       color = 15132390
-      taborder = 9
+      taborder = 8
       bounds_x = 312
       bounds_y = 189
       bounds_cx = 74
@@ -472,7 +425,7 @@ object simple_player: tmainfo
     end
     object btnpause: tbutton
       color = 15132390
-      taborder = 10
+      taborder = 9
       bounds_x = 224
       bounds_y = 189
       bounds_cx = 74
@@ -483,7 +436,7 @@ object simple_player: tmainfo
     end
     object button1: tbutton
       color = 15132390
-      taborder = 11
+      taborder = 10
       bounds_x = 280
       bounds_y = 157
       bounds_cx = 50
@@ -493,7 +446,7 @@ object simple_player: tmainfo
       onexecute = resetplugst
     end
     object label6: tlabel
-      taborder = 12
+      taborder = 11
       bounds_x = 280
       bounds_y = 131
       bounds_cx = 69
@@ -505,7 +458,7 @@ object simple_player: tmainfo
       color = 15132390
       frame.localprops = [frl_fileft, frl_fitop, frl_firight, frl_fibottom]
       frame.localprops1 = []
-      taborder = 13
+      taborder = 12
       bounds_x = 352
       bounds_y = 130
       bounds_cx = 28
@@ -517,7 +470,7 @@ object simple_player: tmainfo
       direction = gd_down
     end
     object label7: tlabel
-      taborder = 14
+      taborder = 13
       bounds_x = 384
       bounds_y = 131
       bounds_cx = 58
@@ -529,7 +482,7 @@ object simple_player: tmainfo
       color = 15132390
       frame.localprops = [frl_fileft, frl_fitop, frl_firight, frl_fibottom]
       frame.localprops1 = []
-      taborder = 15
+      taborder = 14
       bounds_x = 448
       bounds_y = 130
       bounds_cx = 28
@@ -542,7 +495,7 @@ object simple_player: tmainfo
     end
     object btnstop: tbutton
       color = 15132390
-      taborder = 16
+      taborder = 15
       bounds_x = 400
       bounds_y = 189
       bounds_cx = 74
@@ -562,7 +515,7 @@ object simple_player: tmainfo
         0
         0
       )
-      taborder = 17
+      taborder = 16
       bounds_x = 8
       bounds_y = 128
       bounds_cx = 106
@@ -617,7 +570,7 @@ object simple_player: tmainfo
       end
     end
     object llength: tlabel
-      taborder = 18
+      taborder = 17
       bounds_x = 300
       bounds_y = 92
       bounds_cx = 96
@@ -626,7 +579,7 @@ object simple_player: tmainfo
       reffontheight = 15
     end
     object lposition: tlabel
-      taborder = 19
+      taborder = 18
       bounds_x = 216
       bounds_y = 92
       bounds_cx = 84
@@ -644,7 +597,7 @@ object simple_player: tmainfo
         94
         2
       )
-      taborder = 20
+      taborder = 19
       bounds_x = 144
       bounds_y = 110
       bounds_cx = 107
@@ -661,7 +614,7 @@ object simple_player: tmainfo
         111
         2
       )
-      taborder = 21
+      taborder = 20
       bounds_x = 144
       bounds_y = 134
       bounds_cx = 124
@@ -678,7 +631,7 @@ object simple_player: tmainfo
         165
         2
       )
-      taborder = 22
+      taborder = 21
       bounds_x = 280
       bounds_y = 110
       bounds_cx = 178
@@ -686,7 +639,7 @@ object simple_player: tmainfo
     end
     object vuRight: tdockpanel
       color = 976914
-      taborder = 24
+      taborder = 23
       bounds_x = 66
       bounds_y = 24
       bounds_cx = 18
@@ -694,11 +647,147 @@ object simple_player: tmainfo
     end
     object vuLeft: tdockpanel
       color = 976914
-      taborder = 23
+      taborder = 22
       bounds_x = 40
       bounds_y = 24
       bounds_cx = 18
       bounds_cy = 82
     end
+    object songdir: tfilenameeditx
+      frame.caption = 'File to play'
+      frame.localprops = []
+      frame.localprops1 = []
+      frame.buttons.count = 1
+      frame.buttons.items = <      
+        item
+          imagenr = 17
+        end>
+      frame.button.imagenr = 17
+      frame.outerframe = (
+        0
+        18
+        0
+        0
+      )
+      taborder = 26
+      bounds_x = 120
+      bounds_y = 11
+      bounds_cx = 356
+      bounds_cy = 39
+      controller.fontheight = 0
+      controller.fontname = 'stf_default'
+      controller.fontcolor = -1610612734
+      controller.backcolor = -2147483647
+      controller.nopanel = False
+      controller.compact = False
+      controller.showoptions = False
+      controller.hidehistory = False
+      controller.hideicons = False
+      controller.showhidden = False
+      controller.options = [fdo_sysfilename, fdo_savelastdir]
+      reffontheight = 15
+    end
+  end
+  object xmdir: tfilenameeditx
+    frame.caption = 'Folder + filename of XMP library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 8
+    bounds_x = 8
+    bounds_y = 242
+    bounds_cx = 460
+    bounds_cy = 39
+    controller.fontheight = 0
+    controller.fontname = 'stf_default'
+    controller.fontcolor = -1610612734
+    controller.backcolor = -2147483647
+    controller.nopanel = False
+    controller.compact = False
+    controller.showoptions = False
+    controller.hidehistory = False
+    controller.hideicons = False
+    controller.showhidden = False
+    controller.options = [fdo_sysfilename, fdo_savelastdir]
+    reffontheight = 15
+  end
+  object stdir: tfilenameeditx
+    frame.caption = 'Folder + filename of SoundTouch Plugin library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 9
+    bounds_x = 8
+    bounds_y = 282
+    bounds_cx = 460
+    bounds_cy = 39
+    controller.fontheight = 0
+    controller.fontname = 'stf_default'
+    controller.fontcolor = -1610612734
+    controller.backcolor = -2147483647
+    controller.nopanel = False
+    controller.compact = False
+    controller.showoptions = False
+    controller.hidehistory = False
+    controller.hideicons = False
+    controller.showhidden = False
+    controller.options = [fdo_sysfilename, fdo_savelastdir]
+    reffontheight = 15
+  end
+  object bsdir: tfilenameeditx
+    frame.caption = 'Folder + filename of bs2b Plugin library'
+    frame.localprops = []
+    frame.localprops1 = []
+    frame.buttons.count = 1
+    frame.buttons.items = <    
+      item
+        imagenr = 17
+      end>
+    frame.button.imagenr = 17
+    frame.outerframe = (
+      0
+      18
+      0
+      0
+    )
+    taborder = 10
+    bounds_x = 8
+    bounds_y = 322
+    bounds_cx = 460
+    bounds_cy = 39
+    controller.fontheight = 0
+    controller.fontname = 'stf_default'
+    controller.fontcolor = -1610612734
+    controller.backcolor = -2147483647
+    controller.nopanel = False
+    controller.compact = False
+    controller.showoptions = False
+    controller.hidehistory = False
+    controller.hideicons = False
+    controller.showhidden = False
+    controller.options = [fdo_sysfilename, fdo_savelastdir]
+    reffontheight = 15
   end
 end

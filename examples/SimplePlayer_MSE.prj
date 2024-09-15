@@ -69,15 +69,15 @@ order16=0
 order17=0
 order18=0
 [projectoptions]
-projectdir=/home/fred/uos/examples
-projectfilename=/home/fred/uos/examples/SimplePlayer_MSE.prj
+projectdir=/home/fred/uos_xmp/examples
+projectfilename=/home/fred/uos_xmp/examples/SimplePlayer_MSE.prj
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
  [finddialogfo]
  stackedunder=
- x=690
- y=111
+ x=740
+ y=520
  cx=298
  cy=291
 options=114
@@ -105,20 +105,20 @@ options=114
  width9=293
  sortdescend9=0
  [projectoptionsfo.twidgetgrid4]
- propcolwidthref=594
+ propcolwidthref=614
  width0=96
  sortdescend0=0
  sortdescend1=0
  width2=100
  sortdescend2=0
- width3=286
+ width3=296
  sortdescend3=0
- width4=298
+ width4=309
  sortdescend4=0
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=17
+ rowheight=19
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -140,9 +140,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=201
+ y=200
  xprop=1
- yprop=0.37294332723949
+ yprop=0.37384898710866
  [projectoptionsfo.macrogrid]
  propcolwidthref=559
  sortdescend0=0
@@ -191,16 +191,16 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=212
- y=56
+ x=232
+ y=166
  cx=837
  cy=606
 settings=8
  [settings_form]
  x=492
  y=41
- cx=446
- cy=660
+ cx=482
+ cy=724
  wsize=0
  active=1
  visible=1
@@ -334,7 +334,8 @@ targetfile=SimplePlayer_MSE${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
-unitdirs=2
+unitdirs=3
+ ${MSELIBDIR}kernel/windows
  ${MSELIBDIR}kernel/$TARGETOSDIR/
  ${MSELIBDIR}*/
 unitpref=-Fu
@@ -344,13 +345,15 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=5
+makeoptions=6
  -l -Mobjfpc -Sh -Fcutf8
  -gl -O-
  -B
  -FUunits
  -O2 -XX -CX -Xs
-makeoptpurpose=5
+ -WC
+makeoptpurpose=6
+ 
  
  
  
@@ -570,22 +573,23 @@ modulenames=1
 moduletypes=1
  TMAINFO
 modulefiles=1
- /home/fred/uos/examples/mainmse_sp.mfm
+ /home/fred/uos_xmp/examples/mainmse_sp.mfm
 befcommandon=0
-makeoptionson=5
+makeoptionson=6
  4095
  4035
  4095
  4095
- 32
+ 236
+ 192
 compilerusedon=29
- 4095
+ 3895
+ 0
+ 8
  0
  0
- 0
- 0
- 0
- 0
+ 64
+ 128
  0
  0
  0
@@ -616,9 +620,9 @@ debuggerusedon=6
  0
  0
 exeusedon=15
- 4095
+ 3903
  0
- 0
+ 192
  0
  0
  0
@@ -651,8 +655,9 @@ project_time=
 project_date=05:54:09 20/11/22
 project_comment=
 aftcommandon=0
-unitdirson=2
- 69631
+unitdirson=3
+ 65728
+ 69439
  69631
 macroon=0
 macronames=0
@@ -830,7 +835,7 @@ sigsettings=27
  30,30,T,F
 defaultmake=1
 [breakpoints]
-on=27
+on=28
  0
  0
  0
@@ -858,7 +863,8 @@ on=27
  0
  0
  0
-path=27
+ 0
+path=28
  /usr/home/fred/ideu_prog/src/main.pas
  /home/fred/ideu/src/actionsmodule.pas
  /home/fred/ideu/src/main.pas
@@ -886,7 +892,8 @@ path=27
  /home/fred/mseide-msegui/lib/common/image/mseformattgaread.pas
  /home/fred/mseide-msegui/lib/common/db/firebird.pas
  /home/fred/ideu/src/main.pas
-line=27
+ /home/fred/uos_xmp/examples/uos.pas
+line=28
  2129
  1164
  523
@@ -914,7 +921,8 @@ line=27
  18
  8
  2601
-address=27
+ 12211
+address=28
  4868715
  4692069
  4840941
@@ -942,7 +950,8 @@ address=27
  8590717
  10573405
  4882128
-addbkpt=27
+ 0
+addbkpt=28
  0
  0
  0
@@ -970,7 +979,8 @@ addbkpt=27
  0
  0
  0
-ignore=27
+ 0
+ignore=28
  0
  0
  0
@@ -998,7 +1008,9 @@ ignore=27
  0
  0
  0
-condition=27
+ 0
+condition=28
+ 
  
  
  
@@ -1057,36 +1069,60 @@ envvarons=0
 [edit]
 hintwidth=382
 hintheight=0
-finddtext=.addfromfile
-findhistory=1
- .addfromfile
+finddtext=unloadlib
+findhistory=20
+ unloadlib
+ xmp_play_buffer
+ fromfile(
+ SampleFormat
+ CvFloat32toInt32
+ fromfile
+ format
+ ratio 
+ ratio
+ xmp_start_player
+ StreamIn[x].Data.LibOpen := 5
+ not nil
+ did not
+ XM_FileName
+ mainfo.xmdir.value
+ XMloadERROR
+ HandleSt
+ StreamIn[x].Data.LibOpen
+ LibOpen
+ BSloadERROR
 findoptions=1
-editpos=4
- 0,10
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+editpos=5
+ 0,73
+ 0,225
+ 0,58
+ 0,577
+ 0,6
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
-sourcefiles=4
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/SimplePlayer_MSE.pas
- ${PROJECTDIR}/mainmse_sp.pas
  ${PROJECTDIR}/uos_flat.pas
  ${PROJECTDIR}/uos.pas
-relpaths=4
+ ${PROJECTDIR}/mainmse_sp.pas
+ ${PROJECTDIR}/uos_define.inc
+relpaths=5
  SimplePlayer_MSE.pas
- mainmse_sp.pas
  uos_flat.pas
  uos.pas
-ismoduletexts=4
+ mainmse_sp.pas
+ uos_define.inc
+ismoduletexts=5
+ 0
  0
  0
  0
  0
 modules=1
- /home/fred/uos/examples/mainmse_sp.mfm
+ /home/fred/uos_xmp/examples/mainmse_sp.mfm
 moduleoptions=1
  0
 visiblemodules=1
@@ -1095,9 +1131,9 @@ nomenumodules=1
  0
 [sourcefo.files_tab]
 firsttab=0
-index=0
+index=1
 [layout]
-windowlayout=543
+windowlayout=559
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1111,13 +1147,13 @@ windowlayout=543
  ny=0
  ncx=0
  ncy=0
- x=217
- y=122
+ x=105
+ y=110
  cx=1231
  cy=621
  rcx=0
  rcy=0
- wsize=0
+ wsize=6
  active=1
  visible=1
  [findmessagefo.findtext]
@@ -1136,15 +1172,15 @@ windowlayout=543
  ny=0
  ncx=0
  ncy=0
- x=495
- y=172
- cx=497
+ x=604
+ y=136
+ cx=726
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1228,7 +1264,7 @@ windowlayout=543
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=objectinspectorfo
+ stackedunder=conflangfo
  parent=
  mdistate=3
  nx=0
@@ -1245,15 +1281,15 @@ windowlayout=543
  active=0
  visible=0
  [projecttreefo.grid]
- propcolwidthref=26
+ propcolwidthref=27
  width0=141
  sortdescend0=0
- width1=24
+ width1=25
  sortdescend1=0
  sorted=0
  col=1
  row=0
- rowheight=19
+ rowheight=17
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1291,14 +1327,14 @@ windowlayout=543
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=352
+ propcolwidthref=332
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=158
+ width2=149
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1307,12 +1343,12 @@ windowlayout=543
  width5=38
  sortdescend5=0
  values6=0
- width6=184
+ width6=172
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=conflangfo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -1331,10 +1367,10 @@ windowlayout=543
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=566
- width0=135
+ propcolwidthref=453
+ width0=184
  sortdescend0=0
- width1=425
+ width1=263
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1427,9 +1463,9 @@ windowlayout=543
  ncx=0
  ncy=0
  x=0
- y=510
- cx=1217
- cy=88
+ y=682
+ cx=1427
+ cy=138
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1515,7 +1551,7 @@ windowlayout=543
  active=0
  visible=0
  [componentpalettefo.componentpages]
- activetab=1
+ activetab=3
  [debuggerfo]
  splitdir=0
  useroptions=24683
@@ -1528,8 +1564,8 @@ windowlayout=543
  ncy=0
  x=0
  y=0
- cx=1217
- cy=60
+ cx=1427
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1540,12 +1576,12 @@ windowlayout=543
  mdistate=0
  nx=0
  ny=2
- ncx=1217
+ ncx=1427
  ncy=60
  x=0
  y=2
- cx=1217
- cy=60
+ cx=1427
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1555,12 +1591,28 @@ windowlayout=543
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos/examples/SimplePlayer_MSE.pas
- history=4
-  /home/fred/uos/examples/SimplePlayer_MSE.pas
-  /home/fred/uos/examples/uos.pas
-  /home/fred/uos/examples/mainmse_sp.pas
-  ${PROJECTDIR}/main.pas
+ value=/home/fred/uos_xmp/examples/uos_flat.pas
+ history=20
+  /home/fred/uos_xmp/examples/uos.pas
+  /home/fred/uos/src/uos_libsndfile.pas
+  /home/fred/uos/src/uos_portaudio.pas
+  /home/fred/xmp_test/xmptest.prj
+  /home/fred/xmp_test/xmptest.pas
+  /home/fred/Downloads/apngopt-1.4-src/apngopt.cpp
+  /home/fred/SimpleWebStreamer/uos_soundtouch.pas
+  /home/fred/strumpract_work/src/msefiledialogx.pas
+  /home/fred/strumpract/src/msefiledialogx.pas
+  /home/fred/strumpract/src/splash.pas
+  /home/fred/strumpract/src/uos_flat.pas
+  /home/fred/strumpract/src/infosd.pas
+  /home/fred/SimpleWebStreamer/uos.pas
+  /home/fred/SimpleWebStreamer/uos_httpgetthread.pas
+  /home/fred/SimpleWebStreamer/uos_define.inc
+  /home/fred/SimpleWebStreamer/simplewebplayer.prj
+  /home/fred/SimpleWebStreamer/simplewebplayer.pas
+  /home/fred/strumpract/src/drums.pas
+  /home/fred/strumpract/src/waveform.pas
+  /home/fred/Downloads/sinewave/sine.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1577,13 +1629,13 @@ windowlayout=543
  ncy=0
  x=0
  y=0
- cx=1217
- cy=444
+ cx=1427
+ cy=618
  rcx=0
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=0
+ index=1
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
@@ -1617,15 +1669,15 @@ windowlayout=543
  ncx=0
  ncy=0
  x=0
- y=63
- cx=1217
- cy=444
+ y=61
+ cx=1427
+ cy=618
  rcx=0
  rcy=0
  [_mse_simple_player_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=mainfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1635,7 +1687,7 @@ windowlayout=543
  x=810
  y=58
  cx=491
- cy=404
+ cy=400
  rcx=0
  rcy=0
  wsize=0

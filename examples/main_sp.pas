@@ -38,6 +38,7 @@ type
     chkstereo2mono: TCheckBox;
     Edit1: TEdit;
     Edit10: TEdit;
+    Edit11: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
     Edit4: TEdit;
@@ -50,6 +51,7 @@ type
     Label11: TLabel;
     Label12: TLabel;
     Label14: TLabel;
+    Label15: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -85,13 +87,10 @@ type
     procedure CheckBox3Change(Sender: TObject);
     procedure ChknoiseChange(Sender: TObject);
     procedure chkstereo2monoChange(Sender: TObject);
-    procedure Edit5Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure PaintBox1Click(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
-    procedure Panel1Click(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure TrackBar2MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
     procedure TrackBar2MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
@@ -192,11 +191,13 @@ begin
   Edit1.Text := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
   Edit2.Text := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
   Edit3.Text := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
+  Edit11.text := ordir + 'lib\Windows\64bit\libxmp-64.dll';
   Edit5.Text := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
 {$else}
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
+  Edit11.text := ordir + 'lib\Windows\32bit\libxmp-32.dll';
   Edit7.text := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
   Edit10.text := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
   Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
@@ -259,9 +260,8 @@ begin
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   Edit7.text := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
   Edit8.text := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
-  
   Edit10.text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
-  
+  Edit11.text := ordir + 'lib/Linux/64bit/libxmp-64.so';
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
   Edit6.Text := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
    Edit4.Text := ordir + 'sound/test.ogg';
@@ -274,6 +274,7 @@ begin
   Edit7.text := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
   Edit8.text := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
   Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
+  Edit11.text := ordir + 'lib/Linux/32bit/libxmp-32.so';
   // Problems with Windows10 when closing application
   //Edit6.Text := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
   Edit4.Text := ordir + 'sound/test.ogg';
@@ -291,6 +292,7 @@ begin
   Edit1.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
   Edit2.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
   Edit3.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
+  Edit11.text := ordir + 'lib/Linux/aarch64_raspberrypi/libxmp-aarch64.so';
   Edit5.Text := ordir + 'lib/Linux/aarch64_raspberrypi/plugin/libsoundtouch_aarch64.so';
   Edit4.Text := ordir + 'sound/test.ogg';
   {$ENDIF}
@@ -302,11 +304,6 @@ end;
 procedure TForm1.PaintBox1Paint(Sender: TObject);
 begin
   PaintBox1.Canvas.Draw(0, 0, BufferBMP);
-end;
-
-procedure TForm1.Panel1Click(Sender: TObject);
-begin
-
 end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
@@ -331,10 +328,10 @@ var
   loadok: Boolean = False;
 begin
   // Load the libraries
-  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
+  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename, xmpfilename: PChar) : LongInt;
 
   if uos_LoadLib(PChar(Edit1.Text), PChar(Edit2.Text),
-    PChar(Edit3.Text), PChar(Edit7.Text), PChar(Edit8.Text), PChar(Edit10.Text)) = 0 then
+    PChar(Edit3.Text), PChar(Edit7.Text), PChar(Edit8.Text), PChar(Edit10.Text), PChar(Edit11.Text)) = 0 then
     // You may load one or more libraries . When you want... :
   begin
     form1.hide;
@@ -346,8 +343,9 @@ begin
     edit7.ReadOnly  := True;
     edit8.ReadOnly  := True;
     edit10.ReadOnly := True;
+    edit11.ReadOnly := True;
     button1.Caption :=
-      'PortAudio, SndFile, Mpg123, AAC, Opus libraries are loaded...';
+      'PortAudio, SndFile, Mpg123, AAC, Opus, XMP libraries are loaded...';
   end
   else
     MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
@@ -603,11 +601,6 @@ begin
   uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.Checked);
 end;
 
-procedure TForm1.Edit5Change(Sender: TObject);
-begin
-
-end;
-
 procedure uos_logo();
 var
   xpos, ypos: integer;
@@ -778,7 +771,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Height           := 372;
+  Height           := 422;
   ShapeLeft.Height := 0;
   ShapeRight.Height := 0;
 end;
@@ -793,12 +786,6 @@ begin
   uos_free;
   BufferBMP.Free;
 end;
-
-procedure TForm1.PaintBox1Click(Sender: TObject);
-begin
-
-end;
-
 
 end.
 

@@ -4,59 +4,17 @@ unit mainmse_sp;
 interface
 
 uses
-  uos_flat,
-  ctypes,
-  msetypes,
-  mseglob,
-  mseguiglob,
-  mseguiintf,
-  mseapplication,
-  msestat,
-  msemenus,
-  msegui,
-  msegraphics,
-  msegraphutils,
-  mseevent,
-  mseclasses,
-  msewidgets,
-  mseforms,
-  msesimplewidgets,
-  msedataedits,
-  mseedit,
-  mseificomp,
-  mseificompglob,
-  mseifiglob,
-  msestatfile,
-  msestream,
-  msestrings,
-  SysUtils,
-  msegraphedits,
-  msescrollbar,
-  msefileutils,
-  msemenuwidgets,
-  msegrids,
-  msewidgetgrid,
-  msebitmap,
-  msedatanodes,
-  msefiledialog,
-  mselistbrowser,
-  msesys,
-  msesignal,
-  msebarcode,
-  msedock,
-  msedragglob,
-  mseact,
-  msedropdownlist;
+ uos_flat,ctypes,msetypes,mseglob,mseguiglob,mseguiintf,mseapplication,msestat,
+ msemenus,msegui,msegraphics,msegraphutils,mseevent,mseclasses,msewidgets,
+ mseforms,msesimplewidgets,msedataedits,mseedit,mseificomp,mseificompglob,
+ mseifiglob,msestatfile,msestream,msestrings,SysUtils,msegraphedits,
+ msescrollbar,msefileutils,msemenuwidgets,msegrids,msewidgetgrid,msebitmap,
+ msedatanodes,mselistbrowser,msesys,msesignal,msebarcode,msedock,msedragglob,
+ mseact,msedropdownlist, msegridsglob, msefiledialogx;
 
 type
   tmainfo = class(tmainform)
-    padir: tfilenameedit;
     btnload: TButton;
-    sfdir: tfilenameedit;
-    mpdir: tfilenameedit;
-    bsdir: tfilenameedit;
-    m4dir: tfilenameedit;
-    stdir: tfilenameedit;
 
     panel1: tdockpanel;
     tlabel3: tlabel;
@@ -64,7 +22,6 @@ type
     tlabel1: tlabel;
     TrackBar2: tslider;
     TrackBar3: tslider;
-    songdir: tfilenameedit;
     trackbar1: tslider;
     checkbox1: tbooleanedit;
     btnstart: TButton;
@@ -80,7 +37,6 @@ type
     radiobutton3: tbooleaneditradio;
     radiobutton2: tbooleaneditradio;
     radiobutton1: tbooleaneditradio;
-    fadir: tfilenameedit;
     llength: tlabel;
     lposition: tlabel;
     chkstereo2mono: tbooleanedit;
@@ -88,12 +44,20 @@ type
     checkbox2: tbooleanedit;
     vuLeft: tdockpanel;
     vuRight: tdockpanel;
-    ofdir: tfilenameedit;
-    pcdir: tfilenameedit;
     groupdevout: tgroupbox;
     usepc: tbooleaneditradio;
     usepa: tbooleaneditradio;
     usealsa: tbooleanedit;
+   padir: tfilenameeditx;
+   sfdir: tfilenameeditx;
+   mpdir: tfilenameeditx;
+   m4dir: tfilenameeditx;
+   fadir: tfilenameeditx;
+   ofdir: tfilenameeditx;
+   xmdir: tfilenameeditx;
+   stdir: tfilenameeditx;
+   bsdir: tfilenameeditx;
+   songdir: tfilenameeditx;
     procedure loadlibr(const Sender: TObject);
     procedure playit(const Sender: TObject);
     procedure ClosePlayer1;
@@ -336,7 +300,8 @@ begin
   if uos_LoadLib(PChar(ansistring(mainfo.padir.Value)),
     PChar(ansistring(mainfo.sfdir.Value)),
     PChar(ansistring(mainfo.mpdir.Value)), PChar(ansistring(mainfo.m4dir.Value)),
-    PChar(ansistring(mainfo.fadir.Value)), PChar(ansistring(mainfo.ofdir.Value))) = 0 then
+    PChar(ansistring(mainfo.fadir.Value)), PChar(ansistring(mainfo.ofdir.Value)),
+    PChar(ansistring(mainfo.xmdir.Value))) = 0 then
   begin
     hide;
     loadok         := True;
@@ -434,7 +399,7 @@ begin
     //// PlayerIndex : from 0 to what your computer can do !
     //// If PlayerIndex exists already, it will be overwriten...
 
-    InputIndex1 := uos_AddFromFile(PlayerIndex1, PChar(ansistring(songdir.Value)), -1, samformat, -1);
+    InputIndex1 := uos_AddFromFile(PlayerIndex1, PChar(ansistring(songdir.Value)), -1, samformat, 8192 *4);
 
   //// add input from audio file with custom parameters
   ////////// FileName : filename of audio file
@@ -457,7 +422,7 @@ begin
      uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1)
       {$else}
     OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, devused, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-      uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
+      uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, 8192 * 4, -1);
 
        {$endif}
 
