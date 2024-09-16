@@ -258,11 +258,10 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // Load the libraries
-  //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
-  // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
 
   if uos_LoadLib(PChar(Edit1.Text), PChar(Edit2.Text),
-    PChar(Edit3.Text), PChar(Edit8.Text), PChar(Edit9.Text), nil) = 0 then
+    PChar(Edit3.Text), PChar(Edit8.Text), PChar(Edit9.Text), nil, nil) = 0 then
   begin
     form1.hide;
     form1.Position  := podefault;

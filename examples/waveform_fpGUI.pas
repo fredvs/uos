@@ -279,7 +279,7 @@ var
     FilenameEdit1.FileName := ordir + 'sound/test.mp3';
  {$ENDIF}
 
-    if uos_LoadLib(nil, PChar(fnsf), PChar(fnmp), nil, nil, nil) = 0 then
+    if uos_LoadLib(nil, PChar(fnsf), PChar(fnmp), nil, nil, nil, nil) = 0 then
       button1.Enabled := True
     else
     begin

@@ -318,11 +318,10 @@ var
   loadok: Boolean = False;
 begin
   // Load the libraries
-  //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
-  // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
 
   if uos_LoadLib(PChar(Edit1.Text), PChar(Edit2.Text),
-    PChar(Edit3.Text), PChar(Edit7.Text), PChar(Edit8.Text), nil) = 0 then
+    PChar(Edit3.Text), PChar(Edit7.Text), PChar(Edit8.Text), nil, nil) = 0 then
     // You may load one or more libraries . When you want... :
   begin
     form1.hide;

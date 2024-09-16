@@ -162,7 +162,7 @@ begin
     {$ENDIF}
     {$ENDIF}
 
-  uos_LoadLib(PChar(lib1), PChar(lib2), nil, nil, nil, nil);
+  uos_LoadLib(PChar(lib1), PChar(lib2), nil, nil, nil, nil, nil);
 
   sound[0] := Application.Location + 'sound' + directoryseparator + 'drums' + directoryseparator + 'HH.wav';
   sound[1] := Application.Location + 'sound' + directoryseparator + 'drums' + directoryseparator + 'SD.wav';

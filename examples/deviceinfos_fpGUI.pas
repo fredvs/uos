@@ -109,9 +109,8 @@ var
   procedure TDevicesInfos.btnLoadClick(Sender: TObject);
   begin
     // Load the library
-    // function uos_LoadLib(PortAudioFileName: PChar; SndFileFileName: PChar;
-    // Mpg123FileName, opusfilefilename: PChar) : integer;
-    if uos_LoadLib(PChar(FilenameEdit1.FileName), nil, nil, nil, nil, nil) = 0 then
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
+    if uos_LoadLib(PChar(FilenameEdit1.FileName), nil, nil, nil, nil, nil, nil) = 0 then
     begin
       hide;
       Height          := 385;

@@ -242,10 +242,9 @@ var
   loadok: Boolean = False;
 begin
   // Load the libraries
-  //function  uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName,
-  // Mp4ffFileName, FaadFileName, opusfilefilename: PChar) : LongInt;
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
 
-  if uos_LoadLib(PChar(edit1.Text), nil, PChar(edit3.Text), nil, nil, PChar(edit6.Text)) = 0 then
+  if uos_LoadLib(PChar(edit1.Text), nil, PChar(edit3.Text), nil, nil, PChar(edit6.Text), nil) = 0 then
   begin
     form1.hide;
     loadok          := True;

@@ -111,8 +111,8 @@ var
  {$ENDIF}
 
     // Load the libraries
-    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
-    res := uos_LoadLib(PChar(PA_FileName), PChar(SF_FileName), nil, nil, nil, nil);
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
+    res := uos_LoadLib(PChar(PA_FileName), PChar(SF_FileName), nil, nil, nil, nil, nil);
 
     writeln('Result of loading (if 0 => ok ) : ' + IntToStr(res));
 

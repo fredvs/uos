@@ -254,9 +254,9 @@ var
     loadok: Boolean = False;
   begin
     // Load the libraries
-    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFilename: PChar) : LongInt;
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
     if uos_LoadLib(PChar(FilenameEdit1.FileName), PChar(FilenameEdit2.FileName),
-      PChar(FilenameEdit3.FileName), PChar(FilenameEdit7.FileName), PChar(FilenameEdit8.FileName), nil) = 0 then
+      PChar(FilenameEdit3.FileName), PChar(FilenameEdit7.FileName), PChar(FilenameEdit8.FileName), nil, nil) = 0 then
     begin
       hide;
       loadok           := True;

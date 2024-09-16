@@ -295,12 +295,14 @@ var
   loadok: Boolean = False;
 begin
   // Load the libraries
-  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFilename: PChar) : LongInt;
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
 
   if uos_LoadLib(PChar(ansistring(mainfo.padir.Value)),
     PChar(ansistring(mainfo.sfdir.Value)),
-    PChar(ansistring(mainfo.mpdir.Value)), PChar(ansistring(mainfo.m4dir.Value)),
-    PChar(ansistring(mainfo.fadir.Value)), PChar(ansistring(mainfo.ofdir.Value)),
+    PChar(ansistring(mainfo.mpdir.Value)),
+    PChar(ansistring(mainfo.m4dir.Value)),
+    PChar(ansistring(mainfo.fadir.Value)),
+    PChar(ansistring(mainfo.ofdir.Value)),
     PChar(ansistring(mainfo.xmdir.Value))) = 0 then
   begin
     hide;

@@ -177,7 +177,7 @@ begin
 
   tfilenameedit1.Value := SoundFilename;
 
-  res := uos_LoadLib(PChar(PA_FileName), PChar(SF_FileName), PChar(MP_FileName), nil, nil, nil);
+  res := uos_LoadLib(PChar(PA_FileName), PChar(SF_FileName), PChar(MP_FileName), nil, nil, nil,nil);
 
   if Res <> 0 then
   begin

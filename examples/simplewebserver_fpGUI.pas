@@ -213,10 +213,10 @@ var
     ordir := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0)));
 
     // Load the libraries
-    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName : PChar) : LongInt;
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
     if uos_LoadLib(PChar(FilenameEdit1.FileName), PChar(FilenameEdit2.FileName),
       PChar(FilenameEdit3.FileName), PChar(FilenameEdit7.FileName), PChar(FilenameEdit8.FileName),
-      PChar(FilenameEdit31.FileName)) = 0 then
+      PChar(FilenameEdit31.FileName), nil) = 0 then
 
       if uos_LoadServerLib(PChar(ShoutFileName), PChar(OpusFileName)) = 0 then
       begin

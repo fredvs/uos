@@ -166,7 +166,7 @@ begin
    {$endif}
    {$ENDIF}
 
-  uos_LoadLib(PChar(PA_FileName), nil, PChar(MP_FileName), nil, nil, nil);
+  uos_LoadLib(PChar(PA_FileName), nil, PChar(MP_FileName), nil, nil, nil, nil);
 
 end;
 

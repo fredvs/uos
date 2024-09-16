@@ -89,10 +89,10 @@ begin
 
 
   // Load the libraries
-  // function uos_LoadLib(PortAudioFileName: Pchar; SndFileFileName, opusfilefilename: Pchar; Mpg123FileName: Pchar) : integer;
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
   // for web streaming => Mpg123 is needed
 
-  res := uos_LoadLib(PChar(PA_FileName), nil, PChar(MP_FileName), nil, nil, PChar(OF_FileName));
+  res := uos_LoadLib(PChar(PA_FileName), nil, PChar(MP_FileName), nil, nil, PChar(OF_FileName), nil);
   writeln('');
   if res = 0 then
     writeln('===> Libraries are loaded.')

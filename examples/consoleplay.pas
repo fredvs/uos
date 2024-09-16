@@ -117,9 +117,9 @@ begin
 
   // Load the libraries
 
-// function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename: PChar) : LongInt;
+   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
 
-  res := uos_LoadLib(PChar(PA_FileName), PChar(SF_FileName), Nil, Nil, Nil, Nil);
+  res := uos_LoadLib(PChar(PA_FileName), PChar(SF_FileName), Nil, Nil, Nil, Nil, nil);
   writeln;
 
   if res = 0 then
