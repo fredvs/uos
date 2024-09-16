@@ -9,7 +9,7 @@ For fpc, fpGUI, MSEgui and LCL.
 
 With uos you can:
 
-. Listen to mp3, ogg, wav, flac, m4a, opus, cda ... audio files.
+. Listen to mp3, ogg, wav, flac, m4a, opus, mod, it, s3m, xm, cda, ... audio files.
 
 . Deal with 16, 32 integer or float 32 bit resolution.
 
@@ -23,7 +23,7 @@ With uos you can:
 
 . Produce sound from built-in synthesizer.
 
-uos can use: PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile
+uos can use: PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile, Libxmp
 audio libraries and SoundTouch, Bs2b audio-effect libraries.
 
 Included in the package:
