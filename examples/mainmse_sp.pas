@@ -80,9 +80,6 @@ type
     checkbox2: tbooleanedit;
     vuLeft: tdockpanel;
     vuRight: tdockpanel;
-    groupdevout: tgroupbox;
-    usepc: tbooleaneditradio;
-    usepa: tbooleaneditradio;
     padir: tfilenameeditx;
     sfdir: tfilenameeditx;
     mpdir: tfilenameeditx;

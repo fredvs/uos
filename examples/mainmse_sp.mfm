@@ -243,56 +243,6 @@ object simple_player: tmainfo
     bounds_y = 0
     bounds_cx = 490
     bounds_cy = 210
-    object groupdevout: tgroupbox
-      frame.caption = 'Use library'
-      frame.captiontextflags = [tf_bottom]
-      frame.localprops = []
-      frame.localprops1 = []
-      frame.outerframe = (
-        0
-        8
-        0
-        0
-      )
-      taborder = 24
-      visible = False
-      bounds_x = 392
-      bounds_y = 0
-      bounds_cx = 82
-      bounds_cy = 46
-      object usepc: tbooleaneditradio
-        frame.caption = 'PCaudio'
-        frame.localprops = []
-        frame.localprops1 = []
-        frame.outerframe = (
-          0
-          2
-          51
-          2
-        )
-        bounds_x = 2
-        bounds_y = 28
-        bounds_cx = 64
-        bounds_cy = 17
-      end
-      object usepa: tbooleaneditradio
-        frame.caption = 'Portaudio'
-        frame.localprops = []
-        frame.localprops1 = []
-        frame.outerframe = (
-          0
-          2
-          60
-          2
-        )
-        taborder = 1
-        bounds_x = 2
-        bounds_y = 14
-        bounds_cx = 73
-        bounds_cy = 17
-        value = True
-      end
-    end
     object tlabel3: tlabel
       bounds_x = 88
       bounds_y = 107
@@ -647,7 +597,7 @@ object simple_player: tmainfo
         0
         0
       )
-      taborder = 25
+      taborder = 24
       bounds_x = 120
       bounds_y = 11
       bounds_cx = 356
