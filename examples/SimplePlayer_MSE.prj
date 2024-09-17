@@ -71,6 +71,60 @@ order18=0
 [projectoptions]
 projectdir=/home/fred/uos_xmp/examples
 projectfilename=/home/fred/uos_xmp/examples/SimplePlayer_MSE.prj
+findinfiledialog=53
+ [findinfileadialogfo.dir]
+ filenames=1
+  /home/fred/uos_xmp/examples/
+ filenamescust=0
+ filecolwidth=0
+ x=0
+ y=0
+ cx=0
+ cy=0
+ nopanel=0
+ compact=0
+ showoptions=0
+ hidehistory=0
+ hideicons=0
+ showhidden=0
+ colnamewidth=0
+ colsizewidth=0
+ colextwidth=0
+ coldatewidth=0
+ splitterplaces=0
+ splitterlateral=0
+ lastdir=/home/fred/uos_xmp/examples/
+ filehistory=0
+ filefilterindex=0
+ filefilter=
+ [findinfileadialogfo.subdirs]
+ value=0
+ [findinfileadialogfo.incurrentfile]
+ value=0
+ [findinfileadialogfo.inopenfiles]
+ value=0
+ [findinfileadialogfo.wholeword]
+ value=0
+ [findinfileadialogfo.indirectories]
+ value=0
+ [findinfileadialogfo.inprojectdir]
+ value=1
+ [findinfileadialogfo.casesensitive]
+ value=0
+ [findinfileadialogfo.mask]
+ value="*.pas" "*.pp" "*.inc"
+ history=1
+  "*.pas" "*.pp" "*.inc"
+ [findinfileadialogfo.findtext]
+ value=
+ history=1
+  
+ [findinfileadialogfo]
+ stackedunder=
+ x=573
+ y=142
+ cx=234
+ cy=334
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
@@ -80,6 +134,22 @@ finddialog=8
  y=520
  cx=298
  cy=291
+replacedialog=15
+ [replacedialogfo.promptonreplace]
+ value=1
+ [replacedialogfo.selectedonly]
+ value=0
+ [replacedialogfo.replacetext]
+ value=//
+ history=2
+  //
+  
+ [replacedialogfo]
+ stackedunder=
+ x=447
+ y=253
+ cx=389
+ cy=216
 options=114
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
@@ -191,8 +261,8 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=232
- y=166
+ x=237
+ y=195
  cx=837
  cy=606
 settings=8
@@ -347,7 +417,7 @@ befcommand=0
 aftcommand=0
 makeoptions=6
  -l -Mobjfpc -Sh -Fcutf8
- -gl -O-
+ -ghl -O-
  -B
  -FUunits
  -O2 -XX -CX -Xs
@@ -568,12 +638,9 @@ settingsstorage=0
 settingsprojecttree=0
 settingsautoload=0
 settingsautosave=0
-modulenames=1
- SIMPLE_PLAYER
-moduletypes=1
- TMAINFO
-modulefiles=1
- /home/fred/uos_xmp/examples/mainmse_sp.mfm
+modulenames=0
+moduletypes=0
+modulefiles=0
 befcommandon=0
 makeoptionson=6
  4095
@@ -1069,8 +1136,18 @@ envvarons=0
 [edit]
 hintwidth=382
 hintheight=0
-finddtext=unloadlib
+finddtext=///
 findhistory=20
+ ///
+ ////
+ /////
+ //////
+ ////////
+ ///////
+ /////////
+ //////////
+ ///////////
+ ////////////
  unloadlib
  xmp_play_buffer
  fromfile(
@@ -1081,23 +1158,13 @@ findhistory=20
  ratio 
  ratio
  xmp_start_player
- StreamIn[x].Data.LibOpen := 5
- not nil
- did not
- XM_FileName
- mainfo.xmdir.value
- XMloadERROR
- HandleSt
- StreamIn[x].Data.LibOpen
- LibOpen
- BSloadERROR
 findoptions=1
 editpos=5
- 0,73
- 0,225
- 0,58
- 0,577
  0,6
+ 0,-1073741823
+ 0,-1073741823
+ 0,615
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
@@ -1121,19 +1188,15 @@ ismoduletexts=5
  0
  0
  0
-modules=1
- /home/fred/uos_xmp/examples/mainmse_sp.mfm
-moduleoptions=1
- 0
-visiblemodules=1
- -1
-nomenumodules=1
- 0
+modules=0
+moduleoptions=0
+visiblemodules=0
+nomenumodules=0
 [sourcefo.files_tab]
 firsttab=0
-index=1
+index=0
 [layout]
-windowlayout=559
+windowlayout=540
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1264,7 +1327,7 @@ windowlayout=559
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=conflangfo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=3
  nx=0
@@ -1348,7 +1411,7 @@ windowlayout=559
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=projecttreefo
+ stackedunder=conflangfo
  parent=
  mdistate=0
  nx=0
@@ -1367,10 +1430,10 @@ windowlayout=559
  [breakpointsfo.bkptson]
  value=1
  [objectinspectorfo.grid]
- propcolwidthref=453
- width0=184
+ propcolwidthref=468
+ width0=190
  sortdescend0=0
- width1=263
+ width1=272
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1577,7 +1640,7 @@ windowlayout=559
  nx=0
  ny=2
  ncx=1427
- ncy=60
+ ncy=58
  x=0
  y=2
  cx=1427
@@ -1591,8 +1654,11 @@ windowlayout=559
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos_xmp/examples/uos_flat.pas
+ value=/home/fred/uos_xmp/examples/SimplePlayer_MSE.pas
  history=20
+  /home/fred/uos_xmp/examples/mainmse_sp.pas
+  /home/fred/uos_xmp/examples/uos_define.inc
+  /home/fred/uos_xmp/examples/uos_flat.pas
   /home/fred/uos_xmp/examples/uos.pas
   /home/fred/uos/src/uos_libsndfile.pas
   /home/fred/uos/src/uos_portaudio.pas
@@ -1610,9 +1676,6 @@ windowlayout=559
   /home/fred/SimpleWebStreamer/uos_define.inc
   /home/fred/SimpleWebStreamer/simplewebplayer.prj
   /home/fred/SimpleWebStreamer/simplewebplayer.pas
-  /home/fred/strumpract/src/drums.pas
-  /home/fred/strumpract/src/waveform.pas
-  /home/fred/Downloads/sinewave/sine.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1635,7 +1698,7 @@ windowlayout=559
  rcy=0
  [sourcefo.files_tab]
  firsttab=0
- index=1
+ index=0
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
@@ -1674,25 +1737,6 @@ windowlayout=559
  cy=618
  rcx=0
  rcy=0
- [_mse_simple_player_mse_]
- splitdir=0
- useroptions=268451963
- stackedunder=targetconsolefo
- parent=
- mdistate=3
- nx=0
- ny=0
- ncx=0
- ncy=0
- x=810
- y=58
- cx=491
- cy=400
- rcx=0
- rcy=0
- wsize=0
- active=0
- visible=1
 [targetconsole]
 finddtext=
 findhistory=0

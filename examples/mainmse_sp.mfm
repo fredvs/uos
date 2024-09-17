@@ -243,26 +243,6 @@ object simple_player: tmainfo
     bounds_y = 0
     bounds_cx = 490
     bounds_cy = 210
-    object usealsa: tbooleanedit
-      frame.caption = 'alsa'
-      frame.localprops = []
-      frame.localprops1 = []
-      frame.outerframe = (
-        0
-        2
-        26
-        2
-      )
-      taborder = 25
-      hint = 'Use alsa vs pulse audio driver.'
-      bounds_x = 408
-      bounds_y = 46
-      bounds_cx = 39
-      bounds_cy = 17
-      onchange = ChangeStereo2Mono
-      visible = False
-      enabled = False
-    end
     object groupdevout: tgroupbox
       frame.caption = 'Use library'
       frame.captiontextflags = [tf_bottom]
@@ -294,7 +274,6 @@ object simple_player: tmainfo
         bounds_y = 28
         bounds_cx = 64
         bounds_cy = 17
-        onsetvalue = onsetpcaudio
       end
       object usepa: tbooleaneditradio
         frame.caption = 'Portaudio'
@@ -311,7 +290,6 @@ object simple_player: tmainfo
         bounds_y = 14
         bounds_cx = 73
         bounds_cy = 17
-        onsetvalue = onsetportaudio
         value = True
       end
     end
@@ -669,7 +647,7 @@ object simple_player: tmainfo
         0
         0
       )
-      taborder = 26
+      taborder = 25
       bounds_x = 120
       bounds_y = 11
       bounds_cx = 356

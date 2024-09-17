@@ -1,5 +1,5 @@
 
-/////////////////// Demo how to use United Openlib of Sound ////////////////////
+{ Demo how to use United Openlib of Sound (uos) }
 
 unit main_sp;
 
@@ -106,7 +106,7 @@ type
     { public declarations }
   end;
 
-    ////// This is the "standart" DSP procedure look.
+    // This is the "standart" DSP procedure look.
 function DSPReverseBefore(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
 function DSPReverseAfter(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
 
@@ -146,7 +146,7 @@ begin
     label7.Caption := 'Tempo: ' + floattostrf(tempo, ffFixed, 15, 1);
     label9.Caption := 'Pitch: ' + floattostrf(rate, ffFixed, 15, 1);
 
-    if radiogroup1.Enabled = False then   /// player1 was created
+    if radiogroup1.Enabled = False then   // player1 was created
       uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, tempo, rate, checkbox2.Checked);
   end;
 
@@ -156,7 +156,7 @@ procedure TForm1.ResetPlugClick(Sender: TObject);
 begin
   TrackBar4.Position := 50;
   TrackBar5.Position := 50;
-  if radiogroup1.Enabled = False then   /// player1 was created
+  if radiogroup1.Enabled = False then   // player1 was created
     uos_SetPluginSoundTouch(PlayerIndex1, PluginIndex2, 1, 1, checkbox2.Checked);
 
 end;
@@ -186,14 +186,14 @@ var
 begin
   ordir := application.Location;
   uos_logo();
-             {$IFDEF Windows}
-     {$if defined(cpu64)}
+ {$IFDEF Windows}
+  {$if defined(cpu64)}
   Edit1.Text := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
   Edit2.Text := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
   Edit3.Text := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
   Edit11.text := ordir + 'lib\Windows\64bit\libxmp-64.dll';
   Edit5.Text := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
-{$else}
+  {$else}
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
@@ -202,28 +202,28 @@ begin
   Edit10.text := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
   Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
   Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
-  // Error on Windows10 --> when closing application.
+  // Error on Windows10 with libbs2b --> when closing application.
   //Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
-   {$endif}
+  {$endif}
   Edit4.Text := ordir + 'sound\test.ogg';
  {$ENDIF}
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
     Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
-     Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
     Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
     Edit5.text := ordir + 'lib/FreeBSD/64bit/plugin/libsoundtouch-64.so';
     Edit6.text := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
     Edit10.text := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
   
     {$else}
-   Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
-     Edit2.Text := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
+    Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
+    Edit2.Text := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
     Edit3.Text := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
-     Edit5.Text := '' ;
+    Edit5.Text := '' ;
 {$endif}
-     Edit4.Text := ordir + 'sound/test.ogg';
+    Edit4.Text := ordir + 'sound/test.ogg';
  {$ENDIF}
 
   {$IFDEF Darwin}
@@ -275,8 +275,6 @@ begin
   Edit8.text := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
   Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
   Edit11.text := ordir + 'lib/Linux/32bit/libxmp-32.so';
-  // Problems with Windows10 when closing application
-  //Edit6.Text := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
   Edit4.Text := ordir + 'sound/test.ogg';
   {$ENDIF}
 
@@ -357,7 +355,7 @@ begin
     begin
       plugsoundtouch  := True;
       button1.Caption :=
-        'PortAudio, SndFile, Mpg123, AAC, Opus and Plugin are loaded...';
+        'PortAudio, SndFile, Mpg123, AAC, Opus, XMP and Plugin are loaded...';
     end
     else
     begin
@@ -431,139 +429,134 @@ begin
     // If PlayerIndex exists already, it will be overwritten...
 
     if uos_CreatePlayer(PlayerIndex1) then
-      //// Create the player.
-      //// PlayerIndex : from 0 to what your computer can do !
-      //// If PlayerIndex exists already, it will be overwriten...
+      // Create the player.
+      // PlayerIndex : from 0 to what your computer can do !
+      // If PlayerIndex exists already, it will be overwriten...
 
       // InputIndex1 := uos_AddFromFile(PlayerIndex1, Edit4.Text);
-      //// add input from audio file with default parameters
+      // add input from audio file with default parameters
 
       InputIndex1 := uos_AddFromFile(PlayerIndex1, PChar(Edit4.Text), -1, samformat, -1);
-    //// add input from audio file with custom parameters
-    ////////// FileName : filename of audio file
-    //////////// PlayerIndex : Index of a existing Player
-    ////////// OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
-    ////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
-    //////////// FramesCount : default : -1 (65536)
+    // add input from audio file with custom parameters
+    // FileName : filename of audio file
+    // PlayerIndex : Index of a existing Player
+    // OutputIndex : OutputIndex of existing Output // -1 : all output, -2: no output, other integer : existing output)
+    // SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16) SampleFormat of Input can be <= SampleFormat float of Output
+    // FramesCount : default : -1 (65536)
     //  result : -1 nothing created, otherwise Input Index in array
 
     if InputIndex1 > -1 then
     begin
 
-      //  OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1) ;
-      //// add a Output into device with default parameters
-
-    {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+     {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
     OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
      uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
        {$else}
-      OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
-        uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
+    OutputIndex1 := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, InputIndex1),
+     uos_InputGetChannels(PlayerIndex1, InputIndex1), samformat, -1, -1);
       {$endif}
 
-      //// add a Output into device with custom parameters
-      //////////// PlayerIndex : Index of a existing Player
-      //////////// Device ( -1 is default Output device )
-      //////////// Latency  ( -1 is latency suggested ) )
-      //////////// SampleRate : delault : -1 (44100)   /// here default samplerate of input
-      //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-      //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-      //////////// FramesCount : default : -1 (65536)
+      // add a Output into device with custom parameters
+      // PlayerIndex : Index of a existing Player
+      // Device ( -1 is default Output device )
+      // Latency  ( -1 is latency suggested ) )
+      // SampleRate : delault : -1 (44100)   // here default samplerate of input
+      // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+      // SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+      // FramesCount : default : -1 (65536)
       //  result : -1 nothing created, otherwise Output Index in array
 
       uos_InputSetLevelEnable(PlayerIndex1, InputIndex1, 2);
-      ///// set calculation of level/volume (usefull for showvolume procedure)
-      ///////// set level calculation (default is 0)
+      // set calculation of level/volume (usefull for showvolume procedure)
+      // set level calculation (default is 0)
       // 0 => no calcul
       // 1 => calcul before all DSP procedures.
       // 2 => calcul after all DSP procedures.
       // 3 => calcul before and after all DSP procedures.
 
       uos_InputSetPositionEnable(PlayerIndex1, InputIndex1, 1);
-      ///// set calculation of position (usefull for positions procedure)
-      ///////// set position calculation (default is 0)
+      // set calculation of position (usefull for positions procedure)
+      // set position calculation (default is 0)
       // 0 => no calcul
       // 1 => calcul position.
 
       uos_LoopProcIn(PlayerIndex1, InputIndex1, @LoopProcPlayer1);
-      ///// Assign the procedure of object to execute inside the loop for a Input
-      //////////// PlayerIndex : Index of a existing Player
-      //////////// InIndex : Index of a existing Input
-      //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
+      // Assign the procedure of object to execute inside the loop for a Input
+      // PlayerIndex : Index of a existing Player
+      // InIndex : Index of a existing Input
+      // LoopProcPlayer1 : procedure of object to execute inside the loop
 
       uos_InputAddDSPVolume(PlayerIndex1, InputIndex1, 1, 1);
-      ///// DSP Volume changer
-      ////////// PlayerIndex1 : Index of a existing Player
-      ////////// InputIndex1 : InputIndex of a existing input
-      ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
-      ////////// VolRight : Right volume
+      // DSP Volume changer
+      // PlayerIndex1 : Index of a existing Player
+      // InputIndex1 : InputIndex of a existing input
+      // VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
+      // VolRight : Right volume
 
       uos_InputSetDSPVolume(PlayerIndex1, InputIndex1, TrackBar1.position / 100,
-        TrackBar3.position / 100, True); /// Set volume
-      ////////// PlayerIndex1 : Index of a existing Player
-      ////////// InputIndex1 : InputIndex of a existing Input
-      ////////// VolLeft : Left volume
-      ////////// VolRight : Right volume
-      ////////// Enable : Enabled
+        TrackBar3.position / 100, True); // Set volume
+      // PlayerIndex1 : Index of a existing Player
+      // InputIndex1 : InputIndex of a existing Input
+      // VolLeft : Left volume
+      // VolRight : Right volume
+      // Enable : Enabled
 
       DSPIndex1 := uos_InputAddDSP(PlayerIndex1, InputIndex1, @DSPReverseBefore, @DSPReverseAfter, nil, nil);
-      ///// add a custom DSP procedure for input
-      ////////// PlayerIndex1 : Index of a existing Player
-      ////////// InputIndex1: InputIndex of existing input
-      ////////// BeforeFunc : function to do before the buffer is filled
-      ////////// AfterFunc : function to do after the buffer is filled
-      ////////// EndedFunc : function to do at end of thread
-      ////////// LoopProc : external procedure to do after the buffer is filled
-      //////// result = DSPIndex of the custom  DSP
+      // add a custom DSP procedure for input
+      // PlayerIndex1 : Index of a existing Player
+      // InputIndex1: InputIndex of existing input
+      // BeforeFunc : function to do before the buffer is filled
+      // AfterFunc : function to do after the buffer is filled
+      // EndedFunc : function to do at end of thread
+      // LoopProc : external procedure to do after the buffer is filled
+      // result = DSPIndex of the custom  DSP
 
       uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex1, checkbox1.Checked);
-      //// set the parameters of custom DSP;
+      // set the parameters of custom DSP;
 
       // This is a other custom DSP...stereo to mono  to show how to do a DSP ;-)
       DSPIndex2 := uos_InputAddDSP(PlayerIndex1, InputIndex1, nil, @DSPStereo2Mono, nil, nil);
       uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.Checked);
 
-      ///// add bs2b plugin with samplerate_of_input1  / channels(2 = stereo)
+      // add bs2b plugin with samplerate_of_input1  / channels(2 = stereo)
       if plugbs2b = True then
       begin
         PlugInIndex1 := uos_AddPlugin(PlayerIndex1, 'bs2b', uos_InputGetSampleRate(PlayerIndex1, InputIndex1), -1);
         uos_SetPluginbs2b(PlayerIndex1, PluginIndex1, -1, -1, -1, checkbox3.Checked);
       end;
 
-      ///// add SoundTouch plugin with samplerate_of_input1  / channels(2 = stereo)
+      // add SoundTouch plugin with samplerate_of_input1  / channels(2 = stereo)
       if plugsoundtouch = True then
       begin
         PluginIndex2 := uos_AddPlugin(PlayerIndex1, 'soundtouch', uos_InputGetSampleRate(PlayerIndex1, InputIndex1), -1);
-        ChangePlugSet(self); //// Change plugin settings
+        ChangePlugSet(self); // Change plugin settings
       end;
 
       trackbar2.Max := uos_InputLength(PlayerIndex1, InputIndex1);
-      ////// Length of Input in samples
+      // Length of Input in samples
 
       temptime := uos_InputLengthTime(PlayerIndex1, InputIndex1);
-      ////// Length of input in time
+      // Length of input in time
 
       DecodeTime(temptime, ho, mi, se, ms);
 
       llength.Caption := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
 
-      /////// procedure to execute when stream is terminated
+      // procedure to execute when stream is terminated
       uos_EndProc(PlayerIndex1, @ClosePlayer1);
-      ///// Assign the procedure of object to execute at end
-      //////////// PlayerIndex : Index of a existing Player
-      //////////// ClosePlayer1 : procedure of object to execute inside the loop
+      // Assign the procedure of object to execute at end
+      // PlayerIndex : Index of a existing Player
+      // ClosePlayer1 : procedure of object to execute inside the loop
 
       TrackBar2.position := 0;
       trackbar2.Enabled  := True;
-      //Button3.Enabled := False;
+      Button3.Enabled    := False;
       Button4.Enabled    := False;
       Button6.Enabled    := True;
       Button5.Enabled    := True;
       CheckBox1.Enabled  := True;
 
-      // application.ProcessMessages;
-
-      uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
+      uos_Play(PlayerIndex1);  // everything is ready, here we are, lets play it...
     end;
   end
   else
@@ -666,7 +659,7 @@ begin
   begin
     TrackBar2.Position := uos_InputPosition(PlayerIndex1, InputIndex1);
     temptime           := uos_InputPositionTime(PlayerIndex1, InputIndex1);
-    ////// Length of input in time
+    // Length of input in time
     DecodeTime(temptime, ho, mi, se, ms);
     lposition.Caption  := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
   end;
@@ -717,9 +710,9 @@ end;
 function DSPStereo2Mono(var Data: TuosF_Data; var fft: TuosF_FFT): TDArFloat;
 var
   x: integer = 0;
-  ps: PDArShort;     //////// if input is Int16 format
-  pl: PDArLong;      //////// if input is Int32 format
-  pf: PDArFloat;     //////// if input is Float32 format
+  ps: PDArShort;     // if input is Int16 format
+  pl: PDArLong;      // if input is Int32 format
+  pf: PDArFloat;     // if input is Float32 format
   samplef: cFloat;
   samplei: integer;
 begin
@@ -782,9 +775,10 @@ begin
   if (button3.Enabled = False) then
   begin
     button6.Click;
-    sleep(500);
+    sleep(200);
+    application.ProcessMessages;
   end;
-  uos_free;
+  uos_free();
   BufferBMP.Free;
 end;
 
