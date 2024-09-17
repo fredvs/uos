@@ -534,13 +534,21 @@ begin
 
       trackbar2.Max := uos_InputLength(PlayerIndex1, InputIndex1);
       // Length of Input in samples
-
+      
+      if trackbar2.Max > 0 then // mod's can not calculate length
+      begin
+      trackbar2.enabled := true;
       temptime := uos_InputLengthTime(PlayerIndex1, InputIndex1);
       // Length of input in time
 
       DecodeTime(temptime, ho, mi, se, ms);
 
       llength.Caption := format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
+      end else
+      begin
+      trackbar2.enabled := false;
+      llength.Caption := '??:??:??.???';
+      end;
 
       // procedure to execute when stream is terminated
       uos_EndProc(PlayerIndex1, @ClosePlayer1);
@@ -657,6 +665,7 @@ var
 begin
   if TrackBar2.Tag = 0 then
   begin
+    if trackbar2.Max > 0 then
     TrackBar2.Position := uos_InputPosition(PlayerIndex1, InputIndex1);
     temptime           := uos_InputPositionTime(PlayerIndex1, InputIndex1);
     // Length of input in time

@@ -284,7 +284,8 @@ begin
   if (TrackBar1.Tag = 0) then
     if uos_InputPosition(PlayerIndex1, InputIndex1) > 0 then
     begin
-      TrackBar1.Value   := uos_InputPosition(PlayerIndex1, InputIndex1) / inputlength;
+      if inputlength > 0 then
+        TrackBar1.Value := uos_InputPosition(PlayerIndex1, InputIndex1) / inputlength;
       temptime          := uos_InputPositionTime(PlayerIndex1, InputIndex1);
       // Length of input in time
       DecodeTime(temptime, ho, mi, se, ms);
@@ -529,14 +530,23 @@ begin
     end;
 
     inputlength := uos_InputLength(PlayerIndex1, InputIndex1);
-    // Length of Input in samples
+      // Length of Input in samples
 
-    temptime := uos_InputLengthTime(PlayerIndex1, InputIndex1);
-    // Length of input in time
+    if inputlength > 0 then // mod's cannot calculate length
+    begin 
+      trackbar1.enabled := true;
+      temptime := uos_InputLengthTime(PlayerIndex1, InputIndex1);
+      // Length of input in time
 
-    DecodeTime(temptime, ho, mi, se, ms);
+      DecodeTime(temptime, ho, mi, se, ms);
 
-    llength.Caption := ' / ' + format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
+      llength.Caption := ' / ' + format('%.2d:%.2d:%.2d.%.3d', [ho, mi, se, ms]);
+    end
+    else
+    begin
+      trackbar1.enabled := false; 
+      llength.Caption := ' / ??:??:??.???';
+    end;  
 
     // procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex1, @ClosePlayer1);
@@ -603,7 +613,7 @@ begin
   begin
     uos_stop(PlayerIndex1);
     sleep(200);
-    application.processmessages;
+    application.ProcessMessages;
   end;
   if btnLoad.Enabled = False then
   begin
@@ -622,7 +632,8 @@ end;
 
 procedure tmainfo.changepos(const Sender: TObject; var avalue: realty; var accept: Boolean);
 begin
-  uos_InputSeek(PlayerIndex1, InputIndex1, round(avalue * inputlength));
+   if inputlength > 0 then // mod's cannot calculate length
+   uos_InputSeek(PlayerIndex1, InputIndex1, round(avalue * inputlength));
 end;
 
 
