@@ -95,7 +95,7 @@ begin
   {$IFDEF freebsd}
     {$if defined(cpu64)}
     mainfo.padir.value := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
-     mainfo.sfdir.value := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    mainfo.sfdir.value := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
     mainfo.mpdir.value := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
     mainfo.m4dir.value := ordir + 'lib/FreeBSD/64bit/libmp4ff-64.so';
     mainfo.fadir.value := ordir + 'lib/FreeBSD/64bit/libfaad2-64.so';
@@ -110,8 +110,29 @@ begin
     mainfo.mpdir.value := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
    {$endif}
     mainfo.songdir.value := ordir + 'sound/test.ogg';
+ {$ENDIF}
+ 
+ {$IFDEF Darwin}
+   {$IFDEF CPU32}
+  opath := ordir;
+  opath := copy(opath, 1, Pos('/uos', opath) - 1);
+  mainfo.padir.value := opath + '/lib/Mac/32bit/LibPortaudio-32.dylib';
+  mainfo.sfdir.value := opath + '/lib/Mac/32bit/LibSndFile-32.dylib';
+  mainfo.mpdir.value := opath + '/lib/Mac/32bit/LibMpg123-32.dylib';
+  mainfo.stdir.value := opath + '/lib/Mac/32bit/plugin/LibSoundTouch-32.dylib';
+  mainfo.songdir.value := ordir + '/sound/test.ogg';
+   {$ENDIF}
+    {$IFDEF CPU64}
+  opath := ordir;
+  opath := copy(opath, 1, Pos('/uos', opath) - 1);
+  mainfo.padir.value := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
+  mainfo.sfdir.value := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
+  mainfo.mpdir.value := opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
+  mainfo.stdir.value := opath + '/lib/Mac/64bit/libxmp-64.dylib';
+  mainfo.songdir.value := ordir + '/sound/test.ogg';
+   {$ENDIF}
 {$ENDIF}
-
+ 
   mainfo.songdir.controller.lastdir := ordir + 'sound';
   mainfo.Height := 400;
 

@@ -224,7 +224,7 @@ begin
     Edit5.Text := '' ;
 {$endif}
     Edit4.Text := ordir + 'sound/test.ogg';
- {$ENDIF}
+{$ENDIF}
 
   {$IFDEF Darwin}
    {$IFDEF CPU32}
@@ -242,6 +242,7 @@ begin
   Edit1.Text := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
   Edit2.Text := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
   Edit3.Text := opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
+  Edit11.Text := opath + '/lib/Mac/64bit/libxmp-64.dylib';
   Edit4.Text := ordir + '/sound/test.ogg';
    {$ENDIF}
     {$ENDIF}
