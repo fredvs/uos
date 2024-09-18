@@ -243,9 +243,10 @@ begin
   Edit2.Text := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
   Edit3.Text := opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
   Edit11.Text := opath + '/lib/Mac/64bit/libxmp-64.dylib';
+  Edit5.Text := opath + '/lib/Mac/64bit/plugin/libSoundTouchDLL-64.dylib';
   Edit4.Text := ordir + '/sound/test.ogg';
    {$ENDIF}
-    {$ENDIF}
+  {$ENDIF}
 
  {$if defined(CPUAMD64) and defined(openbsd) }
   Edit1.Text := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';

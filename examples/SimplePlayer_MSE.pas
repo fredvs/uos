@@ -128,7 +128,8 @@ begin
   mainfo.padir.value := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
   mainfo.sfdir.value := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
   mainfo.mpdir.value := opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
-  mainfo.stdir.value := opath + '/lib/Mac/64bit/libxmp-64.dylib';
+  mainfo.xmdir.value := opath + '/lib/Mac/64bit/libxmp-64.dylib';
+  mainfo.stdir.value := opath + '/lib/Mac/64bit/plugin/libSoundTouchDLL-64.dylib';
   mainfo.songdir.value := ordir + '/sound/test.ogg';
    {$ENDIF}
 {$ENDIF}
