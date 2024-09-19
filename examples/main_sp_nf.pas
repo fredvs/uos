@@ -36,6 +36,7 @@ type
     CheckBox3: TCheckBox;
     chkstereo2mono: TCheckBox;
     Edit1: TEdit;
+    Edit10: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
     Edit4: TEdit;
@@ -43,10 +44,13 @@ type
     Edit6: TEdit;
     Edit7: TEdit;
     Edit8: TEdit;
+    Edit11: TEdit;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -82,6 +86,7 @@ type
     procedure CheckBox3Change(Sender: TObject);
     procedure chkstereo2monoChange(Sender: TObject);
     procedure Edit5Change(Sender: TObject);
+    procedure Edit11Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -170,8 +175,8 @@ begin
   Form1.TrackBar2.Position  := 0;
   Form1.ShapeLeft.Height    := 0;
   Form1.ShapeRight.Height   := 0;
-  Form1.ShapeLeft.top       := 342;
-  Form1.ShapeRight.top      := 342;
+  Form1.ShapeLeft.top       := 414;
+  Form1.ShapeRight.top      := 414;
   form1.lposition.Caption   := '00:00:00.000';
 end;
 
@@ -184,51 +189,47 @@ var
 begin
   ordir := application.Location;
   uos_logo();
-             {$IFDEF Windows}
-     {$if defined(cpu64)}
+ {$IFDEF Windows}
+  {$if defined(cpu64)}
   Edit1.Text := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
   Edit2.Text := ordir + 'lib\Windows\64bit\LibSndFile-64.dll';
   Edit3.Text := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
+  Edit11.text := ordir + 'lib\Windows\64bit\libxmp-64.dll';
   Edit5.Text := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
-{$else}
+  {$else}
   Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
   Edit2.Text := ordir + 'lib\Windows\32bit\LibSndFile-32.dll';
   Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
+  Edit11.text := ordir + 'lib\Windows\32bit\libxmp-32.dll';
   Edit7.text := ordir + 'lib\Windows\32bit\LibMp4ff-32.dll';
+  Edit10.text := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
   Edit8.text := ordir + 'lib\Windows\32bit\LibFaad2-32.dll';
-  Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll'; 
-  // Problems with Windows10 when closing application
+  Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll';
+  // Error on Windows10 with libbs2b --> when closing application.
   //Edit6.Text := ordir + 'lib\Windows\32bit\plugin\Libbs2b-32.dll';
-   {$endif}
-  Edit4.Text := ordir + 'sound\test.mp3';
+  {$endif}
+  Edit4.Text := ordir + 'sound\test.ogg';
  {$ENDIF}
 
  {$IFDEF freebsd}
     {$if defined(cpu64)}
     Edit1.Text := ordir + 'lib/FreeBSD/64bit/libportaudio-64.so';
-     Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
+    Edit2.Text := ordir + 'lib/FreeBSD/64bit/libsndfile-64.so';
     Edit3.Text := ordir + 'lib/FreeBSD/64bit/libmpg123-64.so';
     Edit5.text := ordir + 'lib/FreeBSD/64bit/plugin/libsoundtouch-64.so';
     Edit6.text := ordir + 'lib/FreeBSD/64bit/plugin/libbs2b-64.so';
-  
+    Edit10.text := ordir + 'lib/FreeBSD/64bit/libopusfile-64.so';
+
     {$else}
-   Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
-     Edit2.Text := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
+    Edit1.Text := ordir + 'lib/FreeBSD/32bit/libportaudio-32.so';
+    Edit2.Text := ordir + 'lib/FreeBSD/32bit/libsndfile-32.so';
     Edit3.Text := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
-     Edit5.Text := '' ;
+    Edit5.Text := '' ;
 {$endif}
-     Edit4.Text := ordir + 'sound/test.mp3';
- {$ENDIF}
+    Edit4.Text := ordir + 'sound/test.ogg';
+{$ENDIF}
 
- {$if defined(CPUAMD64) and defined(openbsd) }
-  Edit1.Text := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
-  Edit2.Text := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so';
-  Edit3.Text := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
-  Edit5.Text := ordir + 'lib/OpenBSD/64bit/plugin/LibSoundTouch-64.so';
-  Edit4.Text := ordir + '/sound/test.ogg'; 
- {$ENDIF}
-
- {$IFDEF Darwin}
+  {$IFDEF Darwin}
    {$IFDEF CPU32}
   opath := ordir;
   opath := copy(opath, 1, Pos('/uos', opath) - 1);
@@ -244,9 +245,19 @@ begin
   Edit1.Text := opath + '/lib/Mac/64bit/LibPortaudio-64.dylib';
   Edit2.Text := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
   Edit3.Text := opath + '/lib/Mac/64bit/LibMpg123-64.dylib';
+  Edit11.Text := opath + '/lib/Mac/64bit/libxmp-64.dylib';
+  Edit5.Text := opath + '/lib/Mac/64bit/plugin/libSoundTouchDLL-64.dylib';
   Edit4.Text := ordir + '/sound/test.ogg';
    {$ENDIF}
-    {$ENDIF}
+  {$ENDIF}
+
+ {$if defined(CPUAMD64) and defined(openbsd) }
+  Edit1.Text := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
+  Edit2.Text := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so';
+  Edit3.Text := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
+  Edit5.Text := ordir + 'lib/OpenBSD/64bit/plugin/LibSoundTouch-64.so';
+  Edit4.Text := ordir + '/sound/test.ogg';
+ {$ENDIF}
 
    {$if defined(CPUAMD64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
@@ -254,37 +265,41 @@ begin
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
   Edit7.text := ordir + 'lib/Linux/64bit/LibMp4ff-64.so';
   Edit8.text := ordir + 'lib/Linux/64bit/LibFaad2-64.so';
+  Edit10.text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
+  Edit11.text := ordir + 'lib/Linux/64bit/libxmp-64.so';
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
   Edit6.Text := ordir + 'lib/Linux/64bit/plugin/libbs2b-64.so';
-  Edit4.Text := ordir + 'sound/test.mp3';
- {$ENDIF}
-{$if defined(cpu86) and defined(linux)}
+   Edit4.Text := ordir + 'sound/test.ogg';
+   {$ENDIF}
+
+ {$if defined(cpu86) and defined(linux)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text := ordir + 'lib/Linux/32bit/LibSndFile-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
   Edit7.text := ordir + 'lib/Linux/32bit/LibMp4ff-32.so';
   Edit8.text := ordir + 'lib/Linux/32bit/LibFaad2-32.so';
   Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
-  Edit6.Text := ordir + 'lib/Linux/32bit/plugin/libbs2b-32.so';
-  Edit4.Text := ordir + 'sound/test.mp3';
- {$ENDIF}
+  Edit11.text := ordir + 'lib/Linux/32bit/libxmp-32.so';
+  Edit4.Text := ordir + 'sound/test.ogg';
+  {$ENDIF}
 
-    {$if defined(linux) and defined(cpuarm)}
+  {$if defined(linux) and defined(cpuarm)}
   Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit2.Text := ordir + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
-  Edit3.Text := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';  
-  Edit5.Text := ordir + 'lib/Linux/arm_raspberrypi/plugin/libsoundtouch-arm.so';  
-  Edit4.Text := ordir + 'sound/test.mp3';
-    {$ENDIF}
+  Edit3.Text := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so';
+  Edit11.Text := ordir + 'lib/Linux/arm_raspberrypi/libxmp-arm.so';
+  Edit5.Text := ordir + 'lib/Linux/arm_raspberrypi/plugin/libsoundtouch-32.so';
+  Edit4.Text := ordir + 'sound/test.ogg';
+  {$ENDIF}
 
-    {$if defined(linux) and defined(cpuaarch64)}
+   {$if defined(linux) and defined(cpuaarch64)}
   Edit1.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
   Edit2.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
   Edit3.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
+  Edit11.text := ordir + 'lib/Linux/aarch64_raspberrypi/libxmp-aarch64.so';
   Edit5.Text := ordir + 'lib/Linux/aarch64_raspberrypi/plugin/libsoundtouch_aarch64.so';
-  Edit4.Text := ordir + 'sound/test.mp3';
+  Edit4.Text := ordir + 'sound/test.ogg';
   {$ENDIF}
-
 
   opendialog1.Initialdir := application.Location + 'sound';
 
@@ -317,11 +332,21 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   loadok: Boolean = False;
 begin
+   {$if defined(CPUAMD64) and defined(linux) }
+  // For Linux amd64, check libsndfile.so
+  if uos_TestLoadLibrary(PChar(Edit2.Text)) = false then
+   begin
+   Edit2.Text := Edit2.Text + '.2';
+   if uos_TestLoadLibrary(PChar(Edit2.Text)) = false then
+    MessageDlg('Error while loading SndFile library...', mtWarning, [mbYes], 0);
+   end;
+   {$endif}
+
   // Load the libraries
-   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
+  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename, xmpfilename: PChar) : LongInt;
 
   if uos_LoadLib(PChar(Edit1.Text), PChar(Edit2.Text),
-    PChar(Edit3.Text), PChar(Edit7.Text), PChar(Edit8.Text), nil, nil) = 0 then
+    PChar(Edit3.Text), PChar(Edit7.Text), PChar(Edit8.Text), PChar(Edit10.Text), PChar(Edit11.Text)) = 0 then
     // You may load one or more libraries . When you want... :
   begin
     form1.hide;
@@ -360,7 +385,7 @@ begin
     else
       CheckBox3.Enabled := False;
 
-    form1.Height   := 556;
+    form1.Height   := 626;
     form1.Position := poScreenCenter;
     form1.Caption  := 'Simple Player.    uos version ' + IntToStr(uos_getversion());
     form1.Show;
@@ -375,8 +400,8 @@ begin
   Button5.Enabled         := False;
   Form1.ShapeLeft.Height  := 0;
   Form1.ShapeRight.Height := 0;
-  Form1.ShapeLeft.top     := 342;
-  Form1.ShapeRight.top    := 342;
+  Form1.ShapeLeft.top     := 414;
+  Form1.ShapeRight.top    := 414;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -520,12 +545,22 @@ begin
       trackbar2.Max := PlayerIndex1.InputLength(InputIndex1);
       ////// Length of Input in samples
 
+       if trackbar2.Max > 0 then // mod's can not calculate length
+      begin
+      trackbar2.enabled := true;
+
       temptime := PlayerIndex1.InputLengthTime(InputIndex1);
       ////// Length of input in time
 
       DecodeTime(temptime, ho, mi, se, ms);
 
       llength.Caption := format('%d:%d:%d.%d', [ho, mi, se, ms]);
+
+      end else
+      begin
+      trackbar2.enabled := false;
+      llength.Caption := '??:??:??.???';
+      end;
 
       /////// procedure to execute when stream is terminated
       PlayerIndex1.EndProc := @ClosePlayer1;
@@ -534,7 +569,7 @@ begin
       //////////// ClosePlayer1 : procedure of object to execute inside the general loop
 
       TrackBar2.position := 0;
-      trackbar1.Enabled  := True;
+
       CheckBox1.Enabled  := True;
 
       button3.Enabled := False;
@@ -583,6 +618,11 @@ begin
 end;
 
 procedure TForm1.Edit5Change(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Edit11Change(Sender: TObject);
 begin
 
 end;
@@ -649,6 +689,7 @@ var
 begin
   if form1.TrackBar2.Tag = 0 then
   begin
+    if trackbar2.Max > 0 then
     form1.TrackBar2.Position := PlayerIndex1.InputPosition(InputIndex1);
     temptime := PlayerIndex1.InputPositionTime(InputIndex1);
     ////// Length of input in time
@@ -661,8 +702,8 @@ procedure Tform1.ShowLevel;
 begin
   ShapeLeft.Height  := round(PlayerIndex1.InputGetLevelLeft(InputIndex1) * 92);
   ShapeRight.Height := round(PlayerIndex1.InputGetLevelRight(InputIndex1) * 92);
-  ShapeLeft.top     := 430 - ShapeLeft.Height;
-  ShapeRight.top    := 430 - ShapeRight.Height;
+  ShapeLeft.top     := 506 - ShapeLeft.Height;
+  ShapeRight.top    := 506 - ShapeRight.Height;
 end;
 
 procedure Tform1.LoopProcPlayer1;
@@ -751,7 +792,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Form1.Height       := 326;
+  Form1.Height       := 396;
   ShapeLeft.Height   := 0;
   ShapeRight.Height  := 0;
   trackbar1.Position := 100;

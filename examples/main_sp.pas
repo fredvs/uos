@@ -87,6 +87,7 @@ type
     procedure CheckBox3Change(Sender: TObject);
     procedure ChknoiseChange(Sender: TObject);
     procedure chkstereo2monoChange(Sender: TObject);
+    procedure Edit10Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -569,7 +570,7 @@ begin
       // ClosePlayer1 : procedure of object to execute inside the loop
 
       TrackBar2.position := 0;
-      trackbar2.Enabled  := True;
+
       Button3.Enabled    := False;
       Button4.Enabled    := False;
       Button6.Enabled    := True;
@@ -613,6 +614,11 @@ end;
 procedure TForm1.chkstereo2monoChange(Sender: TObject);
 begin
   uos_InputSetDSP(PlayerIndex1, InputIndex1, DSPIndex2, chkstereo2mono.Checked);
+end;
+
+procedure TForm1.Edit10Change(Sender: TObject);
+begin
+
 end;
 
 procedure uos_logo();
