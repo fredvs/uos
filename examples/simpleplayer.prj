@@ -89,7 +89,7 @@ finddialog=8
  x=655
  y=516
  cx=312
- cy=269
+ cy=291
 replacedialog=15
  [replacedialogfo.promptonreplace]
  value=1
@@ -485,8 +485,8 @@ befcommandon=0
 makeoptionson=8
  127
  2
- 4
- 71
+ 0
+ 67
  2
  61
  4095
@@ -783,8 +783,10 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=///
+finddtext=loadlib
 findhistory=20
+ loadlib
+ LoadLibrary
  ///
  ////
  /////
@@ -803,53 +805,25 @@ findhistory=20
  uos_AddInto
  application_name
  option_device
- HAVE_PCAUDIOLIB_AUDIO_H
- init
 findoptions=1
-editpos=5
- 0,14
- 0,-1073741823
- 0,-1073741823
- 0,0
- 0,786
+editpos=1
+ 0,7
 bookmarks0=0
-bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-sourcefiles=5
+sourcefiles=1
  ${PROJECTDIR}/simpleplayer.lpr
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/uos_libsndfile.pas
- ${PROJECTDIR}/simpleplayer.lpr
- ${PROJECTDIR}/main_sp.pas
-relpaths=5
+relpaths=1
  simpleplayer.lpr
- uos_libsndfile.pas
- uos_libsndfile.pas
- simpleplayer.lpr
- main_sp.pas
-ismoduletexts=5
- 0
- 0
- 0
- 0
+ismoduletexts=1
  0
 modules=0
 moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=5
- 0
- 3
- 4
- 1
- 2
 firsttab=0
-index=2
+index=0
 [layout]
-windowlayout=543
+windowlayout=567
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -898,7 +872,7 @@ windowlayout=543
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -992,7 +966,7 @@ windowlayout=543
  x=0
  y=0
  cx=205
- cy=609
+ cy=620
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1178,9 +1152,9 @@ windowlayout=543
  ncx=0
  ncy=0
  x=0
- y=689
+ y=684
  cx=1427
- cy=131
+ cy=136
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1278,7 +1252,7 @@ windowlayout=543
  x=0
  y=0
  cx=1427
- cy=74
+ cy=58
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1289,12 +1263,12 @@ windowlayout=543
  mdistate=0
  nx=0
  ny=0
- ncx=1130
+ ncx=1427
  ncy=51
  x=0
  y=0
  cx=1427
- cy=67
+ cy=51
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1304,28 +1278,58 @@ windowlayout=543
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos_xmp/examples/main_sp.pas
- history=20
-  /home/fred/uos_xmp/examples/simpleplayer.lpr
-  /home/fred/uos/examples/uos_libsndfile.pas
-  /home/fred/uos/src/uos.pas
-  /home/fred/uidesigner_ext/src/fpg_main.pas
-  /home/fred/uidesigner_ext/src/pthread.inc
-  /home/fred/uidesigner_ext/src/pthread_ori.inc
-  /home/fred/cthreads.pas
-  /home/fred/fpGUIlib/src/fpgui.pas
-  /home/fred/fpGUIlib/src/fpglib_class.pas
-  /home/fred/demo_mse/test__med/msebufdataset.pas
-  /home/fred/mseide-msegui/apps/ide/main.pas
-  /home/fred/mseide-msegui/lib/common/db/msedbf.pas
-  /home/fred/mseide-msegui/lib/common/fpccompatibility/mse_dbf_prssupp.pas
-  /home/fred/mseide-msegui/lib/common/fpccompatibility/mse_dbf_common.pas
-  /home/fred/demo_mse/mse_fb3_new/main.pas
-  /home/fred/mseide-msegui/lib/common/db/msefirebird.pas
-  /home/fred/mseide-msegui/lib/common/db/firebird.pas
-  /home/fred/mseide-msegui/lib/common/db/msedb.pas
-  /home/fred/mseide-msegui/lib/common/fpccompatibility/mdbf.pas
-  /home/fred/mseide-msegui/lib/common/fpccompatibility/mdb.pas
+ value=/home/fred/uos_xmp/examples/mainmse_sp.pas
+ history=50
+  /home/fred/uos_xmp/examples/mainmse_sp.pas
+  /home/fred/uos_xmp/examples/uos_flat.pas
+  /home/fred/uos_xmp/examples/uos.pas
+  /home/fred/gme_pas_work/gme_test_console/libgme.pas
+  /home/fred/Downloads/project1_xmp_win_lin/unit1.pas
+  /home/fred/gme_pas_work/gme_test_console/gmetest.pas
+  /home/fred/Downloads/project1_gme_win_lin/gme.pas
+  /home/fred/Downloads/project1_gme_win_lin/unit1.pas
+  /home/fred/Downloads/project1_xmp_win_lin/project1.lpr
+  /home/fred/uos_xmp/examples/uos_libxmp.pas
+  /home/fred/xmp_test/libxmp.pas
+  /home/fred/tron/project1_gme_win_lin/gme.pas
+  /home/fred/uos_xmp/examples/main_sp.pas
+  /home/fred/tron/project1_gme_win_lin/project1.lpr
+  /home/fred/tron/project1/gme.pas
+  /home/fred/tron/project1/unit1.pas
+  /home/fred/tron/project1/project1.prj
+  /home/fred/tron/project1/project1.lpr
+  /home/fred/uos/src/uos_libsndfile.pas
+  /home/fred/uos/src/uos_portaudio.pas
+  /home/fred/xmp_test/xmptest.prj
+  /home/fred/xmp_test/xmptest.pas
+  /home/fred/Downloads/apngopt-1.4-src/apngopt.cpp
+  /home/fred/SimpleWebStreamer/uos_soundtouch.pas
+  /home/fred/strumpract_work/src/msefiledialogx.pas
+  /home/fred/strumpract/src/msefiledialogx.pas
+  /home/fred/strumpract/src/splash.pas
+  /home/fred/strumpract/src/uos_flat.pas
+  /home/fred/strumpract/src/infosd.pas
+  /home/fred/SimpleWebStreamer/uos.pas
+  /home/fred/SimpleWebStreamer/uos_httpgetthread.pas
+  /home/fred/SimpleWebStreamer/uos_define.inc
+  /home/fred/SimpleWebStreamer/simplewebplayer.prj
+  /home/fred/SimpleWebStreamer/simplewebplayer.pas
+  /home/fred/strumpract/src/drums.pas
+  /home/fred/strumpract/src/waveform.pas
+  /home/fred/Downloads/sinewave/sine.pas
+  /home/fred/strumpract/src/uos_define.inc
+  /home/fred/mseide-msegui/lib/common/kernel/mselibc.pas
+  /home/fred/mseide-msegui/lib/common/kernel/linux/msesysintf.pas
+  /home/fred/mseide-msegui/lib/common/kernel/mseclasses.pas
+  /home/fred/mseide-msegui/lib/common/kernel/msectypes.pas
+  /home/fred/strumpract/src/aboutform.pas
+  /home/fred/freepascal-ootb/compiler/systems/t_bsd.pas
+  /home/fred/Downloads/freepascal-ootb-main/compiler/systems/t_bsd.pas
+  /home/fred/Downloads/freepascal-ootb-main/rtl/freebsd/x86_64/si_c.inc
+  /home/fred/Downloads/freepascal-ootb-main/rtl/openbsd/si_dll.pp
+  /home/fred/Downloads/freepascal-ootb-main/rtl/openbsd/si_c.pp
+  /home/fred/Downloads/freepascal-ootb-main/rtl/openbsd/x86_64/si_c.inc
+  /home/fred/Downloads/freepascal-ootb-main/rtl/openbsd/x86_64/openbsd_ident.inc
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1343,18 +1347,12 @@ windowlayout=543
  x=208
  y=0
  cx=1219
- cy=609
+ cy=620
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=5
-  0
-  3
-  4
-  1
-  2
  firsttab=0
- index=2
+ index=0
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
@@ -1388,9 +1386,9 @@ windowlayout=543
  ncx=0
  ncy=0
  x=0
- y=77
+ y=61
  cx=1427
- cy=609
+ cy=620
  rcx=0
  rcy=0
 [targetconsole]

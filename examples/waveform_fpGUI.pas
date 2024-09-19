@@ -278,6 +278,12 @@ var
  {$endif}
     FilenameEdit1.FileName := ordir + 'sound/test.mp3';
  {$ENDIF}
+ 
+{$if defined(CPUAMD64) and defined(linux) }
+     // For Linux amd64, check libsndfile.so
+  if uos_TestLoadLibrary(PChar(fnsf)) = false then
+   fnsf := fnsf + '.2';
+{$endif} 
 
     if uos_LoadLib(nil, PChar(fnsf), PChar(fnmp), nil, nil, nil, nil) = 0 then
       button1.Enabled := True

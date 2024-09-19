@@ -121,6 +121,12 @@ procedure Ttest.btnCloseClick(Sender: TObject);
 
     PlayerIndex1 := 0;
 
+{$if defined(CPUAMD64) and defined(linux) }
+     // For Linux amd64, check libsndfile.so
+  if uos_TestLoadLibrary(PChar(SF_FileName)) = false then
+   SF_FileName := SF_FileName + '.2';
+{$endif}
+
     // Load the libraries
     res := uos_LoadLib(Pchar(PA_FileName), nil, Pchar(MP_FileName), nil , nil, nil, nil) ;
   //  if res = 0 then  writeln('===> Libraries are loaded.') else  writeln('===> Libraries are NOT loaded.') ;

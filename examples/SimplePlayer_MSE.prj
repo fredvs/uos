@@ -71,7 +71,7 @@ order18=0
 [projectoptions]
 projectdir=/home/fred/uos_xmp/examples
 projectfilename=/home/fred/uos_xmp/examples/SimplePlayer_MSE.prj
-findinfiledialog=53
+findinfiledialog=54
  [findinfileadialogfo.dir]
  filenames=1
   /home/fred/uos_xmp/examples/
@@ -98,7 +98,7 @@ findinfiledialog=53
  filefilterindex=0
  filefilter=
  [findinfileadialogfo.subdirs]
- value=0
+ value=1
  [findinfileadialogfo.incurrentfile]
  value=0
  [findinfileadialogfo.inopenfiles]
@@ -116,8 +116,9 @@ findinfiledialog=53
  history=1
   "*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=
- history=1
+ value=uos_LoadLib(
+ history=2
+  uos_LoadLib(
   
  [findinfileadialogfo]
  stackedunder=
@@ -638,9 +639,12 @@ settingsstorage=0
 settingsprojecttree=0
 settingsautoload=0
 settingsautosave=0
-modulenames=0
-moduletypes=0
-modulefiles=0
+modulenames=1
+ SIMPLE_PLAYER
+moduletypes=1
+ TMAINFO
+modulefiles=1
+ /home/fred/uos_xmp/examples/mainmse_sp.mfm
 befcommandon=0
 makeoptionson=6
  4095
@@ -1159,44 +1163,252 @@ findhistory=20
  ratio
  xmp_start_player
 findoptions=1
-editpos=5
- 0,6
- 0,-1073741823
- 0,-1073741823
- 0,615
- 0,-1073741823
+editpos=38
+ 0,132
+ 0,340
+ 0,122
+ 0,121
+ 0,113
+ 0,120
+ 0,112
+ 0,115
+ 0,92
+ 0,93
+ 0,112
+ 0,133
+ 0,230
+ 0,181
+ 0,318
+ 0,320
+ 0,267
+ 0,166
+ 0,192
+ 0,166
+ 0,344
+ 0,347
+ 0,181
+ 0,191
+ 0,187
+ 0,190
+ 0,249
+ 0,305
+ 0,121
+ 0,117
+ 12,126
+ 0,255
+ 0,260
+ 0,309
+ 0,216
+ 0,219
+ 0,273
+ 0,599
 bookmarks0=0
 bookmarks1=0
 bookmarks2=0
 bookmarks3=0
 bookmarks4=0
-sourcefiles=5
+bookmarks5=0
+bookmarks6=0
+bookmarks7=0
+bookmarks8=0
+bookmarks9=0
+bookmarks10=0
+bookmarks11=0
+bookmarks12=0
+bookmarks13=0
+bookmarks14=0
+bookmarks15=0
+bookmarks16=0
+bookmarks17=0
+bookmarks18=0
+bookmarks19=0
+bookmarks20=0
+bookmarks21=0
+bookmarks22=0
+bookmarks23=0
+bookmarks24=0
+bookmarks25=0
+bookmarks26=0
+bookmarks27=0
+bookmarks28=0
+bookmarks29=0
+bookmarks30=0
+bookmarks31=0
+bookmarks32=0
+bookmarks33=0
+bookmarks34=0
+bookmarks35=0
+bookmarks36=0
+bookmarks37=0
+sourcefiles=38
  ${PROJECTDIR}/SimplePlayer_MSE.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos.pas
  ${PROJECTDIR}/mainmse_sp.pas
- ${PROJECTDIR}/uos_define.inc
-relpaths=5
+ ${PROJECTDIR}/consolebpmdetect.pas
+ ${PROJECTDIR}/consoleplay.pas
+ ${PROJECTDIR}/consoleplayloop.pas
+ ${PROJECTDIR}/consoleplaymemorybuffer.pas
+ ${PROJECTDIR}/consoleplaymemorystream.pas
+ ${PROJECTDIR}/consolespectrum.pas
+ ${PROJECTDIR}/consolesynth.pas
+ ${PROJECTDIR}/conswebstream.pas
+ ${PROJECTDIR}/deviceinfos_fpGUI.pas
+ ${PROJECTDIR}/filterplayer_fpGUI.pas
+ ${PROJECTDIR}/formspectrum_unit.pas
+ ${PROJECTDIR}/main_di.pas
+ ${PROJECTDIR}/main_fp.pas
+ ${PROJECTDIR}/main_mi.pas
+ ${PROJECTDIR}/main_mp.pas
+ ${PROJECTDIR}/main_mt.pas
+ ${PROJECTDIR}/main_nr.pas
+ ${PROJECTDIR}/main_sd.pas
+ ${PROJECTDIR}/main_sp.pas
+ ${PROJECTDIR}/main_sp_nf.pas
+ ${PROJECTDIR}/main_spectrum_mse.pas
+ ${PROJECTDIR}/main_sr.pas
+ ${PROJECTDIR}/main_wf.pas
+ ${PROJECTDIR}/main_wfvrt.pas
+ ${PROJECTDIR}/main_wsp.pas
+ ${PROJECTDIR}/morseTL_fpGUI.pas
+ ${PROJECTDIR}/testfpguistream.pas
+ ${PROJECTDIR}/noiseremover_fpGUI.pas
+ ${PROJECTDIR}/simpledrums_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI.pas
+ ${PROJECTDIR}/simpleplayer_fpGUI_noflat.pas
+ ${PROJECTDIR}/simplerecorder_fpGUI.pas
+ ${PROJECTDIR}/simplewebplayer_fpGUI.pas
+ ${PROJECTDIR}/simplewebserver_fpGUI.pas
+ ${PROJECTDIR}/waveform_fpGUI.pas
+ ${PROJECTDIR}/multiplayer_fpGUI.pas
+relpaths=38
  SimplePlayer_MSE.pas
- uos_flat.pas
- uos.pas
  mainmse_sp.pas
- uos_define.inc
-ismoduletexts=5
+ consolebpmdetect.pas
+ consoleplay.pas
+ consoleplayloop.pas
+ consoleplaymemorybuffer.pas
+ consoleplaymemorystream.pas
+ consolespectrum.pas
+ consolesynth.pas
+ conswebstream.pas
+ deviceinfos_fpGUI.pas
+ filterplayer_fpGUI.pas
+ formspectrum_unit.pas
+ main_di.pas
+ main_fp.pas
+ main_mi.pas
+ main_mp.pas
+ main_mt.pas
+ main_nr.pas
+ main_sd.pas
+ main_sp.pas
+ main_sp_nf.pas
+ main_spectrum_mse.pas
+ main_sr.pas
+ main_wf.pas
+ main_wfvrt.pas
+ main_wsp.pas
+ morseTL_fpGUI.pas
+ testfpguistream.pas
+ noiseremover_fpGUI.pas
+ simpledrums_fpGUI.pas
+ simpleplayer_fpGUI.pas
+ simpleplayer_fpGUI_noflat.pas
+ simplerecorder_fpGUI.pas
+ simplewebplayer_fpGUI.pas
+ simplewebserver_fpGUI.pas
+ waveform_fpGUI.pas
+ multiplayer_fpGUI.pas
+ismoduletexts=38
  0
  0
  0
  0
  0
-modules=0
-moduleoptions=0
-visiblemodules=0
-nomenumodules=0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+ 0
+modules=1
+ /home/fred/uos_xmp/examples/mainmse_sp.mfm
+moduleoptions=1
+ 0
+visiblemodules=1
+ -1
+nomenumodules=1
+ 0
 [sourcefo.files_tab]
-firsttab=0
-index=0
+order=38
+ 0
+ 1
+ 27
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 28
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+ 10
+ 37
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+firsttab=3
+index=4
 [layout]
-windowlayout=540
+windowlayout=583
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1210,18 +1422,21 @@ windowlayout=540
  ny=0
  ncx=0
  ncy=0
- x=105
- y=110
- cx=1231
- cy=621
+ x=34
+ y=45
+ cx=805
+ cy=673
  rcx=0
  rcy=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [findmessagefo.findtext]
  value=
- history=0
+ history=3
+  not inlined
+  linux
+  used
  [findmessagefo.casesensitive]
  value=0
  [findmessagefo.copytoclip]
@@ -1235,15 +1450,15 @@ windowlayout=540
  ny=0
  ncx=0
  ncy=0
- x=604
- y=136
- cx=726
+ x=495
+ y=172
+ cx=497
  cy=314
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -1265,7 +1480,7 @@ windowlayout=540
  [memoryfo]
  splitdir=0
  useroptions=268451963
- stackedunder=dialogfilesfo
+ stackedunder=findmessagefo
  parent=
  mdistate=0
  nx=0
@@ -1311,15 +1526,15 @@ windowlayout=540
  [findinfilefo]
  splitdir=0
  useroptions=268451947
- stackedunder=
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=239
- y=115
+ x=370
+ y=252
  cx=678
  cy=414
  rcx=0
@@ -1327,7 +1542,7 @@ windowlayout=540
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=objectinspectorfo
+ stackedunder=targetconsolefo
  parent=
  mdistate=3
  nx=0
@@ -1390,14 +1605,14 @@ windowlayout=540
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1406,7 +1621,7 @@ windowlayout=540
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
@@ -1431,9 +1646,9 @@ windowlayout=540
  value=1
  [objectinspectorfo.grid]
  propcolwidthref=468
- width0=190
+ width0=112
  sortdescend0=0
- width1=272
+ width1=350
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1526,9 +1741,9 @@ windowlayout=540
  ncx=0
  ncy=0
  x=0
- y=682
- cx=1427
- cy=138
+ y=562
+ cx=792
+ cy=88
  rcx=0
  rcy=0
  [componentstorefo]
@@ -1614,7 +1829,7 @@ windowlayout=540
  active=0
  visible=0
  [componentpalettefo.componentpages]
- activetab=3
+ activetab=1
  [debuggerfo]
  splitdir=0
  useroptions=24683
@@ -1627,7 +1842,7 @@ windowlayout=540
  ncy=0
  x=0
  y=0
- cx=1427
+ cx=792
  cy=58
  rcx=0
  rcy=0
@@ -1638,13 +1853,13 @@ windowlayout=540
  visible=1
  mdistate=0
  nx=0
- ny=2
- ncx=1427
- ncy=58
+ ny=0
+ ncx=1206
+ ncy=63
  x=0
- y=2
- cx=1427
- cy=58
+ y=0
+ cx=1069
+ cy=63
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1654,28 +1869,10 @@ windowlayout=540
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos_xmp/examples/SimplePlayer_MSE.pas
- history=20
-  /home/fred/uos_xmp/examples/mainmse_sp.pas
-  /home/fred/uos_xmp/examples/uos_define.inc
-  /home/fred/uos_xmp/examples/uos_flat.pas
-  /home/fred/uos_xmp/examples/uos.pas
-  /home/fred/uos/src/uos_libsndfile.pas
-  /home/fred/uos/src/uos_portaudio.pas
-  /home/fred/xmp_test/xmptest.prj
-  /home/fred/xmp_test/xmptest.pas
-  /home/fred/Downloads/apngopt-1.4-src/apngopt.cpp
-  /home/fred/SimpleWebStreamer/uos_soundtouch.pas
-  /home/fred/strumpract_work/src/msefiledialogx.pas
-  /home/fred/strumpract/src/msefiledialogx.pas
-  /home/fred/strumpract/src/splash.pas
-  /home/fred/strumpract/src/uos_flat.pas
-  /home/fred/strumpract/src/infosd.pas
-  /home/fred/SimpleWebStreamer/uos.pas
-  /home/fred/SimpleWebStreamer/uos_httpgetthread.pas
-  /home/fred/SimpleWebStreamer/uos_define.inc
-  /home/fred/SimpleWebStreamer/simplewebplayer.prj
-  /home/fred/SimpleWebStreamer/simplewebplayer.pas
+ value=/home/fred/uos_xmp/examples/simpledrums_fpGUI.pas
+ history=2
+  /home/fred/ideU/src/main.pas
+  ${PROJECTDIR}/main.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1692,13 +1889,52 @@ windowlayout=540
  ncy=0
  x=0
  y=0
- cx=1427
- cy=618
+ cx=792
+ cy=498
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- firsttab=0
- index=0
+ order=38
+  0
+  1
+  27
+  29
+  30
+  31
+  32
+  33
+  34
+  35
+  36
+  28
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  10
+  37
+  11
+  12
+  13
+  14
+  15
+  16
+  17
+  18
+  19
+  20
+  21
+  22
+  23
+  24
+  25
+  26
+ firsttab=3
+ index=4
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
@@ -1721,6 +1957,25 @@ windowlayout=540
  wsize=0
  active=0
  visible=0
+ [_mse_simple_player_mse_]
+ splitdir=0
+ useroptions=268451963
+ stackedunder=findinfilefo
+ parent=
+ mdistate=3
+ nx=0
+ ny=0
+ ncx=0
+ ncy=0
+ x=810
+ y=58
+ cx=491
+ cy=400
+ rcx=0
+ rcy=0
+ wsize=0
+ active=0
+ visible=1
  [mainfo.panel1]
  splitdir=1
  useroptions=302022123
@@ -1733,8 +1988,8 @@ windowlayout=540
  ncy=0
  x=0
  y=61
- cx=1427
- cy=618
+ cx=792
+ cy=498
  rcx=0
  rcy=0
 [targetconsole]

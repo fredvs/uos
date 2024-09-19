@@ -223,6 +223,12 @@ begin
      MP_FileName := ordir + 'lib/Mac/32bit/LibMpg123-32.dylib';
     SoundFilename := opath + '/sound/test.ogg';
  {$ENDIF}
+ 
+ {$if defined(CPUAMD64) and defined(linux) }
+     // For Linux amd64, check libsndfile.so
+  if uos_TestLoadLibrary(PChar(SF_FileName)) = false then
+   SF_FileName := SF_FileName + '.2';
+{$endif}
 
   FileNameEdit1.FileName := SoundFilename;
 

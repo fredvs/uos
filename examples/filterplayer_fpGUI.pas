@@ -129,6 +129,13 @@ var
   var
     str: string;
   begin
+  
+{$if defined(CPUAMD64) and defined(linux) }
+     // For Linux amd64, check libsndfile.so
+  if uos_TestLoadLibrary(PChar(FilenameEdit2.FileName)) = false then
+   FilenameEdit2.FileName := FilenameEdit2.FileName + '.2';
+{$endif}
+  
     // Load the libraries
     // function uos_LoadLib(PortAudioFileName: PChar; SndF   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;ileFileName: PChar; Mpg123FileName,  opusfilefilename: PChar) : integer;
     if uos_LoadLib(PChar(FilenameEdit1.FileName), PChar(FilenameEdit2.FileName), PChar(FilenameEdit3.FileName), nil, nil, nil, nil) = 0 then

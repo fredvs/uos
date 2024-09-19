@@ -326,15 +326,14 @@ var
   loadok: Boolean = False;
 begin
 
-   {$if defined(CPUAMD64) and defined(linux) }
+{$if defined(CPUAMD64) and defined(linux) }
      // For Linux amd64, check libsndfile.so
   if uos_TestLoadLibrary(PChar(mainfo.sfdir.Value)) = false then
    begin
    mainfo.sfdir.Value := mainfo.sfdir.Value + '.2';
-   if uos_TestLoadLibrary(PChar(mainfo.sfdir.Value)) = false then
-    MessageDlg('Error while loading SndFile library...', mtWarning, [mbYes], 0);
+   uos_TestLoadLibrary(PChar(mainfo.sfdir.Value));
    end;
-   {$endif}
+{$endif}
 
   // Load the libraries
   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;

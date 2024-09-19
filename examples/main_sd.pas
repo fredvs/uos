@@ -161,6 +161,12 @@ begin
     lib2 := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
     {$ENDIF}
     {$ENDIF}
+    
+{$if defined(CPUAMD64) and defined(linux) }
+     // For Linux amd64, check libsndfile.so
+  if uos_TestLoadLibrary(PChar(lib2)) = false then
+   lib2 := lib2 + '.2';
+{$endif}  
 
   uos_LoadLib(PChar(lib1), PChar(lib2), nil, nil, nil, nil, nil);
 
