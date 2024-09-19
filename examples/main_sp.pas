@@ -328,6 +328,16 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   loadok: Boolean = False;
 begin
+   {$if defined(CPUAMD64) and defined(linux) }  
+  // For Linux amd64, check libsndfile.so
+  if uos_TestLoadLibrary(PChar(Edit2.Text)) = false then
+   begin
+   Edit2.Text := Edit2.Text + '.2';
+   if uos_TestLoadLibrary(PChar(Edit2.Text)) = false then
+    MessageDlg('Error while loading SndFile library...', mtWarning, [mbYes], 0);
+   end;
+   {$endif}
+
   // Load the libraries
   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfilefilename, xmpfilename: PChar) : LongInt;
 

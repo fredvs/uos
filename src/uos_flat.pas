@@ -227,6 +227,9 @@ procedure uos_UpdateDevice();
 function uos_GetInfoDeviceStr() : PChar ;
 {$endif}
 
+function uos_TestLoadLibrary(Filename: Pchar): boolean;
+// test a library to check if it can be loaded;
+
 function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
 // load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...  
 // PortAudio => needed for dealing with audio-device input/output
@@ -2314,6 +2317,12 @@ procedure uos_MemStream2Wavfile(FileName: UTF8String; Data: TMemoryStream; BitsP
   begin
   uos.uos_MemStream2Wavfile(FileName,Data,BitsPerSample, chan, samplerate);
   end; 
+  
+function uos_TestLoadLibrary(Filename: Pchar): boolean;
+// test a library to check if it can be loaded;  
+begin
+result := uos.uos_TestLoadLibrary(FileName);
+end;
   
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   begin

@@ -77,10 +77,10 @@ uos_shout, uos_opus,
 uos_cdrom, 
 {$endif}
 
-Classes, ctypes, Math, sysutils;
+Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2240915;
+  uos_version : cint32 = 2240919;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -1558,9 +1558,12 @@ inline;
 procedure uos_CustBufferInfos(Var bufferinfos: Tuos_BufferInfos; SampleRate: CDouble; SampleFormat
                               : cint32; Channels: cint32 ; Length: cint32);
 inline;
-
 // to initialize a custom bufferinfos: needed for AddFromMemoryBuffer() if no bufferinfos was created.
 // all infos refer to the buffer used ---> length = length of the buffer div channels.
+
+function uos_TestLoadLibrary(Filename: Pchar): boolean; inline;
+// test a library to check if it can be loaded;
+
 
 const 
   // error
@@ -1633,6 +1636,21 @@ var
   {$endif}
 
 implementation
+
+function uos_TestLoadLibrary(Filename: Pchar): boolean;
+// test a library to check if it can be loaded;
+var
+test_Handle: TLibHandle = NilHandle;
+begin
+ result := false;
+ test_Handle := DynLibs.SafeLoadLibrary(Filename);
+ if test_Handle <> DynLibs.NilHandle then
+  begin
+    DynLibs.UnloadLibrary(test_Handle);
+    test_Handle := DynLibs.NilHandle;
+    result := true;
+  end;
+end;
 
 procedure TDummyThread.Execute;
 begin
