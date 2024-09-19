@@ -566,7 +566,6 @@ begin
     // ClosePlayer1 : procedure of object to execute inside the general loop
 
     TrackBar1.Value   := 0;
-    trackbar1.Enabled := True;
     CheckBox1.Enabled := True;
 
     btnStop.Enabled   := True;

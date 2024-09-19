@@ -1,11 +1,11 @@
 object Form1: TForm1
   Left = 86
-  Height = 488
+  Height = 422
   Top = 205
   Width = 499
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'
-  ClientHeight = 488
+  ClientHeight = 422
   ClientWidth = 499
   Color = clMoneyGreen
   Icon.Data = {
@@ -160,9 +160,9 @@ object Form1: TForm1
     OnPaint = PaintBox1Paint
   end
   object Button1: TButton
-    Left = 14
+    Left = 8
     Height = 26
-    Top = 440
+    Top = 384
     Width = 483
     Caption = 'Load that libraries'
     TabOrder = 0
@@ -302,9 +302,9 @@ object Form1: TForm1
     ParentFont = False
   end
   object Panel1: TPanel
-    Left = -256
+    Left = -248
     Height = 232
-    Top = 216
+    Top = 48
     Width = 498
     ClientHeight = 232
     ClientWidth = 498
