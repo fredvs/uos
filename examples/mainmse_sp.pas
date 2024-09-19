@@ -328,6 +328,7 @@ begin
 
 {$if defined(CPUAMD64) and defined(linux) }
      // For Linux amd64, check libsndfile.so
+  if mainfo.sfdir.Value <> 'system' then     
   if uos_TestLoadLibrary(PChar(mainfo.sfdir.Value)) = false then
    begin
    mainfo.sfdir.Value := mainfo.sfdir.Value + '.2';

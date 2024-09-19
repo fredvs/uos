@@ -262,6 +262,7 @@ begin
 
 {$if defined(CPUAMD64) and defined(linux) }
      // For Linux amd64, check libsndfile.so
+if Edit2.Text <> 'system' then
   if uos_TestLoadLibrary(PChar(edit2.Text)) = false then
    edit2.Text := edit2.Text + '.2';
 {$endif}

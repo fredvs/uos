@@ -331,6 +331,7 @@ var
 begin
    {$if defined(CPUAMD64) and defined(linux) }  
   // For Linux amd64, check libsndfile.so
+  if Edit2.Text <> 'system' then  
   if uos_TestLoadLibrary(PChar(Edit2.Text)) = false then
    begin
    Edit2.Text := Edit2.Text + '.2';

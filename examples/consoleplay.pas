@@ -117,6 +117,7 @@ begin
  
  {$if defined(CPUAMD64) and defined(linux) }
      // For Linux amd64, check libsndfile.so
+  if SF_FileName <> 'system' then
   if uos_TestLoadLibrary(PChar(SF_FileName)) = false then
    SF_FileName := SF_FileName + '.2';
 {$endif}

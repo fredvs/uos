@@ -164,7 +164,8 @@ begin
     
 {$if defined(CPUAMD64) and defined(linux) }
      // For Linux amd64, check libsndfile.so
-  if uos_TestLoadLibrary(PChar(lib2)) = false then
+if lib2 <> 'system' then
+ if uos_TestLoadLibrary(PChar(lib2)) = false then
    lib2 := lib2 + '.2';
 {$endif}  
 

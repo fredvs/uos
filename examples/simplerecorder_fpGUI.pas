@@ -304,6 +304,7 @@ var
 
 {$if defined(CPUAMD64) and defined(linux) }
      // For Linux amd64, check libsndfile.so
+if FilenameEdit2.FileName <> 'system' then
   if uos_TestLoadLibrary(PChar(FilenameEdit2.FileName)) = false then
    FilenameEdit2.FileName := FilenameEdit2.FileName + '.2';
 {$endif}
