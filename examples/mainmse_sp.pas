@@ -328,24 +328,24 @@ begin
 
 {$if defined(CPUAMD64) and defined(linux) }
      // For Linux amd64, check libsndfile.so
-  if (mainfo.sfdir.Value <> 'system') and (mainfo.sfdir.Value <> '') then     
-  if uos_TestLoadLibrary(PChar(mainfo.sfdir.Value)) = false then
+  if (sfdir.Value <> 'system') and (sfdir.Value <> '') then     
+  if uos_TestLoadLibrary(PChar(ansistring(sfdir.Value))) = false then
    begin
-   mainfo.sfdir.Value := mainfo.sfdir.Value + '.2';
-   uos_TestLoadLibrary(PChar(mainfo.sfdir.Value));
+   sfdir.Value := sfdir.Value + '.2';
+   uos_TestLoadLibrary(PChar(ansistring(sfdir.Value)));
    end;
 {$endif}
 
   // Load the libraries
   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
 
-  if uos_LoadLib(PChar(ansistring(mainfo.padir.Value)),
-    PChar(ansistring(mainfo.sfdir.Value)),
-    PChar(ansistring(mainfo.mpdir.Value)),
-    PChar(ansistring(mainfo.m4dir.Value)),
-    PChar(ansistring(mainfo.fadir.Value)),
-    PChar(ansistring(mainfo.ofdir.Value)),
-    PChar(ansistring(mainfo.xmdir.Value))) = 0 then
+  if uos_LoadLib(PChar(ansistring(padir.Value)),
+    PChar(ansistring(sfdir.Value)),
+    PChar(ansistring(mpdir.Value)),
+    PChar(ansistring(m4dir.Value)),
+    PChar(ansistring(fadir.Value)),
+    PChar(ansistring(ofdir.Value)),
+    PChar(ansistring(xmdir.Value))) = 0 then
   begin
     hide;
     loadok         := True;
@@ -378,8 +378,8 @@ begin
 
   if loadok = True then
   begin
-    if ((trim(PChar(ansistring(mainfo.stdir.Value))) <> '') and fileexists(ansistring(mainfo.stdir.Value))) then
-      if (uos_LoadPlugin('soundtouch', PChar(ansistring(mainfo.stdir.Value))) = 0) then
+    if ((trim(PChar(ansistring(stdir.Value))) <> '') and fileexists(ansistring(stdir.Value))) then
+      if (uos_LoadPlugin('soundtouch', PChar(ansistring(stdir.Value))) = 0) then
       begin
         plugsoundtouch  := True;
         btnLoad.Caption :=
@@ -395,13 +395,13 @@ begin
         label7.Enabled    := False;
       end;
 
-    if ((trim(PChar(ansistring(mainfo.bsdir.Value))) <> '') and fileexists(ansistring(mainfo.bsdir.Value))) then
-      if (uos_LoadPlugin('bs2b', PChar(ansistring(mainfo.bsdir.Value))) = 0) then
+    if ((trim(PChar(ansistring(bsdir.Value))) <> '') and fileexists(ansistring(bsdir.Value))) then
+      if (uos_LoadPlugin('bs2b', PChar(ansistring(bsdir.Value))) = 0) then
         plugbs2b        := True
       else
         chkst2b.Enabled := False;
 
-    mainfo.Caption := 'Simple Player.    uos Version ' + IntToStr(uos_getversion());
+    Caption := 'Simple Player.    uos Version ' + IntToStr(uos_getversion());
 
     Show;
   end;
