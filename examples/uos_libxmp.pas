@@ -9,6 +9,7 @@ interface
 
 uses
   dynlibs,
+  sysutils,
   CTypes;
 
 const
@@ -331,8 +332,10 @@ var
 {Special function for dynamic loading of lib ...}
 
 var
-  xmp_Handle: TLibHandle = dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
-
+  xmp_Handle: TLibHandle = dynlibs.NilHandle;
+  {$if defined(cpu32) and defined(windows)} // try load dependency if not in /windows/system32/
+  gc_Handle :TLibHandle=dynlibs.NilHandle;
+  {$endif}
 var
   ReferenceCounter: cardinal = 0;  // Reference counter
 
@@ -351,7 +354,7 @@ end;
 
 Function xmp_Load(const libfilename:string) :boolean;
 var
-thelib: string; 
+thelib, thelibgcc: string; 
 begin
   Result := False;
   if xmp_Handle<>0 then 
@@ -359,7 +362,14 @@ begin
  Inc(ReferenceCounter);
  result:=true {is it already there ?}
 end  else 
-begin {go & load the library}
+begin 
+ {$if defined(cpu32) and defined(windows)}
+  if Length(libfilename) = 0 then thelibgcc := 'libgcc_s_dw2-1.dll' else
+   thelibgcc := IncludeTrailingBackslash(ExtractFilePath(libfilename)) + 'libgcc_s_dw2-1.dll';
+  gc_Handle:= DynLibs.SafeLoadLibrary(thelibgcc);
+ {$endif}
+
+{go & load the library}
    if Length(libfilename) = 0 then thelib := XMP_LIB_NAME else thelib := libfilename;
     xmp_Handle:=DynLibs.LoadLibrary(thelib); // obtain the handle we want
   	if xmp_Handle <> DynLibs.NilHandle then
@@ -400,6 +410,12 @@ begin
   begin
     DynLibs.UnloadLibrary(xmp_Handle);
     xmp_Handle:=DynLibs.NilHandle;
+    {$if defined(cpu32) and defined(windows)}
+    if gc_Handle <> DynLibs.NilHandle then begin
+    DynLibs.UnloadLibrary(gc_Handle);
+    gc_Handle:=DynLibs.NilHandle;
+    end;
+    {$endif}
   end;
 end;
 
