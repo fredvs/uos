@@ -370,7 +370,7 @@ begin
 
     radiogroup1.Enabled := False;
 
-    Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.8, uos_InputGetSampleRate(PlayerIndex1, In1Index),
+    Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
      uos_InputGetChannels(PlayerIndex1, In1Index), samformat, sizebuff, -1);
 
     //// add a Output into device with custom parameters
