@@ -128,11 +128,11 @@ install:
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="63">
+    <Units Count="64">
       <Unit0>
         <Filename Value="simplewebplayer.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <WindowIndex Value="1"/>
         <CursorPos Y="4"/>
         <UsageCount Value="200"/>
@@ -271,7 +271,8 @@ install:
       <Unit23>
         <Filename Value="uos.pas"/>
         <WindowIndex Value="1"/>
-        <CursorPos X="31" Y="1063"/>
+        <TopLine Value="7967"/>
+        <CursorPos X="85" Y="7973"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit23>
@@ -401,11 +402,11 @@ install:
       </Unit44>
       <Unit45>
         <Filename Value="simplewebplayer_fpGUI.pas"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
         <TopLine Value="332"/>
         <CursorPos X="50" Y="348"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit45>
       <Unit46>
@@ -431,11 +432,11 @@ install:
       </Unit49>
       <Unit50>
         <Filename Value="uos_flat.pas"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="129"/>
-        <CursorPos X="10" Y="149"/>
-        <UsageCount Value="13"/>
+        <TopLine Value="391"/>
+        <CursorPos X="24" Y="401"/>
+        <UsageCount Value="14"/>
         <Loaded Value="True"/>
       </Unit50>
       <Unit51>
@@ -455,23 +456,21 @@ install:
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="260"/>
-        <CursorPos X="64" Y="288"/>
-        <ComponentState Value="1"/>
-        <UsageCount Value="11"/>
+        <TopLine Value="505"/>
+        <CursorPos Y="515"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit53>
       <Unit54>
         <Filename Value="uos_httpgetthread.pas"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
         <TopLine Value="21"/>
         <CursorPos X="71" Y="32"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit54>
       <Unit55>
@@ -500,11 +499,11 @@ install:
       </Unit57>
       <Unit58>
         <Filename Value="conswebstream.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
         <TopLine Value="77"/>
         <CursorPos X="3" Y="85"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit58>
       <Unit59>
@@ -534,116 +533,137 @@ install:
         <TopLine Value="32"/>
         <UsageCount Value="11"/>
       </Unit62>
+      <Unit63>
+        <Filename Value="uos_define.inc"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="1"/>
+        <CursorPos X="3" Y="14"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit63>
     </Units>
-    <JumpHistory Count="27" HistoryIndex="26">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="uos.pas"/>
-        <Caret Line="3141" Column="15" TopLine="3134"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="331" Column="14" TopLine="322"/>
       </Position1>
       <Position2>
-        <Filename Value="uos.pas"/>
-        <Caret Line="3114" Column="13" TopLine="3107"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="313" Column="66" TopLine="313"/>
       </Position2>
       <Position3>
-        <Filename Value="uos.pas"/>
-        <Caret Line="3110" Column="13" TopLine="3107"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="514" Column="73" TopLine="510"/>
       </Position3>
       <Position4>
-        <Filename Value="uos.pas"/>
-        <Caret Line="3109" Column="29" TopLine="3106"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="54" Column="114" TopLine="51"/>
       </Position4>
       <Position5>
-        <Filename Value="uos.pas"/>
-        <Caret Line="3108" Column="12" TopLine="3105"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="60" Column="14" TopLine="51"/>
       </Position5>
       <Position6>
-        <Filename Value="uos.pas"/>
-        <Caret Line="3104" Column="12" TopLine="3097"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="142" Column="42" TopLine="126"/>
       </Position6>
       <Position7>
-        <Filename Value="uos.pas"/>
-        <Caret Line="3083" Column="22" TopLine="3076"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="144" Column="18" TopLine="128"/>
       </Position7>
       <Position8>
         <Filename Value="main_wsp.pas"/>
-        <Caret Line="295" Column="3" TopLine="274"/>
+        <Caret Line="308" Column="33" TopLine="289"/>
       </Position8>
       <Position9>
         <Filename Value="main_wsp.pas"/>
-        <Caret Line="387" Column="5" TopLine="359"/>
+        <Caret Line="502" Column="27" TopLine="497"/>
       </Position9>
       <Position10>
         <Filename Value="main_wsp.pas"/>
-        <Caret Line="278" Column="22" TopLine="277"/>
+        <Caret Line="513" Column="12" TopLine="497"/>
       </Position10>
       <Position11>
         <Filename Value="main_wsp.pas"/>
-        <Caret Line="280" Column="22" TopLine="279"/>
+        <Caret Line="54" Column="73" TopLine="51"/>
       </Position11>
       <Position12>
-        <Filename Value="main_wsp.pas"/>
-        <Caret Line="281" Column="22" TopLine="280"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="1047" Column="7" TopLine="1046"/>
       </Position12>
       <Position13>
-        <Filename Value="main_wsp.pas"/>
-        <Caret Line="264" Column="28" TopLine="225"/>
+        <Filename Value="uos.pas"/>
+        <Caret Line="1102" Column="26" TopLine="1085"/>
       </Position13>
       <Position14>
-        <Filename Value="uos_httpgetthread.pas"/>
-        <Caret Line="72" Column="91" TopLine="72"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="279" Column="15" TopLine="277"/>
       </Position14>
       <Position15>
-        <Filename Value="uos.pas"/>
-        <Caret Line="4005" Column="35" TopLine="3997"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="280" Column="15" TopLine="278"/>
       </Position15>
       <Position16>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2563" Column="4" TopLine="2558"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="291" Column="24" TopLine="279"/>
       </Position16>
       <Position17>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2560" Column="5" TopLine="2546"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="300" Column="66" TopLine="291"/>
       </Position17>
       <Position18>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2561" Column="5" TopLine="2550"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="534" Column="24" TopLine="527"/>
       </Position18>
       <Position19>
-        <Filename Value="uos.pas"/>
-        <Caret Line="2606" Column="27" TopLine="2536"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="533" Column="24" TopLine="526"/>
       </Position19>
       <Position20>
-        <Filename Value="uos.pas"/>
-        <Caret Line="1072" Column="4" TopLine="1065"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="532" Column="24" TopLine="525"/>
       </Position20>
       <Position21>
         <Filename Value="main_wsp.pas"/>
-        <Caret Line="264" Column="28" TopLine="225"/>
+        <Caret Line="60" Column="14" TopLine="51"/>
       </Position21>
       <Position22>
         <Filename Value="main_wsp.pas"/>
-        <Caret Line="265" Column="28" TopLine="238"/>
+        <Caret Line="144" Column="39" TopLine="135"/>
       </Position22>
       <Position23>
         <Filename Value="main_wsp.pas"/>
-        <Caret Line="266" Column="28" TopLine="239"/>
+        <Caret Line="311" Column="18" TopLine="295"/>
       </Position23>
       <Position24>
         <Filename Value="main_wsp.pas"/>
-        <Caret Line="243" Column="5" TopLine="243"/>
+        <Caret Line="313" Column="18" TopLine="297"/>
       </Position24>
       <Position25>
         <Filename Value="main_wsp.pas"/>
-        <Caret Line="289" Column="5" TopLine="269"/>
+        <Caret Line="502" Column="40" TopLine="379"/>
       </Position25>
       <Position26>
-        <Filename Value="uos.pas"/>
-        <Caret Line="1063" Column="31"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="193" Column="2" TopLine="184"/>
       </Position26>
       <Position27>
-        <Filename Value="uos_httpgetthread.pas"/>
-        <Caret Line="36" Column="29" TopLine="21"/>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="509" Column="31" TopLine="496"/>
       </Position27>
+      <Position28>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="448" Column="19" TopLine="442"/>
+      </Position28>
+      <Position29>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="88" Column="19" TopLine="78"/>
+      </Position29>
+      <Position30>
+        <Filename Value="main_wsp.pas"/>
+        <Caret Line="151" Column="62" TopLine="142"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

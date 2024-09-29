@@ -230,22 +230,28 @@ function uos_GetInfoDeviceStr() : PChar ;
 function uos_TestLoadLibrary(Filename: Pchar): boolean;
 // test a library to check if it can be loaded;
 
-function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
+                     , opusfileFileName, XMPFileName, fdkaacFilename : PChar) : cint32;
 // load libraries... if libraryfilename = nil =>  do not load it...  You may load what and when you want...  
 // PortAudio => needed for dealing with audio-device input/output
 // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
 // Mpg123 => needed for dealing with mp* audio-files
 // Mp4ff and Faad => needed for dealing with acc, m4a audio-files
 // opusfile => needed for dealing with opus audio-files
+// XMPFileName => needed for dealing with mod files
+// fdkaacFilename => needed for dealing with webstreamm aac files.
 
 // If you want to load libraries from system, replace it by "'system'"
 // If some libraries are not needed, replace it by "nil", 
  
-// for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName)
+// for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName, nil, nil)
 
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
                      , opusfileFileName, XMPFileName : PChar) : cint32;
-// The same but with libxmp added.                                          
+// The same but without fdkaac. (for compatibility with previous version)
+
+function uos_LoadLib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
+// The same but without fdkaac and libxmp. (for compatibility with previous version)
 
 procedure uos_unloadlib();
 // Unload all libraries...
@@ -253,7 +259,7 @@ procedure uos_free();
 // Free uos;
 // To use when program terminate. Do not forget to call it before close application...
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp: boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac: boolean);
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
@@ -2323,16 +2329,23 @@ function uos_TestLoadLibrary(Filename: Pchar): boolean;
 begin
 result := uos.uos_TestLoadLibrary(FileName);
 end;
-  
+
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
+                     , opusfileFileName, XMPFileName, fdkaacFilename : PChar) : cint32;
+  begin
+result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName,
+ FaadFileName, opusfileFileName, XMPFileName, fdkaacFilename)  ;
+  end;
+ 
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName: PChar) : cint32;
   begin
-result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName)  ;
+result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName, nil, nil)  ;
   end; 
   
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
                      , opusfileFileName, XMPFileName : PChar) : cint32;
   begin
-result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName, XMPFileName)  ;
+result := uos.uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName, opusfileFileName, XMPFileName, nil)  ;
   end;                     
    
   
@@ -2399,10 +2412,10 @@ procedure uos_unloadlib() ;
  uos.uos_unloadlib() ;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp : boolean);
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac : boolean);
 // Custom Unload libraries... if true, then delete the library. You may unload what and when you want...
 begin
-uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus, xmp) ;
+uos.uos_unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac) ;
 uosLoadResult:= uos.uosLoadResult;
 end;
 

@@ -12,8 +12,6 @@ uses
   Forms,
   main_wsp { you can add units after this };
 
-{$R *.res}
-
 begin
   Application.Title := 'SimpleWebPlayer';
   Application.Initialize;

@@ -1,6 +1,10 @@
 unit uos_libxmp;
+{This unit is part of United Openlibraries of Sound (uos)}
 
-// by Fred vS | fiens@hotmail.com | 2024
+{This is the Pascal Wrapper + Dynamic loading of libxmp library.
+ Load library with xmp_load() and release with xmp_unload().
+ License : modified LGPL. 
+  by Fred vS | fiens@hotmail.com | 2024}
 
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}

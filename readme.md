@@ -13,7 +13,7 @@ With uos you can:
 
 . Deal with 16, 32 integer or float 32 bit resolution.
 
-. Do internet audio streaming of mp3 and opus files.
+. Do internet audio streaming of mp3, opus and aac files.
 
 . Record all types of input into wav or ogg file with 16 or 32 bit resolution.
 
@@ -23,7 +23,7 @@ With uos you can:
 
 . Produce sound from built-in synthesizer.
 
-uos can use: PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile, Libxmp
+uos can use: PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile, Libxmp, fdk-aac 
 audio libraries and SoundTouch, Bs2b audio-effect libraries.
 
 Included in the package:

@@ -1,11 +1,11 @@
 object Form1: TForm1
   Left = 252
-  Height = 419
+  Height = 498
   Top = 181
   Width = 505
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Web Player U0S PortAudio + SndFile + Mpg123'
-  ClientHeight = 419
+  ClientHeight = 498
   ClientWidth = 505
   Color = clMoneyGreen
   Icon.Data = {
@@ -89,14 +89,14 @@ object Form1: TForm1
   object Shape1: TShape
     Left = 10
     Height = 216
-    Top = 194
-    Width = 489
+    Top = 272
+    Width = 483
     Brush.Color = clSilver
   end
   object TrackBar1: TTrackBar
     Left = 24
     Height = 160
-    Top = 200
+    Top = 288
     Width = 26
     Max = 100
     OnChange = TrackBar1Change
@@ -107,18 +107,19 @@ object Form1: TForm1
     TabOrder = 5
   end
   object Edit1: TEdit
-    Left = 133
+    Left = 132
     Height = 27
-    Top = 12
+    Top = 32
     Width = 360
     Alignment = taCenter
     AutoSize = False
     TabOrder = 3
+    OnChange = Edit1Change
   end
   object Edit3: TEdit
     Left = 132
     Height = 27
-    Top = 50
+    Top = 70
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -127,7 +128,7 @@ object Form1: TForm1
   object Label1: TLabel
     Left = 130
     Height = 18
-    Top = 0
+    Top = 16
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -140,7 +141,7 @@ object Form1: TForm1
   object Label3: TLabel
     Left = 126
     Height = 18
-    Top = 38
+    Top = 58
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -153,7 +154,7 @@ object Form1: TForm1
   object Edit4: TEdit
     Left = 124
     Height = 27
-    Top = 224
+    Top = 296
     Width = 358
     Alignment = taCenter
     AutoSize = False
@@ -163,14 +164,15 @@ object Form1: TForm1
   object PaintBox1: TPaintBox
     Left = 18
     Height = 105
-    Top = 32
+    Top = 56
     Width = 105
+    OnClick = PaintBox1Click
     OnPaint = PaintBox1Paint
   end
   object Label4: TLabel
-    Left = 30
+    Left = 24
     Height = 14
-    Top = 358
+    Top = 454
     Width = 26
     Alignment = taCenter
     Caption = 'Vol L'
@@ -182,7 +184,7 @@ object Form1: TForm1
   object Button1: TButton
     Left = 10
     Height = 26
-    Top = 164
+    Top = 232
     Width = 483
     Caption = 'Load that libraries'
     TabOrder = 2
@@ -191,7 +193,7 @@ object Form1: TForm1
   object Button3: TButton
     Left = 128
     Height = 23
-    Top = 382
+    Top = 454
     Width = 58
     Caption = 'Play'
     Font.Height = 12
@@ -202,7 +204,7 @@ object Form1: TForm1
   object Button4: TButton
     Left = 316
     Height = 23
-    Top = 382
+    Top = 454
     Width = 58
     Caption = 'Resume'
     Enabled = False
@@ -214,7 +216,7 @@ object Form1: TForm1
   object Button5: TButton
     Left = 218
     Height = 23
-    Top = 382
+    Top = 454
     Width = 54
     Caption = 'Pause'
     Enabled = False
@@ -226,7 +228,7 @@ object Form1: TForm1
   object Button6: TButton
     Left = 410
     Height = 23
-    Top = 382
+    Top = 454
     Width = 47
     Caption = 'Stop'
     Enabled = False
@@ -238,7 +240,7 @@ object Form1: TForm1
   object TrackBar3: TTrackBar
     Left = 89
     Height = 162
-    Top = 200
+    Top = 288
     Width = 26
     Max = 100
     OnChange = TrackBar1Change
@@ -249,9 +251,9 @@ object Form1: TForm1
     TabOrder = 9
   end
   object Label5: TLabel
-    Left = 86
+    Left = 88
     Height = 14
-    Top = 358
+    Top = 456
     Width = 28
     Alignment = taCenter
     Caption = 'Vol R'
@@ -263,7 +265,7 @@ object Form1: TForm1
   object RadioGroup1: TRadioGroup
     Left = 124
     Height = 86
-    Top = 272
+    Top = 344
     Width = 120
     AutoFill = True
     Caption = 'Sample Format'
@@ -289,9 +291,7 @@ object Form1: TForm1
       Top = 6
       Width = 104
       Caption = 'Float 32 bit'
-      Checked = True
       TabOrder = 0
-      TabStop = True
     end
     object RadioButton2: TRadioButton
       Left = 6
@@ -307,13 +307,15 @@ object Form1: TForm1
       Top = 44
       Width = 104
       Caption = 'Int 16 bit'
+      Checked = True
       TabOrder = 2
+      TabStop = True
     end
   end
   object lposition: TLabel
     Left = 204
     Height = 15
-    Top = 208
+    Top = 280
     Width = 203
     Caption = 'HTTP location of mp3 or opus file.'
     Font.Height = 12
@@ -323,21 +325,21 @@ object Form1: TForm1
   object ShapeRight: TShape
     Left = 72
     Height = 146
-    Top = 208
+    Top = 296
     Width = 8
     Brush.Color = clLime
   end
   object ShapeLeft: TShape
     Left = 56
     Height = 146
-    Top = 208
+    Top = 296
     Width = 8
     Brush.Color = clLime
   end
   object Edit5: TEdit
     Left = 132
     Height = 27
-    Top = 128
+    Top = 192
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -346,7 +348,7 @@ object Form1: TForm1
   object Label6: TLabel
     Left = 133
     Height = 18
-    Top = 114
+    Top = 176
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -359,7 +361,7 @@ object Form1: TForm1
   object CheckBox2: TCheckBox
     Left = 274
     Height = 21
-    Top = 282
+    Top = 354
     Width = 183
     Caption = 'Enable SoundTouch Plugin'
     Font.Height = 12
@@ -370,7 +372,7 @@ object Form1: TForm1
   object Button7: TButton
     Left = 280
     Height = 25
-    Top = 338
+    Top = 410
     Width = 55
     Caption = 'Reset'
     Font.Height = 12
@@ -381,7 +383,7 @@ object Form1: TForm1
   object Label7: TLabel
     Left = 280
     Height = 15
-    Top = 314
+    Top = 386
     Width = 67
     Caption = 'Tempo: 1.0'
     Font.Height = 12
@@ -391,7 +393,7 @@ object Form1: TForm1
   object Label9: TLabel
     Left = 396
     Height = 15
-    Top = 314
+    Top = 386
     Width = 58
     Caption = 'Pitch: 1.0'
     Font.Height = 12
@@ -401,7 +403,7 @@ object Form1: TForm1
   object TrackBar4: TTrackBar
     Left = 350
     Height = 66
-    Top = 300
+    Top = 372
     Width = 34
     Max = 100
     OnChange = ChangePlugSet
@@ -414,7 +416,7 @@ object Form1: TForm1
   object TrackBar5: TTrackBar
     Left = 455
     Height = 66
-    Top = 300
+    Top = 372
     Width = 34
     Max = 100
     OnChange = ChangePlugSet
@@ -425,9 +427,9 @@ object Form1: TForm1
     TabOrder = 15
   end
   object lerror: TLabel
-    Left = 132
+    Left = 144
     Height = 1
-    Top = 362
+    Top = 432
     Width = 1
     Color = clRed
     Font.Color = clWhite
@@ -438,7 +440,7 @@ object Form1: TForm1
   object Label8: TLabel
     Left = 132
     Height = 18
-    Top = 76
+    Top = 96
     Width = 360
     Alignment = taCenter
     AutoSize = False
@@ -452,28 +454,59 @@ object Form1: TForm1
   object Edit6: TEdit
     Left = 132
     Height = 27
-    Top = 88
+    Top = 108
     Width = 360
     Alignment = taCenter
     AutoSize = False
     TabOrder = 16
   end
   object mp3format: TRadioButton
-    Left = 160
+    Left = 136
     Height = 21
-    Top = 250
+    Top = 322
     Width = 100
     Caption = 'mp3 format'
-    Checked = True
     TabOrder = 18
-    TabStop = True
   end
   object opusformat: TRadioButton
-    Left = 308
+    Left = 248
     Height = 21
-    Top = 250
+    Top = 322
     Width = 102
     Caption = 'opus format'
     TabOrder = 17
+  end
+  object aacformat: TRadioButton
+    Left = 376
+    Height = 21
+    Top = 322
+    Width = 94
+    Caption = 'aac format'
+    Checked = True
+    TabOrder = 19
+    TabStop = True
+  end
+  object Edit8: TEdit
+    Left = 132
+    Height = 27
+    Top = 148
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    TabOrder = 20
+  end
+  object Label11: TLabel
+    Left = 132
+    Height = 18
+    Top = 134
+    Width = 360
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Folder + filename of Fdk-aac Library'
+    Font.Height = -11
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+    OnClick = Label8Click
   end
 end

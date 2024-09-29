@@ -30,3 +30,6 @@ Here are the open source libraries used by uos:
 => Libxmp audio processing library.
    https://xmp.sourceforge.net/
 
+=> Libfdk-aac audio processing library.
+   https://github.com/mstorsjo/fdk-aac
+

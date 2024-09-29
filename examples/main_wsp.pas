@@ -35,7 +35,9 @@ type
     Edit4: TEdit;
     Edit5: TEdit;
     Edit6: TEdit;
+    Edit8: TEdit;
     Label1: TLabel;
+    Label11: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
@@ -46,6 +48,7 @@ type
     lposition: TLabel;
     lerror: TLabel;
     opusformat: TRadioButton;
+    aacformat: TRadioButton;
     PaintBox1: TPaintBox;
     RadioButton1: TRadioButton;
     RadioButton2: TRadioButton;
@@ -64,10 +67,12 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure Edit1Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Label8Click(Sender: TObject);
+    procedure PaintBox1Click(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure ClosePlayer1;
@@ -138,8 +143,8 @@ begin
   Form1.radiogroup1.Enabled := True;
   Form1.ShapeLeft.Height    := 0;
   Form1.ShapeRight.Height   := 0;
-  Form1.ShapeLeft.top       := 280;
-  Form1.ShapeRight.top      := 280;
+  Form1.ShapeLeft.top       := 296;
+  Form1.ShapeRight.top      := 296;
 end;
 
 procedure TForm1.FormActivate(Sender: TObject);
@@ -151,17 +156,20 @@ var
 begin
   ordir := application.Location;
   uos_logo();
-             {$IFDEF Windows}
-     {$if defined(cpu64)}
+  {$IFDEF Windows}
+  {$if defined(cpu64)}
   Edit1.Text := ordir + 'lib\Windows\64bit\LibPortaudio-64.dll';
   Edit3.Text := ordir + 'lib\Windows\64bit\LibMpg123-64.dll';
   Edit5.Text := ordir + 'lib\Windows\64bit\plugin\LibSoundTouch-64.dll';
-{$else}
+  edit8.Text := ordir + 'lib\Windows\64bit\libfdk-aac-64.dll';
+ {$else}
  Edit1.Text := ordir + 'lib\Windows\32bit\LibPortaudio-32.dll';
  Edit3.Text := ordir + 'lib\Windows\32bit\LibMpg123-32.dll';
  Edit5.Text := ordir + 'lib\Windows\32bit\plugin\LibSoundTouch-32.dll';
-  {$endif}
-  {$ENDIF}
+ edit8.Text := ordir + 'lib\Windows\32bit\libfdk-aac-32.dll';
+ Edit6.Text := ordir + 'lib\Windows\32bit\LibOpusFile-32.dll';
+ {$endif}
+ {$ENDIF}
 
   {$IFDEF Darwin}
    {$IFDEF CPU32}
@@ -182,6 +190,7 @@ begin
  {$if defined(CPUAMD64) and defined(linux) }
   Edit1.Text := ordir + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit3.Text := ordir + 'lib/Linux/64bit/LibMpg123-64.so';
+  edit8.Text := ordir + 'lib/Linux/64bit/libfdk-aac-64.so';
   Edit5.Text := ordir + 'lib/Linux/64bit/plugin/LibSoundTouch-64.so';
   Edit6.Text := ordir + 'lib/Linux/64bit/LibOpusFile-64.so';
 {$ENDIF}
@@ -220,7 +229,7 @@ begin
   Edit3.Text := ordir + 'lib/FreeBSD/32bit/libmpg123-32.so';
   Edit5.Text := '';
 {$endif}
-  {$ENDIF}
+{$ENDIF}
 
 end;
 
@@ -242,22 +251,15 @@ var
   loadok: Boolean = False;
 begin
 
-{$if defined(CPUAMD64) and defined(linux) }
-     // For Linux amd64, check libsndfile.so
-if (Edit2.Text <> 'system') and (Edit2.Text <> '') then     
-  if uos_TestLoadLibrary(PChar(edit2.Text)) = false then
-   edit2.Text := edit2.Text + '.2';
-{$endif}
-
   // Load the libraries
-   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
+  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename, fdkaac: PChar) : LongInt;
 
-  if uos_LoadLib(PChar(edit1.Text), nil, PChar(edit3.Text), nil, nil, PChar(edit6.Text), nil) = 0 then
+  if uos_LoadLib(PChar(edit1.Text), nil, PChar(edit3.Text), nil, nil, PChar(edit6.Text), nil, PChar(edit8.Text)) = 0 then
   begin
     form1.hide;
     loadok          := True;
     button1.Caption :=
-      'PortAudio, Mpg123 and OpusFile libraries are loaded...';
+      'PortAudio, Mpg123, OpusFile and fdkaac libraries are loaded...';
   end
   else
     MessageDlg('Error while loading libraries...', mtWarning, [mbYes], 0);
@@ -267,7 +269,7 @@ if (Edit2.Text <> 'system') and (Edit2.Text <> '') then
     if (trim(PChar(edit5.Text)) <> '') and fileexists(edit5.Text) and (uos_LoadPlugin('soundtouch', PChar(edit5.Text)) = 0) then
     begin
       button1.Caption :=
-        'PortAudio, Mpg123, OpusFile and Plugin SoundTouch libraries are loaded...';
+        'PortAudio, Mpg123, OpusFile, fdkaac and SoundTouch libraries are loaded...';
       plugsoundtouch  := True;
     end
     else
@@ -280,22 +282,22 @@ if (Edit2.Text <> 'system') and (Edit2.Text <> '') then
       label7.Enabled    := False;
     end;
 
-
     button1.Enabled := False;
     edit1.ReadOnly  := True;
     edit3.ReadOnly  := True;
     edit5.ReadOnly  := True;
-    form1.Height    := 418;
+    form1.Height    := 498;
     form1.Position  := poScreenCenter;
     form1.Caption   := 'Simple Web Player.    uos version ' + IntToStr(uos_getversion());
 
     // Some audio web streaming
   //  edit4.text :=  'https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden';
  //   edit4.Text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
-     edit4.text := 'http://stream-uk1.radioparadise.com/mp3-128' ;
+  //   edit4.text := 'http://stream-uk1.radioparadise.com/mp3-128' ;
     //  edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
   //    edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
-      // edit4.text := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
+   //  edit4.text := 'https://github.com/fredvs/test/releases/download/fpc323/test.opus';
+     edit4.text := 'https://radiorecord.hostingradio.ru/ps96.aacp';
 
     form1.Show;
   end;
@@ -308,8 +310,8 @@ begin
   Button5.Enabled         := False;
   Form1.ShapeLeft.Height  := 0;
   Form1.ShapeRight.Height := 0;
-  Form1.ShapeLeft.top     := 280;
-  Form1.ShapeRight.top    := 280;
+  Form1.ShapeLeft.top     := 296;
+  Form1.ShapeRight.top    := 296;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -331,9 +333,11 @@ begin
   // If PlayerIndex exists already, it will be overwritten...
 
   if mp3format.Checked = True then
-    audioformat := 0
-  else
-    audioformat := 1;
+    audioformat := 0 else
+  if opusformat.Checked = True then
+    audioformat := 1  else
+  if aacformat.Checked = True then
+    audioformat := 2;
 
   if radiobutton1.Checked = True then
     samformat := 0;
@@ -347,13 +351,13 @@ begin
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
-  In1Index := uos_AddFromURL(PlayerIndex1, PChar(edit4.Text), -1, samformat, -1, audioformat, False);
+  In1Index := uos_AddFromURL(PlayerIndex1, PChar(edit4.Text), -1, samformat, 65536, audioformat, False);
   /////// Add a Input from Audio URL with custom parameters
   ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (1024)
-  //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+  //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus, 2: aac)
   // ICY data on/off
   ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
   //  result : -1 nothing created, otherwise Input Index in array
@@ -364,7 +368,7 @@ begin
     radiogroup1.Enabled := False;
 
     Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.8, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-     uos_InputGetChannels(PlayerIndex1, In1Index), samformat, -1, -1);
+     uos_InputGetChannels(PlayerIndex1, In1Index), samformat, 65536, -1);
 
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
@@ -399,13 +403,13 @@ begin
     ////////// VolRight : Right volume
 
     uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
-      TrackBar3.position / 100, True); /// Set volume
+     TrackBar3.position / 100, True); /// Set volume
     ////////// PlayerIndex1 : Index of a existing Player
     ////////// In1Index : InputIndex of a existing Input
     ////////// VolLeft : Left volume
     ////////// VolRight : Right volume
     ////////// Enable : Enabled
-
+//{
     if plugsoundtouch = True then
     begin
       Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', uos_InputGetSampleRate(PlayerIndex1, In1Index),
@@ -414,7 +418,7 @@ begin
 
       ChangePlugSet(self); //// Change plugin settings
     end;
-
+//}
     /////// procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex1, @ClosePlayer1);
     ///// Assign the procedure of object to execute at end
@@ -427,7 +431,7 @@ begin
     Button5.Enabled := True;
 
     application.ProcessMessages;
-
+ 
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
   end
   else
@@ -439,6 +443,11 @@ procedure TForm1.Button6Click(Sender: TObject);
 begin
   ClosePlayer1;
   uos_Stop(PlayerIndex1);
+end;
+
+procedure TForm1.Edit1Change(Sender: TObject);
+begin
+
 end;
 
 procedure uos_logo();
@@ -500,8 +509,8 @@ procedure Tform1.ShowLevel;
 begin
   ShapeLeft.Height  := round(uos_InputGetLevelLeft(PlayerIndex1, In1Index) * 146);
   ShapeRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, In1Index) * 146);
-  ShapeLeft.top     := 354 - ShapeLeft.Height;
-  ShapeRight.top    := 354 - ShapeRight.Height;
+  ShapeLeft.top     := 450 - ShapeLeft.Height;
+  ShapeRight.top    := 450 - ShapeRight.Height;
 end;
 
 procedure Tform1.LoopProcPlayer1;
@@ -511,7 +520,7 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Form1.Height      := 193;
+  Form1.Height      := 260;
   ShapeLeft.Height  := 0;
   ShapeRight.Height := 0;
 end;
@@ -524,10 +533,19 @@ begin
     sleep(500);
   end;
   if button1.Enabled = False then
-    uos_free;
+  begin
+   if plugsoundtouch then uos_UnloadPlugin('soundtouch');
+    uos_free();
+  end;  
+    BufferBMP.free;
 end;
 
 procedure TForm1.Label8Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.PaintBox1Click(Sender: TObject);
 begin
 
 end;

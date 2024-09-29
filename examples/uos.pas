@@ -65,6 +65,10 @@ uos_dsp_noiseremoval,
 uos_aac, 
 {$endif}
 
+{$IF DEFINED(fdkaac)}
+uos_fdkaacdecoder, 
+{$endif}
+
 {$IF DEFINED(opus)}
 uos_opusfile, 
 {$endif}
@@ -80,7 +84,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2240919;
+  uos_version : cint32 = 2240929;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -325,6 +329,7 @@ type
     AAloadError: shortint;
     OPloadError: shortint;
     XMloadError: shortint;
+    FAloadError: shortint;
     PAinitError: shortint;
     MPinitError: shortint;
   end;
@@ -352,6 +357,8 @@ type
       // opusfile
       XM_FileName : PChar;
       // XMP
+      FA_FileName : PChar;
+      // Fdkaac
       Plug_ST_FileName: pchar;
       // Plugin SoundTouch + GetBMP
       Plug_BS_FileName: pchar;
@@ -368,7 +375,7 @@ type
 
       function loadlib: cint32;
       procedure unloadlib;
-      procedure unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp: boolean);
+      procedure unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac: boolean);
       function InitLib: cint32;
       procedure unloadPlugin(PluginName: Pchar);
   end;
@@ -1447,25 +1454,28 @@ function uos_GetInfoDeviceStr() : Pansichar ;
   {$endif}
 
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
-                     , opusfileFileName : PChar) : cint32;
-
-
+                     , opusfileFileName, XMPFileName, fdkaacFilename : PChar) : cint32;
 // load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
 // PortAudio => needed for dealing with audio-device
 // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
 // Mpg123 => needed for dealing with mp* audio-files
 // Mp4ff and Faad => needed for dealing with acc, m4a audio-files
 // opusfile => needed for dealing with opus audio-files
+// XMP => needed for dealing with MOD audio-files
+// Fdkaac => needed for webstreaming of aac files.
 
 // If you want to load libraries from system, replace it by "'system'"
 // If some libraries are not needed, replace it by "nil", 
 
-// for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName)
+// for example : uos_loadlib('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName, nil, nil)
 
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
                      , opusfileFileName, XMPFileName : PChar) : cint32;
-// The same but with libxmp added.                     
+// The same but without fdkaac. (for compatibility with previous version)
 
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
+                     , opusfileFileName : PChar) : cint32;
+// The same but without libxmp and fdkaac. (for compatibility with previous version)
 
 procedure uos_unloadlib();
 // Unload all libraries... Do not forget to call it before close application...
@@ -1479,9 +1489,7 @@ procedure uos_unloadServerLib();
 // Unload server libraries... Do not forget to call it before close application...
 {$endif}
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp: boolean);
-
-
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac: boolean);
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 
 function uos_loadPlugin(PluginName, PluginFilename: PChar) : cint32;
@@ -6582,7 +6590,7 @@ function Tuos_Player.AddFromURL(URL: PChar; OutputIndex: cint32;
 // OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
 // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default : -1 (4096)
-// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus, 2:aac)
 // ICYon : ICY data on/off
 // example : InputIndex := AddFromURL('http://someserver/somesound.mp3',-1,-1,-1,-1,-1, false);
 
@@ -6592,8 +6600,10 @@ var
   buffadd : tbytes;
   samprat : cint32;
 
-   {$IF DEFINED(sndfile)}
-  //  sfInfo: TSF_INFO;
+  {$IF DEFINED(fdkaac)}
+  rawAACBuffer:  PByte;
+  FErrorCode    : AAC_DECODER_ERROR;
+  FByteFilled, FReadBytes : longword;
   {$endif}
 
   {$IF DEFINED(mpg123)}
@@ -6627,6 +6637,141 @@ begin
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
+  
+  {$IF DEFINED(fdkaac)}
+  if (AudioFormat = 2)
+    then
+    begin
+ {$IF DEFINED(uos_debug) and DEFINED(unix)}
+      WriteLn('Begin fdkaac');
+  {$endif}
+
+      if FramesCount = -1 then
+        totsamples := 65536 Div 2
+      else
+        totsamples := FramesCount;
+
+      if FramesCount = -1 then
+        StreamIn[x].Data.Wantframes :=  65536 Div 2
+      else
+        StreamIn[x].Data.Wantframes := FramesCount ;
+
+      SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * 2);
+
+
+      // init buffer
+      GetMem(rawAACBuffer, 1024 *2);
+
+      PipeBufferSize :=  1024 *2;
+
+      CreatePipeHandles(StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
+
+      StreamIn[x].InPipe := TInputPipeStream.Create(StreamIn[x].InHandle);
+      StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
+
+      StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
+      StreamIn[x].httpget.freeonterminate := true;
+
+      StreamIn[x].httpget.ICYenabled := ICYon;
+
+      // Commencer à récupérer les données du flux HTTP
+      StreamIn[x].httpget.FIsRunning := True;
+      //writeln('avant httpget.Start');
+      StreamIn[x].httpget.Start;
+      // writeln('apres httpget.Start');
+
+      if StreamIn[x].httpget.ICYenabled = true then
+        CheckSynchronize(1000);
+
+      sleep(100);
+
+      StreamIn[x].Data.HandleSt := aacDecoder_Open(TRANSPORT_TYPE.TT_MP4_ADTS, 1);
+
+      if StreamIn[x].Data.HandleSt = nil then
+        begin
+          // writeln('NOT OK aacDecoder_Open()');
+          exit;
+        end;
+      // else writeln('OK aacDecoder_Open()');
+
+      if (aacDecoder_SetParam(StreamIn[x].Data.HandleSt, AAC_CONCEAL_METHOD, 1) <> AAC_DECODER_ERROR
+         .AAC_DEC_OK) then
+        begin
+          // writeln('Unable to set the AAC_CONCEAL_METHOD');
+          exit;
+        end;
+
+      if (aacDecoder_SetParam(StreamIn[x].Data.HandleSt, AAC_PCM_LIMITER_ENABLE, 0) <>
+         AAC_DECODER_ERROR.AAC_DEC_OK) then
+        begin
+          // writeln('Unable to set the AAC_PCM_LIMITER_ENABLE');
+          exit;
+        end;
+
+      // writeln('avant bytesRead');
+      //FReadBytes := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024 *2);
+      FReadBytes := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024 *2);
+
+      // writeln('StreamIn[x].Data.bytesRead ' + inttostr(StreamIn[x].Data.bytesRead));       
+
+      //    writeln('avant aacDecoder_Fill');
+      FByteFilled := FReadBytes;
+      FErrorCode := aacDecoder_Fill(StreamIn[x].Data.HandleSt,@rawAACBuffer,
+                    FReadBytes, FByteFilled);
+
+      //  writeLn('FByteFilled ' + inttostr(FByteFilled));
+
+
+{
+            if (FErrorCode <> AAC_DECODER_ERROR.AAC_DEC_OK) then
+              raise Exception.CreateFmt('Fill failed: %x', [Integer(FErrorCode)]);
+            if (FByteFilled <> 0) then
+              WriteLn(Format('Unable to feed all %d input bytes, %d bytes left', [FReadBytes, FByteFilled]));
+            }
+
+      // writeln('FIN INIT ------------- AACDecDecode');      
+      // Initialisation réussie
+
+      StreamIn[x].Data.LibOpen := 2;
+
+      if SampleFormat = -1 then
+        StreamIn[x].Data.SampleFormat := 2
+      else StreamIn[x].Data.SampleFormat := SampleFormat;
+
+      StreamIn[x].Data.Channels := 2;
+
+      StreamIn[x].Data.ratio := 2;
+      SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels);
+
+      StreamIn[x].Data.Output := OutputIndex;
+      StreamIn[x].Data.Status := 1;
+      StreamIn[x].Data.Position := 0;
+      StreamIn[x].Data.OutFrames := 0;
+      StreamIn[x].Data.Poseek := 0;
+      StreamIn[x].Data.TypePut := 2;
+      StreamIn[x].Data.seekable := false;
+
+      if FramesCount = -1 then
+        StreamIn[x].Data.Wantframes :=  65536 Div StreamIn[x].Data.Channels
+      else
+        StreamIn[x].Data.Wantframes := FramesCount ;
+
+      SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * StreamIn[x].Data.
+                Channels);
+      Err := 0;
+
+      freemem(rawAACBuffer);
+
+      //  writeln('----------- FIN add URL -------------' ); 
+
+    end;
+  {$endif}
+
+ {$IF DEFINED(uos_debug) and DEFINED(unix)}
+  WriteLn('ac StreamIn[x].Data.LibOpen = ' + inttostr(StreamIn[x].Data.LibOpen));
+ {$endif}
+
+  ////////////////// end aac
 
   {$IF DEFINED(opus)}
   if  (AudioFormat = 1)
@@ -9804,6 +9949,13 @@ begin
                                                                 // needed ?
                                                               end;
    {$ENDIF}
+   {$IF DEFINED(fdkaac)}
+                                                           2 :
+                                                               begin
+                                                                 aacDecoder_Close(StreamIn[x].Data.
+                                                                                  HandleSt);
+                                                               end;
+    {$ENDIF}
                                                          end;
                                                        end;
    {$ENDIF}
@@ -10567,6 +10719,17 @@ end;
 procedure Tuos_Player.ReadUrl(x : integer);
 var 
   err : integer;
+  
+   {$IF DEFINED(fdkaac)}
+  FErrorCode    : AAC_DECODER_ERROR;
+  FByteFilled, FReadBytes, FBytesRead : longword;
+  FOutputBuff   : array of cfloat;
+  FCStreamInfo  : PCStreamInfo;
+  bytesRead, bytesRead2, bytesRead3 : integer;
+  len, len2, len3: integer;
+  rawAACBuffer:  PByte;
+   {$endif}  
+  
 {$IF DEFINED(uos_debug) and DEFINED(unix)}
   i : integer;
   st : string;
@@ -10591,6 +10754,93 @@ begin
                                         StreamIn[x].Data.outframes Div StreamIn[x].Data.Channels;
 {$ENDIF}
         end;
+        
+    2:
+       begin
+{$IF DEFINED(fdkaac)}
+         setlength(FOutputBuff, 1024 * 32);
+
+         GetMem(rawAACBuffer,1024 * 32);
+
+         //  GetMem(rawAACBuffer,1024 * 32);
+
+         //   writeln('avant bytesRead');
+         FBytesRead := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024 *16);
+
+         // writeln('StreamIn[x].Data.bytesRead ' + inttostr(StreamIn[x].Data.bytesRead));       
+         //   writeln('avant aacDecoder_Fill');
+
+         FByteFilled := FBytesRead;
+         FErrorCode := aacDecoder_Fill(StreamIn[x].Data.HandleSt,@rawAACBuffer, FBytesRead,
+                       FByteFilled);
+
+         // writeLn('FByteFilled ' + inttostr(FByteFilled));
+
+{
+         if (FErrorCode <> AAC_DECODER_ERROR.AAC_DEC_OK) then
+           raise Exception.CreateFmt('Fill failed: %x', [Integer(FErrorCode)]);
+         if (FByteFilled <> 0) then
+           WriteLn(Format('Unable to feed all %d input bytes, %d bytes left', [FReadBytes,
+                   FByteFilled]));
+          }
+
+         len2 := 0;
+         len3 := 0;
+
+         while true do
+           begin
+             FErrorCode := aacDecoder_DecodeFrame(StreamIn[x].Data.HandleSt, PSmallInt(FOutputBuff),
+                           1024 *32, 0);
+
+             if (FErrorCode <> AAC_DECODER_ERROR.AAC_DEC_OK) then
+               begin
+                 if FErrorCode = AAC_DECODER_ERROR.AAC_DEC_NOT_ENOUGH_BITS then
+                   break;
+                 //  writeln(Format('Decode failed: %x', [Integer(FErrorCode)]));
+               end;
+             // else  writeln('Decode ok ');
+
+             FCStreamInfo := aacDecoder_GetStreamInfo(StreamIn[x].Data.HandleSt);
+             if ((not assigned(FCStreamInfo)) or (FCStreamInfo^.sampleRate <= 0)) then
+               raise Exception.Create('No stream info');
+
+             for len := 0 to (FCStreamInfo^.frameSize) -1 do
+
+               begin
+                 //   writeln(round(FOutputBuff[len]));
+                 StreamIn[x].Data.Buffer[len + len2] :=  FOutputBuff[len];
+                 //   writeln((StreamIn[x].Data.Buffer[len + len2]));
+                 inc(len3);
+               end;
+
+             len2 := len2 + FCStreamInfo^.frameSize;
+
+           end;
+
+{
+               FCStreamInfo := nil;
+              FCStreamInfo := aacDecoder_GetStreamInfo(StreamIn[x].Data.HandleSt);
+              if ((not assigned(FCStreamInfo)) or (FCStreamInfo^.sampleRate <= 0)) then
+                raise Exception.Create('No stream info');
+       }
+
+         //  StreamIn[x].Data.outframes := len3 * StreamIn[x].Data.Channels;
+         StreamIn[x].Data.outframes := len3 * 2;
+
+         if StreamIn[x].Data.SampleFormat < 2 then
+           begin
+             StreamIn[x].Data.Buffer := CvInt16ToFloat32(StreamIn[x].Data.Buffer);
+             if StreamIn[x].Data.SampleFormat = 1 then
+               StreamIn[x].Data.Buffer := CvFloat32toInt32fl(StreamIn[x].Data.Buffer, length(
+                                          StreamIn[x].Data.Buffer));
+           end;
+
+         freemem(rawAACBuffer);
+
+         //  writeln('---------- FIN read url ok ');
+{$ENDIF}
+       end;        
+        
     4 :
         begin
 {$IF DEFINED(opus)}
@@ -11422,6 +11672,9 @@ begin
   {$IF DEFINED(neaac)}
   Aa_Unload;
   {$endif}
+  {$IF DEFINED(fdkaac)}
+  ad_Unload;
+  {$endif}
   {$IF DEFINED(opus)}
   //op_Unload;
   of_Unload;
@@ -11504,6 +11757,7 @@ begin
   uosLoadResult.STloadERROR := -1;
   uosLoadResult.BSloadERROR := -1;
   uosLoadResult.XMloadERROR := -1;
+  uosLoadResult.FAloadERROR := -1;
 
   {$IF DEFINED(portaudio)}
   if (PA_FileName <>  nil) and (PA_FileName <>  '') then
@@ -11634,6 +11888,29 @@ begin
   else
     uosLoadResult.XMloadERROR := -1;
   {$endif}
+  
+    {$IF DEFINED(fdkaac)}
+  if (FA_FileName <> nil) and (FA_FileName <>  '') then
+    begin
+      if FA_FileName =  'system' then FA_FileName :=  '' ;
+      if (ad_Load(UTF8String(FA_FileName)))  then
+        begin
+          uosLoadResult.FAloadERROR := 0;
+          if (uosLoadResult.MPloadERROR = -1) and (uosLoadResult.PAloadERROR = -1) and
+             (uosLoadResult.SFloadERROR = -1) and (uosLoadResult.AAloadERROR = -1) and
+             (uosLoadResult.OPloadERROR = -1) and (uosLoadResult.XMloadERROR = -1)
+            then
+            Result := 0;
+        end
+      else
+        begin
+          uosLoadResult.FAloadERROR := 2;
+          Result := -1;
+        end;
+    end
+  else
+    uosLoadResult.FAloadERROR := -1;
+  {$endif}
 
   if Result = 0 then  Result := InitLib();
 end;
@@ -11711,9 +11988,8 @@ begin
 end;
 {$endif}
 
-
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
-                     , opusfileFileName, XMPFileName : PChar) : cint32;
+                     , opusfileFileName, XMPFileName, fdkaacFilename : PChar) : cint32;
 begin
   result := -1 ;
   if not assigned(uosInit) then
@@ -11735,9 +12011,17 @@ begin
   uosInit.M4_FileName := Mp4ffFileName;
   uosInit.OF_FileName := opusfileFileName;
   uosInit.XM_FileName := XMPFileName;
-
+  uosInit.FA_FileName := fdkaacFilename;
 
   result := uosInit.loadlib ;
+end;
+
+function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
+                     , opusfileFileName, XMPFileName : PChar) : cint32;
+begin
+  result := uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName,
+            FaadFileName
+            , opusfileFileName, XMPFileName, nil);
 end;
 
 function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName
@@ -11745,9 +12029,7 @@ function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFi
 begin
   result := uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName,
             FaadFileName
-            , opusfileFileName, Nil);
-
-
+            , opusfileFileName, Nil, nil);
 end;
 
 function uos_GetVersion() : cint32 ;
@@ -11775,12 +12057,10 @@ begin
     end;
 end;
 
-procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp: boolean);
-
-
+procedure uos_unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac: boolean);
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
-  uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus, xmp) ;
+  uosInit.unloadlibcust(PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac) ;
 end;
 
 procedure uos_UnloadPlugin(PluginName: PChar);
@@ -12451,9 +12731,7 @@ begin
   inherited Destroy;
 end;
 
-procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAc, opus, xmp: boolean);
-
-
+procedure Tuos_Init.unloadlibCust(PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac: boolean);
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 begin
   {$IF DEFINED(portaudio)}
@@ -12467,6 +12745,9 @@ begin
   {$endif}
   {$IF DEFINED(xmp)}
   if xmp = true then  xmp_Unload();
+  {$endif}
+  {$IF DEFINED(fdkaac)}
+  if fdkaac = true then  ad_Unload();
   {$endif}
   {$IF DEFINED(neaac)}
   if AAC = True then aa_Unload();

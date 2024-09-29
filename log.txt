@@ -57,5 +57,6 @@
 * 42 th changes: 2024-08-15 (Webstreamning for https too.)                        *
 * 43 th changes: 2024-08-24 (Fixed memory leak in uos_AddFromURL())               *
 * 44 th changes: 2024-09-15 (Added libxmp to read mod, it, s3m, xm and others)    *
+* 45 th changes: 2024-09-29 (Added libfdk-aac to do websteam of aac files)        *
 *                                                                                 *
 ***********************************************************************************}
