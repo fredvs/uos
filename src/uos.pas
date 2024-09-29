@@ -6602,8 +6602,6 @@ var
 
   {$IF DEFINED(fdkaac)}
   rawAACBuffer:  PByte;
-  FErrorCode    : AAC_DECODER_ERROR;
-  FByteFilled, FReadBytes : longword;
   {$endif}
 
   {$IF DEFINED(mpg123)}
@@ -6647,27 +6645,20 @@ begin
   {$endif}
 
       if FramesCount = -1 then
-        totsamples := 65536 * 2
+        totsamples := 65536
       else
         totsamples := FramesCount;
 
       if FramesCount = -1 then
-        StreamIn[x].Data.Wantframes :=  65536 * 2
+        StreamIn[x].Data.Wantframes :=  65536
       else
         StreamIn[x].Data.Wantframes := FramesCount ;
 
       SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * 2);
 
-
       // init buffer
-     GetMem(rawAACBuffer, 1024 *2);
-
-      PipeBufferSize :=  1024 *2;
-
-  // GetMem(rawAACBuffer, StreamIn[x].Data.Wantframes);
-
-  //    PipeBufferSize :=  StreamIn[x].Data.Wantframes;
-
+     GetMem(rawAACBuffer, StreamIn[x].Data.Wantframes);
+     PipeBufferSize :=  1024 * 4;
 
       CreatePipeHandles(StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
 
@@ -6688,7 +6679,7 @@ begin
       if StreamIn[x].httpget.ICYenabled = true then
         CheckSynchronize(1000);
 
-      sleep(100);
+      sleep(10);
 
       StreamIn[x].Data.HandleSt := aacDecoder_Open(TRANSPORT_TYPE.TT_MP4_ADTS, 1);
 
@@ -6712,27 +6703,6 @@ begin
           // writeln('Unable to set the AAC_PCM_LIMITER_ENABLE');
           exit;
         end;
-
-      // writeln('avant bytesRead');
-      //FReadBytes := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024 *2);
-      FReadBytes := StreamIn[x].InPipe.Read(rawAACBuffer[0],PipeBufferSize);
-
-      // writeln('StreamIn[x].Data.bytesRead ' + inttostr(StreamIn[x].Data.bytesRead));       
-
-      //    writeln('avant aacDecoder_Fill');
-      FByteFilled := FReadBytes;
-      FErrorCode := aacDecoder_Fill(StreamIn[x].Data.HandleSt,@rawAACBuffer,
-                    FReadBytes, FByteFilled);
-
-      //  writeLn('FByteFilled ' + inttostr(FByteFilled));
-
-
-{
-            if (FErrorCode <> AAC_DECODER_ERROR.AAC_DEC_OK) then
-              raise Exception.CreateFmt('Fill failed: %x', [Integer(FErrorCode)]);
-            if (FByteFilled <> 0) then
-              WriteLn(Format('Unable to feed all %d input bytes, %d bytes left', [FReadBytes, FByteFilled]));
-            }
 
       // writeln('FIN INIT ------------- AACDecDecode');      
       // Initialisation réussie
@@ -9337,7 +9307,7 @@ end;
 
 procedure Tuos_Player.ReadMemDec(X : integer);
 var 
-  x2, wantframestemp : integer;
+  wantframestemp : integer;
 {$IF DEFINED(uos_debug) and DEFINED(unix)}
   i : integer;
   st : string;
@@ -10727,10 +10697,9 @@ var
   
    {$IF DEFINED(fdkaac)}
   FErrorCode    : AAC_DECODER_ERROR;
-  FByteFilled, FReadBytes, FBytesRead : longword;
+  FByteFilled, FBytesRead : longword;
   FOutputBuff   : array of cfloat;
   FCStreamInfo  : PCStreamInfo;
-  bytesRead, bytesRead2, bytesRead3 : integer;
   len, len2, len3: integer;
   rawAACBuffer:  PByte;
    {$endif}  
