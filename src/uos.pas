@@ -6647,12 +6647,12 @@ begin
   {$endif}
 
       if FramesCount = -1 then
-        totsamples := 65536 Div 2
+        totsamples := 65536 * 2
       else
         totsamples := FramesCount;
 
       if FramesCount = -1 then
-        StreamIn[x].Data.Wantframes :=  65536 Div 2
+        StreamIn[x].Data.Wantframes :=  65536 * 2
       else
         StreamIn[x].Data.Wantframes := FramesCount ;
 
@@ -6660,9 +6660,14 @@ begin
 
 
       // init buffer
-      GetMem(rawAACBuffer, 1024 *2);
+     GetMem(rawAACBuffer, 1024 *2);
 
       PipeBufferSize :=  1024 *2;
+
+  // GetMem(rawAACBuffer, StreamIn[x].Data.Wantframes);
+
+  //    PipeBufferSize :=  StreamIn[x].Data.Wantframes;
+
 
       CreatePipeHandles(StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
 
@@ -6710,7 +6715,7 @@ begin
 
       // writeln('avant bytesRead');
       //FReadBytes := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024 *2);
-      FReadBytes := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024 *2);
+      FReadBytes := StreamIn[x].InPipe.Read(rawAACBuffer[0],PipeBufferSize);
 
       // writeln('StreamIn[x].Data.bytesRead ' + inttostr(StreamIn[x].Data.bytesRead));       
 
@@ -10758,14 +10763,14 @@ begin
     2:
        begin
 {$IF DEFINED(fdkaac)}
-         setlength(FOutputBuff, 1024 * 32);
+         setlength(FOutputBuff, StreamIn[x].Data.wantframes);
 
-         GetMem(rawAACBuffer,1024 * 32);
+         GetMem(rawAACBuffer,StreamIn[x].Data.wantframes);
 
          //  GetMem(rawAACBuffer,1024 * 32);
 
          //   writeln('avant bytesRead');
-         FBytesRead := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024 *16);
+         FBytesRead := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024 * 4);
 
          // writeln('StreamIn[x].Data.bytesRead ' + inttostr(StreamIn[x].Data.bytesRead));       
          //   writeln('avant aacDecoder_Fill');
@@ -10790,7 +10795,7 @@ begin
          while true do
            begin
              FErrorCode := aacDecoder_DecodeFrame(StreamIn[x].Data.HandleSt, PSmallInt(FOutputBuff),
-                           1024 *32, 0);
+                           StreamIn[x].Data.wantframes, 0);
 
              if (FErrorCode <> AAC_DECODER_ERROR.AAC_DEC_OK) then
                begin
@@ -10817,7 +10822,7 @@ begin
 
            end;
 
-{
+         {
                FCStreamInfo := nil;
               FCStreamInfo := aacDecoder_GetStreamInfo(StreamIn[x].Data.HandleSt);
               if ((not assigned(FCStreamInfo)) or (FCStreamInfo^.sampleRate <= 0)) then

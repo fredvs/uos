@@ -293,7 +293,7 @@ begin
     // Some audio web streaming
   //  edit4.text :=  'https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden';
  //   edit4.Text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
-  //   edit4.text := 'http://stream-uk1.radioparadise.com/mp3-128' ;
+   //  edit4.text := 'http://stream-uk1.radioparadise.com/mp3-128' ;
     //  edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
   //    edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
    //  edit4.text := 'https://github.com/fredvs/test/releases/download/fpc323/test.opus';
@@ -326,12 +326,15 @@ end;
 procedure TForm1.Button3Click(Sender: TObject);
 var
   samformat, audioformat: shortint;
+  sizebuff: integer;
 begin
   lerror.Caption := '';
   PlayerIndex1   := 0;
   // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
   // If PlayerIndex exists already, it will be overwritten...
 
+  sizebuff := 16384;
+  
   if mp3format.Checked = True then
     audioformat := 0 else
   if opusformat.Checked = True then
@@ -351,7 +354,7 @@ begin
   //// PlayerIndex : from 0 to what your computer can do !
   //// If PlayerIndex exists already, it will be overwriten...
 
-  In1Index := uos_AddFromURL(PlayerIndex1, PChar(edit4.Text), -1, samformat, 65536, audioformat, False);
+  In1Index := uos_AddFromURL(PlayerIndex1, PChar(edit4.Text), -1, samformat, sizebuff, audioformat, False);
   /////// Add a Input from Audio URL with custom parameters
   ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
@@ -368,7 +371,7 @@ begin
     radiogroup1.Enabled := False;
 
     Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.8, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-     uos_InputGetChannels(PlayerIndex1, In1Index), samformat, 65536, -1);
+     uos_InputGetChannels(PlayerIndex1, In1Index), samformat, sizebuff, -1);
 
     //// add a Output into device with custom parameters
     //////////// PlayerIndex : Index of a existing Player
