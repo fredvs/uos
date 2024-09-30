@@ -84,7 +84,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2240929;
+  uos_version : cint32 = 2241001;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -6640,6 +6640,34 @@ begin
       WriteLn('Begin fdkaac');
   {$endif}
   
+      
+      PipeBufferSize :=  1024 * 4;
+
+      CreatePipeHandles(StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
+
+      StreamIn[x].InPipe := TInputPipeStream.Create(StreamIn[x].InHandle);
+      StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
+      
+      
+
+      StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
+             
+      StreamIn[x].httpget.freeonterminate := true;
+
+      StreamIn[x].httpget.ICYenabled := ICYon;
+
+      //writeln('avant httpget.Start');
+      StreamIn[x].httpget.Start;
+      // writeln('apres httpget.Start');
+      
+      sleep(2000);
+      
+     if StreamIn[x].httpget.IsRunning then
+     begin
+    
+     if StreamIn[x].httpget.ICYenabled = true then
+        CheckSynchronize(1000);
+
       StreamIn[x].Data.HandleSt := aacDecoder_Open(TRANSPORT_TYPE.TT_MP4_ADTS, 1);
 
       if StreamIn[x].Data.HandleSt = nil then
@@ -6689,31 +6717,16 @@ begin
       StreamIn[x].Data.Poseek := 0;
       StreamIn[x].Data.TypePut := 2;
       StreamIn[x].Data.seekable := false;
-
-      PipeBufferSize :=  1024 * 4;
-
-      CreatePipeHandles(StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
-
-      StreamIn[x].InPipe := TInputPipeStream.Create(StreamIn[x].InHandle);
-      StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
-
-      StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
-      StreamIn[x].httpget.freeonterminate := true;
-
-      StreamIn[x].httpget.ICYenabled := ICYon;
-
-      StreamIn[x].httpget.FIsRunning := True;
-      //writeln('avant httpget.Start');
-      StreamIn[x].httpget.Start;
-      // writeln('apres httpget.Start');
-
-      if StreamIn[x].httpget.ICYenabled = true then
-        CheckSynchronize(1000);
-
-      sleep(500);
-      
       Err := 0;
-             
+     
+     end else
+     begin
+         result := -1;
+         StreamIn[x].httpget.Terminate;
+         sleep(100);
+         StreamIn[x].inpipe.destroy;
+         StreamIn[x].outpipe.destroy;
+     end;     
      // writeln('----------- FIN add URL -------------' ); 
 
     end;
@@ -6757,10 +6770,15 @@ begin
       StreamIn[x].httpget.ICYenabled := false;
       // TODO
 
-      StreamIn[x].httpget.FIsRunning := True;
+     // StreamIn[x].httpget.FIsRunning := True;
 
       StreamIn[x].httpget.Start;
       //  WriteLn('StreamIn[x].httpget.Start');
+      
+      sleep(2000);
+      
+     if StreamIn[x].httpget.IsRunning then
+     begin
 
       len := 1 ;
       len2 := 0 ;
@@ -6897,6 +6915,14 @@ begin
 
             end;
         end;
+        end else
+        begin
+         result := -1;
+         StreamIn[x].httpget.Terminate;
+         sleep(100);
+         StreamIn[x].inpipe.destroy;
+         StreamIn[x].outpipe.destroy;
+        end;
     end;
   {$endif}
 
@@ -6920,9 +6946,24 @@ begin
       StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
 
       StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
+      
+      //  if StreamIn[x].httpget = nil then  writeln('httpget = NIL') else  writeln('httpget = OK');
+    
       StreamIn[x].httpget.freeonterminate := true;
 
       StreamIn[x].httpget.ICYenabled := ICYon;
+      
+      if StreamIn[x].httpget.ICYenabled = true then
+       StreamIn[x].UpdateIcyMetaInterval ;
+
+      StreamIn[x].httpget.Start;
+
+      sleep(1000);
+      
+      if StreamIn[x].httpget.IsRunning then
+      begin
+        if StreamIn[x].httpget.ICYenabled = true then
+            CheckSynchronize(1000);
 
       StreamIn[x].Data.HandleSt := mpg123_new(Nil, Err);
 
@@ -6957,17 +6998,6 @@ begin
   {$IF DEFINED(uos_debug) and DEFINED(unix)}
           if err = 0 then writeln('===> mpg123_replace_reader_handle => ok.') ;
   {$endif}
-
-          if StreamIn[x].httpget.ICYenabled = true then
-            StreamIn[x].UpdateIcyMetaInterval ;
-
-
-          StreamIn[x].httpget.FIsRunning := True;
-          StreamIn[x].httpget.Start;
-
-          if StreamIn[x].httpget.ICYenabled = true then
-            CheckSynchronize(1000);
-
 
           Err :=  mpg123_open_handle(StreamIn[x].Data.HandleSt, Pointer(StreamIn[x].InPipe));
 
@@ -7073,6 +7103,15 @@ begin
 
             end;
         end;
+        end else
+        begin
+         result := -1;
+         StreamIn[x].httpget.Terminate;
+         sleep(100);
+         StreamIn[x].inpipe.destroy;
+         StreamIn[x].outpipe.destroy;
+        end; 
+         
     end;
   {$endif}
 

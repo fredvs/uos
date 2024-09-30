@@ -44,7 +44,6 @@ uses
   openssl, { This implements the procedure InitSSLInterface }
   opensslsockets;
 
-
 { TThreadHttpGetter }
 
 function TThreadHttpGetter.GetRedirectURL(AResponseStrings: TStrings): String;
@@ -84,25 +83,34 @@ procedure TThreadHttpGetter.Execute;
 var
   Http: TFPHTTPClient;
   URL: String;
+  err: shortint = 0;
 begin
   InitSSLInterface;
   Http := TFPHTTPClient.Create(nil);
   http.AllowRedirect := true;
+  http.IOTimeout := 2000;  
   URL := FWantedURL;
   repeat
   try
     Http.RequestHeaders.Clear;
     if ICYenabled = true then
     Http.OnHeaders := @Headers; 
+    // writeln(' avant http.get');
     Http.Get(URL, FOutStream);
-  except
+    // writeln(' apres http.get');
+    except
     on e: EHTTPClient do
     begin
+      //  writeln(' Http.ResponseStatusCode ' +inttostr(Http.ResponseStatusCode));
+      if (Http.ResponseStatusCode > 399) or (Http.ResponseStatusCode < 1) then // not accessible
+      begin 
+        FIsRunning:=False;
+        break;   
+      end;
       if Http.ResponseStatusCode = 302 then
       begin
         URL := GetRedirectURL(Http.ResponseHeaders);
-        if URL <> '' then
-          Continue;
+        if URL <> '' then Continue;
       end
       else
        Break;
@@ -117,7 +125,7 @@ begin
       Break;
   end;
   Break;
-  until False;
+  until (False);
 
   try
     //FOutStream.Free;
@@ -132,7 +140,7 @@ constructor TThreadHttpGetter.Create(AWantedURL: String; AOutputStream: TOutputP
 begin
   inherited Create(True);
   ICYenabled:=false;
-  // FIsRunning:=True;
+  FIsRunning:=True;
   FWantedURL:=AWantedURL;
   FOutStream:=AOutputStream;
   // Start;
