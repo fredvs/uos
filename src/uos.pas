@@ -6600,10 +6600,6 @@ var
   buffadd : tbytes;
   samprat : cint32;
 
-  {$IF DEFINED(fdkaac)}
-  rawAACBuffer:  PByte;
-  {$endif}
-
   {$IF DEFINED(mpg123)}
   mpinfo: Tmpg123_frameinfo;
   // BufferTag: array[1..128] of char; 
@@ -6643,44 +6639,7 @@ begin
  {$IF DEFINED(uos_debug) and DEFINED(unix)}
       WriteLn('Begin fdkaac');
   {$endif}
-
-      if FramesCount = -1 then
-        totsamples := 65536
-      else
-        totsamples := FramesCount;
-
-      if FramesCount = -1 then
-        StreamIn[x].Data.Wantframes :=  65536
-      else
-        StreamIn[x].Data.Wantframes := FramesCount ;
-
-      SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * 2);
-
-      // init buffer
-     GetMem(rawAACBuffer, StreamIn[x].Data.Wantframes);
-     PipeBufferSize :=  1024 * 4;
-
-      CreatePipeHandles(StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
-
-      StreamIn[x].InPipe := TInputPipeStream.Create(StreamIn[x].InHandle);
-      StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
-
-      StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
-      StreamIn[x].httpget.freeonterminate := true;
-
-      StreamIn[x].httpget.ICYenabled := ICYon;
-
-      // Commencer à récupérer les données du flux HTTP
-      StreamIn[x].httpget.FIsRunning := True;
-      //writeln('avant httpget.Start');
-      StreamIn[x].httpget.Start;
-      // writeln('apres httpget.Start');
-
-      if StreamIn[x].httpget.ICYenabled = true then
-        CheckSynchronize(1000);
-
-      sleep(10);
-
+  
       StreamIn[x].Data.HandleSt := aacDecoder_Open(TRANSPORT_TYPE.TT_MP4_ADTS, 1);
 
       if StreamIn[x].Data.HandleSt = nil then
@@ -6705,17 +6664,22 @@ begin
         end;
 
       // writeln('FIN INIT ------------- AACDecDecode');      
-      // Initialisation réussie
-
+      
       StreamIn[x].Data.LibOpen := 2;
 
       if SampleFormat = -1 then
         StreamIn[x].Data.SampleFormat := 2
       else StreamIn[x].Data.SampleFormat := SampleFormat;
+      
+       if FramesCount = -1 then
+        StreamIn[x].Data.Wantframes :=  65536
+      else
+        StreamIn[x].Data.Wantframes := FramesCount ;
 
       StreamIn[x].Data.Channels := 2;
-
+      StreamIn[x].Data.samplerate := 44100;
       StreamIn[x].Data.ratio := 2;
+     
       SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * StreamIn[x].Data.channels);
 
       StreamIn[x].Data.Output := OutputIndex;
@@ -6726,18 +6690,31 @@ begin
       StreamIn[x].Data.TypePut := 2;
       StreamIn[x].Data.seekable := false;
 
-      if FramesCount = -1 then
-        StreamIn[x].Data.Wantframes :=  65536 Div StreamIn[x].Data.Channels
-      else
-        StreamIn[x].Data.Wantframes := FramesCount ;
+      PipeBufferSize :=  1024 * 4;
 
-      SetLength(StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * StreamIn[x].Data.
-                Channels);
+      CreatePipeHandles(StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
+
+      StreamIn[x].InPipe := TInputPipeStream.Create(StreamIn[x].InHandle);
+      StreamIn[x].OutPipe := TOutputPipeStream.Create(StreamIn[x].OutHandle);
+
+      StreamIn[x].httpget := TThreadHttpGetter.Create(url, StreamIn[x].OutPipe);
+      StreamIn[x].httpget.freeonterminate := true;
+
+      StreamIn[x].httpget.ICYenabled := ICYon;
+
+      StreamIn[x].httpget.FIsRunning := True;
+      //writeln('avant httpget.Start');
+      StreamIn[x].httpget.Start;
+      // writeln('apres httpget.Start');
+
+      if StreamIn[x].httpget.ICYenabled = true then
+        CheckSynchronize(1000);
+
+      sleep(500);
+      
       Err := 0;
-
-      freemem(rawAACBuffer);
-
-      //  writeln('----------- FIN add URL -------------' ); 
+             
+     // writeln('----------- FIN add URL -------------' ); 
 
     end;
   {$endif}
@@ -10736,27 +10713,16 @@ begin
 
          GetMem(rawAACBuffer,StreamIn[x].Data.wantframes);
 
-         //  GetMem(rawAACBuffer,1024 * 32);
-
          //   writeln('avant bytesRead');
-         FBytesRead := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024 * 4);
+         FBytesRead := StreamIn[x].InPipe.Read(rawAACBuffer[0],1024);
 
          // writeln('StreamIn[x].Data.bytesRead ' + inttostr(StreamIn[x].Data.bytesRead));       
-         //   writeln('avant aacDecoder_Fill');
-
+        
          FByteFilled := FBytesRead;
          FErrorCode := aacDecoder_Fill(StreamIn[x].Data.HandleSt,@rawAACBuffer, FBytesRead,
                        FByteFilled);
 
          // writeLn('FByteFilled ' + inttostr(FByteFilled));
-
-{
-         if (FErrorCode <> AAC_DECODER_ERROR.AAC_DEC_OK) then
-           raise Exception.CreateFmt('Fill failed: %x', [Integer(FErrorCode)]);
-         if (FByteFilled <> 0) then
-           WriteLn(Format('Unable to feed all %d input bytes, %d bytes left', [FReadBytes,
-                   FByteFilled]));
-          }
 
          len2 := 0;
          len3 := 0;
@@ -10786,18 +10752,9 @@ begin
                  //   writeln((StreamIn[x].Data.Buffer[len + len2]));
                  inc(len3);
                end;
-
              len2 := len2 + FCStreamInfo^.frameSize;
-
            end;
-
-         {
-               FCStreamInfo := nil;
-              FCStreamInfo := aacDecoder_GetStreamInfo(StreamIn[x].Data.HandleSt);
-              if ((not assigned(FCStreamInfo)) or (FCStreamInfo^.sampleRate <= 0)) then
-                raise Exception.Create('No stream info');
-       }
-
+        
          //  StreamIn[x].Data.outframes := len3 * StreamIn[x].Data.Channels;
          StreamIn[x].Data.outframes := len3 * 2;
 
