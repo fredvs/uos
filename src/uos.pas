@@ -6958,7 +6958,7 @@ begin
 
       StreamIn[x].httpget.Start;
 
-      sleep(1000);
+      sleep(2000);
       
       if StreamIn[x].httpget.IsRunning then
       begin
