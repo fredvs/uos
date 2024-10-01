@@ -9,7 +9,7 @@ For fpc, fpGUI, MSEgui and LCL.
 
 With uos you can:
 
-. Listen to mp3, ogg, wav, flac, m4a, opus, mod, it, s3m, xm, cda, ... audio files.
+. Listen to mp3, ogg, wav, flac, m4a, aac, opus, mod, it, s3m, xm, cda, ... audio files.
 
 . Deal with 16, 32 integer or float 32 bit resolution.
 
