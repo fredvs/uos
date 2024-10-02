@@ -114,7 +114,6 @@ object Form1: TForm1
     Alignment = taCenter
     AutoSize = False
     TabOrder = 3
-    OnChange = Edit1Change
   end
   object Edit3: TEdit
     Left = 132
@@ -166,7 +165,6 @@ object Form1: TForm1
     Height = 105
     Top = 56
     Width = 105
-    OnClick = PaintBox1Click
     OnPaint = PaintBox1Paint
   end
   object Label4: TLabel
@@ -449,7 +447,6 @@ object Form1: TForm1
     Font.Name = 'Sans'
     ParentColor = False
     ParentFont = False
-    OnClick = Label8Click
   end
   object Edit6: TEdit
     Left = 132
@@ -507,6 +504,5 @@ object Form1: TForm1
     Font.Name = 'Sans'
     ParentColor = False
     ParentFont = False
-    OnClick = Label8Click
   end
 end

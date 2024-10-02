@@ -67,12 +67,9 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
-    procedure Edit1Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure Label8Click(Sender: TObject);
-    procedure PaintBox1Click(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure ClosePlayer1;
@@ -154,6 +151,12 @@ var
   opath: string;
 {$ENDIF}
 begin
+  {$if (defined(CPUAMD64) and defined(linux)) or (defined(CPUAMD64) and defined(windows))}
+  aacformat.visible := true;
+  {$else}
+  aacformat.visible := false;
+  {$endif}
+
   ordir := application.Location;
   uos_logo();
   {$IFDEF Windows}
@@ -450,11 +453,6 @@ begin
   uos_Stop(PlayerIndex1);
 end;
 
-procedure TForm1.Edit1Change(Sender: TObject);
-begin
-
-end;
-
 procedure uos_logo();
 var
   xpos, ypos: integer;
@@ -543,16 +541,6 @@ begin
     uos_free();
   end;  
     BufferBMP.free;
-end;
-
-procedure TForm1.Label8Click(Sender: TObject);
-begin
-
-end;
-
-procedure TForm1.PaintBox1Click(Sender: TObject);
-begin
-
 end;
 
 end.
