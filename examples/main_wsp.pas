@@ -293,11 +293,11 @@ begin
     // Some audio web streaming
   //  edit4.text :=  'https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden';
  //   edit4.Text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
-   //  edit4.text := 'http://stream-uk1.radioparadise.com/mp3-128' ;
+      edit4.text := 'http://stream-uk1.radioparadise.com/mp3-128' ;
     //  edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
   //    edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
    //  edit4.text := 'https://github.com/fredvs/test/releases/download/fpc323/test.opus';
-     edit4.text := 'https://radiorecord.hostingradio.ru/ps96.aacp';
+   //  edit4.text := 'https://radiorecord.hostingradio.ru/ps96.aacp';
 
     form1.Show;
   end;

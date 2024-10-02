@@ -466,7 +466,9 @@ object Form1: TForm1
     Top = 322
     Width = 100
     Caption = 'mp3 format'
+    Checked = True
     TabOrder = 18
+    TabStop = True
   end
   object opusformat: TRadioButton
     Left = 248
@@ -482,9 +484,7 @@ object Form1: TForm1
     Top = 322
     Width = 94
     Caption = 'aac format'
-    Checked = True
     TabOrder = 19
-    TabStop = True
   end
   object Edit8: TEdit
     Left = 132
