@@ -434,6 +434,8 @@ begin
     Button5.Enabled := True;
 
     application.ProcessMessages;
+    
+    sleep(1000);
  
     uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
   end
