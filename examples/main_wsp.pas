@@ -300,7 +300,7 @@ begin
     //  edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
   //    edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
    //  edit4.text := 'https://github.com/fredvs/test/releases/download/fpc323/test.opus';
-   //  edit4.text := 'https://radiorecord.hostingradio.ru/ps96.aacp';
+     edit4.text := 'https://radiorecord.hostingradio.ru/ps96.aacp';
 
     form1.Show;
   end;
@@ -449,8 +449,9 @@ end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-  ClosePlayer1;
-  uos_Stop(PlayerIndex1);
+   uos_Stop(PlayerIndex1);
+   sleep(1000);
+    ClosePlayer1;
 end;
 
 procedure uos_logo();

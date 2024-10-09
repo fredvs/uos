@@ -643,6 +643,7 @@ end;
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
   uos_free;
+  BufferBMP.free;
 end;
 
 end.

@@ -498,6 +498,7 @@ procedure TForm1.FormDestroy(Sender: TObject);
 begin
   if button1.Enabled = False then
     uos_free;
+  BufferBMP.free;  
 end;
 
 procedure TForm1.Label3Click(Sender: TObject);

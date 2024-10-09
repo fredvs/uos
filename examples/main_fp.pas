@@ -574,6 +574,7 @@ begin
   end;
   if button1.Enabled = False then
     uos_free;
+  BufferBMP.free;  
 end;
 
 end.

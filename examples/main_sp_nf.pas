@@ -812,6 +812,7 @@ begin
     PlayerIndex1.Free;
     uos_free;
   end;
+  BufferBMP.free;
 end;
 
 
