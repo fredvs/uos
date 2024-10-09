@@ -1,4 +1,4 @@
-/////////////////// Demo how to use United Openlib of Sound ////////////////////
+// Demo how to use United Openlib of Sound //
 
 unit main_wsp;
 
@@ -116,7 +116,7 @@ begin
     label7.Caption := 'Tempo: ' + floattostrf(tempo, ffFixed, 15, 1);
     label9.Caption := 'Pitch: ' + floattostrf(rate, ffFixed, 15, 1);
 
-    if radiogroup1.Enabled = False then   /// player1 was created
+    if radiogroup1.Enabled = False then   // player1 was created
       uos_SetPluginSoundTouch(PlayerIndex1, Plugin1Index, tempo, rate, checkbox2.Checked);
   end;
 
@@ -126,7 +126,7 @@ procedure TForm1.ResetPlugClick(Sender: TObject);
 begin
   TrackBar4.Position := 50;
   TrackBar5.Position := 50;
-  if radiogroup1.Enabled = False then   /// player1 was created
+  if radiogroup1.Enabled = False then   // player1 was created
     uos_SetPluginSoundTouch(PlayerIndex1, Plugin1Index, 1, 1, checkbox2.Checked);
 
 end;
@@ -300,7 +300,7 @@ begin
     //  edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
   //    edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
    //  edit4.text := 'https://github.com/fredvs/test/releases/download/fpc323/test.opus';
-     edit4.text := 'https://radiorecord.hostingradio.ru/ps96.aacp';
+   //  edit4.text := 'https://radiorecord.hostingradio.ru/ps96.aacp';
 
     form1.Show;
   end;
@@ -353,19 +353,19 @@ begin
     samformat := 2;
 
   uos_CreatePlayer(PlayerIndex1);
-  //// Create the player.
-  //// PlayerIndex : from 0 to what your computer can do !
-  //// If PlayerIndex exists already, it will be overwriten...
+  // Create the player.
+  // PlayerIndex : from 0 to what your computer can do !
+  // If PlayerIndex exists already, it will be overwriten...
 
   In1Index := uos_AddFromURL(PlayerIndex1, PChar(edit4.Text), -1, samformat, sizebuff, audioformat, False);
-  /////// Add a Input from Audio URL with custom parameters
-  ////////// URL : URL of audio file (like  'http://someserver/somesound.mp3')
-  ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
-  ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
-  //////////// FramesCount : default : -1 (1024)
-  //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus, 2: aac)
+  // Add a Input from Audio URL with custom parameters
+  // URL : URL of audio file (like  'http://someserver/somesound.mp3')
+  // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
+  // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
+  // FramesCount : default : -1 (1024)
+  // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus, 2: aac)
   // ICY data on/off
-  ////////// example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
+  // example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
   //  result : -1 nothing created, otherwise Input Index in array
 
   if In1Index <> -1 then
@@ -376,60 +376,60 @@ begin
     Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
      uos_InputGetChannels(PlayerIndex1, In1Index), samformat, sizebuff, -1);
 
-    //// add a Output into device with custom parameters
-    //////////// PlayerIndex : Index of a existing Player
-    //////////// Device ( -1 is default Output device )
-    //////////// Latency  ( -1 is latency suggested ) )
-    //////////// SampleRate : delault : -1 (44100)   /// here default samplerate of input
-    //////////// Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
-    //////////// SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
-    //////////// FramesCount : default : -1 (65536)
+    // add a Output into device with custom parameters
+    // PlayerIndex : Index of a existing Player
+    // Device ( -1 is default Output device )
+    // Latency  ( -1 is latency suggested ) )
+    // SampleRate : delault : -1 (44100)   // here default samplerate of input
+    // Channels : delault : -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
+    // SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
+    // FramesCount : default : -1 (65536)
     // ChunkCount : default : -1 (= 512)
     //  result : -1 nothing created, otherwise Output Index in array
 
     uos_InputSetLevelEnable(PlayerIndex1, In1Index, 2);
-    ///// set calculation of level/volume (usefull for showvolume procedure)
-    ///////// set level calculation (default is 0)
+    // set calculation of level/volume (usefull for showvolume procedure)
+    // set level calculation (default is 0)
     // 0 => no calcul
     // 1 => calcul before all DSP procedures.
     // 2 => calcul after all DSP procedures.
     // 3 => calcul before and after all DSP procedures.
 
     uos_LoopProcIn(PlayerIndex1, In1Index, @LoopProcPlayer1);
-    ///// Assign the procedure of object to execute inside the loop for a Input
-    //////////// PlayerIndex : Index of a existing Player
-    //////////// InIndex : Index of a existing Input
-    //////////// LoopProcPlayer1 : procedure of object to execute inside the loop
+    // Assign the procedure of object to execute inside the loop for a Input
+    // PlayerIndex : Index of a existing Player
+    // InIndex : Index of a existing Input
+    // LoopProcPlayer1 : procedure of object to execute inside the loop
 
     uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
-    ///// DSP Volume changer
-    ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing input
-    ////////// VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
-    ////////// VolRight : Right volume
+    // DSP Volume changer
+    // PlayerIndex1 : Index of a existing Player
+    // In1Index : InputIndex of a existing input
+    // VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
+    // VolRight : Right volume
 
     uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
-     TrackBar3.position / 100, True); /// Set volume
-    ////////// PlayerIndex1 : Index of a existing Player
-    ////////// In1Index : InputIndex of a existing Input
-    ////////// VolLeft : Left volume
-    ////////// VolRight : Right volume
-    ////////// Enable : Enabled
+     TrackBar3.position / 100, True); // Set volume
+    // PlayerIndex1 : Index of a existing Player
+    // In1Index : InputIndex of a existing Input
+    // VolLeft : Left volume
+    // VolRight : Right volume
+    // Enable : Enabled
 //{
     if plugsoundtouch = True then
     begin
       Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', uos_InputGetSampleRate(PlayerIndex1, In1Index),
         uos_InputGetChannels(PlayerIndex1, In1Index));
-      ///// add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
+      // add SoundTouch plugin with default samplerate(44100) / channels(2 = stereo)
 
-      ChangePlugSet(self); //// Change plugin settings
+      ChangePlugSet(self); // Change plugin settings
     end;
 //}
-    /////// procedure to execute when stream is terminated
+    // procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex1, @ClosePlayer1);
-    ///// Assign the procedure of object to execute at end
-    //////////// PlayerIndex : Index of a existing Player
-    //////////// ClosePlayer1 : procedure of object to execute inside the loop
+    // Assign the procedure of object to execute at end
+    // PlayerIndex : Index of a existing Player
+    // ClosePlayer1 : procedure of object to execute inside the loop
 
     Button3.Enabled := False;
     Button4.Enabled := False;
@@ -440,7 +440,7 @@ begin
     
     sleep(1000);
  
-    uos_Play(PlayerIndex1);  /////// everything is ready, here we are, lets play it...
+    uos_Play(PlayerIndex1);  // everything is ready, here we are, lets play it...
   end
   else
     lerror.Caption := 'URL did not accessed';
