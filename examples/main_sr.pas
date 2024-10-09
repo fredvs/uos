@@ -49,7 +49,6 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
-    procedure CheckBox2Change(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -83,9 +82,9 @@ procedure TForm1.ClosePlayer1;
 begin
   sleep(500);
   application.ProcessMessages;
-  button2.Enabled   := True;
-  button3.Enabled   := False;
-  button5.Enabled   := False;
+  button2.Enabled := True;
+  button3.Enabled := False;
+  button5.Enabled := False;
   CheckBox1.Enabled := True;
   CheckBox2.Enabled := True;
   if CheckBox2.Checked = True then
@@ -106,7 +105,7 @@ var
 {$ENDIF}
 begin
   uos_logo();
-      {$IFDEF Windows}
+  {$IFDEF Windows}
      {$if defined(cpu64)}
   edit1.Text := application.Location + 'lib\Windows\64bit\LibPortaudio-64.dll';
   edit2.Text := application.Location + 'lib\Windows\64bit\LibSndFile-64.dll';
@@ -115,9 +114,9 @@ begin
   edit2.Text := application.Location + 'lib\Windows\32bit\LibSndFile-32.dll';
    {$endif}
   Edit3.Text := application.Location + 'sound\testrecord.wav';
- {$ENDIF}
+  {$ENDIF}
 
-   {$IFDEF Darwin}
+  {$IFDEF Darwin}
    {$IFDEF CPU32}
   opath := application.location;
   opath := copy(ordir, 1, Pos('/uos', opath) - 1);
@@ -132,24 +131,24 @@ begin
   Edit2.Text := opath + '/lib/Mac/64bit/LibSndFile-64.dylib';
   Edit3.Text := application.Location + '/sound/testrecord.wav';
    {$ENDIF}
-    {$ENDIF}
+  {$ENDIF}
 
-    {$if defined(CPUAMD64) and defined(linux) }
+  {$if defined(CPUAMD64) and defined(linux) }
   Edit1.Text :=  application.Location + 'lib/Linux/64bit/LibPortaudio-64.so';
   Edit2.Text :=  application.Location + 'lib/Linux/64bit/LibSndFile-64.so';
    Edit3.Text := application.Location + 'sound/testrecord.wav';
-   {$ENDIF}
+  {$ENDIF}
   {$if defined(cpu86) and defined(linux)}
   Edit1.Text :=  application.Location + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit2.Text :=  application.Location + 'lib/Linux/32bit/LibSndFile-32.so';
    Edit3.Text := application.Location + 'sound/testrecord.wav';
   {$ENDIF}
-   {$if defined(linux) and defined(cpuarm)}
+  {$if defined(linux) and defined(cpuarm)}
   Edit1.Text :=  application.Location + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit2.Text :=  application.Location + 'lib/Linux/arm_raspberrypi/libsndfile-arm.so';
    Edit3.Text := application.Location + 'sound/testrecord.wav';
   {$ENDIF}
-   {$if defined(linux) and defined(cpuaarch64)}
+  {$if defined(linux) and defined(cpuaarch64)}
   Edit1.Text := application.Location + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
   Edit2.Text := application.Location + 'lib/Linux/aarch64_raspberrypi/libsndfile_aarch64.so';
    Edit3.Text := application.Location + 'sound/testrecord.wav';
@@ -161,7 +160,7 @@ begin
    Edit3.Text := application.Location + 'sound/testrecord.wav';
   {$ENDIF}
 
-   {$IFDEF freebsd}
+  {$IFDEF freebsd}
    {$if defined(cpu64)}
    Edit1.Text := application.Location +  'lib/FreeBSD/64bit/libportaudio-64.so';
   Edit2.Text := application.Location +  'lib/FreeBSD/64bit/libsndfile-64.so';
@@ -170,10 +169,7 @@ begin
   Edit2.Text := application.Location +  'lib/FreeBSD/32bit/libsndfile-32.so';
   {$endif}
   Edit3.Text := application.Location + 'sound/testrecord.wav';
-            {$ENDIF}
-
-
-  //
+  {$ENDIF}
 
 end;
 
@@ -185,24 +181,24 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
 
-{$if defined(CPUAMD64) and defined(linux) }
+  {$if defined(CPUAMD64) and defined(linux) }
      // For Linux amd64, check libsndfile.so
 if (Edit2.Text <> 'system') and (Edit2.Text <> '') then
   if uos_TestLoadLibrary(PChar(edit2.Text)) = false then
    edit2.Text := edit2.Text + '.2';
-{$endif}
+  {$endif}
 
   // Load the libraries
-   // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
+  // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
   if uos_LoadLib(PChar(edit1.Text), PChar(edit2.Text), nil, nil, nil, nil, nil) = 0 then
   begin
     form1.hide;
     button1.Caption := 'PortAudio and SndFile libraries are loaded...';
     button1.Enabled := False;
-    edit1.ReadOnly  := True;
-    edit2.ReadOnly  := True;
-    form1.Height    := 318;
-    form1.Position  := poScreenCenter;
+    edit1.ReadOnly := True;
+    edit2.ReadOnly := True;
+    form1.Height := 318;
+    form1.Position := poScreenCenter;
     form1.Show;
   end
   else
@@ -218,11 +214,10 @@ if (Edit2.Text <> 'system') and (Edit2.Text <> '') then
   end;
 end;
 
-
 procedure TForm1.Button2Click(Sender: TObject);
 var
-   outformatst : string;
-   outformat, numchan :integer;
+  outformatst: string;
+  outformat, numchan: integer;
 begin
   if (checkbox1.Checked = True) or (checkbox2.Checked = True) then
   begin
@@ -239,17 +234,19 @@ begin
     //uos_AddIntoFileFromMem(PlayerIndex1, Pchar(edit3.Text));
     // add Output into wav file (save record) from TMemoryStream  with default parameters
 
-     if bwav.checked then
-     begin
-    outformatst := '.wav';
-    outformat := 0;
-    end else
+    if bwav.Checked then
     begin
-    outformatst := '.ogg';
-    outformat := 3;
+      outformatst := '.wav';
+      outformat := 0;
+    end
+    else
+    begin
+      outformatst := '.ogg';
+      outformat := 3;
     end;
 
-     edit3.Text := 'rec_' +  UTF8Decode(formatdatetime('YY_MM_DD_HH_mm_ss', now)) + outformatst ;
+    edit3.Text := 'rec_' + UTF8Decode(formatdatetime('YY_MM_DD_HH_mm_ss', now)) +
+      outformatst;
 
     In1Index := uos_AddFromDevIn(PlayerIndex1);
     // add input from mic with custom parameters
@@ -261,26 +258,26 @@ begin
     // SampleFormat : -1 default : Int16 : (0: Float32, 1:Int32, 2:Int16)
     // FramesCount : -1 default : 4096   ( > = safer, < =  better latency )
 
-    numchan :=  uos_InputGetChannels(PlayerIndex1, In1Index);   
+    numchan := uos_InputGetChannels(PlayerIndex1, In1Index);
 
     // saving in a file using a File-Stream:
-   if CheckBox2.checked then
-     uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text), -1, -1, -1, 4096, outformat);
+    if CheckBox2.Checked then
+      uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text), -1, -1, -1, 4096, outformat);
 
-   //   function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
-   // Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
-   // Add a Output into audio wav file with custom parameters from TFileStream
-   // PlayerIndex : Index of a existing Player
-   // FileName : filename of saved audio wav file
-   // SampleRate : delault : -1 (44100)
-   // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...) if 2 it will force to stereo if input is mono
-   // SampleFormat : default : -1 (2:Int16) (1:Int32, 2:Int16)
-   // FramesCount : default : -1 (= 65536)
-   // FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom, 3:ogg);
+    //   function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
+    // Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
+    // Add a Output into audio wav file with custom parameters from TFileStream
+    // PlayerIndex : Index of a existing Player
+    // FileName : filename of saved audio wav file
+    // SampleRate : delault : -1 (44100)
+    // Channels : delault : -1 (2:stereo) (1:mono, 2:stereo, ...) if 2 it will force to stereo if input is mono
+    // SampleFormat : default : -1 (2:Int16) (1:Int32, 2:Int16)
+    // FramesCount : default : -1 (= 65536)
+    // FileFormat : default : -1 (wav) (0:wav, 1:pcm, 2:custom, 3:ogg);
 
-     //  saving in a Memory-Buffer:
-     //  SetLength(thebuffer, 0);
-     //  uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
+    //  saving in a Memory-Buffer:
+    //  SetLength(thebuffer, 0);
+    //  uos_AddIntoMemoryBuffer(PlayerIndex1, @thebuffer);
 
     // saving in a Memory-Stream:  
     // if thememorystream = nil then thememorystream := tmemorystream.create;
@@ -289,12 +286,14 @@ begin
     // saving in a file using a Menory-Stream:   
     // uos_AddIntoFileFromMem(PlayerIndex1, Pchar(filenameEdit4.filename));
     // add Output into wav file (save record)  with default parameters
-    
-     {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+
+    {$if defined(cpuarm) or defined(cpuaarch64)}
+    // need a lower latency
     out1index := uos_AddIntoDevOut(PlayerIndex1, -1, 0.8, -1, numchan, -1, -1, -1) ;
-         {$else}
-    out1index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, numchan, -1, -1, -1) ;
-     {$endif}
+    {$else}
+    out1index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, -1, numchan, -1, -1, -1);
+    {$endif}
+    
     // function uos_AddIntoDevOut(PlayerIndex: cint32; Device: cint32; Latency: CDouble;
     // SampleRate: CDouble; Channels: cint32; SampleFormat: cint32 ;
     // FramesCount: cint32 ; ChunkCount: cint32): cint32;
@@ -319,7 +318,7 @@ begin
     // VolRight : Right volume
 
     uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
-    TrackBar3.position / 100, True); // Set volume
+      TrackBar3.position / 100, True); // Set volume
 
     // procedure to execute when stream is terminated
     //   uos_EndProc(PlayerIndex1, @ClosePlayer1);
@@ -329,9 +328,9 @@ begin
 
     uos_Play(PlayerIndex1);  // everything is ready to play...
 
-    Button2.Enabled   := False;
-    Button3.Enabled   := True;
-    Button4.Enabled   := False;
+    Button2.Enabled := False;
+    Button3.Enabled := True;
+    Button4.Enabled := False;
     //CheckBox1.Enabled := False;
     CheckBox2.Enabled := False;
   end;
@@ -364,13 +363,14 @@ begin
 
   //  uos_AddIntoDevOut(PlayerIndex1); // add a Output into OUT device with default parameters
 
-     {$if defined(cpuarm) or defined(cpuaarch64)}  // need a lower latency
+  {$if defined(cpuarm) or defined(cpuaarch64)}
+  // need a lower latency
     uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index),
     uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1, -1);
-       {$else}
+  {$else}
   uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
     uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1, -1);
-       {$endif}
+  {$endif}
 
   // add a Output into device with custom parameters
   // PlayerIndex : Index of a existing Player
@@ -408,9 +408,9 @@ begin
 
   uos_Play(PlayerIndex1);  // everything is ready to play...
 
-  button4.Enabled   := False;
-  button5.Enabled   := True;
-  button2.Enabled   := False;
+  button4.Enabled := False;
+  button5.Enabled := True;
+  button2.Enabled := False;
   CheckBox1.Enabled := False;
   CheckBox2.Enabled := False;
 end;
@@ -420,27 +420,22 @@ begin
   uos_outputsetenable(0, out1index, checkbox1.Checked);
 end;
 
-procedure TForm1.CheckBox2Change(Sender: TObject);
-begin
-
-end;
-
 procedure uos_logo();
 var
   xpos, ypos: integer;
   ratio: double;
 begin
-  xpos      := 0;
-  ypos      := 0;
-  ratio     := 1;
+  xpos := 0;
+  ypos := 0;
+  ratio := 1;
   BufferBMP := TBitmap.Create;
   with form1 do
   begin
     form1.PaintBox1.Parent.DoubleBuffered := True;
     PaintBox1.Height := round(ratio * 116);
-    PaintBox1.Width  := round(ratio * 100);
+    PaintBox1.Width := round(ratio * 100);
     BufferBMP.Height := PaintBox1.Height;
-    BufferBMP.Width  := PaintBox1.Width;
+    BufferBMP.Width := PaintBox1.Width;
     BufferBMP.Canvas.AntialiasingMode := amOn;
     BufferBMP.Canvas.Pen.Width := round(ratio * 6);
     BufferBMP.Canvas.brush.Color := clmoneygreen;
@@ -496,8 +491,7 @@ begin
   end;
   if button1.Enabled = False then
     uos_free;
-    BufferBMP.free;
+  BufferBMP.Free;
 end;
 
 end.
-
