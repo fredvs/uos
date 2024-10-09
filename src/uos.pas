@@ -11735,13 +11735,8 @@ begin
       if PA_FileName =  'system' then PA_FileName :=  '' ;
       if Pa_Load(PA_FileName) then
         begin
-          //  {
           Result := 0;
           uosLoadResult.PAloadERROR := 0;
-          uosDefaultDeviceOut := Pa_GetDefaultOutPutDevice();
-          uosDefaultDeviceIn := Pa_GetDefaultInPutDevice();
-          uosDeviceCount := Pa_GetDeviceCount();
-          // }
         end
       else
         uosLoadResult.PAloadERROR := 2;
