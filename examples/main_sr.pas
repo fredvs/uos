@@ -262,7 +262,7 @@ begin
 
     // saving in a file using a File-Stream:
     if CheckBox2.Checked then
-      uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text), -1, -1, -1, 4096, outformat);
+      uos_AddIntoFile(PlayerIndex1, PChar(edit3.Text), -1, numchan, -1, 4096, outformat);
 
     //   function uos_AddIntoFile(PlayerIndex: cint32; Filename: PChar; SampleRate: cint32;
     // Channels: cint32; SampleFormat: cint32 ; FramesCount: cint32 ; FileFormat: cint32): cint32;
