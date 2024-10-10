@@ -1796,7 +1796,7 @@ begin
   Result := arfl;
 end;
 
-function CvSteroToMono(Inbuf: TDArFloat; len : cint32): TDArFloat;
+function CvStereoToMono(Inbuf: TDArFloat; len : cint32): TDArFloat;
 inline;
 var 
   x, y: cint32;
@@ -1827,6 +1827,37 @@ begin
     end
   else Result := Inbuf;
 end;
+
+
+function CvMonoToStereo(Inbuf: TDArFloat; len : cint32): TDArFloat;
+inline;
+var 
+  x, y: cint32;
+  arsh: TDArFloat;
+begin
+
+  if len > 0 then
+    begin
+      setlength(arsh, len * 2);
+
+      x := 0;
+      y := 0;
+
+      while x < (len )-1 do
+        begin
+          arsh[y]  := Inbuf[x] ;
+          inc(y);
+          arsh[y]  := Inbuf[x] ;
+          inc(y);
+          inc(x);
+        end;
+
+      Result := arsh;
+    end
+  else Result := Inbuf;
+end;
+
+
 
 function CvInt32ToFloat32(Inbuf: TDArFloat): TDArFloat;
 inline;
@@ -10149,7 +10180,7 @@ var
   st : string;
   i : integer;
 {$endif}
-  Bufferst2mo: TDArFloat;
+  BufferCv: TDArFloat;
 begin
   // Convert Input format into Output format if needed:
  {$IF DEFINED(uos_debug) and DEFINED(unix)}
@@ -10335,10 +10366,10 @@ begin
          if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
            begin
 
-             Bufferst2mo  := CvSteroToMono(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
+             BufferCv  := CvStereoToMono(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
 
              StreamOut[x].FileBuffer.DataMS.WriteBuffer(
-                                                        Bufferst2mo[0],
+                                                        BufferCv[0],
                                                         StreamIn[x2].Data.outframes * rat);
            end
          else
@@ -10388,9 +10419,23 @@ begin
     6: // give to ogg file from Tfilestream
        begin
          //writeln('ok ogg');
-
-
-  // if StreamIn[x2].Data.outframes = StreamOut[x].Data.Wantframes * StreamOut[x].Data.channels then
+         
+      if (StreamOut[x].Data.channels = 2) and (StreamIn[x2].Data.Channels = 1) then 
+       begin
+       BufferCv  := CvMonoToStereo(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
+       case StreamOut[x].Data.SampleFormat of 
+           0: StreamOut[x].Data.OutFrames := 
+                                             sf_write_float(StreamOut[x].Data.HandleSt,
+                                            @BufferCv[0], StreamIn[x2].Data.outframes * 2);
+           1: StreamOut[x].Data.OutFrames := 
+                                             sf_write_int(StreamOut[x].Data.HandleSt,
+                                            @BufferCv[0], StreamIn[x2].Data.outframes * 2);
+           2: StreamOut[x].Data.OutFrames := 
+                                            sf_write_short(StreamOut[x].Data.HandleSt,
+                                            @BufferCv[0], StreamIn[x2].Data.outframes * 2);
+       end;                                     
+       end else
+       begin          
          case StreamOut[x].Data.SampleFormat of 
            0: StreamOut[x].Data.OutFrames := 
                                              sf_write_float(StreamOut[x].Data.HandleSt,
@@ -10408,6 +10453,7 @@ begin
          sf_write_sync(StreamOut[x].Data.HandleSt);
          // writeln(inttostr(StreamOut[x].Data.OutFrames));
        end;
+      end; 
 
  {$endif}
 
@@ -10423,10 +10469,10 @@ begin
          if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
            begin
 
-             Bufferst2mo  := CvSteroToMono(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
+             BufferCv  := CvStereoToMono(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
 
              StreamOut[x].FileBuffer.Data.WriteBuffer(
-                                                      Bufferst2mo[0],
+                                                      BufferCv[0],
                                                       StreamIn[x2].Data.outframes * rat);
            end
          else
@@ -10438,7 +10484,14 @@ begin
                                                         rat);
              end
          else
-
+           if (StreamOut[x].FileBuffer.wChannels = 2) and (StreamIn[x2].Data.Channels = 1) then
+             begin
+               BufferCv  := CvMonoToStereo(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
+                    StreamOut[x].FileBuffer.Data.WriteBuffer(
+                                                      BufferCv[0],
+                                                      StreamIn[x2].Data.outframes * 4);
+            end  
+         else
            StreamOut[x].FileBuffer.Data.WriteBuffer(
                                                     StreamOut[x].Data.Buffer[0],  StreamIn[x2].Data.
                                                     outframes * StreamIn[x2].Data.Channels * rat);
@@ -10634,7 +10687,7 @@ begin
 
              if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
                begin
-                 Bufferst2mo :=  CvSteroToMono(BufferplugFL, Length(BufferplugFL) Div 2);
+                 Bufferst2mo :=  CvStereoToMono(BufferplugFL, Length(BufferplugFL) Div 2);
                  BufferplugSH := CvFloat32ToInt16(Bufferst2mo);
                end
              else
@@ -10652,7 +10705,7 @@ begin
 
              if (StreamOut[x].FileBuffer.wChannels = 1) and (StreamIn[x2].Data.Channels = 2) then
                begin
-                 Bufferst2mo :=  CvSteroToMono(BufferplugFL, Length(BufferplugFL) Div 2);
+                 Bufferst2mo :=  CvStereoToMono(BufferplugFL, Length(BufferplugFL) Div 2);
                  BufferplugSH := CvFloat32ToInt16(Bufferst2mo);
                end
              else
