@@ -366,10 +366,10 @@ begin
   {$if defined(cpuarm) or defined(cpuaarch64)}
   // need a lower latency
     uos_AddIntoDevOut(PlayerIndex1, -1, 0.3, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-    uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1, -1);
+    -1, -1, -1, -1);
   {$else}
   uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-    uos_InputGetChannels(PlayerIndex1, In1Index), -1, -1, -1);
+    -1, -1, -1, -1);
   {$endif}
 
   // add a Output into device with custom parameters
