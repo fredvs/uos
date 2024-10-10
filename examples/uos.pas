@@ -10435,7 +10435,7 @@ begin
                StreamOut[x].FileBuffer.Data.WriteBuffer(
                                                         StreamOut[x].Data.Buffer[0],  StreamIn[x2].
                                                         Data.outframes * StreamIn[x2].Data.ratio *
-                                                        rat * 2);
+                                                        rat);
              end
          else
 
