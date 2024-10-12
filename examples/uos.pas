@@ -84,7 +84,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2241001;
+  uos_version : cint32 = 2241012;
 
 {$IF DEFINED(bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32(700)) or ((CInt32(30)) shl 16);
@@ -405,8 +405,7 @@ type
     wAvgBytesPerSec: cint32;    // (wSamplesPerSec * wBitsPerSample * wChannels) / 8 => Byte Rate
     wBlockAlign: word;          // (wBitsPerSample * wChannels) / 8 => Bytes total per Sample
     wBitsPerSample: word;
-    //wcbSize: word;            // not part of wave header
-  end;
+   end;
 
 type 
   Tuos_FileBuffer = record
@@ -1908,7 +1907,6 @@ begin
 
     Header.wAvgBytesPerSec := roundmath(samplerate) * Header.wBlockAlign;
 
-    //Header.wcbSize := 0;
     f.WriteBuffer(Header, SizeOf(Header));
   except
 
@@ -1965,7 +1963,7 @@ begin
 
         Header.wAvgBytesPerSec := Data.wSamplesPerSec * Header.wBlockAlign;
         Header.wBitsPerSample := Data.wBitsPerSample;
-        //Header.wcbSize := 0;
+        
         f.WriteBuffer(Header, SizeOf(Header));
       except
         Result := HeaderWriteError;
@@ -6392,7 +6390,7 @@ begin
       Header.wBitsPerSample  := StreamOut[x].FileBuffer.wBitsPerSample;
       Header.wBlockAlign     := StreamOut[x].FileBuffer.wChannels * Header.wBitsPerSample Div 8;
       Header.wAvgBytesPerSec := StreamOut[x].FileBuffer.wSamplesPerSec * Header.wBlockAlign;
-      //Header.wcbSize := 0;
+      
       StreamOut[x].FileBuffer.Data.WriteBuffer(Header, SizeOf(Header));
       IDwav := 'data';
       StreamOut[x].FileBuffer.Data.WriteBuffer(IDwav, 4);
