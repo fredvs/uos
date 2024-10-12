@@ -399,13 +399,13 @@ type
 
 type 
   Tuos_WaveHeaderChunk = packed record
-    wFormatTag: smallint;
+    wFormatTag: word;
     wChannels: word;
-    wSamplesPerSec: cint32;
-    wAvgBytesPerSec: cint32;
-    wBlockAlign: word;
+    wSamplesPerSec: cint32;     // Sample Rate
+    wAvgBytesPerSec: cint32;    // (wSamplesPerSec * wBitsPerSample * wChannels) / 8 => Byte Rate
+    wBlockAlign: word;          // (wBitsPerSample * wChannels) / 8 => Bytes total per Sample
     wBitsPerSample: word;
-    wcbSize: word;
+    //wcbSize: word;            // not part of wave header
   end;
 
 type 
@@ -1908,7 +1908,7 @@ begin
 
     Header.wAvgBytesPerSec := roundmath(samplerate) * Header.wBlockAlign;
 
-    Header.wcbSize := 0;
+    //Header.wcbSize := 0;
     f.WriteBuffer(Header, SizeOf(Header));
   except
 
@@ -1965,7 +1965,7 @@ begin
 
         Header.wAvgBytesPerSec := Data.wSamplesPerSec * Header.wBlockAlign;
         Header.wBitsPerSample := Data.wBitsPerSample;
-        Header.wcbSize := 0;
+        //Header.wcbSize := 0;
         f.WriteBuffer(Header, SizeOf(Header));
       except
         Result := HeaderWriteError;
@@ -1992,12 +1992,14 @@ end;
 
 procedure WriteWave(FileName: UTF8String; Data: Tuos_FileBuffer);
 var 
-  wFileSize: cint32;
+  wFileSize: cuint32;               // this is unsigned!
+  wDataSize: cuint32;
   ID: array[0..3] of char;
 begin
-  Data.data.Position := 42;
+  Data.data.Position := 40;         // since SizeOf(Header) is not 18 rather 16, so 42 - 2
   //(after 'data')
-  Data.data.write(Data.data.Size, 4);
+  wDataSize := Data.data.Size - 44; // 44 is the start of data
+  Data.data.write (wDataSize, 4);
   ID := 'RIFF';
   Data.data.Seek(SizeOf(ID), soFromBeginning);
   wFileSize := Data.data.Size - SizeOf(ID) - SizeOf(wFileSize);
@@ -6387,13 +6389,10 @@ begin
       Header.wChannels := StreamOut[x].FileBuffer.wChannels;
 
       Header.wSamplesPerSec := StreamOut[x].FileBuffer.wSamplesPerSec;
-
-      Header.wBlockAlign := StreamOut[x].FileBuffer.wChannels * (StreamOut[x].FileBuffer.
-                            wBitsPerSample Div 8);
-
+      Header.wBitsPerSample  := StreamOut[x].FileBuffer.wBitsPerSample;
+      Header.wBlockAlign     := StreamOut[x].FileBuffer.wChannels * Header.wBitsPerSample Div 8;
       Header.wAvgBytesPerSec := StreamOut[x].FileBuffer.wSamplesPerSec * Header.wBlockAlign;
-      Header.wBitsPerSample := StreamOut[x].FileBuffer.wBitsPerSample;
-      Header.wcbSize := 0;
+      //Header.wcbSize := 0;
       StreamOut[x].FileBuffer.Data.WriteBuffer(Header, SizeOf(Header));
       IDwav := 'data';
       StreamOut[x].FileBuffer.Data.WriteBuffer(IDwav, 4);
