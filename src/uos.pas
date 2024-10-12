@@ -10415,7 +10415,22 @@ begin
        begin
          //writeln('ok ogg');
          
-      if (StreamOut[x].Data.channels = 2) and (StreamIn[x2].Data.Channels = 1) then 
+       if (StreamOut[x].Data.channels = 1) and (StreamIn[x2].Data.Channels = 2) then 
+       begin
+       BufferCv  := CvStereoToMono(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
+       case StreamOut[x].Data.SampleFormat of 
+           0: StreamOut[x].Data.OutFrames := 
+                                             sf_write_float(StreamOut[x].Data.HandleSt,
+                                            @BufferCv[0], StreamIn[x2].Data.outframes div 2);
+           1: StreamOut[x].Data.OutFrames := 
+                                             sf_write_int(StreamOut[x].Data.HandleSt,
+                                            @BufferCv[0], StreamIn[x2].Data.outframes div 2);
+           2: StreamOut[x].Data.OutFrames := 
+                                            sf_write_short(StreamOut[x].Data.HandleSt,
+                                            @BufferCv[0], StreamIn[x2].Data.outframes div 2);
+       end;                                     
+       end else        
+       if (StreamOut[x].Data.channels = 2) and (StreamIn[x2].Data.Channels = 1) then 
        begin
        BufferCv  := CvMonoToStereo(StreamOut[x].Data.Buffer, StreamIn[x2].Data.outframes);
        case StreamOut[x].Data.SampleFormat of 
