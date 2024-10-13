@@ -1,4 +1,5 @@
 {This unit is part of United Openlibraries of Sound (uos)}
+
 { License : modified LGPL.
   Fred van Stappen fiens@hotmail.com }
 
@@ -8,8 +9,9 @@ unit uos_flat;
 
 {$mode objfpc}{$H+}{$inline on}
 {$PACKRECORDS C}
-{$I uos_define.inc}
+
 // For custom configuration of directive to compiler ---> uos_define.inc
+{$I uos_define.inc}
 
 interface
 
@@ -40,10 +42,10 @@ uses
   {$endif}
 
 {$IF DEFINED (synthesizer)}
-// musical note ==> frequency in hertz
-// Latin: Do, Ré, Mi, Fa, Sol, La, Si 
-// Dièse = _d example la0_d 
 const
+// musical note ==> frequency in hertz
+// Latin: Do, Ré, Mi, Fa, Sol, La, Si
+// Dièse = _d example la0_d
 la0 = 55.0; 
 la0_d = 58.3;
 si0 = 61.7;
@@ -170,6 +172,7 @@ g4 = 1568.0;
 g4_s = 1661.2;
 a5 = 1760.0;
 {$endif}
+
   type
   TDArFloat = array of cfloat;
 
