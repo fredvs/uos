@@ -592,8 +592,8 @@ function uos_InputAddDSPVolume (PlayerIndex: cint32; InputIndex: cint32; VolLeft
 // VolRight : Right volume
 // Result : -1 nothing created, otherwise index of DSPIn in array
 // example DSPIndex1 := uos_OutputAddDSPVolume (0,oututIndex1,1,1);
-procedure uos_OutputAddDSPVolume (PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
-  VolRight: double);
+function uos_OutputAddDSPVolume (PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
+  VolRight: double) : cint32;
 
 // InputIndex : InputIndex of an existing Input
 // PlayerIndex : Index of an existing Player
@@ -892,11 +892,8 @@ procedure uos_PlayNoFreePaused (PlayerIndex: cint32; nloop: Integer = 0);
 // Works only when PlayNoFree () was used: free the player
 procedure uos_FreePlayer (PlayerIndex: cint32);
 
-// Resume playing after pause, looping not allowed
+// Resume playing after pause
 procedure uos_RePlay (PlayerIndex: cint32);
-
-// Resume playing after pause, looping allowed
-procedure uos_RePlay2 (PlayerIndex: cint32);
 
 // Stop playing and free thread
 procedure uos_Stop (PlayerIndex: cint32);
@@ -1059,13 +1056,16 @@ end;
 // Result : -1 nothing created, otherwise index of DSPIn in array
 // example DSPIndex1 := uos_InputAddDSPVolume (0,InputIndex1,1,1);
 
-procedure uos_OutputAddDSPVolume (PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
-  VolRight: double);
+function uos_OutputAddDSPVolume (PlayerIndex: cint32; OutputIndex: cint32; VolLeft: double;
+  VolRight: double) : cint32;
 begin
   if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
     if uosPlayersStat[PlayerIndex] = 1 then
       if assigned (uosPlayers[PlayerIndex]) then
+       begin
         uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex := uosPlayers[PlayerIndex].OutputAddDSPVolume (OutputIndex, VolLeft, VolRight);
+        Result := uosPlayers[PlayerIndex].StreamOut[OutputIndex].Data.DSPVolumeIndex;
+       end;  
 end;
 // DSP Volume changer
 // PlayerIndex : Index of an existing Player
@@ -2174,14 +2174,6 @@ begin
     if uosPlayersStat[PlayerIndex] = 1 then
       if assigned (uosPlayers[PlayerIndex]) then
         uosPlayers[PlayerIndex].RePlay ();
-end;
-
-procedure uos_RePlay2 (PlayerIndex: cint32);// Resume playing after pause
-begin
-  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
-    if uosPlayersStat[PlayerIndex] = 1 then
-      if assigned (uosPlayers[PlayerIndex]) then
-        uosPlayers[PlayerIndex].RePlay2 ();
 end;
 
 procedure uos_Stop (PlayerIndex: cint32);// Stop playing and if uos_Play () was used: free the player
