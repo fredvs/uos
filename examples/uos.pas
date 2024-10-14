@@ -2474,8 +2474,7 @@ end;
 procedure Tuos_Player.RePlay();
 // Resume Playing after Pause
 begin
-  if  (Status > 0) and (isAssigned = True) and
-     (not IsLooped) then
+  if  (Status > 0) and (isAssigned = True) then
     begin
       Status := 1;
       if isGlobalPause = true then
