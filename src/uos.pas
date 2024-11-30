@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2241012;
+  uos_version : cint32 = 2241130;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -8410,6 +8410,7 @@ var
 
   {$IF DEFINED (xmp)}
   mi: xmp_module_info;
+  fi: xmp_frame_info;
   {$endif}
 
   {$IF DEFINED (mpg123)}
@@ -8559,7 +8560,7 @@ begin
          {$endif}
               xmp_start_player (StreamIn[x].Data.HandleSt, 44100, 0);
               xmp_get_module_info (StreamIn[x].Data.HandleSt, mi);
-              // xmp_get_frame_info (StreamIn[x].Data.HandleSt , fi);
+              xmp_get_frame_info (StreamIn[x].Data.HandleSt , fi);
 
               StreamIn[x].Data.LibOpen := 5;
               StreamIn[x].Data.filename := FileName;
@@ -8602,9 +8603,9 @@ begin
               StreamIn[x].Data.track := '';
               StreamIn[x].Data.genre := '';
               StreamIn[x].Data.album := '';
-
-              StreamIn[x].Data.Length := 0;
-
+              
+              StreamIn[x].Data.Length := round(fi.total_time * StreamIn[x].Data.samplerate / 1000);
+                  
               err := 0;
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
               WriteLn ('XMP_open END OK');
@@ -9423,6 +9424,9 @@ begin
   {$IF DEFINED (opus)}
       4 : op_pcm_seek (StreamIn[x].Data.HandleOP, StreamIn[x].Data.Poseek);
   {$endif}
+  {$IF DEFINED (xmp)}
+      5 : xmp_seek_time(StreamIn[x].Data.HandleSt,round(StreamIn[x].Data.Poseek / (StreamIn[x].Data.samplerate / 1000)));
+   {$endif}    
     end;
 end;
 

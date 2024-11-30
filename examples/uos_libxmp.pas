@@ -317,6 +317,8 @@ var
   xmp_restart_module: procedure(ctx: xmp_context); cdecl; 
   xmp_channel_vol: function(ctx: xmp_context; channel: Integer; volume: Integer): Integer; cdecl;
   xmp_set_player: function(ctx: xmp_context; param: Integer; value: Integer): Integer; cdecl;
+  xmp_set_position: function(ctx: xmp_context; pos: Integer): Integer; cdecl;
+  xmp_seek_time: function(ctx: xmp_context; time: Integer): Integer; cdecl;
 
 // Not used yet...
 //function xmp_test_module_from_memory(const data: Pointer; size: LongInt; info: xmp_test_info): Integer; cdecl; external 'xmp';
@@ -397,6 +399,9 @@ Pointer(xmp_stop_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_stop
 Pointer(xmp_restart_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_restart_module'));
 Pointer(xmp_channel_vol):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_channel_vol'));
 Pointer(xmp_set_player):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_set_player'));
+Pointer(xmp_set_position):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_set_position'));
+Pointer(xmp_seek_time):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_seek_time'));
+
 end;
    Result := xmp_IsLoaded;
    ReferenceCounter:=1;   
