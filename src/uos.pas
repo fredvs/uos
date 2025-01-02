@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2241130;
+  uos_version : cint32 = 2250102;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -11071,15 +11071,12 @@ begin
                                                                Move (StreamIn[x].AACI.pData^,
                                                                     StreamIn[x].Data.Buffer[0],
                                                                     outBytes);
-                                                               StreamIn[x].AACI.lwDataLen := 
-
-                                                                                            outBytes
-                                                              ;
+                                                               StreamIn[x].AACI.lwDataLen := outBytes;
                                                              end;
           end;
           if StreamIn[x].AACI.lwDataLen > (StreamIn[x].AACI.BitsPerSample div 8) then
-            StreamIn[x].Data.outframes := trunc (StreamIn[x].AACI.lwDataLen Div (StreamIn[x].AACI.
-                                          BitsPerSample Div 8))
+            StreamIn[x].Data.outframes := trunc (StreamIn[x].AACI.lwDataLen / (StreamIn[x].AACI.
+                                          BitsPerSample / 8))
           else
             StreamIn[x].Data.outframes := 0;
 
