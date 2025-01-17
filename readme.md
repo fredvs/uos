@@ -26,6 +26,11 @@ With uos you can:
 uos can use: PortAudio, SndFile, Mpg123, Faad, Mp4ff, Opus, OpusFile, Libxmp, fdk-aac 
 audio libraries and SoundTouch, Bs2b audio-effect libraries.
 
+### Examples and Documentation
+Before using UOS or asking questions, we strongly recommend looking at the examples in the `examples` folder. These examples demonstrate how to correctly use UOS features and can answer many practical questions.
+
+[![Examples](https://img.shields.io/badge/Examples-Important-orange)](/examples)
+
 Included in the package:
 
 . Examples fpGUI, MSEgui, LCL and console.
