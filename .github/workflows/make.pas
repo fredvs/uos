@@ -83,7 +83,7 @@ uses
     LibPath: string = '/usr/lib/';
   begin
     OutLog(etDebug, #9'add:'#9 + Path);
-    if not FileExists(LibPath + ExtractFileNameWithoutExt(Path)) then
+    if not FileExists(LibPath + ExtractFileName(Path)) then
       if RunCommand('sudo', ['bash', '-c', 'cp %s %s; ldconfig --verbose'.Format([Path, LibPath])], Result, [poStderrToOutPut]) then
         OutLog(etInfo, #9'success!')
       else
