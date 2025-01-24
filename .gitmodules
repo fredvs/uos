@@ -1,0 +1,3 @@
+[submodule "use/fpGUI"]
+	path = use/fpGUI
+	url = git@github.com:graemeg/fpGUI.git
