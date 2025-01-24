@@ -1,3 +1,6 @@
 [submodule "use/fpGUI"]
 	path = use/fpGUI
 	url = git@github.com:graemeg/fpGUI.git
+[submodule "use/mseide-msegui"]
+	path = use/mseide-msegui
+	url = git@github.com:mse-org/mseide-msegui.git
