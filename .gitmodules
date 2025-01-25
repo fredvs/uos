@@ -1,6 +1,7 @@
-[submodule "use/fpGUI"]
-	path = use/fpGUI
-	url = git@github.com:graemeg/fpGUI.git
-[submodule "use/mseide-msegui"]
-	path = use/mseide-msegui
+
+[submodule ".github/use/mseide-msegui"]
+	path = .github/use/mseide-msegui
 	url = git@github.com:mse-org/mseide-msegui.git
+[submodule ".github/use/fpGUI"]
+	path = .github/use/fpGUI
+	url = git@github.com:graemeg/fpGUI.git
