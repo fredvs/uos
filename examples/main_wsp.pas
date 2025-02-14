@@ -200,18 +200,21 @@ begin
  {$if defined(cpu86) and defined(linux)}
   Edit1.Text := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
   Edit3.Text := ordir + 'lib/Linux/32bit/LibMpg123-32.so';
+  edit8.Text := ordir + 'lib/Linux/32bit/libfdk-aac-32.so';
   Edit5.Text := ordir + 'lib/Linux/32bit/plugin/LibSoundTouch-32.so';
 {$endif}
 
  {$if defined(linux) and defined(cpuaarch64)}
   Edit1.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libportaudio_aarch64.so';
   Edit3.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libmpg123_aarch64.so';
+  edit8.Text := ordir + 'lib/Linux/aarch64_raspberrypi/libfdk-aac-64.so';
   Edit5.Text := ordir + 'lib/Linux/aarch64_raspberrypi/plugin/libsoundtouch_aarch64.so';
  {$ENDIF}
 
  {$if defined(linux) and defined(cpuarm)}
   Edit1.Text := ordir + 'lib/Linux/arm_raspberrypi/libportaudio-arm.so';
   Edit3.Text := ordir + 'lib/Linux/arm_raspberrypi/libmpg123-arm.so'; 
+  edit8.Text := ordir + 'lib/Linux/arm_raspberrypi/libfdk-aac-64.so';
   Edit5.Text := ordir + 'lib/Linux/arm_raspberrypi/plugin/libsoundtouch-arm.so'; 
   {$ENDIF}
 
