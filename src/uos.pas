@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2250102;
+  uos_version : cint32 = 2250216;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -1290,7 +1290,23 @@ type
       // example :DSPoutIndex1 := OutputAddDSP (OutputIndex1,@volumeproc,nil,nil);
       function OutputAddDSP (OutputIndex: cint32; BeforeFunc: TFunc;
                             AfterFunc: TFunc; EndedFunc: TFunc; LoopProc: TProc): cint32;
+                            
+      // set level calculation (default is 0)
+      // 0 => no calcul
+      // 1 => calcul before all DSP procedures.
+      // 2 => calcul after all DSP procedures.
+      // 3 => calcul before and after all DSP procedures.
+      procedure OutputSetLevelEnable (OutputIndex: cint32; levelcalc : cint32);
+    
+      // OutputIndex : OutputIndex of existing Output
+      // result : left level from 0 to 1
+      function OutputGetLevelLeft (OutputIndex: cint32): double;  inline;
 
+      // OutputIndex : OutputIndex of existing Output
+      // result : right level from 0 to 1
+      function OutputGetLevelRight (OutputIndex: cint32): double;  inline;
+
+   
       // OutputIndex : OutputIndex of an existing Output
       // DSPoutIndex : DSPoutIndex of existing DSPout
       // Enable :  DSP enabled
@@ -1381,6 +1397,9 @@ type
 
       // to get level of buffer (volume)
       function DSPLevel (Data: Tuos_Data): Tuos_Data;
+      inline;
+
+      function DSPLevelOut (Data: Tuos_Data): Tuos_Data;
       inline;
 
       //  Convert mono 1 channel input to stereo 2 channels input.
@@ -2663,12 +2682,40 @@ begin
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelLeft;
 end;
 
+
 function Tuos_Player.InputGetLevelRight (InputIndex: cint32): double;
 // InputIndex : InputIndex of existing input
 // result : right level (volume) from 0 to 1
 begin
   Result := 0;
   if (isAssigned = True) then Result := StreamIn[InputIndex].Data.LevelRight;
+end;
+
+procedure Tuos_Player.OutputSetLevelEnable (OutputIndex: cint32; levelcalc : cint32);
+// set level calculation (default is 0)
+// 0 => no calcul
+// 1 => calcul before all DSP procedures.
+// 2 => calcul after all DSP procedures.
+// 3 => calcul before and after all DSP procedures.
+begin
+  if (isAssigned = True) then
+    StreamOut[OutputIndex].Data.levelEnable := levelcalc;
+end;
+
+function Tuos_Player.OutputGetLevelLeft (OutputIndex: cint32): double;
+// OutputIndex : OutputIndex of existing Output
+// result : left level (volume) from 0 to 1
+begin
+  Result := 0;
+  if (isAssigned = True) then Result := StreamOut[OutputIndex].Data.LevelLeft;
+end;
+
+function Tuos_Player.OutputGetLevelRight (OutputIndex: cint32): double;
+// InputIndex : InputIndex of existing input
+// result : right level (volume) from 0 to 1
+begin
+  Result := 0;
+  if (isAssigned = True) then Result := StreamOut[OutputIndex].Data.LevelRight;
 end;
 
 function Tuos_Player.InputFiltersGetLevelString (InputIndex: cint32): string;
@@ -4908,6 +4955,140 @@ begin
   Result := Data;
 end;
 
+
+function Tuos_Player.DSPLevelOut (Data: Tuos_Data): Tuos_Data;
+var 
+  x, ratio: cint32;
+  ps: PDArShort;
+  // if input is Int16 format
+  pl: PDArLong;
+  // if input is Int32 format
+  pf: PDArFloat;
+  // if input is Float32 format
+  mins, maxs: array[0..1] of cInt16;
+  // if input is Int16 format
+  minl, maxl: array[0..1] of cInt32;
+  // if input is Int32 format
+  minf, maxf: array[0..1] of cfloat;
+  // if input is Float32 format
+begin
+
+  case Data.SampleFormat of 
+    2:
+       begin
+         mins[0] := 32767;
+         mins[1] := 32767;
+         maxs[0] := -32768;
+         maxs[1] := -32768;
+         ps := @Data.Buffer;
+         x := 0;
+         while x < Data.OutFrames -1 do
+           begin
+             if ps^[x] < mins[0] then
+               mins[0] := ps^[x];
+             if ps^[x] > maxs[0] then
+               maxs[0] := ps^[x];
+
+             Inc (x, 1);
+
+             if ps^[x] < mins[1] then
+               mins[1] := ps^[x];
+             if ps^[x] > maxs[1] then
+               maxs[1] := ps^[x];
+
+             Inc (x, 1);
+           end;
+
+         if Abs (mins[0]) > Abs (maxs[0]) then
+           Data.LevelLeft := Sqrt (Abs (mins[0]) / 32768)
+         else
+           Data.LevelLeft := Sqrt (Abs (maxs[0]) / 32768);
+
+         if Abs (mins[1]) > Abs (maxs[1]) then
+           Data.Levelright := Sqrt (Abs (mins[1]) / 32768)
+         else
+           Data.Levelright := Sqrt (Abs (maxs[1]) / 32768);
+
+       end;
+
+    1:
+       begin
+         minl[0] := 2147483647;
+         minl[1] := 2147483647;
+         maxl[0] := -2147483648;
+         maxl[1] := -2147483648;
+         pl := @Data.Buffer;
+         x := 0;
+         while x < Data.OutFrames -1 do
+           begin
+             if pl^[x] < minl[0] then
+               minl[0] := pl^[x];
+             if pl^[x] > maxl[0] then
+               maxl[0] := pl^[x];
+
+             Inc (x, 1);
+
+             if pl^[x] < minl[1] then
+               minl[1] := pl^[x];
+             if pl^[x] > maxl[1] then
+               maxl[1] := pl^[x];
+
+             Inc (x, 1);
+           end;
+
+         if Abs (minl[0]) > Abs (maxl[0]) then
+           Data.LevelLeft := Sqrt (Abs (minl[0]) / 2147483648)
+         else
+           Data.LevelLeft := Sqrt (Abs (maxl[0]) / 2147483648);
+
+         if Abs (minl[1]) > Abs (maxl[1]) then
+           Data.Levelright := Sqrt (Abs (minl[1]) / 2147483648)
+         else
+           Data.Levelright := Sqrt (Abs (maxl[1]) / 2147483648);
+       end;
+
+    0:
+       begin
+         ratio := 1;
+
+         minf[0] := 1;
+         minf[1] := 1;
+         maxf[0] := -1;
+         maxf[1] := -1;
+         pf := @Data.Buffer;
+         x := 0;
+         while x < (Data.OutFrames div ratio)-1 do
+           begin
+             if pf^[x] < minf[0] then
+               minf[0] := pf^[x];
+             if pf^[x] > maxf[0] then
+               maxf[0] := pf^[x];
+
+             Inc (x, 1);
+
+             if pf^[x] < minf[1] then
+               minf[1] := pf^[x];
+             if pf^[x] > maxf[1] then
+               maxf[1] := pf^[x];
+
+             Inc (x, 1);
+           end;
+
+         if Abs (minf[0]) > Abs (maxf[0]) then
+           Data.LevelLeft := Sqrt (Abs (minf[0]))
+         else
+           Data.LevelLeft := Sqrt (Abs (maxf[0]));
+
+         if Abs (minf[1]) > Abs (maxf[1]) then
+           Data.Levelright := Sqrt (Abs (minf[1]))
+         else
+           Data.Levelright := Sqrt (Abs (maxf[1]));
+       end;
+  end;
+
+  Result := Data;
+end;
+
 function DSPLevelString (Buffer: TDArFloat; SampleFormat, Ratio : cint32; Var resfloatleft : cfloat;
                         Var resfloatright : cfloat): string;
 var 
@@ -6508,6 +6689,8 @@ begin
       x := Length (StreamOut) - 1;
 
       StreamOut[x].Data.Enabled := false;
+      StreamOut[x].Data.levelEnable := 0;
+      StreamOut[x].Data.levelArrayEnable := 0;
 
    {$IF DEFINED (portaudio)}
       StreamOut[x].PAParam.hostApiSpecificStreamInfo := Nil;
@@ -9991,12 +10174,12 @@ begin
     begin
    {$IF DEFINED (portaudio)}
       if (StreamOut[x].Data.HandleSt <> nil) and
-         (StreamOut[x].Data.TypePut = 1) then
+       (StreamOut[x].Data.TypePut = 1) then
         begin
           Pa_StopStream (StreamOut[x].Data.HandleSt);
           Pa_CloseStream (StreamOut[x].Data.HandleSt);
         end;
-   {$ENDIF}
+      {$ENDIF}
 
    {$IF DEFINED (shout)}
       if (StreamOut[x].Data.TypePut = 2) then
@@ -11071,12 +11254,15 @@ begin
                                                                Move (StreamIn[x].AACI.pData^,
                                                                     StreamIn[x].Data.Buffer[0],
                                                                     outBytes);
-                                                               StreamIn[x].AACI.lwDataLen := outBytes;
+                                                               StreamIn[x].AACI.lwDataLen := 
+
+                                                                                            outBytes
+                                                              ;
                                                              end;
           end;
           if StreamIn[x].AACI.lwDataLen > (StreamIn[x].AACI.BitsPerSample div 8) then
-            StreamIn[x].Data.outframes := trunc (StreamIn[x].AACI.lwDataLen / (StreamIn[x].AACI.
-                                          BitsPerSample / 8))
+            StreamIn[x].Data.outframes := trunc (StreamIn[x].AACI.lwDataLen Div (StreamIn[x].AACI.
+                                          BitsPerSample Div 8))
           else
             StreamIn[x].Data.outframes := 0;
 
@@ -11407,7 +11593,7 @@ begin
   {$endif}
 
                 if (StreamIn[x].Data.levelEnable = 1) or (StreamIn[x].Data.levelEnable = 3) then
-                  StreamIn[x].Data := DSPLevel (StreamIn[x].Data);
+                  StreamIn[x].Data := DSPLevel(StreamIn[x].Data);
 
                 // Adding level in array-level// ideal for pre-wave form
                 if (StreamIn[x].Data.levelArrayEnable = 1) then
@@ -11559,10 +11745,13 @@ begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
                  writeln ('copy buffer-in into buffer-out');
   {$endif}
-
-                 // DSPOut AfterBuffProc
+                
+                // calcul level before all dsp
+                if (Streamout[x].Data.levelEnable = 1) then
+                 Streamout[x].Data := DSPLevelOut(Streamout[x].Data);
+                  
+                // DSPOut AfterBuffProc
                  if (length (StreamOut[x].DSP) > 0) and uosIsActif then
-
                    DoDSPOutAfterBufProc (x);
 
                  // apply plugin (ex: SoundTouch Library)
@@ -11578,7 +11767,11 @@ begin
                      if Plugin[x3].Enabled = True then
                        plugenabled := True;
                  end;
-                 //
+                                 
+                // calcul level after all dsp
+                if (Streamout[x].Data.levelEnable = 2) then
+                 Streamout[x].Data := DSPLevelOut(Streamout[x].Data);
+  
 
                  if uosIsActif then
                  begin

@@ -827,6 +827,22 @@ function uos_InputGetLevelLeft (PlayerIndex: cint32; InputIndex: cint32): double
 // Result : right level (volume) from 0 to 1
 function uos_InputGetLevelRight (PlayerIndex: cint32; InputIndex: cint32): double;
 
+// set level calculation (default is 0)
+// OutputIndex : InputIndex of existing output
+// 0 => no calcul
+// 1 => calcul before all DSP procedures.
+// 2 => calcul after all DSP procedures.
+procedure uos_OutputSetLevelEnable (PlayerIndex: cint32; OutputIndex: cint32; enable : cint32);
+
+
+// OutputIndex : OutputIndex of existing Output
+// Result : left level (volume) from 0 to 1
+function uos_OutputGetLevelLeft (PlayerIndex: cint32; OutputIndex: cint32): double;
+
+// OutputIndex : OutputIndex of existing Output
+// Result : right level (volume) from 0 to 1
+function uos_OutputGetLevelRight (PlayerIndex: cint32; OutputIndex: cint32): double;
+
 // InputIndex : InputIndex of existing input
 // Result : list of left|right levels separed by $ character
 function uos_InputFiltersGetLevelString (PlayerIndex: cint32; InputIndex: cint32): string;
@@ -873,6 +889,10 @@ function uos_InputGetSampleRate (PlayerIndex: cint32; InputIndex: cint32): CDoub
 // InputIndex : InputIndex of existing input
 // Result : default channels
 function uos_InputGetChannels (PlayerIndex: cint32; InputIndex: cint32): cint32;
+
+// InputIndex : InputIndex of existing input
+// Result : library used: 0: sndfile, 1:mpg123, aac:2, 3:cdrom 4:opus, 5:xmp
+function uos_InputGetLibUsed (PlayerIndex: cint32; InputIndex: cint32): cint32;
 
 // Start playing with free at end as parameter and assign loop
 procedure uos_PlayEx (PlayerIndex: cint32; no_free: Boolean; nloop: Integer; paused: boolean= false); 
@@ -1970,6 +1990,18 @@ begin
         uosPlayers[PlayerIndex].OutputSetEnable (OutputIndex, enabled);
 end;
 
+procedure uos_OutputSetLevelEnable (PlayerIndex: cint32; OutputIndex: cint32; enable : cint32);
+// set level calculation (default is 0)
+// 0 => no calcul
+// 1 => calcul before all DSP procedures.
+// 2 => calcul after all DSP procedures.
+begin
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+        uosPlayers[PlayerIndex].OutputSetLevelEnable (OutputIndex, enable);
+end;
+
 procedure uos_InputSetPositionEnable (PlayerIndex: cint32; InputIndex: cint32; enable : cint32);
 // set position calculation (default is 0)
 // 0 => no calcul
@@ -2008,6 +2040,30 @@ begin
       if assigned (uosPlayers[PlayerIndex]) then
           Result := uosPlayers[PlayerIndex].InputGetLevelLeft (InputIndex);
 end;
+
+
+// OutputIndex : OutputIndex of existing Output
+// Result : left level (volume) from 0 to 1
+function uos_OutputGetLevelLeft (PlayerIndex: cint32; OutputIndex: cint32): double;
+begin
+  Result := 0;
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+          Result := uosPlayers[PlayerIndex].OutputGetLevelLeft (OutputIndex);
+end;
+
+// OutputIndex : OutputIndex of existing Output
+// Result : right level (volume) from 0 to 1
+function uos_OutputGetLevelRight (PlayerIndex: cint32; OutputIndex: cint32): double;
+begin
+  Result := 0;
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+          Result := uosPlayers[PlayerIndex].OutputGetLevelRight(OutputIndex);
+end;
+
 
 function uos_InputFiltersGetLevelString (PlayerIndex: cint32; InputIndex: cint32): string;
 // InputIndex : InputIndex of existing input
@@ -2056,6 +2112,17 @@ begin
     if uosPlayersStat[PlayerIndex] = 1 then
       if assigned (uosPlayers[PlayerIndex]) then
           Result := uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.Channels;
+end;
+
+function uos_InputGetLibUsed (PlayerIndex: cint32; InputIndex: cint32): cint32;
+begin
+  Result := 0;
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) and
+  (length (uosPlayers[PlayerIndex].StreamIn) > 0) and (InputIndex +1 <= length (uosPlayers[PlayerIndex].StreamIn))
+  then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+          Result := uosPlayers[PlayerIndex].StreamIn[InputIndex].Data.libopen;
 end;
 
 function uos_InputGetLevelRight (PlayerIndex: cint32; InputIndex: cint32): double;
