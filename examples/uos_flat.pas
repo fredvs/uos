@@ -834,7 +834,6 @@ function uos_InputGetLevelRight (PlayerIndex: cint32; InputIndex: cint32): doubl
 // 2 => calcul after all DSP procedures.
 procedure uos_OutputSetLevelEnable (PlayerIndex: cint32; OutputIndex: cint32; enable : cint32);
 
-
 // OutputIndex : OutputIndex of existing Output
 // Result : left level (volume) from 0 to 1
 function uos_OutputGetLevelLeft (PlayerIndex: cint32; OutputIndex: cint32): double;

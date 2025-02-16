@@ -2711,7 +2711,7 @@ begin
 end;
 
 function Tuos_Player.OutputGetLevelRight (OutputIndex: cint32): double;
-// InputIndex : InputIndex of existing input
+// OutputIndex : OutputIndex of existing Output
 // result : right level (volume) from 0 to 1
 begin
   Result := 0;
@@ -11254,15 +11254,12 @@ begin
                                                                Move (StreamIn[x].AACI.pData^,
                                                                     StreamIn[x].Data.Buffer[0],
                                                                     outBytes);
-                                                               StreamIn[x].AACI.lwDataLen := 
-
-                                                                                            outBytes
-                                                              ;
+                                                               StreamIn[x].AACI.lwDataLen := outBytes;
                                                              end;
           end;
           if StreamIn[x].AACI.lwDataLen > (StreamIn[x].AACI.BitsPerSample div 8) then
-            StreamIn[x].Data.outframes := trunc (StreamIn[x].AACI.lwDataLen Div (StreamIn[x].AACI.
-                                          BitsPerSample Div 8))
+            StreamIn[x].Data.outframes := trunc (StreamIn[x].AACI.lwDataLen / (StreamIn[x].AACI.
+                                          BitsPerSample / 8))
           else
             StreamIn[x].Data.outframes := 0;
 
