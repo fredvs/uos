@@ -158,7 +158,7 @@ type
     userData : Pointer) : CInt32;
   PPaStreamCallback = ^PaStreamCallback;  
 
-  PaStreamFinishedCallback = procedure(userData : Pointer);
+  PaStreamFinishedCallback = procedure(userData : Pointer); cdecl;
   PPaStreamFinishedCallback = ^PaStreamFinishedCallback;
 
   PaStreamInfo = record
@@ -249,13 +249,13 @@ type
   sampleFormat : PaSampleFormat;
   sampleRate : CDouble;
   framesPerBuffer : CULong;
-  streamCallback : PPaStreamCallback;
+  streamCallback : PaStreamCallback;
   userData : Pointer):PaError ; cdecl;
 
     var Pa_CloseStream: function(stream : PPaStream):PaError ; cdecl;
 
     var Pa_SetStreamFinishedCallback: function(stream : PPaStream;
-  streamFinishedCallback : PPaStreamFinishedCallback):PaError ; cdecl;
+  streamFinishedCallback : PaStreamFinishedCallback):PaError ; cdecl;
 
     var Pa_StartStream: function(stream : PPaStream):PaError ; cdecl;
 
