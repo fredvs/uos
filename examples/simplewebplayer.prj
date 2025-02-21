@@ -19,8 +19,8 @@ order16=0
 order17=0
 order18=0
 [projectoptions]
-projectdir=/home/fred/uos_xmp/examples
-projectfilename=/home/fred/uos_xmp/examples/simplewebplayer.prj
+projectdir=/home/fred/uos_work/examples
+projectfilename=/home/fred/uos_work/examples/simplewebplayer.prj
 findinfiledialog=77
  [findinfileadialogfo.dir]
  filenames=1
@@ -107,7 +107,7 @@ finddialog=8
  x=973
  y=345
  cx=312
- cy=291
+ cy=324
 replacedialog=15
  [replacedialogfo.promptonreplace]
  value=1
@@ -162,7 +162,7 @@ options=114
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=19
+ rowheight=22
  [projectoptionsfo.newfile]
  firsttab=0
  index=0
@@ -184,9 +184,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=168
+ y=167
  xprop=1
- yprop=0.2398316970547
+ yprop=0.24045261669024
  [projectoptionsfo.macrogrid]
  propcolwidthref=481
  sortdescend0=0
@@ -211,7 +211,7 @@ options=114
  value=
  [projectoptionsfo.makegroupbox]
  firsttab=0
- index=3
+ index=2
  [projectoptionsfo.exceptionsgrid]
  propcolwidthref=699
  width0=47
@@ -235,16 +235,16 @@ options=114
  index=2
  [projectoptionsfo]
  stackedunder=
- x=586
+ x=587
  y=119
  cx=759
  cy=776
 settings=8
  [settings_form]
  x=447
- y=138
- cx=482
- cy=724
+ y=43
+ cx=518
+ cy=820
  wsize=0
  active=1
  visible=1
@@ -511,9 +511,9 @@ makeoptionson=8
  127
  2
  0
- 71
+ 31
  2
- 61
+ 57
  4095
  4095
 compilerusedon=29
@@ -815,8 +815,9 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=FA_
+finddtext=checksyn
 findhistory=20
+ checksyn
  FA_
  fdkaac
  Tuos_Init.unloadlibCust
@@ -836,60 +837,19 @@ findhistory=20
  external
  fdkaacdecoder
  internal
- implementation
 findoptions=1
-editpos=10
- 0,0
- 0,154
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
- 0,86
- 0,1331
- 0,-1073741823
- 0,417
+editpos=2
+ 0,12
+ 0,582
 bookmarks0=0
 bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-bookmarks5=0
-bookmarks6=0
-bookmarks7=0
-bookmarks8=0
-bookmarks9=0
-sourcefiles=10
+sourcefiles=2
  ${PROJECTDIR}/simplewebplayer.lpr
  ${PROJECTDIR}/main_wsp.pas
- ${PROJECTDIR}/uos_aac.pas
- ${PROJECTDIR}/uos_flat.pas
- ${PROJECTDIR}/uos_define.inc
- ${PROJECTDIR}/uos_opus.pas
- ${PROJECTDIR}/uos.pas
- ${PROJECTDIR}/uos_fdkaacdecoder.pas
- ${PROJECTDIR}/uos_yeeep.pas
- ${PROJECTDIR}/uos_libxmp.pas
-relpaths=10
+relpaths=2
  simplewebplayer.lpr
  main_wsp.pas
- uos_aac.pas
- uos_flat.pas
- uos_define.inc
- uos_opus.pas
- uos.pas
- uos_fdkaacdecoder.pas
- uos_yeeep.pas
- uos_libxmp.pas
-ismoduletexts=10
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ismoduletexts=2
  0
  0
 modules=0
@@ -897,21 +857,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=10
- 0
- 1
- 9
- 7
- 2
- 3
- 4
- 5
- 6
- 8
 firsttab=0
-index=3
+index=1
 [layout]
-windowlayout=582
+windowlayout=525
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -925,13 +874,13 @@ windowlayout=582
  ny=0
  ncx=0
  ncy=0
- x=58
- y=67
- cx=1334
- cy=707
+ x=1
+ y=62
+ cx=1398
+ cy=724
  rcx=0
  rcy=0
- wsize=6
+ wsize=0
  active=1
  visible=1
  [findmessagefo.findtext]
@@ -953,15 +902,15 @@ windowlayout=582
  ny=0
  ncx=0
  ncy=0
- x=401
- y=181
- cx=895
- cy=568
+ x=495
+ y=172
+ cx=700
+ cy=467
  rcx=0
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -973,8 +922,8 @@ windowlayout=582
  ncy=0
  x=362
  y=177
- cx=987
- cy=262
+ cx=355
+ cy=107
  rcx=0
  rcy=0
  wsize=0
@@ -1045,7 +994,7 @@ windowlayout=582
  [projecttreefo]
  splitdir=0
  useroptions=268484715
- stackedunder=conflangfo
+ stackedunder=componentpalettefo
  parent=
  mdistate=3
  nx=0
@@ -1062,15 +1011,15 @@ windowlayout=582
  active=0
  visible=0
  [projecttreefo.grid]
- propcolwidthref=27
+ propcolwidthref=26
  width0=141
  sortdescend0=0
- width1=25
+ width1=24
  sortdescend1=0
  sorted=0
  col=1
  row=0
- rowheight=17
+ rowheight=28
  [stackfo]
  splitdir=0
  useroptions=268460137
@@ -1082,7 +1031,7 @@ windowlayout=582
  ncy=0
  x=337
  y=280
- cx=697
+ cx=427
  cy=144
  rcx=0
  rcy=0
@@ -1108,14 +1057,14 @@ windowlayout=582
  active=0
  visible=0
  [watchpointsfo.grid]
- propcolwidthref=332
+ propcolwidthref=352
  sortdescend0=0
  values1=0
  values1_ci=-1
  width1=33
  sortdescend1=0
  values2=0
- width2=149
+ width2=158
  sortdescend2=0
  width4=34
  sortdescend4=0
@@ -1124,12 +1073,12 @@ windowlayout=582
  width5=38
  sortdescend5=0
  values6=0
- width6=172
+ width6=184
  sortdescend6=0
  [breakpointsfo]
  splitdir=0
  useroptions=268451947
- stackedunder=projecttreefo
+ stackedunder=conflangfo
  parent=
  mdistate=0
  nx=0
@@ -1148,10 +1097,10 @@ windowlayout=582
  [breakpointsfo.bkptson]
  value=0
  [objectinspectorfo.grid]
- propcolwidthref=468
- width0=112
+ propcolwidthref=812
+ width0=194
  sortdescend0=0
- width1=350
+ width1=612
  sortdescend1=0
  [symbolfo]
  splitdir=0
@@ -1232,7 +1181,7 @@ windowlayout=582
  [watchfo.watchon]
  [watchfo.expression]
  [watchfo.watcheson]
- value=1
+ value=0
  [messagefo]
  splitdir=0
  useroptions=268550251
@@ -1244,8 +1193,8 @@ windowlayout=582
  ncx=0
  ncy=0
  x=0
- y=732
- cx=1427
+ y=610
+ cx=1384
  cy=88
  rcx=0
  rcy=0
@@ -1313,7 +1262,7 @@ windowlayout=582
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=confdebuggerfo
+ stackedunder=objectinspectorfo
  parent=
  mdistate=0
  nx=0
@@ -1343,8 +1292,8 @@ windowlayout=582
  ncy=0
  x=0
  y=0
- cx=1427
- cy=58
+ cx=1384
+ cy=63
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1355,11 +1304,11 @@ windowlayout=582
  mdistate=0
  nx=0
  ny=0
- ncx=1427
+ ncx=1384
  ncy=63
  x=0
  y=0
- cx=1427
+ cx=1384
  cy=63
  rcx=0
  rcy=0
@@ -1370,58 +1319,12 @@ windowlayout=582
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos_xmp/examples/uos_fdkaacdecoder.pas
- history=50
-  /home/fred/uos_xmp/examples/uos_yeeep.pas
-  /home/fred/uos_xmp/examples/uos_fdkaacdecoder.pas
-  /home/fred/uos_xmp/examples/uos2.pas
-  /home/fred/uos_xmp_aacwebsteam/examples/mainmse_sp.pas
-  /home/fred/uos_xmp_aacwebsteam/examples/main_sp.pas
-  /home/fred/uos_xmp_aacwebsteam/examples/uos.pas
-  /home/fred/uos_xmp_aacwebsteam/examples/uos_httpgetthread.pas
-  /home/fred/uos_xmp/examples/uos_aacdecoder.pas
-  /home/fred/uos_work/examples/consoleplaymemorystream.pas
-  /home/fred/uos_work/examples/conswebstream.pas
-  /home/fred/libfdk-aac-fpc/Examples/aac-dec/Project1.pas
-  /home/fred/libfdk-aac-fpc/Include/FDK_audio.pas
-  /home/fred/libfdk-aac-fpc/Include/aacdecoder_lib.pas
-  /home/fred/libfdk-aac-fpc/Examples/aac-dec/Project1.prj
-  /home/fred/libfdk-aac-fpc/Examples/aac-dec/Project1.dpr
-  /home/fred/uos_xmp/examples/uos_libxmp.pas
-  /home/fred/uos/examples/consoleplay.pas
-  /home/fred/uos/examples/uos_libxmp.pas
-  /home/fred/uos/examples/main_sp.pas
-  /home/fred/xmp_test/libxmp.pas
-  /home/fred/uos_xmp/examples/uos_define.inc
-  /home/fred/uos_xmp/examples/uos_aac.pas
-  /home/fred/uos_xmp/examples/uos.pas
-  /home/fred/uos_xmp/examples/mainmse_sp.pas
-  /home/fred/uos_xmp/examples/SimplePlayer_MSE.pas
-  /home/fred/uos_xmp/examples/uos_flat.pas
-  /home/fred/gme_pas_work/gme_test_console/libgme.pas
-  /home/fred/Downloads/project1_xmp_win_lin/unit1.pas
-  /home/fred/gme_pas_work/gme_test_console/gmetest.pas
-  /home/fred/Downloads/project1_gme_win_lin/gme.pas
-  /home/fred/Downloads/project1_gme_win_lin/unit1.pas
-  /home/fred/Downloads/project1_xmp_win_lin/project1.lpr
-  /home/fred/tron/project1_gme_win_lin/gme.pas
-  /home/fred/uos_xmp/examples/main_sp.pas
-  /home/fred/tron/project1_gme_win_lin/project1.lpr
-  /home/fred/tron/project1/gme.pas
-  /home/fred/tron/project1/unit1.pas
-  /home/fred/tron/project1/project1.prj
-  /home/fred/tron/project1/project1.lpr
-  /home/fred/uos/src/uos_libsndfile.pas
-  /home/fred/uos/src/uos_portaudio.pas
-  /home/fred/xmp_test/xmptest.prj
-  /home/fred/xmp_test/xmptest.pas
-  /home/fred/Downloads/apngopt-1.4-src/apngopt.cpp
-  /home/fred/SimpleWebStreamer/uos_soundtouch.pas
-  /home/fred/strumpract_work/src/msefiledialogx.pas
-  /home/fred/strumpract/src/msefiledialogx.pas
-  /home/fred/strumpract/src/splash.pas
-  /home/fred/strumpract/src/uos_flat.pas
-  /home/fred/strumpract/src/infosd.pas
+ value=/home/fred/uos_work/examples/main_wsp.pas
+ history=4
+  /home/fred/uos_work/examples/simplewebplayer.lpr
+  /home/fred/uos_work/examples/main_wsp.pas
+  /home/fred/ideU/src/main.pas
+  ${PROJECTDIR}/main.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1438,31 +1341,20 @@ windowlayout=582
  ncy=0
  x=0
  y=0
- cx=1427
- cy=668
+ cx=1384
+ cy=541
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=10
-  0
-  1
-  9
-  7
-  2
-  3
-  4
-  5
-  6
-  8
  firsttab=0
- index=3
+ index=1
  [confideufo.usedefaulteditoroptions]
  value=0
  [cpuc86_64fo]
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=componentpalettefo
+ stackedunder=confdebuggerfo
  parent=
  mdistate=0
  nx=0
@@ -1489,9 +1381,9 @@ windowlayout=582
  ncx=0
  ncy=0
  x=0
- y=61
- cx=1427
- cy=668
+ y=66
+ cx=1384
+ cy=541
  rcx=0
  rcy=0
 [targetconsole]

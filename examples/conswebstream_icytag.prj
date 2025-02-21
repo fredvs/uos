@@ -70,111 +70,16 @@ order17=0
 order18=0
 [projectoptions]
 projectdir=/home/fred/uos_work/examples
-projectfilename=/home/fred/uos_work/examples/conswebstream.prj
-findinfiledialog=94
- [findinfileadialogfo.subdirs]
- value=1
- [findinfileadialogfo.incurrentfile]
- value=0
- [findinfileadialogfo.inopenfiles]
- value=0
- [findinfileadialogfo.wholeword]
- value=0
- [findinfileadialogfo.indirectories]
- value=1
- [findinfileadialogfo.inprojectdir]
- value=0
- [findinfileadialogfo.casesensitive]
- value=0
- [findinfileadialogfo.mask]
- value="*.pas" "*.pp" "*.inc" 
- history=17
-  "*.pas" "*.pp" "*.inc" 
-  "*.pas" "*.pp" "*.inc" "*.mfm" 
-  "*.po"
-  "*.pas" "*.pp" "*.inc"  "*.*"
-  "*.pas" "*.pp" "*.inc"  "*.po"
-  "*.pas" "*.pp" "*.inc" "*.*" 
-  
-  "*.pas" "*.pp" "*.inc" "*.sh"
-  "*.pas" "*.pp" "*.inc" "*.*"
-  "*.pas" "*.pp" "*.inc"
-  "*.mfm"
-  "*.pas" "*.pp" "*.inc" "*.mfm"
-  "*.pas" "*.pp" "*.inc" "*.mfm" "*.*"
-  "*.pas" "*.pp" "*.inc" "*.mfm"  "*.*"
-  "*.pas" "*.pp" "*.inc" "*.mfm"  "*.prj"
-  "*.pas" "*.pp" "*.inc" "*.mfm
-  "*.pas" "*.pp" "*.inc" "*.prj"
- [findinfileadialogfo.dir]
- filenames=1
-  /home/fred/lazarus/
- filecolwidth=150
- x=466
- y=190
- cx=608
- cy=346
- filehistory=20
-  /home/fred/lazarus/
-  /home/fred/fpc-ootb_322/
-  /home/fred/mseide-msegui/
-  /home/fred/strumpract/
-  /home/fred/bgrabitmap-11.4/
-  /home/fred/fpc-ootb_322/installer/
-  /home/fred/ideu_po/
-  /home/fred/ideu_bin/
-  /home/fred/fpc331trunk/
-  /home/fred/strumpract/src/
-  /home/fred/ideu_github/
-  /home/fred/mseuniverse/
-  /home/fred/freepascal-ootb_320test/
-  /home/fred/biotray/
-  /home/fred/A Alphabetical listing of command line options_files/
-  /home/fred/svnfpc32/fixes_3_2/
-  /home/fred/mseide-msegui-avantcircular/
-  /home/fred/CodeTyphonIns700/CodeTyphonIns/
-  /home/fred/freepascal-ootb/
-  /home/fred/eschecs_mse/
- filefilterindex=0
- filefilter="*.pas" "*.pp" "*.inc"
- [findinfileadialogfo.findtext]
- value=DEFAULT_PITCH
- history=20
-  DEFAULT_PITCH
-  Screen.Fonts
-  fonts.
-  Screen
-  lfFaceName
-  EnumFontFamilies
-  screen
-  customsetLangFilePattern
-  LangDir
-  fixrows
-  messagefontname
-  usedefaulteditoroptions
-  editfontname
-  deflayout
-  encoding
-  fontname
-  backupfilecount
-  confideufo.encoding
-  fonts
-  TMSEFontRenderer
- [findinfileadialogfo]
- stackedunder=
- x=594
- y=247
- cx=346
- cy=308
+projectfilename=/home/fred/uos_work/examples/conswebstream_icytag.prj
 finddialog=8
  [finddialogfo.selectedonly]
  value=0
  [finddialogfo]
  stackedunder=
- x=789
- y=197
+ x=873
+ y=187
  cx=298
- cy=269
+ cy=324
 replacedialog=33
  [replacedialogfo.promptonreplace]
  value=1
@@ -223,31 +128,31 @@ options=114
  sortdescend3=0
  width4=118
  sortdescend4=0
- width5=93
+ width5=105
  sortdescend5=0
  width6=62
  sortdescend6=0
  width7=62
  sortdescend7=0
- width8=90
+ width8=78
  sortdescend8=0
  width9=354
  sortdescend9=0
  [projectoptionsfo.twidgetgrid4]
- propcolwidthref=704
+ propcolwidthref=724
  width0=96
  sortdescend0=0
  sortdescend1=0
  width2=73
  sortdescend2=0
- width3=337
+ width3=347
  sortdescend3=0
- width4=357
+ width4=368
  sortdescend4=0
  sorted=0
  col=-1073741823
  row=-1073741823
- rowheight=17
+ rowheight=22
  [projectoptionsfo.newfile]
  firsttab=0
  index=2
@@ -269,9 +174,9 @@ options=114
  sortdescend6=0
  [projectoptionsfo.macrosplitter]
  x=0
- y=209
+ y=205
  xprop=1
- yprop=0.39700374531835
+ yprop=0.3969465648855
  [projectoptionsfo.macrogrid]
  propcolwidthref=642
  sortdescend0=0
@@ -665,8 +570,8 @@ codetemplateedit=38
  wsize=0
  active=1
  visible=1
-mainfile=conswebstream.pas
-targetfile=conswebstream${EXEEXT}
+mainfile=conswebstream_icytag.pas
+targetfile=conswebstream_icytag${EXEEXT}
 messageoutputfile=
 makecommand=${COMPILER}
 makedir=
@@ -1219,61 +1124,61 @@ sigsettings=27
 defaultmake=4
 [breakpoints]
 on=27
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
+ -1
 path=27
- /usr/home/fred/ideu_prog/src/main.pas
- /home/fred/ideu/src/actionsmodule.pas
- /home/fred/ideu/src/main.pas
- /home/fred/ideu/src/main.pas
- /home/fred/ideu/src/msesyntaxpainter.pas
- /home/fred/ideu/src/msesyntaxedit.pas
- /home/fred/ideu/src/make.pas
- /home/fred/ideu/src/projectoptionsform.pas
- /home/fred/ideu/src/projectoptionsform.pas
- /home/fred/ideu/src/projectoptionsform.pas
- /home/fred/ideu/src/projectoptionsform.pas
- /home/fred/msegui/lib/common/kernel/linux/cwstring.pas
- /home/fred/ideu/src/main.pas
- /home/fred/ideu/src/actionsmodule.pas
- /home/fred/ideu/src/dialogfiles.pas
- /home/fred/ideu/src/templates/fpc_mse/default.prj
- /home/fred/ideu/src/commandorform.pas
- /home/fred/fpGUIlibDemo_python/fpgui-test.pyw
- /home/fred/ideu/src/make.pas
- /home/fred/ideu/src/sourceform.pas
- /home/fred/ideu/src/projectoptionsform.pas
- /home/fred/ideu/src/main.pas
- /home/fred/mseide-msegui/lib/common/kernel/windows/mseguiintf.pas
- /home/fred/mseide-msegui/lib/common/widgets/msewidgets.pas
- /home/fred/mseide-msegui/lib/common/image/mseformattgaread.pas
- /home/fred/mseide-msegui/lib/common/db/firebird.pas
- /home/fred/ideu/src/main.pas
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 line=27
  2129
  1164
@@ -1561,8 +1466,10 @@ envvarons=0
 [edit]
 hintwidth=382
 hintheight=0
-finddtext=caption
+finddtext=icystr
 findhistory=20
+ InputUpdateICY
+ fromurl
  caption
  ANSI_CHARSET
  GetCharSet
@@ -1581,16 +1488,14 @@ findhistory=20
  font
  conflangfo.sh
  conflangfo.ok
- setlangi
- uses
 findoptions=1
 editpos=1
- 0,160
+ 0,6
 bookmarks0=0
 sourcefiles=1
- ${PROJECTDIR}/conswebstream.pas
+ /home/fred/uos_work/examples/conswebstream_icytag.pas
 relpaths=1
- conswebstream.pas
+ conswebstream_icytag.pas
 ismoduletexts=1
  0
 modules=0
@@ -1601,7 +1506,7 @@ nomenumodules=0
 firsttab=0
 index=0
 [layout]
-windowlayout=522
+windowlayout=540
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1615,9 +1520,9 @@ windowlayout=522
  ny=0
  ncx=0
  ncy=0
- x=65
- y=70
- cx=1231
+ x=83
+ y=118
+ cx=1276
  cy=621
  rcx=0
  rcy=0
@@ -1641,7 +1546,7 @@ windowlayout=522
  ncx=0
  ncy=0
  x=495
- y=172
+ y=181
  cx=700
  cy=467
  rcx=0
@@ -1932,7 +1837,7 @@ windowlayout=522
  ncy=0
  x=0
  y=507
- cx=1217
+ cx=1262
  cy=88
  rcx=0
  rcy=0
@@ -2032,7 +1937,7 @@ windowlayout=522
  ncy=0
  x=0
  y=0
- cx=1217
+ cx=1262
  cy=63
  rcx=0
  rcy=0
@@ -2044,11 +1949,11 @@ windowlayout=522
  mdistate=0
  nx=0
  ny=0
- ncx=1217
+ ncx=1262
  ncy=71
  x=0
  y=0
- cx=1217
+ cx=1262
  cy=71
  rcx=0
  rcy=0
@@ -2059,10 +1964,28 @@ windowlayout=522
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/uos_work/examples/conswebstream.pas
- history=2
-  /home/fred/uos_work/examples/conswebstream.pas
-  ${PROJECTDIR}/main.pas
+ value=/home/fred/uos_work/examples/conswebstream_icytag.pas
+ history=20
+  /home/fred/uos_work/examples/conswebstream_icytag.pas
+  /home/fred/uos_work/examples/uos.pas
+  /home/fred/ideU_work/src/confideu.pas
+  /home/fred/swp_work/src/uos_define.inc
+  /home/fred/swp_work/src/uos_httpgetthread-ori.pas
+  /home/fred/swp_work/src/uos-icy.pas
+  /home/fred/swp_work/src/uos_icy.pas
+  /home/fred/swp_work/src/uos_httpgetthread_icy.pas
+  /home/fred/swp_work/src/uos_httpgetthread.pas
+  /home/fred/uos/examples/testfpguistream.pas
+  /home/fred/uos/examples/simpleplayer_fpGUI_noflat.pas
+  /home/fred/uos/examples/conswebstream.pas
+  /home/fred/Downloads/strumpract-ok/src/msefiledialogx.pas
+  /home/fred/swp_work/src/uos_mpg123.pas
+  /home/fred/swp_work/src/uos.pas
+  /home/fred/Downloads/strumpract-ok/src/uos_flat.pas
+  /home/fred/Downloads/strumpract-ok/src/uos.pas
+  /home/fred/Downloads/strumpract-ok/src/config.pas
+  /home/fred/Downloads/strumpract-ok/src/configlayout.pas
+  /home/fred/Downloads/strumpract-main/src/configlayout.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -2079,7 +2002,7 @@ windowlayout=522
  ncy=0
  x=0
  y=0
- cx=1217
+ cx=1262
  cy=438
  rcx=0
  rcy=0
@@ -2120,7 +2043,7 @@ windowlayout=522
  ncy=0
  x=0
  y=66
- cx=1217
+ cx=1262
  cy=438
  rcx=0
  rcy=0

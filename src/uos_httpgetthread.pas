@@ -24,8 +24,9 @@ type
   private
     FOutStream: TOutputPipeStream;
     FWantedURL: string;
-    FIcyMetaInt: int64;
+    FIcyMetaInt: int64;      // ICY metadata interval (bytes)
     FOnIcyMetaInt: TNotifyEvent;
+    MetaBuffer: TStringStream; // Buffer to hold metadata
     property OnIcyMetaInt: TNotifyEvent read FOnIcyMetaInt write FOnIcyMetaInt;
     procedure DoIcyMetaInt;
     function GetRedirectURL(AResponseStrings: TStrings): string;
@@ -47,8 +48,7 @@ uses
   openssl, { This implements the procedure InitSSLInterface }
   opensslsockets;
 
-           { TThreadHttpGetter }
-
+{ TThreadHttpGetter }
 function TThreadHttpGetter.GetRedirectURL(AResponseStrings: TStrings): string;
 var
   S: string;
@@ -100,11 +100,17 @@ begin
     repeat
       try
         Http.RequestHeaders.Clear;
+        
         if ICYenabled = True then
-          Http.OnHeaders := @Headers;
+        begin
+        Http.AddHeader('icy-metadata', '1');  // Enable ICY metadata
+        Http.OnHeaders := @Headers;
+        end;
+         
         // writeln(' avant http.get');
         Http.Get(URL, FOutStream);
         // writeln(' apres http.get');
+        sleep(500);
       except
         on e: EHTTPClient do
         begin
@@ -126,6 +132,7 @@ begin
         end;
         on e: Exception do
         begin
+          Break;
           //  WriteLn(e.Message);
         end
         else
@@ -135,7 +142,6 @@ begin
       Break;
     until (False);
     try
-      //FOutStream.Free;
       Http.Free;
     finally
       // make sure this is set to false when done
@@ -151,7 +157,6 @@ begin
   FIsRunning := True;
   FWantedURL := AWantedURL;
   FOutStream := AOutputStream;
-  // Start;
 end;
 
 end.

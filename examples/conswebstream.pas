@@ -10,9 +10,7 @@ uses
   cthreads,
    {$ENDIF}
   Classes,
-  // ctypes,
   SysUtils,
-  //uos_opusurl,
   uos_flat;
 
 var
@@ -91,7 +89,7 @@ begin
    // function uos_loadlib(PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName, FaadFileName,  opusfilefilename, libxmpfilename: PChar) : LongInt;
   // for web streaming => Mpg123 is needed
 
-  res := uos_LoadLib(PChar(PA_FileName), nil, PChar(MP_FileName), nil, nil, PChar(OF_FileName), nil);
+  res := uos_LoadLib(PChar(PA_FileName), nil, PChar(MP_FileName), nil, nil, nil, nil);
   writeln('');
   if res = 0 then
     writeln('===> Libraries are loaded.')
@@ -102,39 +100,23 @@ begin
   uos_CreatePlayer(PlayerIndex1); //// Create the player
   writeln('===> uos_CreatePlayer => ok');
 
-  //  theurl := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
-  // theurl := 'http://www.alouette.fr/alouette.m3u' ;
-  // theurl := 'http://broadcast.infomaniak.net/start-latina-high.mp3' ;
-  // theurl := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
-  // theurl := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
-  // theurl := 'https://sites.google.com/site/fredvsbinaries/willi.opus';
   theurl := 'http://stream-uk1.radioparadise.com/mp3-128';
-  // for opus file, set AudioFormat = 1 in AddFromURL()
-  //  theurl := 'https://sites.google.com/site/fredvsbinaries/guit_kungs.opus';
-
- {
- with TfpHttpClient.Create(nil) do
-   try   WriteLn(Get(theurl));
-    finally  Free;
-   end;
-   }
-
+ 
   writeln('Try to connect to ' + theurl);
-  // res := uos_AddFromURL(PlayerIndex1,pchar(theurl)) ;
+ 
   res := uos_AddFromURL(PlayerIndex1, PChar(theurl), -1, -1, -1, -1, False);
-
   ////////// URL : URL of audio file
   ////////// OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   ////////// SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   //////////// FramesCount : default : -1 (1024)
-  //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus)
+  //////////// AudioFormat : default : -1 (mp3) (0: mp3, 1: opus, 2:aac)
   ///////////// ICY data enabled 
 
   if res < 0 then
-    writeln('===> uos_AddFromURL => NOT OK:' + IntToStr(res))
+    writeln('===> uos_AddFromURL => NOT OK'
   else
   begin
-    writeln('===> uos_AddFromURL => OK :' + IntToStr(res));
+    writeln('===> uos_AddFromURL => OK'
 
     //// add a Output  => change framecount => 1024
 
@@ -154,37 +136,27 @@ begin
     // ChunkCount : default : -1 (= 512)
 
     if res2 <> -1 then
-      writeln('===> uos_AddIntoDevOut => ok :' + IntToStr(res2))
+      writeln('===> uos_AddIntoDevOut => ok')
     else
 
       writeln('===> uos_AddIntoDevOut => NOT ok');
     if res <> -1 then
     begin
       writeln('===> All ready to play.');
-      writeln('Press a key to play...');
-      writeln('After, press a key to exit...');
-
     end
-    else
-      writeln();
-    readln;
-
-    /// OK, let play it.
-    if res <> -1 then
+    else  writeln();
+    
+   if res <> -1 then
+   begin
+      writeln('===> OK, let play it'); 
+      sleep(1000);
       uos_Play(PlayerIndex1);
- { 
-    sleep(3000);
-   uos_inputupdateicy(PlayerIndex1,0,theicytag);
-   writeln('icy = ' + (theicytag));
-   sleep(3000);
-   uos_inputupdateicy(PlayerIndex1,0,theicytag);
-   writeln('icy = ' + (theicytag));
-// }
-
-    writeln('Press a key to exit...');
+      writeln('Press Enter to exit...');
+      readln;
+  end;  
   end;
-  readln;
+  writeln('Bye bye...');
+  uos_stop(PlayerIndex1);
   uos_free;
-
 end.
 

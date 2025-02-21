@@ -1238,7 +1238,7 @@ type
       inline;
 
 {$IF DEFINED (webstream) and DEFINED (mpg123)}
-      function InputUpdateICY (InputIndex: cint32; Var icy_data : pchar): integer;
+      function InputUpdateICY (InputIndex: cint32; icy_data : ppchar): integer;
       inline;
 {$endif}
 
@@ -2874,7 +2874,7 @@ end;
 
 {$IF DEFINED (webstream)}
 // for mp3 files only
-function Tuos_Player.InputUpdateICY (InputIndex: cint32; Var icy_data : pchar): integer;
+function Tuos_Player.InputUpdateICY (InputIndex: cint32; icy_data : ppchar): integer;
 begin
   Result := -1;
   if (isAssigned = True) then
@@ -6861,13 +6861,11 @@ begin
       StreamIn[x].InPipe := TInputPipeStream.Create (StreamIn[x].InHandle);
       StreamIn[x].OutPipe := TOutputPipeStream.Create (StreamIn[x].OutHandle);
       
-      
-
       StreamIn[x].httpget := TThreadHttpGetter.Create (url, StreamIn[x].OutPipe);
              
       StreamIn[x].httpget.freeonterminate := true;
-
-      StreamIn[x].httpget.ICYenabled := ICYon;
+      
+       StreamIn[x].httpget.ICYenabled := false;
 
       //writeln ('avant httpget.Start');
       StreamIn[x].httpget.Start;
@@ -6878,11 +6876,8 @@ begin
      if StreamIn[x].httpget.IsRunning then
      begin
     
-     if StreamIn[x].httpget.ICYenabled = true then
-        CheckSynchronize (1000);
-
       StreamIn[x].Data.HandleSt := aacDecoder_Open (TRANSPORT_TYPE.TT_MP4_ADTS, 1);
-
+      
       if StreamIn[x].Data.HandleSt = nil then
         begin
           // writeln ('NOT OK aacDecoder_Open ()');
@@ -6982,7 +6977,6 @@ begin
       StreamIn[x].httpget.freeonterminate := true;
       StreamIn[x].httpget.ICYenabled := false;
       // TODO
-
      // StreamIn[x].httpget.FIsRunning := True;
 
       StreamIn[x].httpget.Start;
@@ -7165,13 +7159,10 @@ begin
       StreamIn[x].httpget.freeonterminate := true;
 
       StreamIn[x].httpget.ICYenabled := ICYon;
-      
-      if StreamIn[x].httpget.ICYenabled = true then
-       StreamIn[x].UpdateIcyMetaInterval;
-
+   
       StreamIn[x].httpget.Start;
 
-      sleep (2000);
+      sleep (1000);
       
       if StreamIn[x].httpget.IsRunning then
       begin
@@ -7202,13 +7193,14 @@ begin
                              MPG123_ENC_SIGNED_16);
           end;
 
-
-
-// mpg123_replace_reader_handle (StreamIn[x].Data.HandleSt, @mpg_read_stream, @mpg_seek_url, @mpg_close_stream);
           mpg123_replace_reader_handle (StreamIn[x].Data.HandleSt,
                                        @mpg_read_stream, @mpg_seek_url, Nil);
-
+       
+         if ICYon then  mpg123_param(StreamIn[x].Data.HandleSt, MPG123_ICY_INTERVAL,
+              StreamIn[x].httpget.IcyMetaInt, 0) ; 
+           
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
+        if ICYon then writeln('httpget.IcyMetaInt = ' + inttostr(StreamIn[x].httpget.IcyMetaInt));
           if err = 0 then writeln ('===> mpg123_replace_reader_handle => ok.');
   {$endif}
 
@@ -7220,7 +7212,7 @@ begin
             writeln ('===> mpg123_open_handle => NOT ok.');
   {$endif}
 
-          sleep (10);
+        sleep (10);
         end;
 
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
@@ -11975,7 +11967,10 @@ begin
         begin
           Result := 0;
           uosLoadResult.PAloadERROR := 0;
-        end
+          uosDefaultDeviceOut := Pa_GetDefaultOutPutDevice();
+          uosDefaultDeviceIn := Pa_GetDefaultInPutDevice();
+          uosDeviceCount := Pa_GetDeviceCount();
+         end
       else
         uosLoadResult.PAloadERROR := 2;
     end
@@ -12439,6 +12434,7 @@ procedure Tuos_InStream.UpdateIcyMetaInterval;
 begin
   if Data.HandleSt<>nil then
     mpg123_param (Data.HandleSt, MPG123_ICY_INTERVAL, httpget.IcyMetaInt, 0);
+  
 end;
 {$endif}
 

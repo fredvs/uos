@@ -656,8 +656,8 @@ type
   Tmpg123_meta_check = function(mh: Tmpg123_handle): integer; cdecl;
   Tmpg123_id3 = function(mh: Tmpg123_handle; v1: PPmpg123_id3v1;
     v2: PPmpg123_id3v2): integer; cdecl;
-  Tmpg123_icy = function(mh: Tmpg123_handle; var icy_meta: PChar): integer; cdecl;
-  // Tmpg123_icy = function(mh: Tmpg123_handle; icy_meta: PPChar): integer; cdecl; 
+ // Tmpg123_icy = function(mh: Tmpg123_handle; var icy_meta: PChar): integer; cdecl;
+  Tmpg123_icy = function(mh: Tmpg123_handle; icy_meta: PPChar): integer; cdecl; 
   Tmpg123_icy2utf8 = function(icy_text: PChar): PChar; cdecl;
 
 const

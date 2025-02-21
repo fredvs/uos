@@ -8,6 +8,7 @@ interface
 
 uses
   uos_flat,
+  Math,
   Forms,
   Dialogs,
   SysUtils,
@@ -18,6 +19,9 @@ uses
   ComCtrls,
   ExtCtrls,
   Classes,
+  fphttpclient,
+  openssl, { This implements the procedure InitSSLInterface }
+  opensslsockets,
   Controls;
 
 type
@@ -38,6 +42,7 @@ type
     Edit8: TEdit;
     Label1: TLabel;
     Label11: TLabel;
+    Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
@@ -58,6 +63,7 @@ type
     Shape1: TShape;
     ShapeRight: TShape;
     ShapeLeft: TShape;
+    Timer1: TTimer;
     TrackBar1: TTrackBar;
     TrackBar3: TTrackBar;
     TrackBar4: TTrackBar;
@@ -70,6 +76,8 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure Label2Click(Sender: TObject);
+    procedure ontimericytag(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure ClosePlayer1;
@@ -91,6 +99,8 @@ var
   PlayerIndex1: cardinal;
   Out1Index, In1Index, DSP1Index, Plugin1Index: integer;
   plugsoundtouch: Boolean = False;
+  aboolicy: Boolean = False;
+  icystr: string;
 
 implementation
 
@@ -154,7 +164,7 @@ begin
   {$if (defined(CPUAMD64) and defined(linux)) or (defined(CPUAMD64) and defined(windows))}
   aacformat.visible := true;
   {$else}
-  aacformat.visible := false;
+  aacformat.Visible := False;
   {$endif}
 
   ordir := application.Location;
@@ -292,18 +302,19 @@ begin
     edit1.ReadOnly  := True;
     edit3.ReadOnly  := True;
     edit5.ReadOnly  := True;
-    form1.Height    := 498;
+    form1.Height    := 558;
     form1.Position  := poScreenCenter;
     form1.Caption   := 'Simple Web Player.    uos version ' + IntToStr(uos_getversion());
 
     // Some audio web streaming
-  //  edit4.text :=  'https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden';
- //   edit4.Text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
-      edit4.text := 'http://stream-uk1.radioparadise.com/mp3-128' ;
+    //  edit4.text :=  'https://radio.lotustechnologieslk.net:2020/stream/hirufmgarden';
+    //  edit4.Text := 'http://broadcast.infomaniak.net:80/alouette-high.mp3';
     //  edit4.text := 'http://www.hubharp.com/web_sound/BachGavotteShort.mp3' ;
-  //    edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
-   //  edit4.text := 'https://github.com/fredvs/test/releases/download/fpc323/test.opus';
-   //  edit4.text := 'https://radiorecord.hostingradio.ru/ps96.aacp';
+    //  edit4.text := 'http://www.jerryradio.com/downloads/BMB-64-03-06-MP3/jg1964-03-06t01.mp3' ;
+    //  edit4.text := 'https://github.com/fredvs/test/releases/download/fpc323/test.opus';
+    //  edit4.text := 'https://radiorecord.hostingradio.ru/ps96.aacp';
+
+    edit4.Text := 'http://stream-uk1.radioparadise.com/mp3-128';
 
     form1.Show;
   end;
@@ -311,6 +322,8 @@ end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 begin
+  if aboolicy then
+    timer1.Enabled        := False;
   uos_Pause(PlayerIndex1);
   Button4.Enabled         := True;
   Button5.Enabled         := False;
@@ -327,25 +340,31 @@ begin
   Button6.Enabled := True;
   application.ProcessMessages;
   uos_RePlay(PlayerIndex1);
+  if aboolicy then
+    timer1.Enabled := True;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 var
   samformat, audioformat: shortint;
   sizebuff: integer;
+  ticy: ppchar;
+  sicy: PChar;
 begin
   lerror.Caption := '';
+  label2.Caption := '';
   PlayerIndex1   := 0;
-  // PlayerIndex : from 0 to what your computer can do ! (depends of ram, cpu, ...)
-  // If PlayerIndex exists already, it will be overwritten...
+  aboolicy       := False;
+  sizebuff       := 8192;
 
-  sizebuff := 16384;
-  
   if mp3format.Checked = True then
-    audioformat := 0 else
-  if opusformat.Checked = True then
-    audioformat := 1  else
-  if aacformat.Checked = True then
+  begin
+    aboolicy    := True;
+    audioformat := 0;
+  end
+  else if opusformat.Checked = True then
+    audioformat := 1
+  else if aacformat.Checked = True then
     audioformat := 2;
 
   if radiobutton1.Checked = True then
@@ -360,7 +379,7 @@ begin
   // PlayerIndex : from 0 to what your computer can do !
   // If PlayerIndex exists already, it will be overwriten...
 
-  In1Index := uos_AddFromURL(PlayerIndex1, PChar(edit4.Text), -1, samformat, sizebuff, audioformat, False);
+  In1Index := uos_AddFromURL(PlayerIndex1, PChar(edit4.Text), -1, samformat, sizebuff, audioformat, True);
   // Add a Input from Audio URL with custom parameters
   // URL : URL of audio file (like  'http://someserver/somesound.mp3')
   // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
@@ -377,7 +396,7 @@ begin
     radiogroup1.Enabled := False;
 
     Out1Index := uos_AddIntoDevOut(PlayerIndex1, -1, -1, uos_InputGetSampleRate(PlayerIndex1, In1Index),
-     uos_InputGetChannels(PlayerIndex1, In1Index), samformat, sizebuff, -1);
+      uos_InputGetChannels(PlayerIndex1, In1Index), samformat, sizebuff, -1);
 
     // add a Output into device with custom parameters
     // PlayerIndex : Index of a existing Player
@@ -412,13 +431,13 @@ begin
     // VolRight : Right volume
 
     uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
-     TrackBar3.position / 100, True); // Set volume
+      TrackBar3.position / 100, True); // Set volume
     // PlayerIndex1 : Index of a existing Player
     // In1Index : InputIndex of a existing Input
     // VolLeft : Left volume
     // VolRight : Right volume
     // Enable : Enabled
-//{
+
     if plugsoundtouch = True then
     begin
       Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', uos_InputGetSampleRate(PlayerIndex1, In1Index),
@@ -427,7 +446,7 @@ begin
 
       ChangePlugSet(self); // Change plugin settings
     end;
-//}
+
     // procedure to execute when stream is terminated
     uos_EndProc(PlayerIndex1, @ClosePlayer1);
     // Assign the procedure of object to execute at end
@@ -440,10 +459,15 @@ begin
     Button5.Enabled := True;
 
     application.ProcessMessages;
-    
+
     sleep(1000);
- 
+
     uos_Play(PlayerIndex1);  // everything is ready, here we are, lets play it...
+
+    application.ProcessMessages;
+    if aboolicy then
+      timer1.Enabled := True;
+
   end
   else
     lerror.Caption := 'URL did not accessed';
@@ -452,9 +476,11 @@ end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-   uos_Stop(PlayerIndex1);
-   sleep(1000);
-    ClosePlayer1;
+  if aboolicy then
+    timer1.Enabled := False;
+  uos_Stop(PlayerIndex1);
+  sleep(1000);
+  ClosePlayer1;
 end;
 
 procedure uos_logo();
@@ -530,6 +556,10 @@ begin
   Form1.Height      := 260;
   ShapeLeft.Height  := 0;
   ShapeRight.Height := 0;
+  label2.Caption    := '';
+  SetExceptionMask(GetExceptionMask + [exZeroDivide] + [exInvalidOp] +
+    [exDenormalized] + [exOverflow] + [exUnderflow] + [exPrecision]);
+
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
@@ -541,10 +571,49 @@ begin
   end;
   if button1.Enabled = False then
   begin
-   if plugsoundtouch then uos_UnloadPlugin('soundtouch');
+    if plugsoundtouch then
+      uos_UnloadPlugin('soundtouch');
     uos_free();
-  end;  
-    BufferBMP.free;
+  end;
+  BufferBMP.Free;
+end;
+
+procedure TForm1.Label2Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.ontimericytag(Sender: TObject);
+var
+  ticy: ppchar;
+  aname, apicture: string;
+  sicy: PChar;
+begin
+  ticy := ppchar(sicy);
+  checksynchronize(uos_InputUpdateICY(PlayerIndex1, In1Index, ticy));
+
+  if ticy <> nil then
+  begin
+    sicy := ticy^;
+    if icystr <> sicy then
+    begin
+      if system.Pos('StreamTitle=', sicy) > 0 then
+      begin
+        aname := Copy(sicy, system.pos('StreamTitle=', sicy) + 12, Length(sicy));
+        aname := Copy(aname, 1, system.Pos(';', aname) - 1);
+      end;
+
+      if system.Pos('StreamUrl=', sicy) > 0 then
+      begin
+        apicture := Copy(sicy, system.pos('StreamUrl=', sicy) + 10, Length(sicy));
+        apicture := Copy(apicture, 2, system.Pos(';', apicture) - 1);
+        apicture := Copy(apicture, 1, system.Pos('''', apicture) - 1);
+      end;
+      label2.Caption := aname + #10 + apicture;
+      icystr := sicy;
+    end;
+  end;
+
 end;
 
 end.
