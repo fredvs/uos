@@ -113,10 +113,10 @@ begin
   ///////////// ICY data enabled 
 
   if res < 0 then
-    writeln('===> uos_AddFromURL => NOT OK'
+    writeln('===> uos_AddFromURL => NOT OK')
   else
   begin
-    writeln('===> uos_AddFromURL => OK'
+    writeln('===> uos_AddFromURL => OK');
 
     //// add a Output  => change framecount => 1024
 
