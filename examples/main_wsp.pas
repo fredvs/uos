@@ -19,9 +19,6 @@ uses
   ComCtrls,
   ExtCtrls,
   Classes,
-  fphttpclient,
-  openssl, { This implements the procedure InitSSLInterface }
-  opensslsockets,
   Controls;
 
 type
@@ -348,8 +345,6 @@ procedure TForm1.Button3Click(Sender: TObject);
 var
   samformat, audioformat: shortint;
   sizebuff: integer;
-  ticy: ppchar;
-  sicy: PChar;
 begin
   lerror.Caption := '';
   label2.Caption := '';

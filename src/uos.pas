@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2250216;
+  uos_version : cint32 = 2250221;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -1525,7 +1525,6 @@ function uos_loadPlugin (PluginName, PluginFilename: PChar) : cint32;
 {$IF DEFINED (soundtouch)}
 // From SoundTouch plugin
 function uos_GetBPM (TheBuffer: TDArFloat;  Channels: cint32; SampleRate: CDouble) : CDouble;
-inline;
 {$endif}
 
 // Unload Plugin...
@@ -2167,7 +2166,6 @@ end;
 
  {$IF DEFINED (soundtouch)}
 function uos_GetBPM (TheBuffer: TDArFloat;  Channels: cint32; SampleRate: CDouble) : CDouble;
-inline;
 // From SoundTouch plugin
 var 
   BPMhandle : THandle;

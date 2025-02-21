@@ -26,8 +26,6 @@ type
     FWantedURL: string;
     FIcyMetaInt: int64;      // ICY metadata interval (bytes)
     FOnIcyMetaInt: TNotifyEvent;
-    MetaBuffer: TStringStream; // Buffer to hold metadata
-    property OnIcyMetaInt: TNotifyEvent read FOnIcyMetaInt write FOnIcyMetaInt;
     procedure DoIcyMetaInt;
     function GetRedirectURL(AResponseStrings: TStrings): string;
     procedure Headers(Sender: TObject);
@@ -86,7 +84,6 @@ procedure TThreadHttpGetter.Execute;
 var
   Http: TFPHTTPClient;
   URL: string;
-  err: shortint = 0;
 begin
   URL          := FWantedURL;
   if pos(' ', URL) > 0 then
