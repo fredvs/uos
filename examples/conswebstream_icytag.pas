@@ -199,7 +199,7 @@ var
         Timer1.Enabled := True;
         inctime        := 0;
 
-        while inctime < 15 do
+        while inctime < 8 do
         begin
           sleep(2000);
           CheckSynchronize;

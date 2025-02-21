@@ -847,7 +847,7 @@ function uos_InputUpdateTag(PlayerIndex: cint32; InputIndex: cint32): Boolean;
 
 {$IF DEFINED (webstream) and DEFINED (mpg123)}
 // for mp3 only
-function uos_InputUpdateICY (PlayerIndex: cint32; InputIndex: cint32; icy_data : ppchar): integer;
+function uos_InputUpdateICY (PlayerIndex: cint32; InputIndex: cint32; var icy_data : ppchar): integer;
 {$endif}
 // Tag infos
 function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): PChar;
@@ -1098,7 +1098,7 @@ end;
  // example uos_OutputSetDSPVolume (0,InputIndex1,1,0.8,True);
 
 {$IF DEFINED (webstream) and DEFINED (mpg123)} 
-function uos_InputUpdateICY (PlayerIndex: cint32; InputIndex: cint32; icy_data : ppchar): integer;
+function uos_InputUpdateICY (PlayerIndex: cint32; InputIndex: cint32; var icy_data : ppchar): integer;
 // for mp3 only
 begin
   Result := -1;
