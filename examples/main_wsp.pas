@@ -580,16 +580,13 @@ end;
 
 procedure TForm1.ontimericytag(Sender: TObject);
 var
-  ticy: ppchar;
   aname, apicture: string;
   sicy: PChar;
 begin
-  ticy := ppchar(sicy);
-  checksynchronize(uos_InputUpdateICY(PlayerIndex1, In1Index, ticy));
+  checksynchronize(uos_InputUpdateICY(PlayerIndex1, In1Index, sicy));
 
-  if ticy <> nil then
+  if sicy <> nil then
   begin
-    sicy := ticy^;
     if icystr <> sicy then
     begin
       if system.Pos('StreamTitle=', sicy) > 0 then

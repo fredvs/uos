@@ -35,16 +35,13 @@ var
 
   procedure TConsoleApp.Timer1Exec(Sender: TObject);
   var
-    ticy: ppchar;
     aname, apicture, prefix: string;
     ares: integer;
     sicy: PChar;
   begin
-    ticy := ppchar(sicy);
-    checksynchronize(uos_InputUpdateICY(PlayerIndex1, InputIndex1, ticy));
-    if ticy <> nil then
+    checksynchronize(uos_InputUpdateICY(PlayerIndex1, InputIndex1, sicy));
+    if sicy <> nil then
     begin
-      sicy := ticy^;
       if icystr <> sicy then
       begin
         if system.Pos('StreamTitle=', sicy) > 0 then

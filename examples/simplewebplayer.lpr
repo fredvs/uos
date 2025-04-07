@@ -5,8 +5,8 @@ program simplewebplayer;
  {$DEFINE UseCThreads}
 
 uses
-  {$IFDEF UNIX} {$IFDEF UseCThreads}
   cmem,
+  {$IFDEF UNIX} {$IFDEF UseCThreads}
   cthreads,
   cwstring, {$ENDIF} {$ENDIF}
   Interfaces, // this includes the LCL widgetset

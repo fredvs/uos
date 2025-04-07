@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2250221;
+  uos_version : cint32 = 2250407;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -1238,7 +1238,7 @@ type
       inline;
 
 {$IF DEFINED (webstream) and DEFINED (mpg123)}
-      function InputUpdateICY (InputIndex: cint32; icy_data : ppchar): integer;
+      function InputUpdateICY (InputIndex: cint32; var icy_data : pchar): integer;
       inline;
 {$endif}
 
@@ -2872,7 +2872,7 @@ end;
 
 {$IF DEFINED (webstream)}
 // for mp3 files only
-function Tuos_Player.InputUpdateICY (InputIndex: cint32; icy_data : ppchar): integer;
+function Tuos_Player.InputUpdateICY (InputIndex: cint32; var icy_data : pchar): integer;
 begin
   Result := -1;
   if (isAssigned = True) then
