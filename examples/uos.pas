@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2250407;
+  uos_version : cint32 = 2250408;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -1104,7 +1104,7 @@ type
 // -1: all output, -2: no output, other cint32 : existing Output
       // SampleFormat : -1 default: Int16 (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default: -1 (4096)
-      // AudioFormat : default: -1 (mp3) (0: mp3, 1: opus)
+      // AudioFormat : default: -1 (auto-find) (0: mp3, 1: opus, 2:aac)
       // ICYon : ICY data on/off
       // example : InputIndex := AddFromURL ('http://someserver/somesound.mp3',-1,-1,-1,-1,false);
       function AddFromURL (URL: PChar; OutputIndex: cint32;
@@ -6801,7 +6801,7 @@ function Tuos_Player.AddFromURL (URL: PChar; OutputIndex: cint32;
 // OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
 // SampleFormat : -1 default: Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
-// AudioFormat : default: -1 (mp3) (0: mp3, 1: opus, 2:aac)
+// AudioFormat : default: -1 (auto-find) (0: mp3, 1: opus, 2:aac)
 // ICYon : ICY data on/off
 // example : InputIndex := AddFromURL ('http://someserver/somesound.mp3',-1,-1,-1,-1,-1, false);
 
@@ -6842,18 +6842,9 @@ begin
   StreamIn[x].Data.levelEnable := 0;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
-  
-  {$IF DEFINED (fdkaac)}
-  if (AudioFormat = 2)
-    then
-    begin
- {$IF DEFINED (uos_debug) and DEFINED (unix)}
-      WriteLn ('Begin fdkaac');
-  {$endif}
-  
-      
+        
       PipeBufferSize :=  1024 * 4;
-
+     
       CreatePipeHandles (StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
 
       StreamIn[x].InPipe := TInputPipeStream.Create (StreamIn[x].InHandle);
@@ -6863,14 +6854,24 @@ begin
              
       StreamIn[x].httpget.freeonterminate := true;
       
-       StreamIn[x].httpget.ICYenabled := false;
+       StreamIn[x].httpget.ICYenabled := ICYon;
 
       //writeln ('avant httpget.Start');
       StreamIn[x].httpget.Start;
       // writeln ('apres httpget.Start');
       
-      sleep (2000);
+      sleep (3000);
       
+    //  writeln('StreamIn[x].httpget.FormatType ' + inttostr(StreamIn[x].httpget.FormatType));
+      
+    {$IF DEFINED (fdkaac)}
+  if (StreamIn[x].httpget.FormatType = 2) or (AudioFormat = 2)
+    then
+    begin
+    {$IF DEFINED (uos_debug) and DEFINED (unix)}
+      WriteLn ('Begi fdkaac');
+    {$endif}   
+      sleep (1000); 
      if StreamIn[x].httpget.IsRunning then
      begin
     
@@ -6934,7 +6935,6 @@ begin
          StreamIn[x].outpipe.destroy;
      end;     
      // writeln ('----------- FIN add URL -------------' ); 
-
     end;
   {$endif}
 
@@ -6942,10 +6942,8 @@ begin
   WriteLn ('ac StreamIn[x].Data.LibOpen = ' + inttostr (StreamIn[x].Data.LibOpen));
  {$endif}
 
-  ////////////////// end aac
-
-  {$IF DEFINED (opus)}
-  if (AudioFormat = 1)
+ {$IF DEFINED (opus)}
+   if (StreamIn[x].httpget.FormatType = 1) or (AudioFormat = 1) // opus
      // or (AudioFormat = -1)
     then
     begin
@@ -6953,34 +6951,6 @@ begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
       WriteLn ('Begin opus test');
   {$endif}
-
-      if FramesCount= -1 then
-        totsamples := 4096
-      else
-        totsamples := FramesCount;
-
-      PipeBufferSize := totsamples * sizeOf (Single);
-      // * 2
-
-  {$IF DEFINED (uos_debug) and DEFINED (unix)}
-      WriteLn ('totsamples: ' + inttostr (totsamples));
-      WriteLn ('PipeBufferSize: ' + inttostr (PipeBufferSize));
-  {$endif}
-
-      CreatePipeHandles (StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
-      StreamIn[x].InPipe := TInputPipeStream.Create (StreamIn[x].InHandle);
-      StreamIn[x].OutPipe := TOutputPipeStream.Create (StreamIn[x].OutHandle);
-
-      StreamIn[x].httpget := TThreadHttpGetter.Create (url, StreamIn[x].OutPipe);
-      StreamIn[x].httpget.freeonterminate := true;
-      StreamIn[x].httpget.ICYenabled := false;
-      // TODO
-     // StreamIn[x].httpget.FIsRunning := True;
-
-      StreamIn[x].httpget.Start;
-      //  WriteLn ('StreamIn[x].httpget.Start');
-      
-      sleep (2000);
       
      if StreamIn[x].httpget.IsRunning then
      begin
@@ -7012,8 +6982,6 @@ begin
   {$endif}
 
       StreamIn[x].Data.HandleOP := 
-
-
 // op_open_callbacks (StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
                                    op_test_callbacks (StreamIn[x].InPipe, uos_callbacks, StreamIn[x].
                                    data.BufferTMP[0], PipeBufferSize, err);
@@ -7131,36 +7099,14 @@ begin
     end;
   {$endif}
 
-  {$IF DEFINED (mpg123)}
-  if (StreamIn[x].Data.LibOpen = -1) and ( (AudioFormat = 0) or (AudioFormat = -1)) then
+    {$IF DEFINED (mpg123)}
+  if (StreamIn[x].httpget.FormatType = 0) or (AudioFormat = 0) then
     begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
       WriteLn ('Begin mpg123');
- {$endif}
-
-      if FramesCount= -1 then
-        totsamples := $4000
-      else
-        totsamples := FramesCount;
-
-      PipeBufferSize := totsamples;
-
-      CreatePipeHandles (StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
-
-      StreamIn[x].InPipe := TInputPipeStream.Create (StreamIn[x].InHandle);
-      StreamIn[x].OutPipe := TOutputPipeStream.Create (StreamIn[x].OutHandle);
-
-      StreamIn[x].httpget := TThreadHttpGetter.Create (url, StreamIn[x].OutPipe);
+  {$endif}
       
-      //  if StreamIn[x].httpget = nil then  writeln ('httpget = NIL') else  writeln ('httpget = OK');
-    
-      StreamIn[x].httpget.freeonterminate := true;
-
-      StreamIn[x].httpget.ICYenabled := ICYon;
-   
-      StreamIn[x].httpget.Start;
-
-      sleep (1000);
+      StreamIn[x].httpget.ICYenabled := icyon;
       
       if StreamIn[x].httpget.IsRunning then
       begin
@@ -8203,14 +8149,16 @@ begin
           StreamIn[x].Data.Length := mpg123_length (StreamIn[x].Data.HandleSt);
 
             {$IF DEFINED (uos_debug) and DEFINED (unix)}
+       {
           writeln ('StreamIn[x].Data.Length = ' + inttostr (
-                  mpg123_length (StreamIn[x].Data.HandleSt));
+                  mpg123_length (StreamIn[x].Data.HandleSt);
           writeln ('StreamIn[x].Data.frames = ' + inttostr (
                   StreamIn[x].Data.frames));
           writeln ('END StreamIn[x].Data.samplerate = ' +
                   inttostr (roundmath (StreamIn[x].Data.samplerate)));
           writeln ('END StreamIn[x].Data.channels = ' +
                   inttostr (StreamIn[x].Data.channels));
+         }         
             {$endif}
         end
       else

@@ -34,6 +34,7 @@ type
   public
     FIsRunning: Boolean;
     ICYenabled: Boolean;
+    FormatType: integer;  // 0: mp3, 1:opus, 2:acc
     property IcyMetaInt: int64 read FIcyMetaInt;
     property IsRunning: Boolean read FIsRunning;
     constructor Create(AWantedURL: string; AOutputStream: TOutputPipeStream);
@@ -84,6 +85,8 @@ procedure TThreadHttpGetter.Execute;
 var
   Http: TFPHTTPClient;
   URL: string;
+  SL: TStringList;
+  s : string;
 begin
   URL          := FWantedURL;
   if pos(' ', URL) > 0 then
@@ -92,13 +95,30 @@ begin
   begin
     InitSSLInterface;
     Http       := TFPHTTPClient.Create(nil);
+    SL:= TStringList.Create;
     http.AllowRedirect := True;
     http.IOTimeout := 2000;
     repeat
       try
         Http.RequestHeaders.Clear;
+        HTTP.Head(URL, SL); // to define format type
         
-        if ICYenabled = True then
+        s := SL.Values['Content-Type'];
+        SL.free;
+        if system.pos('mpeg',s) > 0 then
+        FormatType := 0 else
+        if system.pos('aac',s) > 0 then
+        FormatType := 2 else
+        if system.pos('ogg',s) > 0 then
+        FormatType := 1 else
+        if system.pos('opus',s) > 0 then
+        FormatType := 1 else
+         FormatType := -1;
+        if FormatType = -1 then Break; 
+        
+        //writeln(s + ' ' + inttostr(FormatType));
+           
+        if (ICYenabled = True) and (FormatType = 0)  then
         begin
         Http.AddHeader('icy-metadata', '1');  // Enable ICY metadata
         Http.OnHeaders := @Headers;
@@ -140,6 +160,7 @@ begin
     until (False);
     try
       Http.Free;
+      
     finally
       // make sure this is set to false when done
       FIsRunning := False;

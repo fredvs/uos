@@ -413,7 +413,7 @@ function uos_AddFromURL (PlayerIndex: cint32; URL: PChar): cint32;
 // -1: all output, -2: no output, other cint32 : existing Output
 // SampleFormat : -1 default: Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
-// AudioFormat : default: -1 (mp3) (0: mp3, 1: opus)
+// AudioFormat : default: -1 (auto-find) (0: mp3, 1: opus, 2:aac)
 // example : InputIndex := AddFromURL (0,'http://someserver/somesound.mp3',-1,-1,-1,-1);
 function uos_AddFromURL (PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
   SampleFormat: cint32; FramesCount: cint32; AudioFormat: cint32; ICYon : boolean): cint32;
@@ -1728,14 +1728,14 @@ function uos_AddFromURL (PlayerIndex: cint32; URL: PChar; OutputIndex: cint32;
 // OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
 // SampleFormat : -1 default: Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
-// AudioFormat : default: -1 (mp3) (0: mp3, 1: opus)
+// AudioFormat : default: -1 (auto-find) (0: mp3, 1: opus, 2: aac)
 // ICYon : ICY data on/off  
 // Add an Input from Audio URL
 // URL : URL of audio file (like 'http://someserver/somesound.mp3')
 // OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
 // SampleFormat : -1 default: Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (65536)
-// AudioFormat : default: -1 (mp3) (0: mp3, 1: opus)
+// AudioFormat : default: -1 (auto-find) (0: mp3, 1: opus, 2: aac)
 // example : InputIndex := uos_AddFromURL ('http://someserver/somesound.mp3',-1,-1,-1,-1, false);
 begin
   Result := -1;

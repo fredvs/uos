@@ -49,13 +49,10 @@ type
     Label9: TLabel;
     lposition: TLabel;
     lerror: TLabel;
-    opusformat: TRadioButton;
-    aacformat: TRadioButton;
     PaintBox1: TPaintBox;
     RadioButton1: TRadioButton;
     RadioButton2: TRadioButton;
     RadioButton3: TRadioButton;
-    mp3format: TRadioButton;
     RadioGroup1: TRadioGroup;
     Shape1: TShape;
     ShapeRight: TShape;
@@ -158,12 +155,6 @@ var
   opath: string;
 {$ENDIF}
 begin
-  {$if (defined(CPUAMD64) and defined(linux)) or (defined(CPUAMD64) and defined(windows))}
-  aacformat.visible := true;
-  {$else}
-  aacformat.Visible := False;
-  {$endif}
-
   ordir := application.Location;
   uos_logo();
   {$IFDEF Windows}
@@ -352,15 +343,8 @@ begin
   aboolicy       := False;
   sizebuff       := 8192;
 
-  if mp3format.Checked = True then
-  begin
     aboolicy    := True;
-    audioformat := 0;
-  end
-  else if opusformat.Checked = True then
-    audioformat := 1
-  else if aacformat.Checked = True then
-    audioformat := 2;
+    audioformat := -1;    // auto-find
 
   if radiobutton1.Checked = True then
     samformat := 0;
@@ -380,7 +364,7 @@ begin
   // OutputIndex : OutputIndex of existing Output // -1: all output, -2: no output, other LongInt : existing Output
   // SampleFormat : -1 default : Int16 (0: Float32, 1:Int32, 2:Int16)
   // FramesCount : default : -1 (1024)
-  // AudioFormat : default : -1 (mp3) (0: mp3, 1: opus, 2: aac)
+  // AudioFormat : default : -1 (auto-find) (0: mp3, 1: opus, 2: aac)
   // ICY data on/off
   // example : InputIndex := AddFromFile(0,'http://someserver/somesound.mp3',-1,-1,-1);
   //  result : -1 nothing created, otherwise Input Index in array

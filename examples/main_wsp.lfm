@@ -457,32 +457,6 @@ object Form1: TForm1
     AutoSize = False
     TabOrder = 16
   end
-  object mp3format: TRadioButton
-    Left = 112
-    Height = 23
-    Top = 322
-    Width = 118
-    Caption = 'mp3 format'
-    Checked = True
-    TabOrder = 18
-    TabStop = True
-  end
-  object opusformat: TRadioButton
-    Left = 240
-    Height = 23
-    Top = 322
-    Width = 121
-    Caption = 'opus format'
-    TabOrder = 17
-  end
-  object aacformat: TRadioButton
-    Left = 376
-    Height = 23
-    Top = 322
-    Width = 109
-    Caption = 'aac format'
-    TabOrder = 19
-  end
   object Edit8: TEdit
     Left = 132
     Height = 27
@@ -490,7 +464,7 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
-    TabOrder = 20
+    TabOrder = 17
   end
   object Label11: TLabel
     Left = 132
