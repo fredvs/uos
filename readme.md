@@ -13,7 +13,7 @@ With uos you can:
 
 . Deal with 16, 32 integer or float 32 bit resolution.
 
-. Do internet audio streaming of mp3, opus and aac files.
+. Do internet audio streaming of mp3, opus and aac files with auto-find audio type.
 
 . Record all types of input into wav or ogg file with 16 or 32 bit resolution.
 
