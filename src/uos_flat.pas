@@ -848,6 +848,8 @@ function uos_InputUpdateTag(PlayerIndex: cint32; InputIndex: cint32): Boolean;
 {$IF DEFINED (webstream) and DEFINED (mpg123)}
 // for mp3 only
 function uos_InputUpdateICY (PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): integer;
+// Type of audio of url stream, 0:mp3, 1:opus, 2:acc
+function uos_InputGetURLAudioType(PlayerIndex: cint32; InputIndex: cint32): integer;
 {$endif}
 // Tag infos
 function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): PChar;
@@ -1107,7 +1109,19 @@ begin
       if assigned (uosPlayers[PlayerIndex]) then
         Result := uosPlayers[PlayerIndex].InputUpdateICY (InputIndex, icy_data);
 end; 
+// Type of audio of url stream, 0:mp3, 1:opus, 2:acc
+function uos_InputGetURLAudioType(PlayerIndex: cint32; InputIndex: cint32): integer;
+// for mp3 only
+begin
+  Result := -1;
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+        Result := uosPlayers[PlayerIndex].InputGetURLAudioType(InputIndex);
+end; 
 {$endif}
+
+
 
 function uos_InputUpdateTag(PlayerIndex: cint32; InputIndex: cint32): Boolean;
   // for mp3 and opus files only

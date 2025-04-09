@@ -106,19 +106,19 @@ begin
         s := SL.Values['Content-Type'];
         SL.free;
         if system.pos('mpeg',s) > 0 then
-        FormatType := 0 else
+        FormatType := 1 else
         if system.pos('aac',s) > 0 then
-        FormatType := 2 else
+        FormatType := 3 else
         if system.pos('ogg',s) > 0 then
-        FormatType := 1 else
+        FormatType := 2 else
         if system.pos('opus',s) > 0 then
-        FormatType := 1 else
-         FormatType := -1;
-        if FormatType = -1 then Break; 
+        FormatType := 2 else
+         FormatType := 0;
+        if FormatType = 0 then Break; 
         
         //writeln(s + ' ' + inttostr(FormatType));
            
-        if (ICYenabled = True) and (FormatType = 0)  then
+        if (ICYenabled = True) and (FormatType = 1)  then
         begin
         Http.AddHeader('icy-metadata', '1');  // Enable ICY metadata
         Http.OnHeaders := @Headers;
