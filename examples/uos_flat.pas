@@ -850,6 +850,12 @@ function uos_InputUpdateTag(PlayerIndex: cint32; InputIndex: cint32): Boolean;
 function uos_InputUpdateICY (PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): integer;
 // Type of audio of url stream, 0:mp3, 1:opus, 2:acc
 function uos_InputGetURLAudioType(PlayerIndex: cint32; InputIndex: cint32): integer;
+function uos_InputGetURLContentType(PlayerIndex: cint32; InputIndex: cint32): string;
+function uos_InputGetURLiceAudioInfo(PlayerIndex: cint32; InputIndex: cint32): string;
+function uos_InputGetURLicyDescription(PlayerIndex: cint32; InputIndex: cint32): string;
+function uos_InputGetURLicyGenre(PlayerIndex: cint32; InputIndex: cint32): string;
+function uos_InputGetURLicyName(PlayerIndex: cint32; InputIndex: cint32): string;
+function uos_InputGetURLicyUrl(PlayerIndex: cint32; InputIndex: cint32): string;
 {$endif}
 // Tag infos
 function uos_InputGetTagTitle(PlayerIndex: cint32; InputIndex: cint32): PChar;
@@ -1118,10 +1124,62 @@ begin
     if uosPlayersStat[PlayerIndex] = 1 then
       if assigned (uosPlayers[PlayerIndex]) then
         Result := uosPlayers[PlayerIndex].InputGetURLAudioType(InputIndex);
-end; 
+end;
+
+function uos_InputGetURLContentType(PlayerIndex: cint32; InputIndex: cint32): string;
+begin
+  Result := '';
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+        Result := uosPlayers[PlayerIndex].InputGetURLContentType(InputIndex);
+end;
+
+function uos_InputGetURLiceAudioInfo(PlayerIndex: cint32; InputIndex: cint32): string;
+begin
+  Result := '';
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+        Result := uosPlayers[PlayerIndex].InputGetURLiceAudioInfo(InputIndex);
+end;
+
+function uos_InputGetURLicyDescription(PlayerIndex: cint32; InputIndex: cint32): string;
+begin
+  Result := '';
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+        Result := uosPlayers[PlayerIndex].InputGetURLicyDescription(InputIndex);
+end;
+
+function uos_InputGetURLicyGenre(PlayerIndex: cint32; InputIndex: cint32): string;
+begin
+  Result := '';
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+        Result := uosPlayers[PlayerIndex].InputGetURLicyGenre(InputIndex);
+end;
+
+function uos_InputGetURLicyName(PlayerIndex: cint32; InputIndex: cint32): string;
+begin
+  Result := '';
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+        Result := uosPlayers[PlayerIndex].InputGetURLicyName(InputIndex);
+end;
+
+function uos_InputGetURLicyUrl(PlayerIndex: cint32; InputIndex: cint32): string;
+begin
+  Result := '';
+  if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
+    if uosPlayersStat[PlayerIndex] = 1 then
+      if assigned (uosPlayers[PlayerIndex]) then
+        Result := uosPlayers[PlayerIndex].InputGetURLicyUrl(InputIndex);
+end;
 {$endif}
-
-
 
 function uos_InputUpdateTag(PlayerIndex: cint32; InputIndex: cint32): Boolean;
   // for mp3 and opus files only

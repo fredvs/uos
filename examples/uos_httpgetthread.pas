@@ -34,6 +34,12 @@ type
     FIsRunning: Boolean;
     ICYenabled: Boolean;
     FormatType: integer;  // 0: mp3, 1:opus, 2:acc
+    ContentType: string;
+    ice_audio_info: string; //channels=2;samplerate=44100;bitrate=128
+    icy_description: string;
+    icy_genre: string;
+    icy_name: string;
+    icy_url: string;
     property IcyMetaInt: int64 read FIcyMetaInt;
     property IsRunning: Boolean read FIsRunning;
     constructor Create(AWantedURL: string; AOutputStream: TOutputPipeStream);
@@ -86,7 +92,7 @@ var
   SL: TStringList;
   URL: string;
   s: string;
-  //TempStream: TMemoryStream;
+  TempStream: TMemoryStream;
 begin
   URL := FWantedURL;
   if Pos(' ', URL) > 0 then
@@ -101,7 +107,7 @@ begin
   SL   := TStringList.Create;
   try
     Http.AllowRedirect := True;
-    Http.IOTimeout := 2000;
+    Http.IOTimeout := 5000;
     try
       //Writeln('Sending HEAD request...');
       Http.RequestHeaders.Clear;
@@ -111,30 +117,43 @@ begin
       if SL.Count = 0 then
         FormatType := 1
       else
-        s          := 'Content-Type ' + LowerCase(SL.Values['Content-Type']);
+        begin
+        s          := LowerCase(SL.Values['Content-Type']);
+        ContentType:= s;
+        ice_audio_info:= LowerCase(SL.Values['ice-audio-info']); //channels=2;samplerate=44100;bitrate=128
+        icy_description:= LowerCase(SL.Values['icy-description']);
+        icy_genre := LowerCase(SL.Values['icy-genre']);
+        icy_name := LowerCase(SL.Values['icy-name']);
+        icy_url := LowerCase(SL.Values['icy-url']);
+        end;
       SL.Free;
     except
       on E: Exception do
       begin
-        //  Writeln('HEAD failed: ' + E.Message + '. Falling back to limited GET.');
-        FormatType := 1; // aac streams dont fail Http.Head(URL, SL);
+         // Writeln('HEAD failed: ' + E.Message + '. Falling back to limited GET.');
+          FormatType := 1; // aac streams dont fail Http.Head(URL, SL);
 
-        {     //TODO to check FormatType if Http.Head failed 
+        {//TODO to check FormatType if Http.Head failed 
         TempStream := TMemoryStream.Create;
-        try
+         try
+          Writeln('before RequestHeaders.Clear');
           Http.RequestHeaders.Clear;
+          Writeln('before AddHeader');          
           Http.AddHeader('Range', 'bytes=0-2047'); // Fetch only 2 KB
+          Writeln('before get');
           Http.Get(URL, TempStream);
           Writeln('Limited GET completed.');
           s := LowerCase(Http.ResponseHeaders.Values['Content-Type']);
-        finally
-          TempStream.Free;
-        end;
+          Writeln('s '+ s);
+         except
+         on E: Exception do  Writeln('GET failed: ' + E.Message);
+         end;
+             TempStream.Free;
         }
       end;
     end;
 
-    if FormatType <> 1 then
+    if (FormatType <> 1) then
       if Pos('mpeg', s) > 0 then
         FormatType := 1
       else if Pos('aac', s) > 0 then
@@ -173,7 +192,7 @@ begin
       on E: EHTTPClient do
       begin
         // writeln('Http.ResponseHeaders.Text ' + Http.ResponseHeaders.Text);
-        Writeln('HTTP error: ' + IntToStr(Http.ResponseStatusCode));
+        // Writeln('HTTP error: ' + IntToStr(Http.ResponseStatusCode));
         if (Http.ResponseStatusCode > 399) or (Http.ResponseStatusCode < 1) then
           FIsRunning := False
         else if Http.ResponseStatusCode = 302 then

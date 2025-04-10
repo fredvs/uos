@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2250409;
+  uos_version : cint32 = 2250410;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -1231,6 +1231,18 @@ type
       inline;
       // Type of audio of url stream, 0:mp3, 1:opus, 2:acc, -1:error
       function InputGetURLAudioType(InputIndex: cint32): integer;
+      inline;
+      function InputGetURLContentType(InputIndex: cint32): string;
+      inline;
+      function InputGetURLiceAudioInfo(InputIndex: cint32): string;
+      inline;
+      function InputGetURLicyDescription(InputIndex: cint32): string;
+      inline;
+      function InputGetURLicyGenre(InputIndex: cint32): string;
+      inline;
+      function InputGetURLicyName(InputIndex: cint32): string;
+      inline;      
+      function InputGetURLicyUrl(InputIndex: cint32): string;
       inline;
 {$endif}
 
@@ -2880,6 +2892,70 @@ begin
           Result := StreamIn[InputIndex].httpget.FormatType -1;
     end;
 end;
+
+function Tuos_Player.InputGetURLContentType(InputIndex: cint32): string;
+begin
+  Result := '';
+  if (isAssigned = True) then
+    begin
+      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+        if assigned (StreamIn[InputIndex].httpget) then
+          Result := StreamIn[InputIndex].httpget.ContentType;
+    end;
+end;
+
+function Tuos_Player.InputGetURLiceAudioInfo(InputIndex: cint32): string;
+begin
+  Result := '';
+  if (isAssigned = True) then
+    begin
+      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+        if assigned (StreamIn[InputIndex].httpget) then
+          Result := StreamIn[InputIndex].httpget.ice_Audio_Info;
+    end;
+end;
+
+function Tuos_Player.InputGetURLicyDescription(InputIndex: cint32): string;
+begin
+  Result := '';
+  if (isAssigned = True) then
+    begin
+      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+        if assigned (StreamIn[InputIndex].httpget) then
+          Result := StreamIn[InputIndex].httpget.icy_description;
+    end;
+end;
+function Tuos_Player.InputGetURLicyGenre(InputIndex: cint32): string;
+begin
+  Result := '';
+  if (isAssigned = True) then
+    begin
+      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+        if assigned (StreamIn[InputIndex].httpget) then
+          Result := StreamIn[InputIndex].httpget.icy_genre;
+    end;
+end;
+function Tuos_Player.InputGetURLicyName(InputIndex: cint32): string;
+begin
+  Result := '';
+  if (isAssigned = True) then
+    begin
+      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+        if assigned (StreamIn[InputIndex].httpget) then
+          Result := StreamIn[InputIndex].httpget.icy_name;
+    end;
+end;
+function Tuos_Player.InputGetURLicyUrl(InputIndex: cint32): string;
+begin
+  Result := '';
+  if (isAssigned = True) then
+    begin
+      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+        if assigned (StreamIn[InputIndex].httpget) then
+          Result := StreamIn[InputIndex].httpget.icy_url;
+    end;
+end;
+
 {$ENDIF}
 
 function Tuos_Player.InputGetTagTitle (InputIndex: cint32): pchar;
@@ -6842,7 +6918,7 @@ begin
 
   // writeln ('avant StreamIn[x].httpget.FormatType ' + inttostr(StreamIn[x].httpget.FormatType));
 
-  while  (i < 20) and (StreamIn[x].httpget.IsRunning = false) do
+  while  (i < 100) and (StreamIn[x].httpget.IsRunning = false) do
     begin
       sleep(300);
       inc(i);
@@ -6855,7 +6931,7 @@ begin
       sleep(300);
       inc(i);
     end;
-
+ 
   if StreamIn[x].httpget.IsRunning = false then
     begin
       result := -1;
@@ -7112,20 +7188,19 @@ begin
             end;
         end;
   {$endif}
-
     {$IF DEFINED (mpg123)}
       if (StreamIn[x].httpget.FormatType = 1) or (AudioFormat = 0) then
         begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
           WriteLn ('Begin mpg123');
   {$endif}
-    
-          sleep(500);
-         
+          
+          sleep(500);     
+               
           if StreamIn[x].httpget.IsRunning then
             begin
               if StreamIn[x].httpget.ICYenabled = true then
-                CheckSynchronize (1000);
+                CheckSynchronize (1500);
 
               StreamIn[x].Data.HandleSt := mpg123_new (Nil, Err);
 
