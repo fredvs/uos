@@ -92,7 +92,7 @@ var
   SL: TStringList;
   URL: string;
   s: string;
-  TempStream: TMemoryStream;
+  //TempStream: TMemoryStream;
 begin
   URL := FWantedURL;
   if Pos(' ', URL) > 0 then
