@@ -1,5 +1,3 @@
-
-
 {This unit is part of United Openlibraries of Sound (uos)
   This is the main uos unit.
   License : modified LGPL.3
@@ -84,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2250409;
+  uos_version : cint32 = 2250410;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -436,7 +434,8 @@ type
     //
 
 
-    // for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
+
+// for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
     //              3: into memory buffer, 4: into wav file from memorystream, 5: into memorystream,
     //              6: into ogg file from filestream, 7: into ogg memorystream    
 
@@ -846,6 +845,7 @@ type
 
 
 
+
 // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
       // result : true if set ok. 
 
@@ -972,6 +972,7 @@ type
       // OutputIndex : Output index of used output
 
 
+
 // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
       // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default: -1 (4096)
@@ -998,8 +999,10 @@ type
       //
 
 
+
 // WaveTypeL: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo)
       //
+
 
 
 // WaveTypeR: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, , 3=sawtooth used for stereo, ignored for mono)
@@ -1028,13 +1031,16 @@ type
       //
 
 
+
 // WaveTypeL: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo)
       //
+
 
 
 // WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for stereo, ignored for mono)
       // FrequencyL: do not change: -1 (Left frequency, used for mono)
       //
+
 
 
      // FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
@@ -1056,7 +1062,8 @@ type
       // OutputIndex : Output index of used output
 
 
-      // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
+
+// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
       // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default: -1 (4096)
       //  result :  Input Index in array  -1 = error
@@ -1070,10 +1077,12 @@ type
       // OutputIndex : Output index of used output
 
 
+
 // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
       // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default: -1 (4096)
       //
+
 
 
 // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
@@ -1081,6 +1090,7 @@ type
       // example : InputIndex1 := AddFromFileIntoMemory (edit5.Text,-1,0,-1, -1);
       function AddFromFileIntoMemory (Filename: Pchar; OutputIndex: cint32;
                                       SampleFormat: cint32; FramesCount: cint32; numbuf : cint):
+
 
 
                                                                                               cint32
@@ -1091,6 +1101,7 @@ type
       // Bufferinfos : infos of the buffer
       //
       // OutputIndex : Output index of used output
+
 
 
 // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
@@ -1109,6 +1120,7 @@ type
       // OutputIndex : Output index of used output
 
 
+
 // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
       // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default: -1 (4096)
@@ -1122,6 +1134,7 @@ type
       // Bufferinfos : infos of the Memory-stream
       //
       // OutputIndex : Output index of used output
+
 
 
 // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
@@ -1524,6 +1537,7 @@ function uos_GetInfoDeviceStr () : Pansichar;
 
 
 
+
 // load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
 // PortAudio => needed for dealing with audio-device
 // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
@@ -1536,6 +1550,7 @@ function uos_GetInfoDeviceStr () : Pansichar;
 // If you want to load libraries from system, replace it by "'system'"
 // If some libraries are not needed, replace it by "nil",
 //
+
 
 
 // for example : uos_loadlib ('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName, nil, nil)
@@ -1564,6 +1579,7 @@ function uos_LoadServerLib (ShoutFileName, OpusFileName : PChar) : cint32;
 // Unload server libraries... Do not forget to call it before close application...
 procedure uos_unloadServerLib ();
 {$endif}
+
 
 
 
@@ -1611,11 +1627,13 @@ function uos_File2Buffer (Filename: Pchar; SampleFormat: cint32; Var bufferinfos
 //
 
 
+
 // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
 //  result :  The memory buffer
 // example : buffmem := uos__Stream2Buffer (edit5.Text,0,buffmem, buffinfos, -1, -1);
 function uos_Stream2Buffer (AudioFile: TMemoryStream; SampleFormat: int32; Var outmemory: TDArFloat;
                             Var bufferinfos: Tuos_BufferInfos; frompos : cint; numbuf : cint):
+
 
 
                                                                                            TDArFloat
@@ -1643,6 +1661,7 @@ procedure uos_MemStream2Wavfile (FileName: UTF8String; Data: TMemoryStream; Bits
 // convert buffer int16 into float32.
 function CvInt16ToFloat32 (Inbuf: TDArFloat): TDArFloat;
 inline;
+
 
 
 
@@ -1928,6 +1947,7 @@ begin
 
 
 
+
       // TODO -> this takes only chan1, not (chan1+chan2)/2 -> it get bad noise dont know why ???...
           // arsh[y]  := trunc ((Inbuf[x] + Inbuf[x+1])/ 2);
 
@@ -2152,6 +2172,7 @@ function Filetobuffer (Filename: Pchar; OutputIndex: cint32;
 // OutputIndex : Output index of used output
 
 
+
 // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
@@ -2159,6 +2180,7 @@ function Filetobuffer (Filename: Pchar; OutputIndex: cint32;
 // bufferinfos : the infos of the buffer
 // frompos : from position (default: -1 = from begining, otherwise position in song)
 //
+
 
 
 // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
@@ -2297,6 +2319,7 @@ function Streamtobuffer (AudioFile:TMemoryStream; OutputIndex: cint32;SampleForm
 // OutputIndex : Output index of used output
 
 
+
 // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
@@ -2304,6 +2327,7 @@ function Streamtobuffer (AudioFile:TMemoryStream; OutputIndex: cint32;SampleForm
 // bufferinfos : the infos of the buffer
 // frompos : from position (default: -1 = from begining, otherwise position in song)
 //
+
 
 
 // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
@@ -2389,6 +2413,7 @@ function uos_Stream2Buffer (AudioFile: TMemoryStream; SampleFormat: int32;
 //
 
 
+
 // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
 //  result :  The memory buffer
 // example : buffmem := uos_File2buffer (edit5.Text,0,buffmem, buffinfos, -1);
@@ -2451,6 +2476,7 @@ end;
  {$endif}
 
 function Tuos_Player.GetStatus () : cint32;
+
 
 
 
@@ -2696,7 +2722,8 @@ begin
          StreamIn[InputIndex].Data.Wantframes := (framecount * StreamIn[InputIndex].Data.Channels);
 
       1:
-         StreamIn[InputIndex].Data.Wantframes := (framecount * StreamIn[InputIndex].Data.Channels)* 2 ;
+         StreamIn[InputIndex].Data.Wantframes := (framecount * StreamIn[InputIndex].Data.Channels)*
+                                                 2 ;
 
       2:
          StreamIn[InputIndex].Data.Wantframes := (framecount * StreamIn[InputIndex].Data.Channels);
@@ -4279,6 +4306,7 @@ function SoundTouchPlug (bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt
 
 
 
+
                                                                                            TDArFloat
 ;
 var 
@@ -4345,6 +4373,7 @@ begin
   {$endif}
 
           SetLength (BufferplugFLTMP, (Length (Bufferin)));
+
 
 
 
@@ -5932,12 +5961,14 @@ function Tuos_Player.AddFromDevIn (Device: cint32; Latency: CDouble;
                                    SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32):
 
 
+
                                                                                               cint32
 ;
 // Add Input from IN device with custom parameters
 // Device ( -1 is default Input device )
 // Latency  ( -1 is latency suggested ) 
 // SampleRate : default: -1 (44100)
+
 
 
 
@@ -6107,7 +6138,9 @@ function Tuos_Player.AddFromSynth (Channels: integer; WaveTypeL, WaveTypeR: shor
 
 
 
+
 // WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, 2 = triangle, 2= triangle, 3=sawtooth used for mono and stereo) 
+
 
 
 
@@ -6119,6 +6152,7 @@ function Tuos_Player.AddFromSynth (Channels: integer; WaveTypeL, WaveTypeR: shor
 // Duration: default:  -1 (= 1000)  => duration in msec (0 = endless)
 // NbHarmonics: default:  -1 (= 0) Number of Harmonies
 // EvenHarmonics: default: -1 (= 0) (0 = all harmonics, 1 = Only even harmonics)
+
 
 
 
@@ -6240,7 +6274,9 @@ procedure Tuos_Player.InputSetSynth (InputIndex: cint32; WaveTypeL, WaveTypeR: s
 
 
 
+
 // WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, 2 = triangle, 2= triangle, 3=sawtooth used for mono and stereo) 
+
 
 
 
@@ -6908,6 +6944,7 @@ begin
 
 
 
+
 //   err := Pa_OpenDefaultStream (@StreamOut[x].Data.HandleSt, 2, 2, paFloat32, DefRate, 512, nil, nil);
   {$endif}
 
@@ -6931,6 +6968,7 @@ function Tuos_Player.AddFromURL (URL: PChar; OutputIndex: cint32;
                                  ICYon : boolean): cint32;
 // Add an Input from Audio URL
 // URL : URL of audio file
+
 
 
 
@@ -7040,7 +7078,7 @@ begin
           WriteLn ('Begi fdkaac');
     {$endif}
 
-         sleep (3000);
+          sleep (3000);
 
           if StreamIn[x].httpget.IsRunning then
             begin
@@ -7155,6 +7193,7 @@ begin
   {$endif}
 
               StreamIn[x].Data.HandleOP := 
+
 
 
 // op_open_callbacks (StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
@@ -7285,9 +7324,9 @@ begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
           WriteLn ('Begin mpg123');
   {$endif}
-
-          StreamIn[x].httpget.ICYenabled := icyon;
-
+    
+          sleep(500);
+         
           if StreamIn[x].httpget.IsRunning then
             begin
               if StreamIn[x].httpget.ICYenabled = true then
@@ -7487,6 +7526,7 @@ function Tuos_Player.AddFromMemoryBuffer (Var MemoryBuffer: TDArFloat; Var Buffe
 
 
 
+
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')// Channels : default: -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)// SampleRate : default: -1 (44100)
 // FramesCount : default: -1 (65536 div Channels)
 //  result :  Input Index in array  -1 = error
@@ -7522,6 +7562,7 @@ begin
   StreamIn[x].Data.typeput := 4;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
+
 
 
 
@@ -7599,6 +7640,7 @@ function Tuos_Player.AddFromFileIntoMemory (Filename: Pchar; OutputIndex: cint32
 ): cint32;
 // Add an input from audio file and store it into memory with custom parameters
 // FileName : filename of audio file
+
 
 
 
@@ -7843,6 +7885,7 @@ function Tuos_Player.AddFromMemoryStreamDec (Var MemoryStream: TMemoryStream; Va
 
 
 
+
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
 // FramesCount : default: -1 (4096)
 //  result :  Input Index in array  -1 = error
@@ -7946,7 +7989,9 @@ function Tuos_Player.AddFromMemoryStream (Var MemoryStream: TMemoryStream;
 
 
 
+
 // TypeAudio : default: -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus; 3:decoded Tmemory-stream; 5:mod, it, xm, s3m)
+
 
 
 
@@ -8352,6 +8397,7 @@ begin
             {$IF DEFINED (uos_debug) and DEFINED (unix)}
 
 
+
 {
           writeln ('StreamIn[x].Data.Length = ' + inttostr (
                   mpg123_length (StreamIn[x].Data.HandleSt);
@@ -8433,6 +8479,7 @@ begin
 
 
 
+
 // StreamIn[x].Data.HandleOP := op_test_callbacks (StreamIn[x].data.MemoryStream, uos_callbacksms, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err);
 
       // this is a memorystream converted into a buffer, it works...
@@ -8487,6 +8534,7 @@ begin
                 end;
 
 
+
           //  WriteLn ((Format ('op_bitrate = %d', [op_bitrate (StreamIn[x].Data.HandleOP, nil)])));
 
               StreamIn[x].Data.Length := op_pcm_total (StreamIn[x].Data.HandleOP, Nil);
@@ -8525,6 +8573,7 @@ begin
          {$IF DEFINED (uos_debug) and DEFINED (unix)}
       WriteLn ('TAACInfo.Create () = ok');
          {$endif}
+
 
 
 {
@@ -8720,6 +8769,7 @@ function Tuos_Player.AddFromFile (Filename: PChar; OutputIndex: cint32;
                                   SampleFormat: cint32; FramesCount: cint32 ): cint32;
 // Add an Input from Audio file with Custom parameters
 // FileName : filename of audio file
+
 
 
 
@@ -9143,6 +9193,7 @@ begin
 
 
 
+
         //  WriteLn ((Format ('op_bitrate = %d', [op_bitrate (StreamIn[x].Data.HandleOP, nil)])));  
 
                   StreamIn[x].Data.Length := op_pcm_total (StreamIn[x].Data.HandleOP, Nil);
@@ -9345,6 +9396,7 @@ begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
           WriteLn ('addfromfile OK');
   {$endif}
+  
           Result := x;
           StreamIn[x].Data.Output := OutputIndex;
           StreamIn[x].Data.Status := 1;
@@ -9705,6 +9757,7 @@ begin
 
 
 
+
 {
  if length (StreamIn[x].Data.MemoryStream) - StreamIn[x].Data.posmem - (StreamIn[x].Data.WantFrames
 
@@ -9864,6 +9917,7 @@ begin
   // err :=// if you want clean buffer
   StreamIn[x].Data.OutFrames := 
                                 StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
+
 
 
 
@@ -10224,31 +10278,33 @@ begin
 
   for x := 0 to high (StreamOut) do
     begin
-      if (assigned (StreamOut[x].DSP)) and  (assigned (StreamOut[x]))  then if (length (StreamOut[x]
-                                                                               .
-                                                                               DSP) > 0) then
-                                                                              for x2 := 0 to high (
-                                                                                  StreamOut[x].DSP) 
-                                                                                do
-                                                                                if (StreamOut[x].DSP
-                                                                                   [
-                                                                                   x2].EndFunc <>
-                                                                                   nil)
-                                                                                  then
-                                                                                  StreamOut[x].DSP[
-                                                                                  x2]
-                                                                                  .EndFunc (
+      if (assigned (StreamOut[x].DSP)) and
+         (assigned (StreamOut[x]))  then
+        if (length (StreamOut[x]
+           .
+           DSP) > 0) then
+          for x2 := 0 to high (
+              StreamOut[x].DSP) 
+            do
+            if (StreamOut[x].DSP
+               [
+               x2].EndFunc <>
+               nil)
+              then
+              StreamOut[x].DSP[
+              x2]
+              .EndFunc (
 
-                                                                                           StreamOut
-                                                                                            [x
-                                                                                            ].Data,
+                        StreamOut
+                        [x
+                        ].Data,
 
 
-                                                                                           StreamOut
-                                                                                            [x
-                                                                                            ].DSP[x2
-                                                                                            ].
-                                                                                            fftdata)
+                        StreamOut
+                        [x
+                        ].DSP[x2
+                        ].
+                        fftdata)
       ;
     end;
 
@@ -10346,8 +10402,7 @@ begin
                                                             2 :
                                                                 begin
                                                                   aacDecoder_Close (StreamIn[x].Data
-                                                                                    .
-                                                                                    HandleSt);
+                                                                                    .HandleSt);
                                                                 end;
     {$ENDIF}
                                                           end;
@@ -11465,6 +11520,7 @@ begin
                                                                      outBytes);
                                                                StreamIn[x].AACI.lwDataLen := 
 
+
                                                                                             outBytes
                                                                ;
                                                              end;
@@ -11476,6 +11532,7 @@ begin
             StreamIn[x].Data.outframes := 0;
 
           if StreamIn[x].Data.outframes < 0 then  StreamIn[x].Data.outframes := 0;
+
 
 
 
@@ -11919,6 +11976,7 @@ begin
 
 
 
+
                                                  'for x3 := 0 to high (StreamIn[x2].Data.Buffer) do'
                                            );
                                            writeln ('high (StreamIn[x2].Data.Buffer) = '+ inttostr (
@@ -11938,6 +11996,7 @@ begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
                                            WriteLn (
 
+
                                            'StreamOut[x].Data.Buffer ------------------------------'
                                            );
                                            st := '';
@@ -11946,6 +12005,7 @@ begin
                                                    floattostr (Streamout[0].Data.Buffer[i]);
                                            // WriteLn (st);
                                            writeln (
+
 
                                                'for x3 := 0 to high (StreamIn[x2].Data.Buffer) done'
                                            );
@@ -12502,6 +12562,7 @@ begin
 end;
 
 procedure uos_unloadlibCust (PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac: boolean);
+
 
 
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
@@ -13180,6 +13241,7 @@ begin
 end;
 
 procedure Tuos_Init.unloadlibCust (PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac: boolean);
+
 
 
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...

@@ -19,7 +19,6 @@ uses
 type
 
   { TThreadHttpGetter }
-
   TThreadHttpGetter = class(TThread)
   private
     FOutStream: TOutputPipeStream;
@@ -47,7 +46,7 @@ uses
   openssl, { This implements the procedure InitSSLInterface }
   opensslsockets;
 
-{ TThreadHttpGetter }
+           { TThreadHttpGetter }
 function TThreadHttpGetter.GetRedirectURL(AResponseStrings: TStrings): string;
 var
   S: string;
@@ -84,87 +83,130 @@ end;
 procedure TThreadHttpGetter.Execute;
 var
   Http: TFPHTTPClient;
-  URL: string;
   SL: TStringList;
-  s : string;
+  URL: string;
+  s: string;
+  //TempStream: TMemoryStream;
 begin
-  URL          := FWantedURL;
-  if pos(' ', URL) > 0 then
-    FIsRunning := False
-  else
+  URL := FWantedURL;
+  if Pos(' ', URL) > 0 then
   begin
-    InitSSLInterface;
-    Http       := TFPHTTPClient.Create(nil);
-    SL:= TStringList.Create;
-    http.AllowRedirect := True;
-    http.IOTimeout := 2000;
-    repeat
-      try
-        Http.RequestHeaders.Clear;
-        HTTP.Head(URL, SL); // to define format type
-        
-        s := SL.Values['Content-Type'];
-        SL.free;
-        if system.pos('mpeg',s) > 0 then
-        FormatType := 1 else
-        if system.pos('aac',s) > 0 then
-        FormatType := 3 else
-        if system.pos('ogg',s) > 0 then
-        FormatType := 2 else
-        if system.pos('opus',s) > 0 then
-        FormatType := 2 else
-         FormatType := 0;
-        if FormatType = 0 then Break; 
-        
-        //writeln(s + ' ' + inttostr(FormatType));
-           
-        if (ICYenabled = True) and (FormatType = 1)  then
-        begin
-        Http.AddHeader('icy-metadata', '1');  // Enable ICY metadata
-        Http.OnHeaders := @Headers;
+    FIsRunning := False;
+    Exit;
+  end;
+
+  // Writeln('Starting thread for URL: ', URL);
+  InitSSLInterface;
+  Http := TFPHTTPClient.Create(nil);
+  SL   := TStringList.Create;
+  try
+    Http.AllowRedirect := True;
+    Http.IOTimeout := 2000;
+    try
+      //Writeln('Sending HEAD request...');
+      Http.RequestHeaders.Clear;
+      Http.Head(URL, SL);
+      // if assigned(SL) then Writeln('SL assigned') else Writeln('SL NOT assigned');
+      // writeln('SL.values ' + inttostr(SL.count));
+      if SL.Count = 0 then
+        FormatType := 1
+      else
+        s          := 'Content-Type ' + LowerCase(SL.Values['Content-Type']);
+      SL.Free;
+    except
+      on E: Exception do
+      begin
+        //  Writeln('HEAD failed: ' + E.Message + '. Falling back to limited GET.');
+        FormatType := 1; // aac streams dont fail Http.Head(URL, SL);
+
+        {     //TODO to check FormatType if Http.Head failed 
+        TempStream := TMemoryStream.Create;
+        try
+          Http.RequestHeaders.Clear;
+          Http.AddHeader('Range', 'bytes=0-2047'); // Fetch only 2 KB
+          Http.Get(URL, TempStream);
+          Writeln('Limited GET completed.');
+          s := LowerCase(Http.ResponseHeaders.Values['Content-Type']);
+        finally
+          TempStream.Free;
         end;
-         
-        // writeln(' avant http.get');
-        Http.Get(URL, FOutStream);
-        // writeln(' apres http.get');
-        sleep(500);
-      except
-        on e: EHTTPClient do
+        }
+      end;
+    end;
+
+    if FormatType <> 1 then
+      if Pos('mpeg', s) > 0 then
+        FormatType := 1
+      else if Pos('aac', s) > 0 then
+        FormatType := 3
+      else if Pos('ogg', s) > 0 then
+        FormatType := 2
+      else if Pos('opus', s) > 0 then
+        FormatType := 2
+      else
+        FormatType := 0;
+
+    // Writeln('Content-Type: ' + s)
+    // Writeln('FormatType: ' + intostr(FormatType));
+    if FormatType = 0 then
+    begin
+      // Writeln('Unknown format, exiting.');
+      FIsRunning := False;
+      Exit;
+    end;
+
+    try
+      // Writeln('Sending GET request...');
+      Http.RequestHeaders.Clear;
+
+      if (ICYenabled = True) and (FormatType = 1) then
+      begin
+        // Writeln('Enabling ICY metadata...');
+        Http.RequestHeaders.Clear;
+        Http.AddHeader('icy-metadata', '1');
+        Http.OnHeaders := @Headers;
+      end;
+
+      // Writeln(URL);
+      Http.Get(URL, FOutStream);
+    except
+      on E: EHTTPClient do
+      begin
+        // writeln('Http.ResponseHeaders.Text ' + Http.ResponseHeaders.Text);
+        Writeln('HTTP error: ' + IntToStr(Http.ResponseStatusCode));
+        if (Http.ResponseStatusCode > 399) or (Http.ResponseStatusCode < 1) then
+          FIsRunning := False
+        else if Http.ResponseStatusCode = 302 then
         begin
-          //  writeln(' Http.ResponseStatusCode ' +inttostr(Http.ResponseStatusCode));
-          if (Http.ResponseStatusCode > 399) or (Http.ResponseStatusCode < 1) then // not accessible
+          URL := GetRedirectURL(Http.ResponseHeaders);
+          // Writeln('Redirecting to: ', URL);
+          if URL <> '' then
           begin
-            FIsRunning := False;
-            break;
-          end;
-          if Http.ResponseStatusCode = 302 then
-          begin
-            URL := GetRedirectURL(Http.ResponseHeaders);
-            if URL <> '' then
-              Continue;
+            Http.RequestHeaders.Clear;
+            if (ICYenabled = True) and (FormatType = 1) then
+            begin
+              Http.AddHeader('icy-metadata', '1');
+              Http.OnHeaders := @Headers;
+            end;
+            Http.Get(URL, FOutStream);
+            // Writeln('Redirected GET completed.');
           end
           else
-            Break;
-          // raise E;
-        end;
-        on e: Exception do
-        begin
-          Break;
-          //  WriteLn(e.Message);
+            FIsRunning := False;
         end
         else
-          // Raise;
-          Break;
+          FIsRunning   := False;
       end;
-      Break;
-    until (False);
-    try
-      Http.Free;
-      
-    finally
-      // make sure this is set to false when done
-      FIsRunning := False;
+      on E: Exception do
+      begin
+        // Writeln('GET failed: ' + E.Message);
+        FIsRunning := False;
+      end;
     end;
+  finally
+    Http.Free;
+    FIsRunning := False;
+    // Writeln('Thread finished.');
   end;
 end;
 
