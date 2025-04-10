@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2250410;
+  uos_version : cint32 = 2250409;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -435,7 +435,7 @@ type
 
 
 
-// for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
+    // for Output : 0: into wav file from filestream, 1: into output device Portaudio, 2: into stream server,
     //              3: into memory buffer, 4: into wav file from memorystream, 5: into memorystream,
     //              6: into ogg file from filestream, 7: into ogg memorystream    
 
@@ -597,7 +597,6 @@ type
       EndFunc: TFunc;
       // External Procedure of object to synchronize after buffer is filled
       LoopProc: TProc;
-
       // for FFT
       fftdata: Tuos_FFT;
 
@@ -841,13 +840,9 @@ type
 
       function IsLooped: Boolean;
 
-      function SetGlobalEvent (isenabled : boolean) : boolean;
-
-
-
-
-// Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
+      // Set the RTL Events Global (will pause/start/replay all the players synchro with same rtl event)) 
       // result : true if set ok. 
+      function SetGlobalEvent (isenabled : boolean) : boolean;
 
       // Audio methods
 
@@ -968,12 +963,8 @@ type
       // Device ( -1 is default Input device )
       // Latency  ( -1 is latency suggested ) )
       // SampleRate : default: -1 (44100)
-      //
       // OutputIndex : Output index of used output
-
-
-
-// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
+      // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
       // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default: -1 (4096)
       // ChunkCount : default: -1 (= 512)
@@ -981,8 +972,7 @@ type
       // example : OutputIndex1 := AddFromDevice (-1,-1,-1,-1,-1, -1);
       function AddFromDevIn (Device: cint32; Latency: CDouble;
                              SampleRate: CDouble; OutputIndex: cint32;
-                             SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32
-      ;
+                             SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
 {$endif}
 
       // Add an input from Endless Muted dummy sine wav
@@ -996,16 +986,8 @@ type
 {$IF DEFINED (synthesizer)}
       // Add an input from Synthesizer with custom parameters
       // Channels: default: -1 (2) (1 = mono, 2 = stereo)
-      //
-
-
-
-// WaveTypeL: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo)
-      //
-
-
-
-// WaveTypeR: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, , 3=sawtooth used for stereo, ignored for mono)
+      // WaveTypeL: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo)
+      // WaveTypeR: default: -1 (0) (0 = sine-wave, 1 = square-wave, 2= triangle, , 3=sawtooth used for stereo, ignored for mono)
       // FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
       // FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
       // VolumeL: default: -1 (= 1) (from 0 to 1) => volume left
@@ -1028,22 +1010,10 @@ type
                              FramesCount : cint32): cint32;
 
       // InputIndex: one existing input index
-      //
-
-
-
-// WaveTypeL: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo)
-      //
-
-
-
-// WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for stereo, ignored for mono)
+      // WaveTypeL: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for mono and stereo)
+      // WaveTypeR: do not change: -1 (0 = sine-wave 1 = square-wave, 2= triangle, 3=sawtooth used for stereo, ignored for mono)
       // FrequencyL: do not change: -1 (Left frequency, used for mono)
-      //
-
-
-
-     // FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
+      // FrequencyR: do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
       // VolumeL: do not change: -1 (= 1) (from 0 to 1) => volume left
       // VolumeR: do not change: -1 (from 0 to 1) => volume rigth (ignored for mono)
       // Duration: in msec (-1 = do not change)
@@ -1060,10 +1030,7 @@ type
       // FileName : filename of audio file
       //
       // OutputIndex : Output index of used output
-
-
-
-// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
+      // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex (if multi-output then OutName = name of each output separated by ';')
       // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default: -1 (4096)
       //  result :  Input Index in array  -1 = error
@@ -1073,38 +1040,21 @@ type
 
       // Add an input from audio file and store it into memory with custom parameters
       // FileName : filename of audio file
-      //
       // OutputIndex : Output index of used output
-
-
-
-// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
+      // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
       // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default: -1 (4096)
-      //
-
-
-
-// numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
+      // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
       //  result :  Input Index in array  -1 = error
       // example : InputIndex1 := AddFromFileIntoMemory (edit5.Text,-1,0,-1, -1);
       function AddFromFileIntoMemory (Filename: Pchar; OutputIndex: cint32;
-                                      SampleFormat: cint32; FramesCount: cint32; numbuf : cint):
-
-
-
-                                                                                              cint32
-      ;
-
+                                      SampleFormat: cint32; FramesCount: cint32; numbuf : cint): cint32;
+  
       // Add an input from memory buffer with custom parameters
       // MemoryBuffer : the buffer
       // Bufferinfos : infos of the buffer
-      //
       // OutputIndex : Output index of used output
-
-
-
-// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
+      // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
       // Channels : default: -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)
       // SampleRate : default: -1 (44100)
       // FramesCount : default: -1 (4096)
@@ -1116,12 +1066,8 @@ type
 
       // MemoryStream : Memory stream of encoded audio.
       // TypeAudio : default: -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus)
-      //
       // OutputIndex : Output index of used output
-
-
-
-// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
+      // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
       // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
       // FramesCount : default: -1 (4096)
       //  result :  Input Index in array  -1 = error
@@ -1132,12 +1078,8 @@ type
 
       // MemoryStream : Memory-stream of decoded audio (like created by AddIntoMemoryStream)
       // Bufferinfos : infos of the Memory-stream
-      //
       // OutputIndex : Output index of used output
-
-
-
-// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
+      // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
       // FramesCount : default: -1 (4096)
       //  result :  Input Index in array  -1 = error
       function AddFromMemoryStreamDec (Var MemoryStream: TMemoryStream; Var Bufferinfos:
@@ -1147,7 +1089,6 @@ type
 {$IF DEFINED (webstream)}
       // Add an Input from Audio URL
       // URL : URL of audio file
-      //
       // OutputIndex : OutputIndex of existing Output
       // -1: all output, -2: no output, other cint32 : existing Output
       // SampleFormat : -1 default: Int16 (0: Float32, 1:Int32, 2:Int16)
@@ -1535,9 +1476,6 @@ procedure uos_GetInfoDevice ();
 function uos_GetInfoDeviceStr () : Pansichar;
   {$endif}
 
-
-
-
 // load libraries... if libraryfilename = '' =>  do not load it...  You may load what and when you want...
 // PortAudio => needed for dealing with audio-device
 // SndFile => needed for dealing with ogg, vorbis, flac and wav audio-files
@@ -1546,13 +1484,8 @@ function uos_GetInfoDeviceStr () : Pansichar;
 // opusfile => needed for dealing with opus audio-files
 // XMP => needed for dealing with MOD audio-files
 // Fdkaac => needed for webstreaming of aac files.
-//
 // If you want to load libraries from system, replace it by "'system'"
 // If some libraries are not needed, replace it by "nil",
-//
-
-
-
 // for example : uos_loadlib ('system', SndFileFileName, 'system', nil, nil, nil, OpusFileFileName, nil, nil)
 function uos_loadlib (PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffFileName,
                       FaadFileName
@@ -1579,9 +1512,6 @@ function uos_LoadServerLib (ShoutFileName, OpusFileName : PChar) : cint32;
 // Unload server libraries... Do not forget to call it before close application...
 procedure uos_unloadServerLib ();
 {$endif}
-
-
-
 
 // Custom Unload libraries... if true, then unload the library. You may unload what and when you want...
 procedure uos_unloadlibCust (PortAudio, SndFile, Mpg123, AAC, opus, xmp, fdkaac: boolean);
@@ -1610,8 +1540,6 @@ inline;
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // bufferinfos : the infos of the buffer.
 // frompos : from position (default: -1 = from begining, otherwise position in song)
-//
-//
 // numbuf : number of frames to add to outmemory (default: -1 = all, otherwise number max of frames)
 //  result :  The memory buffer
 // example : buffmem := uos_File2buffer (edit5.Text,0,buffmem, buffinfos, -1, -1);
@@ -1624,20 +1552,11 @@ function uos_File2Buffer (Filename: Pchar; SampleFormat: cint32; Var bufferinfos
 // Outmemory : the buffer to store data.
 // bufferinfos : the infos of the buffer.
 // frompos : from position (default: -1 = from begining, otherwise position in song)
-//
-
-
-
 // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
 //  result :  The memory buffer
 // example : buffmem := uos__Stream2Buffer (edit5.Text,0,buffmem, buffinfos, -1, -1);
 function uos_Stream2Buffer (AudioFile: TMemoryStream; SampleFormat: int32; Var outmemory: TDArFloat;
-                            Var bufferinfos: Tuos_BufferInfos; frompos : cint; numbuf : cint):
-
-
-
-                                                                                           TDArFloat
-;
+                            Var bufferinfos: Tuos_BufferInfos; frompos : cint; numbuf : cint): TDArFloat;
 
 // Create an audio file from an audio file.
 // FileNameIN : filename of audio file IN (ogg, flac, wav, mp3, opus, aac,...)
@@ -1645,8 +1564,7 @@ function uos_Stream2Buffer (AudioFile: TMemoryStream; SampleFormat: int32; Var o
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // typeout : Type of out file (-1:default=wav, 0:wav, 1:pcm, 2:custom)
 // example : InputIndex1 := uos_File2File (edit5.Text,0,buffmem);
-procedure uos_File2File (FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32; typeout:
-                         cint32 );
+procedure uos_File2File (FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32; typeout: cint32 );
 
 // Create an audio wav file from a TMemoryStream.
 // FileName : filename of wav saved file
@@ -1654,16 +1572,12 @@ procedure uos_File2File (FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: ci
 // BitsPerSample : 16 or 32 (bit)
 // chan : number of channels
 // samplerate : sample rate
-procedure uos_MemStream2Wavfile (FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan:
-                                 integer;
-                                 samplerate : CDouble);
+procedure uos_MemStream2Wavfile (FileName: UTF8String; Data: TMemoryStream; BitsPerSample, chan:integer;
+                                                                  samplerate : CDouble);
 
 // convert buffer int16 into float32.
 function CvInt16ToFloat32 (Inbuf: TDArFloat): TDArFloat;
 inline;
-
-
-
 
 // to initialize a custom bufferinfos: needed for AddFromMemoryBuffer () if no bufferinfos was created.
 // all infos refer to the buffer used ---> length = length of the buffer div channels.
@@ -1943,12 +1857,7 @@ begin
 
       while x < (len * 2)-1 do
         begin
-
-
-
-
-
-      // TODO -> this takes only chan1, not (chan1+chan2)/2 -> it get bad noise dont know why ???...
+          // TODO -> this takes only chan1, not (chan1+chan2)/2 -> it get bad noise dont know why ???...
           // arsh[y]  := trunc ((Inbuf[x] + Inbuf[x+1])/ 2);
 
           arsh[y]  := Inbuf[x+1];
@@ -2163,29 +2072,21 @@ end;
 end;
 {$endif}
 
-function Filetobuffer (Filename: Pchar; OutputIndex: cint32;
-                       SampleFormat: cint32; FramesCount: cint32; Var outmemory: TDArFloat;
-                       Var bufferinfos: Tuos_BufferInfos; frompos: cint; numbuf : cint ): TDArFloat;
 // Add an input from audio file with custom parameters
 // FileName : filename of audio file
-//
 // OutputIndex : Output index of used output
-
-
-
 // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
 // Outmemory : the buffer to store data.
 // bufferinfos : the infos of the buffer
 // frompos : from position (default: -1 = from begining, otherwise position in song)
-//
-
-
-
 // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := Filetobuffer (edit5.Text,-1,0,-1, buffmem, buffinfos, -1);
+function Filetobuffer (Filename: Pchar; OutputIndex: cint32;
+                       SampleFormat: cint32; FramesCount: cint32; Var outmemory: TDArFloat;
+                       Var bufferinfos: Tuos_BufferInfos; frompos: cint; numbuf : cint ): TDArFloat;
 var 
   theplayer : Tuos_Player;
   in1 : cint32;
@@ -2212,7 +2113,6 @@ begin
       tempSampleFormat := theplayer.StreamIn[in1].Data.SampleFormat;
       tempSamplerate := theplayer.StreamIn[in1].Data.Samplerate;
       templength := theplayer.StreamIn[in1].Data.Length;
-
       bufferinfos.SampleRate := theplayer.StreamIn[in1].Data.Samplerate;
       bufferinfos.SampleRateRoot := theplayer.StreamIn[in1].Data.Samplerate;
       bufferinfos.SampleFormat := theplayer.StreamIn[in1].Data.SampleFormat;
@@ -2277,17 +2177,16 @@ begin
 end;
  {$endif}
 
-function uos_File2Buffer (Filename: Pchar; SampleFormat: cint32; Var bufferinfos: Tuos_BufferInfos;
-                          frompos : cint; numbuf : cint ): TDArFloat;
 // Create a memory buffer of an audio file.
 // FileName : filename of audio file  
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // bufferinfos : the infos of the buffer.
 // frompos : from position (default: -1 = from begining, otherwise position in song)
-//
 // numbuf : number of frames to add to outmemory (default: -1 = all, otherwise number max of frames)
 //  result :  The memory buffer
 // example : buffmem := uos_File2buffer (edit5.Text,0,buffmem, buffinfos, -1, -1);
+function uos_File2Buffer (Filename: Pchar; SampleFormat: cint32; Var bufferinfos: Tuos_BufferInfos;
+                          frompos : cint; numbuf : cint ): TDArFloat;
    {$IF DEFINED (uos_debug) and DEFINED (unix)}
 var 
   i : integer;
@@ -2309,30 +2208,22 @@ begin
 
 end;
 
-function Streamtobuffer (AudioFile:TMemoryStream; OutputIndex: cint32;SampleFormat: cint32;
-                         FramesCount: cint32;
-                         Var outmemory: TDArFloat; Var bufferinfos: Tuos_BufferInfos; frompos: cint;
-                         numbuf : cint): TDArFloat;
 // Add an input from audio file with custom parameters
 // FileName : filename of audio file
-//
 // OutputIndex : Output index of used output
-
-
-
 // -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
 // Outmemory : the buffer to store data.
 // bufferinfos : the infos of the buffer
 // frompos : from position (default: -1 = from begining, otherwise position in song)
-//
-
-
-
 // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
 //  result :  Input Index in array  -1 = error
 // example : InputIndex1 := streamtobuffer (edit5.Text,-1,0,-1, buffmem, buffinfos, -1);
+function Streamtobuffer (AudioFile:TMemoryStream; OutputIndex: cint32;SampleFormat: cint32;
+                         FramesCount: cint32;
+                         Var outmemory: TDArFloat; Var bufferinfos: Tuos_BufferInfos; frompos: cint;
+                         numbuf : cint): TDArFloat;
 
 var 
   theplayer : Tuos_Player;
@@ -2401,36 +2292,31 @@ begin
   result := outmemory;
 end;
 
-function uos_Stream2Buffer (AudioFile: TMemoryStream; SampleFormat: int32;
-                            Var outmemory: TDArFloat; Var bufferinfos: Tuos_BufferInfos; frompos:
-                            cint;  numbuf : cint): TDArFloat;
 // Create a memory buffer of an audio file.
 // FileName : filename of audio file
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // Outmemory : the buffer to store data.
 // bufferinfos : the infos of the buffer.
 // frompos : from position (default: -1 = from begining, otherwise position in song)
-//
-
-
-
 // numbuf : number of buffer to add to outmemory (default: -1 = all, otherwise number max of buffers)
 //  result :  The memory buffer
 // example : buffmem := uos_File2buffer (edit5.Text,0,buffmem, buffinfos, -1);
+function uos_Stream2Buffer (AudioFile: TMemoryStream; SampleFormat: int32;
+                            Var outmemory: TDArFloat; Var bufferinfos: Tuos_BufferInfos; frompos:
+                            cint;  numbuf : cint): TDArFloat;
 begin
   result := Streamtobuffer (AudioFile,-1, SampleFormat, -1, outmemory, bufferinfos, frompos, numbuf)
   ;
 end;
 
-procedure uos_File2File (FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32; typeout:
-                         cint32 );
 // Create an audio file from an audio file.
 // FileNameIN : filename of audio file IN (ogg, flac, wav, mp3, opus, aac,...)
 // FileNameOUT : filename of audio file OUT (wav, pcm, custom)
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
-
 // typeout : Type of out file (-1:default=wav, 0:wav, 1:pcm, 2:custom)
 // example : InputIndex1 := uos_File2File (edit5.Text,0,buffmem);
+procedure uos_File2File (FilenameIN: Pchar; FilenameOUT: Pchar; SampleFormat: cint32; typeout:
+                         cint32 );
 var 
   theplayer : Tuos_Player;
   in1 : cint32;
@@ -2462,9 +2348,8 @@ begin
   {$endif}
 end;
 
-   {$IF DEFINED (mse)}
-    {$else}
-
+  {$IF DEFINED (mse)}
+  {$else}
 constructor TuosThread.Create (CreateSuspended: boolean; AParent: TObject;
                                Const StackSize: SizeUInt);
 begin
@@ -2475,13 +2360,8 @@ begin
 end;
  {$endif}
 
-function Tuos_Player.GetStatus () : cint32;
-
-
-
-
-
 // Get the status of the player : -1 => error or not yet played, 0 => has stopped, 1 => is running, 2 => is paused.
+function Tuos_Player.GetStatus () : cint32;
 begin
   result := -1;
   if (isAssigned = True) then  result := Status
@@ -2556,16 +2436,16 @@ begin
     end;
 end;
 
+// Start play paused with loop
 procedure Tuos_Player.PlayPaused (nloop: Integer = 0);
 inline;
-// Start play paused with loop
 begin
   PlayEx (False,nloop,true);
 end;
 
+// Start play paused with loop and not free player at end
 procedure Tuos_Player.PlayNoFreePaused (nloop: Integer = 0);
 inline;
-// Start play paused with loop and not free player at end
 begin
   PlayEx (true,nloop,true);
 end;
@@ -2596,8 +2476,8 @@ begin
     end;
 end;
 
-procedure Tuos_Player.RePlay ();
 // Resume Playing after Pause
+procedure Tuos_Player.RePlay ();
 begin
   if (Status > 0) and (isAssigned = True) then
     begin
@@ -2737,11 +2617,11 @@ begin
     end;
 end;
 
-procedure Tuos_Player.InputSetLevelArrayEnable (InputIndex: cint32; levelcalc : cint32);
 // set add level calculation in level-array (default is 0)
 // 0 => no calcul
 // 1 => calcul before all DSP procedures.
 // 2 => calcul after all DSP procedures.
+procedure Tuos_Player.InputSetLevelArrayEnable (InputIndex: cint32; levelcalc : cint32);
 begin
   if (isAssigned = True) then
     begin
@@ -2754,22 +2634,22 @@ begin
     end;
 end;
 
-procedure Tuos_Player.InputSetLevelEnable (InputIndex: cint32; levelcalc : cint32);
 // set level calculation (default is 0)
 // 0 => no calcul
 // 1 => calcul before all DSP procedures.
 // 2 => calcul after all DSP procedures.
 // 3 => calcul before and after all DSP procedures.
 
+procedure Tuos_Player.InputSetLevelEnable (InputIndex: cint32; levelcalc : cint32);
 begin
   if (isAssigned = True) then
     StreamIn[InputIndex].Data.levelEnable := levelcalc;
 end;
 
-procedure Tuos_Player.InputSetPositionEnable (InputIndex: cint32; poscalc : cint32);
 // set position calculation (default is 0)
 // 0 => no calcul
 // 1 => calcul position procedures.
+procedure Tuos_Player.InputSetPositionEnable (InputIndex: cint32; poscalc : cint32);
 begin
   if (isAssigned = True) then
     StreamIn[InputIndex].Data.PositionEnable := poscalc;
@@ -3097,12 +2977,7 @@ begin
   StreamOut[OutputIndex].DSP[Result].Enabled := True;
 end;
 
-procedure Tuos_Player.InputSetFilter (InputIndex: cint32; FilterIndex: cint32;
-                                      TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL:
-                                      cfloat;
-                                      TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR:
-                                      cfloat;
-                                      AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
+
 // InputIndex : InputIndex of an existing Input
 // DSPInIndex : DSPInIndex of existing DSPIn
 // TypeFilterL: Type of filter left: 
@@ -3118,7 +2993,12 @@ procedure Tuos_Player.InputSetFilter (InputIndex: cint32; FilterIndex: cint32;
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
 // Enable :  Filter enabled
-
+procedure Tuos_Player.InputSetFilter (InputIndex: cint32; FilterIndex: cint32;
+                                      TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL:
+                                      cfloat;
+                                      TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR:
+                                      cfloat;
+                                      AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
 begin
   if isAssigned = true then
     begin
@@ -3213,24 +3093,23 @@ begin
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32[1] := 0.0;
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a32[2] := 
                                                                          -StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a32[0]
-                 ;
+                                                                         FilterIndex].fftdata.a32[0];
+                 
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b22[0] := 
                                                                          -StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.C2 *
                                                                          StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.D2 *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a32[0]
-                 ;
+                                                                         FilterIndex].fftdata.a32[0];
+                 
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b22[1] := 
                                                                          (StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.C2 - 1
                                                                          ) *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a32[0]
-                 ;
-                 //
+                                                                         FilterIndex].fftdata.a32[0];
+                  
                end;
 
             2: //  DSPFFTBandReject
@@ -3248,8 +3127,8 @@ begin
                                                                     SampleRate);
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[0] := 
                                                                         1 / (1 + StreamIn[InputIndex
-                                                                        ].DSP[FilterIndex].fftdata.C
-                                                                        );
+                                                                        ].DSP[FilterIndex].fftdata.C);
+                                                                        
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3[1] := 
                                                                         -StreamIn[InputIndex].DSP[
                                                                         FilterIndex].fftdata.D *
@@ -3490,7 +3369,7 @@ begin
                                                                           StreamIn[InputIndex].DSP[
                                                                           FilterIndex].fftdata.a32r[
                                                                           0];
-                 //
+                
                end;
 
             2: //  DSPFFTBandReject
@@ -3514,23 +3393,23 @@ begin
                                                                          -StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.Dr *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
+             
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] := 
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
+                 
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] := 
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[1]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[1];
+                 
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] := 
                                                                          (1 - StreamIn[InputIndex].
                                                                          DSP[FilterIndex].fftdata.Cr
                                                                          ) *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
+               
                end;
 
             3: //  DSPFFTBandPass
@@ -3554,24 +3433,23 @@ begin
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[1] := 0.0;
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] := 
                                                                          -StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
+              
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] := 
                                                                          -StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.Cr *
                                                                          StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.Dr *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
+              
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] := 
                                                                          (StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.Cr - 1
                                                                          ) *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
-               end;
+                                                                         FilterIndex].fftdata.a3r[0];
+                 end;
 
             4: //  DSPFFTLowPass
                begin
@@ -3596,8 +3474,7 @@ begin
                                                                          a3r[0];
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] := 
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] := 
                                                                          2 * (1 - StreamIn[
                                                                          InputIndex].DSP[FilterIndex
@@ -3605,8 +3482,7 @@ begin
                                                                          StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.Cr) *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] := 
                                                                          (1 - Sqrt (2) * StreamIn[
                                                                          InputIndex].DSP[FilterIndex
@@ -3616,8 +3492,7 @@ begin
                                                                          StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.Cr) *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
                end;
 
             5: //  DSPFFTHighPass
@@ -3643,8 +3518,7 @@ begin
                                                                          a3r[0];
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.a3r[2] := 
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[0] := 
                                                                          2 * (StreamIn[InputIndex].
                                                                          DSP[FilterIndex].fftdata.Cr
@@ -3653,8 +3527,7 @@ begin
                                                                          FilterIndex].fftdata.Cr - 1
                                                                          ) *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
                  StreamIn[InputIndex].DSP[FilterIndex].fftdata.b2r[1] := 
                                                                          (1 - Sqrt (2) * StreamIn[
                                                                          InputIndex].DSP[FilterIndex
@@ -3664,20 +3537,13 @@ begin
                                                                          StreamIn[InputIndex].DSP[
                                                                          FilterIndex].fftdata.Cr) *
                                                                          StreamIn[InputIndex].DSP[
-                                                                         FilterIndex].fftdata.a3r[0]
-                 ;
+                                                                         FilterIndex].fftdata.a3r[0];
                end;
           end;
         end;
     end;
 end;
 
-procedure Tuos_Player.OutputSetFilter (OutputIndex: cint32; FilterIndex: cint32;
-                                       TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL:
-                                       cfloat;
-                                       TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR:
-                                       cfloat;
-                                       AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
 // OuputIndex : InputIndex of an existing Output
 // DSPInIndex : DSPInIndex of existing DSPIn
 // TypeFilterL: Type of filter left: 
@@ -3694,6 +3560,12 @@ procedure Tuos_Player.OutputSetFilter (OutputIndex: cint32; FilterIndex: cint32;
 // AlsoBuf : The filter alter buffer aswell ( otherwise, only result is filled in fft.data )
 // LoopProc : external procedure of object to synchronize after DSP done
 // Enable :  Filter enabled
+procedure Tuos_Player.OutputSetFilter (OutputIndex: cint32; FilterIndex: cint32;
+                                       TypeFilterL: shortint; LowFrequencyL, HighFrequencyL, GainL:
+                                       cfloat;
+                                       TypeFilterR: shortint; LowFrequencyR, HighFrequencyR, GainR:
+                                       cfloat;
+                                       AlsoBuf: boolean; LoopProc: TProc; Enable: boolean);
 begin
   if isAssigned = true then
     begin
@@ -3813,7 +3685,7 @@ begin
                                                                            StreamOut[OutputIndex].
                                                                            DSP[FilterIndex].fftdata.
                                                                            a32[0];
-                 //
+                 
                end;
 
             2: //  DSPFFTBandReject
@@ -3991,7 +3863,6 @@ begin
                                                                           [FilterIndex].fftdata.a3[0
                                                                           ];
                end;
-
           end;
         end;
 
@@ -4097,8 +3968,7 @@ begin
                                                                             StreamOut[OutputIndex].
                                                                             DSP[FilterIndex].fftdata
                                                                             .a32r[0];
-                 //
-               end;
+                end;
 
             2: //  DSPFFTBandReject
                begin
@@ -4302,13 +4172,7 @@ end;
 function SoundTouchPlug (bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; Var
                          inputData: Tuos_Data;
                          notused1: float; notused2: float; notused3: float;  notused4: float;
-                         notused5: float; notused6: float; notused7: float;  notused8: float):
-
-
-
-
-                                                                                           TDArFloat
-;
+                         notused5: float; notused6: float; notused7: float;  notused8: float):TDArFloat;
 var 
   ratio : shortint;
   numoutbuf, x1, x2: cint32;
@@ -4374,18 +4238,6 @@ begin
 
           SetLength (BufferplugFLTMP, (Length (Bufferin)));
 
-
-
-
-
-{  
-  x2 := 0;
-while x2 < Length (BufferplugFLTMP) do 
-begin
-BufferplugFLTMP[x2] := 0.0;
-inc (x2);
-end;
-}
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
           writeln ('2_Length (BufferplugFLTMP) = '
                    + inttostr (Length (BufferplugFLTMP)));
@@ -4406,17 +4258,8 @@ end;
               if numoutbuf > 0 then
                 begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
-                  writeln ('SetLength (BufferplugFL) = '  + inttostr (length (BufferplugFL) + trunc
-                  (
-
-                   numoutbuf
-                   *
-
-                   inputData
-                   .
-
-                   Channels
-                  )));
+                  writeln ('SetLength (BufferplugFL) = '  + inttostr (length (BufferplugFL) +
+                   trunc(numoutbuf * inputData.Channels)));
   {$endif}
 
                   SetLength (BufferplugFL, length (BufferplugFL) + trunc (numoutbuf * inputData.
@@ -4452,8 +4295,7 @@ end;
 function GetBPMPlug (bufferin: TDArFloat; plugHandle: THandle; notneeded :Tt_bs2bdp; Var inputData:
                      Tuos_Data;
                      numframes: float; loop: float; notused3: float;  notused4: float;
-                     notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat
-;
+                     notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var 
   ratio : shortint;
 begin
@@ -4487,8 +4329,7 @@ begin
       // writeln ('getBPM init ');
       if (theincbpm < numframes) and (theincbpm > -1) then
         begin
-          bpm_putSamples (plugHandle,  pcfloat (bufferin),  length (bufferin) div inputData.channels
-          );
+          bpm_putSamples (plugHandle,  pcfloat (bufferin),  length (bufferin) div inputData.channels);
         end
       else
         begin
@@ -4509,12 +4350,10 @@ begin
     end;
 end;
 
-
 {$endif}
 
 {$IF DEFINED (bs2b)}
-function bs2bPlug (bufferin: TDArFloat; notneeded: THandle; Abs2bd : Tt_bs2bdp; Var inputData:
-                   Tuos_Data;
+function bs2bPlug (bufferin: TDArFloat; notneeded: THandle; Abs2bd : Tt_bs2bdp; Var inputData: Tuos_Data;
                    notused1: float; notused2: float; notused3: float;  notused4: float;
                    notused5: float; notused6: float; notused7: float;  notused8: float): TDArFloat;
 var 
@@ -4594,7 +4433,6 @@ begin
 
   if lowercase (PlugName) = 'getbpm' then
     begin
-      // 
       SetLength (Plugin, Length (Plugin) + 1);
       x := Length (Plugin) - 1;
       Plugin[x] := Tuos_Plugin.Create ();
@@ -5089,7 +4927,6 @@ begin
 
   Result := Data;
 end;
-
 
 function Tuos_Player.DSPLevelOut (Data: Tuos_Data): Tuos_Data;
 var 
@@ -5958,20 +5795,11 @@ end;
 {$IF DEFINED (portaudio)}
 function Tuos_Player.AddFromDevIn (Device: cint32; Latency: CDouble;
                                    SampleRate: CDouble; OutputIndex: cint32;
-                                   SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32):
-
-
-
-                                                                                              cint32
-;
+                                   SampleFormat: cint32; FramesCount : cint32; ChunkCount: cint32): cint32;
 // Add Input from IN device with custom parameters
 // Device ( -1 is default Input device )
 // Latency  ( -1 is latency suggested ) 
 // SampleRate : default: -1 (44100)
-
-
-
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex
 // (if multi-output then OutName = name of each output separated by ';')
 // SampleFormat : -1 default: Int16 (0: Float32, 1:Int32, 2:Int16)
@@ -6135,15 +5963,7 @@ function Tuos_Player.AddFromSynth (Channels: integer; WaveTypeL, WaveTypeR: shor
                                    FramesCount : cint32): cint32;
 // Add an input from Synthesizer with custom parameters
 // Channels: default: -1 (2) (1 = mono, 2 = stereo)
-
-
-
-
 // WaveTypeL: default: -1 (0) (0 = sine-wave 1 = square-wave, 2 = triangle, 2= triangle, 3=sawtooth used for mono and stereo) 
-
-
-
-
 // WaveTypeR: default: -1 (0) (0 = sine-wave 1 = square-wave,2 = triangle, 2= triangle, 3=sawtooth used, used for stereo, ignored for mono) 
 // FrequencyL: default: -1 (440 htz) (Left frequency, used for mono)
 // FrequencyR: default: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
@@ -6152,10 +5972,6 @@ function Tuos_Player.AddFromSynth (Channels: integer; WaveTypeL, WaveTypeR: shor
 // Duration: default:  -1 (= 1000)  => duration in msec (0 = endless)
 // NbHarmonics: default:  -1 (= 0) Number of Harmonies
 // EvenHarmonics: default: -1 (= 0) (0 = all harmonics, 1 = Only even harmonics)
-
-
-
-
 // OutputIndex: Output index of used output// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
 // SampleFormat: default: -1 (0: Float32) (0: Float32, 1:Int32, 2:Int16)
 // SampleRate: default: -1 (44100)
@@ -6271,15 +6087,7 @@ procedure Tuos_Player.InputSetSynth (InputIndex: cint32; WaveTypeL, WaveTypeR: s
                                      : cint32;
                                      NbHarmonic: cint32; EvenHarmonics: cint32; Enable: boolean);
 // InputIndex: one existing input index   
-
-
-
-
 // WaveTypeL : do not change: -1 (0 = sine-wave 1 = square-wave, 2 = triangle, 2= triangle, 3=sawtooth used for mono and stereo) 
-
-
-
-
 // WaveTypeR : do not change: -1 (0 = sine-wave 1 = square-wave, 2 = triangle, 2= triangle, 3=sawtooth used for stereo, ignored for mono) 
 // FrequencyL : do not change: -1 (Left frequency, used for mono)
 // FrequencyR : do not change: -1 (440 htz) (Right frequency, used for stereo, ignored for mono)
@@ -6940,11 +6748,6 @@ begin
       err := Pa_OpenStream (@StreamOut[x].Data.HandleSt, Nil, @StreamOut[x].PAParam, CDouble (
              StreamOut[x]
              .Data.SampleRate), CULong (ChunkCount), paClipOff, Nil, Nil);
-
-
-
-
-
 //   err := Pa_OpenDefaultStream (@StreamOut[x].Data.HandleSt, 2, 2, paFloat32, DefRate, 512, nil, nil);
   {$endif}
 
@@ -6968,10 +6771,6 @@ function Tuos_Player.AddFromURL (URL: PChar; OutputIndex: cint32;
                                  ICYon : boolean): cint32;
 // Add an Input from Audio URL
 // URL : URL of audio file
-
-
-
-
 // OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
 // SampleFormat : -1 default: Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
@@ -7193,9 +6992,6 @@ begin
   {$endif}
 
               StreamIn[x].Data.HandleOP := 
-
-
-
 // op_open_callbacks (StreamIn[x].InPipe, uos_callbacks, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err); 
                                            op_test_callbacks (StreamIn[x].InPipe, uos_callbacks,
                                            StreamIn[x].
@@ -7262,8 +7058,7 @@ begin
                                   if j = 5 then StreamIn[x].Data.comment := s;
                                   if j = 6 then StreamIn[x].Data.tag := s;
                                   if j > 6 then StreamIn[x].Data.comment := StreamIn[x].Data.comment
-                                                                            + ' ' +
-                                                                            s;
+                                                                            + ' ' + s;
 
                                   inc (LComment);
                                   inc (LcommentLength);
@@ -7523,10 +7318,6 @@ function Tuos_Player.AddFromMemoryBuffer (Var MemoryBuffer: TDArFloat; Var Buffe
 // Add an input from memory buffer with custom parameters
 // MemoryBuffer : the buffer
 // Bufferinfos : infos of the buffer
-
-
-
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')// Channels : default: -1 (2:stereo) (0: no channels, 1:mono, 2:stereo, ...)// SampleRate : default: -1 (44100)
 // FramesCount : default: -1 (65536 div Channels)
 //  result :  Input Index in array  -1 = error
@@ -7562,13 +7353,9 @@ begin
   StreamIn[x].Data.typeput := 4;
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
-
-
-
-
-
-{  
-  setlength (StreamIn[x].Data.memorybuffer, length (MemoryBuffer));
+ 
+ {  
+ setlength (StreamIn[x].Data.memorybuffer, length (MemoryBuffer));
   
    writeln ('length (Data.memorybuffer) =' +inttostr (length (StreamIn[x].Data.memorybuffer)));
    
@@ -7636,14 +7423,9 @@ begin
 end;
 
 function Tuos_Player.AddFromFileIntoMemory (Filename: Pchar; OutputIndex: cint32;
-                                            SampleFormat: cint32; FramesCount: cint32; numbuf : cint
-): cint32;
+                                            SampleFormat: cint32; FramesCount: cint32; numbuf : cint): cint32;
 // Add an input from audio file and store it into memory with custom parameters
 // FileName : filename of audio file
-
-
-
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
@@ -7882,10 +7664,6 @@ function Tuos_Player.AddFromMemoryStreamDec (Var MemoryStream: TMemoryStream; Va
                                              OutputIndex: cint32; FramesCount: cint32): cint32;
 // MemoryStream : Memory-stream of decoded audio (like created by AddIntoMemoryStream)
 // Bufferinfos : infos of the Memory-stream
-
-
-
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
 // FramesCount : default: -1 (4096)
 //  result :  Input Index in array  -1 = error
@@ -7986,15 +7764,7 @@ function Tuos_Player.AddFromMemoryStream (Var MemoryStream: TMemoryStream;
                                           TypeAudio: cint32; OutputIndex: cint32; SampleFormat:
                                           cint32; FramesCount: cint32): cint32;
 // MemoryStream : Memory stream of encoded audio file.
-
-
-
-
 // TypeAudio : default: -1 --> 0 (0: flac, ogg, wav; 1: mp3; 2:opus; 3:decoded Tmemory-stream; 5:mod, it, xm, s3m)
-
-
-
-
 // OutputIndex : Output index of used output// -1: all output, -2: no output, other cint32 refer to an existing OutputIndex  (if multi-output then OutName = name of each output separated by ';')
 // SampleFormat : default: -1 (2:Int16) (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (4096)
@@ -8108,8 +7878,7 @@ begin
             StreamIn[x].Data.Wantframes := 65536 Div StreamIn[x].Data.Channels
           else StreamIn[x].Data.Wantframes := FramesCount;
 
-          SetLength (StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels)
-          ;
+          SetLength (StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
 
           StreamIn[x].Data.hdformat := SFinfo.format;
           StreamIn[x].Data.frames := SFinfo.frames;
@@ -8175,8 +7944,7 @@ begin
               StreamIn[x].Data.SampleFormat := SampleFormat;
             // Need conversion because xmp is always 16 bit     
 
-            if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 65536 Div StreamIn[x].Data.
-                                                                     Channels
+            if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 65536 Div StreamIn[x].Data.Channels
             else
               StreamIn[x].Data.Wantframes := FramesCount;
 
@@ -8235,9 +8003,8 @@ begin
 
           if SampleFormat = -1 then
             StreamIn[x].Data.SampleFormat := 2
-          else StreamIn[x].Data.SampleFormat := 
-                                                SampleFormat
-          ;
+          else StreamIn[x].Data.SampleFormat := SampleFormat;
+          
           mpg123_format_none (StreamIn[x].Data.HandleSt);
 
           case StreamIn[x].Data.SampleFormat of 
@@ -8365,7 +8132,6 @@ begin
                      Channels);
           mpg123_info (StreamIn[x].Data.HandleSt, MPinfo);
 
-
           // problems with mpg123 library
           mpg123_id3 (StreamIn[x].Data.HandleSt, @mpid3v1, @mpid3v2);
           // to do : add id2v2
@@ -8396,9 +8162,7 @@ begin
 
             {$IF DEFINED (uos_debug) and DEFINED (unix)}
 
-
-
-{
+         {
           writeln ('StreamIn[x].Data.Length = ' + inttostr (
                   mpg123_length (StreamIn[x].Data.HandleSt);
           writeln ('StreamIn[x].Data.frames = ' + inttostr (
@@ -8475,12 +8239,7 @@ begin
          {$endif}
 
       // Can not make work...
-
-
-
-
-
-// StreamIn[x].Data.HandleOP := op_test_callbacks (StreamIn[x].data.MemoryStream, uos_callbacksms, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err);
+      // StreamIn[x].Data.HandleOP := op_test_callbacks (StreamIn[x].data.MemoryStream, uos_callbacksms, StreamIn[x].data.BufferTMP[0], PipeBufferSize, err);
 
       // this is a memorystream converted into a buffer, it works...
       StreamIn[x].Data.HandleOP := op_test_memory (StreamIn[x].data.BufferTMP[0],PipeBufferSize, Err
@@ -8533,8 +8292,6 @@ begin
                     end;
                 end;
 
-
-
           //  WriteLn ((Format ('op_bitrate = %d', [op_bitrate (StreamIn[x].Data.HandleOP, nil)])));
 
               StreamIn[x].Data.Length := op_pcm_total (StreamIn[x].Data.HandleOP, Nil);
@@ -8574,9 +8331,7 @@ begin
       WriteLn ('TAACInfo.Create () = ok');
          {$endif}
 
-
-
-{
+       {
          Case SampleFormat of
             0 : StreamIn[x].AACI:= MP4OpenFile (FileName, FAAD_FMT_FLOAT);
             1 : StreamIn[x].AACI:= MP4OpenFile (FileName, FAAD_FMT_32BIT);
@@ -8616,9 +8371,7 @@ begin
             StreamIn[x].Data.Wantframes :=  65536 Div StreamIn[x].Data.Channels
           else StreamIn[x].Data.Wantframes := FramesCount;
 
-          SetLength (StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * StreamIn[x].Data.
-                     Channels
-          );
+          SetLength (StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * StreamIn[x].Data.Channels);
 
           StreamIn[x].Data.title  := StreamIn[x].AACI.Title;
           StreamIn[x].Data.artist  := StreamIn[x].AACI.Artist;
@@ -8679,9 +8432,7 @@ begin
             StreamIn[x].Data.Wantframes :=  65536 Div StreamIn[x].Data.Channels
           else StreamIn[x].Data.Wantframes := FramesCount;
 
-          SetLength (StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * StreamIn[x].Data.
-                     Channels
-          );
+          SetLength (StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes * StreamIn[x].Data.Channels);
 
           StreamIn[x].Data.title  := '';
           StreamIn[x].Data.artist  := '';
@@ -8769,10 +8520,6 @@ function Tuos_Player.AddFromFile (Filename: PChar; OutputIndex: cint32;
                                   SampleFormat: cint32; FramesCount: cint32 ): cint32;
 // Add an Input from Audio file with Custom parameters
 // FileName : filename of audio file
-
-
-
-
 // OutputIndex : OutputIndex of existing Output// -1: all output, -2: no output, other cint32 : existing Output
 // SampleFormat : -1 default: Int16 (0: Float32, 1:Int32, 2:Int16)
 // FramesCount : default: -1 (65536 div channels)
@@ -9072,13 +8819,11 @@ begin
               StreamIn[x].Data.filename := filename;
 
               if FramesCount = -1 then  StreamIn[x].Data.Wantframes := 
-                                                                       65536 Div StreamIn[x].Data.
-                                                                       Channels
+                                                                       65536 Div StreamIn[x].Data.Channels
               else
                 StreamIn[x].Data.Wantframes := FramesCount;
 
-              SetLength (StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.
-                         Channels);
+              SetLength (StreamIn[x].Data.Buffer, StreamIn[x].Data.Wantframes*StreamIn[x].Data.Channels);
 
               mpg123_info (StreamIn[x].Data.HandleSt, MPinfo);
 
@@ -9189,10 +8934,6 @@ begin
                             end;
                         end;
                     end;
-
-
-
-
 
         //  WriteLn ((Format ('op_bitrate = %d', [op_bitrate (StreamIn[x].Data.HandleOP, nil)])));  
 
@@ -9641,8 +9382,7 @@ begin
   aStepR := (aFreqR*1024/StreamIn[x].Data.samplerate);;
 
   StreamIn[x].Data.posdursine := 
-                                 StreamIn[x].Data.posdursine + (StreamIn[x].Data.WantFrames Div chan
-                                 );
+                                 StreamIn[x].Data.posdursine + (StreamIn[x].Data.WantFrames Div chan);
 
   x2 := 0;
 
@@ -9707,7 +9447,6 @@ var
 {$endif}
 begin
   if length (StreamIn[x].Data.memorybuffer) - StreamIn[x].Data.posmem - (StreamIn[x].Data.WantFrames
-
      * StreamIn[x].Data.Channels) >= 0 then wantframestemp := (StreamIn[x].Data.WantFrames
                                                               * StreamIn[x].Data.Channels)
   else
@@ -9753,11 +9492,6 @@ var
   st : string;
 {$endif}
 begin
-
-
-
-
-
 {
  if length (StreamIn[x].Data.MemoryStream) - StreamIn[x].Data.posmem - (StreamIn[x].Data.WantFrames
 
@@ -9917,10 +9651,6 @@ begin
   // err :=// if you want clean buffer
   StreamIn[x].Data.OutFrames := 
                                 StreamIn[x].Data.WantFrames * StreamIn[x].Data.Channels;
-
-
-
-
 
 //  if err = 0 then StreamIn[x].Data.Status := 1 else StreamIn[x].Data.Status := 0;// if you want clean buffer
 end;
@@ -10457,8 +10187,6 @@ begin
     {$endif}
 
     end;
-
-
 end;
 
 procedure Tuos_Player.DoMainLoopProc (x: integer);
@@ -10999,8 +10727,7 @@ begin
 
  {$IF DEFINED (uos_debug) and DEFINED (unix)}
           writeln ('PlugFunc: Length (BufferplugINFLTMP,BufferplugFL) = ' +
-                   inttostr (Length (BufferplugINFLTMP)) + ' , ' + inttostr (Length (BufferplugFL)))
-          ;
+                   inttostr (Length (BufferplugINFLTMP)) + ' , ' + inttostr (Length (BufferplugFL))) ;
  {$endif}
 
           if (length (PlugIn) > 1) then
@@ -11347,8 +11074,7 @@ begin
 
                  // no int32 format with opus => need a conversion from float32 to int32.
                  StreamIn[x].Data.Buffer := Cvfloat32ToInt32fl ( StreamIn[x].Data.Buffer,
-                                            StreamIn[x].Data.outframes * StreamIn[x].Data.Channels )
-                 ;
+                                            StreamIn[x].Data.outframes * StreamIn[x].Data.Channels);
                end;
             2:
                begin
@@ -11361,9 +11087,7 @@ begin
                end;
           end;
 
-          setlength (StreamIn[x].data.Buffer, StreamIn[x].Data.outframes * StreamIn[x].Data.Channels
-          )
-          ;
+          setlength (StreamIn[x].data.Buffer, StreamIn[x].Data.outframes * StreamIn[x].Data.Channels);
 
 {$IF DEFINED (uos_debug) and DEFINED (unix)}
           writeln ('Seek outframes = '+inttostr (StreamIn[x].Data.outframes));
@@ -11425,16 +11149,13 @@ begin
          case StreamIn[x].Data.SampleFormat of 
            0: StreamIn[x].Data.OutFrames := 
                                             sf_read_float (StreamIn[x].Data.HandleSt,
-                                            @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes
-                                            );
+                                            @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes);
            1: StreamIn[x].Data.OutFrames := 
                                             sf_read_int (StreamIn[x].Data.HandleSt,
-                                            @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes
-                                            );
+                                            @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes);
            2: StreamIn[x].Data.OutFrames := 
                                             sf_read_short (StreamIn[x].Data.HandleSt,
-                                            @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes
-                                            );
+                                            @StreamIn[x].Data.Buffer[0], StreamIn[x].Data.Wantframes);
          end;
 
  {$IF DEFINED (uos_debug) and DEFINED (unix)}
@@ -11459,11 +11180,8 @@ begin
          for i := 0 to length (StreamIn[x].data.Buffer) -1 do
            case StreamIn[x].Data.SampleFormat of 
              0: st := st + '|' + inttostr (i) + '=' + floattostr (StreamIn[x].data.Buffer[i]);
-             1: st := st + '|' + inttostr (i) + '=' + inttostr (cint32 (StreamIn[x].data.Buffer[i]))
-             ;
-             2: st := st + '|' + inttostr (i) + '=' + inttostr (cint16 (cint32 (StreamIn[x].data.
-                      Buffer[
-                      i])));
+             1: st := st + '|' + inttostr (i) + '=' + inttostr (cint32 (StreamIn[x].data.Buffer[i]));
+             2: st := st + '|' + inttostr (i) + '=' + inttostr (cint16 (cint32 (StreamIn[x].data.Buffer[i])));
            end;
 
          WriteLn ('OUTPUT DATA sf_read_ () ---------------------------');
@@ -11513,16 +11231,11 @@ begin
                                                                            Wantframes;
                                                                MP4GetData (StreamIn[x].AACI,
                                                                            StreamIn
-                                                                           [x].AACI.pData, outBytes)
-                                                               ;
+                                                                           [x].AACI.pData, outBytes);
                                                                Move (StreamIn[x].AACI.pData^,
                                                                      StreamIn[x].Data.Buffer[0],
                                                                      outBytes);
-                                                               StreamIn[x].AACI.lwDataLen := 
-
-
-                                                                                            outBytes
-                                                               ;
+                                                               StreamIn[x].AACI.lwDataLen := outBytes;
                                                              end;
           end;
           if StreamIn[x].AACI.lwDataLen > (StreamIn[x].AACI.BitsPerSample div 8) then
@@ -11532,10 +11245,6 @@ begin
             StreamIn[x].Data.outframes := 0;
 
           if StreamIn[x].Data.outframes < 0 then  StreamIn[x].Data.outframes := 0;
-
-
-
-
 
     //  setlength (StreamIn[x].data.Buffer,StreamIn[x].Data.outframes * StreamIn[x].Data.channels );
 
@@ -11663,9 +11372,7 @@ begin
 
          for i := 0 to length (StreamIn[x].data.Buffer) -1 do
            begin
-             st := st + '|' + inttostr (i) + '=' + inttostr (cint16 (cint32 (StreamIn[x].data.Buffer
-                   [
-                   i])));
+             st := st + '|' + inttostr (i) + '=' + inttostr (cint16 (cint32 (StreamIn[x].data.Buffer[i])));
            end;
 
          WriteLn ('OUTPUT DATA xmp_read_ ---------------------------');
@@ -11744,8 +11451,7 @@ begin
 
             if (StreamIn[x].data.hasfilters) and uosIsActif then
               begin
-                setlength (StreamIn[x].Data.levelfiltersar,StreamIn[x].Data.nbfilters * StreamIn[x].
-                           Data.channels );
+                setlength (StreamIn[x].Data.levelfiltersar,StreamIn[x].Data.nbfilters * StreamIn[x].Data.channels );
                 StreamIn[x].Data.incfilters := 0;
               end;
 
@@ -11972,13 +11678,7 @@ begin
                                            writeln ('length (StreamOut[x].Data.Buffer) = ' +inttostr
                                                     (
                                                     length (StreamOut[x].Data.Buffer)));
-                                           writeln (
-
-
-
-
-                                                 'for x3 := 0 to high (StreamIn[x2].Data.Buffer) do'
-                                           );
+                                           writeln ('for x3 := 0 to high (StreamIn[x2].Data.Buffer) do');
                                            writeln ('high (StreamIn[x2].Data.Buffer) = '+ inttostr (
                                                     high (StreamIn[x2].Data.Buffer)));
   {$endif}
@@ -11994,21 +11694,13 @@ begin
                                              end;
 
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
-                                           WriteLn (
-
-
-                                           'StreamOut[x].Data.Buffer ------------------------------'
-                                           );
+                                           WriteLn ('StreamOut[x].Data.Buffer -------');
                                            st := '';
                                            for i := 0 to length (StreamOut[0].Data.Buffer) -1 do
                                              st := st + '|' + inttostr (i) + '=' +
                                                    floattostr (Streamout[0].Data.Buffer[i]);
                                            // WriteLn (st);
-                                           writeln (
-
-
-                                               'for x3 := 0 to high (StreamIn[x2].Data.Buffer) done'
-                                           );
+                                           writeln ('for x3 := 0 to high (StreamIn[x2].Data.Buffer) done');
   {$endif}
 
                                            case StreamIn[x2].Data.LibOpen of 
@@ -12063,7 +11755,6 @@ begin
                                      // calcul level after all dsp
                                      if (Streamout[x].Data.levelEnable = 2) then
                                        Streamout[x].Data := DSPLevelOut(Streamout[x].Data);
-
 
                                      if uosIsActif then
                                        begin
@@ -12416,7 +12107,6 @@ begin
   if Result = 0 then  Result := InitLib ();
 end;
 
-
 function uos_loadPlugin (PluginName, PluginFilename: PChar) : cint32;
 begin
   Result := -1;
@@ -12458,7 +12148,6 @@ begin
     end;
   {$endif}
 end;
-
 
 {$IF DEFINED (shout)}
 function uos_LoadServerLib (ShoutFileName, OpusFileName : PChar) : cint32;
@@ -12760,8 +12449,6 @@ begin
       Seekable := False;
       Status := 0;
       // no data
-
-
       SetLength (Buffer,0);
       SetLength (MemoryBuffer,0);
       MemoryStream := Nil;
@@ -12789,7 +12476,6 @@ begin
       LevelRight := 0;
       levelArrayEnable := 0;
 
-      //----------------------------//
       SampleRate := 44100;
   {$IF DEFINED (synthesizer)}
       freqLsine := 440;
@@ -12799,8 +12485,7 @@ begin
       harmonic := 0;
   {$endif}
       SamplerateRoot := SampleRate;
-      //----------------------------//
-
+    
       Wantframes := 0;
       OutFrames := 0;
 
