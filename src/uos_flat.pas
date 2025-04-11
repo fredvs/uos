@@ -848,6 +848,9 @@ function uos_InputUpdateTag(PlayerIndex: cint32; InputIndex: cint32): Boolean;
 {$IF DEFINED (webstream) and DEFINED (mpg123)}
 // for mp3 only
 function uos_InputUpdateICY (PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): integer;
+{$endif}
+
+{$IF DEFINED (webstream)}
 // Type of audio of url stream, 0:mp3, 1:opus, 2:acc
 function uos_InputGetURLAudioType(PlayerIndex: cint32; InputIndex: cint32): integer;
 function uos_InputGetURLContentType(PlayerIndex: cint32; InputIndex: cint32): string;
@@ -1105,7 +1108,7 @@ end;
  // Enable : Enabled
  // example uos_OutputSetDSPVolume (0,InputIndex1,1,0.8,True);
 
-{$IF DEFINED (webstream) and DEFINED (mpg123)} 
+{$IF DEFINED (webstream) and DEFINED (mpg123)}
 function uos_InputUpdateICY (PlayerIndex: cint32; InputIndex: cint32; var icy_data : pchar): integer;
 // for mp3 only
 begin
@@ -1113,8 +1116,11 @@ begin
   if (length (uosPlayers) > 0) and (PlayerIndex < length (uosPlayers)) then
     if uosPlayersStat[PlayerIndex] = 1 then
       if assigned (uosPlayers[PlayerIndex]) then
-        Result := uosPlayers[PlayerIndex].InputUpdateICY (InputIndex, icy_data);
+        Result := uosPlayers[PlayerIndex].InputUpdateICY(InputIndex, icy_data);
 end; 
+{$endif}
+
+{$IF DEFINED (webstream)}
 // Type of audio of url stream, 0:mp3, 1:opus, 2:acc
 function uos_InputGetURLAudioType(PlayerIndex: cint32; InputIndex: cint32): integer;
 // for mp3 only
@@ -2585,7 +2591,6 @@ begin
         Sleep(10);
         Dec(nt);
       end;
-
     end;
 
     {$IF DEFINED (uos_debug) and DEFINED (unix)}
@@ -2606,7 +2611,6 @@ begin
         uosPlayersStat[x] := -1;
         uosPlayers[x]     := nil;
       end;
-
   end;
 end;
 
@@ -2635,4 +2639,3 @@ begin
 end;
 
 end.
-

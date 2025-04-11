@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2250410;
+  uos_version : cint32 = 2250411;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -1225,10 +1225,12 @@ type
 
       function InputUpdateTag (InputIndex: cint32): boolean;
       inline;
-
 {$IF DEFINED (webstream) and DEFINED (mpg123)}
       function InputUpdateICY (InputIndex: cint32; Var icy_data : pchar): integer;
       inline;
+{$endif}      
+
+{$IF DEFINED (webstream)}
       // Type of audio of url stream, 0:mp3, 1:opus, 2:acc, -1:error
       function InputGetURLAudioType(InputIndex: cint32): integer;
       inline;
@@ -2876,21 +2878,23 @@ begin
         if assigned (StreamIn[InputIndex].httpget) then
           if StreamIn[InputIndex].httpget.ICYenabled = true then
             begin
-              Result := mpg123_icy (StreamIn[InputIndex].Data.HandleSt, icy_data);
+              Result := mpg123_icy(StreamIn[InputIndex].Data.HandleSt, icy_data);
             end;
     end;
 end;
+{$endif}
 
+{$IF DEFINED (webstream)}
 // Type of audio of url stream, 0:mp3, 1:opus, 2:acc
 function Tuos_Player.InputGetURLAudioType(InputIndex: cint32): integer;
 begin
   Result := -1;
   if (isAssigned = True) then
     begin
-      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+      // if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
         if assigned (StreamIn[InputIndex].httpget) then
           Result := StreamIn[InputIndex].httpget.FormatType -1;
-    end;
+   end;
 end;
 
 function Tuos_Player.InputGetURLContentType(InputIndex: cint32): string;
@@ -2898,7 +2902,7 @@ begin
   Result := '';
   if (isAssigned = True) then
     begin
-      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+      //if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
         if assigned (StreamIn[InputIndex].httpget) then
           Result := StreamIn[InputIndex].httpget.ContentType;
     end;
@@ -2909,7 +2913,7 @@ begin
   Result := '';
   if (isAssigned = True) then
     begin
-      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+      //if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
         if assigned (StreamIn[InputIndex].httpget) then
           Result := StreamIn[InputIndex].httpget.ice_Audio_Info;
     end;
@@ -2920,7 +2924,7 @@ begin
   Result := '';
   if (isAssigned = True) then
     begin
-      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+      //if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
         if assigned (StreamIn[InputIndex].httpget) then
           Result := StreamIn[InputIndex].httpget.icy_description;
     end;
@@ -2930,7 +2934,7 @@ begin
   Result := '';
   if (isAssigned = True) then
     begin
-      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+      //if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
         if assigned (StreamIn[InputIndex].httpget) then
           Result := StreamIn[InputIndex].httpget.icy_genre;
     end;
@@ -2940,7 +2944,7 @@ begin
   Result := '';
   if (isAssigned = True) then
     begin
-      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+      //if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
         if assigned (StreamIn[InputIndex].httpget) then
           Result := StreamIn[InputIndex].httpget.icy_name;
     end;
@@ -2950,7 +2954,7 @@ begin
   Result := '';
   if (isAssigned = True) then
     begin
-      if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
+      //if StreamIn[InputIndex].Data.LibOpen = 1 then// mp3
         if assigned (StreamIn[InputIndex].httpget) then
           Result := StreamIn[InputIndex].httpget.icy_url;
     end;
@@ -6957,7 +6961,7 @@ begin
 
           if StreamIn[x].httpget.IsRunning then
             begin
-
+          
               StreamIn[x].Data.HandleSt := aacDecoder_Open (TRANSPORT_TYPE.TT_MP4_ADTS, 1);
 
               if StreamIn[x].Data.HandleSt = nil then
@@ -7135,7 +7139,6 @@ begin
                                   if j = 6 then StreamIn[x].Data.tag := s;
                                   if j > 6 then StreamIn[x].Data.comment := StreamIn[x].Data.comment
                                                                             + ' ' + s;
-
                                   inc (LComment);
                                   inc (LcommentLength);
                                 end;
@@ -7174,7 +7177,6 @@ begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
                       WriteLn ('End opus');
   {$endif}
-
                     end;
                 end;
             end
@@ -7194,13 +7196,12 @@ begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
           WriteLn ('Begin mpg123');
   {$endif}
-          
           sleep(500);     
                
           if StreamIn[x].httpget.IsRunning then
             begin
               if StreamIn[x].httpget.ICYenabled = true then
-                CheckSynchronize (1500);
+                CheckSynchronize(1500);
 
               StreamIn[x].Data.HandleSt := mpg123_new (Nil, Err);
 
@@ -7208,7 +7209,6 @@ begin
               if err = 0 then writeln ('===> mpg123_new => ok.')
               else writeln ('===> mpg123_new NOT ok.');
  {$endif}
-
               if Err = 0 then
                 begin
                   if SampleFormat = -1 then

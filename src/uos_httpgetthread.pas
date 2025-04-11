@@ -122,26 +122,30 @@ begin
         ContentType:= s;
         ice_audio_info:= LowerCase(SL.Values['ice-audio-info']); //channels=2;samplerate=44100;bitrate=128
         icy_description:= LowerCase(SL.Values['icy-description']);
+        //writeln('icy_description ' + icy_description);
         icy_genre := LowerCase(SL.Values['icy-genre']);
         icy_name := LowerCase(SL.Values['icy-name']);
-        icy_url := LowerCase(SL.Values['icy-url']);
+        //writeln('icy_name ' + icy_name);
+         icy_url := LowerCase(SL.Values['icy-url']);
         end;
       SL.Free;
     except
       on E: Exception do
       begin
-         // Writeln('HEAD failed: ' + E.Message + '. Falling back to limited GET.');
+          //Writeln('HEAD failed: ' + E.Message + '. Falling back to limited GET.');
           FormatType := 1; // aac streams dont fail Http.Head(URL, SL);
-
+         
         {//TODO to check FormatType if Http.Head failed 
-        TempStream := TMemoryStream.Create;
+        //  TempStream := TMemoryStream.Create;
+        //  TempStream.Position := 0;
+        SL2   := TStringList.Create;
          try
           Writeln('before RequestHeaders.Clear');
           Http.RequestHeaders.Clear;
           Writeln('before AddHeader');          
-          Http.AddHeader('Range', 'bytes=0-2047'); // Fetch only 2 KB
+          Http.AddHeader('Range', 'bytes=0-1023'); // Fetch only 2 KB
           Writeln('before get');
-          Http.Get(URL, TempStream);
+          Http.Get(URL, sl2);
           Writeln('Limited GET completed.');
           s := LowerCase(Http.ResponseHeaders.Values['Content-Type']);
           Writeln('s '+ s);
@@ -149,10 +153,10 @@ begin
          on E: Exception do  Writeln('GET failed: ' + E.Message);
          end;
              TempStream.Free;
-        }
+         }
       end;
     end;
-
+  //  if length(s) > 0 then
     if (FormatType <> 1) then
       if Pos('mpeg', s) > 0 then
         FormatType := 1
@@ -165,8 +169,8 @@ begin
       else
         FormatType := 0;
 
-    // Writeln('Content-Type: ' + s)
-    // Writeln('FormatType: ' + intostr(FormatType));
+    // Writeln('Content-Type: ' + s);
+    // Writeln('FormatType: ' + inttostr(FormatType));
     if FormatType = 0 then
     begin
       // Writeln('Unknown format, exiting.');
