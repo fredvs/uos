@@ -245,7 +245,7 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   if (button3.Enabled = False) then
-    uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
+    uos_outputSetDSPVolume(PlayerIndex1, Out1Index, TrackBar1.position / 100,
       TrackBar3.position / 100, True);
 end;
 
@@ -388,7 +388,7 @@ begin
     // ChunkCount : default : -1 (= 512)
     //  result : -1 nothing created, otherwise Output Index in array
 
-    uos_InputSetLevelEnable(PlayerIndex1, In1Index, 2);
+    uos_OutputSetLevelEnable(PlayerIndex1, Out1Index, 2);
     // set calculation of level/volume (usefull for showvolume procedure)
     // set level calculation (default is 0)
     // 0 => no calcul
@@ -402,14 +402,14 @@ begin
     // InIndex : Index of a existing Input
     // LoopProcPlayer1 : procedure of object to execute inside the loop
 
-    uos_InputAddDSPVolume(PlayerIndex1, In1Index, 1, 1);
+    uos_OutputAddDSPVolume(PlayerIndex1, Out1Index, 1, 1);
     // DSP Volume changer
     // PlayerIndex1 : Index of a existing Player
     // In1Index : InputIndex of a existing input
     // VolLeft : Left volume  ( from 0 to 1 => gain > 1 )
     // VolRight : Right volume
 
-    uos_InputSetDSPVolume(PlayerIndex1, In1Index, TrackBar1.position / 100,
+    uos_OutputSetDSPVolume(PlayerIndex1, Out1Index, TrackBar1.position / 100,
       TrackBar3.position / 100, True); // Set volume
     // PlayerIndex1 : Index of a existing Player
     // In1Index : InputIndex of a existing Input
@@ -519,8 +519,8 @@ end;
 
 procedure Tform1.ShowLevel;
 begin
-  ShapeLeft.Height  := round(uos_InputGetLevelLeft(PlayerIndex1, In1Index) * 146);
-  ShapeRight.Height := round(uos_InputGetLevelRight(PlayerIndex1, In1Index) * 146);
+  ShapeLeft.Height  := round(uos_OutputGetLevelLeft(PlayerIndex1, Out1Index) * 146);
+  ShapeRight.Height := round(uos_OutputGetLevelRight(PlayerIndex1, Out1Index) * 146);
   ShapeLeft.top     := 450 - ShapeLeft.Height;
   ShapeRight.top    := 450 - ShapeRight.Height;
 end;
