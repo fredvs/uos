@@ -67,7 +67,6 @@ const
     {$ENDIF}
   {$ELSEIF Defined(DARWIN) or Defined(MACOS)}
     libfdk_aac = '@executable_path/../Frameworks/libfdk-aac-2.dylib';
-    _PU = '_'
   {$ELSEIF Defined(UNIX)}
     libfdk_aac = 'libfdk-aac-2.so';
   {$IFEND}
