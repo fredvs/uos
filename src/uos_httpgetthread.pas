@@ -91,7 +91,6 @@ var
   Http: TFPHTTPClient;
   SL: TStringList;
   URL: string;
-  s: string;
   //TempStream: TMemoryStream;
 begin
   URL := FWantedURL;
@@ -115,11 +114,18 @@ begin
       // if assigned(SL) then Writeln('SL assigned') else Writeln('SL NOT assigned');
       // writeln('SL.values ' + inttostr(SL.count));
       if SL.Count = 0 then
-        FormatType := 1
+         begin
+          // writeln('SL.Count = 0');
+          if Pos('mpeg', URL) > 0 then FormatType := 1 else
+          if Pos('mp3', URL) > 0 then FormatType := 1 else
+          if Pos('opus', URL) > 0 then FormatType := 2 else
+          if Pos('ogg', URL) > 0 then FormatType := 2 else
+          if Pos('aac', URL) > 0 then FormatType := 3 else
+          FormatType := 2;
+         end 
       else
         begin
-        s          := LowerCase(SL.Values['Content-Type']);
-        ContentType:= s;
+        ContentType       := LowerCase(SL.Values['Content-Type']);
         ice_audio_info:= LowerCase(SL.Values['ice-audio-info']); //channels=2;samplerate=44100;bitrate=128
         icy_description:= LowerCase(SL.Values['icy-description']);
         //writeln('icy_description ' + icy_description);
@@ -132,45 +138,31 @@ begin
     except
       on E: Exception do
       begin
-          //Writeln('HEAD failed: ' + E.Message + '. Falling back to limited GET.');
-          FormatType := 1; // aac streams dont fail Http.Head(URL, SL);
-         
-        {//TODO to check FormatType if Http.Head failed 
-        //  TempStream := TMemoryStream.Create;
-        //  TempStream.Position := 0;
-        SL2   := TStringList.Create;
-         try
-          Writeln('before RequestHeaders.Clear');
-          Http.RequestHeaders.Clear;
-          Writeln('before AddHeader');          
-          Http.AddHeader('Range', 'bytes=0-1023'); // Fetch only 2 KB
-          Writeln('before get');
-          Http.Get(URL, sl2);
-          Writeln('Limited GET completed.');
-          s := LowerCase(Http.ResponseHeaders.Values['Content-Type']);
-          Writeln('s '+ s);
-         except
-         on E: Exception do  Writeln('GET failed: ' + E.Message);
-         end;
-             TempStream.Free;
-         }
+          // Writeln('HEAD failed: ' + E.Message + '. Falling back to limited GET.');
+          if Pos('mpeg', URL) > 0 then FormatType := 1 else
+          if Pos('mp3', URL) > 0 then FormatType := 1 else
+          if Pos('opus', URL) > 0 then FormatType := 2 else
+          if Pos('ogg', URL) > 0 then FormatType := 2 else
+          if Pos('aac', URL) > 0 then FormatType := 3 else
+          FormatType := 2;
       end;
     end;
-  //  if length(s) > 0 then
-    if (FormatType <> 1) then
-      if Pos('mpeg', s) > 0 then
+    
+      if length(ContentType) > 0 then
+      if Pos('mpeg', ContentType) > 0 then
         FormatType := 1
-      else if Pos('aac', s) > 0 then
+      else if Pos('aac', ContentType) > 0 then
         FormatType := 3
-      else if Pos('ogg', s) > 0 then
+      else if Pos('ogg', ContentType) > 0 then
         FormatType := 2
-      else if Pos('opus', s) > 0 then
+      else if Pos('opus', ContentType) > 0 then
         FormatType := 2
       else
         FormatType := 0;
 
     // Writeln('Content-Type: ' + s);
     // Writeln('FormatType: ' + inttostr(FormatType));
+    
     if FormatType = 0 then
     begin
       // Writeln('Unknown format, exiting.');
@@ -243,4 +235,3 @@ begin
 end;
 
 end.
-

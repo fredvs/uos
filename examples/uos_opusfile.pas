@@ -290,13 +290,19 @@ begin
   begin
     DynLibs.UnloadLibrary(of_Handle);
     of_Handle:=DynLibs.NilHandle;
+    if op_Handle <> DynLibs.NilHandle then
+    begin
     DynLibs.UnloadLibrary(op_Handle);
     op_Handle:=DynLibs.NilHandle;
-     {$IFDEF windows} 
+    end;
+    {$IFDEF windows} 
+    if lc_Handle <> DynLibs.NilHandle then 
     DynLibs.UnloadLibrary(lc_Handle);
     lc_Handle:=DynLibs.NilHandle;
+    if wt_Handle <> DynLibs.NilHandle then 
     DynLibs.UnloadLibrary(wt_Handle);
     wt_Handle:=DynLibs.NilHandle;
+    if og_Handle <> DynLibs.NilHandle then 
     DynLibs.UnloadLibrary(og_Handle);
     og_Handle:=DynLibs.NilHandle; 
    {$endif}

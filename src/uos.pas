@@ -6896,12 +6896,21 @@ begin
   StreamIn[x].Data.positionEnable := 0;
   StreamIn[x].Data.levelArrayEnable := 0;
 
+{
   if FramesCount= -1 then
     totsamples := $4000
   else
     totsamples := FramesCount;
 
   PipeBufferSize := totsamples;
+  }
+    if FramesCount= -1 then
+        totsamples := 4096
+      else
+        totsamples := FramesCount;
+
+      PipeBufferSize := totsamples * sizeOf (Single);
+  
 
   CreatePipeHandles (StreamIn[x].InHandle, StreamIn[x].OutHandle, PipeBufferSize);
 
@@ -6950,7 +6959,7 @@ begin
       //  writeln('StreamIn[x].httpget.FormatType ' + inttostr(StreamIn[x].httpget.FormatType));
 
     {$IF DEFINED (fdkaac)}
-      if (StreamIn[x].httpget.FormatType = 3) or (AudioFormat = 2)
+    if ((StreamIn[x].httpget.FormatType = 3) and (AudioFormat = -1)) or (AudioFormat = 2)
         then
         begin
     {$IF DEFINED (uos_debug) and DEFINED (unix)}
@@ -7033,7 +7042,7 @@ begin
  {$endif}
 
  {$IF DEFINED (opus)}
-      if (StreamIn[x].httpget.FormatType = 2) or (AudioFormat = 1) // opus
+      if ((StreamIn[x].httpget.FormatType = 2) and (AudioFormat = -1)) or (AudioFormat = 1)    
          // or (AudioFormat = -1)
         then
         begin
@@ -7191,7 +7200,7 @@ begin
         end;
   {$endif}
     {$IF DEFINED (mpg123)}
-      if (StreamIn[x].httpget.FormatType = 1) or (AudioFormat = 0) then
+    if ((StreamIn[x].httpget.FormatType = 1) and (AudioFormat = -1)) or (AudioFormat = 0) then   
         begin
   {$IF DEFINED (uos_debug) and DEFINED (unix)}
           WriteLn ('Begin mpg123');
@@ -11926,6 +11935,7 @@ end;
 
 procedure Tuos_Init.unloadlib;
 begin
+
   {$IF DEFINED (sndfile)}
   Sf_Unload ();
   {$endif}
@@ -11945,12 +11955,12 @@ begin
   ad_Unload;
   {$endif}
   {$IF DEFINED (opus)}
-  //op_Unload;
   of_Unload;
   {$endif}
   {$IF DEFINED (windows)}
   Set8087CW (old8087cw);
   {$endif}
+  
 end;
 
 function Tuos_Init.InitLib (): cint32;
