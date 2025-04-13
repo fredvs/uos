@@ -110,12 +110,16 @@ begin
     try
       //Writeln('Sending HEAD request...');
       Http.RequestHeaders.Clear;
-      Http.Head(URL, SL);
+      Http.KeepConnection := False;
+      Http.HTTPMethod('HEAD', URL, Nil, [200, 204, 301, 302, 303, 307, 308, 400]);
+      SL.Assign(http.ResponseHeaders);
+ 
+    //  Http.Head(URL, SL);
       // if assigned(SL) then Writeln('SL assigned') else Writeln('SL NOT assigned');
       // writeln('SL.values ' + inttostr(SL.count));
       if SL.Count = 0 then
          begin
-          // writeln('SL.Count = 0');
+          //writeln('SL.Count = 0');
           if Pos('mpeg', URL) > 0 then FormatType := 1 else
           if Pos('mp3', URL) > 0 then FormatType := 1 else
           if Pos('opus', URL) > 0 then FormatType := 2 else
@@ -126,13 +130,17 @@ begin
       else
         begin
         ContentType       := LowerCase(SL.Values['Content-Type']);
+        //writeln('ContentType ' + ContentType);
         ice_audio_info:= LowerCase(SL.Values['ice-audio-info']); //channels=2;samplerate=44100;bitrate=128
+        //writeln('ice_audio_info ' + ice_audio_info);
         icy_description:= LowerCase(SL.Values['icy-description']);
         //writeln('icy_description ' + icy_description);
         icy_genre := LowerCase(SL.Values['icy-genre']);
+        //writeln('icy_genre ' + icy_genre);
         icy_name := LowerCase(SL.Values['icy-name']);
         //writeln('icy_name ' + icy_name);
-         icy_url := LowerCase(SL.Values['icy-url']);
+        icy_url := LowerCase(SL.Values['icy-url']);
+        //writeln('icy_url ' + icy_url);
         end;
       SL.Free;
     except
@@ -149,6 +157,7 @@ begin
     end;
     
       if length(ContentType) > 0 then
+      begin
       if Pos('mpeg', ContentType) > 0 then
         FormatType := 1
       else if Pos('aac', ContentType) > 0 then
@@ -157,11 +166,26 @@ begin
         FormatType := 2
       else if Pos('opus', ContentType) > 0 then
         FormatType := 2
-      else
-        FormatType := 0;
-
-    // Writeln('Content-Type: ' + s);
-    // Writeln('FormatType: ' + inttostr(FormatType));
+      else if Pos('opus', icy_name) > 0 then
+        FormatType := 2
+      else if Pos('aac', icy_name) > 0 then
+        FormatType := 3
+      else if Pos('mp3', icy_name) > 0 then
+        FormatType := 1  
+      else if Pos('mpeg', URL) > 0 then
+        FormatType := 1
+       else if Pos('mp3', URL) > 0 then 
+        FormatType := 1
+       else if Pos('opus', URL) > 0 then
+        FormatType := 2 
+       else if Pos('ogg', URL) > 0 then
+        FormatType := 2 
+       else if Pos('aac', URL) > 0 then
+        FormatType := 3 else
+        FormatType := 2;
+       end;
+       
+     // Writeln('FormatType: ' + inttostr(FormatType));
     
     if FormatType = 0 then
     begin
