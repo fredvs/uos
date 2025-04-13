@@ -104,6 +104,13 @@ begin
   InitSSLInterface;
   Http := TFPHTTPClient.Create(nil);
   SL   := TStringList.Create;
+  ContentType := '';
+  ice_audio_info := '';
+  icy_description := '';
+  icy_genre := '';
+  icy_name := '';
+  icy_url := '';
+ 
   try
     Http.AllowRedirect := True;
     Http.IOTimeout := 5000;
@@ -119,7 +126,7 @@ begin
       // writeln('SL.values ' + inttostr(SL.count));
       if SL.Count = 0 then
          begin
-          //writeln('SL.Count = 0');
+          writeln('SL.Count = 0');
           if Pos('mpeg', URL) > 0 then FormatType := 1 else
           if Pos('mp3', URL) > 0 then FormatType := 1 else
           if Pos('opus', URL) > 0 then FormatType := 2 else
