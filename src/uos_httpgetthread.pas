@@ -110,6 +110,7 @@ begin
   icy_genre := '';
   icy_name := '';
   icy_url := '';
+  FormatType := 0;
  
   try
     Http.AllowRedirect := True;
@@ -126,7 +127,7 @@ begin
       // writeln('SL.values ' + inttostr(SL.count));
       if SL.Count = 0 then
          begin
-          writeln('SL.Count = 0');
+          // writeln('SL.Count = 0');
           if Pos('mpeg', URL) > 0 then FormatType := 1 else
           if Pos('mp3', URL) > 0 then FormatType := 1 else
           if Pos('opus', URL) > 0 then FormatType := 2 else
