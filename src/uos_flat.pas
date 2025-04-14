@@ -403,7 +403,18 @@ function uos_AddFromFileIntoMemory(PlayerIndex: cint32; Filename: PChar; OutputI
 function uos_AddIntoIceServer (PlayerIndex: cint32; SampleRate : CDouble; Channels: cint; SampleFormat: cint;
  EncodeType: cint; Port: cint; Host: pchar; User: pchar; Password: pchar; MountFile :pchar): cint32;
   {$endif}
+  
 {$IF DEFINED (webstream)}
+{ Function to check URL status with detailed error codes }
+{ Returns:
+  0: URL is accessible
+  1: Invalid URL format
+  2: Connection timeout or network error
+  3: Server error (e.g., 404, 500)
+  4: Redirect not followed
+  5: Other network error}
+function uos_CheckURLStatus(const URL: string): Integer;
+
 // Add an Input from Audio URL with default parameters
 function uos_AddFromURL (PlayerIndex: cint32; URL: PChar): cint32;
 
@@ -1121,6 +1132,11 @@ end;
 {$endif}
 
 {$IF DEFINED (webstream)}
+function uos_CheckURLStatus(const URL: string): Integer;
+begin
+  Result := uos.uos_CheckURLStatus(URL);
+end; 
+
 // Type of audio of url stream, 0:mp3, 1:opus, 2:acc
 function uos_InputGetURLAudioType(PlayerIndex: cint32; InputIndex: cint32): integer;
 // for mp3 only

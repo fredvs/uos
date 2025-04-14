@@ -1518,6 +1518,18 @@ function uos_loadlib (PortAudioFileName, SndFileFileName, Mpg123FileName, Mp4ffF
 // Unload all libraries... Do not forget to call it before close application...
 procedure uos_unloadlib ();
 
+{$IF DEFINED (webstream)}
+{ Function to check URL status with detailed error codes }
+{ Returns:
+  0: URL is accessible
+  1: Invalid URL format
+  2: Connection timeout or network error
+  3: Server error (e.g., 404, 500)
+  4: Redirect not followed
+  5: Other network error}
+function uos_CheckURLStatus(const URL: string): Integer;
+{$endif}
+
 {$IF DEFINED (shout)}
 // Shout => needed for dealing with IceCast server
 // Opus => needed for dealing with encoding opus stream
@@ -1674,6 +1686,21 @@ var
   {$endif}
 
 implementation
+
+{$IF DEFINED (webstream)}
+{ Function to check URL status with detailed error codes }
+{ Returns:
+  0: URL is accessible
+  1: Invalid URL format
+  2: Connection timeout or network error
+  3: Server error (e.g., 404, 500)
+  4: Redirect not followed
+  5: Other network error}
+function uos_CheckURLStatus(const URL: string): Integer;
+begin
+result := CheckURLStatus(URL);
+end;
+{$endif}
 
 function uos_TestLoadLibrary (Filename: Pchar): boolean;
 // test a library to check if it can be loaded;
