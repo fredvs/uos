@@ -94,6 +94,7 @@ var
   Out1Index, In1Index, DSP1Index, Plugin1Index: integer;
   plugsoundtouch: Boolean = False;
   aboolicy: Boolean = False;
+  uaudiotype: integer;
   icystr: string;
 
 implementation
@@ -106,6 +107,8 @@ procedure TForm1.ChangePlugSet(Sender: TObject);
 var
   tempo, rate: cfloat;
 begin
+  if uaudiotype <> 1 then
+  begin
   if (trim(PChar(edit5.Text)) <> '') and fileexists(edit5.Text) then
   begin
     if (2 * (TrackBar4.Position / 100)) < 0.3 then
@@ -124,15 +127,19 @@ begin
       uos_SetPluginSoundTouch(PlayerIndex1, Plugin1Index, tempo, rate, checkbox2.Checked);
   end;
 
+  end;
+
 end;
 
 procedure TForm1.ResetPlugClick(Sender: TObject);
 begin
+  if uaudiotype <> 1 then
+  begin
   TrackBar4.Position := 50;
   TrackBar5.Position := 50;
   if radiogroup1.Enabled = False then   // player1 was created
     uos_SetPluginSoundTouch(PlayerIndex1, Plugin1Index, 1, 1, checkbox2.Checked);
-
+  end;
 end;
 
 procedure TForm1.ClosePlayer1;
@@ -417,7 +424,15 @@ begin
     // VolRight : Right volume
     // Enable : Enabled
 
-    if plugsoundtouch = True then
+    // procedure to execute when stream is terminated
+    uos_EndProc(PlayerIndex1, @ClosePlayer1);
+    // Assign the procedure of object to execute at end
+    // PlayerIndex : Index of a existing Player
+    // ClosePlayer1 : procedure of object to execute inside the loop
+
+     uaudiotype := uos_InputGetURLAudioType(PlayerIndex1, In1Index);
+
+     if (plugsoundtouch = True) and (uaudiotype <> 1) then
     begin
       Plugin1Index := uos_AddPlugin(PlayerIndex1, 'soundtouch', uos_InputGetSampleRate(PlayerIndex1, In1Index),
         uos_InputGetChannels(PlayerIndex1, In1Index));
@@ -425,12 +440,6 @@ begin
 
       ChangePlugSet(self); // Change plugin settings
     end;
-
-    // procedure to execute when stream is terminated
-    uos_EndProc(PlayerIndex1, @ClosePlayer1);
-    // Assign the procedure of object to execute at end
-    // PlayerIndex : Index of a existing Player
-    // ClosePlayer1 : procedure of object to execute inside the loop
 
     Button3.Enabled := False;
     Button4.Enabled := False;
@@ -441,15 +450,18 @@ begin
 
     sleep(1000);
 
+    icystr     := 'icy';
+
     uos_Play(PlayerIndex1);  // everything is ready, here we are, lets play it...
 
     application.ProcessMessages;
-    if aboolicy then
-      timer1.Enabled := True;
 
-  end
-  else
-    lerror.Caption := 'URL did not accessed';
+    if aboolicy then
+    begin
+    if uaudiotype = 0 then
+    timer1.Enabled := True else ontimericytag(nil);
+    end;
+    end  else lerror.Caption := 'URL did not accessed';
 
 end;
 
@@ -567,6 +579,7 @@ var
   aname, apicture: string;
   sicy: PChar;
 begin
+  if uaudiotype = 0 then
   checksynchronize(uos_InputUpdateICY(PlayerIndex1, In1Index, sicy));
 
   if sicy <> nil then
