@@ -297,7 +297,7 @@ begin
     edit1.ReadOnly  := True;
     edit3.ReadOnly  := True;
     edit5.ReadOnly  := True;
-    form1.Height    := 558;
+    form1.Height    := 590;
     form1.Position  := poScreenCenter;
     form1.Caption   := 'Simple Web Player.    uos version ' + IntToStr(uos_getversion());
 
@@ -317,8 +317,8 @@ end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 begin
-  if aboolicy then
-    timer1.Enabled        := False;
+  if uaudiotype = 0 then
+    timer1.Enabled := false;
   uos_Pause(PlayerIndex1);
   Button4.Enabled         := True;
   Button5.Enabled         := False;
@@ -335,8 +335,8 @@ begin
   Button6.Enabled := True;
   application.ProcessMessages;
   uos_RePlay(PlayerIndex1);
-  if aboolicy then
-    timer1.Enabled := True;
+  if uaudiotype = 0 then
+    timer1.Enabled := true;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -448,7 +448,7 @@ begin
 
     application.ProcessMessages;
 
-    sleep(1000);
+    sleep(500);
 
     icystr     := 'icy';
 
@@ -576,20 +576,18 @@ end;
 
 procedure TForm1.ontimericytag(Sender: TObject);
 var
-  aname, apicture: string;
+  atitle, apicture, adescri, agenre, aname, aurl, aurlcut: string;
   sicy: PChar;
 begin
   if uaudiotype = 0 then
   checksynchronize(uos_InputUpdateICY(PlayerIndex1, In1Index, sicy));
 
-  if sicy <> nil then
-  begin
-    if icystr <> sicy then
+  if icystr <> sicy then
     begin
       if system.Pos('StreamTitle=', sicy) > 0 then
       begin
-        aname := Copy(sicy, system.pos('StreamTitle=', sicy) + 12, Length(sicy));
-        aname := Copy(aname, 1, system.Pos(';', aname) - 1);
+        atitle := Copy(sicy, system.pos('StreamTitle=', sicy) + 12, Length(sicy));
+        atitle := Copy(atitle, 1, system.Pos(';', atitle) - 1);
       end;
 
       if system.Pos('StreamUrl=', sicy) > 0 then
@@ -598,12 +596,43 @@ begin
         apicture := Copy(apicture, 2, system.Pos(';', apicture) - 1);
         apicture := Copy(apicture, 1, system.Pos('''', apicture) - 1);
       end;
-      label2.Caption := aname + #10 + apicture;
-      icystr := sicy;
+
+      adescri := uos_InputGetURLicyDescription(PlayerIndex1, In1Index);
+      agenre  := uos_InputGetURLicyGenre(PlayerIndex1, In1Index);
+      aname   := uos_InputGetURLicyName(PlayerIndex1, In1Index);
+      aurl    := uos_InputGetURLicyUrl(PlayerIndex1, In1Index);
+
+    if uaudiotype = 0 then
+      if Length(atitle) > 70 then
+        atitle := Copy(atitle, 1, Length(atitle) div 2) + '...' + #10 +
+           '...' + Copy(atitle, (Length(atitle) div 2) + 1, (Length(atitle) div 2) + 1);
+
+    if Length(aname) > 50 then
+      aname  := trim(Copy(aname, 1, 50) + '...');
+    if Length(agenre) > 30 then
+      agenre := trim(Copy(agenre, 1, 30) + '...');
+
+    aurlcut := copy(edit4.caption, system.Pos('//', edit4.caption) + 2, Length(edit4.caption));
+
+    if Length(aurlcut) > 50 then
+      aurlcut := trim(Copy(aurlcut, 1, 50) + '...');
+
+    if Length(adescri) > 50 then
+      adescri := trim(Copy(adescri, 1, 50) + '...');
+
+    if length(aurl) > 0 then
+      aurlcut := trim(aurl);
+    if length(agenre) > 0 then
+      agenre  := ' ' + agenre;
+    if length(aname) > 0 then
+      aurlcut := aname + agenre;
+    if (length(atitle) = 0) and (length(adescri) > 0) then
+      atitle  := adescri;
+    if (length(apicture) = 0) then apicture := '' else apicture := #10 + apicture;
+    label2.Caption := aurlcut + #10 + atitle + apicture;
+     icystr := sicy;
     end;
   end;
-
-end;
 
 end.
 

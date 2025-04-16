@@ -1,11 +1,11 @@
 object Form1: TForm1
   Left = 252
-  Height = 493
+  Height = 578
   Top = 181
   Width = 505
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Web Player U0S PortAudio + SndFile + Mpg123'
-  ClientHeight = 493
+  ClientHeight = 578
   ClientWidth = 505
   Color = clMoneyGreen
   Icon.Data = {
@@ -480,9 +480,9 @@ object Form1: TForm1
     ParentFont = False
   end
   object Label2: TLabel
-    Left = 16
+    Left = 11
     Height = 21
-    Top = 504
+    Top = 494
     Width = 53
     Caption = 'Label2'
     OnClick = Label2Click
