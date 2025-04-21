@@ -80,8 +80,9 @@ begin
       Http.HTTPMethod('HEAD', URL, nil, [200, 204, 301, 302, 303, 307, 308]);
       Result := Http.ResponseStatusCode; // Return exact success status (e.g., 200, 204)
       //writeln('Http.ResponseStatusCode ', result);
-      if Http.ResponseStatusCode in [200, 204, 301, 302, 303, 307, 308, 400] then
-      result := 0;
+      case Http.ResponseStatusCode of 200, 204, 301, 302, 303, 307, 308, 400:
+        result := 0;
+      end;  
     except
       on E: EHTTPClient do
       begin
@@ -242,7 +243,7 @@ begin
     try
       Http.RequestHeaders.Clear;
 
-      if (ICYenabled = True) and (FormatType = 1) then
+      if (ICYenabled = True) and (FormatType <> 3) then
       begin
         Http.AddHeader('icy-metadata', '1');
         Http.OnHeaders := @Headers;
