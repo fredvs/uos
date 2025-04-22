@@ -87,9 +87,12 @@ begin
       on E: EHTTPClient do
       begin
         //writeln('error Http.ResponseStatusCode ', result);
-        if Http.ResponseStatusCode in [301, 302, 303, 307, 308] then
-          Result := Http.ResponseStatusCode // Return redirect status (e.g., 301, 302)
-        else if Http.ResponseStatusCode = 400 then
+       
+        case Http.ResponseStatusCode of 301, 302, 303, 307, 308:
+        Result := Http.ResponseStatusCode;
+        end;   
+          
+        if Http.ResponseStatusCode = 400 then
           Result := 0
         else if Http.ResponseStatusCode > 400 then
           Result := Http.ResponseStatusCode // Return server error (e.g., 404, 500)
