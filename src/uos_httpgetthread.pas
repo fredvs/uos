@@ -246,8 +246,9 @@ begin
     try
       Http.RequestHeaders.Clear;
 
-      if (ICYenabled = True) and (FormatType <> 3) then
+      if (ICYenabled = True) and (FormatType = 1) then
       begin
+        Http.RequestHeaders.Clear;
         Http.AddHeader('icy-metadata', '1');
         Http.OnHeaders := @Headers;
       end;
