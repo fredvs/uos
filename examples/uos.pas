@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2250416;
+  uos_version : cint32 = 2250411;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -7039,7 +7039,9 @@ begin
       {$IF DEFINED(uos_debug) and DEFINED(unix)}
       WriteLn('Begin opus');
       {$ENDIF}
-
+      
+      sleep(2000);
+      
       if StreamIn[x].httpget.IsRunning then
       begin
         len := 1;
