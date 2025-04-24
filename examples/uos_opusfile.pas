@@ -9,6 +9,7 @@ unit uos_OpusFile;
 
 {$mode objfpc}{$H+}
 {$PACKRECORDS C}
+{$RANGECHECKS OFF} 
 
 interface
 
@@ -219,12 +220,12 @@ var
  op_open_file: function(path: PAnsiChar; out error: cint): TOpusFile;cdecl;
  op_open_memory: function(const data; const _size: cuint; out error: cint): TOpusFile;cdecl;
  op_open_callbacks: function(const source; const cb: TOpusFileCallbacks;
-  const initial_data; initial_bytes: cuint; out error: cint): TOpusFile; {$IFDEF windows} stdcall;{$ENDIF} // with cdecl ---> crash in linux, strange ???
+  const initial_data; initial_bytes: cuint; out error: cint): TOpusFile; stdcall; // with cdecl ---> crash in linux, strange ???
  op_test_file: function(path: PAnsiChar; out error: cint): TOpusFile;cdecl;
  // op_test_url: function(path: PAnsiChar; out error: cint): TOpusFile;
  op_test_memory: function(const data; const size: cuint; out error: cint): TOpusFile;cdecl;
  op_test_callbacks: function(const source; const cb: TOpusFileCallbacks; const initial_data; initial_bytes: cuint;
-  out error: cint): TOpusFile; {$IFDEF windows} stdcall;{$ENDIF} // with cdecl ---> crash in linux, strange ???
+  out error: cint): TOpusFile; stdcall;// with cdecl ---> crash in linux, strange ???
  op_test_open: function(OpusFile: TOpusFile): cint;  cdecl;
  op_free: function(OpusFile: TOpusFile): cint;  cdecl;
 
