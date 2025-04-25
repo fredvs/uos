@@ -21,10 +21,9 @@ type
   protected
     procedure DoRun; override;
   public
-    Timer1: TFPTimer;
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
-    procedure Timer1Exec(Sender: TObject);
+    procedure geticy();
   end;
 
 var
@@ -33,7 +32,7 @@ var
   res, PlayerIndex1, InputIndex1, OutputIndex1, inctime: integer;
 
 
-  procedure TConsoleApp.Timer1Exec(Sender: TObject);
+  procedure TConsoleApp.geticy();
   var
     aname, apicture, prefix: string;
     ares: integer;
@@ -193,12 +192,13 @@ var
         writeln('===> OK, let play it');
         sleep(1000);
         uos_Play(PlayerIndex1);
-        Timer1.Enabled := True;
+        geticy();
         inctime        := 0;
 
         while inctime < 8 do
         begin
           sleep(2000);
+          geticy();
           CheckSynchronize;
           Inc(inctime);
         end;
@@ -227,10 +227,6 @@ var
 begin
   Application        := TConsoleApp.Create(nil);
   Application.Title  := 'ConsoleApp';
-  Application.Timer1 := TFPTimer.Create(nil);
-  Application.Timer1.Enabled := False;
-  Application.Timer1.interval := 2000;
-  Application.Timer1.onTimer := @Application.Timer1Exec;
   Application.Run;
   Application.Free;
 end.

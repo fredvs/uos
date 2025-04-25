@@ -57,7 +57,6 @@ type
     Shape1: TShape;
     ShapeRight: TShape;
     ShapeLeft: TShape;
-    Timer1: TTimer;
     TrackBar1: TTrackBar;
     TrackBar3: TTrackBar;
     TrackBar4: TTrackBar;
@@ -70,7 +69,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure Label2Click(Sender: TObject);
     procedure ontimericytag(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
@@ -79,6 +77,7 @@ type
     procedure ShowLevel;
     procedure ChangePlugSet(Sender: TObject);
     procedure ResetPlugClick(Sender: TObject);
+    procedure onicyget(Sender: TObject);
   private
     { private declarations }
   public
@@ -94,7 +93,7 @@ var
   Out1Index, In1Index, DSP1Index, Plugin1Index: integer;
   plugsoundtouch: Boolean = False;
   aboolicy: Boolean = False;
-  uaudiotype: integer;
+  uaudiotype, incicy: integer;
   icystr: string;
 
 implementation
@@ -317,8 +316,7 @@ end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 begin
-  if uaudiotype = 0 then
-    timer1.Enabled := false;
+  if uaudiotype = 0 then incicy := 0;
   uos_Pause(PlayerIndex1);
   Button4.Enabled         := True;
   Button5.Enabled         := False;
@@ -335,8 +333,7 @@ begin
   Button6.Enabled := True;
   application.ProcessMessages;
   uos_RePlay(PlayerIndex1);
-  if uaudiotype = 0 then
-    timer1.Enabled := true;
+  if uaudiotype = 0 then incicy := 0;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -451,24 +448,22 @@ begin
     sleep(500);
 
     icystr     := 'icy';
-
+    
     uos_Play(PlayerIndex1);  // everything is ready, here we are, lets play it...
 
     application.ProcessMessages;
+    
+     if uaudiotype = 0 then incicy := 0;
+ 
+     if aboolicy then
+         onicyget(nil);
 
-    if aboolicy then
-    begin
-    if uaudiotype = 0 then
-    timer1.Enabled := True else ontimericytag(nil);
-    end;
     end  else lerror.Caption := 'URL did not accessed';
 
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-  if aboolicy then
-    timer1.Enabled := False;
   uos_Stop(PlayerIndex1);
   sleep(1000);
   ClosePlayer1;
@@ -540,6 +535,15 @@ end;
 procedure Tform1.LoopProcPlayer1;
 begin
   ShowLevel;
+  if uaudiotype = 0 then
+  begin
+    Inc(incicy);
+    if incicy > 50 then
+    begin
+      ontimericytag(nil);
+      incicy := 0;
+    end;
+  end;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -569,9 +573,38 @@ begin
   BufferBMP.Free;
 end;
 
-procedure TForm1.Label2Click(Sender: TObject);
+procedure TForm1.onicyget(Sender: TObject);
+var
+  adescri, agenre, aname, aurl, aurlcut: string;
+  ares: integer;
 begin
+  
+  adescri := uos_InputGetURLicyDescription(PlayerIndex1, In1Index);
+  agenre  := uos_InputGetURLicyGenre(PlayerIndex1, In1Index);
+  aname   := uos_InputGetURLicyName(PlayerIndex1, In1Index);
+  aurl    := uos_InputGetURLicyUrl(PlayerIndex1, In1Index);
 
+  if Length(aname) > 35 then
+    aname  := trim(Copy(aname, 1, 35) + '...');
+  if Length(agenre) > 10 then
+    agenre := trim(Copy(agenre, 1, 10) + '...');
+
+   aurlcut := copy(edit4.caption, system.Pos('//', edit4.caption) + 2, Length(edit4.caption));
+
+  if Length(aurlcut) > 50 then
+    aurlcut := trim(Copy(aurlcut, 1, 50) + '...');
+
+  if Length(adescri) > 50 then
+    adescri := trim(Copy(adescri, 1, 50) + '...');
+
+  if length(aurl) > 0 then
+    aurlcut := trim(aurl);
+  if length(agenre) > 0 then
+    agenre  := ' ' + agenre;
+  if length(aname) > 0 then
+    aurlcut := aname + agenre;
+
+  label2.Caption := aurlcut + #10 + adescri;
 end;
 
 procedure TForm1.ontimericytag(Sender: TObject);
