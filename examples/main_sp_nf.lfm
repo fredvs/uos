@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 824
+  Left = 534
   Height = 620
-  Top = 167
+  Top = 100
   Width = 505
   BorderIcons = [biSystemMenu]
   Caption = 'Simple Player U0S PortAudio + SndFile + Mpg123'
@@ -85,13 +85,13 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   Position = poDesktopCenter
-  LCLVersion = '3.4.0.0'
+  LCLVersion = '3.6.0.0'
   object Shape1: TShape
-    Left = 10
+    Left = 7
     Height = 216
     Top = 400
     Width = 489
-    Brush.Color = clSilver
+    Brush.Color = clMoneyGreen
   end
   object TrackBar1: TTrackBar
     Left = 25
@@ -113,6 +113,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 3
   end
   object Edit2: TEdit
@@ -122,6 +124,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 4
   end
   object Edit3: TEdit
@@ -131,6 +135,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 5
   end
   object Label1: TLabel
@@ -179,14 +185,18 @@ object Form1: TForm1
     Width = 278
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 0
   end
   object CheckBox1: TCheckBox
     Left = 132
     Height = 21
     Top = 553
-    Width = 108
+    Width = 104
     Caption = 'Play Reverse'
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 6
     OnChange = CheckBox1Change
   end
@@ -212,9 +222,9 @@ object Form1: TForm1
   end
   object Label4: TLabel
     Left = 24
-    Height = 14
+    Height = 16
     Top = 514
-    Width = 26
+    Width = 25
     Alignment = taCenter
     Caption = 'Vol L'
     Font.Height = -11
@@ -287,16 +297,16 @@ object Form1: TForm1
     Max = 100
     OnChange = TrackBar1Change
     Orientation = trVertical
-    Position = 0
+    Position = 100
     Reversed = True
     TickStyle = tsNone
     TabOrder = 13
   end
   object Label5: TLabel
     Left = 81
-    Height = 14
+    Height = 16
     Top = 514
-    Width = 28
+    Width = 26
     Alignment = taCenter
     Caption = 'Vol R'
     Font.Height = -11
@@ -319,60 +329,69 @@ object Form1: TForm1
     ChildSizing.ShrinkVertical = crsScaleChilds
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 59
-    ClientWidth = 103
-    Color = clSilver
+    ClientHeight = 60
+    ClientWidth = 105
+    Color = 13695184
+    Font.Height = 14
+    OnClick = RadioGroup1Click
     ParentBackground = False
+    ParentFont = False
     ParentColor = False
     TabOrder = 14
     object RadioButton1: TRadioButton
       Left = 6
-      Height = 15
+      Height = 16
       Top = 6
-      Width = 91
+      Width = 93
       Caption = 'Float 32 bit'
       Checked = True
+      Font.Height = 12
+      ParentFont = False
       TabOrder = 0
       TabStop = True
     end
     object RadioButton2: TRadioButton
       Left = 6
       Height = 16
-      Top = 21
-      Width = 91
+      Top = 22
+      Width = 93
       Caption = 'Int 32 bit'
+      Font.Height = 12
+      ParentFont = False
       TabOrder = 1
     end
     object RadioButton3: TRadioButton
       Left = 6
       Height = 16
-      Top = 37
-      Width = 91
+      Top = 38
+      Width = 93
       Caption = 'Int 16 bit'
+      Font.Height = 12
+      ParentFont = False
       TabOrder = 2
     end
   end
   object llength: TLabel
     Left = 314
-    Height = 17
+    Height = 21
     Top = 428
-    Width = 84
+    Width = 102
     Caption = '00:00:00.000'
     ParentColor = False
   end
   object lposition: TLabel
     Left = 192
-    Height = 17
+    Height = 21
     Top = 428
-    Width = 84
+    Width = 102
     Caption = '00:00:00.000'
     ParentColor = False
   end
   object Label8: TLabel
     Left = 304
-    Height = 17
+    Height = 21
     Top = 428
-    Width = 4
+    Width = 6
     Caption = '/'
     ParentColor = False
   end
@@ -397,6 +416,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 15
     OnChange = Edit5Change
   end
@@ -417,8 +438,10 @@ object Form1: TForm1
     Left = 288
     Height = 21
     Top = 480
-    Width = 192
+    Width = 189
     Caption = 'Enable SoundTouch Plugin'
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 16
     OnChange = ChangePlugSet
   end
@@ -435,17 +458,21 @@ object Form1: TForm1
     Left = 279
     Height = 17
     Top = 519
-    Width = 71
+    Width = 68
     Caption = 'Tempo: 1.0'
+    Font.Height = 14
     ParentColor = False
+    ParentFont = False
   end
   object Label9: TLabel
     Left = 385
     Height = 17
     Top = 520
-    Width = 60
+    Width = 56
     Caption = 'Pitch: 1.0'
+    Font.Height = 14
     ParentColor = False
+    ParentFont = False
   end
   object TrackBar4: TTrackBar
     Left = 349
@@ -477,8 +504,10 @@ object Form1: TForm1
     Left = 132
     Height = 21
     Top = 488
-    Width = 141
+    Width = 137
     Caption = 'Stereo to BinAural'
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 20
     OnChange = CheckBox3Change
   end
@@ -502,14 +531,18 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 21
   end
   object chkstereo2mono: TCheckBox
     Left = 132
     Height = 21
     Top = 519
-    Width = 122
+    Width = 120
     Caption = 'Stereo to Mono'
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 22
     OnChange = chkstereo2monoChange
   end
@@ -533,6 +566,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 23
     OnChange = Edit5Change
   end
@@ -556,6 +591,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 24
   end
   object Edit11: TEdit
@@ -565,6 +602,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 25
     OnChange = Edit11Change
   end
@@ -588,6 +627,8 @@ object Form1: TForm1
     Width = 360
     Alignment = taCenter
     AutoSize = False
+    Font.Height = 14
+    ParentFont = False
     TabOrder = 26
   end
   object Label14: TLabel

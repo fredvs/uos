@@ -91,6 +91,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure PaintBox1Paint(Sender: TObject);
+    procedure RadioGroup1Click(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure TrackBar2MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
     procedure TrackBar2MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
@@ -308,6 +309,11 @@ end;
 procedure TForm1.PaintBox1Paint(Sender: TObject);
 begin
   PaintBox1.Canvas.Draw(0, 0, BufferBMP);
+end;
+
+procedure TForm1.RadioGroup1Click(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
@@ -716,23 +722,31 @@ end;
 function DSPReverseBefore(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
 begin
   if Data.position > Data.OutFrames div Data.ratio then
-    PlayerIndex1.InputSeek(InputIndex1, Data.position - (Data.OutFrames div (Data.Ratio)));
+    PlayerIndex1.InputSeek(InputIndex1, Data.position - (Data.OutFrames div (Data.channels)));
 end;
 
 function DSPReverseAfter(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
 var
-  x: integer;
+  x: integer = 0;
   arfl: TDArFloat;
 begin
-  SetLength(arfl, length(Data.Buffer));
+  if (Data.position > Data.OutFrames div Data.channels) then
+  begin
+    SetLength(arfl, Data.outframes);
 
-  for x := 0 to ((Data.OutFrames * Data.Ratio) - 1) do
-    if odd(x) then
-      arfl[x] := Data.Buffer[((Data.OutFrames * Data.Ratio) - 1) - x - 1]
-    else
-      arfl[x] := Data.Buffer[((Data.OutFrames * Data.Ratio) - 1) - x + 1];
-  Result := arfl;
+    while x < Data.outframes - 1 do
+    begin
+      arfl[x]     := Data.Buffer[Data.outframes - x - 1];
+      arfl[x + 1] := Data.Buffer[Data.outframes - x];
+      x           := x + 2;
+    end;
+    Result := arfl;
+  end
+  else
+    Result := Data.Buffer;
 end;
+
+
 //}
 
 function DSPStereo2Mono(var Data: Tuos_Data; var fft: Tuos_FFT): TDArFloat;
@@ -809,7 +823,6 @@ begin
   end;
   if button1.Enabled = False then
   begin
-    PlayerIndex1.Free;
     uos_free;
   end;
   BufferBMP.free;

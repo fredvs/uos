@@ -14,7 +14,7 @@ uses
 {$R *.res}
 
 begin
-  Application.Title := 'SimplePlayer';
+  Application.Title:='SimplePlayer';
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.Run;
