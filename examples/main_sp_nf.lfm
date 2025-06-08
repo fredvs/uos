@@ -333,7 +333,6 @@ object Form1: TForm1
     ClientWidth = 105
     Color = 13695184
     Font.Height = 14
-    OnClick = RadioGroup1Click
     ParentBackground = False
     ParentFont = False
     ParentColor = False
@@ -419,7 +418,6 @@ object Form1: TForm1
     Font.Height = 14
     ParentFont = False
     TabOrder = 15
-    OnChange = Edit5Change
   end
   object Label6: TLabel
     Left = 130
@@ -569,7 +567,6 @@ object Form1: TForm1
     Font.Height = 14
     ParentFont = False
     TabOrder = 23
-    OnChange = Edit5Change
   end
   object Label12: TLabel
     Left = 130
@@ -605,7 +602,6 @@ object Form1: TForm1
     Font.Height = 14
     ParentFont = False
     TabOrder = 25
-    OnChange = Edit11Change
   end
   object Label13: TLabel
     Left = 132
