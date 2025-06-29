@@ -8,13 +8,19 @@
 
 unit uos_portaudio;
 
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$else}
+   {$MINENUMSIZE 4} (* use 4-byte enums *)
+{$endif}
 
 interface
-
-uses
-  dynlibs, CTypes;
+{$IFNDEF FPC}
+   uses classes, sysutils, windows, DELPHIctypes;
+{$else}
+   uses dynlibs, CTypes;
+{$endif}
   
 const
 libpa=
@@ -31,7 +37,7 @@ libpa=
 type
   PaError = CInt32;
   PaErrorCode =(
-    paNotInitialized := -10000,
+    paNotInitialized = -10000,
     paUnanticipatedHostError,
     paInvalidChannelCount,
     paInvalidSampleRate,
@@ -60,29 +66,29 @@ type
     paCanNotWriteToAnInputOnlyStream,
     paIncompatibleStreamHostApi,
     paBadBufferPtr,
-    paNoError := 0
+    paNoError = 0
   );
 
   PaDeviceIndex = CInt32;
   
   PaHostApiIndex = CInt32;
   
-  PaHostApiTypeId =(paInDevelopment := 0,
-    paDirectSound := 1,    
-    paMME := 2,
-    paASIO := 3,
-    paSoundManager := 4,
-    paCoreAudio := 5,
-    paOSS := 7,
-    paALSA := 8,
-    paAL := 9,
-    paBeOS := 10,
-    paWDMKS := 11,
-    paJACK := 12,
-    paWASAPI := 13,
-    paAudioScienceHPI := 14
+  PaHostApiTypeId =(paInDevelopment = 0,
+    paDirectSound = 1,
+    paMME = 2,
+    paASIO = 3,
+    paSoundManager = 4,
+    paCoreAudio = 5,
+    paOSS = 7,
+    paALSA = 8,
+    paAL = 9,
+    paBeOS = 10,
+    paWDMKS = 11,
+    paJACK = 12,
+    paWASAPI = 13,
+    paAudioScienceHPI = 14
   );
-  
+
   PaHostApiInfo = record
     structVersion : CInt32;
     _type : PaHostApiTypeId ;
@@ -92,18 +98,18 @@ type
     defaultOutputDevice : PaDeviceIndex;
   end;
   PPaHostApiInfo = ^PaHostApiInfo;
-   
+
   PaHostErrorInfo = record
     hostApiType : PaHostApiTypeId;
     errorCode : CLong;
     errorText : PChar;
   end;
   PPaHostErrorInfo = ^PaHostErrorInfo;
-   
+
   PaTime = CDouble;
-  
+
   PaSampleFormat = pCULongLong;
-    
+
   PaDeviceInfo = record
     structVersion : CInt32;
     _name : PChar;
@@ -145,10 +151,10 @@ type
   PaStreamCallbackFlags = CULong;
 
   PaStreamCallbackResult =(
-    paContinue := 0,
-    paComplete := 1,
-    paAbort := 2);
-  
+    paContinue = 0,
+    paComplete = 1,
+    paAbort = 2);
+
   PaStreamCallback = function(
     input : Pointer;
     output : Pointer;
@@ -156,7 +162,7 @@ type
     timeInfo : PPaStreamCallbackTimeInfo;
     statusFlags : PaStreamCallbackFlags;
     userData : Pointer) : CInt32;
-  PPaStreamCallback = ^PaStreamCallback;  
+  PPaStreamCallback = ^PaStreamCallback;
 
   PaStreamFinishedCallback = procedure(userData : Pointer); cdecl;
   PPaStreamFinishedCallback = ^PaStreamFinishedCallback;
@@ -290,12 +296,15 @@ type
   ///////////////////////////////////////////////
 
        {Special function for dynamic loading of lib ...}
-
+  {$IFDEF FPC}
     var Pa_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
+  {$ELSE}
+  var Pa_Handle:THandle=0;
+  {$ENDIF FPC}
 
     var ReferenceCounter : cardinal = 0;  // Reference counter
          
-    function Pa_IsLoaded : boolean; inline; 
+    function Pa_IsLoaded : boolean; inline;
 
     Function Pa_Load(const libfilename:string) :boolean; // load the lib
 
@@ -307,7 +316,11 @@ implementation
 
 function Pa_IsLoaded: boolean;
 begin
- Result := (Pa_Handle <> dynlibs.NilHandle);
+   {$IFNDEF FPC}
+   Result := (Pa_Handle <> 0);
+   {$else}
+   Result := (Pa_Handle <> dynlibs.NilHandle);
+   {$endif}
 end;
 
 Function Pa_Load (const libfilename:string) :boolean;
@@ -315,54 +328,102 @@ var
 thelib: string; 
 begin
   Result := False;
-  if Pa_Handle<>0 then 
-begin
- Inc(ReferenceCounter);
- result:=true {is it already there ?}
-end  else 
-begin {go & load the library}
-   if Length(libfilename) = 0 then thelib := libpa else thelib := libfilename;
-    Pa_Handle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
-  	if Pa_Handle <> DynLibs.NilHandle then
-begin {now we tie the functions to the VARs from above}
+  if Pa_Handle<>0 then
+  begin
+   Inc(ReferenceCounter);
+   result:=true {is it already there ?}
+  end
+  else begin {go & load the library}
+      if Length(libfilename) = 0
+      then thelib := libpa
+      else thelib := libfilename;
+  {$IFNDEF FPC}
+  Pa_Handle:=SafeLoadLibrary(thelib); // obtain the handle we want
+  {$else}
+  Pa_Handle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
+  {$endif}
+      {$IFNDEF FPC}
+      if Pa_Handle <> 0 then
+      begin {now we tie the functions to the VARs from above}
+      @Pa_GetVersion := GetProcAddress(PA_Handle,('Pa_GetVersion'));
+      @Pa_GetVersionText:=GetProcAddress(PA_Handle,('Pa_GetVersionText'));
+      @Pa_GetErrorText:=GetProcAddress(PA_Handle,('Pa_GetErrorText'));
+      @Pa_Initialize:=GetProcAddress(PA_Handle,('Pa_Initialize'));
+      @Pa_Terminate:=GetProcAddress(PA_Handle,('Pa_Terminate'));
+      @Pa_GetHostApiCount:=GetProcAddress(PA_Handle,('Pa_GetHostApiCount'));
+      @Pa_GetDefaultHostApi:=GetProcAddress(PA_Handle,('Pa_GetDefaultHostApi'));
+      @Pa_GetHostApiInfo:=GetProcAddress(PA_Handle,('Pa_GetHostApiInfo'));
+      @Pa_HostApiTypeIdToHostApiIndex:=GetProcAddress(PA_Handle,('Pa_HostApiTypeIdToHostApiIndex'));
+      @Pa_HostApiDeviceIndexToDeviceIndex:=GetProcAddress(PA_Handle,('Pa_HostApiDeviceIndexToDeviceIndex'));
+      @Pa_GetLastHostErrorInfo:=GetProcAddress(PA_Handle,('Pa_GetLastHostErrorInfo'));
+       //////////////////
+      @Pa_GetDeviceCount:=GetProcAddress(PA_Handle,('Pa_GetDeviceCount'));
+      @Pa_GetDefaultInputDevice:=GetProcAddress(PA_Handle,('Pa_GetDefaultInputDevice'));
+      @Pa_GetDefaultOutputDevice:=GetProcAddress(PA_Handle,('Pa_GetDefaultOutputDevice'));
+      @Pa_GetDeviceInfo:=GetProcAddress(PA_Handle,('Pa_GetDeviceInfo'));
+      @Pa_IsFormatSupported:=GetProcAddress(PA_Handle,('Pa_IsFormatSupported'));
+       //////////////////////
+       @Pa_OpenStream:=GetProcAddress(PA_Handle,('Pa_OpenStream'));
+      @Pa_OpenDefaultStream:=GetProcAddress(PA_Handle,('Pa_OpenDefaultStream'));
+      @Pa_CloseStream:=GetProcAddress(PA_Handle,('Pa_CloseStream'));
+      @Pa_SetStreamFinishedCallback:=GetProcAddress(PA_Handle,('Pa_SetStreamFinishedCallback'));
+      @Pa_StartStream:=GetProcAddress(PA_Handle,('Pa_StartStream'));
+      @Pa_StopStream:=GetProcAddress(PA_Handle,('Pa_StopStream'));
+      @Pa_AbortStream:=GetProcAddress(PA_Handle,('Pa_AbortStream'));
+      @Pa_IsStreamStopped:=GetProcAddress(PA_Handle,('Pa_IsStreamStopped'));
+      @Pa_IsStreamActive:=GetProcAddress(PA_Handle,('Pa_IsStreamActive'));
+      @Pa_GetStreamInfo:=GetProcAddress(PA_Handle,('Pa_GetStreamInfo'));
+      @Pa_GetStreamTime:=GetProcAddress(PA_Handle,('Pa_GetStreamTime'));
+      @Pa_GetStreamCpuLoad:=GetProcAddress(PA_Handle,('Pa_GetStreamCpuLoad'));
+      @Pa_ReadStream:=GetProcAddress(PA_Handle,('Pa_ReadStream'));
+      @Pa_WriteStream:=GetProcAddress(PA_Handle,('Pa_WriteStream'));
+      @Pa_GetStreamReadAvailable:=GetProcAddress(PA_Handle,('Pa_GetStreamReadAvailable'));
+      @Pa_GetStreamWriteAvailable:=GetProcAddress(PA_Handle,('Pa_GetStreamWriteAvailable'));
+      @Pa_GetSampleSize:=GetProcAddress(PA_Handle,('Pa_GetSampleSize'));
+      @Pa_Sleep:=GetProcAddress(PA_Handle,('Pa_Sleep'));
+      end;
+      {$else}
+  	  if Pa_Handle <> DynLibs.NilHandle then
+      begin {now we tie the functions to the VARs from above}
 
-Pointer(Pa_GetVersion):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetVersion'));
-Pointer(Pa_GetVersionText):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetVersionText'));
-Pointer(Pa_GetErrorText):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetErrorText'));
-Pointer(Pa_Initialize):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_Initialize'));
-Pointer(Pa_Terminate):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_Terminate'));
-Pointer(Pa_GetHostApiCount):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetHostApiCount'));
-Pointer(Pa_GetDefaultHostApi):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDefaultHostApi'));
-Pointer(Pa_GetHostApiInfo):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetHostApiInfo'));
-Pointer(Pa_HostApiTypeIdToHostApiIndex):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_HostApiTypeIdToHostApiIndex'));
-Pointer(Pa_HostApiDeviceIndexToDeviceIndex):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_HostApiDeviceIndexToDeviceIndex'));
-Pointer(Pa_GetLastHostErrorInfo):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetLastHostErrorInfo'));
-//////////////////
-Pointer(Pa_GetDeviceCount):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDeviceCount'));
-Pointer(Pa_GetDefaultInputDevice):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDefaultInputDevice'));
-Pointer(Pa_GetDefaultOutputDevice):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDefaultOutputDevice'));
-Pointer(Pa_GetDeviceInfo):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDeviceInfo'));
-Pointer(Pa_IsFormatSupported):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_IsFormatSupported'));
-//////////////////////
-Pointer(Pa_OpenStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_OpenStream'));
-Pointer(Pa_OpenDefaultStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_OpenDefaultStream'));
-Pointer(Pa_CloseStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_CloseStream'));
-Pointer(Pa_SetStreamFinishedCallback):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_SetStreamFinishedCallback'));
-Pointer(Pa_StartStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_StartStream'));
-Pointer(Pa_StopStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_StopStream'));
-Pointer(Pa_AbortStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_AbortStream'));
-Pointer(Pa_IsStreamStopped):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_IsStreamStopped'));
-Pointer(Pa_IsStreamActive):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_IsStreamActive'));
-Pointer(Pa_GetStreamInfo):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamInfo'));
-Pointer(Pa_GetStreamTime):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamTime'));
-Pointer(Pa_GetStreamCpuLoad):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamCpuLoad'));
-Pointer(Pa_ReadStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_ReadStream'));
-Pointer(Pa_WriteStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_WriteStream'));
-Pointer(Pa_GetStreamReadAvailable):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamReadAvailable'));
-Pointer(Pa_GetStreamWriteAvailable):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamWriteAvailable'));
-Pointer(Pa_GetSampleSize):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetSampleSize'));
-Pointer(Pa_Sleep):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_Sleep'));
-end;
+      Pointer(Pa_GetVersion):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetVersion'));
+      Pointer(Pa_GetVersionText):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetVersionText'));
+      Pointer(Pa_GetErrorText):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetErrorText'));
+      Pointer(Pa_Initialize):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_Initialize'));
+      Pointer(Pa_Terminate):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_Terminate'));
+      Pointer(Pa_GetHostApiCount):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetHostApiCount'));
+      Pointer(Pa_GetDefaultHostApi):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDefaultHostApi'));
+      Pointer(Pa_GetHostApiInfo):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetHostApiInfo'));
+      Pointer(Pa_HostApiTypeIdToHostApiIndex):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_HostApiTypeIdToHostApiIndex'));
+      Pointer(Pa_HostApiDeviceIndexToDeviceIndex):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_HostApiDeviceIndexToDeviceIndex'));
+      Pointer(Pa_GetLastHostErrorInfo):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetLastHostErrorInfo'));
+      //////////////////
+      Pointer(Pa_GetDeviceCount):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDeviceCount'));
+      Pointer(Pa_GetDefaultInputDevice):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDefaultInputDevice'));
+      Pointer(Pa_GetDefaultOutputDevice):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDefaultOutputDevice'));
+      Pointer(Pa_GetDeviceInfo):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetDeviceInfo'));
+      Pointer(Pa_IsFormatSupported):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_IsFormatSupported'));
+      //////////////////////
+      Pointer(Pa_OpenStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_OpenStream'));
+      Pointer(Pa_OpenDefaultStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_OpenDefaultStream'));
+      Pointer(Pa_CloseStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_CloseStream'));
+      Pointer(Pa_SetStreamFinishedCallback):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_SetStreamFinishedCallback'));
+      Pointer(Pa_StartStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_StartStream'));
+      Pointer(Pa_StopStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_StopStream'));
+      Pointer(Pa_AbortStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_AbortStream'));
+      Pointer(Pa_IsStreamStopped):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_IsStreamStopped'));
+      Pointer(Pa_IsStreamActive):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_IsStreamActive'));
+      Pointer(Pa_GetStreamInfo):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamInfo'));
+      Pointer(Pa_GetStreamTime):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamTime'));
+      Pointer(Pa_GetStreamCpuLoad):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamCpuLoad'));
+      Pointer(Pa_ReadStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_ReadStream'));
+      Pointer(Pa_WriteStream):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_WriteStream'));
+      Pointer(Pa_GetStreamReadAvailable):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamReadAvailable'));
+      Pointer(Pa_GetStreamWriteAvailable):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetStreamWriteAvailable'));
+      Pointer(Pa_GetSampleSize):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_GetSampleSize'));
+      Pointer(Pa_Sleep):=DynLibs.GetProcedureAddress(PA_Handle,PChar('Pa_Sleep'));
+      end;
+      {$endif}
    Result := Pa_IsLoaded;
    ReferenceCounter:=1;   
 end;
@@ -377,12 +438,13 @@ begin
   if ReferenceCounter > 0 then
     exit;
   // >
-  if Pa_IsLoaded then
-  begin
-     Pa_Terminate();
-    DynLibs.UnloadLibrary(Pa_Handle);
-    Pa_Handle:=DynLibs.NilHandle;
-  end;
+      {$IFNDEF FPC}
+      FreeLibrary(Pa_Handle);
+      Pa_Handle:=0;
+      {$else}
+      DynLibs.UnloadLibrary(Pa_Handle);
+      Pa_Handle:=DynLibs.NilHandle;
+      {$endif}
 end;
 
 end.

@@ -7,12 +7,19 @@
 
 unit uos_httpgetthread;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$endif}
 
 interface
 
 uses
-  Classes, SysUtils, Pipes;
+  Classes, SysUtils,
+  {$IFNDEF FPC}
+  PipesDelphi;
+  {$else}
+  Pipes;
+  {$endif}
 
 type
   { TThreadHttpGetter }
@@ -57,6 +64,37 @@ function CheckURLStatus(const URL: string): Integer;
 
 implementation
 
+{$IFNDEF FPC}
+
+function TThreadHttpGetter.GetRedirectURL(AResponseStrings: TStrings): String;
+begin
+end;
+
+procedure TThreadHttpGetter.DoIcyMetaInt;
+begin
+end;
+
+procedure TThreadHttpGetter.Headers(Sender: TObject );
+begin
+end;
+
+procedure TThreadHttpGetter.Execute;
+begin
+end;
+
+constructor TThreadHttpGetter.Create(AWantedURL: String; AOutputStream: TOutputPipeStream);
+begin
+end;
+
+
+{ Check URL status with detailed error codes }
+function CheckURLStatus(const URL: string): Integer;
+begin
+Exit(1); // Invalid URL format
+end;
+
+{$else}
+
 uses
   fphttpclient, openssl, opensslsockets;
 
@@ -80,19 +118,15 @@ begin
       Http.HTTPMethod('HEAD', URL, nil, [200, 204, 301, 302, 303, 307, 308]);
       Result := Http.ResponseStatusCode; // Return exact success status (e.g., 200, 204)
       //writeln('Http.ResponseStatusCode ', result);
-      case Http.ResponseStatusCode of 200, 204, 301, 302, 303, 307, 308, 400:
-        result := 0;
-      end;  
+      if Http.ResponseStatusCode in [200, 204, 301, 302, 303, 307, 308, 400] then
+      result := 0;
     except
       on E: EHTTPClient do
       begin
         //writeln('error Http.ResponseStatusCode ', result);
-       
-        case Http.ResponseStatusCode of 301, 302, 303, 307, 308:
-        Result := Http.ResponseStatusCode;
-        end;   
-          
-        if Http.ResponseStatusCode = 400 then
+        if Http.ResponseStatusCode in [301, 302, 303, 307, 308] then
+          Result := Http.ResponseStatusCode // Return redirect status (e.g., 301, 302)
+        else if Http.ResponseStatusCode = 400 then
           Result := 0
         else if Http.ResponseStatusCode > 400 then
           Result := Http.ResponseStatusCode // Return server error (e.g., 404, 500)
@@ -248,7 +282,6 @@ begin
 
       if (ICYenabled = True) and (FormatType = 1) then
       begin
-        Http.RequestHeaders.Clear;
         Http.AddHeader('icy-metadata', '1');
         Http.OnHeaders := @Headers;
       end;
@@ -312,5 +345,6 @@ begin
   FWantedURL := AWantedURL;
   FOutStream := AOutputStream;
 end;
+{$ENDIF}
 
 end.

@@ -10,14 +10,25 @@
 
 unit uos_bs2b;
 
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
+
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$else}
+   {$MINENUMSIZE 4} (* use 4-byte enums *)
+{$endif}
 
 
 interface
 
 uses
-  SysUtils, dynlibs, ctypes, math;
+  math,
+
+{$IFNDEF FPC}
+   classes, sysutils, windows, DELPHIctypes;
+{$else}
+   dynlibs, CTypes;
+{$endif}
   
 const
 libsb=
@@ -235,6 +246,17 @@ bs2b_cross_feed_u24le : procedure(bs2bdp:Tt_bs2bdp; var sample:CInt32; n:CInt); 
 
    Procedure bs_Unload(); // unload and frees the lib from memory : do not forget to call it before close application.
 
+var
+  //bs_Handle :TLibHandle=dynlibs.NilHandle;
+  {$IFDEF FPC}
+    bs_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
+  {$ELSE}
+  bs_Handle:Int64=0;
+  {$ENDIF FPC}
+    {$IFDEF windows} // try load dependency if not in /windows/system32/
+    gc_Handle :TLibHandle=dynlibs.NilHandle;
+    {$endif}
+
 implementation
 
 function bs2b_level_delay(fcut : longint) : longint;
@@ -242,16 +264,17 @@ begin
   result:=floor((18700/fcut)*10);
 end;
 
-  var
-    bs_Handle :TLibHandle=dynlibs.NilHandle;
-    {$IFDEF windows} // try load dependency if not in /windows/system32/
-    gc_Handle :TLibHandle=dynlibs.NilHandle;
-    {$endif}
+
+var
     ReferenceCounter : cardinal = 0;  // Reference counter
     
 function bs_IsLoaded(): boolean;
 begin
- Result := (bs_Handle <> dynlibs.NilHandle);
+   {$IFNDEF FPC}
+   Result := (bs_Handle <> 0);
+   {$else}
+   Result := (bs_Handle <> dynlibs.NilHandle);
+   {$endif}
 end;
 
 Procedure bs_Unload();
@@ -264,8 +287,13 @@ begin
   // >
   if bs_IsLoaded() then
   begin
-    DynLibs.UnloadLibrary(bs_Handle);
-    bs_Handle:=DynLibs.NilHandle;
+      {$IFNDEF FPC}
+      FreeLibrary(bs_Handle);
+      bs_Handle:=0;
+      {$else}
+      DynLibs.UnloadLibrary(bs_Handle);
+      bs_Handle:=DynLibs.NilHandle;
+      {$endif}
      {$IFDEF windows}
     if gc_Handle <> DynLibs.NilHandle then begin
     DynLibs.UnloadLibrary(gc_Handle);
@@ -326,22 +354,75 @@ result:=true {is it already there ?}
 end  else begin {go & load the library}
     if Length(libfilename) = 0 then 
     begin
-    {$IFDEF windows} 
+    {$IFDEF windows}
     gc_Handle:= DynLibs.SafeLoadLibrary('libgcc_s_dw2-1.dll');
     {$endif}
-    bs_Handle:=DynLibs.SafeLoadLibrary(libsb);
+    {$IFNDEF FPC}
+    bs_Handle:=SafeLoadLibrary(libsb); // obtain the handle we want
+    {$else}
+    bs_Handle:=DynLibs.SafeLoadLibrary(libsb); // obtain the handle we want
+    {$endif}
     end
-    else
-    begin
-    {$IFDEF windows} 
+    else begin
+    {$IFDEF windows}
     gc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_dw2-1.dll');
     {$endif}
-   
-    bs_Handle:=DynLibs.SafeLoadLibrary(libfilename);
+
+    //bs_Handle:=DynLibs.SafeLoadLibrary(libfilename);
+    {$IFNDEF FPC}
+    bs_Handle:=SafeLoadLibrary(libfilename); // obtain the handle we want
+    {$else}
+    bs_Handle:=DynLibs.SafeLoadLibrary(libfilename); // obtain the handle we want
+    {$endif}
     end;
- 
- 	if bs_Handle <> DynLibs.NilHandle then
-       begin {now we tie the functions to the VARs from above}
+      {$IFNDEF FPC}
+      if bs_Handle <> 0 then begin {now we tie the functions to the VARs from above}
+      @bs2b_open:=GetProcAddress(bs_handle,PChar('bs2b_open'));
+      @bs2b_close:=GetProcAddress(bs_handle,PChar('bs2b_close'));
+      @bs2b_set_level:=GetProcAddress(bs_handle,PChar('bs2b_set_level'));
+      @bs2b_get_level:=GetProcAddress(bs_handle,PChar('bs2b_get_level'));
+      @bs2b_set_level_fcut:=GetProcAddress(bs_handle,PChar('bs2b_set_level_fcut'));
+      @bs2b_get_level_fcut:=GetProcAddress(bs_handle,PChar('bs2b_get_level_fcut'));
+      @bs2b_set_level_feed:=GetProcAddress(bs_handle,PChar('bs2b_set_level_feed'));
+      @bs2b_get_level_feed:=GetProcAddress(bs_handle,PChar('bs2b_get_level_feed'));
+      @bs2b_get_level_delay:=GetProcAddress(bs_handle,PChar('bs2b_get_level_delay'));
+      @bs2b_set_srate:=GetProcAddress(bs_handle,PChar('bs2b_set_srate'));
+      @bs2b_get_srate:=GetProcAddress(bs_handle,PChar('bs2b_get_srate'));
+      @bs2b_clear:=GetProcAddress(bs_handle,PChar('bs2b_clear'));
+      @bs2b_is_clear:=GetProcAddress(bs_handle,PChar('bs2b_is_clear'));
+      @bs2b_runtime_version:=GetProcAddress(bs_handle,PChar('bs2b_runtime_version'));
+      @bs2b_runtime_version_int:=GetProcAddress(bs_handle,PChar('bs2b_runtime_version_int'));
+      @bs2b_cross_feed_d:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_d'));
+      @bs2b_cross_feed_dbe:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_dbe'));
+      @bs2b_cross_feed_dle:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_dle'));
+      @bs2b_cross_feed_f:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_f'));
+      @bs2b_cross_feed_fbe:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_fbe'));
+      @bs2b_cross_feed_fle:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_fle'));
+      @bs2b_cross_feed_s32:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s32'));
+      @bs2b_cross_feed_u32:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u32'));
+      @bs2b_cross_feed_s32be:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s32be'));
+      @bs2b_cross_feed_u32be:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u32be'));
+      @bs2b_cross_feed_s32le:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s32le'));
+      @bs2b_cross_feed_u32le:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u32le'));
+      @bs2b_cross_feed_s16:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s16'));
+      @bs2b_cross_feed_u16:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u16'));
+      @bs2b_cross_feed_s16be:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s16be'));
+      @bs2b_cross_feed_u16be:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u16be'));
+      @bs2b_cross_feed_s16le:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s16le'));
+      @bs2b_cross_feed_u16le:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u16le'));
+      @bs2b_cross_feed_s8:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s8'));
+      @bs2b_cross_feed_u8:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u8'));
+      @bs2b_cross_feed_s24:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s24'));
+      @bs2b_cross_feed_u24:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u24'));
+      @bs2b_cross_feed_s24be:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s24be'));
+      @bs2b_cross_feed_u24be:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u24be'));
+      @bs2b_cross_feed_s24le:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s24le'));
+      @bs2b_cross_feed_u24le:=GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u24le'));
+      end;
+      {$ELSE}
+
+      if bs_Handle <> DynLibs.NilHandle then
+      begin {now we tie the functions to the VARs from above}
 
       pointer(bs2b_open):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_open'));
       pointer(bs2b_close):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_close'));
@@ -384,7 +465,8 @@ end  else begin {go & load the library}
       pointer(bs2b_cross_feed_u24be):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u24be'));
       pointer(bs2b_cross_feed_s24le):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_s24le'));
       pointer(bs2b_cross_feed_u24le):=DynLibs.GetProcAddress(bs_handle,PChar('bs2b_cross_feed_u24le'));
-     end;
+      end;
+      {$ENDIF}
     Result := bs_IsLoaded;
     ReferenceCounter:=1;   
   end;

@@ -6,15 +6,21 @@ unit uos_libxmp;
  License : modified LGPL. 
   by Fred vS | fiens@hotmail.com | 2024}
 
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
+
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$else}
+   {$MINENUMSIZE 4} (* use 4-byte enums *)
+{$endif}
 
 interface
 
-uses
-  dynlibs,
-  sysutils,
-  CTypes;
+{$IFNDEF FPC}
+   uses classes, sysutils, windows, DELPHIctypes;
+{$else}
+   uses dynlibs, CTypes;
+{$endif}
 
 const
   XMP_VERSION     = '4.6.0';
@@ -24,7 +30,7 @@ const
   XMP_VER_RELEASE = 0;
 
 const
-{$IFDEF windows}
+{$IFDEF MSWINDOWS} //windows}
   XMP_LIB_NAME = 'libxmp.dll'; 
 {$ENDIF}
  
@@ -305,16 +311,16 @@ var
   xmp_load_module_from_memory: function(ctx: xmp_context; const Data: Pointer; size: longint): integer; cdecl;
   xmp_load_module_from_file: function(ctx: xmp_context; file_: Pointer; size: longint): integer; cdecl;
   xmp_load_module_from_callbacks: function(ctx: xmp_context; file_: Pointer; callbacks: xmp_callbacks): integer; cdecl;
-  xmp_test_module: function(const filename: PChar; info: xmp_test_info): Integer; cdecl; 
+  xmp_test_module: function(const filename: PChar; info: xmp_test_info): Integer; cdecl;
   xmp_release_module: procedure(ctx: xmp_context); cdecl;
-  xmp_start_player: function(ctx: xmp_context; rate: Integer; flags: Integer): Integer; cdecl; 
+  xmp_start_player: function(ctx: xmp_context; rate: Integer; flags: Integer): Integer; cdecl;
   xmp_play_buffer: function(ctx: xmp_context; buffer: Pointer; size: Integer; loop: Integer): Integer; cdecl;
   xmp_get_frame_info: procedure(ctx: xmp_context; var info: xmp_frame_info); cdecl;
-  xmp_end_player: procedure(ctx: xmp_context); cdecl; 
-  xmp_get_module_info: procedure(ctx: xmp_context; var info: xmp_module_info); cdecl; 
-  xmp_get_format_list: function(): PAnsiChar; cdecl; 
-  xmp_stop_module: procedure(ctx: xmp_context); cdecl; 
-  xmp_restart_module: procedure(ctx: xmp_context); cdecl; 
+  xmp_end_player: procedure(ctx: xmp_context); cdecl;
+  xmp_get_module_info: procedure(ctx: xmp_context; var info: xmp_module_info); cdecl;
+  xmp_get_format_list: function(): PAnsiChar; cdecl;
+  xmp_stop_module: procedure(ctx: xmp_context); cdecl;
+  xmp_restart_module: procedure(ctx: xmp_context); cdecl;
   xmp_channel_vol: function(ctx: xmp_context; channel: Integer; volume: Integer): Integer; cdecl;
   xmp_set_player: function(ctx: xmp_context; param: Integer; value: Integer): Integer; cdecl;
   xmp_set_position: function(ctx: xmp_context; pos: Integer): Integer; cdecl;
@@ -338,7 +344,12 @@ var
 {Special function for dynamic loading of lib ...}
 
 var
-  xmp_Handle: TLibHandle = dynlibs.NilHandle;
+  //xmp_Handle: TLibHandle = dynlibs.NilHandle;
+  {$IFDEF FPC}
+    xmp_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
+  {$ELSE}
+  xmp_Handle:Int64=0;
+  {$ENDIF FPC}
   {$if defined(cpu32) and defined(windows)} // try load dependency if not in /windows/system32/
   gc_Handle :TLibHandle=dynlibs.NilHandle;
   {$endif}
@@ -355,7 +366,11 @@ implementation
 
 function xmp_IsLoaded: boolean;
 begin
+ {$IFDEF FPC}
  Result := (xmp_Handle <> dynlibs.NilHandle);
+ {$ELSE}
+ Result := (xmp_Handle <> 0);//dynlibs.NilHandle);
+ {$ENDIF FPC}
 end;
 
 Function xmp_Load(const libfilename:string) :boolean;
@@ -367,8 +382,8 @@ begin
 begin
  Inc(ReferenceCounter);
  result:=true {is it already there ?}
-end  else 
-begin 
+end  else
+begin
  {$if defined(cpu32) and defined(windows)}
   if Length(libfilename) = 0 then thelibgcc := 'libgcc_s_dw2-1.dll' else
    thelibgcc := IncludeTrailingBackslash(ExtractFilePath(libfilename)) + 'libgcc_s_dw2-1.dll';
@@ -376,35 +391,73 @@ begin
  {$endif}
 
 {go & load the library}
-   if Length(libfilename) = 0 then thelib := XMP_LIB_NAME else thelib := libfilename;
-    xmp_Handle:=DynLibs.LoadLibrary(thelib); // obtain the handle we want
-  	if xmp_Handle <> DynLibs.NilHandle then
-begin {now we tie the functions to the VARs from above}
+   if Length(libfilename) = 0
+   then thelib := XMP_LIB_NAME
+   else thelib := libfilename;
 
-Pointer(xmp_create_context):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_create_context'));
-Pointer(xmp_free_context):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_free_context'));
-Pointer(xmp_load_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_load_module'));
-Pointer(xmp_load_module_from_memory):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_load_module_from_memory'));
-Pointer(xmp_load_module_from_file):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_load_module_from_file'));
-Pointer(xmp_load_module_from_callbacks):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_load_module_from_callbacks'));
-Pointer(xmp_test_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_test_module'));
-Pointer(xmp_release_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_release_module'));
-Pointer(xmp_start_player):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_start_player'));
-Pointer(xmp_play_buffer):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_play_buffer'));
-Pointer(xmp_get_frame_info):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_get_frame_info'));
-Pointer(xmp_end_player):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_end_player'));
-Pointer(xmp_get_module_info):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_get_module_info'));
-Pointer(xmp_get_format_list):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_get_format_list'));
-Pointer(xmp_stop_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_stop_module'));
-Pointer(xmp_restart_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_restart_module'));
-Pointer(xmp_channel_vol):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_channel_vol'));
-Pointer(xmp_set_player):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_set_player'));
-Pointer(xmp_set_position):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_set_position'));
-Pointer(xmp_seek_time):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_seek_time'));
 
-end;
+  {$IFNDEF FPC}
+  xmp_Handle:=SafeLoadLibrary(thelib); // obtain the handle we want
+  {$else}
+  xmp_Handle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
+  {$endif}
+      {$IFNDEF FPC}
+      if xmp_Handle <> 0 then begin {now we tie the functions to the VARs from above}
+
+      //exemple/Pa_GetVersion := GetProcAddress(PA_Handle,('Pa_GetVersion'));
+      @xmp_create_context:=GetProcAddress(xmp_Handle,PChar('xmp_create_context'));
+      @xmp_free_context:=GetProcAddress(xmp_Handle,PChar('xmp_free_context'));
+      @xmp_load_module:=GetProcAddress(xmp_Handle,PChar('xmp_load_module'));
+      @xmp_load_module_from_memory:=GetProcAddress(xmp_Handle,PChar('xmp_load_module_from_memory'));
+      @xmp_load_module_from_file:=GetProcAddress(xmp_Handle,PChar('xmp_load_module_from_file'));
+      @xmp_load_module_from_callbacks:=GetProcAddress(xmp_Handle,PChar('xmp_load_module_from_callbacks'));
+      @xmp_test_module:=GetProcAddress(xmp_Handle,PChar('xmp_test_module'));
+      @xmp_release_module:=GetProcAddress(xmp_Handle,PChar('xmp_release_module'));
+      @xmp_start_player:=GetProcAddress(xmp_Handle,PChar('xmp_start_player'));
+      @xmp_play_buffer:=GetProcAddress(xmp_Handle,PChar('xmp_play_buffer'));
+      @xmp_get_frame_info:=GetProcAddress(xmp_Handle,PChar('xmp_get_frame_info'));
+      @xmp_end_player:=GetProcAddress(xmp_Handle,PChar('xmp_end_player'));
+      @xmp_get_module_info:=GetProcAddress(xmp_Handle,PChar('xmp_get_module_info'));
+      @xmp_get_format_list:=GetProcAddress(xmp_Handle,PChar('xmp_get_format_list'));
+      @xmp_stop_module:=GetProcAddress(xmp_Handle,PChar('xmp_stop_module'));
+      @xmp_restart_module:=GetProcAddress(xmp_Handle,PChar('xmp_restart_module'));
+      @xmp_channel_vol:=GetProcAddress(xmp_Handle,PChar('xmp_channel_vol'));
+      @xmp_set_player:=GetProcAddress(xmp_Handle,PChar('xmp_set_player'));
+      @xmp_set_position:=GetProcAddress(xmp_Handle,PChar('xmp_set_position'));
+      @xmp_seek_time:=GetProcAddress(xmp_Handle,PChar('xmp_seek_time'));
+
+
+
+      end;
+      {$ELSE}
+      if xmp_Handle <> DynLibs.NilHandle then
+      begin {now we tie the functions to the VARs from above}
+
+      Pointer(xmp_create_context):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_create_context'));
+      Pointer(xmp_free_context):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_free_context'));
+      Pointer(xmp_load_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_load_module'));
+      Pointer(xmp_load_module_from_memory):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_load_module_from_memory'));
+      Pointer(xmp_load_module_from_file):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_load_module_from_file'));
+      Pointer(xmp_load_module_from_callbacks):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_load_module_from_callbacks'));
+      Pointer(xmp_test_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_test_module'));
+      Pointer(xmp_release_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_release_module'));
+      Pointer(xmp_start_player):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_start_player'));
+      Pointer(xmp_play_buffer):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_play_buffer'));
+      Pointer(xmp_get_frame_info):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_get_frame_info'));
+      Pointer(xmp_end_player):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_end_player'));
+      Pointer(xmp_get_module_info):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_get_module_info'));
+      Pointer(xmp_get_format_list):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_get_format_list'));
+      Pointer(xmp_stop_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_stop_module'));
+      Pointer(xmp_restart_module):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_restart_module'));
+      Pointer(xmp_channel_vol):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_channel_vol'));
+      Pointer(xmp_set_player):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_set_player'));
+      Pointer(xmp_set_position):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_set_position'));
+      Pointer(xmp_seek_time):=DynLibs.GetProcedureAddress(xmp_Handle,PChar('xmp_seek_time'));
+
+      end;
+      {$ENDIF}
    Result := xmp_IsLoaded;
-   ReferenceCounter:=1;   
+   ReferenceCounter:=1;
 end;
 
 end;
@@ -417,8 +470,15 @@ begin
     exit;
   if xmp_IsLoaded then
   begin
-    DynLibs.UnloadLibrary(xmp_Handle);
-    xmp_Handle:=DynLibs.NilHandle;
+
+      {$IFNDEF FPC}
+      FreeLibrary(xmp_Handle);
+      xmp_Handle:=0;
+      {$else}
+      DynLibs.UnloadLibrary(xmp_Handle);
+      xmp_Handle:=DynLibs.NilHandle;
+      {$endif}
+
     {$if defined(cpu32) and defined(windows)}
     if gc_Handle <> DynLibs.NilHandle then begin
     DynLibs.UnloadLibrary(gc_Handle);

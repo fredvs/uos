@@ -24,8 +24,22 @@ unit uos_libsndfile;
 interface
 
 uses
-  dynlibs, classes,
-  ctypes;
+  {$IFNDEF FPC}
+  windows,
+  //sysutils,
+  DELPHIctypes,
+  {$ENDIF}
+  {$IFDEF UNIX}
+    {$IFDEF UseCThreads}
+  cthreads,
+    {$ENDIF}
+  unixtype,
+  {$ENDIF}
+  {$IFDEF FPC}
+  ctypes,
+  dynlibs,
+  {$ENDIF}
+  classes;
 
 const
 libsf=
@@ -262,7 +276,12 @@ type
   Tuos_count_t = off_t;
 
 const
-  SF_COUNT_MAX = ctypes.clonglong($7FFFFFFFFFFFFFFF);
+//SF_COUNT_MAX = {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.clonglong($7FFFFFFFFFFFFFFF);
+  {$IFNDEF FPC}
+  SF_COUNT_MAX = LongInt($7FFFFFFFFFFFFFFF);
+  {$else}
+  SF_COUNT_MAX = ctypes.clong($7FFFFFFFFFFFFFFF);
+  {$endif}
 
 {
 ** A pointer to a SF_INFO structure is passed to sf_open_read () and filled in.
@@ -276,11 +295,11 @@ type
   TSF_INFO = record
     frames: Tuos_count_t;
     // Used to be called samples.  Changed to avoid confusion.
-    samplerate: ctypes.cint;
-    channels: ctypes.cint;
-    format: ctypes.cint;
-    sections: ctypes.cint;
-    seekable: ctypes.cint;
+    samplerate: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+    channels: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+    format: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+    sections: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+    seekable: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
   end;
 
 {
@@ -299,9 +318,9 @@ type
   PSF_FORMAT_INFO = ^TSF_FORMAT_INFO;
 
   TSF_FORMAT_INFO = record
-    format: ctypes.cint;
-    Name: ctypes.pcchar;
-    extention: ctypes.pcchar;
+    format: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+    Name: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcchar;
+    extention: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcchar;
   end;
 
 {
@@ -321,9 +340,9 @@ type
   PSF_DITHER_INFO = ^TSF_DITHER_INFO;
 
   TSF_DITHER_INFO = record
-    type_: ctypes.cint;
-    level: ctypes.cdouble;
-    Name: ctypes.pcchar;
+    type_: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+    level: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cdouble;
+    Name: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcchar;
   end;
 
 {
@@ -351,17 +370,17 @@ type
   PSF_INSTRUMENT = ^TSF_INSTRUMENT;
 
   TSF_INSTRUMENT = record
-    gain: ctypes.cint;
+    gain: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
     basenote,
-    detune: ctypes.cchar;
+    detune: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cchar;
     velocity_lo,
-    velocity_hi: ctypes.cchar;
-    loop_count: ctypes.cint;
+    velocity_hi: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cchar;
+    loop_count: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
     loops: array[0..15] of record
-      mode: ctypes.cint;
-      start: ctypes.cuint;
-      end_: ctypes.cuint;
-      Count: ctypes.cuint;
+      mode: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+      start: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cuint;
+      end_: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cuint;
+      Count: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cuint;
     end;
   end;
 
@@ -370,25 +389,25 @@ type
   PSF_LOOP_INFO = ^TSF_LOOP_INFO;
 
   TSF_LOOP_INFO = record
-    time_sig_num: ctypes.cushort;
+    time_sig_num: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cushort;
     // any positive integer    > 0
-    time_sig_den: ctypes.cushort;
+    time_sig_den: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cushort;
     // any positive power of 2 > 0
-    loop_mode: ctypes.cint;                // see SF_LOOP enum
+    loop_mode: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;                // see SF_LOOP enum
 
-    num_beats: ctypes.cint;
+    num_beats: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
     // this is NOT the amount of quarter notes !!!
     // a full bar of 4/4 is 4 beats
     // a full bar of 7/8 is 7 beats
 
-    bpm: ctypes.cfloat;
+    bpm: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cfloat;
     // suggestion, as it can be calculated using other fields:
     // file's lenght, file's sampleRate and our time_sig_den
     // -> bpms are always the amount of _quarter notes_ per minute
 
-    root_key: ctypes.cint;
+    root_key: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
     // MIDI note, or -1 for None
-    future: array[0..5] of ctypes.cint;
+    future: array[0..5] of {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
   end;
 
 
@@ -405,12 +424,12 @@ type
     originator_reference: array[0..31] of char;//ctypes.cchar;
     origination_date: array[0..9] of char;//ctypes.cchar;
     origination_time: array[0..7] of char;//ctypes.cchar;
-    time_reference_low: ctypes.cuint;//ctypes.cint;
-    time_reference_high: ctypes.cuint;//ctypes.cint;
-    version: ctypes.cshort;
+    time_reference_low: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cuint;//ctypes.cint;
+    time_reference_high: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cuint;//ctypes.cint;
+    version: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cshort;
     umid: array[0..63] of char;//ctypes.cchar;
     reserved: array[0..189] of char;//ctypes.cchar;
-    coding_history_size: ctypes.cuint;
+    coding_history_size: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cuint;
     coding_history: array[0..255] of char;//ctypes.cchar;
   end;
 
@@ -424,7 +443,7 @@ type
   function (offset: Tuos_count_t; whence: cint32; pms: PMemoryStream): Tuos_count_t; cdecl; 
  //pm_read = ^tm_read;
  tm_read =
-  function (const buf: Pointer; count: Tuos_count_t; pms: PMemoryStream): Tuos_count_t; cdecl; 
+  function (const buf: Pointer; count: Tuos_count_t; pms: PMemoryStream): Tuos_count_t; cdecl;
  //pm_write = ^tm_write;
  tm_write =
   function (const buf: Pointer; count: Tuos_count_t; pms: PMemoryStream): Tuos_count_t; cdecl; 
@@ -450,40 +469,40 @@ type
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 
-function sf_open(path: string; mode: ctypes.cint;
+function sf_open(path: string; mode: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
   var sfinfo: TSF_INFO): TSNDFILE_HANDLE;
 
 ////// Dynamic load : Vars that will hold our dynamically loaded functions..
 var
   sf_open_native: function(path: PChar;
-  mode: ctypes.cint; sfinfo: PSF_INFO): TSNDFILE_HANDLE; cdecl;
+  mode: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; sfinfo: PSF_INFO): TSNDFILE_HANDLE; cdecl;
 
 var
 sf_version_string: function(): PChar; cdecl;
 
 var
-  sf_open_fd: function(fd: ctypes.cint; mode: ctypes.cint; sfinfo: PSF_INFO;
-  close_desc: ctypes.cint): TSNDFILE_HANDLE; cdecl;
+  sf_open_fd: function(fd: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; mode: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; sfinfo: PSF_INFO;
+  close_desc: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint): TSNDFILE_HANDLE; cdecl;
 
 var
-  sf_open_virtual: function(sfvirtual: PSF_VIRTUAL; mode: ctypes.cint;
+  sf_open_virtual: function(sfvirtual: PSF_VIRTUAL; mode: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
   sfinfo: PSF_INFO; user_data: Pointer): TSNDFILE_HANDLE; cdecl;
 
 var
-  sf_error: function(sndfile: TSNDFILE_HANDLE): ctypes.cint; cdecl;
+  sf_error: function(sndfile: TSNDFILE_HANDLE): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 var
   sf_strerror: function(sndfile: TSNDFILE_HANDLE): PChar; cdecl;
 
 var
-  sf_error_number: function(errnum: ctypes.cint): PChar; cdecl;
+  sf_error_number: function(errnum: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint): PChar; cdecl;
 
 var
-  sf_perror: function(sndfile: TSNDFILE_HANDLE): ctypes.cint; cdecl;
+  sf_perror: function(sndfile: TSNDFILE_HANDLE): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 var
   sf_error_str: function(sndfile: TSNDFILE_HANDLE;
-  str: ctypes.pcchar; len: size_t): ctypes.cint; cdecl;
+  str: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcchar; len: size_t): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 {
  In libsndfile there are 4 functions with the same name (sf_command), 3 of them use the parameter "overload".
@@ -493,23 +512,23 @@ var
 }
 
 var
-  sf_command_pointer: function(sndfile: TSNDFILE_HANDLE; command: ctypes.cint;
-  Data: Pointer; datasize: ctypes.cint): ctypes.cint; cdecl;
+  sf_command_pointer: function(sndfile: TSNDFILE_HANDLE; command: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+  Data: Pointer; datasize: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 var
-  sf_command_double: function(sndfile: TSNDFILE_HANDLE; command: ctypes.cint;
-  var Data: double; datasize: ctypes.cint): ctypes.cint; cdecl;
+  sf_command_double: function(sndfile: TSNDFILE_HANDLE; command: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+  var Data: double; datasize: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 var
-  sf_command_array: function(sndfile: TSNDFILE_HANDLE; command: ctypes.cint;
-  var Data: array of char; datasize: ctypes.cint): ctypes.cint; cdecl;
+  sf_command_array: function(sndfile: TSNDFILE_HANDLE; command: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+  var Data: array of char; datasize: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 var
-  sf_command_tsf: function(sndfile: TSNDFILE_HANDLE; command: ctypes.cint;
-  var Data: TSF_BROADCAST_INFO; datasize: ctypes.cint): ctypes.cint; cdecl;
+  sf_command_tsf: function(sndfile: TSNDFILE_HANDLE; command: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+  var Data: TSF_BROADCAST_INFO; datasize: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 var
-  sf_format_check: function(var info: TSF_INFO): ctypes.cint; cdecl;
+  sf_format_check: function(var info: TSF_INFO): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 {
 ** Seek within the waveform data chunk of the SNDFILE. sf_seek () uses
@@ -545,7 +564,7 @@ const
 
 var
   sf_seek: function(sndfile: TSNDFILE_HANDLE; frame: Tuos_count_t;
-  whence: ctypes.cint): Tuos_count_t; cdecl;
+  whence: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint): Tuos_count_t; cdecl;
 
 {
 ** Functions for retrieving and setting string data within sound files.
@@ -556,12 +575,12 @@ var
 ** returns NULL.
 }
 var
-  sf_set_string: function(sndfile: TSNDFILE_HANDLE; str_type: ctypes.cint;
-  str: ctypes.pcchar): ctypes.cint; cdecl;
+  sf_set_string: function(sndfile: TSNDFILE_HANDLE; str_type: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
+  str: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcchar): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 var
   sf_get_string: function(sndfile: TSNDFILE_HANDLE;
-  str_type: ctypes.cint): PChar; cdecl;
+  str_type: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint): PChar; cdecl;
 
 var
   sf_read_raw: function(sndfile: TSNDFILE_HANDLE; ptr: Pointer;
@@ -582,35 +601,35 @@ var
 ** All of these read/write function return number of frames read/written.
 }
 var
-  sf_readf_short: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcshort;
+  sf_readf_short: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcshort;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_writef_short: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcshort;
+  sf_writef_short: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcshort;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_readf_int: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcint;
+  sf_readf_int: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcint;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_writef_int: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcint;
+  sf_writef_int: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcint;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_readf_float: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcfloat;
+  sf_readf_float: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcfloat;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_writef_float: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcfloat;
+  sf_writef_float: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcfloat;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_readf_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
+  sf_readf_double: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcdouble;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_writef_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
+  sf_writef_double: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcdouble;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 {
@@ -619,35 +638,35 @@ var
 ** All of these read/write function return number of items read/written.
 }
 var
-  sf_read_short: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcshort;
+  sf_read_short: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcshort;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_write_short: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcshort;
+  sf_write_short: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcshort;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_read_int: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcint;
+  sf_read_int: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcint;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_write_int: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcint;
+  sf_write_int: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcint;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_read_float: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcfloat;
+  sf_read_float: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcfloat;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_write_float: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcfloat;
+  sf_write_float: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcfloat;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_read_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
+  sf_read_double: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcdouble;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 var
-  sf_write_double: function(sndfile: TSNDFILE_HANDLE; ptr: ctypes.pcdouble;
+  sf_write_double: function(sndfile: TSNDFILE_HANDLE; ptr: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.pcdouble;
   frames: Tuos_count_t): Tuos_count_t; cdecl;
 
 {
@@ -656,7 +675,7 @@ var
 ** Returns 0 on success, or an error number.
 }
 var
-  sf_close: function(sndfile: TSNDFILE_HANDLE): ctypes.cint; cdecl;
+  sf_close: function(sndfile: TSNDFILE_HANDLE): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 {
 ** If the file is opened SFM_WRITE or SFM_RDWR, call fsync() on the file
@@ -664,12 +683,23 @@ var
 ** no action is taken.
 }
 var
-  sf_write_sync: function(sndfile: TSNDFILE_HANDLE): ctypes.cint; cdecl;
+  sf_write_sync: function(sndfile: TSNDFILE_HANDLE): {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint; cdecl;
 
 {Special function for dynamic loading of lib ...}
 
 var
+  //sf_Handle: TLibHandle;
+  //{$IFDEF FPC}
+  //  sf_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
+  //{$ELSE}
+  //sf_Handle:Int64;//=0;
+  //{$ENDIF FPC}
+
+  {$IFNDEF FPC}
+  sf_Handle: cardinal;
+  {$else}
   sf_Handle: TLibHandle;
+  {$endif}
 // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
 
 function sf_Load(const libfilename: string): boolean; // load the lib
@@ -697,45 +727,88 @@ begin
   end
   else
   begin {go & load the library}
-   if Length(libfilename) = 0 then thelib := libsf else thelib := libfilename;
-    sf_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
-    if sf_Handle <> DynLibs.NilHandle then
-    begin {now we tie the functions to the VARs from above}
-      
+   if Length(libfilename) = 0
+   then thelib := libsf
+   else thelib := libfilename;
+
+  //sf_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
+  {$IFNDEF FPC}
+  //sf_Handle:=SafeLoadLibrary(thelib); // obtain the handle we want
+  {$else}
+  //sf_Handle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
+  {$endif}
+      {$IFNDEF FPC}
+      sf_Handle := LoadLibrary(pwidechar(thelib)); // obtain the handle we want
+      if sf_Handle <> 0 then begin {now we tie the functions to the VARs from above}
+      @sf_version_string:= GetProcAddress(sf_Handle, PChar('sf_version_string'));
+      @sf_open_native:= GetProcAddress(sf_Handle, PChar('sf_open'));
+      @sf_open_fd:= GetProcAddress(sf_Handle, PChar('sf_open_fd'));
+      @sf_open_virtual:= GetProcAddress(sf_Handle, PChar('sf_open_virtual'));
+      @sf_error:= GetProcAddress(sf_Handle, PChar('sf_error'));
+      @sf_strerror:= GetProcAddress(sf_Handle, PChar('sf_strerror'));
+      @sf_error_number:= GetProcAddress(sf_Handle, PChar('sf_error_number'));
+      @sf_perror:= GetProcAddress(sf_Handle, PChar('sf_perror'));
+      @sf_error_str:= GetProcAddress(sf_Handle, PChar('sf_error_str'));
+      @sf_command_pointer:= GetProcAddress(sf_Handle, PChar('sf_command'));
+      @sf_command_array:= GetProcAddress(sf_Handle, PChar('sf_command'));
+      @sf_command_double:= GetProcAddress(sf_Handle, PChar('sf_command'));
+      @sf_command_tsf:= GetProcAddress(sf_Handle, PChar('sf_command'));
+      @sf_format_check:= GetProcAddress(sf_Handle, PChar('sf_format_check'));
+      @sf_seek:= GetProcAddress(sf_Handle, PChar('sf_seek'));
+      @sf_set_string:= GetProcAddress(sf_Handle, PChar('sf_set_string'));
+      @sf_get_string:= GetProcAddress(sf_Handle, PChar('sf_get_string'));
+      @sf_read_raw:= GetProcAddress(sf_Handle, PChar('sf_read_raw'));
+      @sf_write_raw:= GetProcAddress(sf_Handle, PChar('sf_write_raw'));
+      @sf_readf_short:= GetProcAddress(sf_Handle, PChar('sf_readf_short'));
+      @sf_writef_short:= GetProcAddress(sf_Handle, PChar('sf_writef_short'));
+      @sf_readf_int:= GetProcAddress(sf_Handle, PChar('sf_readf_int'));
+      @sf_writef_int:= GetProcAddress(sf_Handle, PChar('sf_writef_int'));
+      @sf_readf_float:= GetProcAddress(sf_Handle, PChar('sf_readf_float'));
+      @sf_writef_float:= GetProcAddress(sf_Handle, PChar('sf_writef_float'));
+      @sf_readf_double:= GetProcAddress(sf_Handle, PChar('sf_readf_double'));
+      @sf_writef_double:= GetProcAddress(sf_Handle, PChar('sf_writef_double'));
+      @sf_read_short:= GetProcAddress(sf_Handle, PChar('sf_read_short'));
+      @sf_write_short:= GetProcAddress(sf_Handle, PChar('sf_write_short'));
+      @sf_read_int:= GetProcAddress(sf_Handle, PChar('sf_read_int'));
+      @sf_write_int:= GetProcAddress(sf_Handle, PChar('sf_write_int'));
+      @sf_read_float:= GetProcAddress(sf_Handle, PChar('sf_read_float'));
+      @sf_write_float:= GetProcAddress(sf_Handle, PChar('sf_write_float'));
+      @sf_read_double:= GetProcAddress(sf_Handle, PChar('sf_read_double'));
+      @sf_write_double:= GetProcAddress(sf_Handle, PChar('sf_write_double'));
+      @sf_close:= GetProcAddress(sf_Handle, PChar('sf_close'));
+      @sf_write_sync:= GetProcAddress(sf_Handle, PChar('sf_write_sync'));
+      end;
+      {$ELSE}
+      sf_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
+      if sf_Handle <> DynLibs.NilHandle then
+      begin {now we tie the functions to the VARs from above}
       Pointer(sf_version_string) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_version_string'));
       Pointer(sf_open_native) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_open'));
       Pointer(sf_open_fd) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_open_fd'));
-      Pointer(sf_open_virtual) := DynLibs.GetProcedureAddress(
-        sf_Handle, PChar('sf_open_virtual'));
+      Pointer(sf_open_virtual) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_open_virtual'));
       Pointer(sf_error) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_error'));
       Pointer(sf_strerror) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_strerror'));
-      Pointer(sf_error_number) := DynLibs.GetProcedureAddress(
-        sf_Handle, PChar('sf_error_number'));
+      Pointer(sf_error_number) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_error_number'));
       Pointer(sf_perror) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_perror'));
       Pointer(sf_error_str) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_error_str'));
       Pointer(sf_command_pointer) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_command'));
       Pointer(sf_command_array) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_command'));
       Pointer(sf_command_double) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_command'));
       Pointer(sf_command_tsf) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_command'));
-      Pointer(sf_format_check) := DynLibs.GetProcedureAddress(
-        sf_Handle, PChar('sf_format_check'));
+      Pointer(sf_format_check) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_format_check'));
       Pointer(sf_seek) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_seek'));
       Pointer(sf_set_string) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_set_string'));
       Pointer(sf_get_string) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_get_string'));
       Pointer(sf_read_raw) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_read_raw'));
       Pointer(sf_write_raw) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_write_raw'));
       Pointer(sf_readf_short) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_readf_short'));
-      Pointer(sf_writef_short) := DynLibs.GetProcedureAddress(
-        sf_Handle, PChar('sf_writef_short'));
+      Pointer(sf_writef_short) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_writef_short'));
       Pointer(sf_readf_int) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_readf_int'));
       Pointer(sf_writef_int) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_writef_int'));
       Pointer(sf_readf_float) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_readf_float'));
-      Pointer(sf_writef_float) := DynLibs.GetProcedureAddress(
-        sf_Handle, PChar('sf_writef_float'));
-      Pointer(sf_readf_double) := DynLibs.GetProcedureAddress(
-        sf_Handle, PChar('sf_readf_double'));
-      Pointer(sf_writef_double) := DynLibs.GetProcedureAddress(
-        sf_Handle, PChar('sf_writef_double'));
+      Pointer(sf_writef_float) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_writef_float'));
+      Pointer(sf_readf_double) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_readf_double'));
+      Pointer(sf_writef_double) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_writef_double'));
       Pointer(sf_read_short) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_read_short'));
       Pointer(sf_write_short) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_write_short'));
       Pointer(sf_read_int) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_read_int'));
@@ -743,12 +816,12 @@ begin
       Pointer(sf_read_float) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_read_float'));
       Pointer(sf_write_float) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_write_float'));
       Pointer(sf_read_double) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_read_double'));
-      Pointer(sf_write_double) := DynLibs.GetProcedureAddress(
-        sf_Handle, PChar('sf_write_double'));
+      Pointer(sf_write_double) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_write_double'));
       Pointer(sf_close) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_close'));
       Pointer(sf_write_sync) := DynLibs.GetProcedureAddress(sf_Handle, PChar('sf_write_sync'));
 
-    end;
+      end;
+      {$ENDIF}
     Result := sf_IsLoaded;
     ReferenceCounter := 1;
   end;
@@ -765,13 +838,18 @@ begin
   // >
   if sf_IsLoaded then
   begin
-    DynLibs.UnloadLibrary(sf_Handle);
-    sf_Handle := DynLibs.NilHandle;
+      {$IFNDEF FPC}
+      FreeLibrary(sf_Handle);
+      sf_Handle:=0;
+      {$else}
+      DynLibs.UnloadLibrary(sf_Handle);
+      sf_Handle:=DynLibs.NilHandle;
+      {$endif}
   end;
 
 end;
 
-function sf_open(path: string; mode: ctypes.cint;
+function sf_open(path: string; mode: {$IFDEF FPC}ctypes{$ELSE}DELPHIctypes{$ENDIF}.cint;
   var sfinfo: TSF_INFO): TSNDFILE_HANDLE;
 begin
   Result := sf_open_native(PChar(path), mode, @sfinfo);
@@ -779,7 +857,11 @@ end;
 
 function sf_IsLoaded: boolean;
 begin
-  Result := (sf_Handle <> dynlibs.NilHandle);
+   {$IFNDEF FPC}
+   Result := (sf_Handle <> 0);
+   {$else}
+   Result := (sf_Handle <> dynlibs.NilHandle);
+   {$endif}
 end;
 
 end.

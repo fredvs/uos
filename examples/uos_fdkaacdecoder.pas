@@ -7,15 +7,22 @@
 
 unit uos_fdkaacdecoder;
 
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
-{$MINENUMSIZE 4}
+
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$else}
+{$endif}  
+   {$MINENUMSIZE 4} (* use 4-byte enums *)
 
 interface
 
 uses
-  dynlibs,
-  SysUtils;
+{$IFNDEF FPC}
+   sysutils, DELPHIctypes, windows;
+{$else}
+   sysutils,dynlibs, CTypes;
+{$endif}
 
 type
   FDK_MODULE_ID = (
@@ -1311,7 +1318,12 @@ var
   cdecl;
 
 var
-  ad_Handle: TLibHandle = dynlibs.NilHandle;
+  //ad_Handle: TLibHandle = dynlibs.NilHandle;
+  {$IFDEF FPC}
+  ad_Handle:TLibHandle=dynlibs.NilHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
+  {$ELSE}
+  ad_Handle:Int64=0;
+  {$ENDIF FPC}
   {$if defined(cpu32) and defined(windows)} // try load dependency if not in /windows/system32/
   gc_Handle :TLibHandle=dynlibs.NilHandle;
   {$endif}
@@ -1330,7 +1342,12 @@ implementation
 
 function ad_IsLoaded: Boolean;
 begin
-  Result := (ad_Handle <> dynlibs.NilHandle);
+ // Result := (ad_Handle <> dynlibs.NilHandle);
+   {$IFNDEF FPC}
+   Result := (ad_Handle <> 0);
+   {$else}
+   Result := (ad_Handle <> dynlibs.NilHandle);
+   {$endif}
 end;
 
 procedure ad_Unload;
@@ -1343,8 +1360,15 @@ begin
   // >
   if ad_IsLoaded then
   begin
-    DynLibs.UnloadLibrary(ad_Handle);
-    ad_Handle := DynLibs.NilHandle;
+    //DynLibs.UnloadLibrary(ad_Handle);
+    //ad_Handle := DynLibs.NilHandle;
+      {$IFNDEF FPC}
+      FreeLibrary(ad_Handle);
+      ad_Handle:=0;
+      {$else}
+      DynLibs.UnloadLibrary(ad_Handle);
+      ad_Handle:=DynLibs.NilHandle;
+      {$endif}
     {$if defined(cpu32) and defined(windows)}
     if gc_Handle <> DynLibs.NilHandle then begin
     DynLibs.UnloadLibrary(gc_Handle);
@@ -1376,9 +1400,25 @@ begin
       thelib := libfdk_aac
     else
       thelib := libfilename;
-    ad_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
-    if ad_Handle <> DynLibs.NilHandle then
-    begin {now we tie the functions to the VARs from above}
+   //ad_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
+  {$IFNDEF FPC}
+  ad_Handle:=SafeLoadLibrary(thelib); // obtain the handle we want
+  {$else}
+  ad_Handle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
+  {$endif}
+      {$IFNDEF FPC}
+      if ad_Handle <> 0 then
+      begin {now we tie the functions to the VARs from above}
+      @aacDecoder_Fill          := GetProcAddress(ad_Handle, PChar('aacDecoder_Fill'));
+      @aacDecoder_DecodeFrame   := GetProcAddress(ad_Handle, PChar('aacDecoder_DecodeFrame'));
+      @aacDecoder_GetStreamInfo := GetProcAddress(ad_Handle, PChar('aacDecoder_GetStreamInfo'));
+      @aacDecoder_Open          := GetProcAddress(ad_Handle, PChar('aacDecoder_Open'));
+      @aacDecoder_SetParam      := GetProcAddress(ad_Handle, PChar('aacDecoder_SetParam'));
+      @aacDecoder_Close         := GetProcAddress(ad_Handle, PChar('aacDecoder_Close'));
+      end;
+      {$ELSE}
+      if ad_Handle <> DynLibs.NilHandle then
+      begin {now we tie the functions to the VARs from above}
 
       Pointer(aacDecoder_Fill)          := DynLibs.GetProcedureAddress(ad_Handle, PChar('aacDecoder_Fill'));
       Pointer(aacDecoder_DecodeFrame)   := DynLibs.GetProcedureAddress(ad_Handle, PChar('aacDecoder_DecodeFrame'));
@@ -1387,7 +1427,8 @@ begin
       Pointer(aacDecoder_SetParam)      := DynLibs.GetProcedureAddress(ad_Handle, PChar('aacDecoder_SetParam'));
       Pointer(aacDecoder_Close)         := DynLibs.GetProcedureAddress(ad_Handle, PChar('aacDecoder_Close'));
 
-    end;
+      end;
+      {$ENDIF}
     Result           := ad_IsLoaded;
     ReferenceCounter := 1;
   end;

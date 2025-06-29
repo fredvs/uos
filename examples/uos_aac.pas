@@ -8,14 +8,20 @@
 
 unit uos_aac;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
 {$PACKRECORDS C}
+{$endif}
 
 interface
 
 uses
-  Classes, SysUtils, ctypes, math,
-  dynlibs;
+  Classes,SysUtils, math,
+  {$IFNDEF FPC}
+  DELPHIctypes, windows;
+  {$else}
+  ctypes, dynlibs ;
+  {$ENDIF}
   
 const
 
@@ -323,10 +329,15 @@ implementation
 
 var
  // hNeAAC: {$IFDEF MSWINDOWS}longword{$ELSE}{$IFDEF CPU32}longword{$ELSE}PtrInt{$ENDIF}{$ENDIF};
+  {$IFNDEF FPC}
+  hNeAAC:THandle=NilHandle;
+  hMp4ff:THandle=NilHandle;
+  {$else}
   hNeAAC:TLibHandle=dynlibs.NilHandle;
+  hMp4ff:TLibHandle=dynlibs.NilHandle;
+  {$endif}
   NeAACLoaded : Boolean;
   Mp4ffLoaded : Boolean = False;
-  hMp4ff:TLibHandle=dynlibs.NilHandle; 
 
 //////////// from mcwNeAACDec.pas By Franklyn A. Harlow
 
@@ -512,42 +523,74 @@ Begin
     Result.SampleRate:= mp4ASC.samplingFrequency;
 
   Result.Artist:= '';
+  {$IFNDEF FPC}
+  iRet:= mp4ff_meta_get_writer(Result.hMP4, pwidechar(pID3));
+  {$else}
   iRet:= mp4ff_meta_get_writer(Result.hMP4,  pID3);
+  {$endif}
   if iRet = 1 then
     Result.Artist:= pID3;
 
   Result.AlbumArtist:= '';
+  {$IFNDEF FPC}
+  iRet:= mp4ff_meta_get_artist(Result.hMP4,  pwidechar(pID3));
+  {$else}
   iRet:= mp4ff_meta_get_artist(Result.hMP4,  pID3);
+  {$endif}
   if iRet = 1 then
     Result.AlbumArtist:= pID3;
 
   Result.Album:= '';
+  {$IFNDEF FPC}
+  iRet:= mp4ff_meta_get_album(Result.hMP4,   pwidechar(pID3));
+  {$else}
   iRet:= mp4ff_meta_get_album(Result.hMP4,   pID3);
+  {$endif}
   if iRet = 1 then
     Result.Album:= pID3;
 
   Result.Title:= '';
+  {$IFNDEF FPC}
+  iRet:= mp4ff_meta_get_title(Result.hMP4,   pwidechar(pID3));
+  {$else}
   iRet:= mp4ff_meta_get_title(Result.hMP4,   pID3);
+  {$endif}
   if iRet = 1 then
     Result.Title:= pID3;
 
   Result.Date:= '';
+  {$IFNDEF FPC}
+  iRet:= mp4ff_meta_get_date(Result.hMP4,    pwidechar(pID3));
+  {$else}
   iRet:= mp4ff_meta_get_date(Result.hMP4,    pID3);
+  {$endif}
   if iRet = 1 then
     Result.Date:= pID3;
 
   Result.Genre:= '';
+  {$IFNDEF FPC}
+  iRet:= mp4ff_meta_get_genre(Result.hMP4,   pwidechar(pID3));
+  {$else}
   iRet:= mp4ff_meta_get_genre(Result.hMP4,   pID3);
+  {$endif}
   if iRet = 1 then
     Result.Genre:= pID3;
 
   Result.Track:= '';
+  {$IFNDEF FPC}
+  iRet:= mp4ff_meta_get_track(Result.hMP4,   pwidechar(pID3));
+  {$else}
   iRet:= mp4ff_meta_get_track(Result.hMP4,   pID3);
+  {$endif}
   if iRet = 1 then
     Result.Track:= pID3;
 
   Result.Comment:= '';
+  {$IFNDEF FPC}
+  iRet:= mp4ff_meta_get_comment(Result.hMP4, pwidechar(pID3));
+  {$else}
   iRet:= mp4ff_meta_get_comment(Result.hMP4, pID3);
+  {$endif}
   if iRet = 1 then
     Result.Comment:= pID3;
 
@@ -694,41 +737,52 @@ var
 thelib: string; 
 Begin
    if Length(NeAAC) = 0 then thelib := libaa else thelib := NeAAC;
-  hNeAAC:= DynLibs.SafeLoadLibrary(PChar(thelib));
-  NeAACLoaded:= hNeAAC <> dynlibs.NilHandle;
 
-     Pointer(NeAACDecGetErrorMessage) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecGetErrorMessage'));
-      Pointer(NeAACDecGetCapabilities) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecGetCapabilities'));
-       Pointer(NeAACDecOpen) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecOpen'));
-        Pointer(NeAACDecGetCurrentConfiguration) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecGetCurrentConfiguration'));
-         Pointer(NeAACDecSetConfiguration) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecSetConfiguration'));
-          Pointer(NeAACDecInit) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecInit'));
-           Pointer(NeAACDecInit2) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecInit2'));
-            Pointer(NeAACDecPostSeekReset) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecPostSeekReset'));
-             Pointer(NeAACDecClose) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecClose'));
-         Pointer(NeAACDecDecode) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecDecode'));
-           Pointer(NeAACDecDecode2) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecDecode2'));
-            Pointer(NeAACDecPostSeekReset) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecPostSeekReset'));
-             Pointer(NeAACDecAudioSpecificConfig) :=
-        GetProcAddress(hNeAAC, PChar('NeAACDecAudioSpecificConfig'));
+  //hNeAAC:= DynLibs.SafeLoadLibrary(PChar(thelib));
+  //NeAACLoaded:= hNeAAC <> dynlibs.NilHandle;
+
+   hNeAAC:= SafeLoadLibrary(PChar(thelib));
+   NeAACLoaded:= hNeAAC <> NilHandle;
+
+  {$IFNDEF FPC}
+  NeAACDecGetErrorMessage := GetProcAddress(hNeAAC, PChar('NeAACDecGetErrorMessage'));
+  NeAACDecGetCapabilities := GetProcAddress(hNeAAC, PChar('NeAACDecGetCapabilities'));
+  NeAACDecOpen := GetProcAddress(hNeAAC, PChar('NeAACDecOpen'));
+  NeAACDecGetCurrentConfiguration := GetProcAddress(hNeAAC, PChar('NeAACDecGetCurrentConfiguration'));
+  NeAACDecSetConfiguration := GetProcAddress(hNeAAC, PChar('NeAACDecSetConfiguration'));
+  NeAACDecInit := GetProcAddress(hNeAAC, PChar('NeAACDecInit'));
+  NeAACDecInit2 := GetProcAddress(hNeAAC, PChar('NeAACDecInit2'));
+  NeAACDecPostSeekReset := GetProcAddress(hNeAAC, PChar('NeAACDecPostSeekReset'));
+  NeAACDecClose := GetProcAddress(hNeAAC, PChar('NeAACDecClose'));
+  NeAACDecDecode :=GetProcAddress(hNeAAC, PChar('NeAACDecDecode'));
+  NeAACDecDecode2 :=GetProcAddress(hNeAAC, PChar('NeAACDecDecode2'));
+  NeAACDecPostSeekReset :=GetProcAddress(hNeAAC, PChar('NeAACDecPostSeekReset'));
+  NeAACDecAudioSpecificConfig :=GetProcAddress(hNeAAC, PChar('NeAACDecAudioSpecificConfig'));
+  {$else}
+  Pointer(NeAACDecGetErrorMessage) :=GetProcAddress(hNeAAC, PChar('NeAACDecGetErrorMessage'));
+  Pointer(NeAACDecGetCapabilities) :=GetProcAddress(hNeAAC, PChar('NeAACDecGetCapabilities'));
+  Pointer(NeAACDecOpen) :=GetProcAddress(hNeAAC, PChar('NeAACDecOpen'));
+  Pointer(NeAACDecGetCurrentConfiguration) :=GetProcAddress(hNeAAC, PChar('NeAACDecGetCurrentConfiguration'));
+  Pointer(NeAACDecSetConfiguration) :=GetProcAddress(hNeAAC, PChar('NeAACDecSetConfiguration'));
+  Pointer(NeAACDecInit) :=GetProcAddress(hNeAAC, PChar('NeAACDecInit'));
+  Pointer(NeAACDecInit2) :=GetProcAddress(hNeAAC, PChar('NeAACDecInit2'));
+  Pointer(NeAACDecPostSeekReset) :=GetProcAddress(hNeAAC, PChar('NeAACDecPostSeekReset'));
+  Pointer(NeAACDecClose) :=GetProcAddress(hNeAAC, PChar('NeAACDecClose'));
+  Pointer(NeAACDecDecode) := GetProcAddress(hNeAAC, PChar('NeAACDecDecode'));
+  Pointer(NeAACDecDecode2) :=GetProcAddress(hNeAAC, PChar('NeAACDecDecode2'));
+  Pointer(NeAACDecPostSeekReset) :=GetProcAddress(hNeAAC, PChar('NeAACDecPostSeekReset'));
+  Pointer(NeAACDecAudioSpecificConfig) :=GetProcAddress(hNeAAC, PChar('NeAACDecAudioSpecificConfig'));
+  {$endif}
 end;
 
 Procedure UnLoadNeAAC;
 Begin
   if NeAACLoaded then
+    {$IFNDEF FPC}
+    FreeLibrary(hNeAAC);
+    {$else}
     DynLibs.UnloadLibrary(hNeAAC);
+    {$endif}
   NeAACLoaded:= False;
 end;
 
@@ -768,8 +822,11 @@ end;
 procedure UnLoadMp4ff;
 begin
   if Mp4ffLoaded then
-  
-    DynLibs.UnloadLibrary(hMp4ff);
+     {$IFNDEF FPC}
+     FreeLibrary(hMp4ff);
+     {$else}
+     DynLibs.UnloadLibrary(hMp4ff);
+     {$endif}
   
   Mp4ffLoaded := False;
 end;
@@ -782,118 +839,129 @@ end;
 
  procedure Loadmp4ff(mp4ff : AnsiString);
  var
-thelib: string; 
+thelib: string;
 begin
   if Mp4ffLoaded then
     Exit;
  if Length(mp4ff) = 0 then thelib := libm4 else thelib := mp4ff;
-  hMp4ff := DynLibs.SafeLoadLibrary(PChar(thelib));
-  Mp4ffLoaded := hMp4ff <> dynlibs.NilHandle;
-  
+  //hMp4ff := DynLibs.SafeLoadLibrary(PChar(thelib));
+  //Mp4ffLoaded := hMp4ff <> dynlibs.NilHandle;
+   hMp4ff := SafeLoadLibrary(PChar(thelib));
+   Mp4ffLoaded := hMp4ff <> NilHandle;
+
    // writeln('hMp4ff' + inttostr(hMp4ff));
+   {$IFNDEF FPC}
+   mp4ff_open_read :=GetProcAddress(hMp4ff, pchar('mp4ff_open_read'));
 
-   Pointer(mp4ff_open_read) :=
-        GetProcAddress(hMp4ff, pchar('mp4ff_open_read'));
-        
+   mp4ff_open_read_metaonly := GetProcAddress(hMp4ff, PChar('mp4ff_open_read_metaonly'));
+   mp4ff_close := GetProcAddress(hMp4ff, PChar('mp4ff_close'));
+   mp4ff_get_sample_duration := GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_duration'));
+   mp4ff_get_sample_duration_use_offsets := GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_duration_use_offsets'));
+   mp4ff_get_sample_position :=GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_position'));
+   mp4ff_get_sample_offset :=GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_offset'));
+   mp4ff_find_sample :=GetProcAddress(hMp4ff, PChar('mp4ff_find_sample'));
+
+   mp4ff_find_sample_use_offsets :=GetProcAddress(hMp4ff, PChar('mp4ff_find_sample_use_offsets'));
+   mp4ff_set_sample_position :=GetProcAddress(hMp4ff, PChar('mp4ff_set_sample_position'));
+   mp4ff_read_sample :=GetProcAddress(hMp4ff, PChar('mp4ff_read_sample'));
+   mp4ff_read_sample_v2 :=GetProcAddress(hMp4ff, PChar('mp4ff_read_sample_v2'));
+   mp4ff_read_sample_getsize :=GetProcAddress(hMp4ff, PChar('mp4ff_read_sample_getsize'));
+   mp4ff_get_sample_position :=GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_position'));
+   mp4ff_get_sample_offset :=GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_offset'));
+   mp4ff_find_sample :=GetProcAddress(hMp4ff, PChar('mp4ff_find_sample'));
+
+   mp4ff_get_decoder_config :=GetProcAddress(hMp4ff, PChar('mp4ff_get_decoder_config'));
+   mp4ff_get_track_type := GetProcAddress(hMp4ff, PChar('mp4ff_get_track_type'));
+   mp4ff_total_tracks := GetProcAddress(hMp4ff, PChar('mp4ff_total_tracks'));
+   mp4ff_num_samples := GetProcAddress(hMp4ff, PChar('mp4ff_num_samples'));
+   mp4ff_time_scale :=GetProcAddress(hMp4ff, PChar('mp4ff_time_scale'));
+   mp4ff_get_avg_bitrate := GetProcAddress(hMp4ff, PChar('mp4ff_get_avg_bitrate'));
+   mp4ff_get_max_bitrate := GetProcAddress(hMp4ff, PChar('mp4ff_get_max_bitrate'));
+   mp4ff_get_track_duration := GetProcAddress(hMp4ff, PChar('mp4ff_get_track_duration'));
+
+   mp4ff_get_track_duration_use_offsets := GetProcAddress(hMp4ff, PChar('mp4ff_get_track_duration_use_offsets'));
+   mp4ff_get_sample_rate := GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_rate'));
+   mp4ff_get_channel_count := GetProcAddress(hMp4ff, PChar('mp4ff_get_channel_count'));
+   mp4ff_get_audio_type := GetProcAddress(hMp4ff, PChar('mp4ff_get_audio_type'));
+   mp4ff_free_decoder_config := GetProcAddress(hMp4ff, PChar('mp4ff_free_decoder_config'));
+   mp4ff_meta_get_num_items := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_num_items'));
+   mp4ff_meta_get_by_index := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_by_index'));
+   mp4ff_meta_get_title := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_title'));
+
+   mp4ff_meta_get_artist :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_artist'));
+   mp4ff_meta_get_writer :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_writer'));
+   mp4ff_meta_get_album := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_album'));
+   mp4ff_meta_get_date := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_date'));
+   mp4ff_meta_get_tool := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_tool'));
+   mp4ff_meta_get_comment := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_comment'));
+   mp4ff_meta_get_genre := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_genre'));
+   mp4ff_meta_get_track := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_track'));
+
+   mp4ff_meta_get_disc := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_disc'));
+   mp4ff_meta_get_totaltracks := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_totaltracks'));
+   mp4ff_meta_get_totaldiscs := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_totaldiscs'));
+   mp4ff_meta_get_compilation :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_compilation'));
+   mp4ff_meta_get_tempo :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_tempo'));
+   mp4ff_meta_get_coverart :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_coverart'));
+   {$else}
+
+   Pointer(mp4ff_open_read) :=GetProcAddress(hMp4ff, pchar('mp4ff_open_read'));
+
   //  if Pointer(mp4ff_open_read) <> nil then
-  //    writeln('mp4ff_open_read OK') else 
-  // writeln('mp4ff_open_read NOT OK'); 
-      
-     Pointer(mp4ff_open_read_metaonly) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_open_read_metaonly'));
-     Pointer(mp4ff_close) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_close'));
-     Pointer(mp4ff_get_sample_duration) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_duration'));
-     Pointer(mp4ff_get_sample_duration_use_offsets) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_duration_use_offsets'));
-     Pointer(mp4ff_get_sample_position) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_position'));
-     Pointer(mp4ff_get_sample_offset) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_offset'));
-     Pointer(mp4ff_find_sample) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_find_sample'));
+  //    writeln('mp4ff_open_read OK') else
+  // writeln('mp4ff_open_read NOT OK');
 
-     Pointer(mp4ff_find_sample_use_offsets) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_find_sample_use_offsets'));
-     Pointer(mp4ff_set_sample_position) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_set_sample_position'));
-     Pointer(mp4ff_read_sample) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_read_sample'));
-     Pointer(mp4ff_read_sample_v2) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_read_sample_v2'));
-     Pointer(mp4ff_read_sample_getsize) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_read_sample_getsize'));
-     Pointer(mp4ff_get_sample_position) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_position'));
-     Pointer(mp4ff_get_sample_offset) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_offset'));
-     Pointer(mp4ff_find_sample) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_find_sample'));
+    Pointer(mp4ff_open_read_metaonly) :=GetProcAddress(hMp4ff, PChar('mp4ff_open_read_metaonly'));
+    Pointer(mp4ff_close) := GetProcAddress(hMp4ff, PChar('mp4ff_close'));
+    Pointer(mp4ff_get_sample_duration) := GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_duration'));
+    Pointer(mp4ff_get_sample_duration_use_offsets) :=GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_duration_use_offsets'));
+    Pointer(mp4ff_get_sample_position) := GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_position'));
+    Pointer(mp4ff_get_sample_offset) :=GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_offset'));
+    Pointer(mp4ff_find_sample) :=GetProcAddress(hMp4ff, PChar('mp4ff_find_sample'));
 
-       Pointer(mp4ff_get_decoder_config) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_get_decoder_config'));
-     Pointer(mp4ff_get_track_type) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_get_track_type'));
-     Pointer(mp4ff_total_tracks) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_total_tracks'));
-     Pointer(mp4ff_num_samples) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_num_samples'));
-     Pointer(mp4ff_time_scale) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_time_scale'));
-     Pointer(mp4ff_get_avg_bitrate) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_avg_bitrate'));
-     Pointer(mp4ff_get_max_bitrate) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_max_bitrate'));
-     Pointer(mp4ff_get_track_duration) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_track_duration'));
+    Pointer(mp4ff_find_sample_use_offsets) := GetProcAddress(hMp4ff, PChar('mp4ff_find_sample_use_offsets'));
+    Pointer(mp4ff_set_sample_position) :=GetProcAddress(hMp4ff, PChar('mp4ff_set_sample_position'));
+    Pointer(mp4ff_read_sample) := GetProcAddress(hMp4ff, PChar('mp4ff_read_sample'));
+    Pointer(mp4ff_read_sample_v2) :=GetProcAddress(hMp4ff, PChar('mp4ff_read_sample_v2'));
+    Pointer(mp4ff_read_sample_getsize) :=GetProcAddress(hMp4ff, PChar('mp4ff_read_sample_getsize'));
+    Pointer(mp4ff_get_sample_position) :=GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_position'));
+    Pointer(mp4ff_get_sample_offset) :=GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_offset'));
+    Pointer(mp4ff_find_sample) :=GetProcAddress(hMp4ff, PChar('mp4ff_find_sample'));
 
-       Pointer(mp4ff_get_track_duration_use_offsets) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_get_track_duration_use_offsets'));
-     Pointer(mp4ff_get_sample_rate) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_rate'));
-     Pointer(mp4ff_get_channel_count) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_channel_count'));
-     Pointer(mp4ff_get_audio_type) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_get_audio_type'));
-     Pointer(mp4ff_free_decoder_config) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_free_decoder_config'));
-     Pointer(mp4ff_meta_get_num_items) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_num_items'));
-     Pointer(mp4ff_meta_get_by_index) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_by_index'));
-     Pointer(mp4ff_meta_get_title) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_title'));
+    Pointer(mp4ff_get_decoder_config) :=GetProcAddress(hMp4ff, PChar('mp4ff_get_decoder_config'));
+    Pointer(mp4ff_get_track_type) := GetProcAddress(hMp4ff, PChar('mp4ff_get_track_type'));
+    Pointer(mp4ff_total_tracks) :=GetProcAddress(hMp4ff, PChar('mp4ff_total_tracks'));
+    Pointer(mp4ff_num_samples) := GetProcAddress(hMp4ff, PChar('mp4ff_num_samples'));
+    Pointer(mp4ff_time_scale) :=GetProcAddress(hMp4ff, PChar('mp4ff_time_scale'));
+    Pointer(mp4ff_get_avg_bitrate) := GetProcAddress(hMp4ff, PChar('mp4ff_get_avg_bitrate'));
+    Pointer(mp4ff_get_max_bitrate) := GetProcAddress(hMp4ff, PChar('mp4ff_get_max_bitrate'));
+    Pointer(mp4ff_get_track_duration) :=GetProcAddress(hMp4ff, PChar('mp4ff_get_track_duration'));
 
-        Pointer(mp4ff_meta_get_artist) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_artist'));
-     Pointer(mp4ff_meta_get_writer) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_writer'));
-     Pointer(mp4ff_meta_get_album) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_album'));
-     Pointer(mp4ff_meta_get_date) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_date'));
-     Pointer(mp4ff_meta_get_tool) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_tool'));
-     Pointer(mp4ff_meta_get_comment) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_comment'));
-     Pointer(mp4ff_meta_get_genre) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_genre'));
-     Pointer(mp4ff_meta_get_track) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_track'));
+    Pointer(mp4ff_get_track_duration_use_offsets) := GetProcAddress(hMp4ff, PChar('mp4ff_get_track_duration_use_offsets'));
+    Pointer(mp4ff_get_sample_rate) :=GetProcAddress(hMp4ff, PChar('mp4ff_get_sample_rate'));
+    Pointer(mp4ff_get_channel_count) := GetProcAddress(hMp4ff, PChar('mp4ff_get_channel_count'));
+    Pointer(mp4ff_get_audio_type) := GetProcAddress(hMp4ff, PChar('mp4ff_get_audio_type'));
+    Pointer(mp4ff_free_decoder_config) :=GetProcAddress(hMp4ff, PChar('mp4ff_free_decoder_config'));
+    Pointer(mp4ff_meta_get_num_items) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_num_items'));
+    Pointer(mp4ff_meta_get_by_index) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_by_index'));
+    Pointer(mp4ff_meta_get_title) := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_title'));
 
-        Pointer(mp4ff_meta_get_disc) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_disc'));
-     Pointer(mp4ff_meta_get_totaltracks) :=
-        GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_totaltracks'));
-     Pointer(mp4ff_meta_get_totaldiscs) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_totaldiscs'));
-     Pointer(mp4ff_meta_get_compilation) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_compilation'));
-     Pointer(mp4ff_meta_get_tempo) :=
-            GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_tempo'));
-     Pointer(mp4ff_meta_get_coverart) :=
-           GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_coverart'));
+    Pointer(mp4ff_meta_get_artist) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_artist'));
+    Pointer(mp4ff_meta_get_writer) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_writer'));
+    Pointer(mp4ff_meta_get_album) := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_album'));
+    Pointer(mp4ff_meta_get_date) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_date'));
+    Pointer(mp4ff_meta_get_tool) := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_tool'));
+    Pointer(mp4ff_meta_get_comment) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_comment'));
+    Pointer(mp4ff_meta_get_genre) := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_genre'));
+    Pointer(mp4ff_meta_get_track) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_track'));
+
+    Pointer(mp4ff_meta_get_disc) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_disc'));
+    Pointer(mp4ff_meta_get_totaltracks) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_totaltracks'));
+    Pointer(mp4ff_meta_get_totaldiscs) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_totaldiscs'));
+    Pointer(mp4ff_meta_get_compilation) := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_compilation'));
+    Pointer(mp4ff_meta_get_tempo) := GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_tempo'));
+    Pointer(mp4ff_meta_get_coverart) :=GetProcAddress(hMp4ff, PChar('mp4ff_meta_get_coverart'));
+    {$ENDIF}
 
 end;
 

@@ -6,15 +6,22 @@
  Fred van Stappen / fiens@hotmail.com}
 
 unit uos_OpusFile;
-
-{$mode objfpc}{$H+}
-{$PACKRECORDS C}
-{$RANGECHECKS OFF} 
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$else}
+   {$MINENUMSIZE 4} (* use 4-byte enums *)
+{$endif}
 
 interface
 
 uses
-  ctypes, dynlibs, classes, pipes, SysUtils;
+  classes, SysUtils,
+{$IFNDEF FPC}
+    DELPHIctypes, windows,PipesDelphi;
+{$else}
+   pipes, dynlibs, CTypes;
+{$endif}
   
 type
   TOpusFile = ^OpusFile;
@@ -125,6 +132,22 @@ function OpusSeekCBMS(stream: Pointer; offset: Int64; whence: cint): cint; cdecl
 function OpusTellCBMS(stream: Pointer): Int64; cdecl;
 
 const
+  {$IFNDEF FPC}
+  op_callbacks: TOpusFileCallbacks = (read: OpusReadCB;
+                                      seek: OpusSeekCB;
+                                      tell: OpusTellCB;
+                                      close: nil);
+
+  uos_callbacks: TOpusFileCallbacks = (read: OpusReadCBuosURL;
+                                      seek: OpusSeekCB;
+                                      tell: OpusTellCB;
+                                      close: nil);
+
+  uos_callbacksms: TOpusFileCallbacks = (read: OpusReadCBuosms;
+                                      seek: OpusSeekCBms;
+                                      tell: OpusTellCBms;
+                                      close: nil);
+  {$else}
   op_callbacks: TOpusFileCallbacks = (read: @OpusReadCB;
                                       seek: @OpusSeekCB;
                                       tell: @OpusTellCB;
@@ -139,7 +162,8 @@ const
                                       seek: @OpusSeekCBms;
                                       tell: @OpusTellCBms;
                                       close: nil);
-                                    
+
+  {$endif}
                                       
 type
   TOpusMSDecoder = Pointer;
@@ -220,12 +244,12 @@ var
  op_open_file: function(path: PAnsiChar; out error: cint): TOpusFile;cdecl;
  op_open_memory: function(const data; const _size: cuint; out error: cint): TOpusFile;cdecl;
  op_open_callbacks: function(const source; const cb: TOpusFileCallbacks;
-  const initial_data; initial_bytes: cuint; out error: cint): TOpusFile; stdcall; // with cdecl ---> crash in linux, strange ???
+  const initial_data; initial_bytes: cuint; out error: cint): TOpusFile; {$IFDEF windows} cdecl;{$ENDIF} // with cdecl ---> crash in linux, strange ???
  op_test_file: function(path: PAnsiChar; out error: cint): TOpusFile;cdecl;
  // op_test_url: function(path: PAnsiChar; out error: cint): TOpusFile;
  op_test_memory: function(const data; const size: cuint; out error: cint): TOpusFile;cdecl;
  op_test_callbacks: function(const source; const cb: TOpusFileCallbacks; const initial_data; initial_bytes: cuint;
-  out error: cint): TOpusFile; stdcall;// with cdecl ---> crash in linux, strange ???
+  out error: cint): TOpusFile; {$IFDEF windows} cdecl;{$ENDIF} // with cdecl ---> crash in linux, strange ???
  op_test_open: function(OpusFile: TOpusFile): cint;  cdecl;
  op_free: function(OpusFile: TOpusFile): cint;  cdecl;
 
@@ -254,9 +278,13 @@ var
  op_read_stereo: function(OpusFile: TOpusFile; pcm : pcint; SampleCount: cint): cint;cdecl;
  op_read_float_stereo: function(OpusFile: TOpusFile; pcm : pcfloat; SampleCount: cint): cint;cdecl;
  
- of_Handle:TLibHandle=dynlibs.NilHandle; 
- 
+ {$IFNDEF FPC}
+ of_Handle:THandle=NilHandle;
+ op_Handle:THandle=NilHandle;
+ {$else}
+ of_Handle:TLibHandle=dynlibs.NilHandle;
  op_Handle:TLibHandle=dynlibs.NilHandle;
+ {$endif}
  
   {$IFDEF windows} 
  lc_Handle:TLibHandle=dynlibs.NilHandle;
@@ -276,7 +304,7 @@ implementation
 
  function of_IsLoaded: boolean;
 begin
- Result := (of_Handle <> dynlibs.NilHandle);
+ Result := (of_Handle <> NilHandle);
 end;
 
 Procedure of_Unload;
@@ -289,25 +317,32 @@ begin
   // >
   if of_IsLoaded then
   begin
-    if of_Handle <> DynLibs.NilHandle then 
-    DynLibs.UnloadLibrary(of_Handle);
-    of_Handle:=DynLibs.NilHandle;
-    if op_Handle <> DynLibs.NilHandle then
-    begin
-    DynLibs.UnloadLibrary(op_Handle);
-    op_Handle:=DynLibs.NilHandle;
-    end;
-    {$IFDEF windows} 
-    if lc_Handle <> DynLibs.NilHandle then 
-    DynLibs.UnloadLibrary(lc_Handle);
-    lc_Handle:=DynLibs.NilHandle;
-    if wt_Handle <> DynLibs.NilHandle then 
-    DynLibs.UnloadLibrary(wt_Handle);
-    wt_Handle:=DynLibs.NilHandle;
-    if og_Handle <> DynLibs.NilHandle then 
-    DynLibs.UnloadLibrary(og_Handle);
-    og_Handle:=DynLibs.NilHandle; 
-   {$endif}
+      {$IFNDEF FPC}
+      FreeLibrary(of_Handle);
+      FreeLibrary(op_Handle);
+      {$IFDEF windows}
+      FreeLibrary(lc_Handle);
+      FreeLibrary(wt_Handle);
+      FreeLibrary(og_Handle);
+      {$endif}
+      {$else}
+      DynLibs.UnloadLibrary(of_Handle);
+      DynLibs.UnloadLibrary(op_Handle);
+      {$IFDEF windows}
+      DynLibs.UnloadLibrary(lc_Handle);
+      DynLibs.UnloadLibrary(wt_Handle);
+      DynLibs.UnloadLibrary(og_Handle);
+      {$endif}
+      {$endif}
+
+      of_Handle:=NilHandle;
+      op_Handle:=NilHandle;
+
+      {$IFDEF windows}
+      lc_Handle:=NilHandle;
+      wt_Handle:=NilHandle;
+      og_Handle:=NilHandle;
+      {$endif}
     
   end;
 end;
@@ -315,97 +350,155 @@ end;
 Function of_Load (const libfilename:string) :boolean;
 begin
   Result := False;
-  if of_Handle<>0 then 
-begin
- Inc(ReferenceCounter);
- result:=true {is it already there ?}
-end  else 
-begin {go & load the library}
-  if Length(libfilename) = 0 then
+  if of_Handle<>0 then
   begin
-   {$IFDEF windows} 
- wt_Handle:= DynLibs.SafeLoadLibrary('libwinpthread-1.dll');
- lc_Handle:= DynLibs.SafeLoadLibrary('libgcc_s_sjlj-1.dll');
- og_Handle:= DynLibs.SafeLoadLibrary('libogg-0.dll'); 
- op_Handle:= DynLibs.SafeLoadLibrary('libopus-0.dll');
-   {$else}
-  op_Handle:= DynLibs.SafeLoadLibrary('libopus.so');
- {$endif}
-  of_Handle:=DynLibs.SafeLoadLibrary(libop); 
-   end
-    else
-   begin
-  {$IFDEF windows} 
- wt_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libwinpthread-1.dll');
- lc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_sjlj-1.dll');
- og_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libogg-0.dll'); 
- op_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libopus-0.dll');
-   {$else}
-  op_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libopus.so');
- {$endif}
-  of_Handle:=DynLibs.SafeLoadLibrary(libfilename); 
-  end;
-    
- 
-  	if of_Handle <> DynLibs.NilHandle then
-begin {now we tie the functions to the VARs from above}
-Pointer(op_fopen):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_fopen'));
-Pointer(op_freopen):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_freopen'));
-Pointer(op_mem_stream_create):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_mem_stream_create'));
-Pointer(opus_head_parse):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_head_parse'));
-Pointer(opus_granule_sample):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_granule_sample'));
-Pointer(opus_tags_parse):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_parse'));
-Pointer(opus_tags_copy):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_copy'));
-Pointer(opus_tags_init):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_init'));
-Pointer(opus_tags_add):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_add'));
-Pointer(opus_tags_add_comment):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_add_comment'));
-Pointer(opus_tags_set_binary_suffix):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_set_binary_suffix'));
-Pointer(opus_tags_query):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_query'));
-Pointer(opus_tags_query_count):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_query_count'));
-Pointer(opus_tags_get_binary_suffix):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_get_binary_suffix'));
-Pointer(opus_tags_get_album_gain):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_get_album_gain'));
-Pointer(opus_tags_get_track_gain):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_get_track_gain'));
-Pointer(opus_tags_clear):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_clear'));
-Pointer(opus_tagcompare):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tagcompare'));
-Pointer(opus_tagncompare):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tagncompare'));
-Pointer(opus_picture_tag_parse):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_picture_tag_parse'));
-Pointer(opus_picture_tag_init):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_picture_tag_init'));
-Pointer(opus_picture_tag_clear):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_picture_tag_clear'));
-Pointer(op_test):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test'));
-Pointer(op_free):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_free'));
-Pointer(op_open_file):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_open_file'));
-Pointer(op_open_memory):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_open_memory'));
-Pointer(op_open_callbacks):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_open_callbacks'));
-Pointer(op_test_file):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_file'));
-//Pointer(op_test_url):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_url'));
-Pointer(op_test_memory):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_memory'));
-Pointer(op_test_callbacks):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_callbacks'));
-Pointer(op_test_open):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_open'));
-Pointer(op_seekable):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_seekable'));
-Pointer(op_link_count):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_link_count'));
-Pointer(op_serialno):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_serialno'));
-Pointer(op_channel_count):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_channel_count'));
-Pointer(op_raw_total):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_raw_total'));
-Pointer(op_pcm_total):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_pcm_total'));
-Pointer(op_head):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_head'));
-Pointer(op_tags):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_tags'));
-Pointer(op_current_link):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_current_link'));
-Pointer(op_bitrate):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_bitrate'));
-Pointer(op_bitrate_instant):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_bitrate_instant'));
-Pointer(op_raw_tell):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_raw_tell'));
-Pointer(op_raw_seek):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_raw_seek'));
-Pointer(op_pcm_seek):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_pcm_seek'));
-Pointer(op_set_gain_offset):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_set_gain_offset'));
-Pointer(op_set_dither_enabled):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_set_dither_enabled'));
-Pointer(op_read):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_read'));
-Pointer(op_read_float):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_read_float'));
-Pointer(op_read_stereo):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_read_stereo'));
-Pointer(op_read_float_stereo):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_read_float_stereo'));
+   Inc(ReferenceCounter);
+   result:=true {is it already there ?}
+  end
+  else begin {go & load the library}
+        if Length(libfilename) = 0 then
+        begin
+        {$IFDEF windows}
+        wt_Handle:= DynLibs.SafeLoadLibrary('libwinpthread-1.dll');
+        lc_Handle:= DynLibs.SafeLoadLibrary('libgcc_s_sjlj-1.dll');
+        og_Handle:= DynLibs.SafeLoadLibrary('libogg-0.dll');
+        op_Handle:= DynLibs.SafeLoadLibrary('libopus-0.dll');
+        {$else}
+        op_Handle:= SafeLoadLibrary('libopus.so');//DynLibs.SafeLoadLibrary('libopus.so');
+        {$endif}
+        of_Handle:=SafeLoadLibrary(libop);//DynLibs.SafeLoadLibrary(libop);
+        end
+        else begin
+        {$IFDEF windows}
+        wt_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libwinpthread-1.dll');
+        lc_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libgcc_s_sjlj-1.dll');
+        og_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libogg-0.dll');
+        op_Handle:= DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libopus-0.dll');
+        {$else}
+        op_Handle:= SafeLoadLibrary(ExtractFilePath(libfilename)+'libopus.so');//DynLibs.SafeLoadLibrary(ExtractFilePath(libfilename)+'libopus.so');
+        {$endif}
+        of_Handle:= SafeLoadLibrary(libfilename);//DynLibs.SafeLoadLibrary(libfilename);
+        end;
 
-end;
+        {$IFNDEF FPC}
+        if of_Handle <> NilHandle then
+        begin {now we tie the functions to the VARs from above}
+        op_fopen:=GetProcAddress(OF_Handle,PChar('op_fopen'));
+        op_freopen:=GetProcAddress(OF_Handle,PChar('op_freopen'));
+        op_mem_stream_create:=GetProcAddress(OF_Handle,PChar('op_mem_stream_create'));
+        opus_head_parse:=GetProcAddress(OF_Handle,PChar('opus_head_parse'));
+        opus_granule_sample:=GetProcAddress(OF_Handle,PChar('opus_granule_sample'));
+        opus_tags_parse:=GetProcAddress(OF_Handle,PChar('opus_tags_parse'));
+        opus_tags_copy:=GetProcAddress(OF_Handle,PChar('opus_tags_copy'));
+        opus_tags_init:=GetProcAddress(OF_Handle,PChar('opus_tags_init'));
+        opus_tags_add:=GetProcAddress(OF_Handle,PChar('opus_tags_add'));
+        opus_tags_add_comment:=GetProcAddress(OF_Handle,PChar('opus_tags_add_comment'));
+        opus_tags_set_binary_suffix:=GetProcAddress(OF_Handle,PChar('opus_tags_set_binary_suffix'));
+        opus_tags_query:=GetProcAddress(OF_Handle,PChar('opus_tags_query'));
+        opus_tags_query_count:=GetProcAddress(OF_Handle,PChar('opus_tags_query_count'));
+        opus_tags_get_binary_suffix:=GetProcAddress(OF_Handle,PChar('opus_tags_get_binary_suffix'));
+        opus_tags_get_album_gain:=GetProcAddress(OF_Handle,PChar('opus_tags_get_album_gain'));
+        opus_tags_get_track_gain:=GetProcAddress(OF_Handle,PChar('opus_tags_get_track_gain'));
+        opus_tags_clear:=GetProcAddress(OF_Handle,PChar('opus_tags_clear'));
+        opus_tagcompare:=GetProcAddress(OF_Handle,PChar('opus_tagcompare'));
+        opus_tagncompare:=GetProcAddress(OF_Handle,PChar('opus_tagncompare'));
+        opus_picture_tag_parse:=GetProcAddress(OF_Handle,PChar('opus_picture_tag_parse'));
+        opus_picture_tag_init:=GetProcAddress(OF_Handle,PChar('opus_picture_tag_init'));
+        opus_picture_tag_clear:=GetProcAddress(OF_Handle,PChar('opus_picture_tag_clear'));
+        op_test:=GetProcAddress(OF_Handle,PChar('op_test'));
+        op_free:=GetProcAddress(OF_Handle,PChar('op_free'));
+        op_open_file:=GetProcAddress(OF_Handle,PChar('op_open_file'));
+        op_open_memory:=GetProcAddress(OF_Handle,PChar('op_open_memory'));
+        op_open_callbacks:=GetProcAddress(OF_Handle,PChar('op_open_callbacks'));
+        op_test_file:=GetProcAddress(OF_Handle,PChar('op_test_file'));
+        //Pointer(op_test_url):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_url'));
+        op_test_memory:=GetProcAddress(OF_Handle,PChar('op_test_memory'));
+        op_test_callbacks:=GetProcAddress(OF_Handle,PChar('op_test_callbacks'));
+        op_test_open:=GetProcAddress(OF_Handle,PChar('op_test_open'));
+        op_seekable:=GetProcAddress(OF_Handle,PChar('op_seekable'));
+        op_link_count:=GetProcAddress(OF_Handle,PChar('op_link_count'));
+        op_serialno:=GetProcAddress(OF_Handle,PChar('op_serialno'));
+        op_channel_count:=GetProcAddress(OF_Handle,PChar('op_channel_count'));
+        op_raw_total:=GetProcAddress(OF_Handle,PChar('op_raw_total'));
+        op_pcm_total:=GetProcAddress(OF_Handle,PChar('op_pcm_total'));
+        op_head:=GetProcAddress(OF_Handle,PChar('op_head'));
+        op_tags:=GetProcAddress(OF_Handle,PChar('op_tags'));
+        op_current_link:=GetProcAddress(OF_Handle,PChar('op_current_link'));
+        op_bitrate:=GetProcAddress(OF_Handle,PChar('op_bitrate'));
+        op_bitrate_instant:=GetProcAddress(OF_Handle,PChar('op_bitrate_instant'));
+        op_raw_tell:=GetProcAddress(OF_Handle,PChar('op_raw_tell'));
+        op_raw_seek:=GetProcAddress(OF_Handle,PChar('op_raw_seek'));
+        op_pcm_seek:=GetProcAddress(OF_Handle,PChar('op_pcm_seek'));
+        op_set_gain_offset:=GetProcAddress(OF_Handle,PChar('op_set_gain_offset'));
+        op_set_dither_enabled:=GetProcAddress(OF_Handle,PChar('op_set_dither_enabled'));
+        op_read:=GetProcAddress(OF_Handle,PChar('op_read'));
+        op_read_float:=GetProcAddress(OF_Handle,PChar('op_read_float'));
+        op_read_stereo:=GetProcAddress(OF_Handle,PChar('op_read_stereo'));
+        op_read_float_stereo:=GetProcAddress(OF_Handle,PChar('op_read_float_stereo'));
+
+
+        end;
+        {$ELSE}
+        if of_Handle <> DynLibs.NilHandle then
+        begin {now we tie the functions to the VARs from above}
+        Pointer(op_fopen):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_fopen'));
+        Pointer(op_freopen):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_freopen'));
+        Pointer(op_mem_stream_create):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_mem_stream_create'));
+        Pointer(opus_head_parse):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_head_parse'));
+        Pointer(opus_granule_sample):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_granule_sample'));
+        Pointer(opus_tags_parse):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_parse'));
+        Pointer(opus_tags_copy):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_copy'));
+        Pointer(opus_tags_init):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_init'));
+        Pointer(opus_tags_add):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_add'));
+        Pointer(opus_tags_add_comment):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_add_comment'));
+        Pointer(opus_tags_set_binary_suffix):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_set_binary_suffix'));
+        Pointer(opus_tags_query):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_query'));
+        Pointer(opus_tags_query_count):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_query_count'));
+        Pointer(opus_tags_get_binary_suffix):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_get_binary_suffix'));
+        Pointer(opus_tags_get_album_gain):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_get_album_gain'));
+        Pointer(opus_tags_get_track_gain):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_get_track_gain'));
+        Pointer(opus_tags_clear):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tags_clear'));
+        Pointer(opus_tagcompare):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tagcompare'));
+        Pointer(opus_tagncompare):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_tagncompare'));
+        Pointer(opus_picture_tag_parse):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_picture_tag_parse'));
+        Pointer(opus_picture_tag_init):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_picture_tag_init'));
+        Pointer(opus_picture_tag_clear):=DynLibs.GetProcedureAddress(OF_Handle,PChar('opus_picture_tag_clear'));
+        Pointer(op_test):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test'));
+        Pointer(op_free):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_free'));
+        Pointer(op_open_file):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_open_file'));
+        Pointer(op_open_memory):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_open_memory'));
+        Pointer(op_open_callbacks):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_open_callbacks'));
+        Pointer(op_test_file):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_file'));
+        //Pointer(op_test_url):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_url'));
+        Pointer(op_test_memory):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_memory'));
+        Pointer(op_test_callbacks):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_callbacks'));
+        Pointer(op_test_open):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_test_open'));
+        Pointer(op_seekable):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_seekable'));
+        Pointer(op_link_count):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_link_count'));
+        Pointer(op_serialno):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_serialno'));
+        Pointer(op_channel_count):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_channel_count'));
+        Pointer(op_raw_total):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_raw_total'));
+        Pointer(op_pcm_total):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_pcm_total'));
+        Pointer(op_head):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_head'));
+        Pointer(op_tags):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_tags'));
+        Pointer(op_current_link):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_current_link'));
+        Pointer(op_bitrate):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_bitrate'));
+        Pointer(op_bitrate_instant):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_bitrate_instant'));
+        Pointer(op_raw_tell):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_raw_tell'));
+        Pointer(op_raw_seek):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_raw_seek'));
+        Pointer(op_pcm_seek):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_pcm_seek'));
+        Pointer(op_set_gain_offset):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_set_gain_offset'));
+        Pointer(op_set_dither_enabled):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_set_dither_enabled'));
+        Pointer(op_read):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_read'));
+        Pointer(op_read_float):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_read_float'));
+        Pointer(op_read_stereo):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_read_stereo'));
+        Pointer(op_read_float_stereo):=DynLibs.GetProcedureAddress(OF_Handle,PChar('op_read_float_stereo'));
+
+        end;
+        {$ENDIF}
    Result := of_IsLoaded;
    ReferenceCounter:=1;   
-end;
+  end;
 
 end;
 

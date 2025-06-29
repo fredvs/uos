@@ -10,11 +10,18 @@ unit uos_mpg123;
 interface
 
 {$DEFINE newversion}   // uncomment for mpg123 new version
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
+{$else}
+   {$MINENUMSIZE 4} (* use 4-byte enums *)
+{$endif}
 
-uses
- ctypes, 
- classes, dynlibs;
+{$IFNDEF FPC}
+   uses classes, sysutils, windows, DELPHIctypes;
+{$else}
+   uses classes,dynlibs, CTypes;
+{$endif}
  
 const
 libmp=
@@ -881,7 +888,12 @@ var
 {Special function for dynamic loading of lib ...}
 
 var
-  Mp_Handle: TLibHandle;
+  //Mp_Handle: TLibHandle;
+  {$IFDEF FPC}
+    Mp_Handle:TLibHandle; // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
+  {$ELSE}
+  Mp_Handle:Int64;
+  {$ENDIF FPC}
   // this will hold our handle for the lib; it functions nicely as a mutli-lib prevention unit as well...
   ReferenceCounter: cardinal = 0;  // Reference counter
 
@@ -895,7 +907,11 @@ implementation
 
 function mp_IsLoaded: boolean;
 begin
-  Result := (Mp_Handle <> dynlibs.NilHandle);
+   {$IFNDEF FPC}
+   Result := (Mp_Handle <> 0);
+   {$else}
+   Result := (Mp_Handle <> dynlibs.NilHandle);
+   {$endif}
 end;
 
 function mp_unload(): boolean;
@@ -910,9 +926,14 @@ result := false;
   if mp_IsLoaded then
   begin
     mpg123_exit ;
-    DynLibs.UnloadLibrary(mp_Handle);
-    mp_Handle := DynLibs.NilHandle;
     result := true;
+      {$IFNDEF FPC}
+      FreeLibrary(mp_Handle);
+      mp_Handle:=0;
+      {$else}
+      DynLibs.UnloadLibrary(mp_Handle);
+      mp_Handle:=DynLibs.NilHandle;
+      {$endif}
   end;
 end;
 
@@ -929,71 +950,57 @@ begin
   else
   begin {go & load the library}
     if Length(libfilename) = 0 then thelib := libmp else thelib := libfilename;
-    Mp_Handle := DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
-    if Mp_Handle <> DynLibs.NilHandle then
 
-    begin
+  {$IFNDEF FPC}
+  Mp_Handle:=SafeLoadLibrary(thelib); // obtain the handle we want
+  {$else}
+  Mp_Handle:=DynLibs.SafeLoadLibrary(thelib); // obtain the handle we want
+  {$endif}
+
+      {$IFNDEF FPC}
+      if Mp_Handle <> 0 then begin {now we tie the functions to the VARs from above}
       mpg123_init := Tmpg123_init(GetProcAddress(Mp_Handle, 'mpg123_init'));
       mpg123_exit := Tmpg123_exit(GetProcAddress(Mp_Handle, 'mpg123_exit'));
       mpg123_new := Tmpg123_new(GetProcAddress(Mp_Handle, 'mpg123_new'));
       mpg123_delete := Tmpg123_delete(GetProcAddress(Mp_Handle, 'mpg123_delete'));
       mpg123_param := Tmpg123_param(GetProcAddress(Mp_Handle, 'mpg123_param'));
-      mpg123_getparam := Tmpg123_getparam(
-        GetProcAddress(Mp_Handle, 'mpg123_getparam'));
-      mpg123_plain_strerror := Tmpg123_plain_strerror(
-        GetProcAddress(Mp_Handle, 'mpg123_plain_strerror'));
-      mpg123_strerror := Tmpg123_strerror(
-        GetProcAddress(Mp_Handle, 'mpg123_strerror'));
+      mpg123_getparam := Tmpg123_getparam(GetProcAddress(Mp_Handle, 'mpg123_getparam'));
+      mpg123_plain_strerror := Tmpg123_plain_strerror(GetProcAddress(Mp_Handle, 'mpg123_plain_strerror'));
+      mpg123_strerror := Tmpg123_strerror(GetProcAddress(Mp_Handle, 'mpg123_strerror'));
       mpg123_errcode := Tmpg123_errcode(GetProcAddress(Mp_Handle, 'mpg123_errcode'));
-      mpg123_decoders := Tmpg123_decoders(
-        GetProcAddress(Mp_Handle, 'mpg123_decoders'));
-      mpg123_supported_decoders :=
-        Tmpg123_supported_decoders(GetProcAddress(Mp_Handle, 'mpg123_supported_decoders'));
+      mpg123_decoders := Tmpg123_decoders(GetProcAddress(Mp_Handle, 'mpg123_decoders'));
+      mpg123_supported_decoders :=Tmpg123_supported_decoders(GetProcAddress(Mp_Handle, 'mpg123_supported_decoders'));
       mpg123_decoder := Tmpg123_decoder(GetProcAddress(Mp_Handle, 'mpg123_decoder'));
       mpg123_rates := Tmpg123_rates(GetProcAddress(Mp_Handle, 'mpg123_rates'));
-      mpg123_encodings := Tmpg123_encodings(
-        GetProcAddress(Mp_Handle, 'mpg123_encodings'));
-      mpg123_format_none := Tmpg123_format_none(
-        GetProcAddress(Mp_Handle, 'mpg123_format_none'));
-      mpg123_format_all := Tmpg123_format_all(
-        GetProcAddress(Mp_Handle, 'mpg123_format_all'));
+      mpg123_encodings := Tmpg123_encodings(GetProcAddress(Mp_Handle, 'mpg123_encodings'));
+      mpg123_format_none := Tmpg123_format_none(GetProcAddress(Mp_Handle, 'mpg123_format_none'));
+      mpg123_format_all := Tmpg123_format_all(GetProcAddress(Mp_Handle, 'mpg123_format_all'));
       mpg123_format := Tmpg123_format(GetProcAddress(Mp_Handle, 'mpg123_format'));
-      mpg123_format_support := Tmpg123_format_support(
-        GetProcAddress(Mp_Handle, 'mpg123_format_support'));
-      mpg123_getformat := Tmpg123_getformat(
-        GetProcAddress(Mp_Handle, 'mpg123_getformat'));
+      mpg123_format_support := Tmpg123_format_support(GetProcAddress(Mp_Handle, 'mpg123_format_support'));
+      mpg123_getformat := Tmpg123_getformat(GetProcAddress(Mp_Handle, 'mpg123_getformat'));
       mpg123_open := Tmpg123_open(GetProcAddress(Mp_Handle, 'mpg123_open'));
       mpg123_open_fd := Tmpg123_open_fd(GetProcAddress(Mp_Handle, 'mpg123_open_fd'));
 
-     {$IF DEFINED(newversion)}
+      {$IF DEFINED(newversion)}
       mpg123_open_handle := Tmpg123_open_handle(GetProcAddress(Mp_Handle, 'mpg123_open_handle'));
-      mpg123_replace_reader := Tmpg123_replace_reader(GetProcAddress(Mp_Handle,
-     'mpg123_replace_reader'));
-     mpg123_replace_reader_handle := Tmpg123_replace_reader_handle(GetProcAddress(Mp_Handle,
-     'mpg123_replace_reader_handle'));
-     mpg123_framebyframe_decode := Tmpg123_framebyframe_decode(
-        GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode'));
-      mpg123_framebyframe_next := Tmpg123_framebyframe_next(
-        GetProcAddress(Mp_Handle, 'mpg123_framebyframe_next'));
-      mpg123_framedata := Tmpg123_framedata(
-        GetProcAddress(Mp_Handle, 'mpg123_framedata'));
-       mpg123_meta_free := Tmpg123_meta_free(
-        GetProcAddress(Mp_Handle, 'mpg123_meta_free'));
-       mpg123_strlen := Tmpg123_strlen(
-        GetProcAddress(Mp_Handle, 'mpg123_strlen'));
-      mpg123_chomp_string := Tmpg123_chomp_string(
-        GetProcAddress(Mp_Handle, 'mpg123_chomp_string'));
-       mpg123_getformat2 := Tmpg123_getformat2(
-        GetProcAddress(Mp_Handle, 'mpg123_getformat2'));
-       mpg123_framepos := Tmpg123_framepos(GetProcAddress(Mp_Handle, 'mpg123_framepos'));
+      mpg123_replace_reader := Tmpg123_replace_reader(GetProcAddress(Mp_Handle,'mpg123_replace_reader'));
+      mpg123_replace_reader_handle := Tmpg123_replace_reader_handle(GetProcAddress(Mp_Handle,'mpg123_replace_reader_handle'));
+      mpg123_framebyframe_decode := Tmpg123_framebyframe_decode(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode'));
+      mpg123_framebyframe_next := Tmpg123_framebyframe_next(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_next'));
+      mpg123_framedata := Tmpg123_framedata(GetProcAddress(Mp_Handle, 'mpg123_framedata'));
+      mpg123_meta_free := Tmpg123_meta_free(GetProcAddress(Mp_Handle, 'mpg123_meta_free'));
+      mpg123_strlen := Tmpg123_strlen(GetProcAddress(Mp_Handle, 'mpg123_strlen'));
+      mpg123_chomp_string := Tmpg123_chomp_string(GetProcAddress(Mp_Handle, 'mpg123_chomp_string'));
+      mpg123_getformat2 := Tmpg123_getformat2(GetProcAddress(Mp_Handle, 'mpg123_getformat2'));
+      mpg123_framepos := Tmpg123_framepos(GetProcAddress(Mp_Handle, 'mpg123_framepos'));
       mpg123_framelength := Tmpg123_framelength(GetProcAddress(Mp_Handle, 'mpg123_framelength'));
       mpg123_encsize := Tmpg123_encsize(GetProcAddress(Mp_Handle, 'mpg123_encsize'));
-       mpg123_set_index := Tmpg123_set_index(GetProcAddress(Mp_Handle, 'mpg123_set_index'));
+      mpg123_set_index := Tmpg123_set_index(GetProcAddress(Mp_Handle, 'mpg123_set_index'));
 
       {$if not(defined(cpu64) and defined(unix))}
       mpg123_open_32 := Tmpg123_open_32(GetProcAddress(Mp_Handle, 'mpg123_open_32'));
       mpg123_open_fd_32 := Tmpg123_open_fd_32(GetProcAddress(Mp_Handle, 'mpg123_open_fd_32'));
-      mpg123_open_handle_32 := Tmpg123_open_handle_32(GetProcAddress(Mp_Handle, 'mpg123_open_handle_32'));         
+      mpg123_open_handle_32 := Tmpg123_open_handle_32(GetProcAddress(Mp_Handle, 'mpg123_open_handle_32'));
       mpg123_decode_frame_32 := Tmpg123_decode_frame_32(GetProcAddress(Mp_Handle, 'mpg123_decode_frame_32'));
       mpg123_framebyframe_decode_32 := Tmpg123_framebyframe_decode_32(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode_32'));
       mpg123_tell_32 := Tmpg123_tell_32(GetProcAddress(Mp_Handle, 'mpg123_tell_32'));
@@ -1001,7 +1008,7 @@ begin
       mpg123_tellframe_32 := Tmpg123_tellframe_32(GetProcAddress(Mp_Handle, 'mpg123_tellframe_32'));
       mpg123_seek_32 := Tmpg123_seek_32(GetProcAddress(Mp_Handle, 'mpg123_seek_32'));
       mpg123_seek_frame_32 := Tmpg123_seek_frame_32(GetProcAddress(Mp_Handle, 'mpg123_seek_frame_32'));
-      mpg123_timeframe_32 := Tmpg123_timeframe_32(GetProcAddress(Mp_Handle, 'mpg123_timeframe_32')); 
+      mpg123_timeframe_32 := Tmpg123_timeframe_32(GetProcAddress(Mp_Handle, 'mpg123_timeframe_32'));
       mpg123_index_32 := Tmpg123_index_32(GetProcAddress(Mp_Handle, 'mpg123_index_32'));
       mpg123_set_index_32 := Tmpg123_set_index_32(GetProcAddress(Mp_Handle, 'mpg123_set_index_32'));
       mpg123_position_32 := Tmpg123_position_32(GetProcAddress(Mp_Handle, 'mpg123_position_32'));
@@ -1010,20 +1017,20 @@ begin
       mpg123_set_filesize_32 := Tmpg123_set_filesize_32(GetProcAddress(Mp_Handle, 'mpg123_set_filesize_32'));
       mpg123_replace_reader_32 := Tmpg123_replace_reader_32(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_32'));
       mpg123_replace_reader_handle_32 := Tmpg123_replace_reader_handle_32(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_handle_32'));
-     {$endif}
+      {$endif}
 
-       mpg123_open_64 := Tmpg123_open_64(GetProcAddress(Mp_Handle, 'mpg123_open_64'));
-       mpg123_open_fd_64 := Tmpg123_open_fd_64(GetProcAddress(Mp_Handle, 'mpg123_open_fd_64'));
-       mpg123_open_handle_64 := Tmpg123_open_handle_64(GetProcAddress(Mp_Handle, 'mpg123_open_handle_64'));         
-       mpg123_decode_frame_64 := Tmpg123_decode_frame_64(GetProcAddress(Mp_Handle, 'mpg123_decode_frame_64'));
-       mpg123_framebyframe_decode_64 := Tmpg123_framebyframe_decode_64(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode_64'));
-       mpg123_tell_64 := Tmpg123_tell_64(GetProcAddress(Mp_Handle, 'mpg123_tell_64'));
-       mpg123_framepos_64 := Tmpg123_framepos_64(GetProcAddress(Mp_Handle, 'mpg123_framepos_64'));
-       mpg123_tellframe_64 := Tmpg123_tellframe_64(GetProcAddress(Mp_Handle, 'mpg123_tellframe_64'));
-       mpg123_seek_64 := Tmpg123_seek_64(GetProcAddress(Mp_Handle, 'mpg123_seek_64'));
-       mpg123_seek_frame_64 := Tmpg123_seek_frame_64(GetProcAddress(Mp_Handle, 'mpg123_seek_frame_64'));
-       mpg123_timeframe_64 := Tmpg123_timeframe_64(GetProcAddress(Mp_Handle, 'mpg123_timeframe_64')); 
-       mpg123_index_64 := Tmpg123_index_64(GetProcAddress(Mp_Handle, 'mpg123_index_64'));
+      mpg123_open_64 := Tmpg123_open_64(GetProcAddress(Mp_Handle, 'mpg123_open_64'));
+      mpg123_open_fd_64 := Tmpg123_open_fd_64(GetProcAddress(Mp_Handle, 'mpg123_open_fd_64'));
+      mpg123_open_handle_64 := Tmpg123_open_handle_64(GetProcAddress(Mp_Handle, 'mpg123_open_handle_64'));
+      mpg123_decode_frame_64 := Tmpg123_decode_frame_64(GetProcAddress(Mp_Handle, 'mpg123_decode_frame_64'));
+      mpg123_framebyframe_decode_64 := Tmpg123_framebyframe_decode_64(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode_64'));
+      mpg123_tell_64 := Tmpg123_tell_64(GetProcAddress(Mp_Handle, 'mpg123_tell_64'));
+      mpg123_framepos_64 := Tmpg123_framepos_64(GetProcAddress(Mp_Handle, 'mpg123_framepos_64'));
+      mpg123_tellframe_64 := Tmpg123_tellframe_64(GetProcAddress(Mp_Handle, 'mpg123_tellframe_64'));
+      mpg123_seek_64 := Tmpg123_seek_64(GetProcAddress(Mp_Handle, 'mpg123_seek_64'));
+      mpg123_seek_frame_64 := Tmpg123_seek_frame_64(GetProcAddress(Mp_Handle, 'mpg123_seek_frame_64'));
+      mpg123_timeframe_64 := Tmpg123_timeframe_64(GetProcAddress(Mp_Handle, 'mpg123_timeframe_64'));
+      mpg123_index_64 := Tmpg123_index_64(GetProcAddress(Mp_Handle, 'mpg123_index_64'));
       mpg123_set_index_64 := Tmpg123_set_index_64(GetProcAddress(Mp_Handle, 'mpg123_set_index_64'));
       mpg123_position_64 := Tmpg123_position_64(GetProcAddress(Mp_Handle, 'mpg123_position_64'));
       mpg123_framelength_64 := Tmpg123_framelength_64(GetProcAddress(Mp_Handle, 'mpg123_framelength_64'));
@@ -1032,82 +1039,193 @@ begin
       mpg123_replace_reader_64 := Tmpg123_replace_reader_64(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_64'));
       mpg123_replace_reader_handle_64 := Tmpg123_replace_reader_handle_64(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_handle_64'));
 
-     {$endif}
+      {$endif}
 
-      mpg123_open_feed := Tmpg123_open_feed(
-        GetProcAddress(Mp_Handle, 'mpg123_open_feed'));
+      mpg123_open_feed := Tmpg123_open_feed(GetProcAddress(Mp_Handle, 'mpg123_open_feed'));
       mpg123_close := Tmpg123_close(GetProcAddress(Mp_Handle, 'mpg123_close'));
       mpg123_read := Tmpg123_read(GetProcAddress(Mp_Handle, 'mpg123_read'));
       mpg123_decode := Tmpg123_decode(GetProcAddress(Mp_Handle, 'mpg123_decode'));
-      mpg123_decode_frame := Tmpg123_decode_frame(
-        GetProcAddress(Mp_Handle, 'mpg123_decode_frame'));
+      mpg123_decode_frame := Tmpg123_decode_frame(GetProcAddress(Mp_Handle, 'mpg123_decode_frame'));
       mpg123_tell := Tmpg123_tell(GetProcAddress(Mp_Handle, 'mpg123_tell'));
-      mpg123_tellframe := Tmpg123_tellframe(
-        GetProcAddress(Mp_Handle, 'mpg123_tellframe'));
+      mpg123_tellframe := Tmpg123_tellframe(GetProcAddress(Mp_Handle, 'mpg123_tellframe'));
       mpg123_seek := Tmpg123_seek(GetProcAddress(Mp_Handle, 'mpg123_seek'));
-      mpg123_feedseek := Tmpg123_feedseek(
-        GetProcAddress(Mp_Handle, 'mpg123_feedseek'));
-      mpg123_seek_frame := Tmpg123_seek_frame(
-        GetProcAddress(Mp_Handle, 'mpg123_seek_frame'));
-      mpg123_timeframe := Tmpg123_timeframe(
-        GetProcAddress(Mp_Handle, 'mpg123_timeframe'));
+      mpg123_feedseek := Tmpg123_feedseek(GetProcAddress(Mp_Handle, 'mpg123_feedseek'));
+      mpg123_seek_frame := Tmpg123_seek_frame(GetProcAddress(Mp_Handle, 'mpg123_seek_frame'));
+      mpg123_timeframe := Tmpg123_timeframe(GetProcAddress(Mp_Handle, 'mpg123_timeframe'));
       mpg123_index := Tmpg123_index(GetProcAddress(Mp_Handle, 'mpg123_index'));
-      mpg123_position := Tmpg123_position(
-        GetProcAddress(Mp_Handle, 'mpg123_position'));
+      mpg123_position := Tmpg123_position(GetProcAddress(Mp_Handle, 'mpg123_position'));
       mpg123_eq := Tmpg123_eq(GetProcAddress(Mp_Handle, 'mpg123_eq'));
-      mpg123_reset_eq := Tmpg123_reset_eq(
-        GetProcAddress(Mp_Handle, 'mpg123_reset_eq'));
+      mpg123_reset_eq := Tmpg123_reset_eq(GetProcAddress(Mp_Handle, 'mpg123_reset_eq'));
       mpg123_volume := Tmpg123_volume(GetProcAddress(Mp_Handle, 'mpg123_volume'));
-      mpg123_volume_change := Tmpg123_volume_change(
-        GetProcAddress(Mp_Handle, 'mpg123_volume_change'));
-      mpg123_getvolume := Tmpg123_getvolume(
-        GetProcAddress(Mp_Handle, 'mpg123_getvolume'));
+      mpg123_volume_change := Tmpg123_volume_change(GetProcAddress(Mp_Handle, 'mpg123_volume_change'));
+      mpg123_getvolume := Tmpg123_getvolume(GetProcAddress(Mp_Handle, 'mpg123_getvolume'));
       mpg123_info := Tmpg123_info(GetProcAddress(Mp_Handle, 'mpg123_info'));
-      mpg123_safe_buffer := Tmpg123_safe_buffer(
-        GetProcAddress(Mp_Handle, 'mpg123_safe_buffer'));
+      mpg123_safe_buffer := Tmpg123_safe_buffer(GetProcAddress(Mp_Handle, 'mpg123_safe_buffer'));
       mpg123_scan := Tmpg123_scan(GetProcAddress(Mp_Handle, 'mpg123_scan'));
       mpg123_length := Tmpg123_length(GetProcAddress(Mp_Handle, 'mpg123_length'));
       mpg123_tpf := Tmpg123_tpf(GetProcAddress(Mp_Handle, 'mpg123_tpf'));
       mpg123_spf := Tmpg123_spf(GetProcAddress(Mp_Handle, 'mpg123_spf'));
       mpg123_clip := Tmpg123_clip(GetProcAddress(Mp_Handle, 'mpg123_clip'));
-      mpg123_init_string := Tmpg123_init_string(
-        GetProcAddress(Mp_Handle, 'mpg123_init_string'));
-      mpg123_free_string := Tmpg123_free_string(
-        GetProcAddress(Mp_Handle, 'mpg123_free_string'));
-      mpg123_resize_string := Tmpg123_resize_string(
-        GetProcAddress(Mp_Handle, 'mpg123_resize_string'));
-      mpg123_copy_string := Tmpg123_copy_string(
-        GetProcAddress(Mp_Handle, 'mpg123_copy_string'));
-      mpg123_add_string := Tmpg123_add_string(
-        GetProcAddress(Mp_Handle, 'mpg123_add_string'));
-       mpg123_add_substring := Tmpg123_add_substring(
-        GetProcAddress(Mp_Handle, 'mpg123_add_substring'));
-      mpg123_set_string := Tmpg123_set_string(
-        GetProcAddress(Mp_Handle, 'mpg123_set_string'));
-      mpg123_set_substring := Tmpg123_set_substring(
-        GetProcAddress(Mp_Handle, 'mpg123_set_substring'));
-      mpg123_meta_check := Tmpg123_meta_check(
-        GetProcAddress(Mp_Handle, 'mpg123_meta_check'));
+      mpg123_init_string := Tmpg123_init_string(GetProcAddress(Mp_Handle, 'mpg123_init_string'));
+      mpg123_free_string := Tmpg123_free_string(GetProcAddress(Mp_Handle, 'mpg123_free_string'));
+      mpg123_resize_string := Tmpg123_resize_string(GetProcAddress(Mp_Handle, 'mpg123_resize_string'));
+      mpg123_copy_string := Tmpg123_copy_string(GetProcAddress(Mp_Handle, 'mpg123_copy_string'));
+      mpg123_add_string := Tmpg123_add_string(GetProcAddress(Mp_Handle, 'mpg123_add_string'));
+      mpg123_add_substring := Tmpg123_add_substring(GetProcAddress(Mp_Handle, 'mpg123_add_substring'));
+      mpg123_set_string := Tmpg123_set_string(GetProcAddress(Mp_Handle, 'mpg123_set_string'));
+      mpg123_set_substring := Tmpg123_set_substring(GetProcAddress(Mp_Handle, 'mpg123_set_substring'));
+      mpg123_meta_check := Tmpg123_meta_check(GetProcAddress(Mp_Handle, 'mpg123_meta_check'));
       mpg123_id3 := Tmpg123_id3(GetProcAddress(Mp_Handle, 'mpg123_id3'));
       mpg123_icy := Tmpg123_icy(GetProcAddress(Mp_Handle, 'mpg123_icy'));
       mpg123_parnew := Tmpg123_parnew(GetProcAddress(Mp_Handle, 'mpg123_parnew'));
-      mpg123_new_pars := Tmpg123_new_pars(
-        GetProcAddress(Mp_Handle, 'mpg123_new_pars'));
-      mpg123_delete_pars := Tmpg123_delete_pars(
-        GetProcAddress(Mp_Handle, 'mpg123_delete_pars'));
-      mpg123_fmt_none := Tmpg123_fmt_none(
-        GetProcAddress(Mp_Handle, 'mpg123_fmt_none'));
+      mpg123_new_pars := Tmpg123_new_pars(GetProcAddress(Mp_Handle, 'mpg123_new_pars'));
+      mpg123_delete_pars := Tmpg123_delete_pars(GetProcAddress(Mp_Handle, 'mpg123_delete_pars'));
+      mpg123_fmt_none := Tmpg123_fmt_none(GetProcAddress(Mp_Handle, 'mpg123_fmt_none'));
       mpg123_fmt_all := Tmpg123_fmt_all(GetProcAddress(Mp_Handle, 'mpg123_fmt_all'));
       mpg123_fmt := Tmpg123_fmt(GetProcAddress(Mp_Handle, 'mpg123_fmt'));
-      mpg123_fmt_support := Tmpg123_fmt_support(
-        GetProcAddress(Mp_Handle, 'mpg123_fmt_support'));
+      mpg123_fmt_support := Tmpg123_fmt_support(GetProcAddress(Mp_Handle, 'mpg123_fmt_support'));
       mpg123_par := Tmpg123_par(GetProcAddress(Mp_Handle, 'mpg123_par'));
       mpg123_getpar := Tmpg123_getpar(GetProcAddress(Mp_Handle, 'mpg123_getpar'));
-      mpg123_replace_buffer := Tmpg123_replace_buffer(
-        GetProcAddress(Mp_Handle, 'mpg123_replace_buffer'));
-      mpg123_outblock := Tmpg123_outblock(
-        GetProcAddress(Mp_Handle, 'mpg123_outblock'));
-    end;
+      mpg123_replace_buffer := Tmpg123_replace_buffer(GetProcAddress(Mp_Handle, 'mpg123_replace_buffer'));
+      mpg123_outblock := Tmpg123_outblock(GetProcAddress(Mp_Handle, 'mpg123_outblock'));
+      end;
+      {$ELSE}
+
+      if Mp_Handle <> DynLibs.NilHandle then
+      begin
+      mpg123_init := Tmpg123_init(GetProcAddress(Mp_Handle, 'mpg123_init'));
+      mpg123_exit := Tmpg123_exit(GetProcAddress(Mp_Handle, 'mpg123_exit'));
+      mpg123_new := Tmpg123_new(GetProcAddress(Mp_Handle, 'mpg123_new'));
+      mpg123_delete := Tmpg123_delete(GetProcAddress(Mp_Handle, 'mpg123_delete'));
+      mpg123_param := Tmpg123_param(GetProcAddress(Mp_Handle, 'mpg123_param'));
+      mpg123_getparam := Tmpg123_getparam(GetProcAddress(Mp_Handle, 'mpg123_getparam'));
+      mpg123_plain_strerror := Tmpg123_plain_strerror(GetProcAddress(Mp_Handle, 'mpg123_plain_strerror'));
+      mpg123_strerror := Tmpg123_strerror(GetProcAddress(Mp_Handle, 'mpg123_strerror'));
+      mpg123_errcode := Tmpg123_errcode(GetProcAddress(Mp_Handle, 'mpg123_errcode'));
+      mpg123_decoders := Tmpg123_decoders(GetProcAddress(Mp_Handle, 'mpg123_decoders'));
+      mpg123_supported_decoders :=Tmpg123_supported_decoders(GetProcAddress(Mp_Handle, 'mpg123_supported_decoders'));
+      mpg123_decoder := Tmpg123_decoder(GetProcAddress(Mp_Handle, 'mpg123_decoder'));
+      mpg123_rates := Tmpg123_rates(GetProcAddress(Mp_Handle, 'mpg123_rates'));
+      mpg123_encodings := Tmpg123_encodings(GetProcAddress(Mp_Handle, 'mpg123_encodings'));
+      mpg123_format_none := Tmpg123_format_none(GetProcAddress(Mp_Handle, 'mpg123_format_none'));
+      mpg123_format_all := Tmpg123_format_all(GetProcAddress(Mp_Handle, 'mpg123_format_all'));
+      mpg123_format := Tmpg123_format(GetProcAddress(Mp_Handle, 'mpg123_format'));
+      mpg123_format_support := Tmpg123_format_support(GetProcAddress(Mp_Handle, 'mpg123_format_support'));
+      mpg123_getformat := Tmpg123_getformat(GetProcAddress(Mp_Handle, 'mpg123_getformat'));
+      mpg123_open := Tmpg123_open(GetProcAddress(Mp_Handle, 'mpg123_open'));
+      mpg123_open_fd := Tmpg123_open_fd(GetProcAddress(Mp_Handle, 'mpg123_open_fd'));
+
+      {$IF DEFINED(newversion)}
+      mpg123_open_handle := Tmpg123_open_handle(GetProcAddress(Mp_Handle, 'mpg123_open_handle'));
+      mpg123_replace_reader := Tmpg123_replace_reader(GetProcAddress(Mp_Handle,
+      'mpg123_replace_reader'));
+      mpg123_replace_reader_handle := Tmpg123_replace_reader_handle(GetProcAddress(Mp_Handle,
+      'mpg123_replace_reader_handle'));
+      mpg123_framebyframe_decode := Tmpg123_framebyframe_decode(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode'));
+      mpg123_framebyframe_next := Tmpg123_framebyframe_next(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_next'));
+      mpg123_framedata := Tmpg123_framedata(GetProcAddress(Mp_Handle, 'mpg123_framedata'));
+      mpg123_meta_free := Tmpg123_meta_free(GetProcAddress(Mp_Handle, 'mpg123_meta_free'));
+      mpg123_strlen := Tmpg123_strlen(GetProcAddress(Mp_Handle, 'mpg123_strlen'));
+      mpg123_chomp_string := Tmpg123_chomp_string(GetProcAddress(Mp_Handle, 'mpg123_chomp_string'));
+      mpg123_getformat2 := Tmpg123_getformat2(GetProcAddress(Mp_Handle, 'mpg123_getformat2'));
+      mpg123_framepos := Tmpg123_framepos(GetProcAddress(Mp_Handle, 'mpg123_framepos'));
+      mpg123_framelength := Tmpg123_framelength(GetProcAddress(Mp_Handle, 'mpg123_framelength'));
+      mpg123_encsize := Tmpg123_encsize(GetProcAddress(Mp_Handle, 'mpg123_encsize'));
+      mpg123_set_index := Tmpg123_set_index(GetProcAddress(Mp_Handle, 'mpg123_set_index'));
+
+      {$if not(defined(cpu64) and defined(unix))}
+      mpg123_open_32 := Tmpg123_open_32(GetProcAddress(Mp_Handle, 'mpg123_open_32'));
+      mpg123_open_fd_32 := Tmpg123_open_fd_32(GetProcAddress(Mp_Handle, 'mpg123_open_fd_32'));
+      mpg123_open_handle_32 := Tmpg123_open_handle_32(GetProcAddress(Mp_Handle, 'mpg123_open_handle_32'));
+      mpg123_decode_frame_32 := Tmpg123_decode_frame_32(GetProcAddress(Mp_Handle, 'mpg123_decode_frame_32'));
+      mpg123_framebyframe_decode_32 := Tmpg123_framebyframe_decode_32(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode_32'));
+      mpg123_tell_32 := Tmpg123_tell_32(GetProcAddress(Mp_Handle, 'mpg123_tell_32'));
+      mpg123_framepos_32 := Tmpg123_framepos_32(GetProcAddress(Mp_Handle, 'mpg123_framepos_32'));
+      mpg123_tellframe_32 := Tmpg123_tellframe_32(GetProcAddress(Mp_Handle, 'mpg123_tellframe_32'));
+      mpg123_seek_32 := Tmpg123_seek_32(GetProcAddress(Mp_Handle, 'mpg123_seek_32'));
+      mpg123_seek_frame_32 := Tmpg123_seek_frame_32(GetProcAddress(Mp_Handle, 'mpg123_seek_frame_32'));
+      mpg123_timeframe_32 := Tmpg123_timeframe_32(GetProcAddress(Mp_Handle, 'mpg123_timeframe_32'));
+      mpg123_index_32 := Tmpg123_index_32(GetProcAddress(Mp_Handle, 'mpg123_index_32'));
+      mpg123_set_index_32 := Tmpg123_set_index_32(GetProcAddress(Mp_Handle, 'mpg123_set_index_32'));
+      mpg123_position_32 := Tmpg123_position_32(GetProcAddress(Mp_Handle, 'mpg123_position_32'));
+      mpg123_framelength_32 := Tmpg123_framelength_32(GetProcAddress(Mp_Handle, 'mpg123_framelength_32'));
+      mpg123_length_32 := Tmpg123_length_32(GetProcAddress(Mp_Handle, 'mpg123_length_32'));
+      mpg123_set_filesize_32 := Tmpg123_set_filesize_32(GetProcAddress(Mp_Handle, 'mpg123_set_filesize_32'));
+      mpg123_replace_reader_32 := Tmpg123_replace_reader_32(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_32'));
+      mpg123_replace_reader_handle_32 := Tmpg123_replace_reader_handle_32(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_handle_32'));
+      {$endif}
+
+      mpg123_open_64 := Tmpg123_open_64(GetProcAddress(Mp_Handle, 'mpg123_open_64'));
+      mpg123_open_fd_64 := Tmpg123_open_fd_64(GetProcAddress(Mp_Handle, 'mpg123_open_fd_64'));
+      mpg123_open_handle_64 := Tmpg123_open_handle_64(GetProcAddress(Mp_Handle, 'mpg123_open_handle_64'));
+      mpg123_decode_frame_64 := Tmpg123_decode_frame_64(GetProcAddress(Mp_Handle, 'mpg123_decode_frame_64'));
+      mpg123_framebyframe_decode_64 := Tmpg123_framebyframe_decode_64(GetProcAddress(Mp_Handle, 'mpg123_framebyframe_decode_64'));
+      mpg123_tell_64 := Tmpg123_tell_64(GetProcAddress(Mp_Handle, 'mpg123_tell_64'));
+      mpg123_framepos_64 := Tmpg123_framepos_64(GetProcAddress(Mp_Handle, 'mpg123_framepos_64'));
+      mpg123_tellframe_64 := Tmpg123_tellframe_64(GetProcAddress(Mp_Handle, 'mpg123_tellframe_64'));
+      mpg123_seek_64 := Tmpg123_seek_64(GetProcAddress(Mp_Handle, 'mpg123_seek_64'));
+      mpg123_seek_frame_64 := Tmpg123_seek_frame_64(GetProcAddress(Mp_Handle, 'mpg123_seek_frame_64'));
+      mpg123_timeframe_64 := Tmpg123_timeframe_64(GetProcAddress(Mp_Handle, 'mpg123_timeframe_64'));
+      mpg123_index_64 := Tmpg123_index_64(GetProcAddress(Mp_Handle, 'mpg123_index_64'));
+      mpg123_set_index_64 := Tmpg123_set_index_64(GetProcAddress(Mp_Handle, 'mpg123_set_index_64'));
+      mpg123_position_64 := Tmpg123_position_64(GetProcAddress(Mp_Handle, 'mpg123_position_64'));
+      mpg123_framelength_64 := Tmpg123_framelength_64(GetProcAddress(Mp_Handle, 'mpg123_framelength_64'));
+      mpg123_length_64 := Tmpg123_length_64(GetProcAddress(Mp_Handle, 'mpg123_length_64'));
+      mpg123_set_filesize_64 := Tmpg123_set_filesize_64(GetProcAddress(Mp_Handle, 'mpg123_set_filesize_64'));
+      mpg123_replace_reader_64 := Tmpg123_replace_reader_64(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_64'));
+      mpg123_replace_reader_handle_64 := Tmpg123_replace_reader_handle_64(GetProcAddress(Mp_Handle, 'mpg123_replace_reader_handle_64'));
+
+      {$endif}
+
+      mpg123_open_feed := Tmpg123_open_feed(GetProcAddress(Mp_Handle, 'mpg123_open_feed'));
+      mpg123_close := Tmpg123_close(GetProcAddress(Mp_Handle, 'mpg123_close'));
+      mpg123_read := Tmpg123_read(GetProcAddress(Mp_Handle, 'mpg123_read'));
+      mpg123_decode := Tmpg123_decode(GetProcAddress(Mp_Handle, 'mpg123_decode'));
+      mpg123_decode_frame := Tmpg123_decode_frame(GetProcAddress(Mp_Handle, 'mpg123_decode_frame'));
+      mpg123_tell := Tmpg123_tell(GetProcAddress(Mp_Handle, 'mpg123_tell'));
+      mpg123_tellframe := Tmpg123_tellframe(GetProcAddress(Mp_Handle, 'mpg123_tellframe'));
+      mpg123_seek := Tmpg123_seek(GetProcAddress(Mp_Handle, 'mpg123_seek'));
+      mpg123_feedseek := Tmpg123_feedseek(GetProcAddress(Mp_Handle, 'mpg123_feedseek'));
+      mpg123_seek_frame := Tmpg123_seek_frame(GetProcAddress(Mp_Handle, 'mpg123_seek_frame'));
+      mpg123_timeframe := Tmpg123_timeframe(GetProcAddress(Mp_Handle, 'mpg123_timeframe'));
+      mpg123_index := Tmpg123_index(GetProcAddress(Mp_Handle, 'mpg123_index'));
+      mpg123_position := Tmpg123_position(GetProcAddress(Mp_Handle, 'mpg123_position'));
+      mpg123_eq := Tmpg123_eq(GetProcAddress(Mp_Handle, 'mpg123_eq'));
+      mpg123_reset_eq := Tmpg123_reset_eq(GetProcAddress(Mp_Handle, 'mpg123_reset_eq'));
+      mpg123_volume := Tmpg123_volume(GetProcAddress(Mp_Handle, 'mpg123_volume'));
+      mpg123_volume_change := Tmpg123_volume_change(GetProcAddress(Mp_Handle, 'mpg123_volume_change'));
+      mpg123_getvolume := Tmpg123_getvolume(GetProcAddress(Mp_Handle, 'mpg123_getvolume'));
+      mpg123_info := Tmpg123_info(GetProcAddress(Mp_Handle, 'mpg123_info'));
+      mpg123_safe_buffer := Tmpg123_safe_buffer(GetProcAddress(Mp_Handle, 'mpg123_safe_buffer'));
+      mpg123_scan := Tmpg123_scan(GetProcAddress(Mp_Handle, 'mpg123_scan'));
+      mpg123_length := Tmpg123_length(GetProcAddress(Mp_Handle, 'mpg123_length'));
+      mpg123_tpf := Tmpg123_tpf(GetProcAddress(Mp_Handle, 'mpg123_tpf'));
+      mpg123_spf := Tmpg123_spf(GetProcAddress(Mp_Handle, 'mpg123_spf'));
+      mpg123_clip := Tmpg123_clip(GetProcAddress(Mp_Handle, 'mpg123_clip'));
+      mpg123_init_string := Tmpg123_init_string(GetProcAddress(Mp_Handle, 'mpg123_init_string'));
+      mpg123_free_string := Tmpg123_free_string(GetProcAddress(Mp_Handle, 'mpg123_free_string'));
+      mpg123_resize_string := Tmpg123_resize_string(GetProcAddress(Mp_Handle, 'mpg123_resize_string'));
+      mpg123_copy_string := Tmpg123_copy_string(GetProcAddress(Mp_Handle, 'mpg123_copy_string'));
+      mpg123_add_string := Tmpg123_add_string(GetProcAddress(Mp_Handle, 'mpg123_add_string'));
+      mpg123_add_substring := Tmpg123_add_substring(GetProcAddress(Mp_Handle, 'mpg123_add_substring'));
+      mpg123_set_string := Tmpg123_set_string(GetProcAddress(Mp_Handle, 'mpg123_set_string'));
+      mpg123_set_substring := Tmpg123_set_substring(GetProcAddress(Mp_Handle, 'mpg123_set_substring'));
+      mpg123_meta_check := Tmpg123_meta_check(GetProcAddress(Mp_Handle, 'mpg123_meta_check'));
+      mpg123_id3 := Tmpg123_id3(GetProcAddress(Mp_Handle, 'mpg123_id3'));
+      mpg123_icy := Tmpg123_icy(GetProcAddress(Mp_Handle, 'mpg123_icy'));
+      mpg123_parnew := Tmpg123_parnew(GetProcAddress(Mp_Handle, 'mpg123_parnew'));
+      mpg123_new_pars := Tmpg123_new_pars(GetProcAddress(Mp_Handle, 'mpg123_new_pars'));
+      mpg123_delete_pars := Tmpg123_delete_pars(GetProcAddress(Mp_Handle, 'mpg123_delete_pars'));
+      mpg123_fmt_none := Tmpg123_fmt_none(GetProcAddress(Mp_Handle, 'mpg123_fmt_none'));
+      mpg123_fmt_all := Tmpg123_fmt_all(GetProcAddress(Mp_Handle, 'mpg123_fmt_all'));
+      mpg123_fmt := Tmpg123_fmt(GetProcAddress(Mp_Handle, 'mpg123_fmt'));
+      mpg123_fmt_support := Tmpg123_fmt_support(GetProcAddress(Mp_Handle, 'mpg123_fmt_support'));
+      mpg123_par := Tmpg123_par(GetProcAddress(Mp_Handle, 'mpg123_par'));
+      mpg123_getpar := Tmpg123_getpar(GetProcAddress(Mp_Handle, 'mpg123_getpar'));
+      mpg123_replace_buffer := Tmpg123_replace_buffer(GetProcAddress(Mp_Handle, 'mpg123_replace_buffer'));
+      mpg123_outblock := Tmpg123_outblock(GetProcAddress(Mp_Handle, 'mpg123_outblock'));
+      end;
+      {$ENDIF}
     Result := mp_IsLoaded;
     ReferenceCounter := 1;
 

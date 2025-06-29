@@ -9,8 +9,13 @@
 
 unit uos_dsp_utils;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+   {$mode objfpc}{$H+}
+   {$PACKRECORDS C}
 {$interfaces corba}
+{$else}
+   {$MINENUMSIZE 4} (* use 4-byte enums *)
+{$endif}
 
 interface
 
@@ -47,14 +52,21 @@ type
   end;
 
 type
-  IPAIODataIOInterface = interface
-  ['IPAIODataIOInterface']
+  {$IFDEF FPC}
+  IPAIODataIOInterface = interface['{IPAIODataIOInterface}']
+  {$ELSE}
+  IPAIODataIOInterface = interface['{483A2C38-D618-4767-B266-C5D1151138F5}'] //['{IPAIODataIOInterface}']
+  {$ENDIF}
     procedure WriteDataIO(ASender: IPAIODataIOInterface; AData: PSingle; ASamples: Integer);
   end;
 
   { TPAIOChannelHelper }
 
+  {$IFDEF FPC}
   TPAIOChannelHelper = class(IPAIODataIOInterface)
+  {$ELSE}
+  TPAIOChannelHelper = class(TInterfacedObject,IPAIODataIOInterface)
+  {$ENDIF}
   private
     FOutputs: TList;
     FTarget: IPAIODataIOInterface; // where we will send plexed data.
@@ -73,8 +85,8 @@ type
 
 function NewChannelArray(AChannels: Integer; ASamplesPerChannel: Integer): TChannelArray;
 function SplitChannels(AData: PSingle; ASamples: Integer; AChannels: Integer): TChannelArray;
-function JoinChannels(AChannelData: TChannelArray; ASamples: Integer = -1): TSingleArray;
-function JoinChannels(AChannelData: PPSingle; AChannels: Integer; ASamples: Integer): TSingleArray;
+function JoinChannels(AChannelData: TChannelArray; ASamples: Integer = -1): TSingleArray;overload;
+function JoinChannels(AChannelData: PPSingle; AChannels: Integer; ASamples: Integer): TSingleArray;overload;
 
 function Min(A,B: Integer): Integer;
 function Max(A,B: Integer): Integer;
@@ -87,8 +99,11 @@ procedure TPAIOChannelHelper.WriteDataIO(ASender: IPAIODataIOInterface; AData: P
 var
   BufIndex: Integer;
   BufSize, WCount: Integer;
-  Written: Integer = 0;
+  Written: Integer;// = 0;
+  vtabTMP:TChannelArray;
 begin
+{$IFDEF FPC}
+Written:=0;
   BufIndex := FOutputs.IndexOf(Pointer(ASender));
 
   if BufIndex = -1 then
@@ -102,6 +117,7 @@ begin
   begin
     WCount := Min(BufSize-FPos[BufIndex], ASamples);
     Move(AData[Written], FBuffers[BufIndex][0], WCount*SizeOf(Single));
+    //Move(TChannelArray(AData[Written]), FBuffers[BufIndex][0], WCount*SizeOf(Single));
     Inc(Written, WCount);
     Dec(ASamples, WCount);
     Inc(FPos[BufIndex], WCount);
@@ -109,6 +125,10 @@ begin
     if BufIndex = High(FBuffers) then
       SendDataToTarget;
   end;
+  {$ELSE}
+  raise exception.create('TPAIOChannelHelper.WriteDataIO:NON TRAITE pour Delphi');
+  {$ENDIF}
+
 end;
 
 procedure TPAIOChannelHelper.AllocateBuffers;
@@ -124,9 +144,10 @@ end;
 procedure TPAIOChannelHelper.SendDataToTarget;
 var
   Plexed: TSingleArray;
-  HighestCount: Integer = 0;
+  HighestCount: Integer;// = 0;
   i: Integer;
 begin
+HighestCount:=0;
   for i := 0 to High(FPos) do
     if FPos[i] > HighestCount then
       HighestCount:=FPos[i];
@@ -154,9 +175,10 @@ procedure TPAIOChannelHelper.Write(AData: PSingle; ASamples: Integer);
 var
   Channels: TChannelArray;
   i: Integer;
-  Pos: Integer = 0;
+  Pos: Integer;// = 0;
   WCount: Integer;
 begin
+Pos:=0;
   AllocateBuffers;
   Channels := SplitChannels(AData, ASamples, Outputs.Count);
   while ASamples > 0 do
@@ -180,7 +202,11 @@ end;
 
 constructor TRingBuffer.Create(ASize: Integer);
 begin
+  {$IFDEF FPC}
   FMem:=Getmem(ASize);
+  {$ELSE}
+  //Getmem(FMem,NativeInt(Size));//:=Getmem(ASize);
+  {$ENDIF FPC}
   FTotalSpace:=ASize;
 end;
 
@@ -194,8 +220,9 @@ function TRingBuffer.Write(const ASource; ASize: Integer): Integer;
 var
   EOB: Integer; // end of buffer
   WSize: Integer;
-  WTotal: Integer = 0;
+  WTotal: Integer ;//= 0;
 begin
+WTotal:=0;
   if FUsedSpace = 0 then
   begin
     // give the best chance of not splitting the data at buffer end.
@@ -223,8 +250,9 @@ function TRingBuffer.Read(var ADest; ASize: Integer): Integer;
 var
   EOB: Integer; // end of buffer
   RSize: Integer;
-  RTotal: Integer = 0;
+  RTotal: Integer;// = 0;
 begin
+RTotal:=0;
   if ASize > UsedSpace then
     raise Exception.Create('Ring buffer underflow');
   ASize := Min(ASize, UsedSpace);
@@ -271,6 +299,7 @@ var
   SamplesPerChannel: Integer;
   i, j: Integer;
 begin
+  {$IFDEF FPC}
   SamplesPerChannel:=ASamples div AChannels;
   //SetLength(Result, AChannels);
   Result := NewChannelArray(AChannels, SamplesPerChannel);
@@ -282,6 +311,9 @@ begin
       Result[i][j] := AData[j*AChannels+i];
     end;
   end;
+  {$ELSE}
+  raise exception.create('SplitChannels:NON TRAITE pour Delphi');
+  {$ENDIF}
 end;
 
 function JoinChannels(AChannelData: TChannelArray; ASamples: Integer): TSingleArray;
@@ -312,6 +344,7 @@ var
   i: Integer;
   j: Integer;
 begin
+  {$IFDEF FPC}
   if ASamples > 0 then
   begin
    SetLength(Result, AChannels * ASamples);
@@ -322,6 +355,9 @@ begin
   else
     SetLength(Result, 0);
 
+  {$ELSE}
+  raise exception.create('JoinChannels:NON TRAITE pour Delphi');
+  {$ENDIF}
 end;
 
 end.
