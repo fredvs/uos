@@ -253,7 +253,23 @@ begin
   Edit1.Text := ordir + 'lib/OpenBSD/64bit/LibPortaudio-64.so';
   Edit2.Text := ordir + 'lib/OpenBSD/64bit/LibSndFile-64.so';
   Edit3.Text := ordir + 'lib/OpenBSD/64bit/LibMpg123-64.so';
-  Edit5.Text := ordir + 'lib/OpenBSD/64bit/plugin/LibSoundTouch-64.so';
+  Edit5.Text := ordir + 'lib/OpenBSD/64bit/LibSoundTouch-64.so';
+  Edit4.Text := ordir + '/sound/test.ogg'; 
+ {$ENDIF}
+
+  {$if defined(CPUAMD64) and defined(netbsd) }
+  Edit1.Text := ordir + 'lib/NetBSD/64bit/LibPortaudio-64.so';
+  Edit2.Text := ordir + 'lib/NetBSD/64bit/LibSndFile-64.so';
+  Edit3.Text := ordir + 'lib/NetBSD/64bit/LibMpg123-64.so';
+  Edit5.Text := ordir + 'lib/NetBSD/64bit/LibSoundTouch-64.so';
+  Edit4.Text := ordir + '/sound/test.ogg'; 
+ {$ENDIF}
+
+  {$if defined(CPUAMD64) and defined(dragonflybsd) }
+  Edit1.Text := ordir + 'lib/DragonFlyBSD/64bit/LibPortaudio-64.so';
+  Edit2.Text := ordir + 'lib/DragonFlyBSD/64bit/LibSndFile-64.so';
+  Edit3.Text := ordir + 'lib/DragonFlyBSD/64bit/LibMpg123-64.so';
+  Edit5.Text := ordir + 'lib/DragonFlyBSD/64bit/LibSoundTouch-64.so';
   Edit4.Text := ordir + '/sound/test.ogg'; 
  {$ENDIF}
 

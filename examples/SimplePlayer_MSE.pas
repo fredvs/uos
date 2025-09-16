@@ -61,6 +61,30 @@ begin
     mainfo.bsdir.value := '' ;
     mainfo.songdir.value := ordir + 'sound/test.ogg';
     {$ENDIF}
+
+     {$if defined(CPUAMD64) and defined(netbsd) }
+    mainfo.padir.value := ordir + 'lib/NetBSD/64bit/LibPortaudio-64.so';
+    mainfo.sfdir.value := ordir + 'lib/NetBSD/64bit/LibSndFile-64.so';
+    mainfo.mpdir.value := ordir + 'lib/NetBSD/64bit/LibMpg123-64.so';
+    mainfo.m4dir.value :=  '' ;
+    mainfo.fadir.value := '' ;
+    mainfo.ofdir.value :=  '' ;
+    mainfo.stdir.value := ordir + 'lib/NetBSD/64bit/LibSoundTouch-64.so';
+    mainfo.bsdir.value := '' ;
+    mainfo.songdir.value := ordir + 'sound/test.ogg';
+    {$ENDIF}
+
+     {$if defined(CPUAMD64) and defined(dragonflybsd) }
+    mainfo.padir.value := ordir + 'lib/DragonFlyBSD/64bit/LibPortaudio-64.so';
+    mainfo.sfdir.value := ordir + 'lib/DragonFlyBSD/64bit/LibSndFile-64.so';
+    mainfo.mpdir.value := ordir + 'lib/DragonFlyBSD/64bit/LibMpg123-64.so';
+    mainfo.m4dir.value :=  '' ;
+    mainfo.fadir.value := '' ;
+    mainfo.ofdir.value :=  '' ;
+    mainfo.stdir.value := ordir + 'lib/DragonFlyBSD/64bit/LibSoundTouch-64.so';
+    mainfo.bsdir.value := '' ;
+    mainfo.songdir.value := ordir + 'sound/test.ogg';
+    {$ENDIF}
  
 {$if defined(cpu86) and defined(linux)}
     mainfo.padir.value := ordir + 'lib/Linux/32bit/LibPortaudio-32.so';
