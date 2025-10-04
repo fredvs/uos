@@ -7679,7 +7679,7 @@ begin
       tell  := @m_tell;
     end;
 
-  if (AudioFormat = 0) then
+  if (AudioFormat = 0) or (AudioFormat = -1) then
     sfInfo.format := SF_FORMAT_WAV Or SF_FORMAT_PCM_16;
   if (AudioFormat = 1) then
     sfInfo.format := SF_FORMAT_OGG Or SF_FORMAT_VORBIS;
