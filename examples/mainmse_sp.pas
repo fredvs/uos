@@ -334,6 +334,11 @@ begin
    sfdir.Value := sfdir.Value + '.2';
    uos_TestLoadLibrary(PChar(ansistring(sfdir.Value)));
    end;
+if (padir.Value <> 'system') and (padir.Value <> '') then     
+  if uos_TestLoadLibrary(PChar(ansistring(padir.Value))) = false then
+   begin
+   padir.Value := padir.Value + '.2';
+   uos_TestLoadLibrary(PChar(ansistring(padir.Value)));   
 {$endif}
 
   // Load the libraries

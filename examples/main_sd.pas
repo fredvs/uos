@@ -167,6 +167,10 @@ begin
 if lib2 <> 'system' then
  if uos_TestLoadLibrary(PChar(lib2)) = false then
    lib2 := lib2 + '.2';
+   
+if lib1 <> 'system' then
+ if uos_TestLoadLibrary(PChar(lib1)) = false then
+   lib1 := lib1 + '.2';   
 {$endif}  
 
   uos_LoadLib(PChar(lib1), PChar(lib2), nil, nil, nil, nil, nil);

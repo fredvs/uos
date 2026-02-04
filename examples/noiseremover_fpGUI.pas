@@ -114,6 +114,9 @@ loadok : boolean = false;
 if (FilenameEdit2.FileName <> 'system') and (FilenameEdit2.FileName <> '') then
   if uos_TestLoadLibrary(PChar(FilenameEdit2.FileName)) = false then
    FilenameEdit2.FileName := FilenameEdit2.FileName + '.2';
+if (FilenameEdit1.FileName <> 'system') and (FilenameEdit1.FileName <> '') then     
+   if uos_TestLoadLibrary(PChar(FilenameEdit1.FileName)) = false then 
+   FilenameEdit1.FileName := FilenameEdit1.FileName + '.2';   
 {$endif}
 
 if uos_LoadLib(Pchar(FilenameEdit1.FileName), Pchar(FilenameEdit2.FileName),

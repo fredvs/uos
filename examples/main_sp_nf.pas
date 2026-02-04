@@ -360,6 +360,11 @@ if (Edit2.Text <> 'system') and (Edit2.Text <> '') then
    if uos_TestLoadLibrary(PChar(Edit2.Text)) = false then
     MessageDlg('Error while loading SndFile library...', mtWarning, [mbYes], 0);
    end;
+   
+if (Edit1.Text <> 'system') and (Edit1.Text <> '') then     
+  if uos_TestLoadLibrary(PChar(edit1.Text)) = false then
+   edit1.Text := edit1.Text + '.2';
+   
   {$endif}
 
   // Load the libraries

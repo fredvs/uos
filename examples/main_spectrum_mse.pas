@@ -179,6 +179,11 @@ begin
   if (SF_FileName <> 'system') and  (SF_FileName <> '') then     
   if uos_TestLoadLibrary(PChar(SF_FileName)) = false then
    SF_FileName := SF_FileName + '.2';
+   
+  if (PA_FileName <> 'system') and (PA_FileName <> '') then     
+   if uos_TestLoadLibrary(PChar(PA_FileName)) = false then 
+   PA_FileName := PA_FileName + '.2';
+   
 {$endif}
 
   tfilenameedit1.Value := SoundFilename;

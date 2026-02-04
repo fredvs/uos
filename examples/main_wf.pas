@@ -185,6 +185,9 @@ begin
 if (Edit2.Text <> 'system') and (Edit2.Text <> '') then
   if uos_TestLoadLibrary(PChar(edit2.Text)) = false then
    edit2.Text := edit2.Text + '.2';
+if (Edit1.Text <> 'system') and (Edit1.Text <> '') then     
+  if uos_TestLoadLibrary(PChar(edit1.Text)) = false then
+   edit1.Text := edit1.Text + '.2';
 {$endif}
 
   // Load the libraries
