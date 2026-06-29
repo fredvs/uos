@@ -59,8 +59,7 @@ function CheckURLStatus(const URL: string): Integer;
 
 implementation
 
-uses
-{$IFDEF unix} netdb; {$ENDIF}
+{$IFDEF unix} uses netdb; {$ENDIF}
   
 { Check URL status with detailed error codes }
 function CheckURLStatus(const URL: string): Integer;
