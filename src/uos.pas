@@ -82,7 +82,7 @@ uos_cdrom,
 Classes, DynLibs, ctypes, Math, sysutils;
 
 const 
-  uos_version : cint32 = 2251216;
+  uos_version : cint32 = 2260630;
 
 {$IF DEFINED (bs2b)}
   BS2B_HIGH_CLEVEL = (CInt32 (700)) or ( (CInt32 (30)) shl 16);
@@ -6943,6 +6943,7 @@ begin
   if StreamIn[x].httpget.IsRunning = false then
   begin
     result := -1;
+    StreamIn[x].httpget.http.Terminate;
     StreamIn[x].httpget.Terminate;
     sleep(100);
     StreamIn[x].InPipe.Destroy;
@@ -7021,6 +7022,7 @@ begin
       else
       begin
         result := -1;
+        StreamIn[x].httpget.http.Terminate;
         StreamIn[x].httpget.Terminate;
         sleep(100);
         StreamIn[x].InPipe.Destroy;
@@ -7165,6 +7167,7 @@ begin
       else
       begin
         result := -1;
+        StreamIn[x].httpget.http.Terminate;
         StreamIn[x].httpget.Terminate;
         sleep(100);
         StreamIn[x].InPipe.Destroy;
@@ -7322,6 +7325,7 @@ begin
       else
       begin
         result := -1;
+        StreamIn[x].httpget.http.Terminate;
         StreamIn[x].httpget.Terminate;
         sleep(100);
         StreamIn[x].InPipe.Destroy;
@@ -10026,6 +10030,7 @@ begin
    {$IF DEFINED (webstream)}
                                                      2:
                                                         begin
+                                                          StreamIn[x].httpget.http.Terminate;
                                                           StreamIn[x].httpget.Terminate;
                                                           sleep (100);
                                                           StreamIn[x].inpipe.destroy;
