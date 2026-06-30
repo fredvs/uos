@@ -7,6 +7,7 @@ unit uos;
 
 {$mode objfpc}{$H+}{$inline on}
 {$PACKRECORDS C}
+{$RANGECHECKS OFF}
 
 // For custom configuration of directive to compiler --->  uos_define.inc
 {$I uos_define.inc}
